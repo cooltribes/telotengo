@@ -1,0 +1,57 @@
+<?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
+	'id'=>'marca-form',
+	'enableAjaxValidation'=>false,
+	'enableClientValidation'=>true,
+	'type'=>'horizontal',
+	'clientOptions'=>array(
+		'validateOnSubmit'=>true, 
+	),
+	'htmlOptions' => array(
+        'enctype' => 'multipart/form-data',
+    ),
+)); ?>
+
+	<p class="help-block">Los campos marcados con <span class="required">*</span> son obligatorios.</p>
+
+	<?php echo $form->errorSummary($model); ?>
+
+	<?php echo $form->textFieldRow($model,'nombre',array('class'=>'span5','maxlength'=>45)); ?>
+	
+	<?php echo $form->radioButtonListInlineRow($model, 'destacado', array(1 => 'Si', 0 => 'No',)); ?>
+	
+	<?php //echo $form->radioButtonListRow($model, 'destacado', array('Si','no',)); ?>
+	
+	<?php echo $form->textAreaRow($model,'descripcion',array('class'=>'span5','maxlength'=>250)); ?>
+	
+	 <div class="control-group">
+		<div class="controls">
+		<?php 
+			if($model->isNewRecord)
+				echo '';
+			else {
+				echo CHtml::image(Yii::app()->request->baseUrl.'/images/marca/'.$model->id.'_thumb.jpg',"image");
+			} 
+		?>
+		</div>
+	</div>
+	
+	<div class="control-group">
+	    <label class="control-label required"> Logotipo </label>
+		<div class="controls">
+			<?php                      
+			echo CHtml::activeFileField($model, 'Urlimagen',array('name'=>'url'));
+			echo $form->error($model, 'Urlimagen'); 
+			?>
+	    </div>
+    </div>
+
+
+	<div class="form-actions">
+		<?php $this->widget('bootstrap.widgets.TbButton', array(
+			'buttonType'=>'submit',
+			'type'=>'primary',
+			'label'=>$model->isNewRecord ? 'Crear' : 'Guardar',
+		)); ?>
+	</div>
+
+<?php $this->endWidget(); ?>

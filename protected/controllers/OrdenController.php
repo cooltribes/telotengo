@@ -1,0 +1,731 @@
+<?php
+
+class OrdenController extends Controller
+{
+	/**
+	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
+	 * using two-column layout. See 'protected/views/layouts/column2.php'.
+	 */
+	public $layout='//layouts/column2';
+
+	/**
+	 * @return array action filters
+	 */
+	public function filters()
+	{
+		return array(
+			'accessControl', // perform access control for CRUD operations
+		);
+	}
+
+	/**
+	 * Specifies the access control rules.
+	 * This method is used by the 'accessControl' filter.
+	 * @return array access control rules
+	 */
+	public function accessRules()
+	{
+		return array(
+			array('allow',  // allow all users to perform 'index' and 'view' actions
+				'actions'=>array('index'),
+				'users'=>array('*'),
+			),
+			array('allow', // allow authenticated user to perform 'create' and 'update' actions
+				'actions'=>array('create','update','view','cancelar','listado','detalleusuario','ventas','detalle','calificarVendedor','reclamo','responderReclamo'),
+				'users'=>array('@'),
+			),
+			array('allow', // allow admin user to perform 'admin' and 'delete' actions
+				'actions'=>array('admin','delete','verproductos','aceptarpago','rechazarpago','enviar','devolucion','procesarDevolucion'),
+				'users'=>array('admin'),
+			),
+			array('deny',  // deny all users
+				'users'=>array('*'),
+			),
+		);
+	}
+
+	/**
+	 * Displays a particular model.
+	 * @param integer $id the ID of the model to be displayed
+	 */
+	public function actionView($id)
+	{
+		$model = $this->loadModel($id);
+		$user = User::model()->findByPk(Yii::app()->user->id);
+		if($model && ($model->users_id == Yii::app()->user->id || UserModule::isAdmin())){
+			$this->render('view',array(
+				'model'=>$model,
+			));
+		}
+	}
+
+	/**
+	 * Creates a new model.
+	 * If creation is successful, the browser will be redirected to the 'view' page.
+	 */
+	public function actionCreate()
+	{
+		$model=new Orden;
+
+		// Uncomment the following line if AJAX validation is needed
+		// $this->performAjaxValidation($model);
+
+		if(isset($_POST['Orden']))
+		{
+			$model->attributes=$_POST['Orden'];
+			if($model->save())
+				$this->redirect(array('view','id'=>$model->id));
+		}
+
+		$this->render('create',array(
+			'model'=>$model,
+		));
+	}
+
+	/**
+	 * Updates a particular model.
+	 * If update is successful, the browser will be redirected to the 'view' page.
+	 * @param integer $id the ID of the model to be updated
+	 */
+	public function actionUpdate($id)
+	{
+		$model=$this->loadModel($id);
+
+		// Uncomment the following line if AJAX validation is needed
+		// $this->performAjaxValidation($model);
+
+		if(isset($_POST['Orden']))
+		{
+			$model->attributes=$_POST['Orden'];
+			if($model->save())
+				$this->redirect(array('view','id'=>$model->id));
+		}
+
+		$this->render('update',array(
+			'model'=>$model,
+		));
+	}
+
+	public function actionEnviar()
+	{
+		$orden = Orden::model()->findByPK($_POST['id']);
+		
+		$orden->tracking = $_POST['guia'];
+		$orden->estado=4; // enviado
+		
+		if($orden->save())
+			{
+				// agregar cual fue el usuario que realizó la compra para tenerlo en la tabla estado
+				$estado = new Estado;
+										
+				$estado->estado = 4;
+				$estado->user_id = Yii::app()->user->id; // quien cancelo la orden
+				$estado->fecha = date("Y-m-d H:i:s");
+				$estado->orden_id = $orden->id;
+						
+				if($estado->save())
+				{
+						$user = User::model()->findByPk($orden->users_id);		
+						/*$message            = new YiiMailMessage;
+						$message->view = "mail_template";
+						$subject = 'Tu compra en Personaling #'.$orden->id.' ha sido enviada';
+						$body = "Nos complace informarte que tu pedido #".$orden->id." esta en camino y pronto podrás disfrutar de tu compra
+								<br/>
+								<br/>
+								Puedes hacer seguimiento a tu pedido a través de la página de Zoom: http://www.grupozoom.com con el siguiente número de seguimiento: ".$orden->tracking." <br/> 
+								";
+						$params              = array('subject'=>$subject, 'body'=>$body);
+						$message->subject    = $subject;
+						$message->setBody($params, 'text/html');                
+						$message->addTo($user->email);
+						$message->from = array('operaciones@personaling.com' => 'Tu Personal Shopper Digital');
+						Yii::app()->mail->send($message);*/
+						
+					/*
+						// Enviar correo cuando se envia la compra
+						$user = User::model()->findByPk($orden->user_id);
+						$message             = new YiiMailMessage;
+						//this points to the file test.php inside the view path
+						$message->view = "mail_template";
+						$subject = 'Tu compra en Pesonaling #'.$orden->id.' ha sido enviada';
+						$body = "Nos complace informarte que tu pedido #".$orden->id." ha sido enviado </br>
+								</br>
+								Empresa: Zoom </br>
+								Número de seguimiento: ".$orden->tracking." </br> 
+								";
+						$params              = array('body'=>$body);
+						$message->subject    = $subject;
+						$message->setBody($params, 'text/html');
+						$message->addTo($user->email);
+						$message->from = array('operaciones@personaling.com' => 'Tu Personal Shopper Digital');
+						
+						Yii::app()->mail->send($message);					
+					*/
+					
+					Yii::app()->user->setFlash('success', 'Se ha enviado la orden.');
+					
+					echo "ok";
+				}
+		}	
+		
+	}
+
+	/**
+	 * Deletes a particular model.
+	 * If deletion is successful, the browser will be redirected to the 'admin' page.
+	 * @param integer $id the ID of the model to be deleted
+	 */
+	public function actionDelete($id)
+	{
+		$hasInventario = OrdenHasInventario::model()->findAllByAttributes(array('orden_id'=>$id));
+		
+		foreach($hasInventario as $eachone){
+			$eachone->delete();
+		}		
+			
+		$this->loadModel($id)->delete();
+		
+		Yii::app()->user->setFlash('success',"Pedido eliminado");
+		
+		$this->redirect(array('admin'));
+	}
+
+	/**
+	 * Lists all models.
+	 */
+	public function actionIndex()
+	{
+		$dataProvider=new CActiveDataProvider('Orden');
+		$this->render('index',array(
+			'dataProvider'=>$dataProvider,
+		));
+	}
+
+	/**
+	 * Manages all models.
+	 */
+	public function actionAdmin()
+	{
+		$model = new Orden();
+		$model->unsetAttributes();  // clear any default values
+		
+		$dataProvider = $model->search();
+		
+		$this->render('admin',array(
+			'model'=>$model,
+			'dataProvider'=>$dataProvider,
+		));
+	}
+
+	/**
+	 * Historial de órdenes para empresa vendedora
+	 */
+	public function actionVentas()
+	{
+		$model = new Orden();
+		$model->unsetAttributes();  // clear any default values
+		$orders = array();
+
+		$usuario = User::model()->findByPk(Yii::app()->user->id);
+		$empresas_user = EmpresasHasUsers::model()->findByAttributes(array('users_id'=>$usuario->id));
+		foreach ($empresas_user as $empresa_user) {
+			//$empresa = Empresas::model()->findByPk($empresa_user->empresas_id);
+			$temp = $model->getEmpresaOrders($empresa_user->empresas_id);
+			foreach ($temp as $t) {
+				if(!in_array($t, $orders)){
+					$orders[] = $t;
+				}
+			}
+
+			//$orders = array_merge($orders, $temp));
+		}
+		
+
+		//$model->ordenHasInventarios->inventario->almacen->empresas->id = $empresa->id;
+		
+		//$dataProvider = $model->search();
+
+		$dataProvider=new CArrayDataProvider($orders, array(
+		    'id'=>'orders-dataprovider',
+		    'sort'=>array(
+		        'attributes'=>array(
+		             'fecha',
+		        ),
+		    ),
+		    'pagination'=>array(
+		        'pageSize'=>10,
+		    ),
+		));
+
+		//print_r($dataProvider->getData());
+		
+		$this->render('listado_empresa',array(
+			'model'=>$model,
+			'dataProvider'=>$dataProvider,
+		));
+	}
+
+	/**
+	 * Detalle del modelo (verifica si es empresa o admin y muestra la vista respectiva)
+	 */
+	public function actionDetalle($id)
+	{
+		$model = $this->loadModel($id);
+		
+		$pagos = new DetalleOrden;
+		$pagos->orden_id = $id;
+		$dataProvider = $pagos->search();		
+		
+		$usuario = User::model()->findByPk(Yii::app()->user->id);
+
+		if($usuario->superuser == 1){
+			$this->render('detalle_admin',array(
+				'model'=>$model,
+				'dataProvider'=>$dataProvider,
+			));
+		}else if($usuario->hasEmpresasVendedoras()){
+			$this->render('detalle_empresa',array(
+				'model'=>$model,
+				'dataProvider'=>$dataProvider,
+			));
+		}else if($model->users_id == Yii::app()->user->id){
+			$this->render('detalle_usuario',array(
+				'model'=>$model,
+				'total'=>$dataProvider->totalItemCount,
+				'dataProvider'=>$dataProvider,
+			));
+		}else{
+			throw new Exception("No estás autorizado para ver esta página", 403);
+			
+		}
+	}
+	
+	/**
+	 * Detalle del modelo
+	 */
+	public function actionDetalleusuario($id)
+	{
+		$model = $this->loadModel($id);
+		$pagos = new DetalleOrden;
+		
+		$pagos->orden_id = $id;
+		
+		$dataProvider = $pagos->search();
+		
+		if(isset($_POST['DetalleOrden']))
+		{
+			$modeloDetalle = New DetalleOrden;
+			$modeloDetalle->attributes = $_POST['DetalleOrden'];
+			$modeloDetalle->estado=0; // pago enviado, queda en Default en espera de decision del administrador
+			$modeloDetalle->tipo_pago_id = 2; // deposito o transferencia
+			
+			$modeloDetalle->save(); 
+			
+			Yii::app()->user->setFlash('success',"Su pago se ha registrado exitosamente.");
+			
+			$model->estado = 2; // en espera de confirmacion
+		}
+		
+		$this->render('detalle_usuario',array(
+			'model'=>$model,
+			'total'=>$dataProvider->totalItemCount,
+			'dataProvider'=>$dataProvider,
+		));
+		
+	}
+
+	/**
+	 * Procesar una devolución para una orden
+	 */
+	public function actionDevolucion($id){
+		$model = $this->loadModel($id);
+		$devolucion = new Devolucion();
+
+		$this->render('devolucion',array(
+			'model'=>$model,
+			'devolucion'=>$devolucion,
+		));
+	}
+
+	/**
+	 * Función que se llama por ajax para procesar la devolución de productos
+	 */
+	public function actionProcesarDevolucion(){
+		if(isset($_POST['orden']) && isset($_POST['check']))
+		{
+			$checks = explode(',',$_POST['check']); // checks va a tener los id de orden_has_inventario
+			$cont = 0; 
+			
+			foreach($checks as $uno)
+			{
+				$orden = Orden::model()->findByPk($_POST['orden']);
+				$orden_inventario = OrdenHasInventario::model()->findByPk($uno);
+				
+				$devuelto = new Devolucion; 
+				
+				$devuelto->user_id = $orden->users_id;
+				$devuelto->orden_has_inventario_id = $orden_inventario->id;
+				
+				$devuelto->motivo = $_POST['motivos'][$cont];
+				$devuelto->monto_devuelto = $_POST['monto'];
+				$devuelto->monto_envio = $_POST['envio'];
+				
+				$devuelto->save();
+				
+				if($_POST['motivos'][$cont] != "Devolución por artículo dañado")
+				{
+					$orden_inventario->inventario->cantidad ++; // devuelvo el artículo a inventario
+					$orden_inventario->inventario->save();
+				}
+
+				$cont++;
+			}
+			
+			// devolviendo el saldo
+                        //tambien agregado el envio
+			
+			$balance = new Balance;
+			$balance->total = $_POST['monto'] + $_POST['envio'];
+			$balance->orden_id = $_POST['orden'];
+			$balance->user_id = $orden->users_id;
+			$balance->tipo = 4;
+			
+			$balance->save();
+			
+			// revisando si es una devolucion completa o parcial
+			$devueltos = count($_POST['motivos']);
+			$total = OrdenHasInventario::model()->countByAttributes(array('orden_id'=>$_POST['orden']));
+			
+			if($devueltos == $total){
+				$orden->estado = 9; // devuelto
+				
+				$estado = new Estado;
+				
+				$estado->estado = 9;
+				$estado->user_id = $orden->users_id;
+				$estado->fecha = date("Y-m-d");
+				$estado->orden_id = $orden->id;
+				
+				$estado->save();
+			}					
+			else if($devueltos < $total){
+				$orden->estado = 10; // parcialmente devuelto
+				
+				$estado = new Estado;
+				
+				$estado->estado = 10;
+				$estado->user_id = $orden->users_id;
+				$estado->fecha = date("Y-m-d");
+				$estado->orden_id = $orden->id;
+				
+				$estado->save();
+			}
+			
+			$orden->save();
+			
+			echo "ok";
+		}
+	}
+
+
+	/**
+	 * Calificar un vendedor por una orden_has_inventario
+	 */
+	public function actionCalificarVendedor($id)
+	{
+		$orden_inventario = OrdenHasInventario::model()->findByPk($id);
+		$calificacion = new CalificacionEmpresa;
+		$caracteristicas_nosql = Caracteristica::model()->findAllByAttributes(array('inventario_id'=>$orden_inventario->inventario->id));                                                     
+        $caracteristicas = '';
+        $cont = 1;
+        foreach ($caracteristicas_nosql as $c_nosql) {
+            if($cont == sizeof($caracteristicas_nosql)){
+                $caracteristicas .= $c_nosql->valor;
+            }else{
+                $caracteristicas .= $c_nosql->valor.', ';
+            }
+            $cont++;
+        }
+		
+		
+		if(isset($_POST['CalificacionEmpresa'])){
+			$calificacion->attributes = $_POST['CalificacionEmpresa'];
+			$calificacion->fecha = date('Y-m-d h:i:s', time()); 
+			$calificacion->empresas_id = $orden_inventario->inventario->almacen->empresas->id;
+			$calificacion->user_id = Yii::app()->user->id;
+			$calificacion->orden_id = $orden_inventario->orden->id;
+			
+			$calificacion->save(); 
+			
+			Yii::app()->user->setFlash('success',"Calificación guardada");
+			$this->redirect(Yii::app()->baseUrl.'/orden/detalleusuario/'.$orden_inventario->orden->id);
+		}
+		
+		$this->render('calificar_vendedor',array(
+			'orden_inventario'=>$orden_inventario,
+			'calificacion'=>$calificacion,
+			'caracteristicas'=>$caracteristicas,
+		));
+		
+	}
+
+	/**
+	 * Procesar un reclamo para una orden_has_inventario
+	 */
+	public function actionReclamo($id)
+	{
+		$orden_inventario = OrdenHasInventario::model()->findByPk($id);
+		$reclamo = new Reclamo;
+		$caracteristicas_nosql = Caracteristica::model()->findAllByAttributes(array('inventario_id'=>$orden_inventario->inventario->id));                                                     
+        $caracteristicas = '';
+        $cont = 1;
+        foreach ($caracteristicas_nosql as $c_nosql) {
+            if($cont == sizeof($caracteristicas_nosql)){
+                $caracteristicas .= $c_nosql->valor;
+            }else{
+                $caracteristicas .= $c_nosql->valor.', ';
+            }
+            $cont++;
+        }
+		
+		
+		if(isset($_POST['Reclamo'])){
+			$reclamo->attributes = $_POST['Reclamo'];
+			$reclamo->fecha = date('Y-m-d h:i:s', time()); 
+			$reclamo->estado = 1;
+			$reclamo->empresa_id = $orden_inventario->inventario->almacen->empresas->id;
+			$reclamo->user_id = Yii::app()->user->id;
+			$reclamo->orden_id = $orden_inventario->orden->id;
+			$reclamo->orden_inventario_id = $orden_inventario->id;
+			
+			$reclamo->save(); 
+			
+			Yii::app()->user->setFlash('success',"Reclamo enviado");
+			$this->redirect(Yii::app()->baseUrl.'/orden/detalleusuario/'.$orden_inventario->orden->id);
+		}
+		
+		$this->render('reclamo',array(
+			'orden_inventario'=>$orden_inventario,
+			'reclamo'=>$reclamo,
+			'caracteristicas'=>$caracteristicas,
+		));
+		
+	}
+
+	/**
+	 * Responder un reclamo para una orden_has_inventario
+	 */
+	public function actionResponderReclamo($id)
+	{
+		$reclamo = Reclamo::model()->findByPk($id);
+		$reclamo_comentario = new ReclamoComentarios;
+
+		$caracteristicas_nosql = Caracteristica::model()->findAllByAttributes(array('inventario_id'=>$reclamo->orden_inventario->inventario->id));                                                     
+        $caracteristicas = '';
+        $cont = 1;
+        foreach ($caracteristicas_nosql as $c_nosql) {
+            if($cont == sizeof($caracteristicas_nosql)){
+                $caracteristicas .= $c_nosql->valor;
+            }else{
+                $caracteristicas .= $c_nosql->valor.', ';
+            }
+            $cont++;
+        }
+		
+		if(isset($_POST['ReclamoComentarios'])){
+			$reclamo_comentario->attributes = $_POST['ReclamoComentarios'];
+			$reclamo_comentario->fecha = date('Y-m-d h:i:s', time()); 
+			$reclamo_comentario->user_id = Yii::app()->user->id;
+			$reclamo_comentario->reclamo_id = $id;
+			
+			$reclamo_comentario->save(); 
+			
+			Yii::app()->user->setFlash('success',"Comentario enviado");
+			$this->redirect(Yii::app()->baseUrl.'/orden/detalle/'.$reclamo->orden_id);
+		}
+		
+		$this->render('responder_reclamo',array(
+			'reclamo'=>$reclamo,
+			'reclamo_comentario'=>$reclamo_comentario,
+			'caracteristicas'=>$caracteristicas,
+		));
+		
+	}
+	
+	/**
+	 * Ver Productos
+	 */
+	public function actionVerproductos($id)
+	{ 
+		$model = $this->loadModel($id);
+		
+		$this->render('_productos',array(
+			'model'=>$model,
+		));
+		
+	}
+	
+	/**
+	 * Cancelar el pedido
+	 */
+	public function actionCancelar($id)
+	{
+		$pedido = $this->loadModel($id);
+		
+		$pedido->estado = 5;
+		$pedido->save();
+		
+		Yii::app()->user->setFlash('success',"Pedido cancelado exitosamente.");
+
+		if(Yii::app()->user->isAdmin())
+			$this->redirect(array('admin'));
+		else{
+			$user = User::model()->findByPk(Yii::app()->user->id);
+			if($user->hasEmpresasVendedoras()){
+				$this->redirect(array('ventas'));
+			}else{
+				$this->redirect(array('listado'));
+			}
+		}
+	}
+	
+	/**
+	 * Listado de usuario
+	 */
+	public function actionListado()
+	{ 
+		$user = User::model()->findByPk(Yii::app()->user->id);
+			
+		$model = new Orden();
+		$model->unsetAttributes();  // clear any default values
+		
+		$model->users_id = $user->id;
+		$dataProvider = $model->search();
+		
+		$this->render('listado_usuario',array(
+			'model'=>$model,
+			'dataProvider'=>$dataProvider,
+		));
+		
+	}
+	
+	/**
+	 * Aceptar Pago
+	 */
+	public function actionAceptarpago($id)
+	{
+		$detalle = DetalleOrden::model()->findByPk($id);
+		$detalle->estado = 1; // pago aceptado
+		
+		$orden = Orden::model()->findByPk($detalle->orden_id);
+		$porpagar=$orden->getxPagar();
+		
+		if($detalle->save()){
+		//Revisando si lo depositado es > o = al total de la orden. 
+		
+		$diferencia_pago = round(($detalle->monto - $porpagar),3,PHP_ROUND_HALF_DOWN);
+		
+		if($diferencia_pago >= 0){ // Pago completo o de más 
+		
+			$orden->estado = 3; // pago confirmado
+			$orden->save();
+			 
+			Yii::app()->user->setFlash('success',"Su pago ha sido aceptado y su orden ha sido confirmada.");			
+					/* if($factura){
+							$factura->estado = 2;
+							$factura->save();
+							$estado = new Estado;
+													
+							$estado->estado = 3; // pago recibido
+							$estado->user_id = Yii::app()->user->id;
+							$estado->fecha = date("Y-m-d");
+							$estado->orden_id = $orden->id;
+									
+							if($estado->save())
+							{
+								echo "ok";
+							} else {
+								Yii::trace('user id:'.Yii::app()->user->id.' Validar error:'.print_r($estado->getErrors(),true), 'registro');
+							}
+						} 
+					
+						// Subject y body para el correo
+						$subject = 'Pago aceptado';
+						$body = '<h2> ¡Genial! Tu pago ha sido aceptado.</h2> Estamos preparando tu pedido para el envío, muy pronto podrás disfrutar de tu compra. <br/><br/> ';
+								
+						$usuario = Yii::app()->user->id;
+						
+					if(($diferencia_pago) > 0.5)
+					{
+						$balance = new Balance;
+						$balance->orden_id = $orden->id;
+						$balance->user_id = $orden->user_id;
+						$balance->total = $diferencia_pago;
+							
+						$balance->save();
+						$body .= 'Tenemos una buena noticia, tienes disponible un saldo a favor de '.Yii::app()->numberFormatter->formatCurrency($excede, '').' Bs.';
+					} // si es mayor hace el balance
+					*/ 	
+
+			} 
+			else{ // pago incompleto
+				$diferencia_pago = 0 - $diferencia_pago;
+				$orden->estado = 7; // pago insuficiente
+				$orden->save();	
+				Yii::app()->user->setFlash('error',"Su pago ha sido aceptado pero faltan Bs. ".$diferencia_pago);		
+			}
+		
+		}
+		else
+			var_dump($detalle->getError());
+
+		$this->redirect(array('detalle','id'=>$orden->id));
+	}
+	
+	/**
+	 * Rechazar Pago
+	 */
+	public function actionRechazarpago($id)
+	{ 
+		$detalle = DetalleOrden::model()->findByPk($id);
+		$detalle->estado = 2; // pago rechazado
+		
+		$orden = Orden::model()->findByPk($detalle->orden_id);
+		
+		if($detalle->save()){
+			//Revisando si lo depositado es > o = al total de la orden. 
+			$orden->estado = 6; // pago rechzado
+			$orden->save();	
+			
+			Yii::app()->user->setFlash('error',"Su pago ha sido rechazado.");	
+		}
+		
+		$this->redirect(array('detalle','id'=>$orden->id));
+	}
+
+	/**
+	 * Returns the data model based on the primary key given in the GET variable.
+	 * If the data model is not found, an HTTP exception will be raised.
+	 * @param integer the ID of the model to be loaded
+	 */
+	public function loadModel($id)
+	{
+		$model=Orden::model()->findByPk($id);
+		if($model===null)
+			throw new CHttpException(404,'The requested page does not exist.');
+		return $model;
+	}
+
+	/**
+	 * Performs the AJAX validation.
+	 * @param CModel the model to be validated
+	 */
+	protected function performAjaxValidation($model)
+	{
+		if(isset($_POST['ajax']) && $_POST['ajax']==='orden-form')
+		{
+			echo CActiveForm::validate($model);
+			Yii::app()->end();
+		}
+	}
+}

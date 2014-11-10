@@ -1,0 +1,1603 @@
+2013/11/06 21:39:52 [error] [exception.CException] exception 'CException' with message 'Alias "bootstrap.widgets.TbHeroUnit" is invalid. Make sure it points to an existing directory or file.' in C:\wamp\www\yii\framework\YiiBase.php:347
+Stack trace:
+#0 C:\wamp\www\yii\framework\web\CWidgetFactory.php(146): YiiBase::import('bootstrap.widge...', true)
+#1 C:\wamp\www\yii\framework\web\CBaseController.php(146): CWidgetFactory->createWidget(Object(SiteController), 'bootstrap.widge...', Array)
+#2 C:\wamp\www\yii\framework\web\CBaseController.php(189): CBaseController->createWidget('bootstrap.widge...', Array)
+#3 C:\wamp\www\telotengo\themes\bootstrap\views\site\index.php(9): CBaseController->beginWidget('bootstrap.widge...', Array)
+#4 C:\wamp\www\yii\framework\web\CBaseController.php(126): require('C:\wamp\www\tel...')
+#5 C:\wamp\www\yii\framework\web\CBaseController.php(95): CBaseController->renderInternal('C:\wamp\www\tel...', NULL, true)
+#6 C:\wamp\www\yii\framework\web\CController.php(869): CBaseController->renderFile('C:\wamp\www\tel...', NULL, true)
+#7 C:\wamp\www\yii\framework\web\CController.php(782): CController->renderPartial('index', NULL, true)
+#8 C:\wamp\www\telotengo\protected\controllers\SiteController.php(32): CController->render('index')
+#9 C:\wamp\www\yii\framework\web\actions\CInlineAction.php(49): SiteController->actionIndex()
+#10 C:\wamp\www\yii\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#11 C:\wamp\www\yii\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#12 C:\wamp\www\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#13 C:\wamp\www\yii\framework\web\CWebApplication.php(282): CController->run('')
+#14 C:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('')
+#15 C:\wamp\www\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#16 C:\wamp\www\telotengo\index.php(13): CApplication->run()
+#17 {main}
+REQUEST_URI=/telotengo/
+---
+2013/11/06 21:45:04 [error] [exception.CException] exception 'CException' with message 'Alias "extensions.bootstrap.widgets.TbHeroUnit" is invalid. Make sure it points to an existing directory or file.' in C:\wamp\www\yii\framework\YiiBase.php:347
+Stack trace:
+#0 C:\wamp\www\yii\framework\web\CWidgetFactory.php(146): YiiBase::import('extensions.boot...', true)
+#1 C:\wamp\www\yii\framework\web\CBaseController.php(146): CWidgetFactory->createWidget(Object(SiteController), 'extensions.boot...', Array)
+#2 C:\wamp\www\yii\framework\web\CBaseController.php(189): CBaseController->createWidget('extensions.boot...', Array)
+#3 C:\wamp\www\telotengo\themes\bootstrap\views\site\index.php(9): CBaseController->beginWidget('extensions.boot...', Array)
+#4 C:\wamp\www\yii\framework\web\CBaseController.php(126): require('C:\wamp\www\tel...')
+#5 C:\wamp\www\yii\framework\web\CBaseController.php(95): CBaseController->renderInternal('C:\wamp\www\tel...', NULL, true)
+#6 C:\wamp\www\yii\framework\web\CController.php(869): CBaseController->renderFile('C:\wamp\www\tel...', NULL, true)
+#7 C:\wamp\www\yii\framework\web\CController.php(782): CController->renderPartial('index', NULL, true)
+#8 C:\wamp\www\telotengo\protected\controllers\SiteController.php(32): CController->render('index')
+#9 C:\wamp\www\yii\framework\web\actions\CInlineAction.php(49): SiteController->actionIndex()
+#10 C:\wamp\www\yii\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#11 C:\wamp\www\yii\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#12 C:\wamp\www\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#13 C:\wamp\www\yii\framework\web\CWebApplication.php(282): CController->run('')
+#14 C:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('')
+#15 C:\wamp\www\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#16 C:\wamp\www\telotengo\index.php(13): CApplication->run()
+#17 {main}
+REQUEST_URI=/telotengo/
+---
+2013/11/06 21:47:04 [error] [exception.CException] exception 'CException' with message 'Alias "bootstrap.widgets.TbHeroUnit" is invalid. Make sure it points to an existing directory or file.' in C:\wamp\www\yii\framework\YiiBase.php:347
+Stack trace:
+#0 C:\wamp\www\yii\framework\web\CWidgetFactory.php(146): YiiBase::import('bootstrap.widge...', true)
+#1 C:\wamp\www\yii\framework\web\CBaseController.php(146): CWidgetFactory->createWidget(Object(SiteController), 'bootstrap.widge...', Array)
+#2 C:\wamp\www\yii\framework\web\CBaseController.php(189): CBaseController->createWidget('bootstrap.widge...', Array)
+#3 C:\wamp\www\telotengo\themes\bootstrap\views\site\index.php(9): CBaseController->beginWidget('bootstrap.widge...', Array)
+#4 C:\wamp\www\yii\framework\web\CBaseController.php(126): require('C:\wamp\www\tel...')
+#5 C:\wamp\www\yii\framework\web\CBaseController.php(95): CBaseController->renderInternal('C:\wamp\www\tel...', NULL, true)
+#6 C:\wamp\www\yii\framework\web\CController.php(869): CBaseController->renderFile('C:\wamp\www\tel...', NULL, true)
+#7 C:\wamp\www\yii\framework\web\CController.php(782): CController->renderPartial('index', NULL, true)
+#8 C:\wamp\www\telotengo\protected\controllers\SiteController.php(32): CController->render('index')
+#9 C:\wamp\www\yii\framework\web\actions\CInlineAction.php(49): SiteController->actionIndex()
+#10 C:\wamp\www\yii\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#11 C:\wamp\www\yii\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#12 C:\wamp\www\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#13 C:\wamp\www\yii\framework\web\CWebApplication.php(282): CController->run('')
+#14 C:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('')
+#15 C:\wamp\www\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#16 C:\wamp\www\telotengo\index.php(13): CApplication->run()
+#17 {main}
+REQUEST_URI=/telotengo/
+---
+2013/11/06 21:48:18 [error] [exception.CException] exception 'CException' with message 'CAssetManager.basePath "C:\wamp\www\telotengo\assets" is invalid. Please make sure the directory exists and is writable by the Web server process.' in C:\wamp\www\yii\framework\web\CAssetManager.php:138
+Stack trace:
+#0 C:\wamp\www\yii\framework\web\CAssetManager.php(123): CAssetManager->setBasePath('C:\wamp\www\tel...')
+#1 C:\wamp\www\yii\framework\web\CAssetManager.php(217): CAssetManager->getBasePath()
+#2 C:\wamp\www\telotengo\protected\extensions\bootstrap\components\Bootstrap.php(306): CAssetManager->publish('C:\wamp\www\tel...', true, -1, false)
+#3 C:\wamp\www\telotengo\protected\extensions\bootstrap\components\Bootstrap.php(50): Bootstrap->getAssetsUrl()
+#4 C:\wamp\www\telotengo\protected\extensions\bootstrap\components\Bootstrap.php(81): Bootstrap->registerCoreCss()
+#5 C:\wamp\www\telotengo\protected\extensions\bootstrap\components\Bootstrap.php(115): Bootstrap->registerAllCss()
+#6 C:\wamp\www\telotengo\themes\bootstrap\views\layouts\main.php(12): Bootstrap->register()
+#7 C:\wamp\www\yii\framework\web\CBaseController.php(126): require('C:\wamp\www\tel...')
+#8 C:\wamp\www\yii\framework\web\CBaseController.php(95): CBaseController->renderInternal('C:\wamp\www\tel...', Array, true)
+#9 C:\wamp\www\yii\framework\web\widgets\CContentDecorator.php(76): CBaseController->renderFile('C:\wamp\www\tel...', Array, true)
+#10 C:\wamp\www\yii\framework\web\widgets\CContentDecorator.php(54): CContentDecorator->decorate('<div id="conten...')
+#11 C:\wamp\www\yii\framework\web\widgets\COutputProcessor.php(44): CContentDecorator->processOutput('<div id="conten...')
+#12 C:\wamp\www\yii\framework\web\CBaseController.php(206): COutputProcessor->run()
+#13 C:\wamp\www\yii\framework\web\CBaseController.php(300): CBaseController->endWidget('CContentDecorat...')
+#14 C:\wamp\www\telotengo\protected\views\layouts\column1.php(6): CBaseController->endContent()
+#15 C:\wamp\www\yii\framework\web\CBaseController.php(126): require('C:\wamp\www\tel...')
+#16 C:\wamp\www\yii\framework\web\CBaseController.php(95): CBaseController->renderInternal('C:\wamp\www\tel...', Array, true)
+#17 C:\wamp\www\yii\framework\web\CController.php(784): CBaseController->renderFile('C:\wamp\www\tel...', Array, true)
+#18 C:\wamp\www\telotengo\protected\controllers\SiteController.php(32): CController->render('index')
+#19 C:\wamp\www\yii\framework\web\actions\CInlineAction.php(49): SiteController->actionIndex()
+#20 C:\wamp\www\yii\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#21 C:\wamp\www\yii\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#22 C:\wamp\www\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#23 C:\wamp\www\yii\framework\web\CWebApplication.php(282): CController->run('')
+#24 C:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('')
+#25 C:\wamp\www\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#26 C:\wamp\www\telotengo\index.php(13): CApplication->run()
+#27 {main}
+REQUEST_URI=/telotengo/
+---
+2013/11/11 15:29:59 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "profile/edit".' in C:\wamp\www\yii\framework\web\CWebApplication.php:286
+Stack trace:
+#0 C:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('profile/edit')
+#1 C:\wamp\www\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#2 C:\wamp\www\telotengo\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/telotengo/index.php/profile/edit
+---
+2013/11/11 15:30:13 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "profile/edit".' in C:\wamp\www\yii\framework\web\CWebApplication.php:286
+Stack trace:
+#0 C:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('profile/edit')
+#1 C:\wamp\www\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#2 C:\wamp\www\telotengo\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/telotengo/index.php/profile/edit
+---
+2013/11/11 16:03:02 [warning] [application] Failed to set unsafe attribute "verifyCode" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/11 16:03:07 [warning] [application] Failed to set unsafe attribute "verifyCode" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/11 16:03:16 [warning] [application] Failed to set unsafe attribute "verifyCode" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/11 16:03:19 [warning] [application] Failed to set unsafe attribute "verifyCode" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/11 16:03:22 [warning] [application] Failed to set unsafe attribute "verifyCode" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/11 16:03:28 [warning] [application] Failed to set unsafe attribute "verifyCode" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/11 16:03:34 [error] [php] mail(): Failed to connect to mailserver at &quot;localhost&quot; port 25, verify your &quot;SMTP&quot; and &quot;smtp_port&quot; setting in php.ini or use ini_set() (C:\wamp\www\telotengo\protected\modules\user\UserModule.php:226)
+Stack trace:
+#0 C:\wamp\www\yii\framework\web\actions\CInlineAction.php(49): RegistrationController->actionRegistration()
+#1 C:\wamp\www\yii\framework\web\CController.php(308): CInlineAction->runWithParams()
+#2 C:\wamp\www\yii\framework\web\CController.php(286): RegistrationController->runAction()
+#3 C:\wamp\www\yii\framework\web\CController.php(265): RegistrationController->runActionWithFilters()
+#4 C:\wamp\www\yii\framework\web\CWebApplication.php(282): RegistrationController->run()
+#5 C:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#6 C:\wamp\www\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#7 C:\wamp\www\telotengo\index.php(13): CWebApplication->run()
+REQUEST_URI=/telotengo/index.php/user/registration
+in C:\wamp\www\telotengo\protected\modules\user\UserModule.php (226)
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (54)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/11 20:32:44 [warning] [application] Failed to set unsafe attribute "verifyCode" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/11 20:32:47 [warning] [application] Failed to set unsafe attribute "verifyCode" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/11 20:32:50 [warning] [application] Failed to set unsafe attribute "verifyCode" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/11 20:34:37 [warning] [application] Failed to set unsafe attribute "verifyCode" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/11 20:34:41 [warning] [application] Failed to set unsafe attribute "verifyCode" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/11 20:34:44 [warning] [application] Failed to set unsafe attribute "verifyCode" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/11 20:34:47 [warning] [application] Failed to set unsafe attribute "verifyCode" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/11 20:34:49 [warning] [application] Failed to set unsafe attribute "verifyCode" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/11 20:34:50 [warning] [application] Failed to set unsafe attribute "verifyCode" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/11 20:34:57 [warning] [application] Failed to set unsafe attribute "verifyCode" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/11 20:35:04 [warning] [application] Failed to set unsafe attribute "verifyCode" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/11 20:35:06 [warning] [application] Failed to set unsafe attribute "verifyCode" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/11 20:35:14 [warning] [application] Failed to set unsafe attribute "verifyCode" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/11 20:35:16 [error] [php] mail(): Failed to connect to mailserver at &quot;localhost&quot; port 25, verify your &quot;SMTP&quot; and &quot;smtp_port&quot; setting in php.ini or use ini_set() (C:\wamp\www\telotengo\protected\modules\user\UserModule.php:226)
+Stack trace:
+#0 C:\wamp\www\yii\framework\web\actions\CInlineAction.php(49): RegistrationController->actionRegistration()
+#1 C:\wamp\www\yii\framework\web\CController.php(308): CInlineAction->runWithParams()
+#2 C:\wamp\www\yii\framework\web\CController.php(286): RegistrationController->runAction()
+#3 C:\wamp\www\yii\framework\web\CController.php(265): RegistrationController->runActionWithFilters()
+#4 C:\wamp\www\yii\framework\web\CWebApplication.php(282): RegistrationController->run()
+#5 C:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#6 C:\wamp\www\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#7 C:\wamp\www\telotengo\index.php(13): CWebApplication->run()
+REQUEST_URI=/telotengo/index.php/user/registration
+in C:\wamp\www\telotengo\protected\modules\user\UserModule.php (226)
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (54)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/11 20:36:51 [warning] [application] Failed to set unsafe attribute "verifyCode" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/11 20:36:53 [warning] [application] Failed to set unsafe attribute "verifyCode" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/11 20:36:54 [warning] [application] Failed to set unsafe attribute "verifyCode" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/11 20:36:56 [warning] [application] Failed to set unsafe attribute "verifyCode" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/11 20:36:57 [warning] [application] Failed to set unsafe attribute "verifyCode" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/11 20:36:58 [warning] [application] Failed to set unsafe attribute "verifyCode" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/11 20:37:15 [warning] [application] Failed to set unsafe attribute "verifyCode" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/11 21:06:37 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "user/register".' in C:\wamp\www\yii\framework\web\CWebApplication.php:286
+Stack trace:
+#0 C:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('user/register')
+#1 C:\wamp\www\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#2 C:\wamp\www\telotengo\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/telotengo/index.php/user/register
+HTTP_REFERER=http://localhost/telotengo/index.php/user/login
+---
+2013/11/11 21:21:45 [warning] [application] Failed to set unsafe attribute "verifyCode" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/13 20:37:59 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'db_telotengo.datos_contacto' doesn't exist. The SQL statement executed was: SHOW FULL COLUMNS FROM `datos_contacto`.
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/15 16:43:15 [error] [exception.CException] exception 'CException' with message 'Empresas has an invalid validation rule. The rule must specify attributes to be validated and the validator name.' in C:\wamp\www\yii\framework\base\CModel.php:289
+Stack trace:
+#0 C:\wamp\www\yii\framework\base\CModel.php(260): CModel->createValidators()
+#1 C:\wamp\www\yii\framework\base\CModel.php(304): CModel->getValidators('nombre')
+#2 C:\wamp\www\yii\framework\web\helpers\CHtml.php(1414): CModel->isAttributeRequired('nombre')
+#3 C:\wamp\www\yii\framework\web\widgets\CActiveForm.php(597): CHtml::activeLabelEx(Object(Empresas), 'nombre', Array)
+#4 C:\wamp\www\telotengo\protected\extensions\bootstrap\widgets\input\TbInput.php(253): CActiveForm->labelEx(Object(Empresas), 'nombre', Array)
+#5 C:\wamp\www\telotengo\protected\extensions\bootstrap\widgets\input\TbInputVertical.php(140): TbInput->getLabel()
+#6 C:\wamp\www\telotengo\protected\extensions\bootstrap\widgets\input\TbInput.php(230): TbInputVertical->textField()
+#7 C:\wamp\www\yii\framework\web\CBaseController.php(173): TbInput->run()
+#8 C:\wamp\www\telotengo\protected\extensions\bootstrap\widgets\TbActiveForm.php(497): CBaseController->widget('bootstrap.widge...', Array)
+#9 C:\wamp\www\telotengo\protected\extensions\bootstrap\widgets\TbActiveForm.php(186): TbActiveForm->inputRow('text', Object(Empresas), 'nombre', NULL, Array)
+#10 C:\wamp\www\telotengo\protected\views\empresas\_form.php(10): TbActiveForm->textFieldRow(Object(Empresas), 'nombre', Array)
+#11 C:\wamp\www\yii\framework\web\CBaseController.php(126): require('C:\wamp\www\tel...')
+#12 C:\wamp\www\yii\framework\web\CBaseController.php(95): CBaseController->renderInternal('C:\wamp\www\tel...', Array, true)
+#13 C:\wamp\www\yii\framework\web\CController.php(869): CBaseController->renderFile('C:\wamp\www\tel...', Array, true)
+#14 C:\wamp\www\telotengo\protected\views\empresas\create.php(15): CController->renderPartial('_form', Array)
+#15 C:\wamp\www\yii\framework\web\CBaseController.php(126): require('C:\wamp\www\tel...')
+#16 C:\wamp\www\yii\framework\web\CBaseController.php(95): CBaseController->renderInternal('C:\wamp\www\tel...', Array, true)
+#17 C:\wamp\www\yii\framework\web\CController.php(869): CBaseController->renderFile('C:\wamp\www\tel...', Array, true)
+#18 C:\wamp\www\yii\framework\web\CController.php(782): CController->renderPartial('create', Array, true)
+#19 C:\wamp\www\telotengo\protected\controllers\EmpresasController.php(78): CController->render('create', Array)
+#20 C:\wamp\www\yii\framework\web\actions\CInlineAction.php(49): EmpresasController->actionCreate()
+#21 C:\wamp\www\yii\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#22 C:\wamp\www\yii\framework\web\filters\CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#23 C:\wamp\www\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#24 C:\wamp\www\yii\framework\web\CController.php(1145): CFilter->filter(Object(CFilterChain))
+#25 C:\wamp\www\yii\framework\web\filters\CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#26 C:\wamp\www\yii\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#27 C:\wamp\www\yii\framework\web\CController.php(291): CFilterChain->run()
+#28 C:\wamp\www\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#29 C:\wamp\www\yii\framework\web\CWebApplication.php(282): CController->run('create')
+#30 C:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('empresas/create')
+#31 C:\wamp\www\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#32 C:\wamp\www\telotengo\index.php(13): CApplication->run()
+#33 {main}
+REQUEST_URI=/telotengo/empresas/create
+HTTP_REFERER=http://localhost/telotengo/user/login
+---
+2013/11/15 16:47:23 [error] [exception.CException] exception 'CException' with message 'Empresas has an invalid validation rule. The rule must specify attributes to be validated and the validator name.' in C:\wamp\www\yii\framework\base\CModel.php:289
+Stack trace:
+#0 C:\wamp\www\yii\framework\base\CModel.php(260): CModel->createValidators()
+#1 C:\wamp\www\yii\framework\base\CModel.php(304): CModel->getValidators('mail')
+#2 C:\wamp\www\yii\framework\web\helpers\CHtml.php(1414): CModel->isAttributeRequired('mail')
+#3 C:\wamp\www\yii\framework\web\widgets\CActiveForm.php(597): CHtml::activeLabelEx(Object(Empresas), 'mail', Array)
+#4 C:\wamp\www\telotengo\protected\extensions\bootstrap\widgets\input\TbInput.php(253): CActiveForm->labelEx(Object(Empresas), 'mail', Array)
+#5 C:\wamp\www\telotengo\protected\extensions\bootstrap\widgets\input\TbInputVertical.php(140): TbInput->getLabel()
+#6 C:\wamp\www\telotengo\protected\extensions\bootstrap\widgets\input\TbInput.php(230): TbInputVertical->textField()
+#7 C:\wamp\www\yii\framework\web\CBaseController.php(173): TbInput->run()
+#8 C:\wamp\www\telotengo\protected\extensions\bootstrap\widgets\TbActiveForm.php(497): CBaseController->widget('bootstrap.widge...', Array)
+#9 C:\wamp\www\telotengo\protected\extensions\bootstrap\widgets\TbActiveForm.php(186): TbActiveForm->inputRow('text', Object(Empresas), 'mail', NULL, Array)
+#10 C:\wamp\www\telotengo\protected\views\empresas\_form.php(12): TbActiveForm->textFieldRow(Object(Empresas), 'mail', Array)
+#11 C:\wamp\www\yii\framework\web\CBaseController.php(126): require('C:\wamp\www\tel...')
+#12 C:\wamp\www\yii\framework\web\CBaseController.php(95): CBaseController->renderInternal('C:\wamp\www\tel...', Array, true)
+#13 C:\wamp\www\yii\framework\web\CController.php(869): CBaseController->renderFile('C:\wamp\www\tel...', Array, true)
+#14 C:\wamp\www\telotengo\protected\views\empresas\create.php(15): CController->renderPartial('_form', Array)
+#15 C:\wamp\www\yii\framework\web\CBaseController.php(126): require('C:\wamp\www\tel...')
+#16 C:\wamp\www\yii\framework\web\CBaseController.php(95): CBaseController->renderInternal('C:\wamp\www\tel...', Array, true)
+#17 C:\wamp\www\yii\framework\web\CController.php(869): CBaseController->renderFile('C:\wamp\www\tel...', Array, true)
+#18 C:\wamp\www\yii\framework\web\CController.php(782): CController->renderPartial('create', Array, true)
+#19 C:\wamp\www\telotengo\protected\controllers\EmpresasController.php(78): CController->render('create', Array)
+#20 C:\wamp\www\yii\framework\web\actions\CInlineAction.php(49): EmpresasController->actionCreate()
+#21 C:\wamp\www\yii\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#22 C:\wamp\www\yii\framework\web\filters\CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#23 C:\wamp\www\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#24 C:\wamp\www\yii\framework\web\CController.php(1145): CFilter->filter(Object(CFilterChain))
+#25 C:\wamp\www\yii\framework\web\filters\CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#26 C:\wamp\www\yii\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#27 C:\wamp\www\yii\framework\web\CController.php(291): CFilterChain->run()
+#28 C:\wamp\www\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#29 C:\wamp\www\yii\framework\web\CWebApplication.php(282): CController->run('create')
+#30 C:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('empresas/create')
+#31 C:\wamp\www\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#32 C:\wamp\www\telotengo\index.php(13): CApplication->run()
+#33 {main}
+REQUEST_URI=/telotengo/empresas/create
+---
+2013/11/15 16:49:03 [error] [exception.CException] exception 'CException' with message 'Property "Empresas.mail" is not defined.' in C:\wamp\www\yii\framework\base\CComponent.php:130
+Stack trace:
+#0 C:\wamp\www\yii\framework\db\ar\CActiveRecord.php(145): CComponent->__get('mail')
+#1 C:\wamp\www\yii\framework\web\helpers\CHtml.php(2529): CActiveRecord->__get('mail')
+#2 C:\wamp\www\yii\framework\web\helpers\CHtml.php(2252): CHtml::resolveValue(Object(Empresas), 'mail')
+#3 C:\wamp\www\yii\framework\web\helpers\CHtml.php(1434): CHtml::activeInputField('text', Object(Empresas), 'mail', Array)
+#4 C:\wamp\www\yii\framework\web\widgets\CActiveForm.php(725): CHtml::activeTextField(Object(Empresas), 'mail', Array)
+#5 C:\wamp\www\telotengo\protected\views\empresas\_form.php(12): CActiveForm->textField(Object(Empresas), 'mail', Array)
+#6 C:\wamp\www\yii\framework\web\CBaseController.php(126): require('C:\wamp\www\tel...')
+#7 C:\wamp\www\yii\framework\web\CBaseController.php(95): CBaseController->renderInternal('C:\wamp\www\tel...', Array, true)
+#8 C:\wamp\www\yii\framework\web\CController.php(869): CBaseController->renderFile('C:\wamp\www\tel...', Array, true)
+#9 C:\wamp\www\telotengo\protected\views\empresas\create.php(15): CController->renderPartial('_form', Array)
+#10 C:\wamp\www\yii\framework\web\CBaseController.php(126): require('C:\wamp\www\tel...')
+#11 C:\wamp\www\yii\framework\web\CBaseController.php(95): CBaseController->renderInternal('C:\wamp\www\tel...', Array, true)
+#12 C:\wamp\www\yii\framework\web\CController.php(869): CBaseController->renderFile('C:\wamp\www\tel...', Array, true)
+#13 C:\wamp\www\yii\framework\web\CController.php(782): CController->renderPartial('create', Array, true)
+#14 C:\wamp\www\telotengo\protected\controllers\EmpresasController.php(78): CController->render('create', Array)
+#15 C:\wamp\www\yii\framework\web\actions\CInlineAction.php(49): EmpresasController->actionCreate()
+#16 C:\wamp\www\yii\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#17 C:\wamp\www\yii\framework\web\filters\CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#18 C:\wamp\www\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#19 C:\wamp\www\yii\framework\web\CController.php(1145): CFilter->filter(Object(CFilterChain))
+#20 C:\wamp\www\yii\framework\web\filters\CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#21 C:\wamp\www\yii\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#22 C:\wamp\www\yii\framework\web\CController.php(291): CFilterChain->run()
+#23 C:\wamp\www\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#24 C:\wamp\www\yii\framework\web\CWebApplication.php(282): CController->run('create')
+#25 C:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('empresas/create')
+#26 C:\wamp\www\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#27 C:\wamp\www\telotengo\index.php(13): CApplication->run()
+#28 {main}
+REQUEST_URI=/telotengo/empresas/create
+---
+2013/11/15 16:49:41 [error] [exception.CException] exception 'CException' with message 'Property "Empresas.direccion" is not defined.' in C:\wamp\www\yii\framework\base\CComponent.php:130
+Stack trace:
+#0 C:\wamp\www\yii\framework\db\ar\CActiveRecord.php(145): CComponent->__get('direccion')
+#1 C:\wamp\www\yii\framework\web\helpers\CHtml.php(2529): CActiveRecord->__get('direccion')
+#2 C:\wamp\www\yii\framework\web\helpers\CHtml.php(2252): CHtml::resolveValue(Object(Empresas), 'direccion')
+#3 C:\wamp\www\yii\framework\web\helpers\CHtml.php(1434): CHtml::activeInputField('text', Object(Empresas), 'direccion', Array)
+#4 C:\wamp\www\yii\framework\web\widgets\CActiveForm.php(725): CHtml::activeTextField(Object(Empresas), 'direccion', Array)
+#5 C:\wamp\www\telotengo\protected\views\empresas\_form.php(16): CActiveForm->textField(Object(Empresas), 'direccion', Array)
+#6 C:\wamp\www\yii\framework\web\CBaseController.php(126): require('C:\wamp\www\tel...')
+#7 C:\wamp\www\yii\framework\web\CBaseController.php(95): CBaseController->renderInternal('C:\wamp\www\tel...', Array, true)
+#8 C:\wamp\www\yii\framework\web\CController.php(869): CBaseController->renderFile('C:\wamp\www\tel...', Array, true)
+#9 C:\wamp\www\telotengo\protected\views\empresas\create.php(15): CController->renderPartial('_form', Array)
+#10 C:\wamp\www\yii\framework\web\CBaseController.php(126): require('C:\wamp\www\tel...')
+#11 C:\wamp\www\yii\framework\web\CBaseController.php(95): CBaseController->renderInternal('C:\wamp\www\tel...', Array, true)
+#12 C:\wamp\www\yii\framework\web\CController.php(869): CBaseController->renderFile('C:\wamp\www\tel...', Array, true)
+#13 C:\wamp\www\yii\framework\web\CController.php(782): CController->renderPartial('create', Array, true)
+#14 C:\wamp\www\telotengo\protected\controllers\EmpresasController.php(78): CController->render('create', Array)
+#15 C:\wamp\www\yii\framework\web\actions\CInlineAction.php(49): EmpresasController->actionCreate()
+#16 C:\wamp\www\yii\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#17 C:\wamp\www\yii\framework\web\filters\CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#18 C:\wamp\www\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#19 C:\wamp\www\yii\framework\web\CController.php(1145): CFilter->filter(Object(CFilterChain))
+#20 C:\wamp\www\yii\framework\web\filters\CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#21 C:\wamp\www\yii\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#22 C:\wamp\www\yii\framework\web\CController.php(291): CFilterChain->run()
+#23 C:\wamp\www\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#24 C:\wamp\www\yii\framework\web\CWebApplication.php(282): CController->run('create')
+#25 C:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('empresas/create')
+#26 C:\wamp\www\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#27 C:\wamp\www\telotengo\index.php(13): CApplication->run()
+#28 {main}
+REQUEST_URI=/telotengo/empresas/create
+---
+2013/11/15 16:49:47 [error] [exception.CException] exception 'CException' with message 'Empresas has an invalid validation rule. The rule must specify attributes to be validated and the validator name.' in C:\wamp\www\yii\framework\base\CModel.php:289
+Stack trace:
+#0 C:\wamp\www\yii\framework\base\CModel.php(260): CModel->createValidators()
+#1 C:\wamp\www\yii\framework\web\helpers\CHtml.php(2236): CModel->getValidators('estado')
+#2 C:\wamp\www\yii\framework\web\helpers\CHtml.php(1434): CHtml::activeInputField('text', Object(Empresas), 'estado', Array)
+#3 C:\wamp\www\yii\framework\web\widgets\CActiveForm.php(725): CHtml::activeTextField(Object(Empresas), 'estado', Array)
+#4 C:\wamp\www\telotengo\protected\views\empresas\_form.php(16): CActiveForm->textField(Object(Empresas), 'estado', Array)
+#5 C:\wamp\www\yii\framework\web\CBaseController.php(126): require('C:\wamp\www\tel...')
+#6 C:\wamp\www\yii\framework\web\CBaseController.php(95): CBaseController->renderInternal('C:\wamp\www\tel...', Array, true)
+#7 C:\wamp\www\yii\framework\web\CController.php(869): CBaseController->renderFile('C:\wamp\www\tel...', Array, true)
+#8 C:\wamp\www\telotengo\protected\views\empresas\create.php(15): CController->renderPartial('_form', Array)
+#9 C:\wamp\www\yii\framework\web\CBaseController.php(126): require('C:\wamp\www\tel...')
+#10 C:\wamp\www\yii\framework\web\CBaseController.php(95): CBaseController->renderInternal('C:\wamp\www\tel...', Array, true)
+#11 C:\wamp\www\yii\framework\web\CController.php(869): CBaseController->renderFile('C:\wamp\www\tel...', Array, true)
+#12 C:\wamp\www\yii\framework\web\CController.php(782): CController->renderPartial('create', Array, true)
+#13 C:\wamp\www\telotengo\protected\controllers\EmpresasController.php(78): CController->render('create', Array)
+#14 C:\wamp\www\yii\framework\web\actions\CInlineAction.php(49): EmpresasController->actionCreate()
+#15 C:\wamp\www\yii\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#16 C:\wamp\www\yii\framework\web\filters\CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#17 C:\wamp\www\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#18 C:\wamp\www\yii\framework\web\CController.php(1145): CFilter->filter(Object(CFilterChain))
+#19 C:\wamp\www\yii\framework\web\filters\CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#20 C:\wamp\www\yii\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#21 C:\wamp\www\yii\framework\web\CController.php(291): CFilterChain->run()
+#22 C:\wamp\www\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#23 C:\wamp\www\yii\framework\web\CWebApplication.php(282): CController->run('create')
+#24 C:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('empresas/create')
+#25 C:\wamp\www\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#26 C:\wamp\www\telotengo\index.php(13): CApplication->run()
+#27 {main}
+REQUEST_URI=/telotengo/empresas/create
+---
+2013/11/15 16:50:07 [error] [exception.CException] exception 'CException' with message 'Empresas has an invalid validation rule. The rule must specify attributes to be validated and the validator name.' in C:\wamp\www\yii\framework\base\CModel.php:289
+Stack trace:
+#0 C:\wamp\www\yii\framework\base\CModel.php(260): CModel->createValidators()
+#1 C:\wamp\www\yii\framework\web\helpers\CHtml.php(2236): CModel->getValidators('destacado')
+#2 C:\wamp\www\yii\framework\web\helpers\CHtml.php(1434): CHtml::activeInputField('text', Object(Empresas), 'destacado', Array)
+#3 C:\wamp\www\yii\framework\web\widgets\CActiveForm.php(725): CHtml::activeTextField(Object(Empresas), 'destacado', Array)
+#4 C:\wamp\www\telotengo\protected\views\empresas\_form.php(16): CActiveForm->textField(Object(Empresas), 'destacado', Array)
+#5 C:\wamp\www\yii\framework\web\CBaseController.php(126): require('C:\wamp\www\tel...')
+#6 C:\wamp\www\yii\framework\web\CBaseController.php(95): CBaseController->renderInternal('C:\wamp\www\tel...', Array, true)
+#7 C:\wamp\www\yii\framework\web\CController.php(869): CBaseController->renderFile('C:\wamp\www\tel...', Array, true)
+#8 C:\wamp\www\telotengo\protected\views\empresas\create.php(15): CController->renderPartial('_form', Array)
+#9 C:\wamp\www\yii\framework\web\CBaseController.php(126): require('C:\wamp\www\tel...')
+#10 C:\wamp\www\yii\framework\web\CBaseController.php(95): CBaseController->renderInternal('C:\wamp\www\tel...', Array, true)
+#11 C:\wamp\www\yii\framework\web\CController.php(869): CBaseController->renderFile('C:\wamp\www\tel...', Array, true)
+#12 C:\wamp\www\yii\framework\web\CController.php(782): CController->renderPartial('create', Array, true)
+#13 C:\wamp\www\telotengo\protected\controllers\EmpresasController.php(78): CController->render('create', Array)
+#14 C:\wamp\www\yii\framework\web\actions\CInlineAction.php(49): EmpresasController->actionCreate()
+#15 C:\wamp\www\yii\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#16 C:\wamp\www\yii\framework\web\filters\CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#17 C:\wamp\www\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#18 C:\wamp\www\yii\framework\web\CController.php(1145): CFilter->filter(Object(CFilterChain))
+#19 C:\wamp\www\yii\framework\web\filters\CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#20 C:\wamp\www\yii\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#21 C:\wamp\www\yii\framework\web\CController.php(291): CFilterChain->run()
+#22 C:\wamp\www\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#23 C:\wamp\www\yii\framework\web\CWebApplication.php(282): CController->run('create')
+#24 C:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('empresas/create')
+#25 C:\wamp\www\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#26 C:\wamp\www\telotengo\index.php(13): CApplication->run()
+#27 {main}
+REQUEST_URI=/telotengo/empresas/create
+---
+2013/11/15 16:54:03 [error] [exception.CException] exception 'CException' with message 'Empresas has an invalid validation rule. The rule must specify attributes to be validated and the validator name.' in C:\wamp\www\yii\framework\base\CModel.php:289
+Stack trace:
+#0 C:\wamp\www\yii\framework\base\CModel.php(260): CModel->createValidators()
+#1 C:\wamp\www\yii\framework\base\CModel.php(304): CModel->getValidators('nombre')
+#2 C:\wamp\www\yii\framework\web\helpers\CHtml.php(1414): CModel->isAttributeRequired('nombre')
+#3 C:\wamp\www\yii\framework\web\widgets\CActiveForm.php(597): CHtml::activeLabelEx(Object(Empresas), 'nombre', Array)
+#4 C:\wamp\www\telotengo\protected\extensions\bootstrap\widgets\input\TbInput.php(253): CActiveForm->labelEx(Object(Empresas), 'nombre', Array)
+#5 C:\wamp\www\telotengo\protected\extensions\bootstrap\widgets\input\TbInputVertical.php(140): TbInput->getLabel()
+#6 C:\wamp\www\telotengo\protected\extensions\bootstrap\widgets\input\TbInput.php(230): TbInputVertical->textField()
+#7 C:\wamp\www\yii\framework\web\CBaseController.php(173): TbInput->run()
+#8 C:\wamp\www\telotengo\protected\extensions\bootstrap\widgets\TbActiveForm.php(497): CBaseController->widget('bootstrap.widge...', Array)
+#9 C:\wamp\www\telotengo\protected\extensions\bootstrap\widgets\TbActiveForm.php(186): TbActiveForm->inputRow('text', Object(Empresas), 'nombre', NULL, Array)
+#10 C:\wamp\www\telotengo\protected\views\empresas\_form.php(10): TbActiveForm->textFieldRow(Object(Empresas), 'nombre', Array)
+#11 C:\wamp\www\yii\framework\web\CBaseController.php(126): require('C:\wamp\www\tel...')
+#12 C:\wamp\www\yii\framework\web\CBaseController.php(95): CBaseController->renderInternal('C:\wamp\www\tel...', Array, true)
+#13 C:\wamp\www\yii\framework\web\CController.php(869): CBaseController->renderFile('C:\wamp\www\tel...', Array, true)
+#14 C:\wamp\www\telotengo\protected\views\empresas\create.php(15): CController->renderPartial('_form', Array)
+#15 C:\wamp\www\yii\framework\web\CBaseController.php(126): require('C:\wamp\www\tel...')
+#16 C:\wamp\www\yii\framework\web\CBaseController.php(95): CBaseController->renderInternal('C:\wamp\www\tel...', Array, true)
+#17 C:\wamp\www\yii\framework\web\CController.php(869): CBaseController->renderFile('C:\wamp\www\tel...', Array, true)
+#18 C:\wamp\www\yii\framework\web\CController.php(782): CController->renderPartial('create', Array, true)
+#19 C:\wamp\www\telotengo\protected\controllers\EmpresasController.php(78): CController->render('create', Array)
+#20 C:\wamp\www\yii\framework\web\actions\CInlineAction.php(49): EmpresasController->actionCreate()
+#21 C:\wamp\www\yii\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#22 C:\wamp\www\yii\framework\web\filters\CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#23 C:\wamp\www\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#24 C:\wamp\www\yii\framework\web\CController.php(1145): CFilter->filter(Object(CFilterChain))
+#25 C:\wamp\www\yii\framework\web\filters\CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#26 C:\wamp\www\yii\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#27 C:\wamp\www\yii\framework\web\CController.php(291): CFilterChain->run()
+#28 C:\wamp\www\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#29 C:\wamp\www\yii\framework\web\CWebApplication.php(282): CController->run('create')
+#30 C:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('empresas/create')
+#31 C:\wamp\www\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#32 C:\wamp\www\telotengo\index.php(13): CApplication->run()
+#33 {main}
+REQUEST_URI=/telotengo/empresas/create
+---
+2013/11/18 15:40:31 [error] [exception.CException] exception 'CException' with message 'UActiveForm and its behaviors do not have a method or closure named "activeEmailField".' in C:\wamp\www\yii\framework\base\CComponent.php:266
+Stack trace:
+#0 C:\wamp\www\telotengo\protected\modules\user\views\user\registration.php(37): CComponent->__call('activeEmailFiel...', Array)
+#1 C:\wamp\www\telotengo\protected\modules\user\views\user\registration.php(37): UActiveForm->activeEmailField(Object(RegistrationForm), 'email', Array)
+#2 C:\wamp\www\yii\framework\web\CBaseController.php(126): require('C:\wamp\www\tel...')
+#3 C:\wamp\www\yii\framework\web\CBaseController.php(95): CBaseController->renderInternal('C:\wamp\www\tel...', Array, true)
+#4 C:\wamp\www\yii\framework\web\CController.php(869): CBaseController->renderFile('C:\wamp\www\tel...', Array, true)
+#5 C:\wamp\www\yii\framework\web\CController.php(782): CController->renderPartial('/user/registrat...', Array, true)
+#6 C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php(77): CController->render('/user/registrat...', Array)
+#7 C:\wamp\www\yii\framework\web\actions\CInlineAction.php(49): RegistrationController->actionRegistration()
+#8 C:\wamp\www\yii\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#9 C:\wamp\www\yii\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#10 C:\wamp\www\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#11 C:\wamp\www\yii\framework\web\CWebApplication.php(282): CController->run('')
+#12 C:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('user/registrati...')
+#13 C:\wamp\www\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#14 C:\wamp\www\telotengo\index.php(13): CApplication->run()
+#15 {main}
+REQUEST_URI=/telotengo/user/registration
+HTTP_REFERER=http://localhost/telotengo/user/login
+---
+2013/11/18 15:41:10 [warning] [application] Failed to set unsafe attribute "verifyCode" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 15:41:13 [warning] [application] Failed to set unsafe attribute "verifyCode" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 15:41:15 [warning] [application] Failed to set unsafe attribute "verifyCode" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 15:57:11 [warning] [application] Failed to set unsafe attribute "verifyCode" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 16:00:33 [warning] [application] Failed to set unsafe attribute "verifyCode" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 16:50:39 [error] [exception.CException] exception 'CException' with message 'Property "Profile.cedula" is not defined.' in C:\wamp\www\yii\framework\base\CComponent.php:130
+Stack trace:
+#0 C:\wamp\www\yii\framework\db\ar\CActiveRecord.php(145): CComponent->__get('cedula')
+#1 C:\wamp\www\yii\framework\web\helpers\CHtml.php(2529): CActiveRecord->__get('cedula')
+#2 C:\wamp\www\yii\framework\web\helpers\CHtml.php(2252): CHtml::resolveValue(Object(Profile), 'cedula')
+#3 C:\wamp\www\yii\framework\web\helpers\CHtml.php(1434): CHtml::activeInputField('text', Object(Profile), 'cedula', Array)
+#4 C:\wamp\www\yii\framework\web\widgets\CActiveForm.php(725): CHtml::activeTextField(Object(Profile), 'cedula', Array)
+#5 C:\wamp\www\telotengo\protected\modules\user\views\user\registration.php(64): CActiveForm->textField(Object(Profile), 'cedula', Array)
+#6 C:\wamp\www\yii\framework\web\CBaseController.php(126): require('C:\wamp\www\tel...')
+#7 C:\wamp\www\yii\framework\web\CBaseController.php(95): CBaseController->renderInternal('C:\wamp\www\tel...', Array, true)
+#8 C:\wamp\www\yii\framework\web\CController.php(869): CBaseController->renderFile('C:\wamp\www\tel...', Array, true)
+#9 C:\wamp\www\yii\framework\web\CController.php(782): CController->renderPartial('/user/registrat...', Array, true)
+#10 C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php(77): CController->render('/user/registrat...', Array)
+#11 C:\wamp\www\yii\framework\web\actions\CInlineAction.php(49): RegistrationController->actionRegistration()
+#12 C:\wamp\www\yii\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#13 C:\wamp\www\yii\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#14 C:\wamp\www\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#15 C:\wamp\www\yii\framework\web\CWebApplication.php(282): CController->run('')
+#16 C:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('user/registrati...')
+#17 C:\wamp\www\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#18 C:\wamp\www\telotengo\index.php(13): CApplication->run()
+#19 {main}
+REQUEST_URI=/telotengo/user/registration
+HTTP_REFERER=http://localhost/telotengo/user/login
+---
+2013/11/18 16:53:46 [error] [exception.CException] exception 'CException' with message 'Property "Profile.telefono" is not defined.' in C:\wamp\www\yii\framework\base\CComponent.php:130
+Stack trace:
+#0 C:\wamp\www\yii\framework\db\ar\CActiveRecord.php(145): CComponent->__get('telefono')
+#1 C:\wamp\www\yii\framework\web\helpers\CHtml.php(2529): CActiveRecord->__get('telefono')
+#2 C:\wamp\www\yii\framework\web\helpers\CHtml.php(2252): CHtml::resolveValue(Object(Profile), 'telefono')
+#3 C:\wamp\www\yii\framework\web\helpers\CHtml.php(1434): CHtml::activeInputField('text', Object(Profile), 'telefono', Array)
+#4 C:\wamp\www\yii\framework\web\widgets\CActiveForm.php(725): CHtml::activeTextField(Object(Profile), 'telefono', Array)
+#5 C:\wamp\www\telotengo\protected\modules\user\views\user\registration.php(64): CActiveForm->textField(Object(Profile), 'telefono', Array)
+#6 C:\wamp\www\yii\framework\web\CBaseController.php(126): require('C:\wamp\www\tel...')
+#7 C:\wamp\www\yii\framework\web\CBaseController.php(95): CBaseController->renderInternal('C:\wamp\www\tel...', Array, true)
+#8 C:\wamp\www\yii\framework\web\CController.php(869): CBaseController->renderFile('C:\wamp\www\tel...', Array, true)
+#9 C:\wamp\www\yii\framework\web\CController.php(782): CController->renderPartial('/user/registrat...', Array, true)
+#10 C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php(77): CController->render('/user/registrat...', Array)
+#11 C:\wamp\www\yii\framework\web\actions\CInlineAction.php(49): RegistrationController->actionRegistration()
+#12 C:\wamp\www\yii\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#13 C:\wamp\www\yii\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#14 C:\wamp\www\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#15 C:\wamp\www\yii\framework\web\CWebApplication.php(282): CController->run('')
+#16 C:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('user/registrati...')
+#17 C:\wamp\www\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#18 C:\wamp\www\telotengo\index.php(13): CApplication->run()
+#19 {main}
+REQUEST_URI=/telotengo/user/registration
+HTTP_REFERER=http://localhost/telotengo/user/login
+---
+2013/11/18 16:56:07 [error] [exception.CException] exception 'CException' with message 'Property "Profile.fecha_nacimiento" is not defined.' in C:\wamp\www\yii\framework\base\CComponent.php:130
+Stack trace:
+#0 C:\wamp\www\yii\framework\db\ar\CActiveRecord.php(145): CComponent->__get('fecha_nacimient...')
+#1 C:\wamp\www\yii\framework\web\helpers\CHtml.php(2529): CActiveRecord->__get('fecha_nacimient...')
+#2 C:\wamp\www\yii\framework\web\helpers\CHtml.php(2252): CHtml::resolveValue(Object(Profile), 'fecha_nacimient...')
+#3 C:\wamp\www\yii\framework\web\helpers\CHtml.php(1434): CHtml::activeInputField('text', Object(Profile), 'fecha_nacimient...', Array)
+#4 C:\wamp\www\yii\framework\web\widgets\CActiveForm.php(725): CHtml::activeTextField(Object(Profile), 'fecha_nacimient...', Array)
+#5 C:\wamp\www\telotengo\protected\modules\user\views\user\registration.php(64): CActiveForm->textField(Object(Profile), 'fecha_nacimient...', Array)
+#6 C:\wamp\www\yii\framework\web\CBaseController.php(126): require('C:\wamp\www\tel...')
+#7 C:\wamp\www\yii\framework\web\CBaseController.php(95): CBaseController->renderInternal('C:\wamp\www\tel...', Array, true)
+#8 C:\wamp\www\yii\framework\web\CController.php(869): CBaseController->renderFile('C:\wamp\www\tel...', Array, true)
+#9 C:\wamp\www\yii\framework\web\CController.php(782): CController->renderPartial('/user/registrat...', Array, true)
+#10 C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php(77): CController->render('/user/registrat...', Array)
+#11 C:\wamp\www\yii\framework\web\actions\CInlineAction.php(49): RegistrationController->actionRegistration()
+#12 C:\wamp\www\yii\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#13 C:\wamp\www\yii\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#14 C:\wamp\www\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#15 C:\wamp\www\yii\framework\web\CWebApplication.php(282): CController->run('')
+#16 C:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('user/registrati...')
+#17 C:\wamp\www\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#18 C:\wamp\www\telotengo\index.php(13): CApplication->run()
+#19 {main}
+REQUEST_URI=/telotengo/user/registration
+HTTP_REFERER=http://localhost/telotengo/user/login
+---
+2013/11/18 16:57:25 [warning] [application] Failed to set unsafe attribute "verifyCode" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 19:59:10 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 19:59:10 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 19:59:11 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 19:59:11 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:02:00 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:02:00 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:02:32 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:02:32 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:02:36 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:02:36 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:02:45 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:02:45 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:02:50 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:02:50 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:02:55 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:02:55 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:03:02 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:03:02 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:03:15 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:03:15 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:03:15 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:03:15 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:03:19 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:03:19 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:03:19 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:03:19 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:03:27 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:03:27 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:03:28 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (38)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:03:28 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (38)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:04:17 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:04:17 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:04:19 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:04:19 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:04:21 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:04:21 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:04:22 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:04:22 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:04:23 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:04:23 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:04:24 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:04:24 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:04:25 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:04:25 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:04:26 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:04:26 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:04:26 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:04:26 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:04:27 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:04:27 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:04:31 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:04:31 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:04:31 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (38)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:04:31 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (38)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:05:00 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:05:00 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:05:01 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:05:01 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:05:02 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:05:02 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:05:04 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:05:04 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:05:05 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:05:05 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:05:06 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:05:06 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:05:07 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:05:07 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:05:08 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:05:08 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:05:09 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:05:09 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:05:10 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:05:10 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:05:12 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:05:12 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:05:13 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (38)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:05:13 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (38)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 20:05:14 [error] [php] mail(): Failed to connect to mailserver at &quot;localhost&quot; port 25, verify your &quot;SMTP&quot; and &quot;smtp_port&quot; setting in php.ini or use ini_set() (C:\wamp\www\telotengo\protected\modules\user\UserModule.php:226)
+Stack trace:
+#0 C:\wamp\www\yii\framework\web\actions\CInlineAction.php(49): RegistrationController->actionRegistration()
+#1 C:\wamp\www\yii\framework\web\CController.php(308): CInlineAction->runWithParams()
+#2 C:\wamp\www\yii\framework\web\CController.php(286): RegistrationController->runAction()
+#3 C:\wamp\www\yii\framework\web\CController.php(265): RegistrationController->runActionWithFilters()
+#4 C:\wamp\www\yii\framework\web\CWebApplication.php(282): RegistrationController->run()
+#5 C:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#6 C:\wamp\www\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#7 C:\wamp\www\telotengo\index.php(13): CWebApplication->run()
+REQUEST_URI=/telotengo/user/registration
+in C:\wamp\www\telotengo\protected\modules\user\UserModule.php (226)
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (54)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 21:59:16 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 21:59:16 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 21:59:19 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 21:59:19 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 21:59:20 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 21:59:20 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 21:59:21 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 21:59:21 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 21:59:22 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 21:59:22 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 21:59:23 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 21:59:23 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 21:59:24 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 21:59:24 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 21:59:25 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 21:59:25 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 21:59:25 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 21:59:25 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 21:59:27 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 21:59:27 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 21:59:28 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 21:59:28 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 21:59:28 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (38)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 21:59:28 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (38)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 21:59:30 [error] [php] mail(): Failed to connect to mailserver at &quot;localhost&quot; port 25, verify your &quot;SMTP&quot; and &quot;smtp_port&quot; setting in php.ini or use ini_set() (C:\wamp\www\telotengo\protected\modules\user\UserModule.php:226)
+Stack trace:
+#0 C:\wamp\www\yii\framework\web\actions\CInlineAction.php(49): RegistrationController->actionRegistration()
+#1 C:\wamp\www\yii\framework\web\CController.php(308): CInlineAction->runWithParams()
+#2 C:\wamp\www\yii\framework\web\CController.php(286): RegistrationController->runAction()
+#3 C:\wamp\www\yii\framework\web\CController.php(265): RegistrationController->runActionWithFilters()
+#4 C:\wamp\www\yii\framework\web\CWebApplication.php(282): RegistrationController->run()
+#5 C:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#6 C:\wamp\www\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#7 C:\wamp\www\telotengo\index.php(13): CWebApplication->run()
+REQUEST_URI=/telotengo/user/registration
+in C:\wamp\www\telotengo\protected\modules\user\UserModule.php (226)
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (54)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:00:54 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:00:54 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:00:56 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:00:56 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:00:58 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:00:58 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:00:59 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:00:59 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:01:00 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:01:00 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:01:02 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:01:02 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:01:03 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:01:03 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:01:03 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:01:03 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:01:04 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:01:04 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:01:04 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:01:04 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:01:05 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:01:05 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:01:05 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (38)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:01:05 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (38)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:04:35 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:04:35 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:04:37 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:04:37 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:04:39 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:04:39 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:04:40 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:04:40 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:04:40 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:04:40 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:04:42 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:04:42 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:04:43 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:04:43 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:04:44 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:04:44 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:04:44 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:04:44 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:04:46 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:04:46 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:05:19 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:05:19 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:05:20 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (38)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:05:20 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (38)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:08:50 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:08:50 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:08:52 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:08:52 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:08:53 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:08:53 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:08:54 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:08:54 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:08:55 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:08:55 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:08:55 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:08:55 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:08:56 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:08:56 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:08:58 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:08:58 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:09:00 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:09:00 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:09:01 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:09:01 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:09:01 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (38)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:09:01 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (38)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:17:37 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:17:37 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:17:39 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:17:39 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:17:40 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:17:40 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:17:41 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:17:41 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:17:42 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:17:42 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:17:43 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:17:43 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:17:44 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:17:44 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:17:45 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:17:45 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:17:45 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:17:45 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:17:46 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:17:46 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:17:46 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:17:46 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:17:47 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (38)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/18 22:17:47 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (38)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/19 15:32:56 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/19 15:32:56 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/19 15:32:58 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/19 15:32:58 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/19 15:32:59 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/19 15:32:59 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/19 15:33:00 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/19 15:33:00 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/19 15:33:01 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/19 15:33:01 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/19 15:33:02 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/19 15:33:02 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/19 15:33:03 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/19 15:33:03 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/19 15:33:04 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/19 15:33:04 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/19 15:33:05 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/19 15:33:05 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/19 15:33:06 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/19 15:33:06 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/19 15:33:07 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (38)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/19 15:33:07 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (38)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/19 15:33:49 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/19 15:33:49 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/19 15:33:49 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (38)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/19 15:33:49 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (38)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/19 15:33:50 [error] [php] preg_match(): Compilation failed: range out of order in character class at offset 14 (C:\wamp\www\yii\framework\validators\CRegularExpressionValidator.php:53)
+Stack trace:
+#0 C:\wamp\www\yii\framework\base\CModel.php(159): CRegularExpressionValidator->validate()
+#1 C:\wamp\www\yii\framework\db\ar\CActiveRecord.php(805): RegistrationForm->validate()
+#2 C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php(50): RegistrationForm->save()
+#3 C:\wamp\www\yii\framework\web\actions\CInlineAction.php(49): RegistrationController->actionRegistration()
+#4 C:\wamp\www\yii\framework\web\CController.php(308): CInlineAction->runWithParams()
+#5 C:\wamp\www\yii\framework\web\CController.php(286): RegistrationController->runAction()
+#6 C:\wamp\www\yii\framework\web\CController.php(265): RegistrationController->runActionWithFilters()
+#7 C:\wamp\www\yii\framework\web\CWebApplication.php(282): RegistrationController->run()
+#8 C:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#9 C:\wamp\www\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#10 C:\wamp\www\telotengo\index.php(13): CWebApplication->run()
+REQUEST_URI=/telotengo/user/registration
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (50)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/19 15:34:15 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/19 15:34:15 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/19 15:34:17 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/19 15:34:17 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/19 15:34:18 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/19 15:34:18 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/19 15:34:20 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/19 15:34:20 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/19 15:34:21 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/19 15:34:21 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/19 15:34:22 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/19 15:34:22 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/19 15:34:24 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/19 15:34:24 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/19 15:34:25 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/19 15:34:25 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/19 15:34:25 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/19 15:34:25 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/19 15:34:26 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/19 15:34:26 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (30)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/19 15:34:26 [warning] [application] Failed to set unsafe attribute "type" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (38)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/19 15:34:26 [warning] [application] Failed to set unsafe attribute "newsletter" of "RegistrationForm".
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (38)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/19 16:39:41 [error] [php] Invalid argument supplied for foreach() (C:\wamp\www\yii\framework\web\helpers\CHtml.php:1162)
+Stack trace:
+#0 C:\wamp\www\telotengo\protected\modules\user\views\user\registration.php(60): UActiveForm->radioButtonList()
+#1 C:\wamp\www\yii\framework\web\CBaseController.php(126): require()
+#2 C:\wamp\www\yii\framework\web\CBaseController.php(95): RegistrationController->renderInternal()
+#3 C:\wamp\www\yii\framework\web\CController.php(869): RegistrationController->renderFile()
+#4 C:\wamp\www\yii\framework\web\CController.php(782): RegistrationController->renderPartial()
+#5 C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php(78): RegistrationController->render()
+#6 C:\wamp\www\yii\framework\web\actions\CInlineAction.php(49): RegistrationController->actionRegistration()
+#7 C:\wamp\www\yii\framework\web\CController.php(308): CInlineAction->runWithParams()
+#8 C:\wamp\www\yii\framework\web\CController.php(286): RegistrationController->runAction()
+#9 C:\wamp\www\yii\framework\web\CController.php(265): RegistrationController->runActionWithFilters()
+#10 C:\wamp\www\yii\framework\web\CWebApplication.php(282): RegistrationController->run()
+#11 C:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#12 C:\wamp\www\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#13 C:\wamp\www\telotengo\index.php(13): CWebApplication->run()
+REQUEST_URI=/telotengo/user/registration
+in C:\wamp\www\telotengo\protected\modules\user\views\user\registration.php (60)
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (78)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/19 16:42:17 [error] [php] Invalid argument supplied for foreach() (C:\wamp\www\yii\framework\web\helpers\CHtml.php:1162)
+Stack trace:
+#0 C:\wamp\www\telotengo\protected\modules\user\views\user\registration.php(60): UActiveForm->radioButtonList()
+#1 C:\wamp\www\yii\framework\web\CBaseController.php(126): require()
+#2 C:\wamp\www\yii\framework\web\CBaseController.php(95): RegistrationController->renderInternal()
+#3 C:\wamp\www\yii\framework\web\CController.php(869): RegistrationController->renderFile()
+#4 C:\wamp\www\yii\framework\web\CController.php(782): RegistrationController->renderPartial()
+#5 C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php(78): RegistrationController->render()
+#6 C:\wamp\www\yii\framework\web\actions\CInlineAction.php(49): RegistrationController->actionRegistration()
+#7 C:\wamp\www\yii\framework\web\CController.php(308): CInlineAction->runWithParams()
+#8 C:\wamp\www\yii\framework\web\CController.php(286): RegistrationController->runAction()
+#9 C:\wamp\www\yii\framework\web\CController.php(265): RegistrationController->runActionWithFilters()
+#10 C:\wamp\www\yii\framework\web\CWebApplication.php(282): RegistrationController->run()
+#11 C:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#12 C:\wamp\www\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#13 C:\wamp\www\telotengo\index.php(13): CWebApplication->run()
+REQUEST_URI=/telotengo/user/registration
+in C:\wamp\www\telotengo\protected\modules\user\views\user\registration.php (60)
+in C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php (78)
+in C:\wamp\www\telotengo\index.php (13)
+2013/11/19 18:50:22 [error] [exception.CException] exception 'CException' with message 'Property "CJuiDatePicker.dateFormat" is not defined.' in C:\wamp\www\yii\framework\base\CComponent.php:173
+Stack trace:
+#0 C:\wamp\www\yii\framework\web\CWidgetFactory.php(161): CComponent->__set('dateFormat', 'yyyy-mm-dd')
+#1 C:\wamp\www\yii\framework\web\CBaseController.php(146): CWidgetFactory->createWidget(Object(RegistrationController), 'zii.widgets.jui...', Array)
+#2 C:\wamp\www\yii\framework\web\CBaseController.php(172): CBaseController->createWidget('zii.widgets.jui...', Array)
+#3 C:\wamp\www\telotengo\protected\modules\user\views\user\registration.php(78): CBaseController->widget('zii.widgets.jui...', Array)
+#4 C:\wamp\www\yii\framework\web\CBaseController.php(126): require('C:\wamp\www\tel...')
+#5 C:\wamp\www\yii\framework\web\CBaseController.php(95): CBaseController->renderInternal('C:\wamp\www\tel...', Array, true)
+#6 C:\wamp\www\yii\framework\web\CController.php(869): CBaseController->renderFile('C:\wamp\www\tel...', Array, true)
+#7 C:\wamp\www\yii\framework\web\CController.php(782): CController->renderPartial('/user/registrat...', Array, true)
+#8 C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php(78): CController->render('/user/registrat...', Array)
+#9 C:\wamp\www\yii\framework\web\actions\CInlineAction.php(49): RegistrationController->actionRegistration()
+#10 C:\wamp\www\yii\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#11 C:\wamp\www\yii\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#12 C:\wamp\www\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#13 C:\wamp\www\yii\framework\web\CWebApplication.php(282): CController->run('')
+#14 C:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('user/registrati...')
+#15 C:\wamp\www\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#16 C:\wamp\www\telotengo\index.php(13): CApplication->run()
+#17 {main}
+REQUEST_URI=/telotengo/user/registration
+HTTP_REFERER=http://localhost/telotengo/
+---
+2013/11/19 18:51:19 [error] [exception.CException] exception 'CException' with message 'Property "CJuiDatePicker.altFormat" is not defined.' in C:\wamp\www\yii\framework\base\CComponent.php:173
+Stack trace:
+#0 C:\wamp\www\yii\framework\web\CWidgetFactory.php(161): CComponent->__set('altFormat', 'yyyy-mm-dd')
+#1 C:\wamp\www\yii\framework\web\CBaseController.php(146): CWidgetFactory->createWidget(Object(RegistrationController), 'zii.widgets.jui...', Array)
+#2 C:\wamp\www\yii\framework\web\CBaseController.php(172): CBaseController->createWidget('zii.widgets.jui...', Array)
+#3 C:\wamp\www\telotengo\protected\modules\user\views\user\registration.php(78): CBaseController->widget('zii.widgets.jui...', Array)
+#4 C:\wamp\www\yii\framework\web\CBaseController.php(126): require('C:\wamp\www\tel...')
+#5 C:\wamp\www\yii\framework\web\CBaseController.php(95): CBaseController->renderInternal('C:\wamp\www\tel...', Array, true)
+#6 C:\wamp\www\yii\framework\web\CController.php(869): CBaseController->renderFile('C:\wamp\www\tel...', Array, true)
+#7 C:\wamp\www\yii\framework\web\CController.php(782): CController->renderPartial('/user/registrat...', Array, true)
+#8 C:\wamp\www\telotengo\protected\modules\user\controllers\RegistrationController.php(78): CController->render('/user/registrat...', Array)
+#9 C:\wamp\www\yii\framework\web\actions\CInlineAction.php(49): RegistrationController->actionRegistration()
+#10 C:\wamp\www\yii\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#11 C:\wamp\www\yii\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#12 C:\wamp\www\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#13 C:\wamp\www\yii\framework\web\CWebApplication.php(282): CController->run('')
+#14 C:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('user/registrati...')
+#15 C:\wamp\www\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#16 C:\wamp\www\telotengo\index.php(13): CApplication->run()
+#17 {main}
+REQUEST_URI=/telotengo/user/registration
+HTTP_REFERER=http://localhost/telotengo/
+---
+2013/11/20 15:47:48 [error] [exception.CDbException] exception 'CDbException' with message 'CDbConnection failed to open the DB connection: SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password: NO)' in C:\xampp\htdocs\yii\framework\db\CDbConnection.php:381
+Stack trace:
+#0 C:\xampp\htdocs\yii\framework\db\CDbConnection.php(330): CDbConnection->open()
+#1 C:\xampp\htdocs\yii\framework\db\CDbConnection.php(308): CDbConnection->setActive(true)
+#2 C:\xampp\htdocs\yii\framework\base\CModule.php(387): CDbConnection->init()
+#3 C:\xampp\htdocs\yii\framework\base\CApplication.php(438): CModule->getComponent('db')
+#4 C:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(623): CApplication->getDb()
+#5 C:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(2309): CActiveRecord->getDbConnection()
+#6 C:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(387): CActiveRecordMetaData->__construct(Object(RegistrationForm))
+#7 C:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(402): CActiveRecord::model('RegistrationFor...')
+#8 C:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(77): CActiveRecord->getMetaData()
+#9 C:\xampp\htdocs\telotengo\protected\modules\user\controllers\RegistrationController.php(23): CActiveRecord->__construct()
+#10 C:\xampp\htdocs\yii\framework\web\actions\CInlineAction.php(49): RegistrationController->actionRegistration()
+#11 C:\xampp\htdocs\yii\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#12 C:\xampp\htdocs\yii\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#13 C:\xampp\htdocs\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#14 C:\xampp\htdocs\yii\framework\web\CWebApplication.php(282): CController->run('')
+#15 C:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('user/registrati...')
+#16 C:\xampp\htdocs\yii\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#17 C:\xampp\htdocs\telotengo\index.php(13): CApplication->run()
+#18 {main}
+REQUEST_URI=/telotengo/user/registration
+HTTP_REFERER=http://localhost/telotengo/
+---
+2013/11/20 15:47:59 [error] [exception.CDbException] exception 'CDbException' with message 'CDbConnection failed to open the DB connection: SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password: NO)' in C:\xampp\htdocs\yii\framework\db\CDbConnection.php:381
+Stack trace:
+#0 C:\xampp\htdocs\yii\framework\db\CDbConnection.php(330): CDbConnection->open()
+#1 C:\xampp\htdocs\yii\framework\db\CDbConnection.php(308): CDbConnection->setActive(true)
+#2 C:\xampp\htdocs\yii\framework\base\CModule.php(387): CDbConnection->init()
+#3 C:\xampp\htdocs\yii\framework\base\CApplication.php(438): CModule->getComponent('db')
+#4 C:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(623): CApplication->getDb()
+#5 C:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(2309): CActiveRecord->getDbConnection()
+#6 C:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(387): CActiveRecordMetaData->__construct(Object(User))
+#7 C:\xampp\htdocs\telotengo\protected\modules\user\models\User.php(40): CActiveRecord::model('User')
+#8 C:\xampp\htdocs\telotengo\protected\modules\user\components\UserIdentity.php(27): User::model()
+#9 C:\xampp\htdocs\telotengo\protected\modules\user\models\UserLogin.php(52): UserIdentity->authenticate()
+#10 C:\xampp\htdocs\yii\framework\validators\CInlineValidator.php(42): UserLogin->authenticate('password', Array)
+#11 C:\xampp\htdocs\yii\framework\validators\CValidator.php(213): CInlineValidator->validateAttribute(Object(UserLogin), 'password')
+#12 C:\xampp\htdocs\yii\framework\base\CModel.php(159): CValidator->validate(Object(UserLogin), NULL)
+#13 C:\xampp\htdocs\telotengo\protected\modules\user\controllers\LoginController.php(19): CModel->validate()
+#14 C:\xampp\htdocs\yii\framework\web\actions\CInlineAction.php(49): LoginController->actionLogin()
+#15 C:\xampp\htdocs\yii\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#16 C:\xampp\htdocs\yii\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#17 C:\xampp\htdocs\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#18 C:\xampp\htdocs\yii\framework\web\CWebApplication.php(282): CController->run('')
+#19 C:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('user/login')
+#20 C:\xampp\htdocs\yii\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#21 C:\xampp\htdocs\telotengo\index.php(13): CApplication->run()
+#22 {main}
+REQUEST_URI=/telotengo/user/login
+HTTP_REFERER=http://localhost/telotengo/user/login
+---
+2013/11/20 16:18:11 [error] [exception.CDbException] exception 'CDbException' with message 'CDbConnection failed to open the DB connection: SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password: NO)' in C:\xampp\htdocs\yii\framework\db\CDbConnection.php:381
+Stack trace:
+#0 C:\xampp\htdocs\yii\framework\db\CDbConnection.php(330): CDbConnection->open()
+#1 C:\xampp\htdocs\yii\framework\db\CDbConnection.php(308): CDbConnection->setActive(true)
+#2 C:\xampp\htdocs\yii\framework\base\CModule.php(387): CDbConnection->init()
+#3 C:\xampp\htdocs\yii\framework\base\CApplication.php(438): CModule->getComponent('db')
+#4 C:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(623): CApplication->getDb()
+#5 C:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(2309): CActiveRecord->getDbConnection()
+#6 C:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(387): CActiveRecordMetaData->__construct(Object(RegistrationForm))
+#7 C:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(402): CActiveRecord::model('RegistrationFor...')
+#8 C:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(77): CActiveRecord->getMetaData()
+#9 C:\xampp\htdocs\telotengo\protected\modules\user\controllers\RegistrationController.php(23): CActiveRecord->__construct()
+#10 C:\xampp\htdocs\yii\framework\web\actions\CInlineAction.php(49): RegistrationController->actionRegistration()
+#11 C:\xampp\htdocs\yii\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#12 C:\xampp\htdocs\yii\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#13 C:\xampp\htdocs\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#14 C:\xampp\htdocs\yii\framework\web\CWebApplication.php(282): CController->run('')
+#15 C:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('user/registrati...')
+#16 C:\xampp\htdocs\yii\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#17 C:\xampp\htdocs\telotengo\index.php(13): CApplication->run()
+#18 {main}
+REQUEST_URI=/telotengo/user/registration
+HTTP_REFERER=http://localhost/telotengo/site/index
+---
+2013/11/20 16:26:38 [error] [exception.CDbException] exception 'CDbException' with message 'CDbConnection failed to open the DB connection: SQLSTATE[HY000] [1049] Unknown database 'db_telotengo'' in C:\xampp\htdocs\yii\framework\db\CDbConnection.php:381
+Stack trace:
+#0 C:\xampp\htdocs\yii\framework\db\CDbConnection.php(330): CDbConnection->open()
+#1 C:\xampp\htdocs\yii\framework\db\CDbConnection.php(308): CDbConnection->setActive(true)
+#2 C:\xampp\htdocs\yii\framework\base\CModule.php(387): CDbConnection->init()
+#3 C:\xampp\htdocs\yii\framework\base\CApplication.php(438): CModule->getComponent('db')
+#4 C:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(623): CApplication->getDb()
+#5 C:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(2309): CActiveRecord->getDbConnection()
+#6 C:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(387): CActiveRecordMetaData->__construct(Object(RegistrationForm))
+#7 C:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(402): CActiveRecord::model('RegistrationFor...')
+#8 C:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(77): CActiveRecord->getMetaData()
+#9 C:\xampp\htdocs\telotengo\protected\modules\user\controllers\RegistrationController.php(23): CActiveRecord->__construct()
+#10 C:\xampp\htdocs\yii\framework\web\actions\CInlineAction.php(49): RegistrationController->actionRegistration()
+#11 C:\xampp\htdocs\yii\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#12 C:\xampp\htdocs\yii\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#13 C:\xampp\htdocs\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#14 C:\xampp\htdocs\yii\framework\web\CWebApplication.php(282): CController->run('')
+#15 C:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('user/registrati...')
+#16 C:\xampp\htdocs\yii\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#17 C:\xampp\htdocs\telotengo\index.php(13): CApplication->run()
+#18 {main}
+REQUEST_URI=/telotengo/user/registration
+HTTP_REFERER=http://localhost/telotengo/site/index
+---
+2013/11/20 16:26:40 [error] [exception.CDbException] exception 'CDbException' with message 'CDbConnection failed to open the DB connection: SQLSTATE[HY000] [1049] Unknown database 'db_telotengo'' in C:\xampp\htdocs\yii\framework\db\CDbConnection.php:381
+Stack trace:
+#0 C:\xampp\htdocs\yii\framework\db\CDbConnection.php(330): CDbConnection->open()
+#1 C:\xampp\htdocs\yii\framework\db\CDbConnection.php(308): CDbConnection->setActive(true)
+#2 C:\xampp\htdocs\yii\framework\base\CModule.php(387): CDbConnection->init()
+#3 C:\xampp\htdocs\yii\framework\base\CApplication.php(438): CModule->getComponent('db')
+#4 C:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(623): CApplication->getDb()
+#5 C:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(2309): CActiveRecord->getDbConnection()
+#6 C:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(387): CActiveRecordMetaData->__construct(Object(RegistrationForm))
+#7 C:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(402): CActiveRecord::model('RegistrationFor...')
+#8 C:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(77): CActiveRecord->getMetaData()
+#9 C:\xampp\htdocs\telotengo\protected\modules\user\controllers\RegistrationController.php(23): CActiveRecord->__construct()
+#10 C:\xampp\htdocs\yii\framework\web\actions\CInlineAction.php(49): RegistrationController->actionRegistration()
+#11 C:\xampp\htdocs\yii\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#12 C:\xampp\htdocs\yii\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#13 C:\xampp\htdocs\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#14 C:\xampp\htdocs\yii\framework\web\CWebApplication.php(282): CController->run('')
+#15 C:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('user/registrati...')
+#16 C:\xampp\htdocs\yii\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#17 C:\xampp\htdocs\telotengo\index.php(13): CApplication->run()
+#18 {main}
+REQUEST_URI=/telotengo/user/registration
+HTTP_REFERER=http://localhost/telotengo/site/index
+---
+2013/11/20 16:26:51 [error] [exception.CDbException] exception 'CDbException' with message 'CDbConnection failed to open the DB connection: SQLSTATE[HY000] [1049] Unknown database 'db_telotengo'' in C:\xampp\htdocs\yii\framework\db\CDbConnection.php:381
+Stack trace:
+#0 C:\xampp\htdocs\yii\framework\db\CDbConnection.php(330): CDbConnection->open()
+#1 C:\xampp\htdocs\yii\framework\db\CDbConnection.php(308): CDbConnection->setActive(true)
+#2 C:\xampp\htdocs\yii\framework\base\CModule.php(387): CDbConnection->init()
+#3 C:\xampp\htdocs\yii\framework\base\CApplication.php(438): CModule->getComponent('db')
+#4 C:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(623): CApplication->getDb()
+#5 C:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(2309): CActiveRecord->getDbConnection()
+#6 C:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(387): CActiveRecordMetaData->__construct(Object(RegistrationForm))
+#7 C:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(402): CActiveRecord::model('RegistrationFor...')
+#8 C:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(77): CActiveRecord->getMetaData()
+#9 C:\xampp\htdocs\telotengo\protected\modules\user\controllers\RegistrationController.php(23): CActiveRecord->__construct()
+#10 C:\xampp\htdocs\yii\framework\web\actions\CInlineAction.php(49): RegistrationController->actionRegistration()
+#11 C:\xampp\htdocs\yii\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#12 C:\xampp\htdocs\yii\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#13 C:\xampp\htdocs\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#14 C:\xampp\htdocs\yii\framework\web\CWebApplication.php(282): CController->run('')
+#15 C:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('user/registrati...')
+#16 C:\xampp\htdocs\yii\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#17 C:\xampp\htdocs\telotengo\index.php(13): CApplication->run()
+#18 {main}
+REQUEST_URI=/telotengo/user/registration
+HTTP_REFERER=http://localhost/telotengo/user/recovery
+---

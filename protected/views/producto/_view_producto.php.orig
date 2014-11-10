@@ -1,0 +1,217 @@
+<!-- CONTENIDO ON -->
+<div class="container-fluid" style="padding: 0 15px;">
+
+    <div class="row main-content">
+
+        <section class="col-md-8 col-md-offset-1"  role="main">
+            <div class="row">
+                <!-- IMAGENes ON -->
+                
+                <?php
+                $main_image = $model->mainimage->url;
+				?>
+                
+                <div class=" col-md-5">
+                    <figure>
+                        <img width="450px" height="400px" src="<?php echo Yii::app()->baseUrl.$main_image; ?>" alt="<?php echo $model->nombre; ?>">
+                    </figure>
+                    <div class="row margin_top_small">
+                    	
+                    <?php 
+                 		$imagenes = $model->imagenes;
+						
+						foreach($imagenes as $imagen){
+							
+							$path = str_replace(".","_thumb.",$imagen->url);
+							
+							echo '	<div class="col-xs-6 col-md-3">
+                            		<a href="#" class="thumbnail">
+                                		<img width="110px" height="110px" src="'.Yii::app()->baseUrl.$path.'" alt="..."> 
+                           	 		</a>
+                        			</div>';	
+						}
+					?>
+                    	                            
+                    </div>
+                </div>
+                <!-- IMAGENes OFF -->
+                <div class="col-md-7">
+                    <div class="page-header">
+                                <h1><?php echo $model->nombre; ?><small>  Modelo MD711LL/A 128 Gb / 4Gb Ram </small></h1>
+                                <span>Por: <a href="#"><?php echo $marca->nombre; ?></a></span>
+                                <div>
+                                    <span class="glyphicon glyphicon-star"></span>  
+                                    <span class="glyphicon glyphicon-star"></span>
+                                    <span class="glyphicon glyphicon-star"></span>
+                                    <span class="glyphicon glyphicon-star"></span>
+                                    <span class="glyphicon glyphicon-star-empty"></span> 
+                                    <small><a href="#">10 Valoraciones de este producto</a></small>
+                                    |
+                                    <small>Últimos 6 meses: 296 órdenes (296 unidades)</small>
+                                </div>               
+                    </div>  
+                    <?php
+<<<<<<< HEAD
+						// inventario_menor_precio tiene el inventario con menor precio para el producto
+						$inventario_menor_precio = Inventario::model()->getMenor($model->id);
+
+                        // La variable inventarios tiene todos los objetos de inventarios que tenga en producto_id del modelo en cuestion ordenados por precio, excepto el de menor precio
+                        $inventarios = Inventario::model()->getOpcionesCompra($inventario_menor_precio->id, $model->id);
+=======
+                    	// La variable inventarios tiene todos los objetos de inventarios que tenga en producto_id del modelo en cuestion
+                    	$inventarios = $model->inventarios;
+						
+						// inv tiene el inventario con menor precio para el producto
+						$inv = Inventario::model()->get_menor($model->id);
+											
+						
+						//foreach($inventarios as $r)
+						//	var_dump($r);
+>>>>>>> f02e956882ddc94c7a9d5e37c9a866edd06e5e76
+                    ?>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <dl class="dl-horizontal">
+                                <dt class="padding_xsmall">Precio en tiendas</dt>
+<<<<<<< HEAD
+                                <dd class="padding_xsmall">Bs. <?php echo $inventario_menor_precio->precio+700; ?></dd>
+                                <dt class="padding_xsmall">Precio</dt>
+                                <dd class="padding_xsmall">Bs. <?php echo $inventario_menor_precio->precio; ?></dd>
+=======
+                                <dd class="padding_xsmall">Bs. <?php echo $inv->precio+700; ?></dd>
+                                <dt class="padding_xsmall">Precio</dt>
+                                <dd class="padding_xsmall">Bs. <?php echo $inv->precio; ?></dd>
+>>>>>>> f02e956882ddc94c7a9d5e37c9a866edd06e5e76
+                                <dt class="padding_xsmall">Ahorras</dt>
+                                <dd class="padding_xsmall">Bs. 2000 (9%)</dd>
+                                <dt class="padding_xsmall">Atributo</dt>
+                                <dd class="padding_xsmall"> 
+                                    <a href="#" class="btn-default btn">11,6" </a>
+                                    <a href="#" class="btn-default btn">13,3" </a>
+                                </dd>
+                                <dt class="padding_xsmall">Atributo</dt>
+                                <dd class="padding_xsmall"> 256 Gb 128 Gb</dd>
+                                <dt class="padding_xsmall">Tipo de Entrega</dt>
+                                <dd class="padding_xsmall"> Desde Táchira </dd>
+                                <dt class="padding_xsmall">Fecha estima de entrega</dt>
+                                <dd class="padding_xsmall"> 3-8 días </dd>                        
+                            </dl>
+                        </div>
+                        <div class="col-lg-6">
+                            <dl class="dl-horizontal">
+                                <dt>Disponibilidad: </dt>
+                                <dd> <span class="text-danger" >Sólo quedan 2 </span ></dd>
+                            </dl>
+                        </div>                        
+                    </div>
+                    
+                    <p><strong>Caracteristicas principales</strong></p>
+                    <ul>
+                        <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</li>
+                        <li>Tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim</li>
+                        <li>Veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea</li>
+                        <li>Commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit</li>
+                    </ul>
+
+                </div>
+            </div>
+        </section>
+
+
+        <section class="col-md-2">
+            <div class="caja">
+                <div>
+<<<<<<< HEAD
+                    <h4 >Mejor Precio: <span class="text-danger title_medium ">Bs. <?php echo $inventario_menor_precio->precio; ?></span></h4>
+=======
+                    <h4 >Mejor Precio: <span class="text-danger title_medium ">Bs. 32.000</span></h4>
+>>>>>>> f02e956882ddc94c7a9d5e37c9a866edd06e5e76
+                </div>
+                <h4>Costo de Envio: <span class="text-success">Gratis</span></h4>
+                <a href="#" class="btn btn-success btn-block btn-lg">Comprar</a>
+                <div class="text_align_center margin_top_small">
+                    <a href="btn-link"> <span class="glyphicon glyphicon-heart"></span>&nbsp Añadir a mi lista de deseos</a>
+                </div>
+                <hr>
+                
+                <p class="text-muted">Vendido y enviador por:</p>
+<<<<<<< HEAD
+                <p><strong> <a href="#"><?php echo $inventario_menor_precio->almacen->empresas->razon_social; ?></a></strong> <span class="glyphicon glyphicon-certificate"></span></p>
+=======
+                <p><strong> <a href="#">Sigma System C.A</a></strong> <span class="glyphicon glyphicon-certificate"></span></p>
+>>>>>>> f02e956882ddc94c7a9d5e37c9a866edd06e5e76
+                <p>Táchira (San Cristóbal)</p>
+                <p> <span class="text-info">98%</span> Calificaciones positivas</p>
+                <small>155 Calificaciones</small>
+
+            </div>
+            
+            <!-- MÁS OPCIONES DE COMPRA ON -->
+            <div class="caja">
+                <p class="text-muted">Más opciones de compra:</p>
+                
+<<<<<<< HEAD
+                <?php
+                foreach($inventarios as $opcion){
+                    ?>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <strong><a href="#"><?php echo $opcion->almacen->empresas->razon_social; ?></a></strong>
+                            <small>Carabobo (Valencia)</small>
+                        </div>
+                        <div class="col-sm-6">
+                            <a href="#" class="btn btn-block  btn-success btn-xs">Comprar</a>
+                        </div>
+                    </div>
+                    <div>
+                        <strong class="text-danger">Bs. <?php echo $opcion->precio; ?> </strong><span class="text-muted"> + Bs. 160 de envío</span>
+                    </div>
+                    <hr>
+                    <?php
+                }
+                ?>
+
+
+                
+                <!-- <div class="row">
+=======
+                <div class="row">
+                    <div class="col-sm-6">
+                        <strong><a href="#">Mundo PC</a></strong>
+                        <small>Carabobo (Valencia)</small>
+                    </div>
+                    <div class="col-sm-6">
+                        <a href="#" class="btn btn-block  btn-success btn-xs">Comprar</a>
+                    </div>
+                </div>
+                <div>
+                    <strong class="text-danger">Bs. 32.100 </strong><span class="text-muted"> + Bs. 160 de envío</span>
+                </div>
+                <hr>
+                <div class="row">
+>>>>>>> f02e956882ddc94c7a9d5e37c9a866edd06e5e76
+                    <div class="col-sm-6">
+                        <strong><a href="#">Compumall</a></strong>
+                        <small>Miranda (Caracas)</small>
+                    </div>
+                    <div class="col-sm-6">
+                        <a href="#" class="btn btn-block  btn-success btn-xs">Comprar</a>
+                    </div>
+                </div>
+                <div>
+                    <strong class="text-danger">Bs. 32.400 </strong><span class="text-muted"> + Bs. 160 de envío</span>
+<<<<<<< HEAD
+                </div> -->
+=======
+                </div>
+>>>>>>> f02e956882ddc94c7a9d5e37c9a866edd06e5e76
+
+            </div>
+
+            <!-- MÁS OPCIONES DE COMPRA OFF -->
+
+        </section>
+
+    </div>
+</div>
+<!-- CONTENIDO OFF -->
