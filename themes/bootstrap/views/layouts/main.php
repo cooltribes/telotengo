@@ -122,9 +122,9 @@
 					$usuario = User::model()->findByPk(Yii::app()->user->id);
 					
 					$empresaHas = EmpresasHasUsers::model()->findByAttributes(array('users_id'=>$usuario->id));
-					$empresa = Empresas::model()->findByPk($empresaHas->empresas_id);
+					if(isset($empresaHas)) $empresa = Empresas::model()->findByPk($empresaHas->empresas_id);
 					
-					if($empresa){ // tiene empresa
+					if(isset($empresa)){ // tiene empresa
 						if($empresa->tipo==2){ // empresa vendedora
 							
 						?>
@@ -329,7 +329,7 @@
 			<footer role="contentinfo" class="footer">
               	<div class="row">
                     <div class="col-md-3 col-md-offset-2">
-                      <h2>Telotengo en los medios:</h2>
+                      <h2>Sigma Systems:</h2>
                       Un poco de logos ahi
                       Recibe ofertas en tu correo:
                       Dale un ojo a nuestro blog
@@ -356,7 +356,7 @@
 						</ul>
 					</div>
                 </div>
-                <p>&copy; Telotengo 2013</p>
+                <p>&copy; Sigma Systems C.A. <?php echo date("Y"); ?></p>
             </footer>
 		</div>
 		<!-- page -->

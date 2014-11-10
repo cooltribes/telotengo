@@ -5,11 +5,11 @@
             <div class="col-md-12  main-content" role="main">
                     <div class="page-header">
                         <h1>
-                           Bienvenido a Telotengo
+                           ¡Bienvenido a Sigma Tiendas!
                         </h1>
                     </div>
                     <div class="alert alert-success">Te hemos enviado un correo electrónico con las instrucciones para activar tu cuenta</div>
-                    <hr>
+                    <hr> 
                     <div class="lead"></div>
 
                     <div class="col-sm-offset-5 padding_medium">

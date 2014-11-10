@@ -10,7 +10,7 @@ Yii::setPathOfAlias('bootstrap', dirname(__FILE__).'/../extensions/bootstrap');
 return array(
 	'theme'=>'bootstrap',
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-	'name'=>'Telotengo',
+	'name'=>'Sigma Tiendas',
 	
 	'language' => 'es', // the language that the user is using and the application should be targeted to
 	
@@ -39,7 +39,7 @@ return array(
                 'bootstrap.gii',
             ),
 			'class'=>'system.gii.GiiModule',
-			'password'=>'Enter Your Password Here',
+			'password'=>'12345678',
 			// If removed, Gii defaults to localhost only. Edit carefully to taste.
 			//'ipFilters'=>array('127.0.0.1','::1'),
 			'ipFilters'=>array('*'),
@@ -198,19 +198,24 @@ return array(
 			),
 		),
         
-		'mail' => array(
+		/*'mail' => array(
        		'class' => 'application.extensions.yii-mail.YiiMail',
             'transportType'=>'php',
             'viewPath' => 'application.views.mail',             
+        ),*/
+
+        'mail' => array(
+                'class' => 'ext.yii-mail.YiiMail',
+                'transportType'=>'php', 
+                'viewPath' => 'application.views.mail',             
         ),
-	
 	),
 
 	// application-level parameters that can be accessed
 	// using Yii::app()->params['paramName']
 	'params'=>array(
 		// this is used in contact page
-		'adminEmail'=>'webmaster@example.com',
+		'adminEmail'=>'info@sigmatiendas.com', 
 		'contacto'=>'contacto@telotengo.com',
 		//'contacto'=>'dduque@upsidecorp.ch',
 		'uploadPath'=>dirname(__FILE__).'/../../documentos/',
