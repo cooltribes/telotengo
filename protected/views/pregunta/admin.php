@@ -20,7 +20,6 @@ $this->breadcrumbs=array(
 		    </div>
 		<?php } ?>
 
-	    
 		<?php
 		$template = '{summary}
 	    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-bordered table-hover table-striped">
@@ -37,15 +36,12 @@ $this->breadcrumbs=array(
 	    {pager} 
 		';
 
-			$this->widget('zii.widgets.CListView', array(
+		$this->widget('zii.widgets.CListView', array(
 		    'id'=>'list-auth-pregunta',
 		    'dataProvider'=>$dataProvider,
-		    'itemView'=>'_datos',
+		    'itemView'=>'_datos', 
 		    'template'=>$template,
 		    'enableSorting'=>'true',
-		    'afterAjaxUpdate'=>" function(id, data) {
-							   
-								} ",
 			'pager'=>array(
 				'header'=>'',
 				'htmlOptions'=>array(
@@ -53,7 +49,7 @@ $this->breadcrumbs=array(
 			)
 			),					
 		));  
-		
+
 		?>
 
 </div>

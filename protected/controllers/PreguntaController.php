@@ -178,10 +178,13 @@ class PreguntaController extends Controller
 		$model=new Pregunta;
 		$model->unsetAttributes();  // clear any default values
 		
-		$dataProvider = $model->search();
+		$dataProvider = $model->search(); 
 		
 		if(isset($_GET['Pregunta']))
 			$model->attributes=$_GET['Pregunta'];
+
+		//var_dump($dataProvider->getData());
+		//Yii::app()->end();
 
 		$this->render('admin',array(
 			'model'=>$model,

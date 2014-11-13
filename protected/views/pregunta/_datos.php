@@ -18,7 +18,7 @@ echo"<tr>";
 		}
 	}
 	else{
-		echo "Aún sin respuestas.";	
+		echo "Aún sin respuestas.";	 
 	}
 	
 	echo "</td>";

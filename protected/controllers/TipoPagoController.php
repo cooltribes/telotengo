@@ -31,11 +31,11 @@ class TipoPagoController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array(),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
+				'actions'=>array('admin','delete','create'),
 				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -124,28 +124,8 @@ class TipoPagoController extends Controller
 			
 		         $this->redirect(array('admin'));
 		}
-		
-		
+		 
 		$this->render('create',array('model'=>$tipo));
-		
-		/*
-		
-		$model=new TipoPago;
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
-		if(isset($_POST['TipoPago']))
-		{
-			$model->attributes=$_POST['TipoPago'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
-		}
-
-		$this->render('create',array(
-			'model'=>$model,
-		));
-		 * */
 	}
 
 	/**

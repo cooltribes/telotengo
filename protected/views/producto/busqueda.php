@@ -54,6 +54,6 @@ $this->breadcrumbs=array(
 		?>
 
                 </div><!-- COLUMNA PRINCIPAL DERECHA OFF // -->
-                <?php include('sidebar_admin.php') ?>
+
             </div><!-- CONTENIDO OFF -->
 		</div>

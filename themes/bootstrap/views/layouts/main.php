@@ -86,14 +86,14 @@
 				        <ul class="dropdown-menu">
 				        	<li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/seleccion">Crear nuevo</a></li> 
 							<li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/admin">Todos</a></li>
-							<li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/poraprobar">Por Aprobar (<?php echo $total; ?>)</a></li>
+							<!-- <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/poraprobar">Por Aprobar (<?php echo $total; ?>)</a></li> -->
 							<li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/seleccion">Agregar a Inventario</a></li>
 							<li><a href="<?php echo Yii::app()->baseUrl; ?>/flashsale/admin">Ventas Flash</a></li>
 							<li><a href="<?php echo Yii::app()->baseUrl; ?>/pregunta/admin">Preguntas</a></li>
 						</ul>
 				    </li>
 				    		
-					<li class="dropdown">
+					<!-- <li class="dropdown">
 				        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Empresas<b class="caret"></b></a>
 				        <ul class="dropdown-menu">
 							<li><a href="<?php echo Yii::app()->baseUrl; ?>/empresas/admin">Todas</a></li>
@@ -101,6 +101,7 @@
 							<li><a href="<?php echo Yii::app()->baseUrl; ?>/empresas/vendedoras">Vendedoras</a></li>
 				    	</ul>
 				    </li>    
+				    --> 
 				    
 				    <li class="dropdown">
 				        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Administración<b class="caret"></b></a>

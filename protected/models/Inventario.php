@@ -28,7 +28,7 @@ ESTADOS:
 
 */
 
-class Inventario extends CActiveRecord
+class Inventario extends CActiveRecord 
 {
 	/**
 	 * Returns the static model of the specified AR class.

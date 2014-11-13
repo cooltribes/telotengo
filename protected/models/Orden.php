@@ -245,5 +245,32 @@ class Orden extends CActiveRecord
 
 		
 	}
+
+	public function getStatus($status){
+
+		switch ($status) {
+	    case 1:
+	        return "<td>En espera de pago</td>";
+	    case 2:
+	        return "<td>En espera de confirmación</td>"; 
+	    case 3:
+	        return "<td>Pago Confirmado</td>";
+		case 4: 
+			return "<td>Orden Enviada</td>";
+		case 5:	
+			return "<td>Orden Cancelada</td>";
+		case 6:
+			return "<td>Pago Rechazado</td>";
+		case 7:
+			return "<td>Pago Insuficiente</td>";
+		case 8:
+			return "<td>Entregado</td>";
+		case 9:
+			return "<td>Orden Devuelta</td>";
+		case 10:
+			return "<td>Parcialmente Devuelto</td>";
+		}
+
+	} // get
 	
 }

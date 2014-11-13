@@ -6,8 +6,6 @@ $this->breadcrumbs=array(
 	'Detalle',
 );
 ?>	
-	
-	
     <div class="container">
         <div class="row">
             <!-- COLUMNA PRINCIPAL DERECHA ON // OJO: esta de primera para mejorar el SEO sin embargo por CSS se ubica visualmente a la derecha -->
@@ -35,7 +33,7 @@ $this->breadcrumbs=array(
                             <p class="well well-sm"> Estado: <span>
                         
                             <?php
-		
+							$model->getStatus($model->estado); Yii::app()->end();/*
 							switch ($model->estado) {
 							    case 1:
 							        echo "En espera de pago"; 
@@ -67,7 +65,7 @@ $this->breadcrumbs=array(
 								case 10:
 									echo "Parcialmente Devuelto";
 									break;	
-							}
+							}*/
 
 		                    if($model->estado==4||$model->estado==8||$model->estado==9||$model->estado==10){
 		                        ?>

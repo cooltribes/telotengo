@@ -60,9 +60,6 @@ $this->breadcrumbs=array(
 		    'itemView'=>'_datos',
 		    'template'=>$template,
 		    'enableSorting'=>'true',
-		    'afterAjaxUpdate'=>" function(id, data) {
-							   
-								} ",
 			'pager'=>array(
 				'header'=>'',
 				'htmlOptions'=>array(
