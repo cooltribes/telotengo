@@ -20,6 +20,19 @@
  */
 class Giftcard extends CActiveRecord
 {
+
+    //Montos para Venezuela
+    public static $montos = array(
+        200 => 200,
+        500 => 500,
+        1000 => 1000,
+        1500 => 1500,
+        2000 => 2000,
+        3000 => 3000,
+        4000 => 4000,
+        5000 => 5000,
+    );
+
     /**
      * @return string the associated database table name
      */
@@ -37,7 +50,7 @@ class Giftcard extends CActiveRecord
         // will receive user inputs.
         return array(
             array('codigo, monto, estado, inicio_vigencia, fin_vigencia, comprador', 'required'),
-            array('estado, comprador, beneficiario', 'numerical', 'integerOnly'=>true),
+            array('estado, comprador', 'numerical', 'integerOnly'=>true), 
             array('monto', 'numerical'),
             array('codigo', 'length', 'max'=>25),
             array('fecha_uso', 'safe'),
@@ -55,7 +68,6 @@ class Giftcard extends CActiveRecord
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
-            'beneficiario0' => array(self::BELONGS_TO, 'Users', 'beneficiario'),
             'comprador0' => array(self::BELONGS_TO, 'Users', 'comprador'),
         );
     }
@@ -121,4 +133,40 @@ class Giftcard extends CActiveRecord
     {
         return parent::model($className);
     }
+
+
+   public static function getMontos() {
+        return self::$montos;                       
+    }
+
+    /*Retorna los ultimos 4 digitos del codigo con formato*/
+    public function getMascaraCodigo($codigo) {
+        
+        return 'XXXX-XXXX-XXXX-'.substr($codigo, 12,14);
+    }
+    
+    public function generarCodigo(){
+        $cantNum = 8;
+        $cantLet = 8;
+        
+        $l = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        
+        $LETRAS = str_split($l);
+        $NUMEROS = range(0, 9);
+
+        $codigo = array();
+        //Seleccionar cantLet letras
+        for ($i = 0; $i < $cantLet; $i++) {
+            $codigo[] = $LETRAS[array_rand($LETRAS)];
+        }
+        for ($i = 0; $i < $cantNum; $i++) {
+            $codigo[] = array_rand($NUMEROS);
+        }
+        
+        shuffle($codigo);
+        $codigo = implode("", $codigo);
+        
+        return $codigo;
+    }   
+
 }

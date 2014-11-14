@@ -106,6 +106,7 @@
 				    <li class="dropdown">
 				        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Administración<b class="caret"></b></a>
 				        <ul class="dropdown-menu">
+							<li><a href="<?php echo Yii::app()->baseUrl; ?>/Giftcard/admin">Gift Cards</a></li>
 							<li><a href="<?php echo Yii::app()->baseUrl; ?>/user/admin">Usuarios</a></li>
 							<li><a href="<?php echo Yii::app()->baseUrl; ?>/marca/admin">Marcas</a></li>
 							<li><a href="<?php echo Yii::app()->baseUrl; ?>/categoria/admin">Categorías</a></li>

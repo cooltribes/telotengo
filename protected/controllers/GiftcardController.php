@@ -25,17 +25,9 @@ class GiftcardController extends Controller
      */ 
     public function accessRules() 
     { 
-        return array( 
-            array('allow',  // allow all users to perform 'index' and 'view' actions 
-                'actions'=>array('index','view'), 
-                'users'=>array('*'), 
-            ), 
-            array('allow', // allow authenticated user to perform 'create' and 'update' actions 
-                'actions'=>array('create','update'), 
-                'users'=>array('@'), 
-            ), 
+        return array(  
             array('allow', // allow admin user to perform 'admin' and 'delete' actions 
-                'actions'=>array('admin','delete'), 
+                'actions'=>array('admin','delete','create','update'), 
                 'users'=>array('admin'), 
             ), 
             array('deny',  // deny all users 
@@ -66,38 +58,18 @@ class GiftcardController extends Controller
         // Uncomment the following line if AJAX validation is needed 
         // $this->performAjaxValidation($model); 
 
-        if(isset($_POST['Giftcard'])) 
-        { 
-            $model->attributes=$_POST['Giftcard']; 
+        if(isset($_POST['Giftcard'])) { 
+            $model->attributes=$_POST['Giftcard'];
+            $model->beneficiario=$_POST["Giftcard"]['beneficiario'];
+            $model->codigo = Giftcard::model()->generarCodigo();
+            $model->estado = 2; // Enviada 
+            $model->comprador = Yii::app()->user->id;
+
             if($model->save()) 
-                $this->redirect(array('view','id'=>$model->id)); 
+                $this->redirect(array('admin')); 
         } 
 
         $this->render('create',array( 
-            'model'=>$model, 
-        )); 
-    } 
-
-    /** 
-     * Updates a particular model. 
-     * If update is successful, the browser will be redirected to the 'view' page. 
-     * @param integer $id the ID of the model to be updated 
-     */ 
-    public function actionUpdate($id) 
-    { 
-        $model=$this->loadModel($id); 
-
-        // Uncomment the following line if AJAX validation is needed 
-        // $this->performAjaxValidation($model); 
-
-        if(isset($_POST['Giftcard'])) 
-        { 
-            $model->attributes=$_POST['Giftcard']; 
-            if($model->save()) 
-                $this->redirect(array('view','id'=>$model->id)); 
-        } 
-
-        $this->render('update',array( 
             'model'=>$model, 
         )); 
     } 
@@ -123,28 +95,15 @@ class GiftcardController extends Controller
     } 
 
     /** 
-     * Lists all models. 
-     */ 
-    public function actionIndex() 
-    { 
-        $dataProvider=new CActiveDataProvider('Giftcard'); 
-        $this->render('index',array( 
-            'dataProvider'=>$dataProvider, 
-        )); 
-    } 
-
-    /** 
      * Manages all models. 
      */ 
     public function actionAdmin() 
     { 
-        $model=new Giftcard('search'); 
-        $model->unsetAttributes();  // clear any default values 
-        if(isset($_GET['Giftcard'])) 
-            $model->attributes=$_GET['Giftcard']; 
+        $model = new Giftcard;
+        $dataProvider= $model->search();
 
         $this->render('admin',array( 
-            'model'=>$model, 
+            'dataProvider'=>$dataProvider, 
         )); 
     } 
 
