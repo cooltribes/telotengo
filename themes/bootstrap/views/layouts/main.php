@@ -189,7 +189,7 @@
 						<?php	
 						}
 					}
-					else { // usuario normal
+					else { // usuario normal 
 					?>
 					
 						<li><a href="<?php echo Yii::app()->baseUrl; ?>/">Inicio</a></li>
@@ -206,6 +206,7 @@
 					        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cuenta<b class="caret"></b></a>
 					        <ul class="dropdown-menu">
 					        	<li><a href="<?php echo Yii::app()->baseUrl; ?>/user/user/tucuenta">Tu Cuenta</a></li>
+					        	<li><a href="<?php echo Yii::app()->baseUrl; ?>/user/user/favoritos">Mis Favoritos</a></li>
 								<li><a href="<?php echo Yii::app()->baseUrl; ?>/user/profile/edit">Editar perfil</a></li> 
 								<li><a href="<?php echo Yii::app()->baseUrl."/user/profile/profile/id/".Yii::app()->user->id; ?>">Mi perfil público</a></li>
 								<li><a href="<?php echo Yii::app()->baseUrl; ?>/user/profile/changepassword">Cambiar Contraseña</a></li>       

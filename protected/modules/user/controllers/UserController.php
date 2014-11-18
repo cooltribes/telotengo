@@ -25,7 +25,7 @@ class UserController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
+				'actions'=>array('index','view','favoritos'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -67,6 +67,17 @@ class UserController extends Controller
 		$dataProvider = $empresas->search();
 		
 		$this->render('tu_cuenta',array('model'=>$model,'dataProvider'=>$dataProvider,'provider'=>$provider,));
+	}
+
+	public function actionFavoritos(){
+		$model = new UserFavoritos;
+		$model->user_id = Yii::app()->user->id;
+
+		$dataProvider = $model->search();
+
+		$this->render('favoritos',array(
+			'dataProvider'=>$dataProvider,
+		));
 	}
 	
 	public function actionAgregarSocial(){

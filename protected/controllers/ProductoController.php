@@ -27,7 +27,7 @@ class ProductoController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','detalle','loadInventario','calificar'),
+				'actions'=>array('index','view','detalle','loadInventario','calificar','agregarFavorito'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -1119,6 +1119,44 @@ class ProductoController extends Controller
 			'dataProvider'=>$dataProvider,
 			'calificacion_promedio'=>$calificacion_promedio,
 		));
+	}
+
+	/*
+	 * Action para que la usuaria le encante un producto
+	 * 
+	 * */
+	public function actionAgregarFavorito(){
+		if(Yii::app()->user->isGuest==false){ // si está logueado
+			$like = UserFavoritos::model()->findByAttributes(array('user_id'=>Yii::app()->user->id,'producto_id'=>$_POST['idProd']));
+				if(isset($like)){ // si ya le dio like
+					$like->delete();
+					//$total = UserEncantan::model()->countByAttributes(array('producto_id'=>$_POST['idProd']));  	
+					echo CJSON::encode(array(
+						'mensaje'=> 'borrado'
+						//'total'=> $total
+					));
+					exit; 
+				}
+				else{ // esta logueado y es un like nuevo
+				$favorito = new UserFavoritos;
+				$favorito->producto_id = $_POST['idProd'];
+				$favorito->user_id = Yii::app()->user->id;
+				
+				if($favorito->save()){
+					//$total = UserEncantan::model()->countByAttributes(array('producto_id'=>$_POST['idProd']));  	
+					echo CJSON::encode(array(
+						'mensaje'=> 'ok'
+						//'total'=> $total
+					));
+					exit;
+				}
+				}// else
+			}
+			else{
+				echo CJSON::encode(array(
+					'mensaje'=> 'no'
+				));
+			}
 	}
 
 	/**

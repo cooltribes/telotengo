@@ -64,6 +64,24 @@ Yii::app()->clientScript->registerMetaTag($model->nombre, null, null, array('pro
                     <div class="page-header">
                                 <h1><?php echo $model->nombre; ?> <small><?php echo $model->modelo; ?></small></h1>
                                 <span>Por: <a href="#"><?php echo $model->marca->nombre; ?></a></span>
+                                <p><span>Agregar a Favoritos: 
+                                    <?php
+                                        if(!Yii::app()->user->isGuest){
+                                            $like = UserFavoritos::model()->findByAttributes(array('user_id'=>Yii::app()->user->id,'producto_id'=>$model->id));
+                                        }
+                                    ?>
+                                    <button id="Favorito" onclick='AddFavorito()' title="Agregar a Favoritos" class="btn-link btn-link-active">
+                                    <?php
+                                        if(isset($like)){ // le ha dado like    
+                                            echo '<span id="like" class="entypo">&hearts;</span>';
+                                        }else{
+                                            echo "<span id='like' class='entypo icon_personaling_big'>&#9825;</span>";
+                                        }
+                                    ?>
+                                    </button>
+
+                               </span></p>
+
                                 <?php
                                 if($calificacion_promedio >= 0 && $calificacion_promedio < 1){
                                     $clase_1 = 'glyphicon glyphicon-star-empty';
@@ -603,6 +621,10 @@ Yii::app()->clientScript->registerMetaTag($model->nombre, null, null, array('pro
 
 <div class="modal fade" id="modalWishlist" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 </div>
+
+<div class="modal fade" id="modalFavorito" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+</div>
+
 <!- MODAL WINDOW OFF ->
 
 <div id="fb-root"></div>
@@ -686,6 +708,49 @@ Yii::app()->clientScript->registerMetaTag($model->nombre, null, null, array('pro
       	$("#principal").fadeIn("slow",function(){});
 
     });
+
+    function AddFavorito(){
+        var producto_id = $("#producto_id").attr("value");
+        
+            $.ajax({
+                type: "post",
+                dataType:"json",
+                url: "<?php echo Yii::app()->baseUrl;?>/producto/agregarFavorito", // action Tallas de Producto
+                data: { 'idProd':producto_id}, 
+                success: function (data) {
+                    if(data.mensaje=="ok"){         
+                        var a = "♥";
+                        $("#Favorito").addClass("btn-link-active");
+                        $("span#like").text(a);
+                    }
+                    if(data.mensaje=="no"){
+                        var datos = '<div class="modal-dialog">';
+                        datos = datos+'<div class="modal-content">';
+        
+                        datos = datos+" <div class='modal-header'>"; 
+                        datos = datos+"<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>×</button>";
+                        datos = datos+"<h3>Agregar a Favoritos</h3></div>";
+                        datos = datos+"<div class='modal-body'>";
+                        datos = datos+"<div>Debes ingresar con tu cuenta de usuario o registrarte para poder tener un producto como favorito.</div>";
+                        datos = datos+"</div>";
+                        datos = datos+"<hr/>";
+                        datos = datos+"</div>";
+                        datos = datos+"</div>";
+                        
+                        $('#modalFavorito').html(datos);               
+                        $('#modalFavorito').modal('show');
+                        
+                        //bootbox.alert("Debes ingresar con tu cuenta de usuario o registrarte para poder tener un producto como favorito.");          
+                    }
+                    if(data.mensaje=="borrado"){
+                        var a = "♡";
+                        $("#Favorito").removeClass("btn-link-active");
+                        $("span#like").text(a);
+                    }
+                      
+                }//success
+            }) // ajax
+    }
 
     $('.radio_caracteristicas').change(function(){
         //console.log('Clicked: '+$(this).children('input[type=radio]:first').val());
