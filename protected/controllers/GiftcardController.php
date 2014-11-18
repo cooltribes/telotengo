@@ -27,7 +27,7 @@ class GiftcardController extends Controller
     { 
         return array(  
             array('allow', // allow admin user to perform 'admin' and 'delete' actions 
-                'actions'=>array('admin','delete','create','update'), 
+                'actions'=>array('admin','delete','create','update','inactivar'), 
                 'users'=>array('admin'), 
             ), 
             array('deny',  // deny all users 
@@ -62,17 +62,44 @@ class GiftcardController extends Controller
             $model->attributes=$_POST['Giftcard'];
             $model->beneficiario=$_POST["Giftcard"]['beneficiario'];
             $model->codigo = Giftcard::model()->generarCodigo();
-            $model->estado = 2; // Enviada 
+            $model->estado = 1; // Enviada
             $model->comprador = Yii::app()->user->id;
 
-            if($model->save()) 
+            $user = User::model()->findByPk(Yii::app()->user->id);
+
+            $message = new YiiMailMessage;
+            $subject = 'Te han enviado una Gift Card desde sigmatiendas.com';                                
+            $message->subject = $subject;
+            $body = '<h2>¡'.$user->profile->first_name.' '.$user->profile->last_name.' te ha enviado una Gift Card!</h2>
+                Monto: '.$model->monto.'.
+                Código: '.$model->codigo.'.
+                Puedes cobrar tu Gift Card en <a href="sigmatiendas.com">Sigma Tiendas</a>.';
+            $message->from = array(Yii::app()->params['adminEmail'] => "Sigma Tiendas");
+            $message->setBody($body, 'text/html');                
+            $message->addTo($model->beneficiario);
+
+            Yii::app()->mail->send($message);
+
+            if($model->save()){
+                Yii::app()->user->setFlash('success',"Gift Card enviada exitosamente."); 
                 $this->redirect(array('admin')); 
+            }
         } 
 
         $this->render('create',array( 
             'model'=>$model, 
         )); 
     } 
+
+     /* Inactivar desde administrador */ 
+    public function actionInactivar($id){
+        $model = Giftcard::model()->findByPk($id);
+        $model->saveAttributes(array('estado'=>3)); // Inactivo 
+
+        Yii::app()->user->setFlash('success',"Gift Card inactivada exitosamente.");
+
+        $this->redirect(array('admin'));
+    }
 
     /** 
      * Deletes a particular model. 
@@ -81,17 +108,9 @@ class GiftcardController extends Controller
      */ 
     public function actionDelete($id) 
     { 
-        if(Yii::app()->request->isPostRequest) 
-        { 
-            // we only allow deletion via POST request 
-            $this->loadModel($id)->delete(); 
-
-            // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-            if(!isset($_GET['ajax'])) 
-                $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin')); 
-        } 
-        else 
-            throw new CHttpException(400,'Invalid request. Please do not repeat this request again.'); 
+        $this->loadModel($id)->delete();
+        Yii::app()->user->setFlash('success',"Gift Card eliminada correctamente.");
+        $this->redirect(array('admin')); 
     } 
 
     /** 

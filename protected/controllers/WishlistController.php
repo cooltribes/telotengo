@@ -31,7 +31,7 @@ class WishlistController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','listado','add','modalchoose','agregar','crearagregar','productos','eliminarproducto'),
+				'actions'=>array('create','update','listado','add','modalchoose','agregar','crearagregar','productos','eliminarproducto','eliminar'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -126,6 +126,22 @@ class WishlistController extends Controller
 		$this->loadModel($id)->delete();
 
 		Yii::app()->user->setFlash('success',"Lista de deseos eliminada correctamente.");
+		$this->redirect(array('admin'));
+		
+	}
+
+
+	public function actionEliminar($id)
+	{
+		$hasproductos = WishlistHasProducto::model()->findAllByAttributes(array('wishlist_id'=>$id)); 
+		
+		foreach($hasproductos as $eachone){
+			$eachone->delete();
+		}
+			
+		$this->loadModel($id)->delete();
+
+		Yii::app()->user->setFlash('success',"Lista de deseos eliminada correctamente.");
 		$this->redirect(array('listado'));
 		
 	}
@@ -186,10 +202,10 @@ class WishlistController extends Controller
 		}
 		$datos=$datos."<hr/>";
 		$datos=$datos."<div>O agregue este producto a una nueva lista</div>";
-		
+
 		$model = new Wishlist;
 		
-		$datos=$datos.$form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
+		/*$form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
 				'id'=>'new-wishlist-form',
 				'action'=>Yii::app()->baseUrl.'/wishlist/crearagregar',
 				'enableAjaxValidation'=>false,
@@ -199,21 +215,23 @@ class WishlistController extends Controller
 					'validateOnSubmit'=>true, 
 				),
 				'htmlOptions'=>array('class'=>'form-horizontal','role'=>"form"),
-			));
-		
+			));*/
+
+		$datos .= '<form method="post" action="'.Yii::app()->baseUrl.'/wishlist/crearagregar'.'" id="new-wishlist-form" class="form-horizontal" role="form" enctype="multipart/form-data">';
+
 		$datos=$datos.'<div class="form-group">';
-		$datos=$datos.$form->labelEx($model,'nombre');
-		$datos=$datos.$form->textField($model,'nombre',array('class'=>'form-control','maxlength'=>65));
-		$datos=$datos.$form->error($model, 'nombre');
+		$datos=$datos.CHtml::activeLabel($model,'nombre');
+		$datos=$datos.CHtml::activeTextField($model,'nombre',array('class'=>'form-control','maxlength'=>65));
+		$datos=$datos.CHtml::error($model, 'nombre');
 		$datos=$datos."</div>";
-	
-		$datos=$datos.$form->hiddenField($model,'users_id',array('type'=>"hidden",'value'=>$user->id));
+		
+		$datos=$datos.CHtml::hiddenField('id_user', $user->id, array('id'=>'id_user'));
 		$datos=$datos.CHtml::hiddenField('id_producto', $producto->id, array('id'=>'id_producto'));
 		
-		$datos=$datos."<button class='small btn btn-info' onclick='createadd(".$producto->id.",".$user->id.");'>Crear</button>";
+		$datos=$datos."<button class='small btn btn-info'>Crear</button>";
 		$datos=$datos."</div>";
 
-		$datos=$datos.$this->endWidget();
+		$datos=$datos."</form>";
 		
 		$datos=$datos."<hr/>";
 		$datos=$datos."</div>";
@@ -221,9 +239,8 @@ class WishlistController extends Controller
 		
 		$datos=$datos."<div class='modal-footer'>";
 		$datos=$datos."</div>";	
- 		
 		$datos=$datos."</div>";	
-		$datos=$datos."</div>";	
+		$datos=$datos."</div>";
 
 		echo $datos;
 	}
@@ -249,20 +266,20 @@ class WishlistController extends Controller
 	public function actionCrearagregar()
 	{
 		$wish = new Wishlist;
-		$wish->nombre = $_POST['nombrewish'];
-		$wish->users_id = $_POST['user_id'];
+		$wish->nombre = $_POST['Wishlist']['nombre'];
+		$wish->users_id = $_POST['id_user'];
 		$wish->fecha = date('Y-m-d');
 		
 		if($wish->save()){
 			$wishlisthas = new WishlistHasProducto;
 			$wishlisthas->wishlist_id = $wish->id;
-			$wishlisthas->producto_id = $_POST['producto_id'];
+			$wishlisthas->producto_id = $_POST['id_producto']; 
 			$wishlisthas->save();
 		}
 			
 		Yii::app()->user->setFlash('success',"Producto agregado a la nueva lista de deseos.");
 		
-		echo "ok";		
+		$this->redirect(array('wishlist/listado'));	
 	}
 	
 	/**

@@ -5,6 +5,18 @@
 	<td><?php echo $data->monto; ?></td>
 	<td><?php $user = User::model()->findByPk($data->comprador); echo $user->email; ?></td>
 	<td><?php echo $data->beneficiario; ?></td>
-	<td>Estado</td>
-	<td>Accion</td>
+	<td><?php echo $data->getEstado(); ?></td>
+	
+	<?php echo '<td>
+		<div class="dropdown">
+			<a class="dropdown-toggle btn" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="#">
+				<i class="icon-cog"></i><b class="caret"></b>
+			</a>
+			<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+				<li><a tabindex="-1" href="'.Yii::app()->createUrl('/Giftcard/inactivar',array('id'=>$data->id)).'" ><i class="icon-cog"></i> inactivar </a></li>
+				<li><a tabindex="-1" href="'.Yii::app()->createUrl('/Giftcard/delete',array('id'=>$data->id)).'" ><i class="icon-trash"></i> Eliminar </a></li>
+			</ul>
+        </div>
+	</td>'
+  	?>
 </tr>

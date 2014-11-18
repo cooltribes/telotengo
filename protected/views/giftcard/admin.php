@@ -14,7 +14,7 @@ $this->breadcrumbs=array(
 	<hr/>
 
 		<?php if(Yii::app()->user->hasFlash('success')){?>
-		    <div class="alert in alert-block fade alert-success text_align_center">
+		    <div class="alert in alert-block fade alert-success text_align_center"> 
 		        <?php echo Yii::app()->user->getFlash('success'); ?>
 		    </div>
 		<?php } ?>

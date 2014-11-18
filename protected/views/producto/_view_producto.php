@@ -4,6 +4,12 @@ $baseUrl = Yii::app()->baseUrl;
 $cs = Yii::app()->getClientScript();
 $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
 
+Yii::app()->clientScript->registerMetaTag("Vive la experiencia tecnológica. Sigma Systems", null, null, array('property' => 'og:description'), null);
+Yii::app()->clientScript->registerMetaTag(Yii::app()->request->hostInfo.Yii::app()->request->url , null, null, array('property' => 'og:url'), null);
+Yii::app()->clientScript->registerMetaTag('Sigmatiendas.com', null, null, array('property' => 'og:site_name'), null); 
+Yii::app()->clientScript->registerMetaTag($model->nombre, null, null, array('property' => 'og:title'), null); 
+//Yii::app()->clientScript->registerMetaTag($model->mainimage, null, null, array('property' => 'og:image'), null); 
+
 ?>
 <!-- CONTENIDO ON -->
 <div class="container-fluid" style="padding: 0 15px;">
@@ -296,7 +302,7 @@ $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
 
                                 // Lógica nueva, esperemos que funcione
 
-                                foreach ($caracteristicas_agrupadas as $value) {
+                               /* foreach ($caracteristicas_agrupadas as $value) {
                                     
                                 }
 
@@ -369,7 +375,15 @@ $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
                                 <dd class="padding_xsmall"> 3-8 días </dd>                        
                             </dl>
                         </div>
-                                            
+                    <!-- REDES SOCIALES -->
+                    <?php
+                        $link = "http://telotengo.com/sigmatiendas/producto/detalle/".$model->id;
+                        $tweetText = "SigmaSystems | ".$model->nombre." ".$model->modelo.". Por ".$model->marca->nombre;
+                    ?>
+                    <div class="fb-share-button" data-href=<?php echo $link; ?> data-layout="button"></div>
+                    <a href="https://twitter.com/share" class="twitter-share-button" data-count="none" data-text="<?php echo $tweetText; ?>" data-hashtags="LaMejorTecnologia" data-via="Sigmatiendas">Tweet</a>
+                    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
                     </div>
                     
                     <p><strong>Descripción del producto</strong></p>
@@ -588,10 +602,18 @@ $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
 <!- MODAL WINDOW ON -> 
 
 <div class="modal fade" id="modalWishlist" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-
 </div>
-
 <!- MODAL WINDOW OFF ->
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/es_LA/sdk.js#xfbml=1&appId=430758747053394&version=v2.0";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
 <script type="text/javascript">
 
 	function wishlist()

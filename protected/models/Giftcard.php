@@ -20,7 +20,12 @@
  */
 class Giftcard extends CActiveRecord
 {
-
+/*
+Estados
+    1. Enviada
+    2. Aplicada
+    3. Inactiva
+*/
     //Montos para Venezuela
     public static $montos = array(
         200 => 200,
@@ -143,6 +148,18 @@ class Giftcard extends CActiveRecord
     public function getMascaraCodigo($codigo) {
         
         return 'XXXX-XXXX-XXXX-'.substr($codigo, 12,14);
+    }
+
+    /* Devuelve el estado */
+    public function getEstado(){
+        switch ($this->estado) {
+            case 1:
+                return "Enviada";            
+            case 2:
+                return "Aplicada";
+            case 3:
+                return "Inactiva";
+        }
     }
     
     public function generarCodigo(){

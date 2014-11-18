@@ -17,9 +17,9 @@ echo"<tr>";
 		<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
 			<li><a tabindex="-1" href="'.Yii::app()->createUrl('/wishlist/productos',array('id'=>$data->id)).'" ><i class="glyphicon glyphicon-search"></i> Ver productos </a></li>
 			<li><a tabindex="-1" href="'.Yii::app()->createUrl('/wishlist/create',array('id'=>$data->id)).'" ><i class="glyphicon glyphicon-cog"></i> Editar </a></li>
-			<li><a tabindex="-1" href="'.Yii::app()->createUrl('/wishlist/delete',array('id'=>$data->id)).'" ><i class="glyphicon glyphicon-trash"></i> Eliminar </a></li>
+			<li><a tabindex="-1" href="'.Yii::app()->createUrl('/wishlist/eliminar',array('id'=>$data->id)).'" ><i class="glyphicon glyphicon-trash"></i> Eliminar </a></li>
 		</ul>
-        </div></td>
+        </div></td> 
         
         <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         </div>		
