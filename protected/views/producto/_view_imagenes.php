@@ -186,7 +186,7 @@ var uno=0;
 	            		'<div class="col-xs-6 col-md-3">'.
 	                    CHtml::image($img->getUrl(array('type'=>'thumb')), "Imagen " . $img->id, array("width" => "240", "height" => "240",'class'=>'thumbnail')) . 
 	                    '<span>X</span><h4> Enlace: </h4>'.
-	                    CHtml::textField('Enlace',Yii::app()->getBaseUrl(true).$img->getUrl(),array('disabled'=>'disabled'))
+	                    CHtml::textField('Enlace',Yii::app()->getBaseUrl(true).$model->mainimage->url,array('disabled'=>'disabled'))
 	                    .'</div>'; 
 			}			
 

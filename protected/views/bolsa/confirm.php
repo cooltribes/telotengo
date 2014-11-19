@@ -490,13 +490,13 @@
 		var pass_payment_method = false;
 		var address_id, payment_method_id;
 		$(".address_radio").each(function( index ) {
-			if($(this).prop("checked")){
+			if($(".address_radio").prop("checked")){
 				pass_address = true;
 				address_id = $(this).val();
 			}
 		});
 		$(".metodo_pago").each(function( index ) {
-			if($(this).prop("checked")){
+			if($(".metodo_pago").prop("checked")){
 				pass_payment_method = true;
 				payment_method_id = $(this).val();
 			}

@@ -26,6 +26,10 @@ class GiftcardController extends Controller
     public function accessRules() 
     { 
         return array(  
+            array('allow', // allow authenticated user to perform 'create' and 'update' actions
+                'actions'=>array('comprar'),
+                'users'=>array('@'),
+            ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions 
                 'actions'=>array('admin','delete','create','update','inactivar'), 
                 'users'=>array('admin'), 
@@ -44,6 +48,23 @@ class GiftcardController extends Controller
     { 
         $this->render('view',array( 
             'model'=>$this->loadModel($id), 
+        )); 
+    } 
+
+    /** 
+     * accion para comprar GC 
+     */ 
+    public function actionComprar() 
+    { 
+        $model = new Giftcard;
+        $modeldos = new BolsaGC;
+        $modeldos->plantilla_url = "gift_card_one"; //Default      
+        $envio = new EnvioGiftcard("masivo");
+
+        $this->render('comprar',array( 
+            'giftcard'=>$model, 
+            'model' => $modeldos,
+            'envio'=>$envio,
         )); 
     } 
 

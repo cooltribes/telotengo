@@ -8,7 +8,7 @@ Yii::app()->clientScript->registerMetaTag("Vive la experiencia tecnológica. Sig
 Yii::app()->clientScript->registerMetaTag(Yii::app()->request->hostInfo.Yii::app()->request->url , null, null, array('property' => 'og:url'), null);
 Yii::app()->clientScript->registerMetaTag('Sigmatiendas.com', null, null, array('property' => 'og:site_name'), null); 
 Yii::app()->clientScript->registerMetaTag($model->nombre, null, null, array('property' => 'og:title'), null); 
-//Yii::app()->clientScript->registerMetaTag($model->mainimage, null, null, array('property' => 'og:image'), null); 
+Yii::app()->clientScript->registerMetaTag(Yii::app()->getBaseUrl(true).str_replace(".","_thumb.",$model->mainimage->url), null, null, array('property' => 'og:image'), null); 
 
 ?>
 <!-- CONTENIDO ON -->

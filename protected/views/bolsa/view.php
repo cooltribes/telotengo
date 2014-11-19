@@ -5,6 +5,8 @@
 $this->breadcrumbs=array(
 	'Bolsa',
 );
+
+$subtotal = 0; 
 ?> 
         <div class="row">
         	<?php if(Yii::app()->user->hasFlash('error')){?>
@@ -19,8 +21,8 @@ $this->breadcrumbs=array(
                 	if(isset($model))
 					{
 							
-					 $bolsa_has = BolsaHasInventario::model()->findAllByAttributes(array('bolsa_id'=>$model->id));	
-					 $subtotal = 0;
+					$bolsa_has = BolsaHasInventario::model()->findAllByAttributes(array('bolsa_id'=>$model->id));	
+					$subtotal = 0; 
                         
 					if(isset($bolsa_has) && count($bolsa_has)>0 )
 					{	
@@ -48,7 +50,7 @@ $this->breadcrumbs=array(
 									$principal = Imagenes::model()->findByAttributes(array('orden'=>1,'producto_id'=>$inventario->producto_id));
 	    							
 									$producto = Producto::model()->findByPk($inventario->producto_id);
-									$subtotal += $inventario->precio*$uno->cantidad;
+									$subtotal += ($inventario->precio)*($uno->cantidad);
 																		
 	    							if($principal->getUrl())
 	    								$im = CHtml::image(str_replace(".","_thumb.",$principal->getUrl()), "Preview", array("height"=>"100px", "width" => "100px",'class'=>'img-responsive'));
@@ -99,8 +101,7 @@ $this->breadcrumbs=array(
                        </tbody> 
                     </table>
                 <?php
-                }else
-				{
+                }else{
 					echo "No tienes productos en el carrito. ¿Por qué no ves si algo te gusta? </br> <a href=http://telotengo.com/'".Yii::app()->baseUrl."/tienda'>Ir a la Tienda</a>" ;
 				}
                 ?>
@@ -143,7 +144,6 @@ $this->breadcrumbs=array(
             </div>
         </div>
         <!-- COLUMNA PRINCIPAL DERECHA OFF // -->
-        <?php include('sidebar_admin.php') ?>
 
     </div>
 <!-- CONTENIDO OFF -->

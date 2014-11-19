@@ -25,11 +25,11 @@ class UserController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','favoritos'),
+				'actions'=>array('index','view'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('tucuenta','usuariostienda','createuser','deleteuser','editrol','avatar','agregarsocial','deletesocial','privacidad','notificaciones'),
+				'actions'=>array('tucuenta','favoritos','quitarfav','usuariostienda','createuser','deleteuser','editrol','avatar','agregarsocial','deletesocial','privacidad','notificaciones'),
 				'users'=>array('@'),
 			),
 			array('deny',  // deny all users
@@ -78,6 +78,15 @@ class UserController extends Controller
 		$this->render('favoritos',array(
 			'dataProvider'=>$dataProvider,
 		));
+	}
+
+	public function actionQuitarFav($producto_id,$user_id){
+		$model = UserFavoritos::model()->findByAttributes(array('producto_id'=>$producto_id,'user_id'=>$user_id));
+		$model->delete();
+
+		Yii::app()->user->setFlash('success', 'Producto eliminado de los favoritos.');
+
+		$this->redirect(array('favoritos')); 
 	}
 	
 	public function actionAgregarSocial(){

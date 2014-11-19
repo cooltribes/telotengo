@@ -64,7 +64,7 @@ $this->breadcrumbs=array(
 					        
 							array('label'=>'Preferencias', 'active'=>false),
 					        array('label'=>' Lista de Deseos', 'icon'=>'glyphicon glyphicon-folder-open', 'url'=>Yii::app()->baseUrl.'/wishlist/listado'),
-					        array('label'=>' Favoritos', 'icon'=>'glyphicon glyphicon-file', 'url'=>'#'),
+					        array('label'=>' Favoritos', 'icon'=>'glyphicon glyphicon-file', 'url'=>Yii::app()->baseUrl.'/user/user/favoritos'),
 							
 							array('label'=>'Configuración de la cuenta', 'active'=>true),
 							array('label'=>' Avatar', 'icon'=>'glyphicon glyphicon-user', 'url'=>Yii::app()->baseUrl.'/user/user/avatar'),
@@ -98,43 +98,7 @@ $this->breadcrumbs=array(
       	<td><p class="">2</p> Compras Sin Calificar </td>
 		<td><p class="">1</p> Entregas Sin Calificar </td>
     </tr>
-</table>
-
-	<section class="padding_xsmall">
-		<h3> Empresas </h3>
-					
-				<?php
-				$template = '{summary}
-				    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-bordered table-hover table-striped">
-				        <tr>
-				            <th scope="col">Tienda</th>
-				            <th scope="col">Rol</th>
-				        </tr>
-				    {items}
-				    </table>
-				    {pager} 
-					';
-			
-						$this->widget('zii.widgets.CListView', array(
-					    'id'=>'list-auth-tiendas',
-					    'dataProvider'=>$dataProvider,
-					    'itemView'=>'_datos_tiendas',
-					    'template'=>$template,
-					    'enableSorting'=>'true',
-					    'afterAjaxUpdate'=>" function(id, data) {
-										   
-											} ",
-						'pager'=>array(
-							'header'=>'',
-							'htmlOptions'=>array(
-							'class'=>'pagination pagination-right',
-						)
-						),					
-					));  
-					
-					?>
-                
-    </section>   
+</table> 
     
     <section class="bg_color3 margin_bottom_small padding_small box_1">
 		<h3> Redes sociales registradas </h3>
