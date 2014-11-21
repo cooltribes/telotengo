@@ -50,7 +50,22 @@ include("class.zoom.json.services.php");
 
 
 class Orden extends CActiveRecord
-{
+{	
+
+	const ESTADO_ESPERA = 1;
+	const ESTADO_ESPERA_CONF = 2;
+	const ESTADO_CONFIRMADO = 3;
+        
+	const ESTADO_ENVIADO = 4;
+	const ESTADO_CANCELADO = 5;
+	const ESTADO_RECHAZADO = 6;
+	
+    const ESTADO_INSUFICIENTE = 7;	
+	const ESTADO_ENTREGADA = 8;
+	const ESTADO_DEVUELTA = 9;
+        
+	const ESTADO_PARC_DEV = 10;  
+	const ESTADO_FINALIZADA = 11;  
 	/**
 	 * @return string the associated database table name
 	 */

@@ -26,6 +26,8 @@ Estados
     2. Aplicada
     3. Inactiva
 */
+    const MAX_MONTO = 5000; 
+
     //Montos para Venezuela
     public static $montos = array(
         200 => 200,
@@ -185,5 +187,9 @@ Estados
         
         return $codigo;
     }   
+
+    public static function getMontoMaximo() {
+        return self::MAX_MONTO;            
+    }
 
 }
