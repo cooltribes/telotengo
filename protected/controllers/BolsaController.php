@@ -700,14 +700,15 @@ class BolsaController extends Controller
                             ));
                     Yii::app()->end();
                 }
-                
+
                 //$this->crearGC($userId, $orden->id);
                 	$user = User::model()->findByPk($userId)->profile;
                 	$message = new YiiMailMessage;                
 			        $subject = 'Tu compra de Gift Card de Sigma Tiendas';
 			        $body = "¡Hola <strong>{$user->first_name}</strong>!<br/><br/>
 			                Hemos procesado satisfactoriamente tu compra de Gift Card.<br/>
-			                Recuerda registrar tu pago para poder enviar la tarjeta de regalo a su destinatario.";
+			                Recuerda enviar tu pago para poder enviar la tarjeta de regalo a su destinatario.<br/>
+			                Email: compras@sigmatiendas.com";
 			        $message->subject = $subject;
 			        $message->setBody($body, 'text/html');
 			        

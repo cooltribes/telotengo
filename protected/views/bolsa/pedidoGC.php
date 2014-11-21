@@ -1,59 +1,53 @@
 <?php
 $nf = new NumberFormatter("es_VE", NumberFormatter::CURRENCY);
-$this->setPageTitle(Yii::app()->name . " - " . Yii::t('contentForm', 'Order Summary'));
+$this->setPageTitle(Yii::app()->name . " - Resumen de la orden");
 if (!Yii::app()->user->isGuest) { // que este logueado
     $user = User::model()->findByPk(Yii::app()->user->id);
-//$pago = Pago::model()->findByAttributes(array('id'=>$orden->pago_id));
-//$tipo_pago = $orden->getTipoPago();
     $tipo_pago = 2; //tarjeta
-//echo $orden->pago_id;
-    ?>
-    <?php //echo "xPagar".$orden->getxPagar()." SumxOrden".Detalle::model()->getSumxOrden($orden->id);  ?>
-    <style>
-    	#voucher div table{
-    		border: solid 25px #FFF;
-			margin: 0 auto;
-			outline: solid 1px;
-    	}
-    </style>
-    <div class="container margin_top">
-        <div class="row">
-            <div class="span8 offset2">
-                <?php
-                    
-
-                    if ($orden->estado == 3) { // Listo el pago
-                    ?>   
-                    <div class='alert alert-success margin_top_medium margin_bottom'>
-                        <h1><?php echo Yii::t('contentForm','Your order has been successfully completed.'); ?></h1>
-                        <p<?php echo Yii::t('contentForm','We received the data of purchase as well as your credit card payment.'); ?><br/>
-                          <?php  echo Yii::t('contentForm','Your Gift Card is available to be applied at any time.'); ?></p>
-                    </div>
-                    <?php
-                }
-                ?>
-                <section class="bg_color3 margin_top  margin_bottom_small padding_small box_1">
-                    <h3><?php  echo Yii::t('contentForm','Order Summary'); ?> </h3>
-                    <p class="well well-small"><strong><?php  echo Yii::t('contentForm','Confirmation number'); ?>:</strong> <?php echo $orden->id; ?></p>
-                    
-                    <hr/>
-                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                        <tr>
-                            <th class="text_align_left"><?php  echo Yii::t('contentForm','Subtotal'); ?>:</th>
-                            <td><?php echo Yii::t('contentForm','currSym').'. ' . Yii::app()->numberFormatter->formatCurrency($orden->total, ''); ?></td>
-                        </tr>           
-                        <tr>
-                            <th class="text_align_left"><h4><?php  echo Yii::t('contentForm','Total'); ?>:</h4></th>
-                        <td><h4><?php echo Yii::t('contentForm','currSym').'. ' . Yii::app()->numberFormatter->formatCurrency($orden->total, ''); ?></h4></td>
-                        </tr>
-                    </table>
-                    <hr/> 
-                    <p><?php echo Yii::t('contentForm','We have sent a summary of the purchase to your inbox');  ?>: <strong><?php echo $user->email; ?></strong> </p>          
-                   	<?php if($tipoPago == 2){ ?>
-	                    <p><?php echo Yii::t('contentForm','Reference').": ".$referencia; ?></p>	
-	                    <div style="margin: 0 auto; " id="voucher"><?php echo CHtml::decode($voucher); ?>
-	                    </div>
-                    <?php } ?>
+?>
+<?php //echo "xPagar".$orden->getxPagar()." SumxOrden".Detalle::model()->getSumxOrden($orden->id);  ?>
+<style>
+	#voucher div table{
+		border: solid 25px #FFF;
+	margin: 0 auto;
+	outline: solid 1px;
+	}
+</style>
+  <div class="container margin_top">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <?php
+          if ($orden->estado == 3) { // Listo el pago
+        ?>   
+          <div class='alert alert-success margin_top_medium margin_bottom'>
+            <h1>Tu orden ha sido completada satisfactoriamente.</h1>
+              <p>Hemos recibido los datos de tu compra <br/>
+                 Tu tarjeta será enviada y estará disponible para ser aplicada al momento de confirmar el pago</p>
+          </div>
+          <?php
+          }
+          ?>
+          <section class="bg_color3 margin_top  margin_bottom_small padding_small box_1">
+            <h3> Resumen de la compra: </h3>
+              <p class="well well-small"><strong>Número de confirmación:</strong> <?php echo $orden->id; ?></p>                    
+              <hr/>
+              <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <th class="text_align_left"><?php  echo Yii::t('contentForm','Subtotal'); ?>:</th>
+                    <td><?php echo 'Bs. ' . Yii::app()->numberFormatter->formatCurrency($orden->total, ''); ?></td>
+                  </tr>           
+                  <tr>
+                    <th class="text_align_left"><h4>Total:</h4></th>
+                    <td><h4><?php echo 'Bs. ' . Yii::app()->numberFormatter->formatCurrency($orden->total, ''); ?></h4></td>
+                  </tr>
+              </table>
+              <hr/> 
+              <p>Hemos enviado un resumen de la compra a tu correo electrónico: <strong><?php echo $user->email; ?></strong> </p>          
+             	<?php if($tipoPago == 2){ ?>
+                <p><?php echo Yii::t('contentForm','Reference').": ".$referencia; ?></p>	
+                  <div style="margin: 0 auto; " id="voucher"><?php echo CHtml::decode($voucher); ?>
+                  </div>
+              <?php } ?>
                     <h3 class="margin_top"><?php echo Yii::t('contentForm','Order Details');  ?></h3>
                     <div>
                         <table class='table' width='100%' >
