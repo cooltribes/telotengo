@@ -1,9 +1,8 @@
 <?php
-$nf = new NumberFormatter("es_VE", NumberFormatter::CURRENCY);
+
 $this->setPageTitle(Yii::app()->name . " - Resumen de la orden");
 if (!Yii::app()->user->isGuest) { // que este logueado
     $user = User::model()->findByPk(Yii::app()->user->id);
-    $tipo_pago = 2; //tarjeta
 ?>
 <?php //echo "xPagar".$orden->getxPagar()." SumxOrden".Detalle::model()->getSumxOrden($orden->id);  ?>
 <style>
@@ -18,14 +17,23 @@ if (!Yii::app()->user->isGuest) { // que este logueado
       <div class="col-md-8 col-md-offset-2">
         <?php
           if ($orden->estado == 3) { // Listo el pago
-        ?>   
+        ?>    
           <div class='alert alert-success margin_top_medium margin_bottom'>
             <h1>Tu orden ha sido completada satisfactoriamente.</h1>
               <p>Hemos recibido los datos de tu compra <br/>
                  Tu tarjeta será enviada y estará disponible para ser aplicada al momento de confirmar el pago</p>
           </div>
           <?php
+          }else if($orden->estado == 1){ // Por pagar aun
+          ?>
+          <div class='alert alert-success margin_top_medium margin_bottom'>
+            <h1>Tu Gift Card se ha creado satisfactoriamente.</h1>
+              <p>Hemos recibido los datos de tu compra<br/>
+              Tu tarjeta será enviada y estará disponible para ser aplicada al momento de confirmar el pago</p>
+          </div>
+          <?php
           }
+
           ?>
           <section class="bg_color3 margin_top  margin_bottom_small padding_small box_1">
             <h3> Resumen de la compra: </h3>
@@ -42,51 +50,42 @@ if (!Yii::app()->user->isGuest) { // que este logueado
                   </tr>
               </table>
               <hr/> 
-              <p>Hemos enviado un resumen de la compra a tu correo electrónico: <strong><?php echo $user->email; ?></strong> </p>          
-             	<?php if($tipoPago == 2){ ?>
+              <p>Hemos enviado una notificación de pago a tu correo electrónico: <strong><?php echo $user->email; ?></strong> </p>
+              <p>
+              <a href="<?php echo Yii::app()->baseUrl; ?>/bolsa/registrarpagoGC" class="btn btn-danger" title="Registrar pago">Registrar Pago</a>
+              </p>      
+             	<?php
+
+              if(Yii::app()->getSession()->get('tipoPago') == 2){ ?>
                 <p><?php echo Yii::t('contentForm','Reference').": ".$referencia; ?></p>	
-                  <div style="margin: 0 auto; " id="voucher"><?php echo CHtml::decode($voucher); ?>
-                  </div>
-              <?php } ?>
-                    <h3 class="margin_top"><?php echo Yii::t('contentForm','Order Details');  ?></h3>
+                  <div style="margin: 0 auto; " id="voucher"><?php echo CHtml::decode($voucher); ?></div>
+                    <?php } ?>
+
+                    <h3 class="margin_top">Detalle de la Orden.</h3>
                     <div>
                         <table class='table' width='100%' >
                             <thead>                                
-                                <tr>
-                                    <th colspan='2'><?php echo Yii::t('contentForm','Gift Card');  ?></th>
-                                    <th><?php echo Yii::t('contentForm','Amount');  ?></th>
-                                    <th></th>
+                              <tr>
+                                <th colspan='2'>Gift Card</th>
+                                <th>Monto</th>
+                                <th></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php 
-                                ////            $aaa = CHtml::image(Yii::app()->baseUrl . str_replace(".","_thumb.",$img->url), "Imagen ", array("width" => "70", "height" => "70",'class'=>'margin_bottom'));
-////            echo "<td>".$aaa."</td>";
-//             echo"<td><img src='http://placehold.it/70x70/' class='margin_bottom'></td>";
-//            echo "
-//                <td>
-//                <strong>".$producto->nombre."</strong> <br/>
-//                <strong>Color</strong>: ".$color->valor."<br/>
-//                <strong>Talla</strong>: ".$talla->valor."</td>
-//                </td>
-//                ";
-//            echo "<td>Bs. ".$pre."</td>";
-//                    echo "<td>".$individual->cantidad."</td>
-//                    ";
-                                
-                                /*Por los momentos una sola giftcard por Compra*/
-                                $giftcard = Giftcard::model()->findByAttributes(array("orden_id" => $orden->id));
-                                $entrega = Yii::app()->getSession()->get('entrega');
-                                $envio = new EnvioGiftcard();
-                                $envio->attributes = Yii::app()->getSession()->get('envio');
-                                ?>
-                                <tr>
-                                    <td>
-                                        <!--<img src='<?php echo Yii::app()->baseUrl; ?>/images/giftcards/gift_card_one_x114.png' class='margin_bottom'>-->
-                                        <img src='<?php echo 
-                                        Yii::app()->baseUrl."/images/giftcards/{$giftcard->plantilla_url}_x114.jpg"; ?>' class='margin_bottom'>
+                              <?php                    
+                              /*Por los momentos una sola giftcard por Compra*/
+                              $giftcard = Giftcard::model()->findByAttributes(array("orden_id" => $orden->id));
+                              $envio = new EnvioGiftcard();
+                              $envio->attributes = Yii::app()->getSession()->get('envio');
+                              ?>
+                              <tr>
+                              <td>
+                                <!--<img src='<?php echo Yii::app()->baseUrl; ?>/images/giftcards/gift_card_one_x114.png' class='margin_bottom'>-->
+                                <img src='<?php echo Yii::app()->baseUrl."/images/giftcards/gift_card_one_x470.jpg"; ?>' class='margin_bottom'>
                                     </td>
-                                    <td>
+                                    <td></td><td><?php 
+                                    /*
+                                      <td>
                                         <strong><?php echo Yii::t('contentForm','Code');  ?>:</strong> <?php echo $giftcard->getMascaraCodigo(); ?><br/>
                                         <strong><?php echo Yii::t('contentForm','Validity');  ?>:</strong> <?php echo Yii::t('contentForm','From1')." <i>".date("d-m-Y", $giftcard->getInicioVigencia()).
                                                 "</i>".Yii::t('contentForm','To')." <i>".date("d-m-Y", $giftcard->getFinVigencia())."</i>"; ?><br/>
@@ -95,105 +94,35 @@ if (!Yii::app()->user->isGuest) { // que este logueado
                                         if($entrega == 2){ ?>
                                         <strong><?php echo Yii::t('contentForm','Sent to:');  ?></strong> <?php echo $envio->email; ?><br/>
                                         <?php } ?>
-                                    </td>
-                                    <td><?php echo Yii::t('contentForm','currSym').' '.$giftcard->monto; ?></td>
+                                      </td>
+                                    */
+                                    echo 'Bs. '.$orden->total; ?></td>
                                     <td>
-                                    <?php 
+                                    <?php /*
                                     //si era para imprimir
-                                    if($entrega == 1){
                                         $this->widget("bootstrap.widgets.TbButton", array(
                                            'buttonType' => "link" ,
                                            'type' => "danger" ,
                                            'icon' => "print white" ,
-                                           'label' => Yii::t('contentForm','Print'),
-                                           'url' => "javascript:printElem('#divImprimir')" ,
+                                           'label' => "Imprimir",
+                                           'url' => "javascript:print()" ,
                                         ));
-                                    }
+                                    
                                     //si era para enviar
-                                    if($entrega == 2){
-                                        echo "<i>".Yii::t('contentForm','Sent by email')."</i>";
-                                    } 
-                                    ?>
+                                        echo "<br/><i>Además será enviada al correo electrónico</i>";  */
+                                    ?> 
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                </section>
+                </section> 
                 <hr/>
-                <a href="../../tienda/index" class="btn btn-danger" title="seguir comprando"><?php echo Yii::t('contentForm','Go to Store'); ?></a> </div>
+                <a href="<?php echo Yii::app()->baseUrl; ?>/tienda/index" class="btn btn-danger" title="seguir comprando">Volver a la tienda</a> </div>
         </div>
-    </div>
-
+    </div> 
     <!-- /container -->
-<div class="hide" id="divImprimir">
-    
-<div style="width: 350px">
-    
-<table class="table table-condensed" border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnImageCardBlock">
-  <tbody class="mcnImageCardBlockOuter">
-      <tr>
-          <td class="mcnImageCardBlockInner" valign="top" style="padding-top:9px; padding-right:18px; padding-bottom:9px; padding-left:18px;">
-
-              <table align="right" border="0" cellpadding="0" cellspacing="0" class="mcnImageCardBottomContent" width="100%" style="border: 1px solid rgb(153, 153, 153); background-color: rgb(255, 255, 255);">
-                  <tbody>
-                      <tr>
-                          <td class="mcnImageCardBottomImageContent" align="left" valign="top" style="padding-top:18px; padding-right:18px; padding-bottom:0; padding-left:18px; font-family: Helvetica; text-align:center;">
-                              <img alt="" src="<?php echo 
-                                        Yii::app()->baseUrl."/images/giftcards/{$giftcard->plantilla_url}_x531.jpg"; ?>" width="470" style="max-width:470px;" class="mcnImage blockDropTarget" id="mojo_neapolitan_preview_ImageUploader_281" widgetid="mojo_neapolitan_preview_ImageUploader_281">
-
-                          </td>
-                      </tr>
-                      <tr>
-                          <td class="mcnTextContent" valign="top" style="padding-top:9px; padding-right:9px; padding-bottom:9px; padding-left:9px;">
-                              <table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnImageCardBlock">
-                                  <tbody class="mcnImageCardBlockOuter">
-                                      <tr>
-                                          <td class="mcnImageCardBlockInner" valign="" >
-
-                                              <table align="right" border="0" cellpadding="0" cellspacing="0" class="mcnImageCardBottomContent" width="100%">
-                                                  <tbody>
-                                                      <tr>
-                                                          <td class="mcnTextContent" valign="top" style="padding-top:9px; padding-right:9px; padding-bottom:9px; padding-left:24px; border-right: 1px solid #ddd;" width="213">
-                                                              <span style="font-size:42px; color:#6d2d56;"><?php echo $giftcard->monto.' '.Yii::t('contentForm','currSym');?>.</span><br>
-                                                              <br>
-                                                              <span style="color:#9b9894;"><?php echo Yii::t('contentForm','Code'); ?>:  </span><br>
-                                                              <span style="font-size: 14px; color: #000;"><?php echo $giftcard->getCodigo() ?></span>
-                                                          </td>
-                                                          <td valign="top" style="padding-top:9px; padding-right:9px; padding-bottom:9px; padding-left:9px;" width="263">
-                                                              <br>
-                                                              <strong><?php echo Yii::t('contentForm','To1'); ?>: </strong><span> <?php echo  $envio->nombre ?></span>
-                                                              <br>
-                                                              <strong><?php echo Yii::t('contentForm','Message'); ?>:</strong><span><?php echo $envio->mensaje ?></span>
-                                                          </td>
-                                                      </tr>
-                                                  </tbody>
-                                              </table>
-                                          </td>
-                                      </tr>
-                                  </tbody>
-                              </table>   
-                          </td>                         
-                      </tr>
-                      <tr>
-                          <td style="text-align:center; font-size: 11px; margin-top:20px; padding-bottom:10px; padding-top:10px; font-size: 11px;">
-                              <?php echo Yii::t('contentForm','Valid from <strong>{start}</strong> until <strong>{end}</strong>',array('{start}'=>date("d-m-Y", $giftcard->getInicioVigencia()),'{end}'=>date("d-m-Y", $giftcard->getFinVigencia()))); ?>
-                          </td>
-                      </tr>                                                              
-                  </tbody>
-              </table>
-
-
-          </td>
-      </tr>
-  </tbody>
-</table>
-
-    
-</div>
-    
-</div>
-    <?php
+<?php
 }// si esta logueado
 else {
     // redirecciona al login porque se murió la sesión
@@ -202,18 +131,6 @@ else {
     header('Location: ' . $url);
 }
 ?>
-
-<!-- Modal Window -->
-<?php
-$detPago = new Detalle;
-$detPago->monto = 0;
-?>
-
-
-<!-- <input type="hidden" id="idDetalle" value="<?php //echo($orden->detalle_id);  ?>" /> -->
-
-<!-- // Modal Window --> 
-
 <script type="text/javascript">
 /*<![CDATA[*/
     function printElem(elem)
@@ -241,4 +158,4 @@ $detPago->monto = 0;
         return true;
     }
 /*]]>*/
-</script>
+</script> 

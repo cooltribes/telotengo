@@ -63,7 +63,7 @@ Estados
             array('fecha_uso', 'safe'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('id, codigo, monto, estado, inicio_vigencia, fin_vigencia, fecha_uso, comprador, beneficiario', 'safe', 'on'=>'search'),
+            array('id, codigo, monto, estado, inicio_vigencia, fin_vigencia, fecha_uso, comprador, beneficiario, orden_id', 'safe', 'on'=>'search'),
         );
     }
 
@@ -94,6 +94,7 @@ Estados
             'fecha_uso' => 'Fecha Uso',
             'comprador' => 'Comprador',
             'beneficiario' => 'Beneficiario',
+            'orden_id' => 'Orden ID',
         );
     }
 
@@ -124,6 +125,7 @@ Estados
         $criteria->compare('fecha_uso',$this->fecha_uso,true);
         $criteria->compare('comprador',$this->comprador);
         $criteria->compare('beneficiario',$this->beneficiario);
+        $criteria->compare('orden_id',$this->orden_id);
 
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,

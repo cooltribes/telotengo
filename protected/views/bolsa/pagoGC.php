@@ -292,7 +292,6 @@ $(document).ready(function() {
 
 //Boton siguiente - General para todos los metodos de pago        
 $("#btn-siguiente").click(function(e){
-    alert("NAAAAAAAAAAAA");
     $("#tarjeta-form").submit();
 });
 

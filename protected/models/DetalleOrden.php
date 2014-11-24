@@ -58,7 +58,7 @@ class DetalleOrden extends CActiveRecord
 			array('nombre', 'length', 'max'=>125),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, monto, fecha, estado, confirmacion, nombre, cedula, orden_id, tipo_pago_id', 'safe', 'on'=>'search'),
+			array('id, monto, fecha, estado, confirmacion, nombre, cedula, orden_id, tipo_pago_id, comentario', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -90,6 +90,7 @@ class DetalleOrden extends CActiveRecord
 			'cedula' => 'Cedula',
 			'orden_id' => 'Orden',
 			'tipo_pago_id' => 'Tipo Pago',
+			'comentario' => "Comentario",
 		);
 	}
 
@@ -113,6 +114,7 @@ class DetalleOrden extends CActiveRecord
 		$criteria->compare('cedula',$this->cedula,true);
 		$criteria->compare('orden_id',$this->orden_id);
 		$criteria->compare('tipo_pago_id',$this->tipo_pago_id);
+		$criteria->compare('comentario',$this->comentario);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
