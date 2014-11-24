@@ -141,7 +141,7 @@ if (!Yii::app()->user->isGuest) { // que este logueado
             			    'action'=>Yii::app()->createUrl('bolsa/comprarGC'),
             			    'htmlOptions'=>array('class'=>'well'),
             			)); 
-                        
+                        }
                         $tipo_pago = Yii::app()->getSession()->get('tipoPago');
                         echo CHtml::hiddenField('codigo_randon',rand());
                         
@@ -158,7 +158,8 @@ if (!Yii::app()->user->isGuest) { // que este logueado
                                 //'onclick'=>'js:enviar_pago();',
                                 'id'=>'btnPagarTDC',
                                 )
-                        )); 
+                        ));
+
                         $this->endWidget(); 
                     ?>
                 </div>
@@ -180,7 +181,7 @@ if (!Yii::app()->user->isGuest) { // que este logueado
 <?php $this->endWidget(); ?>
 
 <?php 
-}
+
 }// si esta logueado 
 else{
 	// redirecciona al login porque se murió la sesión

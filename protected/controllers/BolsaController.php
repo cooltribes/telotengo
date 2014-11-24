@@ -33,7 +33,7 @@ class BolsaController extends Controller
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
 				'actions'=>array('create','update','agregar','view','eliminar','authenticate','confirm','cities','addAddress','placeOrder',
-								'sendValidationEmail','actualizar','agregarAjax','calcularEnvio','authGC','pagoGC','confirmarGC','crearGC','sendsummary'),
+								'sendValidationEmail','actualizar','agregarAjax','calcularEnvio','authGC','pagoGC','confirmarGC','crearGC','sendsummary','comprarGC'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -703,6 +703,7 @@ class BolsaController extends Controller
 
                 //$this->crearGC($userId, $orden->id);
                 	$user = User::model()->findByPk($userId)->profile;
+                	$usuario = User::model()->findByPk($userId);
                 	$message = new YiiMailMessage;                
 			        $subject = 'Tu compra de Gift Card de Sigma Tiendas';
 			        $body = "¡Hola <strong>{$user->first_name}</strong>!<br/><br/>
@@ -712,7 +713,7 @@ class BolsaController extends Controller
 			        $message->subject = $subject;
 			        $message->setBody($body, 'text/html');
 			        
-			        $message->addTo($comprador->email);
+			        $message->addTo($usuario->email);
 			        return Yii::app()->mail->send($message);
                 
             	break;
