@@ -52,11 +52,11 @@ if (!Yii::app()->user->isGuest) { // que este logueado
               <hr/> 
               <p>Hemos enviado una notificación de pago a tu correo electrónico: <strong><?php echo $user->email; ?></strong> </p>
               <p>
-              <a href="<?php echo Yii::app()->baseUrl; ?>/bolsa/registrarpagoGC" class="btn btn-danger" title="Registrar pago">Registrar Pago</a>
+              <a href="<?php echo Yii::app()->baseUrl; ?>/bolsa/registrarpagoGC/<?php echo $orden->id; ?>" class="btn btn-danger" title="Registrar pago">Registrar Pago</a>
               </p>      
              	<?php
 
-              if(Yii::app()->getSession()->get('tipoPago') == 2){ ?>
+              if(Yii::app()->getSession()->get('tipoPago') == 2){ ?> 
                 <p><?php echo Yii::t('contentForm','Reference').": ".$referencia; ?></p>	
                   <div style="margin: 0 auto; " id="voucher"><?php echo CHtml::decode($voucher); ?></div>
                     <?php } ?>

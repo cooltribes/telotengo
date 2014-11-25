@@ -685,6 +685,12 @@ class BolsaController extends Controller
                 $orden->fecha = date("Y-m-d H:i:s"); // Datetime exacto del momento de la compra 
                 $orden->total = $total;
                 $orden->user_id = $userId;
+				
+				$campos = Yii::app()->getSession()->get('envio');                    
+            	
+            	$orden->nombre = $campos["nombre"];
+            	$orden->mensaje = $campos["mensaje"];
+            	$orden->email = $campos["email"];
 
                 if (!($orden->save())){
                     echo CJSON::encode(array(
@@ -748,7 +754,7 @@ class BolsaController extends Controller
                         Yii::app()->end();
                     }	
 	                    //Pasar de la bolsa a las giftcards
-	                    $this->crearGC($userId, $orden->id);
+	                    $this->actionCrearGC($userId, $orden->id, FALSE);
 	                    
 	                    //Generar el detalle de pago
 	                    $detalle->orden_id = $orden->id;
@@ -774,17 +780,31 @@ class BolsaController extends Controller
 		
 
    /*Pasar de la bolsa a generar las giftcards*/
-    public function crearGC($userId, $ordenId){
+    public function actionCrearGC($userId, $ordenId, $deposito){
         
         $giftcards = BolsaGC::model()->findAllByAttributes(array("user_id" => $userId));		
         $resumen="";
         foreach($giftcards as $gift){
             
-            $model = new Giftcard;
+			$model = new Giftcard;
             $model->monto = $gift->monto;
-            $model->plantilla_url = $gift->plantilla_url;
+
+        	if($deposito == FALSE){	                	
+                $envio = new EnvioGiftcard();
+                $campos = Yii::app()->getSession()->get('envio');                    
+                
+                $envio->nombre = $campos["nombre"];
+                $envio->mensaje = $campos["mensaje"];
+                $envio->email = $campos["email"];
+
+                $model->beneficiario = $envio->email;
+    		}else{
+    			$orden = OrdenGC::model()->findByPk($ordenId);
+
+    			$model->beneficiario = $orden->email;
+    		}
             
-            $model->estado = 1; //inactiva hasta que pague con deposito
+            $model->estado = 1; // Enviada
             $model->inicio_vigencia = date('Y-m-d');
             $now = date('Y-m-d', strtotime('now'));
             $model->fin_vigencia = date("Y-m-d", strtotime($now." + 1 year"));
@@ -799,59 +819,50 @@ class BolsaController extends Controller
             
             $model->save();
             $gift->delete();
-			
-            //Enviar la giftcard por correo solo si se selecciono email al comprar
-            // o cuando no sea por deposito
-            if(Yii::app()->getSession()->get('tipoPago') != 1){
-            	                	
-                $envio = new EnvioGiftcard();
-                $campos = Yii::app()->getSession()->get('envio');                    
-                
-                $envio->nombre = $campos["nombre"];
-                $envio->mensaje = $campos["mensaje"];
-                $envio->email = $campos["email"];
-                                    
-                $saludo = "<strong>{$model->UserComprador->profile->first_name}</strong> te ha enviado una Gift Card como obsequio.";               
+            
+            $user = User::model()->findByPk($userId);
 
-                $personalMes = ""; 
-                
-                if($envio->mensaje != ""){
-                    $personalMes = "<br/><br/><i>" . $envio->mensaje . "</i><br/>";
-                }
-                                  
-                $message = new YiiMailMessage;
-                //Opciones de Mandrill
-                $message->activarPlantillaMandrill("plantilla-correos-no-footer");
-                $subject = 'Gift Card de Personaling';
-                
-                if(Yii::app()->language == "es_ve"){ 
-                                    $body = "¡Hola <strong>{$envio->nombre}</strong>!<br><br> {$saludo} 
-                    	                    <br/>".Yii::t('contentForm','Start enjoying your Gift Card in <a href="https://www.personaling.com.ve" title="Personaling">Personaling.com.ve</a> using it.')."
-                    	                    <br/>
-                                            (Para ver la Gift Card permite mostrar las imagenes de este correo) <br/><br/>";
-                                    }
-                                    else{
-                                    $body = "¡Hola <strong>{$envio->nombre}</strong>!<br><br> {$saludo} 
-                    	                    <br/>".Yii::t('contentForm','Start enjoying your Gift Card in <a href="https://www.personaling.es" title="Personaling">Personaling.es</a> using it.')."
-                    	                    <br/>
-                                            (Para ver la Gift Card permite mostrar las imagenes de este correo) <br/><br/>";	
-                                    }
+            $saludo = "<strong>{$user->profile->first_name}</strong> te ha enviado una Gift Card como obsequio.";               
 
-                $body = $this->renderPartial("//mail/_giftcard",
-                        array('body' => $body,'envio' => $envio,
-                            'model'=> $model), true);
-                
-                $message->subject = $subject;
-                $message->setBody($body, 'text/html');
-                $message->addTo($envio->email);
-                Yii::app()->mail->send($message); 
-
-                $resumen.="<tr><td>Email</td><td>{$envio->email}</td><td>{$model->monto}</td><tr>";
+            if($envio->mensaje != ""){
+                $personalMes = "<br/><br/><i>" . $envio->mensaje . "</i><br/>";
             }
-            	 
-        } 
+                              
+            $message = new YiiMailMessage;
+            $subject = 'Gift Card de Sigma Tiendas';
+            
+            if($deposito == FALSE){
+            	$body = "¡Hola <strong>{$envio->nombre}</strong>!<br><br> {$saludo} 
+                    <br/> {$envio->mensaje}
+                    <br/> Comienza a disfrutar de tu Gift Card usándola en <a href='www.sigmatiendas.com' title='Sigma Tiendas'>Sigmatiendas.com</a>
+                    <br/>Tu código: {$model->codigo}
+                    <br/>
+                    (Para ver la Gift Card permite mostrar las imagenes de este correo) <br/><br/>";
+            	$message->addTo($envio->email);
+            }
+            else{
+            	$body = "¡Hola <strong>{$orden->nombre}</strong>!<br><br> {$saludo} 
+            		<br/> {$orden->mensaje}
+                    <br/> Comienza a disfrutar de tu Gift Card usándola en <a href='www.sigmatiendas.com' title='Sigma Tiendas'>Sigmatiendas.com</a>
+                    <br/>Tu código: {$model->codigo}
+                    <br/>
+                    (Para ver la Gift Card permite mostrar las imagenes de este correo) <br/><br/>";
+            	$message->addTo($orden->email);
+            }
+
+           	$message->from = array(Yii::app()->params['adminEmail'] => "Sigma Tiendas");
+            $message->subject = $subject;
+            $message->setBody($body, 'text/html');
+            Yii::app()->mail->send($message); 	 
+            
+        }
         
         $this->actionSendSummary($ordenId,$userId);
+        Yii::app()->user->setFlash('success',"Gift Card enviada correctamente.");
+        
+        if($deposito == TRUE){
+        	$this->redirect($this->createAbsoluteUrl('giftcard/admin',array(),'http'));	
+        }
 	}	
 
 	public function actionSendSummary($ordenId,$userId){
@@ -864,9 +875,9 @@ class BolsaController extends Controller
         $body = "¡Hola <strong>{$user->first_name}</strong>!<br/><br/>
                 Hemos procesado satisfactoriamente tu compra de Gift Card.";
 
+        $message->from = array(Yii::app()->params['adminEmail'] => "Sigma Tiendas");
         $message->subject = $subject;
         $message->setBody($body, 'text/html');
-        
         $message->addTo($comprador->email);
         return Yii::app()->mail->send($message);         
 	}
@@ -889,16 +900,19 @@ class BolsaController extends Controller
 			// datos del deposito
 			$pago->attributes = $_POST['DetalleOrden'];
 			$pago->estado = 0; // sin revisar
-			$pago->orden_id = $id;
-			$pago->comentario = "Pago de Gift Card";
+			$pago->ordenGC_id = $id; // para Giftcard
+			$pago->comentario = "Pago de Gift Card"; 
 			$pago->tipo_pago_id = 2; // Deposito
+
+			$ordengc = OrdenGC::model()->findByPk($id);
+			$ordengc->saveAttributes(array('estado'=>2)); // En espera de confirmacion 
+
 			if($pago->save()){
 				Yii::app()->user->setFlash('success',"El pago ha sido registrado satisfactoriamente. En un periodo de 12-24 horas estarás recibiendo tu Gift Card");       
-			}else{
-				var_dump($pago->getErrors());
-				Yii::app()->end();
-			} 
-		} 
+			}
+
+			$this->redirect($this->createAbsoluteUrl('user/user/tucuenta'));	
+		}
   
 		$this->render('registrarpago',array('pago'=>$pago));
 	} 

@@ -38,7 +38,7 @@ class OrdenGC extends CActiveRecord
 	 * @param string $className active record class name.
 	 * @return OrdenGC the static model class
 	 */
-	public static function model($className=__CLASS__)
+	public static function model($className=__CLASS__) 
 	{
 		return parent::model($className);
 	}
@@ -65,7 +65,7 @@ class OrdenGC extends CActiveRecord
 			array('fecha', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, estado, fecha, total, user_id, admin_id', 'safe', 'on'=>'search'),
+			array('id, estado, fecha, total, user_id, admin_id, nombre, mensaje, email', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -95,6 +95,9 @@ class OrdenGC extends CActiveRecord
 			'total' => 'Total',
 			'user_id' => 'User',
 			'admin_id' => 'Admin',
+			'nombre' => 'Nombre',
+			'mensaje' => 'Mensaje',
+			'email' => 'Email',
 		);
 	}
 
@@ -115,6 +118,9 @@ class OrdenGC extends CActiveRecord
 		$criteria->compare('total',$this->total);
 		$criteria->compare('user_id',$this->user_id);
 		$criteria->compare('admin_id',$this->admin_id);
+		$criteria->compare('nombre',$this->nombre);
+		$criteria->compare('mensaje',$this->mensaje);
+		$criteria->compare('email',$this->email);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

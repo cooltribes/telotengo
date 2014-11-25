@@ -31,7 +31,7 @@ class GiftcardController extends Controller
                 'users'=>array('@'),
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions 
-                'actions'=>array('admin','delete','create','update','inactivar'), 
+                'actions'=>array('admin','delete','create','update','inactivar','sinpago','poraprobar','aprobar'), 
                 'users'=>array('admin'), 
             ), 
             array('deny',  // deny all users 
@@ -179,6 +179,44 @@ class GiftcardController extends Controller
             'dataProvider'=>$dataProvider, 
         )); 
     } 
+
+    /** 
+     * Las Ordenes de GC que faltan por pagar o por aprobar 
+     */ 
+    public function actionSinPago() 
+    { 
+        $model = new OrdenGC;
+        $model->estado = 1;
+        $dataProvider= $model->search();
+
+        $this->render('sinpago',array( 
+            'dataProvider'=>$dataProvider, 
+        )); 
+    } 
+
+    /** 
+     * Las Ordenes de GC que faltan por pagar o por aprobar 
+     */ 
+    public function actionPorAprobar() 
+    {
+        $model = new OrdenGC;
+        $model->estado = 2;
+        $dataProvider= $model->search();
+
+        $this->render('poraprobar',array( 
+            'dataProvider'=>$dataProvider, 
+        )); 
+    }
+
+    public function actionAprobar($id){
+        $model = DetalleOrden::model()->findByPk($id);
+        $model->saveAttributes(array('estado'=>1)); // aprobado
+
+        $orden = OrdenGC::model()->findByPk($model->ordenGC_id);
+        $orden->saveAttributes(array('estado'=>3)); // Pago confirmado
+
+        $this->redirect($this->createAbsoluteUrl('bolsa/crearGC',array('userId'=>$orden->user_id, 'ordenId'=>$id,'deposito'=>TRUE),'http')); 
+    }
 
     /** 
      * Returns the data model based on the primary key given in the GET variable. 

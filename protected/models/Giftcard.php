@@ -166,7 +166,7 @@ Estados
         }
     }
     
-    public function generarCodigo(){
+    static function generarCodigo(){
         $cantNum = 8;
         $cantLet = 8;
         
