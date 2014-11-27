@@ -10,6 +10,7 @@ echo"<tr>";
 	echo "<td>".$user->email."</td>";
    	echo "<td>".$pago->monto."</td>";
 	echo "<td>".$pago->fecha."</td>";
+	echo "<td>".$data->email."</td>";
 	echo "<td>".$pago->confirmacion."</td>";
 	echo '<td>
 

@@ -431,8 +431,8 @@ class BolsaController extends Controller
 			
 				if($model->save()){
 					echo '<div class="radio">
-				                <label>
-				                    <input type="radio" class="address_checkbox" name="optionsRadios" id="address_'.$model->id.'" value="'.$model->id.'" checked>
+				                <label> 
+				                    <input type="radio" class="address_radio" name="optionsRadios" id="address_'.$model->id.'" value="'.$model->id.'" checked>
 				                    <strong>'.$model->nombre.': </strong>'.$model->direccion_1.' '.$model->direccion_2.'. '.$model->ciudad->nombre.', '.$model->provincia->nombre.'.
 				                </label>
 				            </div>';
@@ -463,13 +463,40 @@ class BolsaController extends Controller
 			}
 		}
 
+		// $subtotal = $subtotal - $_POST['balance'];
+		if($_POST['balance']>0){
+			if($_POST['subtotal'] == 0){ // Ver que balance hay, restar la compra y dejar el resto	
+				$faltaDescontar = $_POST['balance'];
+				$balances = Balance::model()->findAllByAttributes(array('user_id'=>Yii::app()->user->id));
+				
+				foreach($balances as $balance){
+					if($balance->total < $faltaDescontar){ // balance usado en la orden mayor a uno de los conseguidos en BD
+						$faltaDescontar = $faltaDescontar - $balance->total;
+						$balance->delete();
+					}
+					else{
+						$balance->total = $balance->total-$faltaDescontar;
+						$balance->save(); 
+						$faltaDescontar=0; 
+						break; // sale del foreach porque ya descontó todo
+					}
+				}
+			}
+			else{
+				$balances = Balance::model()->findAllByAttributes(array('user_id'=>Yii::app()->user->id));
+				foreach($balances as $balance){
+					$balance->delete();
+				}
+			}
+		}
+
 		$orden = new Orden();
 		$orden->descuento = 0;
 		$orden->envio = $_POST['envio'];
 		$orden->iva = 0;
-		$orden->total = $subtotal + $_POST['envio']; //falta agregar el iva
+		$orden->total = $_POST['subtotal']; // $subtotal + $_POST['envio']; //falta agregar el iva
 		$orden->fecha = date('Y-m-d H:i:s');
-		$orden->estado = 1;
+		$orden->estado = 1; // En espera de pago
 		$orden->users_id = intval($user->id);
 		$orden->tipo_pago_id = intval($_POST['payment_method_id']);
 		
@@ -485,6 +512,24 @@ class BolsaController extends Controller
 				if($orden_inventario->save()){
 					$inventario->cantidad -= $uno->cantidad;
 					if($inventario->save()){
+						// enviar mail de compra
+						$message = new YiiMailMessage;
+						$message->view = "mail_template";
+						$subject = 'Tu compra en Sigma Tiendas #'.$orden->id.' ha sido enviada';
+						$body = "Nos complace informarte que tu pedido #".$orden->id." se ha registrado correctamente
+								<br/>
+								Recuerda registrar los datos de tu pago en la siguiente dirección <a href=''>Registrar Pago</a>
+								<br/>
+								Gracias por confiar en nosotros
+								<br/> 
+								";
+						$params = array('subject'=>$subject, 'body'=>$body);
+						$message->subject = $subject;
+						$message->setBody($params, 'text/html');                
+						$message->addTo($user->email);
+						$message->from = array(Yii::app()->params["adminEmail"] => 'Sigma Tiendas');
+						Yii::app()->mail->send($message);
+
 						$post_data = array(
 							'status' => 'ok',
 						    'order' => $orden->id,
@@ -687,7 +732,7 @@ class BolsaController extends Controller
                 $orden->user_id = $userId;
 				
 				$campos = Yii::app()->getSession()->get('envio');                    
-            	
+
             	$orden->nombre = $campos["nombre"];
             	$orden->mensaje = $campos["mensaje"];
             	$orden->email = $campos["email"];
@@ -708,7 +753,7 @@ class BolsaController extends Controller
 			        $body = "¡Hola <strong>{$usuario->first_name}</strong>!<br/><br/>
 			                Hemos procesado satisfactoriamente tu compra de Gift Card.<br/>
 			                Recuerda enviar tu pago para poder enviar la tarjeta de regalo a su destinatario.<br/>
-			                Entra en la siguiente dirección para registrar tu pago <a href='http://telotengo.com/sigmatiendas/bolsa/registrarpagoGC'
+			                Entra en la siguiente dirección para registrar tu pago <a href='http://telotengo.com/sigmatiendas/bolsa/registrarpagoGC/".$orden->id."''
 			                title='Registrar'>Registrar Pago</a>";
 			        $message->from = array(Yii::app()->params['adminEmail'] => "Sigma Tiendas");
 			        $message->subject = $subject;
@@ -789,18 +834,17 @@ class BolsaController extends Controller
 			$model = new Giftcard;
             $model->monto = $gift->monto;
 
-        	if($deposito == FALSE){	                	
+           	if($deposito == FALSE){	                	
                 $envio = new EnvioGiftcard();
-                $campos = Yii::app()->getSession()->get('envio');                    
-                
+                $campos = Yii::app()->getSession()->get('envio');                   
+
                 $envio->nombre = $campos["nombre"];
                 $envio->mensaje = $campos["mensaje"];
                 $envio->email = $campos["email"];
 
                 $model->beneficiario = $envio->email;
     		}else{
-    			$orden = OrdenGC::model()->findByPk($ordenId);
-
+    			$orden = OrdenGC::model()->findByPk($ordenId); 
     			$model->beneficiario = $orden->email;
     		}
             
@@ -823,36 +867,45 @@ class BolsaController extends Controller
             $user = User::model()->findByPk($userId);
 
             $saludo = "<strong>{$user->profile->first_name}</strong> te ha enviado una Gift Card como obsequio.";               
-
-            if($envio->mensaje != ""){
-                $personalMes = "<br/><br/><i>" . $envio->mensaje . "</i><br/>";
+            if($deposito == FALSE){
+	            if($envio->mensaje != ""){
+	                $personalMes = "<br/><br/><i>" . $envio->mensaje . "</i><br/>";
+	            }
             }
-                              
+            else{
+            	if($orden->mensaje != ""){
+	                $personalMes = "<br/><br/><i>" . $orden->mensaje . "</i><br/>";
+	            }
+            }
+
             $message = new YiiMailMessage;
             $subject = 'Gift Card de Sigma Tiendas';
             
             if($deposito == FALSE){
             	$body = "¡Hola <strong>{$envio->nombre}</strong>!<br><br> {$saludo} 
-                    <br/> {$envio->mensaje}
+                    <br/> Mensaje: {$envio->mensaje}
                     <br/> Comienza a disfrutar de tu Gift Card usándola en <a href='www.sigmatiendas.com' title='Sigma Tiendas'>Sigmatiendas.com</a>
                     <br/>Tu código: {$model->codigo}
+                    <br/>Para aplicar tu Gift Card ingresa tu código en la siguiente dirección <a href='telotengo.com/sigmatiendas/giftcard/aplicar'>Cobrar Gift Card</a>
                     <br/>
                     (Para ver la Gift Card permite mostrar las imagenes de este correo) <br/><br/>";
-            	$message->addTo($envio->email);
+            	//$message->addTo($envio->email);
             }
             else{
             	$body = "¡Hola <strong>{$orden->nombre}</strong>!<br><br> {$saludo} 
-            		<br/> {$orden->mensaje}
+            		<br/> Mensaje: {$orden->mensaje}
                     <br/> Comienza a disfrutar de tu Gift Card usándola en <a href='www.sigmatiendas.com' title='Sigma Tiendas'>Sigmatiendas.com</a>
                     <br/>Tu código: {$model->codigo}
+                    <br/>Para aplicar tu Gift Card ingresa tu código en la siguiente dirección <a href='telotengo.com/sigmatiendas/giftcard/aplicar'>Cobrar Gift Card</a>
                     <br/>
                     (Para ver la Gift Card permite mostrar las imagenes de este correo) <br/><br/>";
-            	$message->addTo($orden->email);
+            	//$message->addTo($orden->email);
             }
 
            	$message->from = array(Yii::app()->params['adminEmail'] => "Sigma Tiendas");
             $message->subject = $subject;
             $message->setBody($body, 'text/html');
+            $message->addTo($model->beneficiario);
             Yii::app()->mail->send($message); 	 
             
         }
@@ -900,7 +953,8 @@ class BolsaController extends Controller
 			// datos del deposito
 			$pago->attributes = $_POST['DetalleOrden'];
 			$pago->estado = 0; // sin revisar
-			$pago->ordenGC_id = $id; // para Giftcard
+			$pago->orden_id = 0; // para Giftcard
+			$pago->ordenGC_id = $id; // para Giftcard 
 			$pago->comentario = "Pago de Gift Card"; 
 			$pago->tipo_pago_id = 2; // Deposito
 
@@ -909,6 +963,10 @@ class BolsaController extends Controller
 
 			if($pago->save()){
 				Yii::app()->user->setFlash('success',"El pago ha sido registrado satisfactoriamente. En un periodo de 12-24 horas estarás recibiendo tu Gift Card");       
+			}
+			else{
+				var_dump($pago->getErrors());
+				Yii::app()->end();
 			}
 
 			$this->redirect($this->createAbsoluteUrl('user/user/tucuenta'));	

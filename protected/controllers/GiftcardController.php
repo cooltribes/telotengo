@@ -27,11 +27,11 @@ class GiftcardController extends Controller
     { 
         return array(  
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions'=>array('comprar','registrar'),
+                'actions'=>array('comprar','registrar','aplicar'),
                 'users'=>array('@'),
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions 
-                'actions'=>array('admin','delete','create','update','inactivar','sinpago','poraprobar','aprobar'), 
+                'actions'=>array('admin','delete','create','update','inactivar','sinpago','poraprobar','aprobar','rechazar'), 
                 'users'=>array('admin'), 
             ), 
             array('deny',  // deny all users 
@@ -68,7 +68,6 @@ class GiftcardController extends Controller
 
             if($modeldos->validate()){                    
                 $envio->attributes = $_POST['EnvioGiftcard'];                        
-
                 Yii::app()->getSession()->remove('entrega');                        
                 Yii::app()->getSession()->add('entrega',$_POST['entrega']);
                         
@@ -215,7 +214,70 @@ class GiftcardController extends Controller
         $orden = OrdenGC::model()->findByPk($model->ordenGC_id);
         $orden->saveAttributes(array('estado'=>3)); // Pago confirmado
 
-        $this->redirect($this->createAbsoluteUrl('bolsa/crearGC',array('userId'=>$orden->user_id, 'ordenId'=>$id,'deposito'=>TRUE),'http')); 
+        $this->redirect($this->createAbsoluteUrl('bolsa/crearGC',array('userId'=>$orden->user_id, 'ordenId'=>$model->ordenGC_id,'deposito'=>TRUE),'http')); 
+    }
+
+    public function actionAplicar(){
+        $model = new Giftcard;
+
+        if(isset($_POST['Giftcard'])){
+            $gc = Giftcard::model()->findByAttributes(array('codigo'=>$_POST['Giftcard']['codigo']));
+
+            if(isset($gc)){
+                if($gc->estado==1){ // enviada
+                    $balance = new Balance;
+                    $balance->total = $gc->monto;
+                    $balance->orden_id = 0;
+                    $balance->user_id = Yii::app()->user->id;
+                    $balance->tipo = 2; // Giftcard
+
+                    if($balance->save()){
+                        $gc->saveAttributes(array('estado'=>2)); // aplicada
+                        Yii::app()->user->setFlash('success',"Su Gift Card ha sido aplicada correctamente y ya se encuentra el saldo disponible.");
+                    }    
+                }
+                else{
+                    Yii::app()->user->setFlash('error', 'La Gift Card ya fue aplicada o se encuentra inactiva.');
+                    $this->redirect(array('aplicar'));
+                }
+            }
+            else{
+                Yii::app()->user->setFlash('error', 'El código de Gift Card que ingresó no existe.');
+                $this->redirect(array('aplicar'));
+            }
+
+        }
+
+        $this->render('aplicar',array( 
+            'model'=>$model,
+        ));
+    }
+
+    public function actionRechazar($id){
+        $model = DetalleOrden::model()->findByPk($id);
+        $model->saveAttributes(array('estado'=>2)); // rechazado
+
+        $orden = OrdenGC::model()->findByPk($model->ordenGC_id);
+        $orden->saveAttributes(array('estado'=>6)); // Pago rechazado
+        
+        $user = User::model()->findByPk($orden->user_id);
+
+        $message = new YiiMailMessage;
+        $subject = 'Tu pago de Gift Card en Sigmatiendas';
+        $body = "¡Hola! 
+                <br/> Lamentos informar que tu pago registrado de referencia {$model->confirmacion} 
+                <br/> ha sido rechazado. Dirigite a <a href='www.sigmatiendas.com' title='Sigma Tiendas'>Sigmatiendas.com</a>
+                <br/> o escribe a info@sigmatiendas.com para recibir más información
+                <br/>
+                <br/>";
+        $message->from = array(Yii::app()->params['adminEmail'] => "Sigma Tiendas");
+        $message->subject = $subject;
+        $message->setBody($body, 'text/html');
+        $message->addTo($user->email);
+        Yii::app()->mail->send($message); 
+
+        Yii::app()->user->setFlash('success',"Pago rechazado correctamente.");
+        $this->redirect(array('admin'));
     }
 
     /** 

@@ -9,7 +9,6 @@ $this->breadcrumbs=array(
 );
 
 ?>
-
 		<?php if(Yii::app()->user->hasFlash('success')){?>
 		    <div class="alert in alert-block fade alert-success text_align_center">
 		        <?php echo Yii::app()->user->getFlash('success'); ?>
@@ -99,7 +98,10 @@ $this->breadcrumbs=array(
 		<td><p class="">1</p> Entregas Sin Calificar </td>
     </tr>
 </table> 
-    
+    <section class="bg_color3 margin_bottom_small padding_small box_1">
+    	<h3> Saldo total disponible </h3>
+    	<h5><?php echo Balance::model()->getTotal(); ?> Bs.</h5> 
+    </section>
     <section class="bg_color3 margin_bottom_small padding_small box_1">
 		<h3> Redes sociales registradas </h3>
 					

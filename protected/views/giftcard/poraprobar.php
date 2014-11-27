@@ -27,10 +27,11 @@ $this->breadcrumbs=array(
 	        <tr>
 	            <th scope="col">Orden GC</th>
 	            <th scope="col">Fecha</th>
-	            <th scope="col">Total Orden</th>
+	            <th scope="col">Total GC</th>
 	            <th scope="col">Usuario</th>
 	            <th scope="col">Monto Pago</th>
 	            <th scope="col">Fecha Pago</th>
+	            <th scope="col">Beneficiario</th>
 	            <th scope="col">Numero Pago</th>
 	            <th scope="col">Acción</th>
 	        </tr>

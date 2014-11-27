@@ -16,7 +16,7 @@ class EnvioGiftcard extends CFormModel
             array('email', 'required', 'message' => "Debes indicar un email para enviar la Gift Card"),                        
             array('email', 'email', 'message' => "No es un formato de email válido."),
             //array('mensaje', 'required', 'message' => "Escribe un mensaje para quien recibirá la Gift Card"),
-            array('mensaje', 'safe'),
+            array('mensaje, email, nombre', 'safe'),
             array('mensaje', 'length', 'max' => 140),  
 		);
 	}	
