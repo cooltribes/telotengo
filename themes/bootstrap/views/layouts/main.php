@@ -482,7 +482,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
 					?>
 					
 						<li><a href="<?php echo Yii::app()->baseUrl; ?>/">Inicio</a></li>
-						<li><a href="<?php echo Yii::app()->baseUrl; ?>/tienda/">Tienda</a></li>
+						<li><a href="<?php echo Yii::app()->baseUrl; ?>/tienda/">Tienda</a></li> 
 						<li class="dropdown">
 					        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Direcciones<b class="caret"></b></a>
 					        <ul class="dropdown-menu">

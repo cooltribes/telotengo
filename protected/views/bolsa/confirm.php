@@ -349,6 +349,8 @@
             echo CHtml::hiddenField('subtotal', $subtotal, array('id'=>'subtotal'));
             echo CHtml::hiddenField('peso', $peso, array('id'=>'peso'));
             echo CHtml::hiddenField('envio', $envio, array('id'=>'envio'));
+            echo CHtml::hiddenField('balance', 0, array('id'=>'balance'));
+            echo CHtml::hiddenField('balanceUsado', 0, array('id'=>'balanceUsado'));
 		}
 			?>                       	          
 			
@@ -356,8 +358,23 @@
             
         </div>
         <div class="col-sm-4 col-sm-offset-1 caja">
-           <h3> Resumen</h3>
+            <h3> Resumen</h3>
+            
+                <?php
+                $balance = Balance::model()->getTotal();
+
+                if($balance > 0){ ?>  
+                <label class="radio" id="BalanceDisponible">
+                    <!-- <input type="radio" name="opcionBalance" id="radio-balance" value="1" onclick="usarBalance(<?php echo $balance; ?>)"> -->
+                    <input type="checkbox" name="opcionBalance" id="check-balance" value="Balance" onclick="usarBalance(<?php echo $balance; ?>)">
+                    Usar Balance Disponible
+                    <strong>
+                        <?php echo 'Bs. '.Yii::app()->numberFormatter->formatCurrency($balance, ''); ?>
+                    </strong>      
+                </label>
+                <?php } ?>
             <hr>
+            
             <div class="padding_xsmall">
                 <span>Subtotal: <strong><?php echo $subtotal; ?> Bs.</strong></span>
             </div>
@@ -367,8 +384,11 @@
             <div class="padding_xsmall">
                 <span>IVA: <strong>0,00 Bs.</strong></span>
             </div>
-            <h4>Total: <strong><span class="total"><?php echo $subtotal; ?></span> Bs.</strong> </h4>
-
+            <div id="total_balance" style="display: none;">
+            </div>
+            <div id="total_compra">
+                <h4>Total: <strong><span class="total"><?php echo $subtotal; ?></span> Bs.</strong> </h4>
+            </div>
             <?php
             $this->widget('bootstrap.widgets.TbButton', array(
 				'buttonType'=>'link',
@@ -479,6 +499,7 @@
                         $('.envio').html(envio);
                         $('#envio').val(envio);
                         var total = parseFloat(data.subtotal.replace(",", ".")) + parseFloat($('#subtotal').val().replace(",", "."));
+                        $('#subtotal').val( parseFloat($('#subtotal').val()) + parseFloat(envio) );
                         $('.total').html(total);
                     },
             });
@@ -490,18 +511,18 @@
 		var pass_payment_method = false;
 		var address_id, payment_method_id;
 		$(".address_radio").each(function( index ) {
-			if($(this).prop("checked")){
+			if($(".address_radio").prop("checked", true)){
 				pass_address = true;
 				address_id = $(this).val();
 			}
 		});
 		$(".metodo_pago").each(function( index ) {
-			if($(this).prop("checked")){
+			if($(".metodo_pago").prop("checked")){
 				pass_payment_method = true;
 				payment_method_id = $(this).val();
 			}
 		});
-		
+
 		if(!pass_address || !pass_payment_method){
 			if(!pass_address){
 				$("#place_order_error").html("Debe seleccionar una dirección válida para continuar");
@@ -516,7 +537,7 @@
 			$.ajax({
 			      url: "<?php echo Yii::app()->createUrl('bolsa/placeOrder'); ?>",
 			      type: "post",
-			      data: { address_id : address_id, payment_method_id : payment_method_id, envio: $('#envio').val() },
+			      data: { address_id : address_id, payment_method_id : payment_method_id, envio: $('#envio').val(), balance: $('#balance').val(), subtotal: $('#subtotal').val()},
                   dataType : 'json',
 			      success: function(data){
                         if(data.status == 'ok'){
@@ -566,5 +587,63 @@
 		}
 	
 	}
-	
+
+    function usarBalance(total){
+        if($('#check-balance').is(':checked')){ // si se seleccióno
+            var subtotal = $('#subtotal').val();
+            var balanceRestante = 0;
+            var balanceUsado = 0;
+
+            if(parseFloat(total) > parseFloat(subtotal)){ // Balance es mayor a la orden
+                balanceRestante = parseFloat(total) - parseFloat(subtotal);
+
+                balanceUsado = parseFloat(subtotal);
+                $('#balanceUsado').val(balanceUsado);
+
+                $('#total_balance').html('<span>Balance: <strong>'+balanceUsado+' Bs.</strong></span>');                        
+                $('#total_balance').show();
+        
+                $('#total_compra').html('<h4>Total: <strong><span class="total">0</span> Bs.</strong></h4>');
+        
+                $('#balance').val(balanceUsado);
+                $('#subtotal').val(0);
+
+            }else{ // orden normal, el balance pasa a ser un descuento
+                $('#total_balance').html('<span>Balance: <strong>'+total+' Bs.</strong></span>');                        
+                $('#total_balance').show();
+        
+                $('#total_compra').html('<h4>Total: <strong><span class="total">'+(subtotal-total)+'</span> Bs.</strong></h4>');
+        
+                $('#balance').val(total);
+                $('#subtotal').val(subtotal-total);
+            }
+
+        }
+        else{
+            var balanceUsado = $('#balanceUsado').val();
+            var subtotal = $('#subtotal').val(); 
+
+            if(subtotal > 0){ // no se uso todo el balance
+                $('#total_balance').html('');                        
+                $('#total_balance').hide();
+
+                var nuevo = parseFloat(subtotal)+parseFloat(total); //+parseInt($('#envio').val());
+
+                $('#total_compra').html('<h4>Total: <strong><span class="total">'+nuevo+'</span> Bs.</strong></h4>');
+                
+                $('#balance').val(0);
+                $('#subtotal').val(nuevo);
+            }
+            else{
+                $('#total_balance').html('');                        
+                $('#total_balance').hide();
+
+                $('#total_compra').html('<h4>Total: <strong><span class="total">'+balanceUsado+'</span> Bs.</strong></h4>');
+                
+                $('#balanceUsado').val(0);
+                $('#balance').val(0);
+                $('#subtotal').val(balanceUsado); 
+            }
+        }
+    }
 </script>

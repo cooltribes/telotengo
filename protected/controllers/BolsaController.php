@@ -32,7 +32,9 @@ class BolsaController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','agregar','view','eliminar','authenticate','confirm','cities','addAddress','placeOrder','sendValidationEmail','actualizar','agregarAjax','calcularEnvio'),
+				'actions'=>array('create','update','agregar','view','eliminar','authenticate','confirm','cities','addAddress','placeOrder',
+								'sendValidationEmail','actualizar','agregarAjax','calcularEnvio',
+								'authGC','pagoGC','confirmarGC','crearGC','sendsummary','comprarGC','pedidoGC','registrarpagoGC'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -429,8 +431,8 @@ class BolsaController extends Controller
 			
 				if($model->save()){
 					echo '<div class="radio">
-				                <label>
-				                    <input type="radio" class="address_checkbox" name="optionsRadios" id="address_'.$model->id.'" value="'.$model->id.'" checked>
+				                <label> 
+				                    <input type="radio" class="address_radio" name="optionsRadios" id="address_'.$model->id.'" value="'.$model->id.'" checked>
 				                    <strong>'.$model->nombre.': </strong>'.$model->direccion_1.' '.$model->direccion_2.'. '.$model->ciudad->nombre.', '.$model->provincia->nombre.'.
 				                </label>
 				            </div>';
@@ -461,13 +463,40 @@ class BolsaController extends Controller
 			}
 		}
 
+		// $subtotal = $subtotal - $_POST['balance'];
+		if($_POST['balance']>0){
+			if($_POST['subtotal'] == 0){ // Ver que balance hay, restar la compra y dejar el resto	
+				$faltaDescontar = $_POST['balance'];
+				$balances = Balance::model()->findAllByAttributes(array('user_id'=>Yii::app()->user->id));
+				
+				foreach($balances as $balance){
+					if($balance->total < $faltaDescontar){ // balance usado en la orden mayor a uno de los conseguidos en BD
+						$faltaDescontar = $faltaDescontar - $balance->total;
+						$balance->delete();
+					}
+					else{
+						$balance->total = $balance->total-$faltaDescontar;
+						$balance->save(); 
+						$faltaDescontar=0; 
+						break; // sale del foreach porque ya descontó todo
+					}
+				}
+			}
+			else{
+				$balances = Balance::model()->findAllByAttributes(array('user_id'=>Yii::app()->user->id));
+				foreach($balances as $balance){
+					$balance->delete();
+				}
+			}
+		}
+
 		$orden = new Orden();
 		$orden->descuento = 0;
 		$orden->envio = $_POST['envio'];
 		$orden->iva = 0;
-		$orden->total = $subtotal + $_POST['envio']; //falta agregar el iva
+		$orden->total = $_POST['subtotal']; // $subtotal + $_POST['envio']; //falta agregar el iva
 		$orden->fecha = date('Y-m-d H:i:s');
-		$orden->estado = 1;
+		$orden->estado = 1; // En espera de pago
 		$orden->users_id = intval($user->id);
 		$orden->tipo_pago_id = intval($_POST['payment_method_id']);
 		
@@ -483,6 +512,24 @@ class BolsaController extends Controller
 				if($orden_inventario->save()){
 					$inventario->cantidad -= $uno->cantidad;
 					if($inventario->save()){
+						// enviar mail de compra
+						$message = new YiiMailMessage;
+						$message->view = "mail_template";
+						$subject = 'Tu compra en Sigma Tiendas #'.$orden->id.' ha sido enviada';
+						$body = "Nos complace informarte que tu pedido #".$orden->id." se ha registrado correctamente
+								<br/>
+								Recuerda registrar los datos de tu pago en la siguiente dirección <a href=''>Registrar Pago</a>
+								<br/>
+								Gracias por confiar en nosotros
+								<br/> 
+								";
+						$params = array('subject'=>$subject, 'body'=>$body);
+						$message->subject = $subject;
+						$message->setBody($params, 'text/html');                
+						$message->addTo($user->email);
+						$message->from = array(Yii::app()->params["adminEmail"] => 'Sigma Tiendas');
+						Yii::app()->mail->send($message);
+
 						$post_data = array(
 							'status' => 'ok',
 						    'order' => $orden->id,
@@ -506,6 +553,428 @@ class BolsaController extends Controller
 
 	}
 
+	/* 1. Paso
+	 * Paso de autenticacion para la compra de giftcard
+	 */
+	public function actionAuthGC(){
+		// que esté logueado para llegar a esta acción
+        if (!Yii::app()->user->isGuest) { 
+	        //y que tenga giftcards en la bolsa
+            $giftcard = BolsaGC::model()->findByAttributes(array("user_id" => Yii::app()->user->id));
+            if(!$giftcard){
+                $this->redirect(array("giftcard/comprar"));
+            }
+			
+			$model=new UserLogin;
+			$user = User::model()->findByPk(Yii::app()->user->id);
+			
+			if(isset($_POST['UserLogin']))
+			{
+				$model->attributes=$_POST['UserLogin'];
+				// validate user input and redirect to previous page if valid
+				
+				if($model->validate()) {
+					//Si esta activo - ir al siguiente paso
+					if($user->status == 1){
+						$this->redirect(array('bolsa/pagoGC'));
+					}else{
+						Yii::app()->user->setFlash('error',"Debes validar tu cuenta para continuar. Te hemos enviado un nuevo enlace de validación a <strong>".$user->email."</strong>"); 
+						$activation_url = $this->createAbsoluteUrl('/user/activation/activation',array("activkey" => $user->activkey, "email" => $user->email));
+
+						$message = new YiiMailMessage;
+						$message->view = "mail_template";
+						$subject = 'Activa tu cuenta en Sigma Tiendas';
+						$body = "Estás recibiendo este email porque has solicitado un nuevo enlace para validar tu cuenta. Puedes continuar haciendo click en el siguiente enlace:<br/>".$activation_url;
+						$params              = array('subject'=>$subject, 'body'=>$body);
+						$message->subject    = $subject;
+						$message->setBody($params, 'text/html');
+						$message->addTo($user->email);
+						$message->from = array(Yii::app()->params["adminEmail"] => 'Sigma Tiendas');
+						Yii::app()->mail->send($message);
+						$this->refresh();
+					}
+				}else{
+					$this->render('authGC',array('model'=>$model));
+				}	
+			}else{
+                // si no viene del formulario. O bien viene de la pagina anterior
+                $this->render('authGC',array('model'=>$model));
+			}
+		}else{ // no va a llegar nadie que no esté logueado    
+	        Yii::app()->user->setReturnUrl($this->createUrl('bolsa/authGC'));
+	        Yii::app()->user->setFlash('error',"La sesión ha expirado, intenta tu compra nuevamente"); 
+	        //Redirigir a login
+	        $this->redirect(array('/user/login'));                        
+		}
+	} // AUTHGC
+
+	/*2. Paso
+	 * Paso para escoger el metodo de pago en la compra de giftcard
+     * (solo tarjeta actualmente 04/12/2013)
+	 */	
+    public function actionPagoGC(){
+	    if (Yii::app()->user->isGuest){
+            //Redirigir a login
+            Yii::app()->user->setReturnUrl($this->createUrl('bolsa/authGC'));
+            Yii::app()->user->setFlash('error',Yii::t("contentForm", "¡La sesión ha expirado, intenta tu compra nuevamente!"));                              
+            $this->redirect(array('/user/login'));                        
+        }
+	
+	    if(isset($_POST['tipo_pago'])){
+        	if($_POST['tipo_pago']==2 && isset($_POST['ajax']) && $_POST['ajax']==='tarjeta-form'){
+                echo CActiveForm::validate($_POST['TarjetaCredito']);
+                Yii::app()->end();
+        	}
+            //$tarjeta = new TarjetaCredito; 
+            Yii::app()->getSession()->add('tipoPago',$_POST['tipo_pago']);
+ 
+            if($_POST['tipo_pago'] == 2){ // pago de tarjeta de credito
+	            $usuario = Yii::app()->user->id; 
+
+	            $tarjeta->nombre = $_POST['TarjetaCredito']['nombre'];
+	            $tarjeta->numero = $_POST['TarjetaCredito']['numero'];
+	            $tarjeta->codigo = $_POST['TarjetaCredito']['codigo'];
+	            $tarjeta->month = $_POST['TarjetaCredito']['month'];
+	            $tarjeta->year = $_POST['TarjetaCredito']['year'];
+	            $tarjeta->ci = $_POST['TarjetaCredito']['ci'];
+	            $tarjeta->direccion = $_POST['TarjetaCredito']['direccion'];
+	            $tarjeta->ciudad = $_POST['TarjetaCredito']['ciudad'];
+	            $tarjeta->zip = $_POST['TarjetaCredito']['zip'];
+	            $tarjeta->estado = $_POST['TarjetaCredito']['estado'];
+	            $tarjeta->user_id = $usuario;		
+
+	            if($tarjeta->save()){
+                    Yii::app()->getSession()->add('idTarjeta',$tarjeta->id);
+                    $this->redirect(array('bolsa/confirmarGC'));
+	            }
+	            else{
+	            	echo CActiveForm::validate($tarjeta);
+	            }
+        	}
+            else{
+            	// colocar valor o algo para deposito (?)
+                $this->redirect(array('bolsa/confirmarGC'));
+            }
+
+        }
+        else{                
+            //Comprobar que hay giftcards en la bolsa - si no, redirigir a la primera página
+            $giftcard = BolsaGC::model()->findByAttributes(array("user_id" => Yii::app()->user->id));
+            
+            if(!$giftcard){
+                $this->redirect(array("giftcard/comprar"));
+            }
+            
+            $total = $giftcard->monto;
+            Yii::app()->getSession()->add('total',$total);
+            $this->render('pagoGC',array(               
+                'total' => $total,
+        	));		
+        }
+
+    }
+
+    /*
+	 * 3. Paso
+	 * Paso para ver el resumen de la compra y hacer el pago
+	 */
+    public function actionConfirmarGC()
+    {                            
+	    if (Yii::app()->user->isGuest){
+	        //Redirigir a login
+	        Yii::app()->user->setReturnUrl($this->createUrl('bolsa/authGC'));
+	        Yii::app()->user->setFlash('error',Yii::t("contentForm", "¡La sesión ha expirado, intenta tu compra nuevamente!"));                              
+	        $this->redirect(array('/user/login'));                        
+	    }
+
+        //por los momentos solo la primera giftcard que encuentre
+        $giftcard = BolsaGC::model()->findByAttributes(array("user_id" => Yii::app()->user->id));
+
+        if(!$giftcard){
+        	$this->redirect(array("giftcard/comprar"));
+        }
+
+        $monto = Yii::app()->getSession()->get('total');
+         /* Para pago con tarjeta y paypal */
+        $nombreProducto = "GiftCard Personaling";
+
+        $tipo_pago = Yii::app()->getSession()->get('tipoPago');
+
+        $optional = array(                        
+            'name'          => 'Personaling Enterprise S.L.',
+            'product_name'  => $nombreProducto,                             
+        );                                            
+
+        $this->render('confirmarGC',array(
+            'idTarjeta'=> Yii::app()->getSession()->get('idTarjeta'),
+            'monto'=> $monto,
+            'giftcard' => $giftcard,
+            'tipoPago' => $tipo_pago,
+             ));
+	}
+
+	/**
+     * Para pasar la tarjeta y cobrar
+     */
+    public function actionComprarGC()
+	{
+
+        $userId = Yii::app()->user->id;                 
+        $tipoPago = Yii::app()->getSession()->get('tipoPago');	
+        $total = Yii::app()->getSession()->get('total');
+            
+        switch ($tipoPago) {
+        	case 1:
+				$orden = new OrdenGC;                            
+                $orden->estado = Orden::ESTADO_ESPERA; // En espera de pago 
+                $orden->fecha = date("Y-m-d H:i:s"); // Datetime exacto del momento de la compra 
+                $orden->total = $total;
+                $orden->user_id = $userId;
+				
+				$campos = Yii::app()->getSession()->get('envio');                    
+
+            	$orden->nombre = $campos["nombre"];
+            	$orden->mensaje = $campos["mensaje"];
+            	$orden->email = $campos["email"];
+
+                if (!($orden->save())){
+                    echo CJSON::encode(array(
+                                'status'=> 'error',
+                                'error'=> $orden->getErrors(),
+                            ));
+                    Yii::app()->end();
+                }
+
+                //$this->crearGC($userId, $orden->id);
+                	$user = User::model()->findByPk($userId);
+                	$usuario = $user->profile; 
+                	$message = new YiiMailMessage;                
+			        $subject = 'Tu compra de Gift Card de Sigma Tiendas';
+			        $body = "¡Hola <strong>{$usuario->first_name}</strong>!<br/><br/>
+			                Hemos procesado satisfactoriamente tu compra de Gift Card.<br/>
+			                Recuerda enviar tu pago para poder enviar la tarjeta de regalo a su destinatario.<br/>
+			                Entra en la siguiente dirección para registrar tu pago <a href='http://telotengo.com/sigmatiendas/bolsa/registrarpagoGC/".$orden->id."''
+			                title='Registrar'>Registrar Pago</a>";
+			        $message->from = array(Yii::app()->params['adminEmail'] => "Sigma Tiendas");
+			        $message->subject = $subject;
+			        $message->setBody($body, 'text/html');
+			        $message->addTo($user->email);
+			        Yii::app()->mail->send($message);
+                
+            	break;
+            case 2: // TARJETA DE CREDITO
+                $tarjetaId = Yii::app()->getSession()->get('idTarjeta');
+                $resultado = $this->cobrarTarjeta($tarjetaId, $userId, $total);
+				$global = $resultado;
+
+                if ($resultado['status'] == "ok")
+                {
+                    $tarjeta = TarjetaCredito::model()->findByPk($tarjetaId);
+                    $detalle = new DetallePago();
+                    $detalle->nTarjeta = $tarjeta->numero;
+                    $detalle->nTransferencia = $resultado["idOutput"];
+                    $detalle->nombre = $tarjeta->nombre;
+                    $detalle->cedula = $tarjeta->ci;
+                    $detalle->monto = $total;
+                    $detalle->fecha = date("Y-m-d H:i:s");
+                    $detalle->banco = 'TDC';
+                    $detalle->estado = 1; // aceptado
+                    
+                    if(!$detalle->save()){
+                        Yii::trace('UserID: '.$userId.' Error al guardar detalle:'.print_r($detalle->getErrors(),true), 'registro');
+                    }
+                            
+                    $orden = new OrdenGC;                            
+                    $orden->estado = Orden::ESTADO_CONFIRMADO;
+                    $orden->fecha = date("Y-m-d H:i:s"); // Datetime exacto del momento de la compra 
+                    $orden->total = $total;
+                    $orden->user_id = $userId;
+                       
+                    if (!($orden->save())){
+                        echo CJSON::encode(array(
+                                    'status'=> 'error',
+                                    'error'=> $orden->getErrors(),
+                                ));
+                        Yii::trace('UserID: '.$userId.' Error al guardar la orden:'.print_r($orden->getErrors(),true), 'registro');	
+                        Yii::app()->end();
+                    }	
+	                    //Pasar de la bolsa a las giftcards
+	                    $this->actionCrearGC($userId, $orden->id, FALSE);
+	                    
+	                    //Generar el detalle de pago
+	                    $detalle->orden_id = $orden->id;
+	                    $detalle->tipo_pago = 2;
+	                    $detalle->save();
+                    
+                }else { 
+                	$this->redirect($this->createAbsoluteUrl('bolsa/errorGC',array('codigo'=>$resultado['codigo'],'mensaje'=>$resultado['mensaje']),'http'));
+                }			
+                break;
+            case 3:			        
+                break;
+        } 
+
+        //Ver resumen del pedido
+        if($tipoPago == 2){ // tarjeta
+    		Yii::app()->session['voucher'] = $global['voucher'];
+			Yii::app()->session['referencia'] = $global['referencia'];
+		}
+		
+		$this->redirect($this->createAbsoluteUrl('bolsa/pedidoGC',array('id'=>$orden->id),'http'));	
+    }
+		
+
+   /*Pasar de la bolsa a generar las giftcards*/
+    public function actionCrearGC($userId, $ordenId, $deposito){
+        
+        $giftcards = BolsaGC::model()->findAllByAttributes(array("user_id" => $userId));		
+        $resumen="";
+        foreach($giftcards as $gift){
+            
+			$model = new Giftcard;
+            $model->monto = $gift->monto;
+
+           	if($deposito == FALSE){	                	
+                $envio = new EnvioGiftcard();
+                $campos = Yii::app()->getSession()->get('envio');                   
+
+                $envio->nombre = $campos["nombre"];
+                $envio->mensaje = $campos["mensaje"];
+                $envio->email = $campos["email"];
+
+                $model->beneficiario = $envio->email;
+    		}else{
+    			$orden = OrdenGC::model()->findByPk($ordenId); 
+    			$model->beneficiario = $orden->email;
+    		}
+            
+            $model->estado = 1; // Enviada
+            $model->inicio_vigencia = date('Y-m-d');
+            $now = date('Y-m-d', strtotime('now'));
+            $model->fin_vigencia = date("Y-m-d", strtotime($now." + 1 year"));
+            $model->comprador = $userId;
+
+            do{  
+                $model->codigo = Giftcard::generarCodigo();
+                $existe = Giftcard::model()->countByAttributes(array('codigo' => $model->codigo));                        
+            }while($existe);
+            
+            $model->orden_id = $ordenId;
+            
+            $model->save();
+            $gift->delete();
+            
+            $user = User::model()->findByPk($userId);
+
+            $saludo = "<strong>{$user->profile->first_name}</strong> te ha enviado una Gift Card como obsequio.";               
+            if($deposito == FALSE){
+	            if($envio->mensaje != ""){
+	                $personalMes = "<br/><br/><i>" . $envio->mensaje . "</i><br/>";
+	            }
+            }
+            else{
+            	if($orden->mensaje != ""){
+	                $personalMes = "<br/><br/><i>" . $orden->mensaje . "</i><br/>";
+	            }
+            }
+
+            $message = new YiiMailMessage;
+            $subject = 'Gift Card de Sigma Tiendas';
+            
+            if($deposito == FALSE){
+            	$body = "¡Hola <strong>{$envio->nombre}</strong>!<br><br> {$saludo} 
+                    <br/> Mensaje: {$envio->mensaje}
+                    <br/> Comienza a disfrutar de tu Gift Card usándola en <a href='www.sigmatiendas.com' title='Sigma Tiendas'>Sigmatiendas.com</a>
+                    <br/>Tu código: {$model->codigo}
+                    <br/>Para aplicar tu Gift Card ingresa tu código en la siguiente dirección <a href='telotengo.com/sigmatiendas/giftcard/aplicar'>Cobrar Gift Card</a>
+                    <br/>
+                    (Para ver la Gift Card permite mostrar las imagenes de este correo) <br/><br/>";
+            	//$message->addTo($envio->email);
+            }
+            else{
+            	$body = "¡Hola <strong>{$orden->nombre}</strong>!<br><br> {$saludo} 
+            		<br/> Mensaje: {$orden->mensaje}
+                    <br/> Comienza a disfrutar de tu Gift Card usándola en <a href='www.sigmatiendas.com' title='Sigma Tiendas'>Sigmatiendas.com</a>
+                    <br/>Tu código: {$model->codigo}
+                    <br/>Para aplicar tu Gift Card ingresa tu código en la siguiente dirección <a href='telotengo.com/sigmatiendas/giftcard/aplicar'>Cobrar Gift Card</a>
+                    <br/>
+                    (Para ver la Gift Card permite mostrar las imagenes de este correo) <br/><br/>";
+            	//$message->addTo($orden->email);
+            }
+
+           	$message->from = array(Yii::app()->params['adminEmail'] => "Sigma Tiendas");
+            $message->subject = $subject;
+            $message->setBody($body, 'text/html');
+            $message->addTo($model->beneficiario);
+            Yii::app()->mail->send($message); 	 
+            
+        }
+        
+        $this->actionSendSummary($ordenId,$userId);
+        Yii::app()->user->setFlash('success',"Gift Card enviada correctamente.");
+        
+        if($deposito == TRUE){
+        	$this->redirect($this->createAbsoluteUrl('giftcard/admin',array(),'http'));	
+        }
+	}	
+
+	public function actionSendSummary($ordenId,$userId){
+            			
+        $comprador=User::model()->findByPk($userId);
+        $user=$comprador->profile;
+        
+        $message = new YiiMailMessage;                
+        $subject = 'Tu compra de Gift Card de Sigma Tiendas';
+        $body = "¡Hola <strong>{$user->first_name}</strong>!<br/><br/>
+                Hemos procesado satisfactoriamente tu compra de Gift Card.";
+
+        $message->from = array(Yii::app()->params['adminEmail'] => "Sigma Tiendas");
+        $message->subject = $subject;
+        $message->setBody($body, 'text/html');
+        $message->addTo($comprador->email);
+        return Yii::app()->mail->send($message);         
+	}
+
+	/**
+	* Muestra el detalle de una compra de giftcard,
+	* se puede imprimir la tarjeta
+	*/
+    public function actionPedidoGC($id){
+		$orden = OrdenGC::model()->findByPk($id);
+				
+		$this->render('pedidoGC',array('orden'=>$orden,'voucher'=>Yii::app()->session['voucher'],'referencia'=>Yii::app()->session['referencia'],
+										'tipoPago'=>Yii::app()->getSession()->get('tipoPago')));
+	}
+
+	public function actionRegistrarPagoGC($id){
+		$pago = new DetalleOrden;
+
+		if(isset($_POST['DetalleOrden']["nombre"])){
+			// datos del deposito
+			$pago->attributes = $_POST['DetalleOrden'];
+			$pago->estado = 0; // sin revisar
+			$pago->orden_id = 0; // para Giftcard
+			$pago->ordenGC_id = $id; // para Giftcard 
+			$pago->comentario = "Pago de Gift Card"; 
+			$pago->tipo_pago_id = 2; // Deposito
+
+			$ordengc = OrdenGC::model()->findByPk($id);
+			$ordengc->saveAttributes(array('estado'=>2)); // En espera de confirmacion 
+
+			if($pago->save()){
+				Yii::app()->user->setFlash('success',"El pago ha sido registrado satisfactoriamente. En un periodo de 12-24 horas estarás recibiendo tu Gift Card");       
+			}
+			else{
+				var_dump($pago->getErrors());
+				Yii::app()->end();
+			}
+
+			$this->redirect($this->createAbsoluteUrl('user/user/tucuenta'));	
+		}
+  
+		$this->render('registrarpago',array('pago'=>$pago));
+	} 
+ 
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.

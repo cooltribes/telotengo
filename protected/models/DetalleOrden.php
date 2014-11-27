@@ -58,7 +58,7 @@ class DetalleOrden extends CActiveRecord
 			array('nombre', 'length', 'max'=>125),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, monto, fecha, estado, confirmacion, nombre, cedula, orden_id, tipo_pago_id', 'safe', 'on'=>'search'),
+			array('id, monto, fecha, estado, confirmacion, nombre, cedula, orden_id, tipo_pago_id, comentario, ordenGC_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -71,6 +71,7 @@ class DetalleOrden extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'orden' => array(self::BELONGS_TO, 'Orden', 'orden_id'),
+			'ordengc' => array(self::BELONGS_TO, 'OrdenGC', 'ordenGC_id'),
 			'tipoPago' => array(self::BELONGS_TO, 'TipoPago', 'tipo_pago_id'),
 		);
 	}
@@ -90,6 +91,8 @@ class DetalleOrden extends CActiveRecord
 			'cedula' => 'Cedula',
 			'orden_id' => 'Orden',
 			'tipo_pago_id' => 'Tipo Pago',
+			'comentario' => "Comentario",
+			'ordenGC_id' => "Orden Giftcard",
 		);
 	}
 
@@ -113,6 +116,8 @@ class DetalleOrden extends CActiveRecord
 		$criteria->compare('cedula',$this->cedula,true);
 		$criteria->compare('orden_id',$this->orden_id);
 		$criteria->compare('tipo_pago_id',$this->tipo_pago_id);
+		$criteria->compare('comentario',$this->comentario);
+		$criteria->compare('ordenGC_id',$this->ordenGC_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

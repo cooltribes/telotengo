@@ -23,7 +23,7 @@ echo"<tr>";
 	</a> 
 	 
 		<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-			<li><a tabindex="-1" href="'.Yii::app()->createUrl('/user/user/quitarfav',array('producto_id'=>$producto->id,'user_id'=>$data->user_id)).'" ><i class="icon-trash"></i></a>Quitar de Favorito</li>
+			<li><a tabindex="-1" href="'.Yii::app()->createUrl('/user/user/quitarfav',array('producto_id'=>$producto->id,'user_id'=>$data->user_id)).'" ><i class="icon-trash"></i>Quitar de Favorito</a></li> 
 		</ul>
         </div></td>
 		';

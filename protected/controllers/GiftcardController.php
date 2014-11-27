@@ -26,8 +26,12 @@ class GiftcardController extends Controller
     public function accessRules() 
     { 
         return array(  
+            array('allow', // allow authenticated user to perform 'create' and 'update' actions
+                'actions'=>array('comprar','registrar','aplicar'),
+                'users'=>array('@'),
+            ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions 
-                'actions'=>array('admin','delete','create','update','inactivar'), 
+                'actions'=>array('admin','delete','create','update','inactivar','sinpago','poraprobar','aprobar','rechazar'), 
                 'users'=>array('admin'), 
             ), 
             array('deny',  // deny all users 
@@ -44,6 +48,55 @@ class GiftcardController extends Controller
     { 
         $this->render('view',array( 
             'model'=>$this->loadModel($id), 
+        )); 
+    } 
+
+    /** 
+     * accion para comprar GC 
+     */ 
+    public function actionComprar() 
+    { 
+        $model = new Giftcard;
+        $modeldos = new BolsaGC;
+        $modeldos->plantilla_url = "gift_card_one"; //Default      
+        $envio = new EnvioGiftcard();
+
+        if(isset($_POST['BolsaGC']))
+        {    
+            $modeldos->attributes = $_POST['BolsaGC'];
+            $modeldos->user_id = Yii::app()->user->id;
+
+            if($modeldos->validate()){                    
+                $envio->attributes = $_POST['EnvioGiftcard'];                        
+                Yii::app()->getSession()->remove('entrega');                        
+                Yii::app()->getSession()->add('entrega',$_POST['entrega']);
+                        
+                //si es para enviar por correo, validar email
+                if(($_POST['entrega'] == 2 && $envio->validate()) || $_POST['entrega'] == 1){
+                            
+                    //Guardar los datos del envio pero borrar los anteriores                        
+                    Yii::app()->getSession()->remove('envio');                        
+                    Yii::app()->getSession()->add('envio',$envio->attributes);
+
+                    /*
+                    por los momentos se van a borrar todas las existentes en la bolsa del usuario
+                    porque se va a trabajar con una sola
+                     */
+                    BolsaGC::model()->deleteAllByAttributes(array("user_id" => Yii::app()->user->id));
+
+                    if($modeldos->save()){                              
+                        $this->redirect($this->createAbsoluteUrl('bolsa/authGC',array(),'http')); // era https
+                    }  
+                }
+            }           
+        }else{
+            Yii::app()->getSession()->remove('entrega');  
+        }
+
+        $this->render('comprar',array( 
+            'giftcard'=>$model, 
+            'model' => $modeldos,
+            'envio'=>$envio,
         )); 
     } 
 
@@ -125,6 +178,107 @@ class GiftcardController extends Controller
             'dataProvider'=>$dataProvider, 
         )); 
     } 
+
+    /** 
+     * Las Ordenes de GC que faltan por pagar o por aprobar 
+     */ 
+    public function actionSinPago() 
+    { 
+        $model = new OrdenGC;
+        $model->estado = 1;
+        $dataProvider= $model->search();
+
+        $this->render('sinpago',array( 
+            'dataProvider'=>$dataProvider, 
+        )); 
+    } 
+
+    /** 
+     * Las Ordenes de GC que faltan por pagar o por aprobar 
+     */ 
+    public function actionPorAprobar() 
+    {
+        $model = new OrdenGC;
+        $model->estado = 2;
+        $dataProvider= $model->search();
+
+        $this->render('poraprobar',array( 
+            'dataProvider'=>$dataProvider, 
+        )); 
+    }
+
+    public function actionAprobar($id){
+        $model = DetalleOrden::model()->findByPk($id);
+        $model->saveAttributes(array('estado'=>1)); // aprobado
+
+        $orden = OrdenGC::model()->findByPk($model->ordenGC_id);
+        $orden->saveAttributes(array('estado'=>3)); // Pago confirmado
+
+        $this->redirect($this->createAbsoluteUrl('bolsa/crearGC',array('userId'=>$orden->user_id, 'ordenId'=>$model->ordenGC_id,'deposito'=>TRUE),'http')); 
+    }
+
+    public function actionAplicar(){
+        $model = new Giftcard;
+
+        if(isset($_POST['Giftcard'])){
+            $gc = Giftcard::model()->findByAttributes(array('codigo'=>$_POST['Giftcard']['codigo']));
+
+            if(isset($gc)){
+                if($gc->estado==1){ // enviada
+                    $balance = new Balance;
+                    $balance->total = $gc->monto;
+                    $balance->orden_id = 0;
+                    $balance->user_id = Yii::app()->user->id;
+                    $balance->tipo = 2; // Giftcard
+
+                    if($balance->save()){
+                        $gc->saveAttributes(array('estado'=>2)); // aplicada
+                        Yii::app()->user->setFlash('success',"Su Gift Card ha sido aplicada correctamente y ya se encuentra el saldo disponible.");
+                    }    
+                }
+                else{
+                    Yii::app()->user->setFlash('error', 'La Gift Card ya fue aplicada o se encuentra inactiva.');
+                    $this->redirect(array('aplicar'));
+                }
+            }
+            else{
+                Yii::app()->user->setFlash('error', 'El código de Gift Card que ingresó no existe.');
+                $this->redirect(array('aplicar'));
+            }
+
+        }
+
+        $this->render('aplicar',array( 
+            'model'=>$model,
+        ));
+    }
+
+    public function actionRechazar($id){
+        $model = DetalleOrden::model()->findByPk($id);
+        $model->saveAttributes(array('estado'=>2)); // rechazado
+
+        $orden = OrdenGC::model()->findByPk($model->ordenGC_id);
+        $orden->saveAttributes(array('estado'=>6)); // Pago rechazado
+        
+        $user = User::model()->findByPk($orden->user_id);
+
+        $message = new YiiMailMessage;
+        $subject = 'Tu pago de Gift Card en Sigmatiendas';
+        $body = "¡Hola! 
+                <br/> Lamentos informar que tu pago registrado de referencia {$model->confirmacion} 
+                <br/> ha sido rechazado. Dirigite a <a href='www.sigmatiendas.com' title='Sigma Tiendas'>Sigmatiendas.com</a>
+                <br/> o escribe a info@sigmatiendas.com para recibir más información
+                <br/>
+                <br/>";
+        $message->from = array(Yii::app()->params['adminEmail'] => "Sigma Tiendas");
+        $message->subject = $subject;
+        $message->setBody($body, 'text/html');
+        $message->addTo($user->email);
+        Yii::app()->mail->send($message); 
+
+        Yii::app()->user->setFlash('success',"Pago rechazado correctamente.");
+        $this->redirect(array('admin'));
+    }
 
     /** 
      * Returns the data model based on the primary key given in the GET variable. 

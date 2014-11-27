@@ -110,6 +110,16 @@ class Balance extends CActiveRecord
 		));
 	}
 
+	public function getTotal(){
+		$todas = Balance::model()->findAllByAttributes(array('user_id'=>Yii::app()->user->id));
+		$total = 0;
+
+		foreach($todas as $bal)
+			$total += $bal->total;
+
+		return $total;
+	}
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
