@@ -377,7 +377,7 @@ $this->breadcrumbs=array(
                             </tbody>
                         </table>
                         <div class="padding_xsmall">
-                                Subtotal: <span><?php echo $model->total; ?> Bs.</span>
+                                Subtotal: <span><?php echo $model->total-$model->envio; ?> Bs.</span>
                             </div>
                             <div class="padding_xsmall">
                                 Envio: <span><?php echo $model->envio; ?> Bs.</span>
@@ -387,7 +387,7 @@ $this->breadcrumbs=array(
                             </div>
                             <div class="">
                                 <h3>
-                                    Total: <strong><?php echo $model->total+$model->envio+$model->iva; ?> Bs.</strong>
+                                    Total: <strong><?php echo $model->total; //+$model->envio+$model->iva; ?> Bs.</strong>
                                 </h3>
                             </div>
                             <div>  

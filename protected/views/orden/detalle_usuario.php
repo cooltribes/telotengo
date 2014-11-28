@@ -31,9 +31,8 @@ $this->breadcrumbs=array(
                         <h3>Resumen:</h3>
                         <div>
                             <p class="well well-sm"> Estado: <span>
-                        
+                         
                             <?php
-							$model->getStatus($model->estado); Yii::app()->end();/*
 							switch ($model->estado) {
 							    case 1:
 							        echo "En espera de pago"; 
@@ -65,7 +64,7 @@ $this->breadcrumbs=array(
 								case 10:
 									echo "Parcialmente Devuelto";
 									break;	
-							}*/
+							}
 
 		                    if($model->estado==4||$model->estado==8||$model->estado==9||$model->estado==10){
 		                        ?>
@@ -238,7 +237,7 @@ $this->breadcrumbs=array(
                             
 		                    
 								
-							if($model->estado== 1|| $model->estado==7)
+							if( $model->estado== 1 || $model->estado==7)
 							{
 							
 							$detalle = new DetalleOrden;
@@ -274,6 +273,11 @@ $this->breadcrumbs=array(
 							echo $form->error($detalle,'cedula');
 							echo '</div>';
 							
+							echo '<div class="form-group">';
+							echo $form->textFieldRow($detalle,'confirmacion',array('class'=>'form-control','maxlength'=>45));
+							echo $form->error($detalle,'confirmacion');
+							echo '</div>';
+
 							echo '<div class="form-group">';
 							echo $form->textFieldRow($detalle,'monto',array('class'=>'form-control','maxlength'=>45));
 							echo $form->error($detalle,'monto');
@@ -435,7 +439,7 @@ $this->breadcrumbs=array(
                             </tbody>
                         </table>
                         <div class="padding_xsmall">
-                            Subtotal: <span><?php echo $model->total; ?> Bs.</span>
+                            Subtotal: <span><?php echo $model->total-$model->envio; ?> Bs.</span>
                         </div>
                         <div class="padding_xsmall">
                             Envio: <span><?php echo $model->envio; ?> Bs.</span>
@@ -445,11 +449,12 @@ $this->breadcrumbs=array(
                         </div>
                         <div class="">
                             <h3>
-                                Total: <strong><?php echo $model->total+$model->envio+$model->iva; ?> Bs.</strong>
+                                Total: <strong><?php echo $model->total; //+$model->envio+$model->iva; ?> Bs.</strong>
                             </h3>
                         </div>
                         <div>  
-                            <p class="text-muted">Fecha estimada de entrega 01/02/2014 - 03/02/2014</p>
+                            <p class="text-muted">Fecha estimada de entrega
+                            <?php echo date('d/m/Y', strtotime($model->fecha . '+1 day'));?> - <?php echo date('d/m/Y', strtotime($model->fecha.'+1 week')); ?></</p>
 
                         </div>  
                         </div>

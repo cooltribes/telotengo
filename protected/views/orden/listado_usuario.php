@@ -23,17 +23,6 @@ $this->breadcrumbs=array(
 		    </div>
 		<?php } ?>
 
-	    <div class="row margin_top margin_bottom ">
-	        <div class="span4">
-	            <form class="no_margin_bottom form-search">
-	            	<div class="input-prepend"> <span class="add-on"><i class="icon-search"></i></span>
-	            		<input class="span3" id="query" name="query" type="text" placeholder="Buscar">
-	                	<a href="#" class="btn" id="btn_search_event">Buscar</a>
-	           		</div>         
-	           	</form>
-	        </div>
-			
-	    </div>
 	    <hr/>
 	    
 	    <?php
@@ -43,6 +32,7 @@ $this->breadcrumbs=array(
 	            <th scope="col">Pedido #</th>
 	            <th scope="col">Fecha</th>
 	            <th scope="col">Total Bs.</th>
+	            <th scope="col">Balance Usado Bs.</th>
 	            <th scope="col">Vendedor</th>
 	            <th scope="col">Estado</th>
 	            <th scope="col">Acción</th>

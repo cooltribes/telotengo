@@ -23,14 +23,16 @@
                             <div class="padding_xsmall">
                                 IVA: <span><?php echo $model->iva; ?> Bs.</span>
                             </div>
+                            <div class="padding_xsmall">
+                                Balance usado: <span><?php echo $model->balance; ?> Bs.</span>
+                            </div>
                             <div class="">
                                 <h3>
-                                    Total: <strong><?php echo $model->total+$model->envio+$model->iva; ?> Bs.</strong>
+                                    Total: <strong><?php echo $model->total; ?> Bs.</strong>
                                 </h3>
                             </div>
                             <div>  
-                                <p class="text-muted">Fecha estimada de entrega 01/02/2014 - 03/02/2014</p>
-
+                                <p class="text-muted">Fecha estimada de entrega <?php echo date('d/m/Y', strtotime($model->fecha.'+1 day'));?> - <?php echo date('d/m/Y', strtotime($model->fecha.'+1 week')); ?></p>
                             </div>                            
                         </div>                        
                         <div>

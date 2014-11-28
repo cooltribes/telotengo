@@ -14,6 +14,7 @@ include("class.zoom.json.services.php");
  * @property integer $estado
  * @property integer $users_id
  * @property integer $tipo_pago_id
+ * @property integer $balance 
  *
  * The followings are the available model relations:
  * @property DetalleOrden[] $detalleOrdens
@@ -87,7 +88,7 @@ class Orden extends CActiveRecord
 			array('descuento, envio, iva, total', 'numerical'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, descuento, envio, iva, total, fecha, estado, users_id, tipo_pago_id, tipo_guia, tracking', 'safe', 'on'=>'search'),
+			array('id, descuento, envio, iva, total, fecha, estado, users_id, tipo_pago_id, tipo_guia, tracking, balance', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -127,6 +128,7 @@ class Orden extends CActiveRecord
 			'tipo_pago_id' => 'Tipo Pago',
 			'tipo_guia' => 'Tipo Guía',
 			'tracking' => 'Tracking',
+			'balance' => 'Balance',
 		);
 	}
 
@@ -159,6 +161,7 @@ class Orden extends CActiveRecord
 		$criteria->compare('tipo_pago_id',$this->tipo_pago_id);
 		$criteria->compare('tipo_guia',$this->tipo_guia);
 		$criteria->compare('tracking',$this->tracking);
+		$criteria->compare('balance',$this->balance);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -267,7 +270,7 @@ class Orden extends CActiveRecord
 	    case 1:
 	        return "<td>En espera de pago</td>";
 	    case 2:
-	        return "<td>En espera de confirmación</td>"; 
+	        return "<td>En espera de confirmación</td>";
 	    case 3:
 	        return "<td>Pago Confirmado</td>";
 		case 4: 

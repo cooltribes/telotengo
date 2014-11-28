@@ -86,7 +86,7 @@ class DetalleOrden extends CActiveRecord
 			'monto' => 'Monto',
 			'fecha' => 'Fecha',
 			'estado' => 'Estado',
-			'confirmacion' => 'Confirmacion',
+			'confirmacion' => 'Número de Confirmacion',
 			'nombre' => 'Nombre',
 			'cedula' => 'Cedula',
 			'orden_id' => 'Orden',
