@@ -165,7 +165,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                                     <?php
                                 }
                                 ?>
-                            </ul>
+                            </ul> 
                             <?php
                         }
                         ?>
