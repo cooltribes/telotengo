@@ -77,13 +77,13 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
             color:#F00;
         }
         .mainHead .container .navbar-right{
-            width:20%;
+            width:20%;  
             text-align: center;
         }
-        .mainHead .container .navbar-right ul li.button{
-    
+        .button{
+      
             min-width:6em;
-            float:left;
+            float:right;
             margin-left:.3em;
             text-align: center;
             background-color: #198ac9;
@@ -94,11 +94,9 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
             -webkit-transition: background-color 300ms ease-in-out;
             -o-transition: background-color 300ms ease-in-out;
             
-        }.mainHead .container .navbar-right ul li.button:hover{
-            text-decoration:none;
         }
-        .mainHead .container .navbar-right .button>a:hover{
-            
+        .button:hover{
+            text-decoration:none;
             background-color: #2a9bda;
             padding-top:7px;
             padding-bottom:13px;
@@ -181,7 +179,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
     
     </style>
    
-    <nav class="navegacion-superior navbar-default navbar-fixed-top" style="position:absolute; background-color: #127ab5; padding: 5px 0 0 0" >
+    <nav class="navegacion-superior navbar-default navbar-fixed-top" style="position:inherit; background-color: #127ab5; padding: 5px 0 0 0; " >
         <div class="container"> 
             <div class="navbar-left">                
                         <a href="http://facebook.com/sigmatiendas">
@@ -216,38 +214,147 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
         <div class="mainHead"> 
             <div class="container">
                 <div class="navbar">
-                    <div class="navbar-left">  
-                        <img src="http://sigmatiendas.com/skin/frontend/fortis/default/images/sigma-systems-logo.png" width="190px"/>
-                    </div>
-                    <div class="navbar-right">  
-                        <p><span class="white">Vive la <span class="red">Experiencia</span> tecnológica</span></p>
-                        <ul class="no_list_style">
-                            <li class="button">
-                                <a href="<?php echo Yii::app()->baseUrl; ?>/site/index">                           
-                                    <div class="white" >
-                                        <span class="glyphicon glyphicon-user glyphiconLarge"></span><br/>
-                                        Tu cuenta
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="button"> 
-                                <a href="<?php echo Yii::app()->baseUrl; ?>/user/login">
-                                    <div class="white" >
-                                        <span class="glyphicon glyphicon-check glyphiconLarge"></span><br/>
-                                        Inicia Sesión
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="button">
-                                <a href="<?php echo Yii::app()->baseUrl; ?>/user/registration">
-                                    <div class="white" >
-                                        <span class="glyphicon glyphicon-plus-sign glyphiconLarge"></span><br/>
-                                        Regístrate                            
-                                    </div>
-                                </a>
-                            </li>
-                            
+                    <div class="row-fluid">
+                        <div class="col-md-3">  
+                           <a href="<?php echo Yii::app()->baseUrl; ?>/" title="Inicio">
+                                <img src="http://sigmatiendas.com/skin/frontend/fortis/default/images/sigma-systems-logo.png" width="190px"/>
+                            </a> 
+                        </div>
+                        <div class="col-md-9">  
+                            <div class="row" style="text-align:right">
+                                <span class="white">Vive la <span class="red">Experiencia</span> tecnológica</span>
+                            </div>
+                            <div class="row">
+                            <ul class="no_list_style">
+                             <?php
+                    if(Yii::app()->user->isAdmin()){
+                ?>
+                    <li class="button"><a href="<?php echo Yii::app()->baseUrl; ?>/site/logout" class="white">Salir</a> </li>
+                    <li class="dropdown button">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <span class="white">Administración<b class="caret"></b></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/user/admin">Usuarios</a></li>
+                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/marca/admin">Marcas</a></li>
+                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/categoria/admin">Categorías</a></li>
+                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/giftcard/admin">Gift Cards</a></li>
+                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/TipoPago/admin">Tipos de Pago</a> </li>
                         </ul>
+                    </li>    
+                     
+                    <li class="dropdown button">
+                        <a href="#" class="dropdown-toggle white" data-toggle="dropdown">Pedidos<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/orden/admin">Todos</a></li> 
+                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/user/admin/reclamos">Reclamos</a></li>
+                        </ul>
+                    </li>       
+                    <li class="dropdown button">
+                        <a href="#" class="dropdown-toggle white" data-toggle="dropdown">Productos<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/seleccion">Crear nuevo</a></li> 
+                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/admin">Todos</a></li>
+                            
+                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/seleccion">Agregar a Inventario</a></li>
+                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/flashsale/admin">Ventas Flash</a></li>
+                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/pregunta/admin">Preguntas</a></li>
+                        </ul>
+                    </li>
+                     
+                    
+                     
+                            
+                        
+                <?php        
+                    
+                }
+                else if(!Yii::app()->user->isGuest)
+                {
+                 // usuario normal
+                    ?>
+                        <li class="button"><a href="<?php echo Yii::app()->baseUrl; ?>/site/logout"><div class="white">Salir</div></a></li>
+                        <li class="dropdown button">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <div class="white">Cuenta<b class="caret"></b></div>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="<?php echo Yii::app()->baseUrl; ?>/user/user/tucuenta">Tu Cuenta</a></li>
+                                <li><a href="<?php echo Yii::app()->baseUrl; ?>/user/profile/edit">Editar perfil</a></li> 
+                                <li><a href="<?php echo Yii::app()->baseUrl."/user/profile/profile/id/".Yii::app()->user->id; ?>">Mi perfil público</a></li>
+                                <li><a href="<?php echo Yii::app()->baseUrl; ?>/user/profile/changepassword">Cambiar Contraseña</a></li>       
+                            </ul>
+                        </li> 
+                        
+                        <li class="dropdown button">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <div class="white">Direcciones<b class="caret"></b></div>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="<?php echo Yii::app()->baseUrl; ?>/direccionEnvio/listado">De Envío </a>
+                                </li>
+                                <li>
+                                    <a href="<?php echo Yii::app()->baseUrl; ?>/direccionFacturacion/listado">De Facturación</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="button">
+                            <a href="<?php echo Yii::app()->baseUrl; ?>/bolsa/view">
+                                <div class="white">
+                                    <span class="glyphicon glyphicon-shopping-cart"></span> Tu Carrito de compras 
+                                </div>
+                            </a>
+                        </li>
+                          
+                        
+                        
+                        <li class="button"><a href="<?php echo Yii::app()->baseUrl; ?>/tienda/"><div class="white">Tienda</div></a></li> 
+
+            
+                <?php
+                        
+                }
+                else { 
+                ?> 
+                                <li class="button">
+                                    <a href="<?php echo Yii::app()->baseUrl; ?>/site/index">                           
+                                        <div class="white" >
+                                            <span class="glyphicon glyphicon-user glyphiconLarge"></span><br/>
+                                            Tu cuenta
+                                        </div> 
+                                    </a>
+                                </li>
+                                <li class="button"> 
+                                    <a href="<?php echo Yii::app()->baseUrl; ?>/user/login">
+                                        <div class="white" >
+                                            <span class="glyphicon glyphicon-check glyphiconLarge"></span><br/>
+                                            Inicia Sesión
+                                        </div>
+                                    </a> 
+                                </li>
+                                <li class="button">
+                                    <a href="<?php echo Yii::app()->baseUrl; ?>/user/registration">
+                                        <div class="white" >
+                                            <span class="glyphicon glyphicon-plus-sign glyphiconLarge"></span><br/>
+                                            Regístrate                            
+                                        </div>
+                                    </a>
+                                </li>
+
+                <?php   
+                }
+                ?>
+                             
+                             
+                             
+                            
+                            
+                            
+                            
+                            </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="row-fluid" align="center">
@@ -309,299 +416,6 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
         
     </nav>
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <nav class="navbar navbar-default " role="navigation" style="background-color: #ea662e; margin-top: 250px">
-    	<div class="container">
-	        <div class="row">
-	        <!-- Brand and toggle get grouped for better mobile display -->
-	        <div class="col-md-2">
-	        	<div class="navbar-header">
-					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-						<span class="sr-only">Toggle navigation</span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</button>
-					<a href="http://telotengo.com<?php echo Yii::app()->baseUrl; ?>">
-						<?php echo CHtml::image(Yii::app()->baseUrl.'/images/telotengo-on-logo.jpg');  ?>
-					</a>
-				</div>
-	        </div>
-	        	
-		<ul class="nav navbar-nav navbar-right collapse navbar-collapse">
-		            
-				<?php
-					$sql = "select count(*) from tbl_producto where notificado=0";
-					$total = Yii::app()->db->createCommand($sql)->queryScalar();
-					
-					if(Yii::app()->user->isAdmin()){
-				?>
-					<li class="dropdown">
-				        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Pedidos<b class="caret"></b></a>
-				        <ul class="dropdown-menu">
-				        	<li><a href="<?php echo Yii::app()->baseUrl; ?>/orden/admin">Todos</a></li> 
-							<li><a href="<?php echo Yii::app()->baseUrl; ?>/user/admin/reclamos">Reclamos</a></li>
-						</ul>
-				    </li>      	
-					<li class="dropdown">
-				        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Productos<b class="caret"></b></a>
-				        <ul class="dropdown-menu">
-				        	<li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/seleccion">Crear nuevo</a></li> 
-							<li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/admin">Todos</a></li>
-							<li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/poraprobar">Por Aprobar (<?php echo $total; ?>)</a></li>
-							<li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/seleccion">Agregar a Inventario</a></li>
-							<li><a href="<?php echo Yii::app()->baseUrl; ?>/flashsale/admin">Ventas Flash</a></li>
-							<li><a href="<?php echo Yii::app()->baseUrl; ?>/pregunta/admin">Preguntas</a></li>
-						</ul>
-				    </li>
-				    		
-					<li class="dropdown">
-				        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Empresas<b class="caret"></b></a>
-				        <ul class="dropdown-menu">
-							<li><a href="<?php echo Yii::app()->baseUrl; ?>/empresas/admin">Todas</a></li>
-							<li><a href="<?php echo Yii::app()->baseUrl; ?>/empresas/compradoras">Compradoras</a></li>
-							<li><a href="<?php echo Yii::app()->baseUrl; ?>/empresas/vendedoras">Vendedoras</a></li>
-				    	</ul>
-				    </li>    
-				    
-				    <li class="dropdown">
-				        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Administración<b class="caret"></b></a>
-				        <ul class="dropdown-menu">
-							<li><a href="<?php echo Yii::app()->baseUrl; ?>/user/admin">Usuarios</a></li>
-							<li><a href="<?php echo Yii::app()->baseUrl; ?>/marca/admin">Marcas</a></li>
-							<li><a href="<?php echo Yii::app()->baseUrl; ?>/categoria/admin">Categorías</a></li>
-							<li><a href="<?php echo Yii::app()->baseUrl; ?>/TipoPago/admin">Tipos de Pago</a> </li>
-				    	</ul>
-				    </li>     
-					<li><a href="<?php echo Yii::app()->baseUrl; ?>/site/logout">Salir</a> </li>		
-			            
-			    <?php        
-					
-				}
-				else if(!Yii::app()->user->isGuest)
-				{
-				
-					$usuario = User::model()->findByPk(Yii::app()->user->id);
-					
-					$empresaHas = EmpresasHasUsers::model()->findByAttributes(array('users_id'=>$usuario->id));
-				    if(isset($empresaHas)) $empresa = Empresas::model()->findByPk($empresaHas->empresas_id);
-					
-					if(isset($empresa)){ // tiene empresa
-						if($empresa->tipo==2){ // empresa vendedora
-							
-						?>
-							<li><a href="<?php echo Yii::app()->baseUrl; ?>/site/index">Inicio</a></li>
-							<li class="dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Empresas<b class="caret"></b></a>
-						        <ul class="dropdown-menu">
-									<li><a href="<?php echo Yii::app()->baseUrl; ?>/empresas/listado">Mis Empresas</a></li>   
-									<li><a href="<?php echo Yii::app()->baseUrl; ?>/DatosPago/listado">Datos de pago</a></li>
-						    	</ul> 
-						   </li>
-							<li class="dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Productos<b class="caret"></b></a>
-						        <ul class="dropdown-menu">
-									<!-- <li><a href="<?php //echo Yii::app()->baseUrl; ?>/inventario/listado">Inventario</a></li> -->
-									<li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/seleccion">Agregar</a></li>
-									<li><a href="<?php echo Yii::app()->baseUrl; ?>/pregunta/preguntas">Preguntas</a></li>
-						    	</ul> 
-						   </li>
-							<li class="dropdown">
-						        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cuenta<b class="caret"></b></a>
-						        <ul class="dropdown-menu">
-						        	<li><a href="<?php echo Yii::app()->baseUrl; ?>/user/user/tucuenta">Tu Cuenta</a></li>
-									<li><a href="<?php echo Yii::app()->baseUrl; ?>/user/profile/edit">Editar perfil</a></li>
-									<li><a href="<?php echo Yii::app()->baseUrl."/user/profile/profile/id/".Yii::app()->user->id; ?>">Mi perfil público</a></li>
-									<li><a href="<?php echo Yii::app()->baseUrl; ?>/user/profile/changepassword">Cambiar Contraseña</a></li>
-						    	</ul>
-						    </li>   
-							<li><a href="<?php echo Yii::app()->baseUrl; ?>/site/logout">Salir</a></li>
-						
-						<?php					
-							
-						}
-						else if ($empresa->tipo==1) // empresa compradora
-						{
-						?>
-						
-						<li><a href="<?php echo Yii::app()->baseUrl; ?>/site/index">Inicio</a></li>
-						<li class="dropdown">
-					        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Direcciones<b class="caret"></b></a>
-					        <ul class="dropdown-menu">
-								<li><a href="<?php echo Yii::app()->baseUrl; ?>/direccionEnvio/listado">De Envío</a></li>
-								<li><a href="<?php echo Yii::app()->baseUrl; ?>/direccionFacturacion/listado">De Facturación</a></li>
-					    	</ul>
-					    </li>
-					    <li><a href="<?php echo Yii::app()->baseUrl; ?>/bolsa/view"><span class="glyphicon glyphicon-shopping-cart"></span> Carrito </a></li>
-						<li class="dropdown">
-					        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cuenta<b class="caret"></b></a>
-					        <ul class="dropdown-menu">
-					        	<li><a href="<?php echo Yii::app()->baseUrl; ?>/user/user/tucuenta">Tu Cuenta</a></li>
-								<li><a href="<?php echo Yii::app()->baseUrl; ?>/user/profile/edit">Editar perfil</a></li>
-								<li><a href="<?php echo Yii::app()->baseUrl."/user/profile/profile/id/".Yii::app()->user->id; ?>">Mi perfil público</a></li>
-								<li><a href="<?php echo Yii::app()->baseUrl; ?>/user/profile/changepassword">Cambiar Contraseña</a></li>
-								<li><a href="<?php echo Yii::app()->baseUrl; ?>/empresas/listado">Mis empresas</a></li>          
-					    	</ul>
-					    </li>   
-						<li><a href="<?php echo Yii::app()->baseUrl; ?>/site/logout">Salir</a></li>
-						
-						
-						<?php	
-						}
-					}
-					else { // usuario normal
-					?>
-					
-						<li><a href="<?php echo Yii::app()->baseUrl; ?>/">Inicio</a></li>
-						<li><a href="<?php echo Yii::app()->baseUrl; ?>/tienda/">Tienda</a></li> 
-						<li class="dropdown">
-					        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Direcciones<b class="caret"></b></a>
-					        <ul class="dropdown-menu">
-								<li><a href="<?php echo Yii::app()->baseUrl; ?>/direccionEnvio/listado">De Envío</a></li>
-								<li><a href="<?php echo Yii::app()->baseUrl; ?>/direccionFacturacion/listado">De Facturación</a></li>
-					    	</ul>
-					    </li>
-					  	<li><a href="<?php echo Yii::app()->baseUrl; ?>/bolsa/view"><span class="glyphicon glyphicon-shopping-cart"></span> Tu Carrito de compras </a></li>
-						<li class="dropdown">
-					        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cuenta<b class="caret"></b></a>
-					        <ul class="dropdown-menu">
-					        	<li><a href="<?php echo Yii::app()->baseUrl; ?>/user/user/tucuenta">Tu Cuenta</a></li>
-								<li><a href="<?php echo Yii::app()->baseUrl; ?>/user/profile/edit">Editar perfil</a></li> 
-								<li><a href="<?php echo Yii::app()->baseUrl."/user/profile/profile/id/".Yii::app()->user->id; ?>">Mi perfil público</a></li>
-								<li><a href="<?php echo Yii::app()->baseUrl; ?>/user/profile/changepassword">Cambiar Contraseña</a></li>       
-					    	</ul>
-					    </li>   
-						<li><a href="<?php echo Yii::app()->baseUrl; ?>/site/logout">Salir</a></li>
-						
-					<?php
-					}
-					
-				?>
-
-			
-				<?php
-						
-				}
-				else {
-				?>
-			
-					<li><a href="<?php echo Yii::app()->baseUrl; ?>/site/index">Inicio</a></li>
-					<li><a href="<?php echo Yii::app()->baseUrl; ?>/user/login">Inicia sesión</a></li>
-					<li><a href="<?php echo Yii::app()->baseUrl; ?>/user/registration">Registrate</a></li>
-					<li><a href="<?php echo Yii::app()->baseUrl; ?>/site/contact">Contacto</a></li>
-
-				<?php	
-				}
-				?>
-				<li></li>	            
-				</ul>
-        	</div>
-        	<!-- <div class="row navbar navbar-inverse">
- 				<ul class="nav navbar-nav navbar-left collapse navbar-collapse">
-			    	<li><a href="#">Inicio</a></li>
-			    	<li><a href="#">Ofertas</a></li>
-			    	<li><a href="#">Tiendas</a></li>
-			    </ul>
-
-			    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-			    	<ul class="nav navbar-nav navbar-right collapse navbar-collapse">
-			    		<li><a href="#">Inicio</a></li>
-			    		<li><a href="#">Ofertas</a></li>
-			    		<li><a href="#">Tiendas</a></li>
-			    	</ul>
-	    		</div>       		
-        	</div>
-        	
-    	</div>
-    	-->
-    	</nav>
-		
-		<nav class="navbar navbar-inverse">
-    		<div class="container">
-    			<div class="row">
-	    			<div class="col-md-3">
-		        		<div class="navbar-header">
-			      			<ul class="nav navbar-nav navbar-left">
-						    	<li><a href="<?php echo Yii::app()->baseUrl; ?>/site/index">Inicio</a></li>
-						    	<li><a href="<?php echo Yii::app()->baseUrl; ?>/tienda">Tienda</a></li>
-						    	<li><a href="#">Ofertas</a></li> 
-						    </ul>
-						</div>
-					</div>
-					<!-- Collect the nav links, forms, and other content for toggling -->
-				<div class="col-md-offset-1 col-md-4 pull-right">
-				<?php
-				
-				$url = Yii::app()->baseUrl."/site/busqueda";
-				
-				$form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
-					'id'=>'busqueda-form',
-					'enableAjaxValidation'=>false,
-					'enableClientValidation'=>true,
-					'action'=> $url,
-					'type'=>'horizontal',
-					'clientOptions'=>array(
-						'validateOnSubmit'=>true, 
-					),
-					'htmlOptions' => array(
-				        'enctype' => 'multipart/form-data',
-				        'class' => 'form-inline',
-				    ),
-				)); ?>
-					<div class="form-group">
-						<!-- <input type="text" id="busqueda" placeholder="Buscar por palabra clave..." class=""> -->
-						
-						<?php
-							echo CHtml::textField('busqueda', '',
-								array('id'=>'busqueda', 
-						    		'class'=>'form-control',
-									'placeholder'=>'Buscar por palabra clave'
-									)
-								);
-						?>
-						
-						<?php
-						  $this->widget('bootstrap.widgets.TbButton', array(
-								'buttonType'=>'submit',
-								'type'=>'success',
-								'icon'=>'glyphicon glyphicon-search',
-							)); ?>
-
-					</div>
-			<?php $this->endWidget(); ?>
-					</div>
-				</div>
-    		</div>
-    	</nav>
 		
   <!-- HEADER OFF -->
 

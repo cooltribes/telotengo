@@ -12,7 +12,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
           <!-- COLUMNA PRINCIPAL DERECHA ON // OJO: esta de primera para mejorar el SEO sin embargo por CSS se ubica visualmente a la derecha -->
 
 
-        <div class="col-md-10 col-md-push-2 main-content" role="main">
+        <div class="col-md-12 main-content" role="main">
 			
 			
             <ul class="nav nav-tabs" id="myTab">
@@ -75,7 +75,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
 					
                     $inventario_menor_precio = Inventario::model()->getMenor($producto->id);
                     ?>
-    					<article class="col-md-3">
+    					<article class="col-md-3" style="overflow: hidden">
                     		<div class="caja"> 
                     		
                     		<?php 
@@ -141,79 +141,6 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
         <!-- COLUMNA PRINCIPAL DERECHA OFF // -->
         <!-- COLUMNA IZQUIERDA (MENU) ON // -->
 
-        <div class="col-md-2 col-md-pull-10 navegacion-principal" role="navigation">
-            <h3>Departamentos</h3>
-            <!-- <div id="menu-top">
-                
-            </div> -->
-
-            <ul id="nav" class="dropdown dropdown-vertical">
-                <?php
-                $categorias = Categoria::model()->findAllByAttributes(array('id_padre'=>0));
-                foreach ($categorias as $categoria) {
-                    ?>
-                    <li class="dir"><?php echo $categoria->nombre; ?>
-                        <?php
-                        $hijos = Categoria::model()->findAllByAttributes(array('id_padre'=>$categoria->id));
-                        if(sizeof($hijos) > 0){
-                            ?>
-                            <ul>
-                                <?php
-                                foreach ($hijos as $hijo) {
-                                    ?>
-                                    <li><?php echo Chtml::link($hijo->nombre, Yii::app()->baseUrl.'/categorias'.'/'.$hijo->url_amigable, array()); ?></li>
-                                    <?php
-                                }
-                                ?>
-                            </ul> 
-                            <?php
-                        }
-                        ?>
-                    </li>
-                    <?php
-                }
-                ?>
-            </ul>
-
-            <!-- <nav>
-                <ul class="nav nav-pills nav-stacked">
-                    <li>
-
-                        <?php /*$this->widget('bootstrap.widgets.TbButton', array(
-                        'label'=>'Libros',
-                        'type'=>'primary',
-                        'htmlOptions'=>array('data-title'=>'Libros', 'data-content'=>'<a href="#">Link 1</a><a href="#">Link 2</a>', 'rel'=>'popover'),
-                        ));*/ ?>
-
-                        <a href="#" class="link">Libros
-                        <small>Impresos y digitales</small></a>
-                    </li>
-                    <li>
-                        <a href="#">Peliculas
-                        <small>Estrenos y clásicos</small></a>
-                    </li>
-                    <li>
-                        <a href="#">Computadores
-                        <small>Samsung, apple, hp</small></a>
-                    </li>
-                    <li>
-                        <a href="#">Video juegos
-                        <small>Cónsolas, controles,</small></a>
-                    </li>
-                    <li>
-                        <a href="#">Juguetes
-                        <small>Para 6 meses, 2 años...</small></a>
-                    </li>
-                    <li>
-                        <a href="#">Deportes
-                        <small>Bates, botas, pelotas</small></a>
-                    </li>
-
-                </ul>
-            </nav> -->
-            <!-- <a href="#" class="btn btn-info btn-block">Ayuda</a>
-            <a href="#" class="btn btn-info btn-block">Preguntas frecuentes</a> -->
-        </div>
         <!-- COLUMNA IZQUIERDA (MENU) OFF // -->
     </div>
      <!-- CONTENIDO OFF -->
