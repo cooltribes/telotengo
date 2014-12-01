@@ -8,13 +8,9 @@
 			
 <h1>Contáctanos</h1>
 
-<?php if(Yii::app()->user->hasFlash('contact')): ?>
-
 <div class="flash-success">
 	<?php echo Yii::app()->user->getFlash('contact'); ?>
 </div>
-
-<?php else: ?>
 
 <p> Si tienes alguna duda o pregunta, por favor llena el siguiente formulario para contactarnos. </p>
 
@@ -78,4 +74,3 @@
 		</div>
 	</div>
 </div>
-<?php endif; ?>

@@ -4,6 +4,16 @@ $this->breadcrumbs=array(
 );
 
 ?>
+	<?php if(Yii::app()->user->hasFlash('success')){?>
+	    <div class="alert in alert-block fade alert-success text_align_center">
+	        <?php echo Yii::app()->user->getFlash('success'); ?>
+	    </div>
+	<?php } ?>
+	<?php if(Yii::app()->user->hasFlash('error')){?>
+	    <div class="alert in alert-block fade alert-error text_align_center">
+	        <?php echo Yii::app()->user->getFlash('error'); ?>
+	    </div> 
+	<?php } ?>
 
 <div class="container margin_top">	
 		<h1><?php echo $profile->first_name." ".$profile->last_name; ?></h1>
@@ -104,33 +114,23 @@ $this->breadcrumbs=array(
 					$orden = new Orden;
 					
 					$dataProvider = $orden->CuatroComprados($model->id);
-					
-					if($dataProvider != false)
-					{
+					if($dataProvider != false){
 						if(count($dataProvider->getData())>0){	
-							
-							foreach($dataProvider->getData() as $row)
-							{
+							foreach($dataProvider->getData() as $row){
 								$principal = Imagenes::model()->findByAttributes(array('orden'=>1,'producto_id'=>$row['id']));
 	    							
 								if($principal->getUrl())
 									$im = CHtml::image(str_replace(".","_thumb.",$principal->getUrl()), "Imagen ", array("height"=>"170", "width" => "170"));
 								else 
-									$im = '<img src="http://placehold.it/170x170" alt="...">';
+									$im = '<img src="http://placehold.it/170x170" alt="..."">';
 							
 							?>
 								<div class="col-sm-6 col-md-3">
-								<?php echo "<a href='".Yii::app()->baseUrl.'/producto/detalle/'.$row['id']."'>";	?>	
+								<a href="<?php Yii::app()->baseUrl; ?>/producto/detalle/<?php echo $row['id']; ?>>";	?>	
 									<div class="thumbnail">
 										<?php echo $im; ?>
 										<div class="caption">
 											<h4><?php echo $row['nombre']; ?></h4>
-											<?php
-											if(strlen($row['descripcion']) > 35)
-												echo "<p>".substr($row['descripcion'],0,30).' ... </p>';
-											else
-												echo '<p>'.$row['descripcion'].'</p>';											
-										?>
 										</div>
 									</div>
 								</a>
@@ -145,10 +145,9 @@ $this->breadcrumbs=array(
 					else
 						echo '<div class="padding_left_small"><h5> El usuario no ha realizado ninguna compra.</h5><div>';	
 					
-					?>		
-																
+					?>													
 				</div>
 				<!-- Productos comprados -->				
 			</section>
 		</div>
-	</div>
+		</div></div>

@@ -111,7 +111,7 @@ class ProfileController extends Controller
 	/**
 	 * Change password
 	 */
-	public function actionChangepassword() {
+	public function actionChangepassword(){
 		$model = new UserChangePassword;
 		if (Yii::app()->user->id) {
 			
@@ -129,7 +129,7 @@ class ProfileController extends Controller
 						$new_password->password = UserModule::encrypting($model->password);
 						$new_password->activkey=UserModule::encrypting(microtime().$model->password);
 						if ($new_password->save()) {
-							Yii::app()->user->setFlash('profileMessage',UserModule::t("Nueva contraseña guardada"));
+							Yii::app()->user->setFlash('success', 'Se ha cambiado correctamente la contraseña.');
 							$this->redirect(array("profile"));
 						}else{
 							print_r($new_password->getErrors());

@@ -105,8 +105,19 @@ class SiteController extends Controller
 					"Content-Type: text/plain; charset=UTF-8";
 
 				mail(Yii::app()->params['contacto'],$subject,$model->body,$headers);
+
+				$message = new YiiMailMessage;
+				$message->view = "mail_template";
+				$subject = 'Contacto - '.$model->email;
+				$body = $model->body;
+				$params = array('body'=>$body);
+				$message->subject = $subject;
+				$message->setBody($params, 'text/html');
+				$message->addTo(Yii::app()->params['contacto']);
+				$message->from = array(Yii::app()->params['contacto'] => 'Sigma Tiendas');
+				Yii::app()->mail->send($message);			
+
 				Yii::app()->user->setFlash('contact','Gracias por contactarnos. Te responderemos lo más pronto posible.');
-				$this->refresh();
 			}
 		}
 		$this->render('contact',array('model'=>$model));
