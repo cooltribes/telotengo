@@ -463,9 +463,22 @@ class BolsaController extends Controller
 			}
 		}
 
+		$orden = new Orden();
+		$orden->descuento = 0;
+		$orden->iva = 0;
+		$orden->total = $_POST['subtotal']; // $subtotal + $_POST['envio']; //falta agregar el iva
+		$orden->fecha = date('Y-m-d H:i:s');
+		$orden->users_id = intval($user->id);
+		$orden->envio = $_POST['envio'];
+
 		// $subtotal = $subtotal - $_POST['balance'];
 		if($_POST['balance']>0){
+			$orden->balance = $_POST['balance'];
 			if($_POST['subtotal'] == 0){ // Ver que balance hay, restar la compra y dejar el resto	
+				
+				$orden->estado = 3; // Pago confirmado
+				$orden->tipo_pago_id = 6; // Balance
+
 				$faltaDescontar = $_POST['balance'];
 				$balances = Balance::model()->findAllByAttributes(array('user_id'=>Yii::app()->user->id));
 				
@@ -483,22 +496,14 @@ class BolsaController extends Controller
 				}
 			}
 			else{
+				$orden->tipo_pago_id = intval($_POST['payment_method_id']);
+				$orden->estado = 1; // En espera de pago
 				$balances = Balance::model()->findAllByAttributes(array('user_id'=>Yii::app()->user->id));
 				foreach($balances as $balance){
 					$balance->delete();
 				}
 			}
 		}
-
-		$orden = new Orden();
-		$orden->descuento = 0;
-		$orden->envio = $_POST['envio'];
-		$orden->iva = 0;
-		$orden->total = $_POST['subtotal']; // $subtotal + $_POST['envio']; //falta agregar el iva
-		$orden->fecha = date('Y-m-d H:i:s');
-		$orden->estado = 1; // En espera de pago
-		$orden->users_id = intval($user->id);
-		$orden->tipo_pago_id = intval($_POST['payment_method_id']);
 		
 		if($orden->save()){
 			foreach($bolsa_has as $uno){
@@ -518,7 +523,7 @@ class BolsaController extends Controller
 						$subject = 'Tu compra en Sigma Tiendas #'.$orden->id.' ha sido enviada';
 						$body = "Nos complace informarte que tu pedido #".$orden->id." se ha registrado correctamente
 								<br/>
-								Recuerda registrar los datos de tu pago en la siguiente dirección <a href=''>Registrar Pago</a>
+								Recuerda registrar los datos de tu pago en la siguiente dirección <a href='telotengo.com/sigmatiendas/orden/detalleusuario/".$orden->id."'>Registrar Pago</a>
 								<br/>
 								Gracias por confiar en nosotros
 								<br/> 

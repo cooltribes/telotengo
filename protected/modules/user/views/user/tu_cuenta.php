@@ -7,7 +7,6 @@
 $this->breadcrumbs=array(
 	'Tu Cuenta',
 );
-
 ?>
 		<?php if(Yii::app()->user->hasFlash('success')){?>
 		    <div class="alert in alert-block fade alert-success text_align_center">
@@ -59,7 +58,7 @@ $this->breadcrumbs=array(
 					        
 					        array('label'=>'Pagos y Balance', 'active'=>false),
 					        array('label'=>' Preferencias de pago', 'icon'=>'glyphicon glyphicon-check', 'url'=>'#'),
-					        array('label'=>' Tarjetas de regalo', 'icon'=>'glyphicon glyphicon-credit-card', 'url'=>'#'),
+					        array('label'=>' Tarjetas de regalo', 'icon'=>'glyphicon glyphicon-credit-card', 'url'=>Yii::app()->baseUrl.'/giftcard/comprar'),
 					        
 							array('label'=>'Preferencias', 'active'=>false),
 					        array('label'=>' Lista de Deseos', 'icon'=>'glyphicon glyphicon-folder-open', 'url'=>Yii::app()->baseUrl.'/wishlist/listado'),

@@ -216,8 +216,8 @@ return array(
 	'params'=>array(
 		// this is used in contact page
 		'adminEmail'=>'info@sigmatiendas.com', 
-		'contacto'=>'contacto@telotengo.com',
-		//'contacto'=>'dduque@upsidecorp.ch',
+		//'contacto'=>'contacto@telotengo.com',
+		'contacto'=>'dduque@upsidecorp.ch',
 		'uploadPath'=>dirname(__FILE__).'/../../documentos/',
         'uploadUrl'=>'/documentos',
 	),

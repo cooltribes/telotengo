@@ -316,14 +316,16 @@ class OrdenController extends Controller
 		{
 			$modeloDetalle = New DetalleOrden;
 			$modeloDetalle->attributes = $_POST['DetalleOrden'];
+
 			$modeloDetalle->estado=0; // pago enviado, queda en Default en espera de decision del administrador
 			$modeloDetalle->tipo_pago_id = 2; // deposito o transferencia
-			
+
 			$modeloDetalle->save(); 
 			
 			Yii::app()->user->setFlash('success',"Su pago se ha registrado exitosamente.");
 			
 			$model->estado = 2; // en espera de confirmacion
+			$model->save();
 		}
 		
 		$this->render('detalle_usuario',array(
@@ -623,49 +625,29 @@ class OrdenController extends Controller
 		if($detalle->save()){
 		//Revisando si lo depositado es > o = al total de la orden. 
 		
-		$diferencia_pago = round(($detalle->monto - $porpagar),3,PHP_ROUND_HALF_DOWN);
-		
-		if($diferencia_pago >= 0){ // Pago completo o de más 
-		
-			$orden->estado = 3; // pago confirmado
-			$orden->save();
-			 
-			Yii::app()->user->setFlash('success',"Su pago ha sido aceptado y su orden ha sido confirmada.");			
-					/* if($factura){
-							$factura->estado = 2;
-							$factura->save();
-							$estado = new Estado;
-													
-							$estado->estado = 3; // pago recibido
-							$estado->user_id = Yii::app()->user->id;
-							$estado->fecha = date("Y-m-d");
-							$estado->orden_id = $orden->id;
-									
-							if($estado->save())
-							{
-								echo "ok";
-							} else {
-								Yii::trace('user id:'.Yii::app()->user->id.' Validar error:'.print_r($estado->getErrors(),true), 'registro');
-							}
-						} 
-					
-						// Subject y body para el correo
-						$subject = 'Pago aceptado';
-						$body = '<h2> ¡Genial! Tu pago ha sido aceptado.</h2> Estamos preparando tu pedido para el envío, muy pronto podrás disfrutar de tu compra. <br/><br/> ';
-								
-						$usuario = Yii::app()->user->id;
-						
-					if(($diferencia_pago) > 0.5)
-					{
-						$balance = new Balance;
-						$balance->orden_id = $orden->id;
-						$balance->user_id = $orden->user_id;
-						$balance->total = $diferencia_pago;
-							
-						$balance->save();
-						$body .= 'Tenemos una buena noticia, tienes disponible un saldo a favor de '.Yii::app()->numberFormatter->formatCurrency($excede, '').' Bs.';
-					} // si es mayor hace el balance
-					*/ 	
+			$diferencia_pago = round(($detalle->monto - $porpagar),3,PHP_ROUND_HALF_DOWN);
+			//$diferencia_pago = round(($detalle->monto - $orden->total),3,PHP_ROUND_HALF_DOWN);
+			
+			if($diferencia_pago >= 0){ // Pago completo o de más 
+			
+				$orden->estado = 3; // pago confirmado
+				$orden->save();
+				 
+				Yii::app()->user->setFlash('success',"Su pago ha sido aceptado y su orden ha sido confirmada.");			
+
+				if(($diferencia_pago) > 0.5)
+				{
+					$balance = new Balance;
+					$balance->orden_id = $orden->id;
+					$balance->user_id = $orden->users_id;
+					$balance->total = $diferencia_pago;
+					$balance->tipo = 0; // balance positivo
+
+					$balance->save();
+
+					// Enviar mail de saldo positivo y de pago aceptado
+
+				} // si es mayor hace el balance
 
 			} 
 			else{ // pago incompleto
@@ -674,7 +656,7 @@ class OrdenController extends Controller
 				$orden->save();	
 				Yii::app()->user->setFlash('error',"Su pago ha sido aceptado pero faltan Bs. ".$diferencia_pago);		
 			}
-		
+			
 		}
 		else
 			var_dump($detalle->getError());
