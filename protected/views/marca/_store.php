@@ -25,7 +25,7 @@
         }
 
         echo '<p>Bs.<big>'.$inventario_menor_precio->precio.'</big><a role="button" href="'.Yii::app()->baseUrl.'/producto/detalle/'.$data->id.'" 
-                class="btn btn-xs btn-success pull-right">Comprar ahora »</a>';
+                class="btn btn-xs btn-danger pull-right">Comprar ahora »</a>'; 
     ?>
     </div>
 </article>
