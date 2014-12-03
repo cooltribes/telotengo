@@ -6,14 +6,14 @@
 		);
 	?>
 	<div class="row">
-		<div class="col-md-offset-4 col-md-4">
+		<div class="col-md-offset-3 col-md-6">
 			<h1><?php echo UserModule::t("Login"); ?></h1>
 
 			<?php if(Yii::app()->user->hasFlash('loginMessage')): ?>
 
 			<div class="alert in alert-block fade alert-success text_align_center">
 				<?php echo Yii::app()->user->getFlash('loginMessage'); ?>
-			</div>
+			</div> 
 
 			<?php endif; ?>
 

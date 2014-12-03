@@ -208,6 +208,23 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
             background: none;
             border:0px;
             box-shadow: none;
+        } 
+        #page>#content>.container{
+            margin-bottom:4em;
+        }
+        #boton_facebook{
+            background-color: #3B5998;
+            background-image: url(<?php echo Yii::app()->theme->baseUrl;?>/images/icon_facebook_registrator.png);
+            background-repeat: no-repeat;
+            background-position-y: -2px;
+            padding: 10px 10px 10px 35px;
+            color: #FFF;
+        }
+        #boton_facebook:visited{
+            color:#FFF;
+        }
+        .align_center{
+            text-align: center;
         }
     
     </style>
@@ -394,9 +411,11 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                 <div class="col-md-10">
 
                     <ul id="nav" class="dropdown dropdown-horizontal">
+                   <a href="<?php echo Yii::app()->getBaseUrl(true);?>">
                         <li class="dir">
                             <span class="glyphicon glyphicon-home glyphiconLarge white"></span>
                         </li>
+                    </a>
                         <?php
                         $categorias = Categoria::model()->findAllByAttributes(array('id_padre'=>0));
                         foreach ($categorias as $categoria) {
