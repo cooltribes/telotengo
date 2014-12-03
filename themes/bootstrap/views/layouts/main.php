@@ -2,6 +2,8 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+<link rel="icon" href="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/favicon75.png" type="image/x-icon">
+<link rel="shortcut icon" href="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/favicon75.png" type="image/x-icon">
 <?php
 Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_menu/css/helper.css');
 Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_menu/css/dropdown/dropdown.vertical.css');
@@ -33,12 +35,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
 		      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
 		      <![endif]-->
 		      <!-- Move down content because we have a fixed navbar that is 50px tall -->
-			<style>
-		      body {
-		        padding-top: 50px;
-		        padding-bottom: 20px;
-		      }
-			</style>
+			
 
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
 
@@ -59,6 +56,12 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
             color: #FFF; font-size: .8em;
         }
         .linkSuperior:hover{
+            color: #FFF;
+        }
+        .linkSuperior:active{
+            color: #FFF;
+        } 
+        .linkSuperior:visited{
             color: #FFF;
         } 
         .mainHead{
@@ -145,12 +148,14 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
         }   
         .footer{
             background-color:  #198ac9;
+            margin-right:0px;
         }
         .subfooter{
             background-color:  #016eab;
         }
         body{
             padding: 0px;
+            background: none;
         }
         .foot-title{
             color:#FFF;
@@ -168,13 +173,41 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
             color: #FFF;
         }
         .foot-section{
-            background:#016eab;
+            background:rgba(0, 0, 0, 0.07);
             overflow-y: hidden;
             min-height: 210px;
+        }
+        .foot-main{
+            width:100%;
         }
         .no_list_style{
             list-style-type: none;
             
+        }
+        .clientService{
+            width:100%;
+            text-align:right;
+        }
+        .productName {
+            line-height: 1.5em;
+            height: 3em;
+            min-height: 3em;       /* height is 2x line-height, so two lines will display */
+            overflow: hidden;  /* prevents extra lines from being visible */
+        }
+        .productImage{
+            height:240px;
+        }
+        .carousel-indicators li{
+            border: solid 1px #CCC;
+            
+        }
+        .carousel-indicators .active li{
+            background-color: #CCC;
+        }
+        .main-content{
+            background: none;
+            border:0px;
+            box-shadow: none;
         }
     
     </style>
@@ -183,15 +216,15 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
         <div class="container"> 
             <div class="navbar-left">                
                         <a href="http://facebook.com/sigmatiendas">
-                            <img src="http://maranjo.com/sandbox/sigma/skin/social_images/facebook.png" alt="Facebook" width="25" height="25">
+                            <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/facebook.png" alt="Facebook" width="25" height="25">
                         </a>
                    
                         <a href="https://twitter.com/Sigmatiendas">
-                            <img src="http://maranjo.com/sandbox/sigma/skin/social_images/twitter.png" alt="Twitter" width="25" height="25">
+                            <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/twitter.png" alt="Twitter" width="25" height="25">
                         </a>
                 
                         <a href="http://instagram.com/sigmatiendas">
-                            <img src="http://sigmatiendas.com/skin/skin/social_images/instagram.png" alt="Instagram" width="25" height="25">
+                            <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/instagram.png" alt="Instagram" width="25" height="25">
                         </a>
                         <a class="linkSuperior" href="http://twitter.com/sigmatiendas">
                            Síguenos en @Sigmatiendas
@@ -200,12 +233,12 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
             </div>
             <div class="navbar-right">
                 <ul style="list-style: none; color:#FFF">
-                    <a href="http://sigmatiendas.com/index.php/our-info/" class="linkSuperior">Quienes somos </a>|
-                    <a href="http://sigmatiendas.com/index.php/suport/" class="linkSuperior">Ensamblaje y soporte </a>|
-                    <a href="http://sigmatiendas.com/index.php/waranty/" class="linkSuperior">Garantías </a>|
-                    <a href="http://sigmatiendas.com/index.php/agreements/" class="linkSuperior">Convenios </a>|
-                    <a href="http://sigmatiendas.com/index.php/corporative/" class="linkSuperior">Corporativo </a>|
-                    <a href="http://sigmatiendas.com/index.php/licences/" class="linkSuperior">Instalación de Licencias </a>
+                    <a href="<?php echo Yii::app()->baseUrl;?>/site/info" class="linkSuperior">Quienes somos </a>|
+                    <a href="<?php echo Yii::app()->baseUrl;?>/site/soporte" class="linkSuperior">Ensamblaje y soporte </a>|
+                    <a href="<?php echo Yii::app()->baseUrl;?>/site/garantia" class="linkSuperior">Garantías </a>|
+                    <a href="<?php echo Yii::app()->baseUrl;?>/site/convenios" class="linkSuperior">Convenios </a>|
+                    <a href="<?php echo Yii::app()->baseUrl;?>/site/corporativo" class="linkSuperior">Corporativo </a>|
+                    <a href="<?php echo Yii::app()->baseUrl;?>/site/licencias" class="linkSuperior">Instalación de Licencias </a>
                   
                 </ul>
             </div>
@@ -377,7 +410,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                                         <?php
                                         foreach ($hijos as $hijo) {
                                             ?>
-                                            <li><?php echo Chtml::link($hijo->nombre, Yii::app()->baseUrl.'/categorias'.'/'.$hijo->url_amigable, array()); ?></li>
+                                            <?php echo CHtml::link('<li>'.$hijo->nombre.'</li>', Yii::app()->baseUrl.'/categorias'.'/'.$hijo->url_amigable, array()); ?>
                                             <?php
                                         }
                                         ?>
@@ -465,9 +498,10 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                       Recibe ofertas en tu correo:
                       Dale un ojo a nuestro blog
                       Formas de pago
+                      <p>&copy; Telotengo <?php echo date('Y');?></p>
                     </div>
                 </div>
-                <p>&copy; Telotengo 2013</p>
+                
             </footer>
 		
 		<!-- page -->

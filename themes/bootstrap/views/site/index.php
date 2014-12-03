@@ -3,6 +3,16 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
 Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_menu/css/dropdown/dropdown.vertical.css');
 Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_menu/css/dropdown/themes/default/default.css');
 ?>
+<script>
+$(document).ready(function () {
+$('#myCarousel2').carousel({
+    interval: 2000
+});
+
+
+$('.carousel').carousel('cycle');
+});  
+</script>
 
 <div class="container" style="padding: 0 15px;">
 
@@ -14,57 +24,42 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
 
         <div class="col-md-12 main-content" role="main">
 			
-			
-            <ul class="nav nav-tabs" id="myTab">
-            	<li class="active"><a href="#home" data-toggle="tab">Home</a></li>
-              	<li><a href="#computadores" data-toggle="tab">Computadores</a></li>
-              	<li><a href="#monitores" data-toggle="tab">Monitores</a></li>
-              	<li><a href="#cornetas" data-toggle="tab">Cornetas</a></li>
-              	<li><a href="#impresoras" data-toggle="tab">Impresoras</a></li>
-              	<li class="pull-right"> <span class="glyphicon  glyphicon-phone-alt"></span> Servicio al cliente:  (0800) 33441122 |  servicio@telotengo.com</li>
-			</ul>
-	
-    		<div class="tab-content"> 
-    			
-    			<div class="tab-pane active" id="home">
-                    <div class="container">
-                        <img src="http://www.semaudiolabs.com/images/tec/tech_banner01.jpg" />
-                    </div>
-                </div> 
-                
-                <div class="tab-pane" id="computadores">
-                    <div class="container">
-                        <img src="http://www.avg-la.com/wp-content/themes/avg-latinoamerica/img/2013/banner-home-avg-is-2013-updated.png" />
-                    </div>
-                </div>
-                
-                <div class="tab-pane" id="monitores">
-                    <div class="container">
-                        <img src="http://www.lg.com/co/images/main/hero/banner-monitor-lcd.jpg" />
-                    </div>
-                </div>
-                
-               	<div class="tab-pane" id="cornetas">
-                    <div class="container">
-                        <img src="http://www.f-covers.com/cover/jl-audio-gotham-facebook-cover-timeline-banner-for-fb.jpg" />
-                    </div>
-                </div>
-                
-                <div class="tab-pane" id="impresoras">
-                    <div class="container">
-                        <img src="http://www.www8-hp.com/es/es/images/IPG_home_banner_tcm176-954532.jpg" />
-                    </div>
-                </div>
-                
-                <div class="tab-pane">
-                    <div class="container">
-                            <h1>Seccion computadores</h1>
-                            <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-                            <p><a class="btn btn-primary btn-lg" role="button">Learn more &raquo;</a></p>
-                    </div>
-                </div> 
-            </div>            
-            <section class="row">
+			<div id="myCarousel" class="carousel slide">
+               <!-- Carousel indicators -->
+               <ol class="carousel-indicators">
+                  <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                  <li data-target="#myCarousel" data-slide-to="1"></li>
+                  <li data-target="#myCarousel" data-slide-to="2"></li>
+               </ol>   
+               <!-- Carousel items -->
+               <div class="carousel-inner">
+                  <div class="item active">
+                     <a href="https://wuelto.com/sigmatiendas" target="_blank">
+                         <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/slider1.jpg" width="100%" title="Halloween YuppiPark">
+                     </a>
+                  </div>
+                  <div class="item">
+                     <a href="http://sigmatiendas.com/index.php/computadoras-impresoras/licencias.html" target="_blank">
+                         <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/slider2.jpg" width="100%" title="Licencias Originales">
+                     </a>
+                  </div>
+                  <div class="item">
+                     <a href="http://sigmatiendas.com/index.php/computadoras-impresoras/equipos.html" target="_blank">
+                         <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/slider3.jpg" width="100%" title="Impresoras">
+                     </a>
+                  </div>
+               </div>
+               <!-- Carousel nav -->
+               <a class="carousel-control left" href="#myCarousel" 
+                  data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+               <a class="carousel-control right" href="#myCarousel" 
+                  data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+            </div> 
+            
+            
+            <section class="row margin_top">
+            <h2>Ofertas Especiales</h2>
+            <hr/>
             	<?php            	
             	$prod = new Producto;
 				$productos = $prod->front();
@@ -75,42 +70,45 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
 					
                     $inventario_menor_precio = Inventario::model()->getMenor($producto->id);
                     ?>
-    					<article class="col-md-3" style="overflow: hidden">
+    					<article class="col-md-3">
                     		<div class="caja"> 
                     		
                     		<?php 
-    	                	
+    	                 	
     	                	if($producto->mainimage) // tiene imagen
     	                	{
-    	                		$principal = Imagenes::model()->findByAttributes(array('orden'=>1,'producto_id'=>$producto->id));
-    							
-    							if($principal->getUrl())
-    								$im = CHtml::image(str_replace(".","_thumb.",$principal->getUrl()), "Imagen ", array("height"=>"310","width"=>"310"));
+    	                		$principal = Imagenes::model()->findByAttributes(array('orden'=>1,'producto_id'=>$producto->id)); ?>
+    							<div class="productImage">
+    					<?php	if($principal->getUrl())
+    								$im = CHtml::image(str_replace(".","_thumb.",$principal->getUrl()), "Imagen ", array("width"=>"100%","style"=>"max-height:240px; overflow-y:hidden"));
     							else 
     								echo '<img src="http://placehold.it/300x240" width="100%">';
     							 
-    							echo "<a href='".Yii::app()->baseUrl.'/producto/detalle/'.$producto->id."'>".$im."</a>";
+    							echo "<a href='".Yii::app()->baseUrl.'/producto/detalle/'.$producto->id."'>".$im; ?>
     							
-    							$marca = Marca::model()->findByPk($producto->marca_id);
+    							</div>
     							
-								if($producto->hasFlashsale()){
-									$a = "marcas/".$marca->nombre;
-									echo CHtml::link($marca->nombre,array($a)).'<p class="lead">Aplica oferta.</p>';
-								}else{
-									$a = "marcas/".$marca->nombre;
-									echo CHtml::link($marca->nombre,array($a));
-								}
+    				<?php
+    						$marca = Marca::model()->findByPk($producto->marca_id);
+    							
 								
-    							echo '<h2> '.$producto->nombre.' </h2>';
-    							
+    							echo '<h3 class="productName no_margin_top no_margin_bottom"> '.$producto->nombre.' </h3></a>';
+    							if($producto->hasFlashsale()){
+                                    $a = "marcas/".$marca->nombre;
+                                    echo '<small><span class="muted">por </span>'.CHtml::link($marca->nombre,array($a)).'<p class="lead">Aplica oferta.</p></small>';
+                                }else{
+                                    $a = "marcas/".$marca->nombre;
+                                    echo '<small><span class="muted">por </span>'.CHtml::link($marca->nombre,array($a)).'</small>';
+                                }
+                                echo "</a>";
 								/*if(strlen($producto->descripcion) > 45)
 									echo "<p>".substr($producto->descripcion,0,40).' ... <br/>';
 								else
 									echo '<p>'.$producto->descripcion.'<br/>';
 								*/
 								
-    		                    echo 'Bs. '.($inventario_menor_precio->precio_tienda).' en tienda</p>';
-    							echo '<p>Bs. '.$inventario_menor_precio->precio.' <a role="button" href="'.Yii::app()->baseUrl.'/producto/detalle/'.$producto->id.'" class="btn btn-xs btn-success">Comprar ahora »</a>';
+    		   
+    							echo '<p>Bs.<big>'.$inventario_menor_precio->precio.'</big><a role="button" href="'.Yii::app()->baseUrl.'/producto/detalle/'.$producto->id.'" class="btn btn-xs btn-danger pull-right">Comprar ahora »</a>';
     							
     	                	}
     						?>
@@ -121,19 +119,129 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
     				    }
                 	    ?>
   
-                        <!--   
-                        <article class="col-md-3">
-                            <div class="caja"><img src="http://placehold.it/300x240" width="100%">
-                                sony
-                                <h2>Heading</h2>
-                                <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus. <br/>
-                                    Bs. 5.000,00 En tienda</p>
-                                    <p>Bs. 4.200 <a role="button" href="#" class="btn btn-xs btn-success btn-default">Comprar ahora »</a>
-                                </p>
-                            </div>
-                        </article>    
-                        -->
                                                                              
+            </section>
+            <section class="row margin_top">
+                <h2>Ubícanos</h2>
+            <hr/>
+            <div class="row">
+                <div class="col-md-12" style="text-align: center">
+                    <a href="<?php echo Yii::app()->baseUrl;?>/site/tiendas">
+                        <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/img_sucursales.png" style="margin: 0 auto 0 auto" />
+                    </a>
+                </div>
+            </div>
+            </section>
+            
+            <section class="row margin_top">
+             
+                    <div class="col-md-4">
+                        <div class="content">
+                        <iframe style="border: none; background-color: #ffffff; overflow: hidden; width: 100%; height: 370px;" src="http://www.facebook.com/plugins/likebox.php?href=https%3A%2F%2Fwww.facebook.com%2Fsigmatiendas&amp;width=400&amp;height=370&amp;colorscheme=light&amp;show_faces=true&amp;header=true&amp;stream=false&amp;show_border=true&amp;appId=123361354501719" frameborder="0" scrolling="no" width="320" height="370"></iframe>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="content">
+                        <a class="twitter-timeline" href="https://twitter.com/Sigmatiendas" data-widget-id="530834988501975040">Tweets por @Sigmatiendas</a>
+                        <script type="text/javascript">// <![CDATA[
+                        !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+                        // ]]></script>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="content">
+                            <script src="//instansive.com/widget/js/instansive.js"></script><iframe src="//instansive.com/widgets/ec65216c130bcf8283bc9daeb4aa5a318dbb2447.html" id="instansive_ec65216c13" name="instansive_ec65216c13"  scrolling="no" allowtransparency="true" class="instansive-widget" style="width: 100%; border: 0; overflow: hidden;"></iframe>
+                        </div>
+                    </div>
+                    
+               
+            </section>
+            
+            <section class="row margin_top">
+                <h2>Marcas Destacadas</h2>
+            <hr/>
+            
+            <div id="myCarousel2" class="carousel slide">
+               <!-- Carousel indicators -->
+         
+               <!-- Carousel items -->
+               <div class="carousel-inner">
+                  <div class="item active row-fluid">
+                     <div class="col-md-3">
+                        <a>
+                            <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/marcas/blackberry.png" />
+                        </a> 
+                     </div>
+                     <div class="col-md-3">
+                        <a>
+                            <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/marcas/lenovo.png" />
+                        </a> 
+                     </div>
+                     <div class="col-md-3">
+                        <a>
+                            <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/marcas/samsung.png" />
+                        </a> 
+                     </div>
+                     <div class="col-md-3">
+                        <a>
+                            <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/marcas/hp.png" />
+                        </a> 
+                     </div>
+                     
+                  </div>
+                  
+                  <div class="item row-fluid">
+                     <div class="col-md-3">
+                        <a>
+                            <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/marcas/caselogic.png" />
+                        </a> 
+                     </div>
+                     <div class="col-md-3">
+                        <a>
+                            <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/marcas/sandisk.png" />
+                        </a> 
+                     </div>
+                     <div class="col-md-3">
+                        <a>
+                            <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/marcas/kingston.png" />
+                        </a> 
+                     </div>
+                     <div class="col-md-3">
+                        <a>
+                            <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/marcas/siragon.png" />
+                        </a> 
+                     </div>
+                  </div>
+                  
+                  <div class="item row-fluid">
+                        <div class="col-md-3">
+                        <a>
+                            <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/marcas/argom.png" />
+                        </a> 
+                     </div>
+                     <div class="col-md-3">
+                        <a>
+                            <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/marcas/quo.png" />
+                        </a> 
+                     </div>
+                     <div class="col-md-3">
+                        <a>
+                            <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/marcas/nyck.png" />
+                        </a> 
+                     </div>
+                     <div class="col-md-3">
+                        <a>
+                            <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/marcas/forza.png" />
+                        </a> 
+                     </div>
+                  </div>
+                  
+               </div>
+               <!-- Carousel nav -->
+
+            </div> 
+            
+             
             </section>
 
         </div>
