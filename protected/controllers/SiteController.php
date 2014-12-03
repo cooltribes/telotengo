@@ -23,7 +23,8 @@ class SiteController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','error','contact','login','logout','captcha','busqueda'), 
+				'actions'=>array('index','error','contact','login','logout','captcha','busqueda','tiendas','info','soporte','garantia','convenios',
+								'corporativo','licencias'), 
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -97,19 +98,13 @@ class SiteController extends Controller
 			$model->attributes=$_POST['ContactForm'];
 			if($model->validate())
 			{
-				$name='=?UTF-8?B?'.base64_encode($model->name).'?=';
-				$subject='=?UTF-8?B?'.base64_encode($model->subject).'?=';
-				$headers="From: $name <{$model->email}>\r\n".
-					"Reply-To: {$model->email}\r\n".
-					"MIME-Version: 1.0\r\n".
-					"Content-Type: text/plain; charset=UTF-8";
-
-				mail(Yii::app()->params['contacto'],$subject,$model->body,$headers);
-
 				$message = new YiiMailMessage;
 				$message->view = "mail_template";
-				$subject = 'Contacto - '.$model->email;
-				$body = $model->body;
+				$subject = 'Formulario de Contacto - '.$model->email;
+				$body = "El usuario de mail: ".$model->email."<br/>
+						envió el siguiente mensaje: ".$model->body."<br/>
+						<br/>
+						Atender a la brevedad";
 				$params = array('body'=>$body);
 				$message->subject = $subject;
 				$message->setBody($params, 'text/html');
@@ -117,7 +112,8 @@ class SiteController extends Controller
 				$message->from = array(Yii::app()->params['contacto'] => 'Sigma Tiendas');
 				Yii::app()->mail->send($message);			
 
-				Yii::app()->user->setFlash('contact','Gracias por contactarnos. Te responderemos lo más pronto posible.');
+				Yii::app()->user->setFlash('success','Gracias por contactarnos. Te responderemos lo más pronto posible.');
+				$this->redirect(array("contact"));
 			}
 		}
 		$this->render('contact',array('model'=>$model));
@@ -163,7 +159,42 @@ class SiteController extends Controller
 
 		$this->render('mensajes');
 	}
-	
+
+	/* Ver los mapas de las tiendas */
+	public function actionTiendas(){
+		$this->render('tienda');
+	}
+
+	/* Quienes Somos */
+	public function actionInfo(){
+		$this->render('info');
+	}
+
+	/* Ensamblaje y Soporte */
+	public function actionSoporte(){
+		$this->render('soporte');
+	}
+
+	/* Garantia */
+	public function actionGarantia(){
+		$this->render('garantia');
+	}
+
+	/* Convenios */
+	public function actionConvenios(){
+		$this->render('convenios');
+	}
+
+	/* Corporativo */
+	public function actionCorporativo(){
+		$this->render('corporativo');
+	}
+
+	/* Licencias */
+	public function actionLicencias(){
+		$this->render('licencias');
+	}
+
 		/**
 	 * Arma el cuerpo del mensaje que se va a mostrar y lo devuelve como texto para colocarlo en el frontend
 	 */

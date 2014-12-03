@@ -63,7 +63,7 @@ Yii::app()->clientScript->registerMetaTag(Yii::app()->getBaseUrl(true).str_repla
                 <div class="col-md-7">
                     <div class="page-header">
                                 <h1><?php echo $model->nombre; ?> <small><?php echo $model->modelo; ?></small></h1>
-                                <span>Por: <a href="#"><?php echo $model->marca->nombre; ?></a></span>
+                                <span>Por: <a href="<?php echo Yii::app()->baseUrl.'/marcas/'.$model->marca->nombre; ?>"><?php echo $model->marca->nombre; ?></a></span>
                                 <p><span>Agregar a Favoritos: 
                                     <?php
                                         if(!Yii::app()->user->isGuest){
@@ -387,6 +387,7 @@ Yii::app()->clientScript->registerMetaTag(Yii::app()->getBaseUrl(true).str_repla
                                 
 								                                
                                 ?> 
+
                                 <dt class="padding_xsmall">Tipo de Entrega</dt>
                                 <dd class="padding_xsmall"> Desde <span class='inventario_provincia'><?php echo $provincia->nombre; ?></span>, <span class='inventario_ciudad'><?php echo $ciudad->nombre; ?></span></dd>
                                 <dt class="padding_xsmall">Fecha estima de entrega</dt>
@@ -399,35 +400,18 @@ Yii::app()->clientScript->registerMetaTag(Yii::app()->getBaseUrl(true).str_repla
                         $tweetText = "SigmaSystems | ".$model->nombre." ".$model->modelo.". Por ".$model->marca->nombre;
                     ?>
                     <div class="fb-share-button" data-href=<?php echo $link; ?> data-layout="button"></div>
-                    <a href="https://twitter.com/share" class="twitter-share-button" data-count="none" data-text="<?php echo $tweetText; ?>" data-hashtags="LaMejorTecnologia" data-via="Sigmatiendas">Tweet</a>
-                    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-
-                    </div>
+                    <a  href="https://twitter.com/share" class="twitter-share-button" data-count="none" data-text="<?php echo $tweetText; ?>"
+                        data-hashtags="LaMejorTecnologia" data-via="Sigmatiendas">Tweet</a>
+                    
                     
                     <p><strong>Descripción del producto</strong></p>
-                    
                     <?php
-                    
-                    echo $model->descripcion;
-                    
-					/*
-					 
-					<ul>
-                    	<li>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</li>
-                        <li>Tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim</li>
-                        <li>Veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea</li>
-                        <li>Commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit</li>
-                    </ul>
-					
-					*/
-					
+                        echo $model->descripcion;
                     ?>
                     
                 </div>
             </div>
         </section>
-
-
         <section class="col-md-2">
             <div class="caja">
                 <div>
@@ -466,78 +450,19 @@ Yii::app()->clientScript->registerMetaTag(Yii::app()->getBaseUrl(true).str_repla
                 <small>155 Calificaciones</small>
 
             </div>
-            
-            <!-- MÁS OPCIONES DE COMPRA ON -->
-            <div class="caja">
-                <p class="text-muted">Más opciones de compra:</p>
-                
-                <?php
-                foreach($inventarios as $opcion){
-                    ?>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <strong><a href="#"><?php echo $opcion->almacen->empresas->razon_social; ?></a></strong>
-                            <small>Carabobo (Valencia)</small>
-                        </div>
-                        <div class="col-sm-6">
-                            <a href="#" class="btn btn-block  btn-success btn-xs">Comprar</a>
-                        </div>
-                    </div>
-                    <div>
-                        <strong class="text-danger">Bs. <?php echo $opcion->precio; ?> </strong><span class="text-muted"> + Bs. 160 de envío</span>
-                    </div>
-                    <hr>
-                    <?php
-                }
-                ?>
-
-
-                
-                <!-- <div class="row">
-
-                <div class="row">
-                    <div class="col-sm-6">
-                        <strong><a href="#">Mundo PC</a></strong>
-                        <small>Carabobo (Valencia)</small>
-                    </div>
-                    <div class="col-sm-6">
-                        <a href="#" class="btn btn-block  btn-success btn-xs">Comprar</a>
-                    </div>
-                </div>
-                <div>
-                    <strong class="text-danger">Bs. 32.100 </strong><span class="text-muted"> + Bs. 160 de envío</span>
-                </div>
-                <hr>
-                <div class="row">
-
-                    <div class="col-sm-6">
-                        <strong><a href="#">Compumall</a></strong>
-                        <small>Miranda (Caracas)</small>
-                    </div>
-                    <div class="col-sm-6">
-                        <a href="#" class="btn btn-block  btn-success btn-xs">Comprar</a>
-                    </div>
-                </div>
-                <div>
-                    <strong class="text-danger">Bs. 32.400 </strong><span class="text-muted"> + Bs. 160 de envío</span>
-
-                </div> -->
-
-                </div>
-
-            </div>
-
-            <!-- MÁS OPCIONES DE COMPRA OFF -->
-
+        
         </section>
 
-	<hr/>
+    </div>
+    </div>
+	
+    <hr/>
 	
 	<h3>Preguntas.</h3>
 	<hr/>
 	
 	<div class="well">
-	<div class="row padding_left_large padding_right_large ">
+	<div class="row padding_left_large padding_right_large "> 
 		<div>
 	
 	<?php
@@ -655,6 +580,9 @@ Yii::app()->clientScript->registerMetaTag(Yii::app()->getBaseUrl(true).str_repla
 	}
  
 </script>
+
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
 
 <script>
 	
