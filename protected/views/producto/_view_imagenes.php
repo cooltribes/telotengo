@@ -184,7 +184,7 @@ var uno=0;
 				//Yii::app()->baseUrl . str_replace(".","_thumb.",$img->url)
 	            $lis['img_' . $img->id] =
 	            		'<div class="col-xs-6 col-md-3">'.
-	                    CHtml::image($img->getUrl(array('type'=>'thumb')), "Imagen " . $img->id, array("width" => "240", "height" => "240",'class'=>'thumbnail')) . 
+	                    CHtml::image($img->getUrl(array('type'=>'thumb')), "Imagen " . $img->id, array("width" => "160", "height" => "160")) . 
 	                    '<span>X</span><h4> Enlace: </h4>'.
 	                    CHtml::textField('Enlace',Yii::app()->getBaseUrl(true).$model->mainimage->url,array('disabled'=>'disabled'))
 	                    .'</div>'; 

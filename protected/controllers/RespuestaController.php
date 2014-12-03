@@ -62,7 +62,8 @@ class RespuestaController extends Controller
 	public function actionCreate($id)
 	{
 		$model=new Respuesta; 
-		
+		$pregunta = Pregunta::model()->findByPk($id);
+
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
@@ -88,6 +89,7 @@ class RespuestaController extends Controller
 
 		$this->render('create',array(
 			'model'=>$model,
+			'pregunta' => $pregunta,
 		));
 	}
 

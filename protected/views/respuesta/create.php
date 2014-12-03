@@ -8,9 +8,12 @@ $this->breadcrumbs=array(
 ?>
 <div class="row">
 		<div class="col-md-offset-3 col-md-5">
-			<h1>Aportar Respuesta</h1>
+			<h2>Aportar Respuesta</h2>
+				<div>
+				Pregunta: <?php echo $pregunta->pregunta; ?>
+				</div>
 
-			<?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
+				<?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
 
 		</div>
 	</div>

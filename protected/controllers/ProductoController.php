@@ -693,7 +693,7 @@ class ProductoController extends Controller
     public function actionCaracteristicas()
 	{
 		
-		$user = Yii::app()->user-id;
+		$user = Yii::app()->user->id;
 		$empresas_user = EmpresasHasUsers::model()->findAllByAttributes(array('users_id'=>$user));
 	
 		if(isset($empresas_user)>0) // el usuario tiene al menos una empresa registrada

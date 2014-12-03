@@ -490,8 +490,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                             <div class="col-md-4 col-md-offset-2">
                                 <h2 class="foot-title"> Sobre nosotros </h2>
                                 <ul class="foot-list">
-                                    <li><a href="#" title="Quienes somos">¿Quiénes Somos?</a></li>
-                                    <li><a href="#" title="Trabaja con Nosotros">Trabaja con Nosotros</a></li>
+                                    <li><a href="<?php echo Yii::app()->baseUrl; ?>/site/info" title="Quienes somos">¿Quiénes Somos?</a></li>
                                     <li><a href="#" title="Términos de Uso">Términos de Uso</a></li>
                                     <li><a href="<?php echo Yii::app()->baseUrl; ?>/site/contact">Contacto</a></li>
                                 </ul>
@@ -515,9 +514,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                       <h2 class="foot-title">Telotengo en los medios:</h2>
                       Un poco de logos ahi
                       Recibe ofertas en tu correo:
-                      Dale un ojo a nuestro blog
-                      Formas de pago
-                      <p>&copy; Telotengo <?php echo date('Y');?></p>
+                      <p>&copy; Telotengo <?php echo date('Y');?></p> 
                     </div>
                 </div>
                 

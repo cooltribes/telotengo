@@ -262,9 +262,6 @@ class MarcaController extends Controller
 		
 		$producto = new Producto;
 		$producto->unsetAttributes();
-		 
-		// echo Yii::app()->session['marca'];
-		// Yii::app()->end();
 		  
 		$producto->estado = 1; 
 		$producto->marca_id = Yii::app()->session['marca'];
@@ -283,9 +280,9 @@ class MarcaController extends Controller
 	// Action para filtrar en storefront
 	public function actionFiltrar()
 	{
-		$marca=Yii::app()->session['marca'];	
+		$marca = Yii::app()->session['marca'];	
 		$rangos = Inventario::model()->getLimitesMarca($marca); 
-		
+
 		$producto = new Producto;
 		$producto->unsetAttributes();  
 		$producto->estado = 1;
@@ -329,15 +326,19 @@ class MarcaController extends Controller
 				));	
 			
 			}
-			
+
+			$marcanueva = Marca::model()->findByPk($marca);
+
 			$todos = array();
 			$todos = $this->getAllChildren(Categoria::model()->findAllByAttributes(array("id_padre"=>$producto->categoria_id)));
-	
+			
 			$dataProvider = $producto->busqueda($todos);
-	
+
 			$this->render('storefront',
 				array(
 				'dataProvider'=>$dataProvider,
+				'model' => $marcanueva,
+				'rangos'=>$rangos,
 			));	
 	}
 

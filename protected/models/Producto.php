@@ -71,7 +71,7 @@ class Producto extends CActiveRecord
 			array('nombre, descripcion, marca_id, codigo, interno, peso', 'required'),
 			array('destacado, marca_id', 'numerical', 'integerOnly'=>true),
 			array('peso', 'numerical'),
-			array('nombre', 'length', 'max'=>150),
+			array('nombre', 'length', 'max'=>60), 
 			//array('descripcion', 'length', 'max'=>1000),
 			array('modelo', 'length', 'max'=>255),
 			// The following rule is used by search().
@@ -258,14 +258,11 @@ class Producto extends CActiveRecord
 		
 	}
 
-	public function front()
-	{
-		
-		$sql ="SELECT id FROM tbl_producto where destacado=1 ORDER BY RAND() LIMIT 8";
+	public function front(){
+		$sql ="SELECT id FROM tbl_producto where destacado=1 ORDER BY RAND() LIMIT 4";
 		$num = Yii::app()->db->createCommand($sql)->query();
 		
 		return $num;
-			
 	}
 	
 	public function hasFlashsale()

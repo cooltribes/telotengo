@@ -3,7 +3,6 @@ $this->breadcrumbs=array(
 	'Productos'=>array('Admin'),
 	'Agregar',
 );
-
 ?>
 
 <div class="container-fluid" style="padding: 0 15px;">
@@ -60,6 +59,7 @@ $this->breadcrumbs=array(
 										}',
 									),
 							)); 
+
 							?>
 
 						<?php $this->endWidget(); ?>
