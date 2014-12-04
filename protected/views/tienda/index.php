@@ -1,14 +1,11 @@
 <!-- CONTENIDO ON -->
 
-<div class="container-fluid margin_top" style="padding: 0 15px;">
+<div class="container-fluid margin_top margin_bottom" style="padding: 0 15px;">
 	
-<?php
-$this->breadcrumbs=array(
-	'Tienda',
-);
-?>
-
+<?php // $this->breadcrumbs=array(	'Tienda',);?>
+<div class="container" style="padding: 0 15px;">
 <div class="row">
+    
 <?php
 
 $categorias = Categoria::model()->findAll(); 
@@ -16,47 +13,67 @@ $marcas = Marca::model()->findAll();
 
 ?>
         <section class="col-md-2" role="main">
+
+            <h3 class="no_margin_bottom">Categorías</h3><hr class="no_margin_top"/> 
             <div>
-                Categorias
-                <hr>
-                <ul class="col-md-offset-1">
-                	<li class="categorias-listado" id="todas"><a href="#">Todas</a></li>
-                	<?php 
-                	foreach($categorias as $categoria){
-						echo '<li class="categorias-listado" id="'.$categoria->id.'"><a href="#">'.$categoria->nombre.'</a></li>';
-					}
-					?>
+                
+                <ul class="no_list_style">
+                     
+          <?php        $categorias = Categoria::model()->findAllByAttributes(array('id_padre'=>0));
+                        foreach ($categorias as $categoria) {
+                            ?>
+                            <?php echo '<li class="categorias-listado padre" id="'.$categoria->id.'"><a href="#"><strong>'.$categoria->nombre.'</strong></a>'; ?>
+                                <?php
+                                $hijos = Categoria::model()->findAllByAttributes(array('id_padre'=>$categoria->id));
+                                if(sizeof($hijos) > 0){
+                                    ?>
+                                    <ul class="subcategorias no_list_style" id="cat<?php echo $categoria->id; ?>" style="display:none;">
+                                        <?php
+                                        foreach ($hijos as $hijo) {
+                                            ?>
+                                            <?php echo '<li class="categorias-listado hijo" id="'.$hijo->id.'"><a href="#">'.$hijo->nombre.'</a></li>'; ?>
+                                            <?php
+                                        } 
+                                        ?>
+                                    </ul> 
+                                    <?php
+                                }?>
+                                 </li>
+                         <?php   }
+                                ?>
+                                   
+                  <li class="categorias-listado todas" id="todas"><a href="#">Todas</a></li>         
+                            
                 </ul>  
             </div>
+            <h3 class="no_margin_bottom">Precios</h3><hr class="no_margin_top"/> 
             <div>
-                Precios
-                <hr>
-                <ul class="col-md-offset-1">
+
+                <ul class="col-md-offset-1 no_list_style no_margin_left">
                 	<?php
-                		
-                	echo'<li class="precio-listado" id="0"><a href="#">Hasta '.number_format($rangos[0]["max"],0,",",".").' Bs. <span class="color12">('.$rangos[0]['count'].')</span></a></li>';
-					echo'<li class="precio-listado" id="1"><a href="#">De '.number_format($rangos[1]["min"],0,",",".").' a '
+                		 
+                	echo'<li class="precio-listado padre" id="0"><a href="#">Hasta '.number_format($rangos[0]["max"],0,",",".").' Bs. <span class="color12">('.$rangos[0]['count'].')</span></a></li>';
+					echo'<li class="precio-listado padre" id="1"><a href="#">De '.number_format($rangos[1]["min"],0,",",".").' a '
 						.number_format($rangos[1]["max"],0,",",".").' Bs. <span class="color12">('.$rangos[1]['count'].')</span></a></li>';
-					echo'<li class="precio-listado" id="2"><a href="#">De '.number_format($rangos[2]["min"],0,",",".").' a '
+					echo'<li class="precio-listado padre" id="2"><a href="#">De '.number_format($rangos[2]["min"],0,",",".").' a '
 						.number_format($rangos[2]["max"],0,",",".").' Bs. <span class="color12">('.$rangos[2]['count'].')</span></a></li>';
-					echo'<li class="precio-listado" id="3"><a href="#">Más de '.number_format($rangos[3]["min"],0,",",".").' Bs. <span class="color12">('.$rangos[3]['count'].')</span></a></li>';
-					echo'<li class="precio-listado" id="5"><a href="#">Todos los precios</a></li>';	
+					echo'<li class="precio-listado padre" id="3"><a href="#">Más de '.number_format($rangos[3]["min"],0,",",".").' Bs. <span class="color12">('.$rangos[3]['count'].')</span></a></li>';
+					echo'<li class="precio-listado todas" id="5"><a href="#">Todos los precios</a></li>';	
                 	
                 	?>
                 </ul>  
-            </div>
-
+        </div>  
+            <h3 class="no_margin_bottom">Marcas</h3><hr class="no_margin_top"/> 
             <div id="marca-listado">
-                Marca
-                <hr>
-                <ul class="col-md-offset-1">
+
+                <ul class="col-md-offset-1 no_margin_left"> 
                     <?php 
-                	foreach($marcas as $marca)
+                	foreach($marcas as $marca) 
 					{
-						echo '<li class="marcas-listado" id="'.$marca->id.'"><a href="#">'.$marca->nombre.'</a></li>';
+						echo '<li class="marcas-listado padre" id="'.$marca->id.'"><a href="#">'.$marca->nombre.'</a></li>';
 					}
 					?>               
-                </ul>  
+                </ul>     
             </div>                                             
         </section>
 
@@ -67,6 +84,8 @@ $marcas = Marca::model()->findAll();
 		var ajaxRequest; 
 		$('.categorias-listado').click(function(){
 			id_categoria = $(this).attr('id');
+           
+
 			// ajaxRequest = $('#categorias-listado').serialize();
 			clearTimeout(ajaxUpdateTimeout);
 			
@@ -77,12 +96,18 @@ $marcas = Marca::model()->findAll();
 				type: 'POST',	
 				url: '" . CController::createUrl('tienda/filtrar') . "',
 				data: {'categoria':id_categoria}
+				
 				}
 				
 				)
 				},
 		
+		
 		300);
+			if(!$(this).hasClass('hijo')){
+                            $('.subcategorias').hide();
+                            $('#cat'+$(this).attr('id')).show();
+                        }   
 		return false;
 		});",CClientScript::POS_READY
 	);
@@ -146,7 +171,7 @@ $marcas = Marca::model()->findAll();
 	?>
 
         <div class="col-md-10">
-            <section class="row">
+            <section class="row-fluid">
 			<!-- PRODUCTOS ON -->
 		    <?php
 			$template = '
@@ -177,4 +202,6 @@ $marcas = Marca::model()->findAll();
 
     </div>
 </div>
+</div>
+
 <!-- CONTENIDO OFF -->

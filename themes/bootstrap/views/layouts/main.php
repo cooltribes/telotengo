@@ -145,7 +145,12 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
         
         ul.dropdown ul li{
             background-color: #FFF;
-        }   
+        }
+        footer{
+            bottom:0px;
+            position:inherit;
+            width:100%;
+        }  
         .footer{
             background-color:  #198ac9;
             margin-right:0px;
@@ -180,21 +185,30 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
         .foot-main{
             width:100%;
         }
-        .no_list_style{
+        .no_list_style, ul{
             list-style-type: none;
-            
+             
         }
         .clientService{
             width:100%;
             text-align:right;
         }
-        .productName {
+        .productName {  
             line-height: 1.5em;
             height: 3em;
             min-height: 3em;       /* height is 2x line-height, so two lines will display */
             overflow: hidden;  /* prevents extra lines from being visible */
         }
-        .productImage{
+       .caja{
+           box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3); 
+       } 
+       .caja:hover{
+           box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5); 
+       }
+        .caja>.productImage{
+            height:240px; 
+        }
+        .cajaTienda>.productImage{
             height:240px;
         }
         .carousel-indicators li{
@@ -226,6 +240,22 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
         .align_center{
             text-align: center;
         }
+        .padre, .todas{
+            margin-top:.6em;
+        }
+        .padre>a{
+            color:#000;
+            font-weight: bold;
+         }
+         .todas>a{
+            color:#666677;
+            
+         }
+         .hijo>a{
+             color:#666677;
+             margin-left:1em;
+         }
+         
     
     </style>
    
@@ -395,17 +425,10 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                 <?php   
                 }
                 ?>
-                             
-                             
-                             
-                            
-                            
-                            
-                            
-                            </ul>
+                                 </ul>
                             </div>
                         </div>
-                    </div>
+                    </div> 
                 </div>
                 <div class="row-fluid" align="center">
                 <div class="col-md-10">
@@ -483,7 +506,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
             </div>
 			<div class="clear"></div>
             
-			<footer role="contentinfo" class="footer">
+			<footer role="contentinfo" class="footer margin_top_large">
               	<div class="row foot-main">
                     <div class="col-md-7 col-md-offset-1">
                         <div class="row-fluid foot-section">
