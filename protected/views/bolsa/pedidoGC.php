@@ -4,7 +4,7 @@ $this->setPageTitle(Yii::app()->name . " - Resumen de la orden");
 if (!Yii::app()->user->isGuest) { // que este logueado
     $user = User::model()->findByPk(Yii::app()->user->id);
 ?>
-<?php //echo "xPagar".$orden->getxPagar()." SumxOrden".Detalle::model()->getSumxOrden($orden->id);  ?>
+
 <style>
 	#voucher div table{
 		border: solid 25px #FFF;
@@ -12,30 +12,29 @@ if (!Yii::app()->user->isGuest) { // que este logueado
 	outline: solid 1px;
 	}
 </style>
-  <div class="container margin_top">
-    <div class="row">
-      <div class="col-md-8 col-md-offset-2">
-        <?php
-          if ($orden->estado == 3) { // Listo el pago
-        ?>    
-          <div class='alert alert-success margin_top_medium margin_bottom'>
-            <h1>Tu orden ha sido completada satisfactoriamente.</h1>
-              <p>Hemos recibido los datos de tu compra <br/>
-                 Tu tarjeta será enviada y estará disponible para ser aplicada al momento de confirmar el pago</p>
-          </div>
-          <?php
-          }else if($orden->estado == 1){ // Por pagar aun
-          ?>
-          <div class='alert alert-success margin_top_medium margin_bottom'>
-            <h1>Tu Gift Card se ha creado satisfactoriamente.</h1>
-              <p>Hemos recibido los datos de tu compra<br/>
-              Tu tarjeta será enviada y estará disponible para ser aplicada al momento de confirmar el pago</p>
-          </div>
-          <?php
-          }
 
-          ?>
-          <section class="bg_color3 margin_top  margin_bottom_small padding_small box_1">
+<div class="container margin_top">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <?php
+        if ($orden->estado == 3) { // Listo el pago
+      ?>    
+        <div class='alert alert-success margin_top_medium margin_bottom'>
+          <h1>Tu orden ha sido completada satisfactoriamente.</h1>
+            <p>Hemos recibido los datos de tu compra <br/> Tu tarjeta será enviada y estará disponible para ser aplicada al momento de confirmar el pago</p>
+        </div>
+        <?php
+        }else if($orden->estado == 1){ // Por pagar aun
+        ?>
+        <div class='alert alert-success margin_top_small margin_bottom_small'>
+          <h1>Tu Gift Card se ha creado satisfactoriamente.</h1>
+            <p>Hemos recibido los datos de tu compra<br/> Tu tarjeta será enviada y estará disponible para ser aplicada al momento de confirmar el pago</p>
+        </div>
+        <?php
+        }
+        
+        ?>
+        <section>
             <h3> Resumen de la compra: </h3>
               <p class="well well-small"><strong>Número de confirmación:</strong> <?php echo $orden->id; ?></p>                    
               <hr/>
@@ -61,9 +60,9 @@ if (!Yii::app()->user->isGuest) { // que este logueado
                   <div style="margin: 0 auto; " id="voucher"><?php echo CHtml::decode($voucher); ?></div>
                     <?php } ?>
 
-                    <h3 class="margin_top">Detalle de la Orden.</h3>
+                    <h3 class="margin_top_small">Detalle de la Orden.</h3>
                     <div>
-                        <table class='table' width='100%' >
+                        <table class='table table-condensed' width='100%' >
                             <thead>                                
                               <tr>
                                 <th colspan='2'>Gift Card</th>
@@ -81,7 +80,7 @@ if (!Yii::app()->user->isGuest) { // que este logueado
                               <tr>
                               <td>
                                 <!--<img src='<?php echo Yii::app()->baseUrl; ?>/images/giftcards/gift_card_one_x114.png' class='margin_bottom'>-->
-                                <img src='<?php echo Yii::app()->baseUrl."/images/giftcards/gift_card_one_x470.jpg"; ?>' class='margin_bottom'>
+                                <img src='<?php echo Yii::app()->baseUrl."/images/giftcards/GIFTCARD-xmas-470x288.jpg"; ?>'>
                                     </td>
                                     <td></td><td><?php 
                                     /*

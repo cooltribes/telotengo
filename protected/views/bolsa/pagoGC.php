@@ -15,50 +15,24 @@ if (!Yii::app()->user->isGuest) { // que este logueado
         text-align: center;
     }
 </style>
+
 <div class="container margin_top">
-    <div class="progreso_compra progreso_compra_giftcard">
-        <div class="clearfix margin_bottom">
-            <div class="first-past">Autenticación</div>
-                <div class="middle-done">
-                    Método de pago
-                </div>
-            <div class="last-not_done">
-                Confirmar compra
-            </div>
-        </div>
-    </div>
     <div class="row">
-        <section class="span7">
+        <section class="col-md-offset-2 col-md-8">
         <!-- Forma de pago ON -->
         <div class="box_1 padding_small margin_bottom">
-            <h4 class="braker_bottom margin_bottom_medium ">Escoge el método de pago</h4>
-
-       <!--
-       <input type="radio" name="optionsRadios" id="mercadopago" value="option4" data-toggle="collapse" data-target="#mercadoPago">
-        <button type="button" id="btn_mercadopago" class="btn btn-link" data-toggle="collapse" data-target="#mercadoPagoCol"> MercadoPago </button>
-       -->
-       <?php /*
-                 $this->beginWidget('bootstrap.widgets.TbActiveForm',array(
-                                        'id'=>'pagos-form',
-                                        'enableAjaxValidation'=>false,
-                                        'enableClientValidation'=>true,
-                                        'clientOptions'=>array(
-                                                'validateOnSubmit'=>true, 
-                                     ),
-                                        'htmlOptions'=>array('class'=>''),
-                                )); */
-                ?>
-                
-          <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
-                                        'id'=>'tarjeta-form', 
-                                        'enableAjaxValidation'=>false,
-                                        'enableClientValidation'=>true,
-                                        'clientOptions'=>array(
-                                                'validateOnSubmit'=>true, 
-                                        ),
-                                        'htmlOptions'=>array('class'=>''),
-                                )); 
-                                ?>      
+            <h3 class="braker_bottom_small">Escoge el método de pago</h3>
+            <hr/>
+                <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
+                        'id'=>'tarjeta-form', 
+                        'enableAjaxValidation'=>false,
+                        'enableClientValidation'=>true,
+                        'clientOptions'=>array(
+                                'validateOnSubmit'=>true, 
+                        ),
+                        'htmlOptions'=>array('class'=>''),
+                    )); 
+                ?>      
                 
        <div class="accordion" id="accordion2">	
             <!-- DEPOSITO O TRANSFERENCIA -->
@@ -73,13 +47,10 @@ if (!Yii::app()->user->isGuest) { // que este logueado
                 </div>
                 <div class="padding_left margin_bottom_medium collapse" id="collapseTwo">
                     <div class="well well-small" >
-                        <h4>Banco Banesco</h4>
-                        <ul>
-                            <li><strong>Cuenta Corriente Nº:</strong> 0134-0277-98-2771093092</li>
-                            <li><strong>Titular de la cuenta: </strong>PERSONALING C.A.</li>
-                            <li><strong>RIF:</strong> Nº J-40236088-6</li>
-                            <li><strong>Correo electrónico:</strong>operaciones@personaling.com</li>
-                       </ul>
+                        <?php  
+                            $datos = TipoPago::model()->datosDeposito();
+                            echo $datos;
+                        ?>
                     </div>
                 </div>
             </div>
@@ -208,39 +179,36 @@ if (!Yii::app()->user->isGuest) { // que este logueado
            <input type="hidden" id="tipo_pago" name="tipo_pago" value="5" />
             <?php 
              $this->endWidget();
-
             ?>
         </div>
- 
     </section>
 
-    <div class="span5 margin_bottom padding_top_xsmall">
-    	
-      <div class="margin_left">
-        <div id="resumen" class="well well_personaling_big ">
-            <h4>Resumen de la compra</h4>
-                <div class=" margin_bottom">
-                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-condensed " id="tabla_resumen">
-                <tr>
-                    <th class="text_align_left"><?php echo Yii::t('contentForm','Subtotal'); ?>:</th>
-                    <td>
-                    <?php
-                        echo 'Bs. '.Yii::app()->numberFormatter->formatCurrency($total, '');
-                    ?>
-                    </td>
-                </tr> 
-                <tr>
-                    <th class="text_align_left"><h4>Total:</h4></th>
-                    <td class="text_align_right">
-                        <h4 id="precio_total">
-                        <?php echo 'Bs. '.Yii::app()->numberFormatter->formatCurrency($total, ''); ?>
-                        </h4>
-                    </td>
-                </tr>
+    <div class="col-md-offset-2 col-md-8">
+        <div>
+            <div id="resumen" class="well">
+                <h4>Resumen de la compra</h4>
+                    <div class=" margin_bottom">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-condensed " id="tabla_resumen">
+                    <tr>
+                        <th class="text_align_left"><?php echo Yii::t('contentForm','Subtotal'); ?>:</th>
+                        <td>
+                        <?php
+                            echo 'Bs. '.Yii::app()->numberFormatter->formatCurrency($total, '');
+                        ?>
+                        </td>
+                    </tr> 
+                    <tr>
+                        <th class="text_align_left"><h4>Total:</h4></th>
+                        <td class="text_align_right">
+                            <h4 id="precio_total">
+                            <?php echo 'Bs. '.Yii::app()->numberFormatter->formatCurrency($total, ''); ?>
+                            </h4>
+                        </td>
+                    </tr>
                 </table>
             <div class="form-actions">
                 <?php $this->widget('bootstrap.widgets.TbButton', array(
-    	            'type'=>'warning',
+    	            'type'=>'danger',
     	            'size'=>'large',
     	            'label'=>'Siguiente',
     	            //'url'=>'confirmar', // action

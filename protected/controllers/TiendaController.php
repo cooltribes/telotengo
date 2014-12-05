@@ -124,7 +124,7 @@ class TiendaController extends Controller
 			$dataProvider = $producto->busqueda($todos);
 	
 			$this->render('index',
-				array('dataProvider'=>$dataProvider,
+				array('dataProvider'=>$dataProvider,'rangos'=>$rangos,
 			));	
 	}
 

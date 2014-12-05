@@ -55,7 +55,7 @@ $this->breadcrumbs=array(
 
 
 					<div class="submit">
-						<?php echo CHtml::submitButton(UserModule::t("Guardar"), array('class'=>'btn btn-default')); ?>
+						<?php echo CHtml::submitButton(UserModule::t("Guardar"), array('class'=>'btn btn-danger btn-lg form-control')); ?>
 					</div>
 
 				<?php $this->endWidget(); ?>

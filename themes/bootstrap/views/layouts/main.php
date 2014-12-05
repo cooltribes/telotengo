@@ -22,7 +22,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="language" content="en" />
 
-	    <title>Telotengo</title>
+	    <title>Sigma Tiendas</title>
 
 		
 		
@@ -216,13 +216,15 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
         <div class="container"> 
             <div class="navbar-left">                
                         <a href="http://facebook.com/sigmatiendas">
-                            <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/facebook.png" alt="Facebook" width="25" height="25">
+                            <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/ICON-facebook.png" alt="Facebook" width="25" height="25">
                         </a>
                    
                         <a href="https://twitter.com/Sigmatiendas">
                             <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/twitter.png" alt="Twitter" width="25" height="25">
                         </a>
-                
+                        <a href="http://youtube.com/Sigmaoficial">
+                            <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/ICON-youtube.png" alt="Youtube" width="25" height="25">
+                        </a>
                         <a href="http://instagram.com/sigmatiendas">
                             <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/instagram.png" alt="Instagram" width="25" height="25">
                         </a>
@@ -314,7 +316,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                             <ul class="dropdown-menu">
                                 <li><a href="<?php echo Yii::app()->baseUrl; ?>/user/user/tucuenta">Tu Cuenta</a></li>
                                 <li><a href="<?php echo Yii::app()->baseUrl; ?>/user/profile/edit">Editar perfil</a></li> 
-                                <li><a href="<?php echo Yii::app()->baseUrl."/user/profile/profile/id/".Yii::app()->user->id; ?>">Mi perfil público</a></li>
+                                <!-- <li><a href="<?php echo Yii::app()->baseUrl."/user/profile/profile/id/".Yii::app()->user->id; ?>">Mi perfil público</a></li> -->
                                 <li><a href="<?php echo Yii::app()->baseUrl; ?>/user/profile/changepassword">Cambiar Contraseña</a></li>       
                             </ul>
                         </li> 
@@ -340,10 +342,11 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                             </a>
                         </li>
                           
-                        
-                        
                         <li class="button"><a href="<?php echo Yii::app()->baseUrl; ?>/tienda/"><div class="white">Tienda</div></a></li> 
-
+                        <li class="button"><a href="<?php echo Yii::app()->baseUrl; ?>/giftcard/comprar">
+                            <div class="white"><span class="glyphicon glyphicon-gift"> Comprar Giftcard</div>
+                            </a>
+                        </li>
             
                 <?php
                         
@@ -485,17 +488,18 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                                     <li><a href="#" title="Formas de Pago">Formas de Pago</a></li>
                                     <li><a href="#" title="Políticas de Privacidad">Políticas de Privacidad</a></li>
                                     <li><a href="#" title="Políticas de Envíos, Devoluciones y Cancelaciones">Políticas de Envíos, Devoluciones y Cancelaciones</a></li>
-                                    <li><a href="#" title="Términos y Condiciones de Promesa">Términos y Condiciones de Promesa</a></li>
                                 </ul>
                             </div>
                         </div>
                    </div>             
                     
 					<div class="col-md-3 foot-section white" >
-                      <h2 class="foot-title">Telotengo en los medios:</h2>
-                      Un poco de logos ahi
-                      Recibe ofertas en tu correo:
-                      <p>&copy; Telotengo <?php echo date('Y');?></p> 
+                        <h2 class="foot-title">Sigmasys C.A.</h2>
+                            <strong>0276-3442626</strong>
+                            <p>
+                            <div>Av. Libertador, Centro Comercial Las Lomas, Local Nº 30, San Cristóbal, Edo. Táchira.</div>
+                            </p>
+                      <p>&copy; Sigmasys C.A <?php echo date('Y');?></p> 
                     </div>
                 </div>
                 

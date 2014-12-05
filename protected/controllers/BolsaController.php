@@ -32,7 +32,7 @@ class BolsaController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','agregar','view','eliminar','authenticate','confirm','cities','addAddress','placeOrder',
+				'actions'=>array('create','update','agregar','eliminar','authenticate','confirm','cities','addAddress','placeOrder',
 								'sendValidationEmail','actualizar','agregarAjax','calcularEnvio',
 								'authGC','pagoGC','confirmarGC','crearGC','sendsummary','comprarGC','pedidoGC','registrarpagoGC'),
 				'users'=>array('@'),
