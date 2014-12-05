@@ -430,10 +430,8 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                         </div>
                     </div> 
                 </div>
-                <div class="row-fluid" align="center">
-                <div class="col-md-10">
-
-                    <ul id="nav" class="dropdown dropdown-horizontal">
+            
+                    <ul id="nav" class="dropdown dropdown-horizontal row">
                    <a href="<?php echo Yii::app()->getBaseUrl(true);?>">
                         <li class="dir">
                             <span class="glyphicon glyphicon-home glyphiconLarge white"></span>
@@ -464,19 +462,19 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                             <?php
                         }
                         ?>    </ul> 
-                 </div>   
+          
 
-                        <div class="col-md-2 margin_top_small">
+                       <!-- <div class="col-md-2 margin_top_small">
                        
                         <?php
-                            echo CHtml::textField('busqueda', '',
+                          /*  echo CHtml::textField('busqueda', '',
                                 array('id'=>'busqueda', 
                                     
                                     'placeholder'=>'Buscar por palabra clave'
                                     )
-                                ); ?>
+                                ); */?>
 
-                        </div>
+                        </div>-->
                    
                         
                     
@@ -485,7 +483,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                    
                    
                   
-                </div>
+               
             </div>
          </div>
         
