@@ -329,7 +329,7 @@ class CategoriaController extends Controller
 		}
 		
 		
-		$sql='select b.* from tbl_categoria_has_tbl_producto a, tbl_producto b where a.categoria_id = '.Yii::app()->session['categoria'].' and b.id = a.producto_id';
+		$sql='select b.id from tbl_categoria_has_tbl_producto a, tbl_producto b where a.categoria_id = '.Yii::app()->session['categoria'].' and b.id = a.producto_id';
 		
 		$dataProvider=new CSqlDataProvider($sql, array(
 		    'sort'=>array(
