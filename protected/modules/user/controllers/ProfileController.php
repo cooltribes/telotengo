@@ -130,7 +130,7 @@ class ProfileController extends Controller
 						$new_password->activkey=UserModule::encrypting(microtime().$model->password);
 						if ($new_password->save()) {
 							Yii::app()->user->setFlash('success', 'Se ha cambiado correctamente la contraseña.');
-							$this->redirect(array("profile"));
+							$this->redirect(array("user/tucuenta"));
 						}else{
 							print_r($new_password->getErrors());
 							die();

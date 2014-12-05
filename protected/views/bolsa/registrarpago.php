@@ -1,64 +1,73 @@
-	<?php if(Yii::app()->user->hasFlash('success')){?>
-	    <div class="alert in alert-block fade alert-success text_align_center">
-	        <?php echo Yii::app()->user->getFlash('success'); ?>
-	    </div>
-	<?php } ?>
-	<?php if(Yii::app()->user->hasFlash('error')){?>
-	    <div class="alert in alert-block fade alert-error text_align_center">
-	        <?php echo Yii::app()->user->getFlash('error'); ?>
-	    </div>
-	<?php } ?>
+<div class="container">
+    <div class="row">
+	    <div class="col-md-10 col-md-offset-1 main-content">
 
-	<?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
-	        'id'=>'pago-form', 
-	        'enableAjaxValidation'=>false,
-	        'enableClientValidation'=>true,
-	        'clientOptions'=>array(
-	                'validateOnSubmit'=>true, 
-	        ),
-	        'htmlOptions'=>array('class'=>''),
-		)); 
-	?>
-    <div class="controls">
-    	<?php echo CHtml::activeTextField($pago,'nombre', array('id' => 'nombre', 'class' => 'col-md-5', 'placeholder' => 'Nombre del depositante')); ?>
-        <div style="display:none" id="RegistrationForm_email_em_" class="help-inline"></div>
-    </div>
-    <div class="control-group"> 
-        <div class="controls">
-        	<?php echo CHtml::activeTextField($pago,'confirmacion', array('id' => 'numeroTrans', 'class' => 'col-md-5', 'placeholder' => 'Número o Código del Depósito')); ?>
-            <div style="display:none" class="help-inline"></div>
-        </div>
-    </div>
-    <div class="control-group"> 
-        <div class="controls">
-        	<?php echo CHtml::activeTextField($pago,'cedula', array('id' => 'cedula', 'class' => 'col-md-5', 'placeholder' => 'Cedula del depositante')); ?>
-			<div style="display:none" id="RegistrationForm_email_em_" class="help-inline"></div>
-        </div>
-    </div>
-    <div class="control-group"> 
-        <div class="controls input-append">
-        	<?php echo CHtml::activeTextField($pago,'monto', array('id' => 'monto', 'title' => 'Monto','class' => 'col-md-4','placeholder' => "Monto. Use coma (,) como separador decima")); ?>
-            <span class="add-on"><?php echo 'Bs.'; ?></span>
-            <div style="display:none" id="RegistrationForm_email_em_" class="help-inline"></div>
-        </div>
-    </div>
-	<div class="control-group input-prepend">
-		<label class="control-label required"> Fecha <span class="required">*</span>
-			<?php
-			    $this->widget('zii.widgets.jui.CJuiDatePicker',array(
-			        'model' => $pago,
-			        'attribute' => "fecha",
-			        'language' => 'es',
-			        // additional javascript options for the date picker plugin
-			        'options'=>array(
-			            'showAnim'=>'fold',
-			            'dateFormat'=>'yy-mm-dd',
+	    <h2>Registrar Pago de Gift Card</h2>
+	    <hr/>
+
+	    	<div class="well">
+				<div>
+
+			<?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
+			        'id'=>'pago-form', 
+			        'enableAjaxValidation'=>false,
+			        'enableClientValidation'=>true,
+			        'clientOptions'=>array(
+		                'validateOnSubmit'=>true, 
 			        ),
-			    ));
-
+			        'htmlOptions' => array(
+					    'enctype' => 'multipart/form-data',
+				    ),
+				)); 
 			?>
-		</label>
-	</div>
+
+			<?php echo $form->errorSummary($pago); ?>
+
+		    <div class="form-group">
+		    	<?php
+		    	echo $form->textFieldRow($pago,'nombre',array('class'=>'form-control','maxlength'=>45, 'placeholder' => 'Nombre del depositante'));
+		    	echo $form->error($pago,'nombre');
+		    	// echo CHtml::activeTextField($pago,'nombre', array('id' => 'nombre', 'class' => 'col-md-5 form-control', 'placeholder' => 'Nombre del depositante')); 
+		    	?>
+		    </div>
+		    <div class="form-group"> 
+	        	<?php
+	        	echo $form->textFieldRow($pago,'confirmacion',array('class'=>'form-control','maxlength'=>45,'placeholder' => 'Número o Código del Depósito'));
+				echo $form->error($pago,'confirmacion');
+	        	//echo CHtml::activeTextField($pago,'confirmacion', array('id' => 'numeroTrans', 'class' => 'col-md-5', 'placeholder' => 'Número o Código del Depósito'));
+	        	?>
+		    </div>
+		    <div class="form-group">
+		    	<?php
+		    	echo $form->textFieldRow($pago,'cedula',array('class'=>'form-control','maxlength'=>45,'placeholder' => 'Cedula del depositante'));
+				echo $form->error($pago,'cedula'); 
+	        	// echo CHtml::activeTextField($pago,'cedula', array('id' => 'cedula', 'class' => 'col-md-5', 'placeholder' => 'Cedula del depositante'));
+	        	?>
+		    </div>
+		    <div class="form-group"> 
+	        	<?php
+	        	echo $form->textFieldRow($pago,'monto',array('class'=>'form-control','maxlength'=>45,'placeholder' => 'Monto depositado en bolivares'));
+				echo $form->error($pago,'monto'); 
+	        	//echo CHtml::activeTextField($pago,'monto', array('id' => 'monto', 'title' => 'Monto','class' => 'col-md-4','placeholder' => "Monto. Use coma (,) como separador decima"));
+	        	?>
+		    </div>
+			<div class="form-group">
+				<?php
+					echo $form->labelEx($pago,'fecha');
+					    $this->widget('zii.widgets.jui.CJuiDatePicker',array(
+					        'model' => $pago,
+					        'attribute' => "fecha",
+					        'language' => 'es',
+					        // additional javascript options for the date picker plugin
+					        'options'=>array(
+					            'showAnim'=>'fold',
+					            'dateFormat'=>'yy-mm-dd',
+					        ),
+					    ));
+					echo $form->error($pago,'fecha');
+					?>
+				</label>
+			</div>
 	
 	<div class="form-actions">
 		<?php $this->widget('bootstrap.widgets.TbButton', array(
@@ -71,3 +80,4 @@
 	<?php 
     	$this->endWidget();
     ?>
+    </div></div></div></div></div>

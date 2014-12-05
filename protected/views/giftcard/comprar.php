@@ -22,7 +22,7 @@ $this->breadcrumbs = array(
     );
     ?>	
     <!-- FLASH OFF --> 
-    <h1><?php echo Yii::t('contentForm','Gift Card'); ?></h1>
+    <h1>Compra una Gift Card</h1>
     <section class="bg_color3  span12 margin_bottom_small padding_medium box_1">
         <?php
         $form = $this->beginWidget("bootstrap.widgets.TbActiveForm", array(
@@ -33,7 +33,6 @@ $this->breadcrumbs = array(
             )
         ));
         ?>
-        <legend> Compra una Gift Card </legend>
             <div class="row margin_top">
                 <div class="col-md-6">
                     <div>
@@ -41,51 +40,60 @@ $this->breadcrumbs = array(
                         <ul class="thumbnails" id="plantillas">
                             <li class="active" id="GC-gift_card_one">
                                 <a href="#">
-                                <div class="thumbnail">
-                                    <img src="<?php echo Yii::app()->baseUrl; ?>/images/giftcards/gift_card_one_x200.jpg">
+                                <div>
+                                    <img src="<?php echo Yii::app()->baseUrl; ?>/images/giftcards/GIFTCARD-xmas-200x123.jpg">
                                     </div>
                                 </a>
                             </li>		
                             <?php echo $form->hiddenField($model, 'plantilla_url'); ?>
                         </ul>
-                    </div>	
-                <div>
-                <p class="lead">2. <?php echo "Seleccione el monto" ?></p>
+                    </div>
+                <div class="row-fluid">
+                <br/>
+                <p class="lead">2. Seleccione el monto</p>
                     <?php echo $form->errorSummary($model); ?>
-                        <div class="control-group input-prepend">
-                            <label class="control-label required" for="BolsaGC_monto"><?php echo "Monto"; ?> <span class="required">*</span></label>
-                            <div class="controls">
+                        <div class="control-group">
+                            <label class="control-label required" for="BolsaGC_monto">Monto.
+                                <span class="required">*</span>
+                            </label>
+                            <div class="col-md-3">
                                 <span class="add-on">Bs.</span>
-                                <?php echo CHtml::activeDropDownList($model, 'monto', Giftcard::getMontos(), array('class' => 'span1',)); ?>
+                                <?php echo CHtml::activeDropDownList($model, 'monto', Giftcard::getMontos(), array('class' => 'col-md-1 form-control',)); ?>
                             </div>
                         </div>
                 </div>
-                <div class="span6">	
-                    <p class="lead">3. <?php echo "Personalízala." ?></p>                                       
+                <div>
+                    <p class="lead">3. Personalízala.</p>                                       
                     <?php
                         echo $form->textFieldRow($envio, 'nombre', array(
-                            'placeholder' => "Nombre del beneficiario"
+                            'placeholder' => "Nombre del beneficiario",
+                            'class'=>"form-control"
                         ));
                     ?>                                        
                     <?php
-                    echo $form->textAreaRow($envio, 'mensaje', array(
-                        'placeholder' => "Mensaje", 'maxlength' => '100'));
+                        echo $form->textAreaRow($envio, 'mensaje', array(
+                            'placeholder' => "Mensaje", 'maxlength' => '150','class'=>"form-control"));
                     ?>
-                        <p class="lead">4. <?php echo '¿A quién la envías?'; ?></p>
-                            <input type="hidden" name="entrega" value="2" >
-                            <?php
-                                echo $form->textFieldRow($envio, 'email', array(
-                                    'placeholder' => 'Correo electrónico del destinatario'
-                                ));
-                            ?>  
+                    <br/>
+                    <p class="lead">
+                    4. ¿A quién la envías?
+                    </p>
+                        <input type="hidden" name="entrega" value="2" >
+                        <?php
+                            echo $form->textFieldRow($envio, 'email', array(
+                                'placeholder' => 'Correo electrónico del destinatario',
+                                'class'=>"form-control"
+                            ));
+                        ?>  
                         <div class="control-group margin_top_large text_align_center">
                             <?php
                             $this->widget('bootstrap.widgets.TbButton', array(
                                 'buttonType' => 'submit',
                                 'label' => 'Comprar',
                                 'icon' => 'shopping-cart white',
-                                'type' => 'warning',
-                                'size' => 'large',
+                                'type' => 'success',
+                                'size' => 'large', 
+                                'htmlOptions' => array('class'=>"form-control"),
                                     )
                             );
                             ?>   
@@ -95,7 +103,7 @@ $this->breadcrumbs = array(
             </div>	
                 <div class="col-md-5 box_shadow_personaling padding_medium">
                     <div class="contenedorPreviewGift" >
-                        <img src="<?php echo Yii::app()->baseUrl; ?>/images/giftcards/gift_card_one_x470.jpg" width="470">
+                        <img src="<?php echo Yii::app()->baseUrl; ?>/images/giftcards/GIFTCARD-xmas-470x288.jpg" width="470">
                         <div class="row-fluid margin_top">
                             <div class="span6 braker_right">
                                 <div class=" T_xlarge color4" id="monto"><?php echo $model->monto." Bs."; ?> </div>

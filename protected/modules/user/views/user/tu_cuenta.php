@@ -2,7 +2,6 @@
     <div class="page-header">
         <h1>Tu Cuenta</h1>     
     </div>
-
 <?php
 $this->breadcrumbs=array(
 	'Tu Cuenta',
@@ -54,10 +53,10 @@ $this->breadcrumbs=array(
 					    'items'=>array(
 					        array('label'=>'Compras', 'active'=>false),
 					        array('label'=>' Pedidos y Devoluciones', 'icon'=>'glyphicon glyphicon-gift', 'url'=>Yii::app()->baseUrl.'/orden/listado'),
-					        array('label'=>' Calificar a un vendedor', 'icon'=>'glyphicon glyphicon-thumbs-up', 'url'=>'#'),
+					        //array('label'=>' Calificar a un vendedor', 'icon'=>'glyphicon glyphicon-thumbs-up', 'url'=>'#'),
 					        
-					        array('label'=>'Pagos y Balance', 'active'=>false),
-					        array('label'=>' Preferencias de pago', 'icon'=>'glyphicon glyphicon-check', 'url'=>'#'),
+					        //array('label'=>'Pagos y Balance', 'active'=>false),
+					        //array('label'=>' Preferencias de pago', 'icon'=>'glyphicon glyphicon-check', 'url'=>'#'),
 					        array('label'=>' Tarjetas de regalo', 'icon'=>'glyphicon glyphicon-credit-card', 'url'=>Yii::app()->baseUrl.'/giftcard/comprar'),
 					        
 							array('label'=>'Preferencias', 'active'=>false),
