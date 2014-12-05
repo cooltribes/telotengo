@@ -34,7 +34,7 @@ class BolsaController extends Controller
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
 				'actions'=>array('create','update','agregar','eliminar','authenticate','confirm','cities','addAddress','placeOrder',
 								'sendValidationEmail','actualizar','agregarAjax','calcularEnvio',
-								'authGC','pagoGC','confirmarGC','crearGC','sendsummary','comprarGC','pedidoGC','registrarpagoGC'),
+								'authGC','pagoGC','confirmarGC','crearGC','sendsummary','comprarGC','pedidoGC','registrarpagoGC','view'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -430,17 +430,20 @@ class BolsaController extends Controller
 			$model->users_id = Yii::app()->user->id;
 			
 				if($model->save()){
-					echo '<div class="radio">
+					$response['div']= '<div class="radio">
 				                <label> 
 				                    <input type="radio" class="address_radio" name="optionsRadios" id="address_'.$model->id.'" value="'.$model->id.'" checked>
 				                    <strong>'.$model->nombre.': </strong>'.$model->direccion_1.' '.$model->direccion_2.'. '.$model->ciudad->nombre.', '.$model->provincia->nombre.'.
 				                </label>
 				            </div>';
+                    $response['id']=$model->id;        
 				}
 				else
 				{
-					echo CActiveForm::validate($model);
+					$response['div']= CActiveForm::validate($model);
 				}
+                echo CJSON::encode($response); 
+                         Yii::app()->end();
 			
 		}
 	}
@@ -504,7 +507,8 @@ class BolsaController extends Controller
 				}
 			}
 		}
-		
+		$orden->tipo_pago_id = intval($_POST['payment_method_id']);
+        $orden->estado = 1;
 		if($orden->save()){
 			foreach($bolsa_has as $uno){
 				$inventario = Inventario::model()->findByPk($uno->inventario_id);	
@@ -545,7 +549,7 @@ class BolsaController extends Controller
 							'status' => 'error',
 						);
 					}
-					echo json_encode($post_data);
+					
 				}else{
 					Yii::trace('UserID: '.$user->id.' Error al guardar compra (orden_inventario):'.print_r($orden_inventario->getErrors(),true), 'registro');
 				}
@@ -553,7 +557,12 @@ class BolsaController extends Controller
 			}
 		}else{
 			Yii::trace('UserID: '.$user->id.' Error al guardar compra (orden):'.print_r($orden->getErrors(),true), 'registro');
-		}
+		    $post_data = array(
+                            'status' => "error",
+                        );
+        }
+       
+       echo json_encode($post_data);
 
 
 	}

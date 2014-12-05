@@ -1,10 +1,10 @@
 <!-- CONTENIDO ON -->
 
-<div class="container-fluid margin_top margin_bottom" style="padding: 0 15px;">
+
 	
 <?php // $this->breadcrumbs=array(	'Tienda',);?>
-<div class="container" style="padding: 0 15px;">
-<div class="row">
+<div class="container">
+<div class="row-fluid">
     
 <?php
 
@@ -196,12 +196,12 @@ $marcas = Marca::model()->findAll();
 
 			
 			?>
-			<!-- PRODUCTOS OFF -->
+			<!-- PRODUCTOS OFF --> 
             </section>
         </div>
 
     </div>
 </div>
-</div>
+
 
 <!-- CONTENIDO OFF -->

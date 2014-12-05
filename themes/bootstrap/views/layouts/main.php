@@ -125,6 +125,12 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
             font-size:1.05em;
             padding-left:13px;
             padding-right:13px;
+            display:table-cell;
+            float:none;
+            text-align:center;
+        }
+        ul.dropdown *.dir ul{
+            width:100%;
         }
         ul.dropdown>li>span:hover{
             color: #198ac9;
@@ -390,10 +396,14 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                         </li>
                           
                         <li class="button"><a href="<?php echo Yii::app()->baseUrl; ?>/tienda/"><div class="white">Tienda</div></a></li> 
-                        <li class="button"><a href="<?php echo Yii::app()->baseUrl; ?>/giftcard/comprar">
-                            <div class="white"><span class="glyphicon glyphicon-gift"> Comprar Giftcard</div>
+                       
+                        <li class="button">
+                            <a href="<?php echo Yii::app()->baseUrl; ?>/giftcard/comprar">
+                                <div class="white">
+                                    <span class="glyphicon glyphicon-gift"></span> Comprar Giftcard
+                                </div>
                             </a>
-                        </li>
+                        </li> 
             
                 <?php
                         
@@ -424,7 +434,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                                         </div>
                                     </a>
                                 </li>
-
+ 
                 <?php   
                 }
                 ?>
@@ -433,13 +443,13 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                         </div>
                     </div> 
                 </div>
-            
-                    <ul id="nav" class="dropdown dropdown-horizontal row">
-                   <a href="<?php echo Yii::app()->getBaseUrl(true);?>">
+                <div class="width:100%">
+                    <ul class="dropdown" style="display: table; width:100%;">
+                
                         <li class="dir">
                             <span class="glyphicon glyphicon-home glyphiconLarge white"></span>
                         </li>
-                    </a>
+                 
                         <?php
                         $categorias = Categoria::model()->findAllByAttributes(array('id_padre'=>0));
                         foreach ($categorias as $categoria) {
@@ -466,7 +476,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                         }
                         ?>    </ul> 
           
-
+                </div>
                        <!-- <div class="col-md-2 margin_top_small">
                        
                         <?php
@@ -491,7 +501,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
          </div>
         
     </nav>
-    
+     
 		
   <!-- HEADER OFF -->
 

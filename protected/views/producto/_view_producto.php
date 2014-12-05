@@ -12,16 +12,17 @@ Yii::app()->clientScript->registerMetaTag(Yii::app()->getBaseUrl(true).str_repla
 
 ?>
 <!-- CONTENIDO ON -->
-<div class="container-fluid" style="padding: 0 15px;">
+<div class="container"">
 
 <?php
 	echo CHtml::hiddenField('producto_id', $model->id, array('id'=>'producto_id'));
 ?>
 
-    <div class="row main-content">
+    <div class="row-fluid main-content">
 
-        <section class="col-md-10" role="main">
-            <div class="">
+        <section role="main">
+            <div class="col-md-10">
+                <div class="row-fluid">
                 <!-- IMAGENes ON -->
                 
                 <?php
@@ -31,7 +32,7 @@ Yii::app()->clientScript->registerMetaTag(Yii::app()->getBaseUrl(true).str_repla
                 <div class=" col-md-5">
                 	<div class='imagen_principal'> 
                     <figure>
-                        <img width="450px" height="400px" src="<?php echo Yii::app()->baseUrl.$main_image; ?>" alt="<?php echo $model->nombre; ?>" id="principal">
+                        <img width="100%" src="<?php echo Yii::app()->baseUrl.$main_image; ?>" alt="<?php echo $model->nombre; ?>" id="principal">
                     </figure>
                     </div>
                     <div class="margin_top_small">
@@ -235,7 +236,7 @@ Yii::app()->clientScript->registerMetaTag(Yii::app()->getBaseUrl(true).str_repla
                                 $inventarios_all = Inventario::model()->findAllByAttributes(array('producto_id'=>$model->id));
 
                                 echo CHtml::hiddenField('producto_id', $model->id, array('id'=>'producto_id'));
-
+                            
                                 // Recorrer cada una de las categorías asociadas al producto para buscar sus características
                                 foreach ($model->categorias as $categoria) {
                                     $categoria_caracteristicas = CategoriaHasCaracteristicaSql::model()->findAllByAttributes(array('categoria_id'=>$categoria->id));
@@ -291,7 +292,7 @@ Yii::app()->clientScript->registerMetaTag(Yii::app()->getBaseUrl(true).str_repla
                                                     }
                                                     ?>
                                                     
-                                                </div>
+                                                </div> 
                                             </dd>
                                             <?php
                                         }
@@ -299,6 +300,7 @@ Yii::app()->clientScript->registerMetaTag(Yii::app()->getBaseUrl(true).str_repla
                                         //echo '<br/><br/>';
                                     }
                                 }
+                         
                                 //print_r($model->categorias);
                                 // $caracteristicas_all almacena todas las caracteristicas encontradas en nosql para este producto, 
                                 /*$caracteristicas_all = array();
@@ -409,13 +411,14 @@ Yii::app()->clientScript->registerMetaTag(Yii::app()->getBaseUrl(true).str_repla
                         echo $model->descripcion;
                     ?>
                     
+                    </div>
                 </div>
             </div>
         </section>
         <section class="col-md-2">
-            <div class="caja">
+            <div>
                 <div>
-                    <h4 >Mejor Precio: <span class="text-danger title_medium precio">Bs. <?php echo $inventario_menor_precio->precio; ?></span></h4>
+                    <h2><small>Bs.</small><?php echo $inventario_menor_precio->precio; ?></span></h2>
                 </div>
                 <h4>Costo de Envio: <span class="text-success">Gratis</span></h4>
                 <a href="#" class="btn btn-success btn-block btn-lg" onclick="agregar_bolsa()">Comprar</a>
@@ -443,9 +446,7 @@ Yii::app()->clientScript->registerMetaTag(Yii::app()->getBaseUrl(true).str_repla
                 </div>
                 <hr>
                 
-                <p class="text-muted">Vendido y enviador por:</p>
-                <p><strong> <a href="#"><?php echo $inventario_menor_precio->almacen->empresas->razon_social; ?></a></strong> <span class="glyphicon glyphicon-certificate"></span></p>
-                <p><span class='inventario_provincia'><?php echo $provincia->nombre; ?></span> (<span class='inventario_ciudad'><?php echo $ciudad->nombre; ?></span>)</p>
+                
                 <p> <span class="text-info">98%</span> Calificaciones positivas</p>
                 <small>155 Calificaciones</small>
 

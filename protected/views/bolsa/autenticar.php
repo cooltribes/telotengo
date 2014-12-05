@@ -1,23 +1,25 @@
 <div class="container">
 	<div class="row">
+	     
 		<div class="col-md-offset-4 col-md-4">
-
+		    <h1>Ingresar</h1>
+            <div class="margin_bottom" style="text-align: center"><small>Por favor introduce tus datos de inicio de sesión para continuar con tu compra</small></div>
 			<?php if(Yii::app()->user->hasFlash('error')): ?>
-
+   
 			<div class="has-error">
 				<?php echo Yii::app()->user->getFlash('error'); ?>
 			</div>
-
+ 
 			<?php endif; ?>
-
-			<div class="form ">
+             
+			<div class="form "> 
 				<?php 
 				$form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
 					'id'=>'caracteristica-form',
 					'enableAjaxValidation'=>false,
 					'htmlOptions'=>array(),
 				));
-				?>
+				?>  
 
 				
 				
