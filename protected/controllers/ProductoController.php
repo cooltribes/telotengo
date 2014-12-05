@@ -36,7 +36,7 @@ class ProductoController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete','update','eliminar','orden','aprobar','rechazar','poraprobar','calificaciones','eliminarCalificacion'),
+				'actions'=>array('admin','delete','update','eliminar','orden','aprobar','rechazar','poraprobar','calificaciones','eliminarCalificacion','importar'),
 				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -1184,4 +1184,111 @@ class ProductoController extends Controller
 			Yii::app()->end();
 		}
 	}
+
+	/*
+	Action para importar los productos desde Magento
+	*/
+	public function actionImportar(){
+			
+			$archivo = CUploadedFile::getInstancesByName('archivoCarga');
+			$nombre = "";
+			$extension = "";
+			
+			if (isset($archivo) && count($archivo) > 0) {
+            	$nombreTemporal = "ProductosImportar";
+                $rutaArchivo = Yii::getPathOfAlias('webroot').'/docs/xlsMasterData/';
+                foreach ($archivo as $arc => $xls) {
+
+                        $nombre = $rutaArchivo.$nombreTemporal;
+                        $extension = '.' . $xls->extensionName;
+                        $uploadedFileName = $xls->name;
+                        
+						if ($xls->saveAs($nombre . $extension)) {
+
+                        } else {
+                            Yii::app()->user->updateSession();
+                            Yii::app()->user->setFlash('error', UserModule::t("Error al cargar el archivo."));
+                		}
+					}
+      		}else{
+            	Yii::app()->user->updateSession();
+                Yii::app()->user->setFlash('error', UserModule::t("Debes seleccionar un archivo."));                            
+				$error = true;
+			} 
+
+	        // Si pasa la validacion
+	     	if($nombre != "")
+	     		$sheetArray = Yii::app()->yexcel->readActiveSheet($nombre . $extension);
+					
+			$i=0;
+			
+			if(isset($sheetArray)){
+	           	//para cada fila del archivo
+	           	foreach ($sheetArray as $row) {
+					
+	            	if ($row['A'] != "" && $row['A'] != "sku") { // para que no tome la primera ni vacios
+						$i++; // fila
+	               		
+	               		$sku = $row['A'];
+						$name = $row['B'];
+	                    $metaTitle = $row['C'];
+						$metaDescription = $row['D'];
+	                    $url = $row['E'];
+						$marca = $row['F'];
+						$precio = $row['G'];
+						$peso = $row['H'];
+						$status = $row['I'];
+						$descripcion = $row['J'];
+						$descripcionCorta = $row['K'];
+						$keywords = $row['L'];
+						$cantidad = $row['M'];
+						
+						$producto = new Producto;
+						$producto->nombre = $name;
+						$producto->descripcion = $descripcion;
+						$producto->destacado = 0;
+						$producto->estado = $status;
+						$producto->notificado = 1;
+						$producto->interno = "por ahora";
+						$producto->peso = $peso;
+						$producto->codigo = $sku;
+
+						// busqueda de la marca
+						$marcaMayuscula = ucfirst($marca);
+
+						$marcaBusqueda = Marca::model()->findByAttributes(array('nombre'=>$marcaMayuscula));
+						if(isset($marcaBusqueda)){
+							$producto->marca_id = $marcaBusqueda->id; // id de la marca conseguida
+						}else{
+							$nuevaMarca = new Marca;
+							$nuevaMarca->nombre = $marcaMayuscula;
+							$nuevaMarca->descripcion = "cambiar";
+							$nuevaMarca->destacado = 0; // no
+
+							if($nuevaMarca->save()){
+								$producto->marca_id = $nuevaMarca->id;
+							}
+						}
+
+						// guardar producto
+						$producto->save(); // guardado
+
+						// seo
+						$seo = new Seo;
+						$seo->descripcion = $metaDescription;
+						$seo->tags = $keywords;
+						$seo->amigable = $url;
+						$seo->producto_id = $producto->save();
+
+						$seo->save();
+	                    
+	              	}// if
+				}// foreach			
+				Yii::app()->user->setFlash("success", "Se ha cargado con éxito el archivo. Puede ver los detalles de la carga a continuación.<br>"); 	
+			} // if
+			
+			$this->render('importarProductos');
+		}
+
+
 }

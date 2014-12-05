@@ -1,5 +1,3 @@
-<div class="container-fluid" style="padding: 0 15px;">
-
 <?php
 $this->breadcrumbs=array(
 	'Pedidos'=>array('listado'),
@@ -7,10 +5,10 @@ $this->breadcrumbs=array(
 );
 ?>	
     <div class="container">
-        <div class="row">
+        <div class="row-fluid">
             <!-- COLUMNA PRINCIPAL DERECHA ON // OJO: esta de primera para mejorar el SEO sin embargo por CSS se ubica visualmente a la derecha -->
             <div class="col-md-10 col-md-offset-1 main-content" role="main">
-                    <div class="page-header">
+                    <div>
                         <h1>
                            Pedido #<?php echo $model->id; ?>
                         </h1> 
@@ -30,7 +28,7 @@ $this->breadcrumbs=array(
                     <section>
                         <h3>Resumen:</h3>
                         <div>
-                            <p class="well well-sm"> Estado: <span>
+                            <p class="well well-md"> Estado: <span>
                          
                             <?php
 							switch ($model->estado) {
@@ -138,7 +136,7 @@ $this->breadcrumbs=array(
                                 $envio = 0;
                                 $total = 0;
                                 ?>
-                                <div class="well well-sm">
+                                <div class="well well-md">
                                     Productos devueltos:
                                     <table class="table">
                                         <thead>
@@ -235,28 +233,25 @@ $this->breadcrumbs=array(
                                 <?php
                             }
                             
-		                    
-								
-							if( $model->estado== 1 || $model->estado==7)
-							{
+		                    if( $model->estado== 1 || $model->estado==7){
 							
 							$detalle = new DetalleOrden;
 								
-							echo '<div class="well">
-								<div class="row padding_left_medium">
+							echo '<div class="well well-md row-fluid">
+								<div class="row padding_left">
 									<div class="col-md-6 1">
 									Registrar Pago '
 									;
-	
+
 							$form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
 								'id'=>'pago-form',
 								'enableAjaxValidation'=>false,
 								'enableClientValidation'=>true,
 								'type'=>'horizontal',
 								'clientOptions'=>array(
-									'validateOnSubmit'=>true, 
-								),
-								'htmlOptions' => array(
+									'validateOnSubmit'=>true,
+ 								),
+								'htmlOptions' => array( 
 							        'enctype' => 'multipart/form-data',
 							    ),
 							));
@@ -297,8 +292,9 @@ $this->breadcrumbs=array(
 							echo '<div class="form-actions">';
 								$this->widget('bootstrap.widgets.TbButton', array(
 									'buttonType'=>'submit',
-									'type'=>'primary',
+									'type'=>'danger',
 									'label'=>'Enviar',
+									'htmlOptions'=>array('class'=>'form-control'),
 								));
 							echo '</div>';
 	
@@ -464,4 +460,3 @@ $this->breadcrumbs=array(
             <!-- COLUMNA PRINCIPAL DERECHA OFF // -->
         </div>
     </div>
-</div>
