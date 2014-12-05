@@ -220,5 +220,6 @@ return array(
 		'contacto'=>'dduque@upsidecorp.ch',
 		'uploadPath'=>dirname(__FILE__).'/../../documentos/',
         'uploadUrl'=>'/documentos',
+        'caracteristicas'=>FALSE,
 	),
 );

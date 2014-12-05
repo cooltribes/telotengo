@@ -23,7 +23,8 @@
         <li id="" class="<?php if($activo=='seo') echo 'active'; ?>"><?php echo CHtml::link('SEO',array('seo','id'=>$model->id,)); ?>
         	 
         </li>
-        <?php } ?>
+        <?php } 
+        ?> 
         
         <li id="" class=<?php if($activo == 'caracteristicas') echo 'active'; ?>><?php echo CHtml::link('Características',array('caracteristicas','id'=>$model->id,)); ?></li>
     </ul>

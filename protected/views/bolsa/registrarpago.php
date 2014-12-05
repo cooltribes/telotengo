@@ -6,8 +6,10 @@
 	    <hr/>
 
 	    	<div class="well">
-				<div>
-
+				<div class="row-fluid">
+					<h3>Datos</h3> 
+					<h4>Destinatario: <small><?php echo $model->email; ?></small></h4>
+					<h4>Monto: <small><?php echo $model->total; ?></small></h4>
 			<?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
 			        'id'=>'pago-form', 
 			        'enableAjaxValidation'=>false,
@@ -58,6 +60,7 @@
 					        'model' => $pago,
 					        'attribute' => "fecha",
 					        'language' => 'es',
+					        'htmlOptions' => array('class'=>'form-control','placeholder'=>'Fecha del depósito'), 
 					        // additional javascript options for the date picker plugin
 					        'options'=>array(
 					            'showAnim'=>'fold',
@@ -66,7 +69,6 @@
 					    ));
 					echo $form->error($pago,'fecha');
 					?>
-				</label>
 			</div>
 	
 	<div class="form-actions">

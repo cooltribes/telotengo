@@ -962,6 +962,7 @@ class BolsaController extends Controller
 
 	public function actionRegistrarPagoGC($id){
 		$pago = new DetalleOrden;
+		$model = OrdenGC::model()->findByPk($id);
 
 		if(isset($_POST['DetalleOrden']["nombre"])){
 			// datos del deposito
@@ -986,7 +987,7 @@ class BolsaController extends Controller
 			$this->redirect($this->createAbsoluteUrl('user/user/tucuenta'));	
 		}
   
-		$this->render('registrarpago',array('pago'=>$pago));
+		$this->render('registrarpago',array('pago'=>$pago,'model'=>$model));
 	} 
  
 	/**
