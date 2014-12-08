@@ -10,6 +10,10 @@
 @black: #000;
 @gray: #fbfbfb;
 @darkgray:#666;
+.white{color:#FFF;}
+.red{color:#F00;}
+
+
 
 body{ 
    // border-top: 3px solid @blue;
@@ -161,7 +165,7 @@ body{
 .title_medium{
     font-size:24px;
 }
-
+.glyphiconLarge{font-size:1.7em; } 
 // Animacinoes
 
 .transition_all{
@@ -252,9 +256,231 @@ body{
     padding: 1em;
     margin-bottom: 2em;
     .border_radius(@radius:1px);
-    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1)
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+        .productImage{
+            height:240px; 
+        }
+        a>.productName {  
+            line-height: 1.5em;
+            height: 3em;
+            min-height: 3em;       /* height is 2x line-height, so two lines will display */
+            overflow: hidden;  /* prevents extra lines from being visible */
+        }
+   
    }
+    
 
 /* CAJA DE PRODUCTO OFF
-   ========================================================================== */
+ * 
+ */
+/* LAYOUT ON
+ * ===========================================================================
+ */
+
+body{
+            padding: 0px;
+            background: none;
+        }
+
+.links_menu{
+  list-style: none; 
+  .white;
+        .linkSuperior{
+            color: #FFF; font-size: .8em;
+        }
+        .linkSuperior:hover{
+            color: #FFF;
+        }
+        .linkSuperior:active{
+            color: #FFF;
+        } 
+        .linkSuperior:visited{
+            color: #FFF;
+        }      
+}
+.mainHead{
+              background: -webkit-linear-gradient(#198ac9, #016eab); /* For Safari 5.1 to 6.0 */
+              background: -o-linear-gradient(#198ac9, #016eab); /* For Opera 11.1 to 12.0 */
+              background: -moz-linear-gradient(#198ac9, #016eab); /* For Firefox 3.6 to 15 */
+              background: linear-gradient(#198ac9, #016eab); /* Standard syntax */
+     .container{
+            font-size:.8em;
+            .menu{
+                background-color: #F19;
+            }
+            
+        }        
+}
+.userButtons{
+    .button{
+      
+            min-width:6em;
+            float:right;
+            margin-left:.3em;
+            text-align: center;
+            background-color: #198ac9;
+            padding-top:10px;
+            padding-bottom:10px;
+             transition: background-color 300ms ease-in-out;
+            -moz-transition: background-color 300ms ease-in-out;
+            -webkit-transition: background-color 300ms ease-in-out;
+            -o-transition: background-color 300ms ease-in-out;
+            
+        }
+        .button:hover{
+            text-decoration:none;
+            background-color: #2a9bda;
+            padding-top:7px;
+            padding-bottom:13px;
+           
+            
+        }  
+}
+     
+        ul.dropdown.categoriesMenu *.dir{
+            background-image: none;
+            background-color: #ec1f24;
+            line-height: 2.8em;
+            height:4.2em;
+            color: #FFF;
+            font-size:1.05em;
+            padding-left:13px;
+            padding-right:13px;
+            display:table-cell;
+            float:none;
+            text-align:center;
+            cursor:pointer;
+        }
+        ul.dropdown.categoriesMenu *.dir ul{
+            width:100%;
+        }
+        ul.dropdown.categoriesMenu>li>span:hover{
+            color: #198ac9;
+        }
+        ul.dropdown.categoriesMenu *.dir:hover{
+            background-color:#FFF;
+            color: #198ac9;
+        }
+        
+        #busqueda{ 
+            width: 100%;
+            list-style: none;
+            height: 2.8em;            
+        }        
+        .menu, .menu>ul, .menu>ul>li{
+            background: #ec1f24;
+        }
+        
+        ul.dropdown ul li{
+            background-color: #FFF;
+        }
+        
+        footer{
+            bottom:0px;
+            position:inherit;
+            width:100%;
+        }  
+        .footer{
+            background-color:  #198ac9;
+            margin-right:0px;
+            .subfooter{
+              background-color:  #016eab;
+            }
+            .foot-main{
+              width:100%;
+            }
+            div>.foot-section{
+              background:rgba(0, 0, 0, 0.07);
+              overflow-y: hidden;
+              min-height: 210px;
+              div{
+                .foot-title{
+                  color:#FFF;
+                  font-size:1.7em;
+                }
+                .foot-list{
+                  list-style-type: none;
+                  color:#FFF;
+                  li>a, li>a:hover{
+                      .white;
+                  }
+                }
+                
+              }
+              
+              
+            }
+        }
+        
+      
+        .no_list_style, ul{
+            list-style-type: none;
+             
+        }
+        .clientService{
+            width:100%;
+            text-align:right;
+        }
+        
+        .carousel-indicators li{
+            border: solid 1px #CCC;
+            
+        }
+        .carousel-indicators .active li{
+            background-color: #CCC;
+        }
+        .main-content{
+            background: none;
+            border:0px;
+            box-shadow: none;
+        } 
+        #page>#content>.container{
+            margin-bottom:4em;
+        }
+        #boton_facebook{
+            background-color: #3B5998;
+            background-image: url(/sigmatiendas/themes/bootstrap/images/icon_facebook_registrator.png);
+            background-repeat: no-repeat;
+            background-position-y: -2px;
+            padding: 10px 10px 10px 35px;
+            color: #FFF;
+        }
+        #boton_facebook:visited{
+            color:#FFF;
+        }
+        .align_center{
+            text-align: center;
+        }
+                 
+//=============== LAYOUT OFF =======================================================
+
+//================ TIENDA =============
+        .padre, .todas{
+            margin-top:.6em;
+        }
+        .padre>a{
+            color:#000;
+            font-weight: bold;
+         }
+         .todas>a{
+            color:#666677;
+            
+         }
+         .hijo>a{
+             color:#666677;
+             margin-left:1em;
+         } 
+          
+
+//================ DETALLE PRODUCTO =====================
+
+
+.thumbnail{
+  height:65px; 
+  overflow:hidden;
+  cursor:pointer;
+}
+.thumbnail:hover{
+  border:1px solid #888;
+}
 

@@ -12,7 +12,7 @@ $this->breadcrumbs=array(
 $categorias = Categoria::model()->findAll(); 
 $marcas = Marca::model()->findAll();
 
-?>
+?> 
 
     <div class="row-fluid"> 
     <h1><?php echo $model->nombre;?> <small>en Sigmatiendas</small></h1>

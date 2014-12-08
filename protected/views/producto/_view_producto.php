@@ -51,11 +51,11 @@ Yii::app()->clientScript->registerMetaTag(Yii::app()->getBaseUrl(true).str_repla
                                     </div>';
 						*/
 								
-							echo '<div class="col-xs-6 col-md-3">';		
-							echo CHtml::image(Yii::app()->baseUrl.$path, $model->nombre, array("width" => "80", "height" => "80", 'id'=>'thumb'.$imagen->id, 'class'=>'thumbnail','style'=>'cursor: pointer'));
+							echo '<div class="col-xs-6 col-md-3 thumbnail margin_left_xsmall">';		
+							echo CHtml::image(Yii::app()->baseUrl.$path, $model->nombre, array("width" => "100%", 'id'=>'thumb'.$imagen->id, 'class'=>'thumbnailclick'));
 							echo '</div>';	
 									
-                        }
+                        } 
                     ?>
                                                     
                     </div>
@@ -610,7 +610,7 @@ Yii::app()->clientScript->registerMetaTag(Yii::app()->getBaseUrl(true).str_repla
     });
 	
 	
-	$(".thumbnail").click(function(){
+	$(".thumbnailclick").click(function(){
      	var image = $("#principal");
      	var thumbnail = $(this).attr("src");
      	

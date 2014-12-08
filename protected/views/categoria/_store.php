@@ -13,7 +13,7 @@
                     echo "<a href='".Yii::app()->baseUrl."/producto/detalle/".$item->id."''>".$im."</a>";
                     echo "</div>";
                 }
-            echo '<h3 class="productName no_margin_top no_margin_bottom"> '.$item->nombre.' </h3></a>';
+            echo '<a href="'.Yii::app()->baseUrl.'/producto/detalle/'.$item->id.'"><h3 class="productName no_margin_top no_margin_bottom"> '.$item->nombre.' </h3></a>';
             $marca = Marca::model()->findByPk($item->marca_id);
            
             if($item->hasFlashsale()){

@@ -46,224 +46,13 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
 				//Yii::app()->less->register(); ?>
 		<?php Yii::app()->bootstrap->register(); ?>
 		<?php  Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/styles.css',null); ?>
+		<?php  Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/styles.css',null); ?>
 	</head>
 
 	<body>
 
      <!-- HEADER ON -->
-    <style>
-        .linkSuperior{
-            color: #FFF; font-size: .8em;
-        }
-        .linkSuperior:hover{
-            color: #FFF;
-        }
-        .linkSuperior:active{
-            color: #FFF;
-        } 
-        .linkSuperior:visited{
-            color: #FFF;
-        } 
-        .mainHead{
-              background: -webkit-linear-gradient(#198ac9, #016eab); /* For Safari 5.1 to 6.0 */
-              background: -o-linear-gradient(#198ac9, #016eab); /* For Opera 11.1 to 12.0 */
-              background: -moz-linear-gradient(#198ac9, #016eab); /* For Firefox 3.6 to 15 */
-              background: linear-gradient(#198ac9, #016eab); /* Standard syntax */
-        }
-        .mainHead .container{
-            font-size:.8em;
-        }
-        .white{
-            color:#FFF;
-        }
-       .red{
-            color:#F00;
-        }
-        .mainHead .container .navbar-right{
-            width:20%;  
-            text-align: center;
-        }
-        .button{
-      
-            min-width:6em;
-            float:right;
-            margin-left:.3em;
-            text-align: center;
-            background-color: #198ac9;
-            padding-top:10px;
-            padding-bottom:10px;
-             transition: background-color 300ms ease-in-out;
-            -moz-transition: background-color 300ms ease-in-out;
-            -webkit-transition: background-color 300ms ease-in-out;
-            -o-transition: background-color 300ms ease-in-out;
-            
-        }
-        .button:hover{
-            text-decoration:none;
-            background-color: #2a9bda;
-            padding-top:7px;
-            padding-bottom:13px;
-           
-            
-        }
-        .glyphiconLarge{
-            font-size:1.7em;
-        } 
-        
-        .mainHead .container .menu{
-            background-color: #F19;
-        }
-        .menu{
-            text-align: center;
-        }
-        ul.dropdown *.dir{
-            background-image: none;
-            background-color: #ec1f24;
-            line-height: 2.8em;
-            height:4.2em;
-            color: #FFF;
-            font-size:1.05em;
-            padding-left:13px;
-            padding-right:13px;
-            display:table-cell;
-            float:none;
-            text-align:center;
-        }
-        ul.dropdown *.dir ul{
-            width:100%;
-        }
-        ul.dropdown>li>span:hover{
-            color: #198ac9;
-        }
-        ul.dropdown *.dir:hover{
-            background-color:#FFF;
-            color: #198ac9;
-        }
-        
-        #busqueda{ 
-            width: 100%;
-            list-style: none;
-            height: 2.8em;            
-        }        
-        .menu, .menu>ul, .menu>ul>li{
-            background: #ec1f24;
-        }
-        
-        ul.dropdown ul li{
-            background-color: #FFF;
-        }
-        footer{
-            bottom:0px;
-            position:inherit;
-            width:100%;
-        }  
-        .footer{
-            background-color:  #198ac9;
-            margin-right:0px;
-        }
-        .subfooter{
-            background-color:  #016eab;
-        }
-        body{
-            padding: 0px;
-            background: none;
-        }
-        .foot-title{
-            color:#FFF;
-            font-size:1.7em;
-        }
-        .foot-list{
-            list-style-type: none;
-            color:#FFF;
-        }
-        
-        .foot-list>li>a{
-            color: #FFF;
-        }
-        .foot-list>li>a:hover{
-            color: #FFF;
-        }
-        .foot-section{
-            background:rgba(0, 0, 0, 0.07);
-            overflow-y: hidden;
-            min-height: 210px;
-        }
-        .foot-main{
-            width:100%;
-        }
-        .no_list_style, ul{
-            list-style-type: none;
-             
-        }
-        .clientService{
-            width:100%;
-            text-align:right;
-        }
-        .productName {  
-            line-height: 1.5em;
-            height: 3em;
-            min-height: 3em;       /* height is 2x line-height, so two lines will display */
-            overflow: hidden;  /* prevents extra lines from being visible */
-        }
-       .caja{
-           box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3); 
-       } 
-       .caja:hover{
-           box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5); 
-       }
-        .caja>.productImage{
-            height:240px; 
-        }
-        .cajaTienda>.productImage{
-            height:240px;
-        }
-        .carousel-indicators li{
-            border: solid 1px #CCC;
-            
-        }
-        .carousel-indicators .active li{
-            background-color: #CCC;
-        }
-        .main-content{
-            background: none;
-            border:0px;
-            box-shadow: none;
-        } 
-        #page>#content>.container{
-            margin-bottom:4em;
-        }
-        #boton_facebook{
-            background-color: #3B5998;
-            background-image: url(<?php echo Yii::app()->theme->baseUrl;?>/images/icon_facebook_registrator.png);
-            background-repeat: no-repeat;
-            background-position-y: -2px;
-            padding: 10px 10px 10px 35px;
-            color: #FFF;
-        }
-        #boton_facebook:visited{
-            color:#FFF;
-        }
-        .align_center{
-            text-align: center;
-        }
-        .padre, .todas{
-            margin-top:.6em;
-        }
-        .padre>a{
-            color:#000;
-            font-weight: bold;
-         }
-         .todas>a{
-            color:#666677;
-            
-         }
-         .hijo>a{
-             color:#666677;
-             margin-left:1em;
-         }
-         
-    
-    </style>
+
    
     <nav class="navegacion-superior navbar-default navbar-fixed-top" style="position:inherit; background-color: #127ab5; padding: 5px 0 0 0; " >
         <div class="container"> 
@@ -287,7 +76,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                         
             </div>
             <div class="navbar-right">
-                <ul style="list-style: none; color:#FFF">
+                <ul class="links_menu">
                     <a href="<?php echo Yii::app()->baseUrl;?>/site/info" class="linkSuperior">Quienes somos </a>|
                     <a href="<?php echo Yii::app()->baseUrl;?>/site/soporte" class="linkSuperior">Ensamblaje y soporte </a>|
                     <a href="<?php echo Yii::app()->baseUrl;?>/site/garantia" class="linkSuperior">Garantías </a>|
@@ -313,7 +102,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                                 <span class="white">Vive la <span class="red">Experiencia</span> tecnológica</span>
                             </div>
                             <div class="row">
-                            <ul class="no_list_style">
+                            <ul class="no_list_style userButtons">
                              <?php
                     if(Yii::app()->user->isAdmin()){
                 ?>
@@ -444,10 +233,10 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                     </div> 
                 </div>
                 <div class="width:100%">
-                    <ul class="dropdown" style="display: table; width:100%;">
+                    <ul class="dropdown categoriesMenu" style="display: table; width:100%;">
                 
                         <li class="dir">
-                            <span class="glyphicon glyphicon-home glyphiconLarge white"></span>
+                            <span class="glyphicon glyphicon-home glyphiconLarge"></span>
                         </li>
                  
                         <?php
@@ -531,17 +320,19 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                             </div>
                            
                             <div class="col-md-4">
-                                <h2 class="foot-title">Servicio al cliente</h2>
-                                <ul class="foot-list">
-                                    <li><a href="<?php echo Yii::app()->baseUrl; ?>/user/login">Inicia sesión</a></li>
-                                    <li><a href="#" title="Preguntas Frecuentes">Preguntas Frecuentes</a></li>
-                                    <li><a href="#" title="Formas de Pago">Formas de Pago</a></li>
-                                    <li><a href="#" title="Políticas de Privacidad">Políticas de Privacidad</a></li>
-                                    <li><a href="#" title="Políticas de Envíos, Devoluciones y Cancelaciones">Políticas de Envíos, Devoluciones y Cancelaciones</a></li>
-                                </ul>
+                                <div>
+                                    <h2 class="foot-title">Servicio al cliente</h2>
+                                    <ul class="foot-list">
+                                        <li><a href="<?php echo Yii::app()->baseUrl; ?>/user/login">Inicia sesión</a></li>
+                                        <li><a href="#" title="Preguntas Frecuentes">Preguntas Frecuentes</a></li>
+                                        <li><a href="#" title="Formas de Pago">Formas de Pago</a></li>
+                                        <li><a href="#" title="Políticas de Privacidad">Políticas de Privacidad</a></li>
+                                        <li><a href="#" title="Políticas de Envíos, Devoluciones y Cancelaciones">Políticas de Envíos, Devoluciones y Cancelaciones</a></li>
+                                  </ul> 
+                                </div> 
                             </div>
                         </div>
-                   </div>             
+                   </div>              
                     
 					<div class="col-md-3 foot-section white" >
                         <h2 class="foot-title">Sigmasys C.A.</h2>
