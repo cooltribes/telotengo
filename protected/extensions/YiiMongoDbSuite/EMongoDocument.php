@@ -38,7 +38,7 @@ abstract class EMongoDocument extends EMongoEmbeddedDocument
 	private		static		$_indexes		= array();		// Hold collection indexes array
 
 	private 				$_fsyncFlag		= null;			// Object level FSync flag
-	private 				$_safeFlag		= null;			// Object level Safe flag
+	private 				$_safeFlag		= null; // Object level Safe flag 
 
 	protected				$useCursor		= null;			// Whatever to return cursor instead on raw array
 
@@ -607,7 +607,7 @@ abstract class EMongoDocument extends EMongoEmbeddedDocument
 			if(version_compare(Mongo::VERSION, '1.0.5','>=') === true)
 				$result = $this->getCollection()->insert($rawData, array(
 					'fsync'	=> $this->getFsyncFlag(),
-					'safe'	=> $this->getSafeFlag()
+					'w'	=> 1 //$this->getSafeFlag()
 				));
 			else
 				$result = $this->getCollection()->insert($rawData, CPropertyValue::ensureBoolean($this->getSafeFlag()));

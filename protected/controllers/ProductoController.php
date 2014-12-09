@@ -136,11 +136,11 @@ class ProductoController extends Controller
 	public function actionCreate()
 	{
 		$user = Yii::app()->user->id;
-		$empresas_user = EmpresasHasUsers::model()->findAllByAttributes(array('users_id'=>$user));
+		//$empresas_user = EmpresasHasUsers::model()->findAllByAttributes(array('users_id'=>$user));
 		
 		$u = User::model()->findByPk($user);
 		
-		if( sizeof($empresas_user)>0 || $u->superuser==1) // el usuario tiene al menos una empresa registrada		{
+		if( $u->superuser==1) //sizeof($empresas_user)>0 || $u->superuser==1) // el usuario tiene al menos una empresa registrada		{
 		{
 			if(isset($_GET['id']))
 				$model = Producto::model()->findByPk($_GET['id']);
@@ -153,7 +153,7 @@ class ProductoController extends Controller
 	
 			// Uncomment the following line if AJAX validation is needed
 			// $this->performAjaxValidation($model);
-	
+		
 			if(isset($_POST['Producto']))
 			{ 
 				$model->attributes=$_POST['Producto'];
@@ -690,8 +690,7 @@ class ProductoController extends Controller
         }//else principal
     }
 
-    public function actionCaracteristicas()
-	{
+    public function actionCaracteristicas(){
 		
 		$user = Yii::app()->user->id;
 		$empresas_user = EmpresasHasUsers::model()->findAllByAttributes(array('users_id'=>$user));
@@ -763,10 +762,18 @@ class ProductoController extends Controller
 						$this->redirect(array('empresas/listado'));
 					}
 				}
-				$dataProvider = new CActiveDataProvider('Inventario',array('data'=>array()));
+
+				$inv = new Inventario;
+				$inv->producto_id = $producto_id;
+				$dataProvider = $inv->search();
+				//var_dump($dataProvider->getData());
+				//Yii::app()->end();
+				//$dataProvider = new CActiveDataProvider('Inventario',array('data'=>array()));
+
 				if(isset($_GET['Inventario'])){
 					$dataProvider = $model->getInventariosAlmacen($producto->id, $_GET['Inventario']['almacen_id']);
 				}
+
 				$this->render('confirmar_inventario',array(
 					'model'=>$model,
 					'producto'=>$producto,
@@ -830,6 +837,7 @@ class ProductoController extends Controller
 						$caracteristica_nosql->valor = $_POST[$cp->caracteristica->id];
 						$caracteristica_nosql->inventario_id = $model->id;
 						$caracteristica_nosql->save();
+
 						//echo 'Guardado';
 					}
 				}
@@ -1079,10 +1087,10 @@ class ProductoController extends Controller
 	 */
 	public function actionAdmin()
 	{
-		$model=new Producto('search');
+		$model = new Producto;
 		$model->unsetAttributes();  // clear any default values
-		
-		$dataProvider = $model->search();
+
+		$dataProvider = $model->listar();
 		
 		if(isset($_GET['Producto']))
 			$model->attributes=$_GET['Producto'];
@@ -1190,13 +1198,15 @@ class ProductoController extends Controller
 	*/
 	public function actionImportar(){
 			
+			ini_set('memory_limit', '-1');
+
 			$archivo = CUploadedFile::getInstancesByName('archivoCarga');
 			$nombre = "";
 			$extension = "";
 			
 			if (isset($archivo) && count($archivo) > 0) {
             	$nombreTemporal = "ProductosImportar";
-                $rutaArchivo = Yii::getPathOfAlias('webroot').'/docs/xlsMasterData/';
+                $rutaArchivo = Yii::getPathOfAlias('webroot').'/docs/productos/';
                 foreach ($archivo as $arc => $xls) {
 
                         $nombre = $rutaArchivo.$nombreTemporal;
@@ -1221,14 +1231,16 @@ class ProductoController extends Controller
 	     		$sheetArray = Yii::app()->yexcel->readActiveSheet($nombre . $extension);
 					
 			$i=0;
-			
+			$totalProductos = 0;
+
 			if(isset($sheetArray)){
 	           	//para cada fila del archivo
 	           	foreach ($sheetArray as $row) {
 					
 	            	if ($row['A'] != "" && $row['A'] != "sku") { // para que no tome la primera ni vacios
 						$i++; // fila
-	               		
+	               		$totalProductos++;
+
 	               		$sku = $row['A'];
 						$name = $row['B'];
 	                    $metaTitle = $row['C'];
@@ -1284,9 +1296,9 @@ class ProductoController extends Controller
 	                    
 	              	}// if
 				}// foreach			
-				Yii::app()->user->setFlash("success", "Se ha cargado con éxito el archivo. Puede ver los detalles de la carga a continuación.<br>"); 	
+				Yii::app()->user->setFlash("success", "Se ha cargado con éxito el archivo. Se han importado ".$totalProductos." producto(s)"); 	
 			} // if
-			
+			ini_set('memory_limit', '32M');
 			$this->render('importarProductos');
 		}
 

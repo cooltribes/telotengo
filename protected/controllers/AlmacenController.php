@@ -62,7 +62,7 @@ class AlmacenController extends Controller
 	 */
 	public function actionCreate($id_empresa)
 	{
-		$model=new Almacen;
+		$model = new Almacen;
 		$empresa = Empresas::model()->findByPk($id_empresa);
 		$model->empresas_id = $empresa->id;
 

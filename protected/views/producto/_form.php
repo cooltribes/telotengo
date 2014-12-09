@@ -1,16 +1,16 @@
-<div class="container-fluid" style="padding: 0 15px;">
-	<div class="row">
+<div class="container">
+	<div class="row-fluid">
 		<!-- COLUMNA PRINCIPAL DERECHA ON // OJO: esta de primera para mejorar el SEO sin embargo por CSS se ubica visualmente a la derecha -->
-		<div class="col-md-10  col-md-push-2 main-content" role="main">
-			<h1>Información General <small> - Registar nuevo producto</small></h1>
+		<div class="col-md-10">
+			<h1>Información General <small> - Nuevo producto</small></h1>
 			<!-- Nav tabs -->
 			<!-- SUBMENU ON -->
 			<?php echo $this->renderPartial('_menu', array('model'=>$model, 'activo'=>'informacion_general')); ?>
 			<!-- SUBMENU OFF -->
 
 			<div class="well">
-				<div class="row">
-					<div class="col-md-6 1">
+				<div class="row-fluid">
+					<div>
 						<?php 
 						$form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
 							'id'=>'producto-form',
@@ -26,7 +26,7 @@
 							<div class="form-group">
 								<label>Modelo</label>
 								<?php echo $form->textField($model,'modelo',array('class'=>'form-control','maxlength'=>150)); ?>
-								<?php echo $form->error($model,'modelo'); ?>
+								<?php echo $form->error($model,'modelo');  ?>
 							</div>
 							
 							<div class="form-group">
@@ -56,6 +56,7 @@
 								
 								echo CHtml::dropDownList('Producto[marca_id]', $model->marca_id, $list, array('empty' => 'Seleccione...', 'class' => 'form-control')); 
 								echo $form->error($model,'marca_id');
+
 				                ?>
 							</div>    
 
@@ -80,24 +81,24 @@
 										$categoria = Categoria::model()->findAllByAttributes(array('id_padre'=>0));
 										$uno;
 										$dos;
-										
-										if(isset($prod_has))
-										{
+
+										if(count($prod_has)>0){
 											$uno = $prod_has[0];
 											$dos = $prod_has[1];
 											
 											echo CHtml::dropDownList('cate_padre',$uno->categoria_id, CHtml::listData($categoria,'id','nombre'), array('empty' => 'Seleccione una categoría...', 'class' => 'form-control'));
 										}
-										else 
+										else {
+
 											echo CHtml::dropDownList('cate_padre','', CHtml::listData($categoria,'id','nombre'), array('empty' => 'Seleccione una categoría...', 'class' => 'form-control'));
-										
+										}
+
 										?> 
 									</div>
 									<div class="col-xs-6">
 										<?php
 										 
-										if(isset($prod_has)) 
-										{
+										if(count($prod_has)>0){
 											// se realiza la llamada al controlador para llenar el select	
 											$datos = Producto::model()->hijos($uno->categoria_id);
 											
