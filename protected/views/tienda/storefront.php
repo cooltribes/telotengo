@@ -1,6 +1,6 @@
 <!-- CONTENIDO ON -->
 
-<div class="container-fluid margin_top" style="padding: 0 15px;">
+<div class="container margin_top">
 	
 <?php
 $this->breadcrumbs=array(
@@ -8,7 +8,7 @@ $this->breadcrumbs=array(
 );
 ?>
 	
-    <div class="row">
+    <div class="row-fluid">
 <?php
 
 // var_dump($dataProvider->getData());

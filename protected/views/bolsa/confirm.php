@@ -1,16 +1,16 @@
 <?php include("zoom.php"); ?>
 <div class="container" style="padding: 0 15px;">
 
-    <div class="page-header">
+    <div>
         <h1>Completar Compra</h1>
     </div>
-    <section class="row">
+    <section class="row-fluid">
 
         <!-- COLUMNA PRINCIPAL DERECHA ON // OJO: esta de primera para mejorar el SEO sin embargo por CSS se ubica visualmente a la derecha -->
     
 
         <h3>Dirección</h3>
-        <div class="col-sm-3" id="addresses">
+        <div class="col-sm-4" id="addresses"> 
         	<?php
         	foreach ($addresses as $address) {
         		?>
@@ -25,7 +25,7 @@
         	?>
         </div>
 
-        <div class="col-sm-8 col-sm-offset-1" id="direccion">
+        <div class="col-sm-7 col-sm-offset-1" id="direccion">
             <p>O ingresa una nueva dirección:</p>
             <?php
             $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
@@ -37,27 +37,27 @@
 				'htmlOptions'=>array('onsubmit'=>"return false;",),
 			));
             ?>
-                <div class="row">
-                    <div class="form-group col-sm-3">
+                <div class="row-fluid">
+                    <div class="form-group col-sm-9">
                         <label for="nombre" class="sr-only">Nombre</label>
                         <?php echo $form->textField($newAddress,'nombre',array('class'=>'form-control','maxlength'=>50, 'placeholder'=>'Nombre')); ?>
                         <?php echo $form->error($newAddress, 'nombre'); ?>
                     </div>
-                    <div class="form-group col-sm-3">
+                    <div class="form-group col-sm-9">
                         <label for="direccion2" class="sr-only">Dirección 1</label>
                         <?php echo $form->textField($newAddress,'direccion_1',array('class'=>'form-control','maxlength'=>255, 'placeholder'=>'Dirección 1')); ?>
                         <?php echo $form->error($newAddress, 'direccion_1'); ?>
                     </div>
 
-                    <div class="form-group col-sm-3">
+                    <div class="form-group col-sm-9">
                         <label for="direccion2" class="sr-only">Dirección 2</label>
                         <?php echo $form->textField($newAddress,'direccion_2',array('class'=>'form-control','maxlength'=>255, 'placeholder'=>'Dirección 2')); ?>
                         <?php echo $form->error($newAddress, 'direccion_2'); ?>
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="form-group col-sm-3">
+              
+                    <div class="form-group col-sm-9">
                         <label for="provincia" class="sr-only">
                             Provincia
                         </label>
@@ -70,7 +70,7 @@
 		                <?php echo $form->error($newAddress, 'provincia_id'); ?>
                     </div>
 
-                    <div class="form-group col-sm-3">
+                    <div class="form-group col-sm-9">
                         <label for="cuidad" class="sr-only">
                             Ciudad
                         </label>
@@ -81,27 +81,32 @@
                         
                     </div>
 
-                    <div class="form-group col-sm-3">
+                    <div class="form-group col-sm-9">
                         <label for="telefono" class="sr-only">Teléfono</label>
                          <?php echo $form->textField($newAddress,'telefono',array('class'=>'form-control','maxlength'=>50, 'placeholder'=>'Teléfono')); ?>
                     	<?php echo $form->error($newAddress, 'telefono'); ?>
-                    </div>
-                </div>
+                    </div> 
+          <div class="form-group col-sm-9">
                 <?php
+                
+                echo CHtml::hiddenField('addressHid','0');
                 $this->widget('bootstrap.widgets.TbButton', array(
 					'buttonType'=>'ajaxSubmit',
 					'url'=>$this->createUrl('addAddress'),
-					'htmlOptions'=>array('class'=>'btn btn-info'),
+					'htmlOptions'=>array('class'=>'form-control btn btn-info'),
 					'label'=>'Agregar',
 					'ajaxOptions'=>array(
+					       'dataType'=>'json',
 							'success'=>'js:function(data){
 								
-								if(data.indexOf("div") != -1){ // Si encuentra "div" se guardó la dirección
-									$("#addresses").append(data);
+								if(data.div.indexOf("div") != -1){ // Si encuentra "div" se guardó la dirección
+									$("#addresses").append(data.div);
+                                    $("#addressHid").val(data.id);
 									$("#address-form").find("input[type=text], select").val("");
-								}
+                                   
+								}  
 								else{									
-									var valor = JSON.parse(data); // transformando a Json para leer
+									var valor = JSON.parse(data.div); // transformando a Json para leer
 									
 									// alert(data);
 									// alert(valor.DireccionEnvio_telefono); 
@@ -151,14 +156,14 @@
 				)); 
 				?>
             <?php $this->endWidget(); ?>
-
+            </div>
         </div>
 
     </section>
     
 
     <!-- METODO DE PAGO ON -->
-    <section class="row">
+    <section class="row-fluid">
     	<?php
         $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
 			'id'=>'payment-metods-form',
@@ -179,9 +184,9 @@
                             </a>
                         </li> -->
                     
-                        <li>
+                        <li class="active">
                             <a href="#depositoTransferencia" data-toggle="tab">
-                                <label for="ratiodepositoTransferencia" class="btn btn-default padding_small">
+                                <label for="ratiodepositoTransferencia" class="btn btn-default padding_small active">
                                     <input type="radio" class="metodo_pago" name="metodoPago" id="ratiodepositoTransferencia" value="2" checked>
                                     Depósito/Transferencia
                                 </label>
@@ -237,10 +242,10 @@
                         <div class="col-sm-offset-2">
                             <button class="btn btn-success">Comprar</button>                                           
                         </div>
-                    </div>
-
+                    </div> 
+       
                 </div>
-                  <div class="tab-pane" id="depositoTransferencia">  <p>Siga las instrucciones que se enviaran a su cuenta de correo</p></div>
+                  <div class="tab-pane active" id="depositoTransferencia">  <p>Siga las instrucciones que se enviaran a su cuenta de correo</p></div>
                   <div class="tab-pane" id="tarjetadeRegalo">
                     <div class="form-horizontal">
                         <div class="form-group">
@@ -263,7 +268,7 @@
 
     <!-- METODO DE PAGO OF -->
 
-    <section class="row">
+    <section class="row-fluid">
     	
     	<?php if(Yii::app()->user->hasFlash('success')){?>
 		    <div class="alert in alert-block fade alert-success text_align_center">
@@ -357,23 +362,11 @@
 			
             
         </div>
-        <div class="col-sm-4 col-sm-offset-1 caja">
+        <div class="col-sm-4 col-sm-offset-1">
             <h3> Resumen</h3>
             
-                <?php
-                $balance = Balance::model()->getTotal();
-
-                if($balance > 0){ ?>  
-                <label class="radio" id="BalanceDisponible">
-                    <!-- <input type="radio" name="opcionBalance" id="radio-balance" value="1" onclick="usarBalance(<?php echo $balance; ?>)"> -->
-                    <input type="checkbox" name="opcionBalance" id="check-balance" value="Balance" onclick="usarBalance(<?php echo $balance; ?>)">
-                    Usar Balance Disponible
-                    <strong>
-                        <?php echo 'Bs. '.Yii::app()->numberFormatter->formatCurrency($balance, ''); ?>
-                    </strong>      
-                </label>
-                <?php } ?>
-            <hr>
+               
+            
             
             <div class="padding_xsmall">
                 <span>Subtotal: <strong><?php echo $subtotal; ?> Bs.</strong></span>
@@ -389,6 +382,20 @@
             <div id="total_compra">
                 <h4>Total: <strong><span class="total"><?php echo $subtotal; ?></span> Bs.</strong> </h4>
             </div>
+            <hr>
+             <?php
+                $balance = Balance::model()->getTotal();
+
+                if($balance > 0){ ?>  
+                <label class="radio" id="BalanceDisponible">
+                    <!-- <input type="radio" name="opcionBalance" id="radio-balance" value="1" onclick="usarBalance(<?php echo $balance; ?>)"> -->
+                    <input type="checkbox" name="opcionBalance" id="check-balance" value="Balance" onclick="usarBalance(<?php echo $balance; ?>)">
+                    Usar Balance Disponible
+                    <strong>
+                        <?php echo 'Bs. '.Yii::app()->numberFormatter->formatCurrency($balance, ''); ?>
+                    </strong>      
+                </label>
+                <?php } ?>
             <?php
             $this->widget('bootstrap.widgets.TbButton', array(
 				'buttonType'=>'link',
@@ -487,6 +494,7 @@
 
     $('.address_radio').change(function(){
         if($(this).val() != ''){
+            $('#addressHid').val($(this).val());
             var path = location.pathname.split('/');
             $.ajax({
                     url: "<?php echo Yii::app()->createUrl('bolsa/calcularEnvio'); ?>",
@@ -510,12 +518,15 @@
 	  	var pass_address = false;
 		var pass_payment_method = false;
 		var address_id, payment_method_id;
-		$(".address_radio").each(function( index ) {
+		address_id=$('#addressHid').val();
+		if(address_id!='0')
+		  pass_address=true;
+		/*$(".address_radio").each(function( index ) {
 			if($(".address_radio").prop("checked", true)){
 				pass_address = true;
 				address_id = $(this).val();
 			}
-		});
+		});*/
 		$(".metodo_pago").each(function( index ) {
 			if($(".metodo_pago").prop("checked")){
 				pass_payment_method = true;

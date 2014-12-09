@@ -15,7 +15,7 @@ $subtotal = 0;
 			    </div>
 			<?php } ?>
             <div class="col-md-8 col-md-push-2 " >
-                <div class="page-header"><h1>Bolsa</h1></div>
+                <div><h1>Bolsa</h1></div>
                 <section class="col-sm-8 main-content">
                 <?php
                 	if(isset($model))
