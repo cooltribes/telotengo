@@ -57,7 +57,7 @@ $('.carousel').carousel('cycle');
             </div> 
             
             
-            <section class="row margin_top">
+            <section class="row-fluid margin_top">
             <h2>Ofertas Especiales</h2>
             <hr/>
             	<?php            	
@@ -121,10 +121,10 @@ $('.carousel').carousel('cycle');
   
                                                                              
             </section>
-            <section class="row margin_top">
+            <section class="row-fluid margin_top">
                 <h2>Ubícanos</h2>
             <hr/>
-            <div class="row">
+            <div class="row-fluid">
                 <div class="col-md-12" style="text-align: center">
                     <a href="<?php echo Yii::app()->baseUrl;?>/site/tiendas">
                         <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/img_sucursales.png" style="margin: 0 auto 0 auto" />
@@ -133,7 +133,7 @@ $('.carousel').carousel('cycle');
             </div>
             </section>
             
-            <section class="row margin_top">
+            <section class="row-fluid margin_top">
              
                     <div class="col-md-4">
                         <div class="content">
@@ -157,7 +157,7 @@ $('.carousel').carousel('cycle');
                
             </section>
             
-            <section class="row margin_top">
+            <section class="row-fluid margin_top">
                 <h2>Marcas Destacadas</h2>
             <hr/>
             

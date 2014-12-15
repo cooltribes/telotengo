@@ -4,6 +4,9 @@
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
 <link rel="icon" href="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/favicon75.png" type="image/x-icon">
 <link rel="shortcut icon" href="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/favicon75.png" type="image/x-icon">
+<?php  Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/styles.css',null); ?>
+        <?php  Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/styles.css',null); ?>
+
 <?php
 Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_menu/css/helper.css');
 Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_menu/css/dropdown/dropdown.vertical.css');
@@ -45,8 +48,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
 		<?php //Yii::app()->less->files = array('less/styles.less'=>'css/syles.css');
 				//Yii::app()->less->register(); ?>
 		<?php Yii::app()->bootstrap->register(); ?>
-		<?php  Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/styles.css',null); ?>
-		<?php  Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/styles.css',null); ?>
+		
 	</head>
 
 	<body>
@@ -56,7 +58,8 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
    
     <nav class="navegacion-superior navbar-default navbar-fixed-top" style="position:inherit; background-color: #127ab5; padding: 5px 0 0 0; " >
         <div class="container"> 
-            <div class="navbar-left">                
+            <div class="navbar-left">  
+                <div class="links_menu">            
                         <a href="http://facebook.com/sigmatiendas">
                             <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/ICON-facebook.png" alt="Facebook" width="25" height="25">
                         </a>
@@ -64,16 +67,19 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                         <a href="https://twitter.com/Sigmatiendas">
                             <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/twitter.png" alt="Twitter" width="25" height="25">
                         </a>
-                        <a href="http://youtube.com/Sigmaoficial">
-                            <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/ICON-youtube.png" alt="Youtube" width="25" height="25">
-                        </a>
                         <a href="http://instagram.com/sigmatiendas">
                             <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/instagram.png" alt="Instagram" width="25" height="25">
                         </a>
+                        <a href="http://youtube.com/Sigmaoficial">
+                            <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/ICON-youtube.png" alt="Youtube" width="25" height="25">
+                        </a>
+                          
+                        
+                        
                         <a class="linkSuperior" href="http://twitter.com/sigmatiendas">
                            Síguenos en @Sigmatiendas
                         </a> 
-                        
+                </div>          
             </div>
             <div class="navbar-right">
                 <ul class="links_menu">
@@ -92,12 +98,21 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
             <div class="container">
                 <div class="navbar">
                     <div class="row-fluid">
-                        <div class="col-md-3">  
-                           <a href="<?php echo Yii::app()->baseUrl; ?>/" title="Inicio">
-                                <img src="http://sigmatiendas.com/skin/frontend/fortis/default/images/sigma-systems-logo.png" width="190px"/>
-                            </a> 
+                        <div class="col-md-4 no_padding">
+                            <div class="row-fluid">
+                                <div class="col-md-6 no_padding">   
+                                   <a href="<?php echo Yii::app()->baseUrl; ?>/" title="Inicio">
+                                        <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/logo.png" width="100%"/>
+                                   </a>
+                                </div>
+                                <div class="col-md-6 no_padding">   
+                                   <a href="<?php echo Yii::app()->baseUrl; ?>/" title="Inicio">
+                                        <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/slogan.png" width="100%"/>
+                                   </a>
+                                </div>
+                            </div> 
                         </div>
-                        <div class="col-md-9">  
+                        <div class="col-md-8">  
                             <div class="row" style="text-align:right">
                                 <span class="white">Vive la <span class="red">Experiencia</span> tecnológica</span>
                             </div>
@@ -234,10 +249,11 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                 </div>
                 <div class="width:100%">
                     <ul class="dropdown categoriesMenu" style="display: table; width:100%;">
-                
-                        <li class="dir">
-                            <span class="glyphicon glyphicon-home glyphiconLarge"></span>
-                        </li>
+                      
+                            <li class="dir" id="homeButton" >
+                                  <a href="<?php echo  Yii::app()->baseUrl; ?>"><span class="glyphicon glyphicon-home glyphiconLarge"></span></a>
+                            </li>
+                        
                  
                         <?php
                         $categorias = Categoria::model()->findAllByAttributes(array('id_padre'=>0));
@@ -350,6 +366,11 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
 	</body>
 </html>
 <script>
+    $('#homeButton').hover(function(e){
+            $('#homeButton>a>span').css('color','#198ac9');
+        },function(e){
+            $('#homeButton>a>span').css('color','#FFF');
+        });
     $('#busqueda').keyup(function(e){
             if(e.keyCode == 13)
             {
