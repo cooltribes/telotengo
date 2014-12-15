@@ -208,9 +208,28 @@ class OrdenController extends Controller
 	{
 		$model = new Orden();
 		$model->unsetAttributes();  // clear any default values
-		
+		$bandera=false;
 		$dataProvider = $model->search();
 		
+		/* Para mantener la paginacion en las busquedas */
+		if(isset($_GET['ajax']) && isset($_SESSION['searchPedido']) && !isset($_POST['query'])){
+			$_POST['query'] = $_SESSION['searchPedido'];
+			$bandera=true;
+		}
+
+		/* Para buscar desde el campo de texto */
+		if (isset($_POST['query'])){
+			$bandera=true;
+			unset($_SESSION['searchPedido']);
+			$_SESSION['searchPedido'] = $_POST['query'];
+            $model->id = $_POST['query'];
+            $dataProvider = $model->search();
+        }	
+
+        if($bandera==FALSE){
+			unset($_SESSION['searchPedido']);
+        }
+
 		$this->render('admin',array(
 			'model'=>$model,
 			'dataProvider'=>$dataProvider,

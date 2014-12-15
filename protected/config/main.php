@@ -93,14 +93,16 @@ return array(
       		'files'=>array(
         	'less/styles.less'=>'css/styles.css',
       ),*/
-     
-       'less'=>array(
-	      'class'=>'ext.less.components.Less',
-	      'mode'=>'client',
-	      'files'=>array(
-	        'less/styles.less'=>'css/styles.less',
-	      ),
-    ),
+		'yexcel' => array(
+		    'class' => 'ext.yexcel.Yexcel' 
+		),
+       	'less'=>array(
+	    	'class'=>'ext.less.components.Less',
+	      	'mode'=>'client',
+	      	'files'=>array(
+	        	'less/styles.less'=>'css/styles.less',
+	      	),
+    	),
 		'user'=>array(
 			// enable cookie-based authentication
 

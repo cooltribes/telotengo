@@ -12,12 +12,11 @@ Yii::app()->clientScript->registerMetaTag(Yii::app()->getBaseUrl(true).str_repla
 
 ?>
 <!-- CONTENIDO ON -->
-<div class="container"">
+<div class="container">
 
 <?php
 	echo CHtml::hiddenField('producto_id', $model->id, array('id'=>'producto_id'));
 ?>
-
     <div class="row-fluid main-content">
 
         <section role="main">
@@ -67,6 +66,7 @@ Yii::app()->clientScript->registerMetaTag(Yii::app()->getBaseUrl(true).str_repla
                                 <span>Por: <a href="<?php echo Yii::app()->baseUrl.'/marcas/'.$model->marca->nombre; ?>"><?php echo $model->marca->nombre; ?></a></span>
                                 <p><span>Agregar a Favoritos: 
                                     <?php
+
                                         if(!Yii::app()->user->isGuest){
                                             $like = UserFavoritos::model()->findByAttributes(array('user_id'=>Yii::app()->user->id,'producto_id'=>$model->id));
                                         }
@@ -162,8 +162,7 @@ Yii::app()->clientScript->registerMetaTag(Yii::app()->getBaseUrl(true).str_repla
                                         }
                                         ?>
                                     </span></small>
-                                    |
-                                    <small>Últimos 6 meses: 296 órdenes (296 unidades)</small>
+                                    <!-- <small>Últimos 6 meses: 296 órdenes (296 unidades)</small> -->
                                 </div>               
                     </div>  
                     <?php
@@ -206,14 +205,13 @@ Yii::app()->clientScript->registerMetaTag(Yii::app()->getBaseUrl(true).str_repla
                             	<dt class="padding_xsmall">Disponibilidad </dt>
                                 <dd class="padding_xsmall text-danger"> Sólo quedan <span id='inventario_cantidad'><?php echo $inventario_menor_precio->cantidad; ?><span></dd>
                             	
-                                <dt class="padding_xsmall">Precio en tiendas</dt>
+                               <!-- <dt class="padding_xsmall">Precio en tiendas</dt>
 
-                                <dd class="padding_xsmall precio_tienda">Bs. <?php echo $inventario_menor_precio->precio_tienda; ?></dd>
+                                <dd class="padding_xsmall precio_tienda">Bs. <?php echo $inventario_menor_precio->precio_tienda; ?></dd> -->
                                 <dt class="padding_xsmall">Precio</dt>
                                 <dd class="padding_xsmall precio">Bs. <?php echo $inventario_menor_precio->precio; ?></dd>
 
-
-                                <dt class="padding_xsmall">Ahorras</dt>
+                                <!-- <dt class="padding_xsmall">Ahorras</dt>
                                 <dd class="padding_xsmall descuento">Bs. 
                                 <?php	
                                 		
@@ -227,10 +225,11 @@ Yii::app()->clientScript->registerMetaTag(Yii::app()->getBaseUrl(true).str_repla
 								echo $valor." (".$porcentaje."%)";
 									
                                 ?>
-                                </dd>
+                                </dd> -->
 
                                 <?php
                                 // Características
+                                $caract = array();  
 
                                 // $inventarios_all tiene todos los inventarios. Se usa para buscar las características disponibles para este producto
                                 $inventarios_all = Inventario::model()->findAllByAttributes(array('producto_id'=>$model->id));
@@ -238,66 +237,73 @@ Yii::app()->clientScript->registerMetaTag(Yii::app()->getBaseUrl(true).str_repla
                                 echo CHtml::hiddenField('producto_id', $model->id, array('id'=>'producto_id'));
                             
                                 // Recorrer cada una de las categorías asociadas al producto para buscar sus características
-                                foreach ($model->categorias as $categoria) {
+                                foreach ($model->categorias as $categoria){
                                     $categoria_caracteristicas = CategoriaHasCaracteristicaSql::model()->findAllByAttributes(array('categoria_id'=>$categoria->id));
+
                                     // Para cada categoría busco las características
                                     foreach ($categoria_caracteristicas as $c_caracteristica) {
-                                        $caracteristica_producto = CaracteristicasProducto::model()->findByAttributes(array('producto_id'=>$model->id, 'caracteristica_id'=>$c_caracteristica->caracteristica_id));;
-                                        if($caracteristica_producto){
-                                            ?>
-                                            <dt class="padding_xsmall"><?php echo $c_caracteristica->caracteristica->nombre; ?></dt>
-                                            <dd class="padding_xsmall">
-                                                <div class="btn-group" data-toggle="buttons">
-                                                    <?php
-                                                    // Para cada característica asociada a una categoría, busco los diferentes valores cargados en MongoDB
-                                                    $criteria = new EMongoCriteria(array(
-                                                        'conditions'=>array(
-                                                            'caracteristica_id'=>array('==' => $c_caracteristica->caracteristica->id), 
-                                                            'producto_id'=>array('==' => $model->id), 
-                                                        ),
-                                                        'sort'=>array('valor' => EMongoCriteria::SORT_ASC),
-                                                    ));
-                                                    //$criteria->condition = "caracteristica_id = ".$c_caracteristica->caracteristica->id.' AND producto_id = '.$model->id;
-                                                    $caracteristicas_nosql = Caracteristica::model()->findAll($criteria);
-                                                    
-                                                    //$caracteristicas_nosql = Caracteristica::model()->findAllByAttributes(array('caracteristica_id'=>$c_caracteristica->caracteristica->id, 'producto_id'=>$model->id), array('order'=>'valor'));
-                                                    // En MongoDB hay muchos valores repetidos para cada característica, es necesario guardar valores únicos en $printed
-                                                    $printed = array();
-                                                    foreach ($caracteristicas_nosql as $c_nosql) {
-                                                        if(!in_array($c_nosql->valor, $printed)){
-                                                            $printed[] = $c_nosql->valor;
-                                                            //echo $c_nosql->valor.'<br/>';
-                                                            
-                                                        }
-                                                    }
+                                        if(!in_array($c_caracteristica->caracteristica->nombre, $caract)){ 
+                                            array_push($caract,$c_caracteristica->caracteristica->nombre);
 
-                                                    // Muestro los valores guardados en $printed como características disponibles para este producto
-                                                    foreach ($printed as $valor) {
-                                                        $active = '';
-                                                        foreach ($caracteristicas_menor_precio as $caracteristica_mp) {
-                                                            /*print_r($caracteristica_mp->_id);
-                                                            echo '<br/></br>';
-                                                            print_r($c_nosql->_id);*/
-                                                            //echo $caracteristica_mp->caracteristica_id.' == '.$c_nosql->caracteristica_id.'</br>';
-                                                            //echo $caracteristica_mp->valor.' == '.$c_nosql->valor.'<br/></br>';
-                                                            if($caracteristica_mp->caracteristica_id == $c_caracteristica->caracteristica_id && $caracteristica_mp->valor == $valor){
-                                                                $active = 'active';
+                                            $caracteristica_producto = CaracteristicasProducto::model()->findByAttributes(array('producto_id'=>$model->id, 'caracteristica_id'=>$c_caracteristica->caracteristica_id));;
+                                            
+                                            if($caracteristica_producto){
+                                                ?>
+                                                <dt class="padding_xsmall"><?php echo $c_caracteristica->caracteristica->nombre; ?></dt>
+                                                <dd class="padding_xsmall">
+                                                    <div class="btn-group" data-toggle="buttons">
+                                                        <?php
+                                                        // Para cada característica asociada a una categoría, busco los diferentes valores cargados en MongoDB
+                                                        $criteria = new EMongoCriteria(array(
+                                                            'conditions'=>array(
+                                                                'caracteristica_id'=>array('==' => $c_caracteristica->caracteristica->id), 
+                                                                'producto_id'=>array('==' => $model->id), 
+                                                            ),
+                                                            'sort'=>array('valor' => EMongoCriteria::SORT_ASC),
+                                                        ));
+                                                        //$criteria->condition = "caracteristica_id = ".$c_caracteristica->caracteristica->id.' AND producto_id = '.$model->id;
+                                                        $caracteristicas_nosql = Caracteristica::model()->findAll($criteria);
+                                                        
+                                                        //$caracteristicas_nosql = Caracteristica::model()->findAllByAttributes(array('caracteristica_id'=>$c_caracteristica->caracteristica->id, 'producto_id'=>$model->id), array('order'=>'valor'));
+                                                        // En MongoDB hay muchos valores repetidos para cada característica, es necesario guardar valores únicos en $printed
+                                                        $printed = array();
+                                                        foreach ($caracteristicas_nosql as $c_nosql) {
+                                                            if(!in_array($c_nosql->valor, $printed)){
+                                                                $printed[] = $c_nosql->valor;
+                                                                //echo $c_nosql->valor.'<br/>';
+                                                                
                                                             }
                                                         }
+
+                                                        // Muestro los valores guardados en $printed como características disponibles para este producto
+                                                        foreach ($printed as $valor) {
+                                                            $active = '';
+                                                            foreach ($caracteristicas_menor_precio as $caracteristica_mp) {
+                                                                /*print_r($caracteristica_mp->_id);
+                                                                echo '<br/></br>';
+                                                                print_r($c_nosql->_id);*/
+                                                                //echo $caracteristica_mp->caracteristica_id.' == '.$c_nosql->caracteristica_id.'</br>';
+                                                                //echo $caracteristica_mp->valor.' == '.$c_nosql->valor.'<br/></br>';
+                                                                if($caracteristica_mp->caracteristica_id == $c_caracteristica->caracteristica_id && $caracteristica_mp->valor == $valor){
+                                                                    $active = 'active';
+                                                                }
+                                                            }
+                                                            ?>
+                                                            <label class="btn btn-default radio_caracteristicas <?php echo $active; ?>" >
+                                                                <input type="radio" name="<?php //echo $caracteristica_sql->id; ?>" id="<?php //echo $c_nosql->_id; ?>" value="<?php echo $valor; ?>" /> <?php echo $valor; ?>
+                                                            </label>
+                                                            <?php
+                                                        }
                                                         ?>
-                                                        <label class="btn btn-default radio_caracteristicas <?php echo $active; ?>" >
-                                                            <input type="radio" name="<?php //echo $caracteristica_sql->id; ?>" id="<?php //echo $c_nosql->_id; ?>" value="<?php echo $valor; ?>" /> <?php echo $valor; ?>
-                                                        </label>
-                                                        <?php
-                                                    }
-                                                    ?>
-                                                    
-                                                </div> 
-                                            </dd>
-                                            <?php
+                                                        
+                                                    </div>
+                                                </dd>
+                                                <?php
+                                            }
+                                            //print_r($c_caracteristica);
+                                            //echo '<br/><br/>';
+
                                         }
-                                        //print_r($c_caracteristica);
-                                        //echo '<br/><br/>';
                                     }
                                 }
                          
@@ -389,11 +395,8 @@ Yii::app()->clientScript->registerMetaTag(Yii::app()->getBaseUrl(true).str_repla
                                 
 								                                
                                 ?> 
-
-                                <dt class="padding_xsmall">Tipo de Entrega</dt>
-                                <dd class="padding_xsmall"> Desde <span class='inventario_provincia'><?php echo $provincia->nombre; ?></span>, <span class='inventario_ciudad'><?php echo $ciudad->nombre; ?></span></dd>
-                                <dt class="padding_xsmall">Fecha estima de entrega</dt>
-                                <dd class="padding_xsmall"> 3-8 días </dd>                        
+                                <dt class="padding_xsmall">Fecha estimada de entrega</dt>
+                                <dd class="padding_xsmall">3-8 días</dd>                        
                             </dl>
                         </div>
                     <!-- REDES SOCIALES -->
@@ -404,7 +407,6 @@ Yii::app()->clientScript->registerMetaTag(Yii::app()->getBaseUrl(true).str_repla
                     <div class="fb-share-button" data-href=<?php echo $link; ?> data-layout="button"></div>
                     <a  href="https://twitter.com/share" class="twitter-share-button" data-count="none" data-text="<?php echo $tweetText; ?>"
                         data-hashtags="LaMejorTecnologia" data-via="Sigmatiendas">Tweet</a>
-                    
                     
                     <p><strong>Descripción del producto</strong></p>
                     <?php
@@ -446,12 +448,11 @@ Yii::app()->clientScript->registerMetaTag(Yii::app()->getBaseUrl(true).str_repla
                 </div>
                 <hr>
                 
-                
-                <p> <span class="text-info">98%</span> Calificaciones positivas</p>
-                <small>155 Calificaciones</small>
+                <p class="text-muted">Vendido y enviado por:</p>
+                <p><strong>Sigma Sys C.A.</strong></p>
+                <p><span>Desde San Cristóbal, Táchira</span></p>
 
             </div>
-        
         </section>
 
     </div>

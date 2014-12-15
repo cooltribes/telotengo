@@ -1,12 +1,10 @@
-<div class="container-fluid" style="padding: 0 15px;">
-
-<?php
-$this->breadcrumbs=array(
-	'Pedidos'=>array('admin'),
-	'Detalle',
-);
-
-?>
+<div class="container">
+    <?php
+    $this->breadcrumbs=array(
+    	'Pedidos'=>array('admin'),
+    	'Detalle',
+    );
+    ?>
 	
 	<?php if(Yii::app()->user->hasFlash('success')){?>
 		<div class="alert in alert-block fade alert-success text_align_center">
@@ -19,116 +17,90 @@ $this->breadcrumbs=array(
 		</div>
 	<?php } ?>	
 	
-    <div class="container">
-        <div class="row">
-            <!-- COLUMNA PRINCIPAL DERECHA ON // OJO: esta de primera para mejorar el SEO sin embargo por CSS se ubica visualmente a la derecha -->
-            <div class="col-md-10 col-md-offset-1 main-content" role="main">
-                    <div class="page-header">
-                        <h1>
-                           Pedido #<?php echo $model->id; ?>
-                        </h1>
-                    </div>
-
-                    <?php 
-                    if($model->estado == 3) // dinero confirmado
-                    {
-                        ?>
-                        <section>
-                            <h3>Acciones:</h3>
-                            
-                            <div class="alert alert-block form-inline ">
-                                <h4 class="alert-heading "> Enviar pedido:</h4>
-                                <p>
-                                <input name="" id="tracking" type="text" placeholder="Numero de Tracking">
-                                <a onclick="enviarPedido(<?php echo $model->id; ?>)" class="btn" title="Enviar pedido">Enviar</a> </p>
-                                Tipo de guía: 
-                                <?php
-                                
-                                switch ($model->tipo_guia) {
-                                    case 0:
-                                        echo 'Zoom hasta 0,5 Kg.';
-                                        break;
-                                    case 1:
-                                        echo 'Zoom entre 0,5 y 5 Kg.';
-                                        break;
-                                    case 2:
-                                        echo 'DHL mayor a 5 Kg.';
-                                        break;
-                                    default:
-                                        break;
-                                }
-                                ?>
-                            </div>
-                                
-                        </section>
-                        <?php
-                        }
-                    ?>
-
+    <div class="row-fluid">
+    <!-- COLUMNA PRINCIPAL DERECHA ON // OJO: esta de primera para mejorar el SEO sin embargo por CSS se ubica visualmente a la derecha -->
+        <div>
+        <div>
+            <h1>
+               Pedido #<?php echo $model->id; ?>
+            </h1>
+        </div>
+        <?php 
+        if($model->estado == 3) // dinero confirmado
+        {
+        ?>
+        <section>
+            <h3>Acciones:</h3>                        
+            <div class="alert alert-block form-inline ">
+                <h4 class="alert-heading "> Enviar pedido:</h4>
+                    <p>
+                    <input name="" id="tracking" type="text" placeholder="Numero de Tracking">
+                    <a onclick="enviarPedido(<?php echo $model->id; ?>)" class="btn" title="Enviar pedido">Enviar</a> </p>
+                    Tipo de guía: 
                     <?php
-                    if($model->estado==4||$model->estado==8||$model->estado==9||$model->estado==10){
-                        ?>
+                                
+                    switch ($model->tipo_guia) {
+                        case 0:
+                            echo 'Zoom hasta 0,5 Kg.';
+                            break;
+                        case 1:
+                            echo 'Zoom entre 0,5 y 5 Kg.';
+                            break;
+                        case 2:
+                            echo 'DHL mayor a 5 Kg.';
+                            break;
+                        default:
+                            break;
+                    }
+                    ?>
+            </div>
+        </section>
+        <?php
+        }
+        ?>
+        <?php
+            if($model->estado==4||$model->estado==8||$model->estado==9||$model->estado==10){
+        ?>
+            <div class="well well-small margin_top_small well_personaling_small">
+                <h3 class="braker_bottom "> Transporte </h3>
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-bordered table-hover table-striped">
+                    <tr>
+                        <th scope="col">Fecha</th>
+                        <!--  <th scope="col">Tipo</th>-->
+                        <th scope="col">Transportista</th>
+                        <th scope="col">Costo de envio</th>
+                        <th scope="col">Numero de seguimiento</th>
+                        <th scope="col"></th>
+                    </tr>
+                    <tr>
+                        <td><?php
+                            echo date("d/m/Y",strtotime(Estado::model()->getDate($model->id, $model->estado)));?>
+                        </td>
+                        <!-- <td>Delivery</td>-->
+                        <td> 
+                            <?php
 
-                        <div class="well well-small margin_top_small well_personaling_small">
-                            <h3 class="braker_bottom "> Transporte </h3>
-                            <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-bordered table-hover table-striped">
-                                <tr>
-                                    <th scope="col">Fecha</th>
-                                    <!--  <th scope="col">Tipo</th>-->
-                                    <th scope="col">Transportista</th>
-                                    <th scope="col">Costo de envio</th>
-                                    <th scope="col">Numero de seguimiento</th>
-                                    <th scope="col"></th>
-                                </tr>
-                                <tr>
-                                    <td><?php 
-                                        echo date("d/m/Y",strtotime(Estado::model()->getDate($model->id, $model->estado)));?>
-                                    </td>
-                                    <!-- <td>Delivery</td>-->
-                                    <td> 
-                                        <?php
-
-                                        switch ($model->tipo_guia) {
-                                            case 0:
-                                                echo 'Zoom';
-                                                break;
-                                            case 1:
-                                                echo 'Zoom';
-                                                break;
-                                            case 2:
-                                                echo 'DHL';
-                                                break;
-                                            default:
-                                                break;
-                                        }
-                                        ?>
-                                    </td>
-                                    <td><?php echo number_format($model->envio, 2, ',', '.'); ?> Bs.</td>
-                                    <td><?php echo $model->tracking; ?></td>
-                                    <td><a href="#" title="Editar"><i class="icon-edit"></i></a></td>
-                                </tr>
-                            </table>
-
-                            <?php if(!is_null($tracking))
-                            { 
-                                ?>
-                                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-bordered table-hover table-striped">
-                                    <tr>
-                                        <th scope="col">Fecha</th>
-                                        <!--  <th scope="col">Tipo</th>-->
-                                        <th scope="col">Estatus</th>
-                                    </tr>
-                                    <?php 
-                                    foreach ($tracking as $track){
-                                        echo "<tr>
-                                            <td>".$track->fecha."</td><td>".$track->descripcion_estatus."</td>        
-                                        </tr>";
-                                    }
-                                    ?>
-                                </table>
-                                <?php 
+                            switch ($model->tipo_guia) {
+                                case 0:
+                                    echo 'Zoom';
+                                    break;
+                                case 1:
+                                    echo 'Zoom';
+                                    break;
+                                case 2:
+                                    echo 'DHL';
+                                    break;
+                                default:
+                                    break;
                             }
                             ?>
+                        </td>
+                        <td><?php echo number_format($model->envio, 2, ',', '.'); ?> Bs.</td>
+                        <td><?php echo $model->tracking; ?></td>
+                        <td><a href="#" title="Editar"><i class="icon-edit"></i></a></td>
+                    </tr>
+                            </table>
+
                         </div>      
                         <?php
                         // envío
@@ -391,8 +363,8 @@ $this->breadcrumbs=array(
                                 </h3>
                             </div>
                             <div>  
-                                <p class="text-muted">Fecha estimada de entrega 01/02/2014 - 03/02/2014</p>
-
+                                <p class="text-muted"><?php echo 'Fecha estimada de entrega: ' ?><?php echo date('d/m/Y', strtotime('+1 day'));?>  - <?php echo date('d/m/Y', strtotime('+1 week'));  ?>
+                                </p>
                             </div>                  
                         </div>
                     </section>

@@ -1,6 +1,6 @@
 <div class="container">
-    <div class="row margin_top">
-        <div class="col-md-12"> 
+    <div class="row-fluid margin_top_small">
+        <div class="col-md-10 col-md-offset-1"> 
     
      	<!-- FLASH ON -->
         <?php if(Yii::app()->user->hasFlash('success')){?>
@@ -14,8 +14,10 @@
             </div>
         <?php } ?>
 		<!-- FLASH OFF --> 
-    	  
-        <div class="page-header">
+    	<?php
+        ///echo ini_get('memory_limit');
+        ?>
+        <div>
             <h1>Importar productos</h1>
         </div>
         <div class="bg_color3 margin_bottom_small padding_small box_1">

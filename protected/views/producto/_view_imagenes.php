@@ -1,49 +1,38 @@
 <script type="text/javascript">
     $(document).ready(function(){
-var uno=0;
+	var uno=0;
 
-        $("#ul_imagenes span").live('click',function(){
-
-            var span = $(this);
+	$("#ul_imagenes span").live('click',function(){
+	    var span = $(this);
 			
-            $.ajax({
-                type:"POST",
-                url: "<?php echo CController::createUrl('producto/eliminar'); ?>",
-                cache:false,
-               	data: "id="+$(this).parent().parent().attr('id').replace('img_',''),
-                success: function(data){
+        $.ajax({
+            type:"POST",
+            url: "<?php echo CController::createUrl('producto/eliminar'); ?>",
+            cache:false,
+           	data: "id="+$(this).parent().parent().attr('id').replace('img_',''),
+            success: function(data){
 
-                    if(data=='OK'){
-                        
-                        span.parent().parent().fadeOut('medium', function() {
-						    // Animation complete.
-						    span.parent().parent().remove(); // se quita el elemento
+                if(data=='OK'){                        
+                    span.parent().parent().fadeOut('medium', function() {
+				    span.parent().parent().remove(); // se quita el elemento
 						    
-						    var order = $("#ul_imagenes").sortable("serialize") + '&action=actualizar_orden';
+				    var order = $("#ul_imagenes").sortable("serialize") + '&action=actualizar_orden';
 								
-					    	$.ajax({
-		                        type:"POST",
-		                        url: "<?php echo CController::createUrl('producto/orden'); ?>",
-		                        cache:false,
-		                        data: order,
-		                        success: function(data){
-		
-		                            $("#respuesta").empty();
-		                            $("#respuesta").html(data);
-		                        }
-		                    });
-					    
-					  });
-                    
-                    }else{
+				    	$.ajax({
+	                        type:"POST",
+	                        url: "<?php echo CController::createUrl('producto/orden'); ?>",
+	                        cache:false,
+	                        data: order,
+	                        success: function(data){
 
+	                            $("#respuesta").empty();
+	                            $("#respuesta").html(data); 
+	                        }
+	                    });
+			    	});
                     }
-                    
-                
-                    
                }
             });
-			
         })
 
         $(function() {
@@ -53,8 +42,7 @@ var uno=0;
                 update: function() {
  
                     //alert("movi");
-
-                    var order = $(this).sortable("serialize") + '&action=actualizar_orden';
+					var order = $(this).sortable("serialize") + '&action=actualizar_orden';
                     //alert(order);
 
                     $.ajax({
@@ -71,19 +59,14 @@ var uno=0;
                 }
             });
         });
-
     });
 </script>
 
 <!-- CONTENIDO ON -->
-     <div class="container-fluid" style="padding: 0 15px;">
-			
-      <div class="row">
-
+<div class="container">
+	<div class="row-fluid">
         <!-- COLUMNA PRINCIPAL DERECHA ON // OJO: esta de primera para mejorar el SEO sin embargo por CSS se ubica visualmente a la derecha -->
-
-        <div class="col-md-10 col-md-push-2 main-content" role="main">
-        	
+        <div>
         			
 		<?php
 		$this->breadcrumbs=array(
@@ -92,34 +75,28 @@ var uno=0;
 		);
 		
 		?>
-        	
-          <h1>Imágenes<small> - Registar nuevo producto</small></h1>
-
-		 <?php echo $this->renderPartial('_menu', array('model'=>$model,'activo'=>'imagenes')); ?>
-		
-		
-		  <!-- SUBMENU ON --> 
-		 
-		  <?php 
-		  
-		   Yii::app()->clientScript->registerScript('form_sending', "
-		            $('#producto-form').submit(function(){
-		                $('#wrapper_content').addClass('loading');
-		            });
-		            ");
-		  
-		  $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
-			'action' => CController::createUrl('producto/multi', array('id' => $model->id)),
-			'id'=>'producto-form',
-			'enableAjaxValidation'=>false,
-			'htmlOptions' => array('enctype' => 'multipart/form-data'),
-		)); ?>
+        <h1>Imágenes<small> - Registar nuevo producto</small></h1>
+			<?php echo $this->renderPartial('_menu', array('model'=>$model,'activo'=>'imagenes')); ?>
+			<!-- SUBMENU ON --> 
+			  <?php 
+			   Yii::app()->clientScript->registerScript('form_sending', "
+			            $('#producto-form').submit(function(){
+			                $('#wrapper_content').addClass('loading');
+			            });
+			            ");
+			  
+			  $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
+				'action' => CController::createUrl('producto/multi', array('id' => $model->id)),
+				'id'=>'producto-form',
+				'enableAjaxValidation'=>false,
+				'htmlOptions' => array('enctype' => 'multipart/form-data'),
+			)); ?>
 			
-          <div class="well">
-            <div class="row padding_left_small">
-                <div class="col-md-6 1">
-                        <div class="form-group">
-	                            <label for="exampleInputFile">Cargue o agregue las imagenes aqui</label>
+		<div class="well">
+    	    <div class="row padding_left_small">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="exampleInputFile">Cargue o agregue las imagenes aqui</label>
 	                            	
 						              <?php
 						            	$this->widget('CMultiFileUpload', array(
@@ -159,7 +136,7 @@ var uno=0;
 			</div>		
         </div>
         
-        <?php $this->endWidget(); ?>	
+        <?php $this->endWidget(); ?>	 
 
         <div class="well well-small">
           <h3>Instrucciones:</h3>

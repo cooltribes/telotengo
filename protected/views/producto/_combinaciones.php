@@ -12,8 +12,7 @@ $caracteristicas = CaracteristicasProducto::model()->findAllByAttributes(array('
 	}
 	?>
     
-    
     <td>Cantidad: <strong><?php echo $data['cantidad']; ?></strong></td>
     <td>Precio: <strong><?php echo $data['precio']; ?> Bs.</strong></td>
-    <td><button type="button" class="close" aria-hidden="true" onclick="eliminar_inventario(<?php echo $data['id']; ?>)">&times;</button></td>
+    <td><button type="button" class="close" aria-hidden="true" onclick="eliminar_inventario(<?php echo $data['id']; ?>)">&times;</button></td> 
 </tr>

@@ -64,8 +64,9 @@ class FlashsaleController extends Controller
 	{
 		$model=new Flashsale;
 		
-		if($_GET['id'])
+		if(isset($_GET['id'])){
 			$model = Flashsale::model()->findByPk($_GET['id']);
+		}
 			
 		if(isset($_GET['inventario_id'])){
 			$inventario_id = $_GET['inventario_id']; 
@@ -189,7 +190,7 @@ class FlashsaleController extends Controller
 		if(Yii::app()->session['busqueda']){
 			$producto->nombre = Yii::app()->session['busqueda'];
 		}
-		$dataProvider = $producto->search(); 
+		$dataProvider = $producto->searchTwo(); 
 			
 		$this->render('busqueda',array('dataProvider'=>$dataProvider));
 	}

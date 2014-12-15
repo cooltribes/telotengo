@@ -1,7 +1,7 @@
 <!-- CONTENIDO ON -->
-<div class="container-fluid" style="padding: 0 15px;">
-	
-	<div class="row">
+<div class="container">
+	<div class="row-fluid">
+
 <?php
 $this->breadcrumbs=array(
 	'Productos'=>array('admin'),
@@ -20,43 +20,41 @@ $this->breadcrumbs=array(
 	    </div>
 	<?php } ?>
 
-		 <!-- COLUMNA PRINCIPAL DERECHA ON // OJO: esta de primera para mejorar el SEO sin embargo por CSS se ubica visualmente a la derecha -->
+	<!-- COLUMNA PRINCIPAL DERECHA ON // OJO: esta de primera para mejorar el SEO sin embargo por CSS se ubica visualmente a la derecha -->
 
-        <div class="col-md-10  col-md-push-2 main-content" role="main">
-        	<h1>SEO<small> - Registar nuevo producto</small></h1>
-			
+	<div>
+    	<h1>SEO<small> - Nuevo producto</small></h1>
+    	<hr/>
 			<!-- Nav tabs -->
 			<?php echo $this->renderPartial('_menu', array('model'=>$model,'activo'=>'seo')); ?> 
  
-	<div class="well">
-            <div class="row">
-                <div class="col-md-6 1">
-					
-									  
-				  <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
+		<div class="well">
+            <div class="row-fluid">
+                <div class="col-md-8">
+					  
+				<?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
 					'id'=>'seo-form',
 					'enableAjaxValidation'=>false,
-					'htmlOptions' => array('class' => 'padding_left_small'),
+					'htmlOptions' => array('class' => 'form-horizontal'),
 				)); ?>
 				
-					<?php echo $form->errorSummary($model); ?>
+				<?php echo $form->errorSummary($model); ?>
 					
-		            <div class="form-group">
-		              	<?php echo $form->textFieldRow($seo, 'descripcion', array('class'=>'form-control')); ?>
-		                <div class=" muted">Descripción del producto para mostrar a los buscadores web</div>
-		            </div>
+	            <div class="form-group">
+	              	<?php echo $form->textFieldRow($seo, 'descripcion', array('class'=>'form-control')); ?>
+	                <div class=" muted">Descripción del producto para mostrar a los buscadores web</div>
+	            </div>
 		            
-            		<div class="form-group">
-                 		<?php echo $form->textFieldRow($seo, 'tags', array('class'=>'form-control')); ?>
-                		<div class=" muted">Lista de palabras clave relacionadas con el producto, separadas por coma (,)</div>
-                	</div>
-            
-		            <div class="form-group">
-						<?php echo $form->textFieldRow($seo, 'amigable', array('class'=>'form-control', 'placeholder'=>'Ejemplo: prenda-color-marca')); ?>
-		                <div class=" muted">Dirección URL del producto</div>
-		            </div>
-		            
-					
+        		<div class="form-group">
+             		<?php echo $form->textFieldRow($seo, 'tags', array('class'=>'form-control')); ?>
+            		<div class=" muted">Lista de palabras clave relacionadas con el producto, separadas por coma (,)</div>
+            	</div>
+    
+	            <div class="form-group">
+					<?php echo $form->textFieldRow($seo, 'amigable', array('class'=>'form-control', 'placeholder'=>'Ejemplo: prenda-color-marca')); ?>
+	                <div class=" muted">Dirección URL del producto</div>
+	            </div>
+	            				
 				<div class="form-actions">
 					<?php $this->widget('bootstrap.widgets.TbButton', array(
 						'buttonType'=>'submit',
@@ -66,19 +64,14 @@ $this->breadcrumbs=array(
 				</div>
 					
       			</div>
-    		</div>
-	</div> 
-   <?php $this->endWidget(); ?>
-
-   
-  </div>
-   
-</div>
+			</div>
+		</div> 
+   		<?php $this->endWidget(); ?>
+	</div>
+</div> 
 <!-- /container -->
 
-
-<script>
- 
+<script> 
  function valSeo(){
 	 var exp= /^\w{1}([a-zA-Z_|\-]*[a-zA-Z]+[a-zA-Z_|\-]*)$/;
 	 var val=$('#Seo_urlAmigable').val();
@@ -86,6 +79,5 @@ $this->breadcrumbs=array(
 	 	return true;
 	else
 		return false;	
-	}		
-		
+	}				
 </script>

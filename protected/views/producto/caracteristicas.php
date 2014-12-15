@@ -1,15 +1,15 @@
 <?php
 $this->breadcrumbs=array(
 	'Productos'=>array('Admin'),
-	'Agregar',
+	'Caracteristicas',
 );
 ?>
 
-<div class="container-fluid" style="padding: 0 15px;">
-	<div class="row">
+<div class="container">
+	<div class="row-fluid">
 		<!-- COLUMNA PRINCIPAL DERECHA ON // OJO: esta de primera para mejorar el SEO sin embargo por CSS se ubica visualmente a la derecha -->
-		<div class="col-md-10  col-md-push-2 main-content" role="main">
-			<h1>Información General <small> - Registar nuevo producto</small></h1>
+		<div>
+			<h1>Información General <small> - Nuevo producto</small></h1>
 			<!-- Nav tabs -->
 			<!-- SUBMENU ON -->
 			<?php echo $this->renderPartial('_menu', array('model'=>$producto, 'activo'=>'caracteristicas')); ?>
@@ -17,12 +17,10 @@ $this->breadcrumbs=array(
 
 			<div class="well">
 				<div class="row">
-					<div class="col-md-6 1">
+					<div class="col-md-6">
 						<div class="form-group">
 							<?php 
-							if($producto->estado == 0){
 								echo CHtml::link('+ Agregar característica', '#',array('class'=>'btn btn-default', 'id'=>'agregar_caracteristica'));
-							}
 							?>
 						</div>
 						<?php 

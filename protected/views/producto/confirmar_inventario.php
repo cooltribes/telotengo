@@ -1,31 +1,23 @@
 <?php
 $empresas_all = Empresas::model()->findAllByAttributes(array('tipo'=>2, 'estado'=>2));
 ?>
-
-<div class="container-fluid" style="padding: 0 15px;">
-
-    <div class="row">
-        <?php
-        //var_dump($almacenes);
-        ?>
-
+<div class="container">
+    <div class="row-fluid">
         <!-- COLUMNA PRINCIPAL DERECHA ON // OJO: esta de primera para mejorar el SEO sin embargo por CSS se ubica visualmente a la derecha -->
-
-
-        <div class="col-md-10  col-md-push-2 main-content" role="main">
-            <div class="page-header">
-                <h1>Vender Producto <small> - Confirmar agregar al inventario </small></h1>
+        <div>
+            <div>
+                <h1>Vender Producto <small> - Agregar al inventario </small></h1>
             </div>
-            <div class="well margin_top">
+            <div class="well margin_top_small">
                 <p>Verifique los datos, complete la información y presione Aceptar para proceder</p>
                 <?php 
                 $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
                     'id'=>'inventario-form',
                     'enableAjaxValidation'=>false,
-                    'htmlOptions'=>array('class'=>'form-horizontal margin_top'),
+                    'htmlOptions'=>array('class'=>'form-horizontal'),
                 ));
                 ?>
-                    <?php
+                    <?php /*
                     if(Yii::app()->user->isAdmin()){
                         ?>
                         <div class="form-group ">
@@ -37,31 +29,34 @@ $empresas_all = Empresas::model()->findAllByAttributes(array('tipo'=>2, 'estado'
                             </div>
                         </div>
                         <?php
-                    }
+                    } */ // name="Inventario[almacen_id]" id="Inventario_almacen_id"
                     ?>
-                    <div class="form-group ">
+                    <!-- <div class="form-group ">
                         <label for="" class="col-sm-2 control-label">Almacén</label>
                         <div class="col-sm-3">
                             <?php
                             echo $form->dropDownList($model, 'almacen_id', CHtml::listData($almacenes, 'id', 'alias'), array('class'=>'form-control', 'empty'=>'Seleccione una sucursal...'));
                             ?>
                         </div>
-                    </div>
+                    </div> -->
+
+                    <?php  echo $form->hiddenField($model,'almacen_id',array('value'=>14)); ?>
+
                     <div class="form-group">
-                        <label for=""  class="col-sm-2 control-label" for="nombre">Nombre del producto</label>
-                        <div class="col-sm-3">
+                        <label for="" class="col-sm-2 control-label" for="nombre">Nombre del producto</label>
+                        <div class="col-md-6">
                             <input id="nombre" type="text" class="form-control" disabled value="<?php echo $producto->nombre; ?>">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for=""  class="col-sm-2 control-label" for="descipcion">Descripción</label>
-                        <div class="col-sm-3">
+                        <label for="" class="col-sm-2 control-label" for="descipcion">Descripción</label>
+                        <div class="col-md-6">
                             <div id="descripcion" class="form-control-static"><?php echo $producto->descripcion; ?></div>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for=""  class="col-sm-2 control-label" for="marca">Marca</label>
-                        <div class="col-sm-3" >
+                        <label for="" class="col-sm-2 control-label" for="marca">Marca</label>
+                        <div class="col-md-4" >
                             <input id="marca" type="text" class="form-control" disabled value="<?php echo $producto->marca->nombre; ?>">
                         </div>
                     </div>
@@ -73,7 +68,7 @@ $empresas_all = Empresas::model()->findAllByAttributes(array('tipo'=>2, 'estado'
                         ?>
                         <div class="form-group has-success">
                             <label for=""  class="col-sm-2 control-label" for="marca"><?php echo $cp->caracteristica->nombre; ?></label>
-                            <div class="col-sm-3" >
+                            <div class="col-md-4" >
                                 <input id="<?php echo $cp->caracteristica->id; ?>" name="<?php echo $cp->caracteristica->id; ?>" type="text" class="form-control caracteristica_text_field" placeholder="<?php echo $cp->caracteristica->nombre; ?>">
                             </div>
                         </div>
@@ -82,7 +77,7 @@ $empresas_all = Empresas::model()->findAllByAttributes(array('tipo'=>2, 'estado'
                     ?>
                     <div class="form-group has-success">
                         <label for=""  class="col-sm-2 control-label" for="sku"> Código SKU </label>
-						<div class="col-sm-3" >
+						<div class="col-md-4" >
                         	<?php
                          		echo $form->textField($model, 'sku', array('class'=>'form-control', 'placeholder'=>'Código SKU'));
                        		?>
@@ -90,18 +85,18 @@ $empresas_all = Empresas::model()->findAllByAttributes(array('tipo'=>2, 'estado'
                    	</div>
 
                     <div class="col-sm-offset-2 form-inline">
-                        <div class="row">
-                            <div class="col-sm-2">
+                        <div class="row-fluid">
+                            <div class="col-md-3">
                                 <?php
                                 echo $form->textField($model, 'cantidad', array('class'=>'form-control', 'placeholder'=>'Cantidad a vender'));
                                 ?>
                             </div>
-                            <div class="col-sm-2">
+                            <!--<div class="col-sm-2">
                                 <?php
                                 echo $form->textField($model, 'precio_tienda', array('class'=>'form-control', 'placeholder'=>'Precio en tienda'));
                                 ?>
-                            </div>
-                            <div class="col-sm-2">
+                            </div>-->
+                            <div class="col-md-3">
                                 <?php
                                 echo $form->textField($model, 'precio', array('class'=>'form-control', 'placeholder'=>'Precio'));
                                 ?>
@@ -109,21 +104,23 @@ $empresas_all = Empresas::model()->findAllByAttributes(array('tipo'=>2, 'estado'
                             <?php
                             if($inventario_menor_precio){
                                 ?>
-                                <div class="col-sm-2">
-                                    <span class="label label-success">Menor precio: <?php echo Yii::app()->numberFormatter->formatCurrency($inventario_menor_precio->precio, ''); ?> Bs.</span>
+                                <div class="col-md-3">
+                                    <h4><span class="label label-success">Menor precio: <?php echo Yii::app()->numberFormatter->formatCurrency($inventario_menor_precio->precio, ''); ?> Bs.</span>
+                                    </h4>
                                 </div>
                                 <?php
                             }
                             ?>
                             <?php
+                            echo $form->hiddenField($model, 'precio_tienda', array('value'=>0));
                             echo $form->hiddenField($model, 'producto_id', array('value'=>$producto->id));
                             ?>
-                            <div class="col-sm-1">
+                            <div class="col-md-3">
                                 <?php
                                 $this->widget('bootstrap.widgets.TbButton', array(
                                     'buttonType'=>'ajaxSubmit',
                                     'url'=>$this->createUrl('agregarInventarioAjax'),
-                                    'htmlOptions'=>array('class'=>'btn btn-primary'),
+                                    'htmlOptions'=>array('class'=>'btn btn-danger'),
                                     'label'=>'Agregar',
                                     'ajaxOptions'=>array(
                                             'success'=>'js:function(data){
@@ -143,8 +140,8 @@ $empresas_all = Empresas::model()->findAllByAttributes(array('tipo'=>2, 'estado'
                         </div>
                     </div>
                 <?php $this->endWidget(); ?>
-                <div class="row margin_top">
-                    <div class="col-sm-5 col-sm-offset-2 bg_white">
+                <div class="row-fluid margin_top_small">
+                    <div class="col-md-8 col-md-offset-2 bg_white">
                         <?php
                         $template = '{summary}
                             <table class="table">
@@ -185,8 +182,8 @@ $empresas_all = Empresas::model()->findAllByAttributes(array('tipo'=>2, 'estado'
                         ?>
                     </div>  
                 </div>
-                <div class="row margin_top">
-                    <a href="" class="col-sm-offset-2 btn btn-primary btn-lg">Finalizar</a>
+                <div class="row-fluid margin_top_small">
+                    <a href="../producto/admin" class="col-md-4 col-sm-offset-2 btn btn-primary">Finalizar</a>
                 </div>
             </div>
         </div>
