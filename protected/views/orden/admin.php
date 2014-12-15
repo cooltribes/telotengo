@@ -1,12 +1,9 @@
 <?php
 /* @var $this FlashsaleController */
 /* @var $model Flashsale */
-
 $this->breadcrumbs=array(
-	'Pedidos'=>array('admin'),
 	'Administrar',
 );
-
 ?>
 
 <div class="container">
@@ -24,12 +21,12 @@ $this->breadcrumbs=array(
 		    </div>
 		<?php } ?>
 
-	    <div class="row margin_top margin_bottom ">
-	        <div class="span4">
+	    <div class="row-fluid margin_top">
+	        <div class="col-md-4">
 	            <form class="no_margin_bottom form-search">
 	            	<div class="input-prepend"> <span class="add-on"><i class="icon-search"></i></span>
-	            		<input class="span3" id="query" name="query" type="text" placeholder="Buscar">
-	                	<a href="#" class="btn" id="btn_search_event">Buscar</a>
+	            		<input class="col-md-9" id="query" name="query" type="text" placeholder="Buscar por ID">
+	                	<a href="#" class="btn btn-danger btn-sm margin_left_small" id="btn_search_event">Buscar</a>
 	           		</div>         
 	           	</form>
 	        </div>
@@ -37,6 +34,58 @@ $this->breadcrumbs=array(
 	    </div>
 	    <hr/>
 	    
+	    <?php
+		Yii::app()->clientScript->registerScript('query1',
+			"var ajaxUpdateTimeout;
+			var ajaxRequest;
+			$('#btn_search_event').click(function(){
+				ajaxRequest = $('#query').serialize();
+				clearTimeout(ajaxUpdateTimeout);
+				
+				ajaxUpdateTimeout = setTimeout(function () {
+					$.fn.yiiListView.update(
+					'list-auth-ordenes',
+					{
+					type: 'POST',	
+					url: '" . CController::createUrl('orden/admin') . "',
+					data: ajaxRequest}
+					)
+					},
+			300);
+			return false;
+			});",CClientScript::POS_READY
+		);
+		
+		// Codigo para actualizar el list view cuando presionen ENTER
+		
+		Yii::app()->clientScript->registerScript('query',
+			"var ajaxUpdateTimeout;
+			var ajaxRequest; 
+			
+			$(document).keypress(function(e) {
+			    if(e.which == 13) {
+					ajaxRequest = $('#query').serialize();
+					clearTimeout(ajaxUpdateTimeout);
+					
+					ajaxUpdateTimeout = setTimeout(function () {
+						$.fn.yiiListView.update(
+						'list-auth-ordenes',
+						{
+						type: 'POST',	
+						url: '" . CController::createUrl('orden/admin') . "',
+						data: ajaxRequest}
+						
+						)
+						},
+				
+				300);
+				return false;
+			    }
+			});",CClientScript::POS_READY
+		);	
+		?>
+
+
 	    <?php
 	$template = '{summary}
 	    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-bordered table-hover table-striped">

@@ -5,8 +5,8 @@
 ?>
 
 <div class="well">
-	<div class="row padding_left_medium">
-		<div class="col-md-6 1">
+	<div class="row-fluid">
+		<div class="col-md-offset-2 col-md-8">
 
 
 <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
@@ -28,21 +28,19 @@
 		<?php 
 
 		    $principal = Imagenes::model()->findByAttributes(array('orden'=>1,'producto_id'=>$producto->id));
-		    							
+	    							
 		    if($principal->getUrl()) 
 		    	echo CHtml::image(str_replace(".","_x180.",$principal->getUrl()), "Imagen ", array());
 		   
 		    $marca = Marca::model()->findByPk($producto->marca_id);
-				
-			echo "<p><strong>".$producto->nombre." por <small>".$marca->nombre."</small></strong></p>
-					<p>Descripción del producto: ".$producto->descripcion."
-					</p>";								
+							
+			echo "<p><strong>".$producto->nombre." por <small>".$marca->nombre."</small></strong></p>";								
 			echo '<p><b> Precio Actual:</b> '.$inventario->precio.' Bs.</p>';
 			echo $codigo;
 			
 		?>   
 	</div>
-	
+	<hr/>
 	<div class="form-group"> 
 		<?php echo $form->labelEx($model,'cantidad'); ?>
 		<?php echo $form->textField($model,'cantidad',array('class'=>'form-control','maxlength'=>10,'placeholder'=>'Cantidad disponible para la Venta Flash.')); ?>

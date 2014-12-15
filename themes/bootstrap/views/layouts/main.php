@@ -130,7 +130,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                     <li class="dropdown button">
                         <a href="#" class="dropdown-toggle white" data-toggle="dropdown">Productos<b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/seleccion">Crear nuevo</a></li> 
+                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/create">Crear nuevo</a></li> 
                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/admin">Todos</a></li>
                             
                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/seleccion">Agregar a Inventario</a></li>

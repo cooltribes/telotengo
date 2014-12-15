@@ -1,16 +1,15 @@
 <!-- CONTENIDO ON -->
-
-        <div class="container-fluid" style="padding: 0 15px;">
-            <div class="row">
-                <!-- COLUMNA PRINCIPAL DERECHA ON // OJO: esta de primera para mejorar el SEO sin embargo por CSS se ubica visualmente a la derecha -->
-                <div class="col-md-10 col-md-push-2 main-content" role="main">
-                    <div class="page-header">
-                        <h1>
-                            Resultados de la busqueda - <?php echo Yii::app()->session['busqueda']; ?>
-                        </h1>
-                    </div>
+<div class="container">
+    <div class="row-fluid">
+    	<!-- COLUMNA PRINCIPAL DERECHA ON // OJO: esta de primera para mejorar el SEO sin embargo por CSS se ubica visualmente a la derecha -->
+        <div>
+	        <div class="page-header">
+            <h1>
+                Resultados de la busqueda - <?php echo Yii::app()->session['busqueda']; ?>
+            </h1>
+        </div>
                     
-                    <?php 
+    <?php 
 	$template = '{summary}
 	    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-bordered table-hover table-striped">
 	        <tr>
@@ -43,6 +42,5 @@
 		?>
 
                 </div><!-- COLUMNA PRINCIPAL DERECHA OFF // -->
-                <?php include('sidebar_admin.php') ?>
             </div><!-- CONTENIDO OFF -->
 		</div>

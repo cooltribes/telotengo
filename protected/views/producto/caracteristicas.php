@@ -6,10 +6,10 @@ $this->breadcrumbs=array(
 ?>
 
 <div class="container">
-	<div class="row">
+	<div class="row-fluid">
 		<!-- COLUMNA PRINCIPAL DERECHA ON // OJO: esta de primera para mejorar el SEO sin embargo por CSS se ubica visualmente a la derecha -->
-		<div class="col-md-10 main-content" role="main">
-			<h1>Información General <small> - Registar nuevo producto</small></h1>
+		<div>
+			<h1>Información General <small> - Nuevo producto</small></h1>
 			<!-- Nav tabs -->
 			<!-- SUBMENU ON -->
 			<?php echo $this->renderPartial('_menu', array('model'=>$producto, 'activo'=>'caracteristicas')); ?>

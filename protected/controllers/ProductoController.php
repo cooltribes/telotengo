@@ -61,9 +61,8 @@ class ProductoController extends Controller
 	{
 		if(isset($_POST['busqueda'])){
 			unset(Yii::app()->session['busqueda']);
-				
-			Yii::app()->session['busqueda'] = $_POST['busqueda'];
 			
+			Yii::app()->session['busqueda'] = $_POST['busqueda'];
 			$this->redirect(array('busqueda'));
 		}
 		else
@@ -72,7 +71,7 @@ class ProductoController extends Controller
 
 	
 	// el usuario decidio buscar el producto
-	public function actionBusqueda()
+	public function actionBusqueda() 
 	{		
 		$producto = new Producto;
 		$producto->unsetAttributes();  
@@ -80,8 +79,8 @@ class ProductoController extends Controller
 		if(Yii::app()->session['busqueda']){
 			$producto->nombre = Yii::app()->session['busqueda'];
 		}
-		$dataProvider = $producto->search(); 
-			
+
+		$dataProvider = $producto->searchTwo();
 		$this->render('busqueda',array('dataProvider'=>$dataProvider));
 	}
 
@@ -348,6 +347,7 @@ class ProductoController extends Controller
 				$buscar[] = $new;
 			}
 		}
+
 		// Busco todos los objetos que tengan alguna de las caracteristicas buscadas
 		$criteria = new EMongoCriteria(array(
             'conditions'=>array(
@@ -383,10 +383,12 @@ class ProductoController extends Controller
 		}else{
 			$caracteristica_nosql = Caracteristica::model()->findByAttributes(array('producto_id'=>$_POST['producto_id'], 'valor'=>$_POST['clicked']));
     		$inventario = Inventario::model()->findByPk($caracteristica_nosql->inventario_id);
+    		var_dump($caracteristica_nosql);
+    		Yii::app()->end(); 
 		}
-
+        
 		if(isset($inventario)){
-			
+
 			$flashsale = Flashsale::model()->findByAttributes(array('inventario_id'=>$inventario->id,'estado'=>1));  // activo
 				
 			$almacen = Almacen::model()->findByPk($inventario->almacen_id);
@@ -397,7 +399,7 @@ class ProductoController extends Controller
 			
 			if(isset($flashsale))
 			{
-				$return = array(
+				$return = array( 
 					'inventario' => array(
 						'id' => $inventario->id,
 						'precio' => $inventario->precio,
@@ -1086,12 +1088,31 @@ class ProductoController extends Controller
 	 * Manages all models.
 	 */
 	public function actionAdmin()
-	{
+	{	
 		$model = new Producto;
 		$model->unsetAttributes();  // clear any default values
-
+		$bandera=false;
 		$dataProvider = $model->listar();
-		
+
+		/* Para mantener la paginacion en las busquedas */
+		if(isset($_GET['ajax']) && isset($_SESSION['searchBox']) && !isset($_POST['query'])){
+			$_POST['query'] = $_SESSION['searchBox'];
+			$bandera=true;
+		}
+
+		/* Para buscar desde el campo de texto */
+		if (isset($_POST['query'])){
+			$bandera=true;
+			unset($_SESSION['searchBox']);
+			$_SESSION['searchBox'] = $_POST['query'];
+            $model->nombre = $_POST['query'];
+            $dataProvider = $model->listar();
+        }	
+
+        if($bandera==FALSE){
+			unset($_SESSION['searchBox']);
+        }
+
 		if(isset($_GET['Producto']))
 			$model->attributes=$_GET['Producto'];
 

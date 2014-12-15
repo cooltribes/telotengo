@@ -448,7 +448,7 @@ Yii::app()->clientScript->registerMetaTag(Yii::app()->getBaseUrl(true).str_repla
                 </div>
                 <hr>
                 
-                <p class="text-muted">Vendido y enviador por:</p>
+                <p class="text-muted">Vendido y enviado por:</p>
                 <p><strong>Sigma Sys C.A.</strong></p>
                 <p><span>Desde San Cristóbal, Táchira</span></p>
 

@@ -1,7 +1,7 @@
 <div class="container">
 	<div class="row-fluid">
 		<!-- COLUMNA PRINCIPAL DERECHA ON // OJO: esta de primera para mejorar el SEO sin embargo por CSS se ubica visualmente a la derecha -->
-		<div class="col-md-10">
+		<div>
 			<h1>Información General <small> - Nuevo producto</small></h1>
 			<!-- Nav tabs -->
 			<!-- SUBMENU ON -->
@@ -35,8 +35,19 @@
 								<?php echo $form->error($model,'codigo'); ?>
 							</div>
 							
+							<?php
+							if(UserModule::isAdmin()){
+							?>
+								<div class="form-group">
+								<?php echo $form->radioButtonListInlineRow($model,'estado', array(1 => 'Activo', 0 => 'Inactivo',)); ?>
+								<?php echo $form->error($model,'estado'); ?>
+								</div>
+							<?php
+							}
+							?>
+
 							<div class="form-group">
-								<label>Peso estimado.</label>
+								<label>Peso estimado (Kg.)</label>
 								<?php echo $form->textField($model,'peso',array('class'=>'form-control','placeholder'=>'Peso estimado del producto a registrar')); ?>
 								<?php echo $form->error($model,'peso'); ?>
 							</div>
@@ -116,7 +127,7 @@
 							</div>
 							<?php $this->widget('bootstrap.widgets.TbButton', array(
 								'buttonType'=>'submit',
-								'htmlOptions'=>array('class'=>'btn btn-primary btn-lg'),
+								'htmlOptions'=>array('class'=>'btn btn-primary margin_top_small col-md-3'),
 								'label'=>$model->isNewRecord ? 'Agregar' : 'Guardar',
 							)); ?>
 
