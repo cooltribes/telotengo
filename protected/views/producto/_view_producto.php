@@ -20,7 +20,9 @@ Yii::app()->clientScript->registerMetaTag(Yii::app()->getBaseUrl(true).str_repla
     <div class="row-fluid main-content">
 
         <section role="main">
-            <div class="col-md-10">
+            <h1><?php echo $model->nombre; ?> <small><?php echo $model->modelo; ?></small></h1>
+            <hr/>
+            <div class="col-md-9">
                 <div class="row-fluid">
                 <!-- IMAGENes ON -->
                 
@@ -28,7 +30,7 @@ Yii::app()->clientScript->registerMetaTag(Yii::app()->getBaseUrl(true).str_repla
                 $main_image = $model->mainimage->url;
                 ?>
                 
-                <div class=" col-md-5">
+                <div class=" col-md-6">
                 	<div class='imagen_principal'> 
                     <figure>
                         <img width="100%" src="<?php echo Yii::app()->baseUrl.$main_image; ?>" alt="<?php echo $model->nombre; ?>" id="principal">
@@ -60,28 +62,50 @@ Yii::app()->clientScript->registerMetaTag(Yii::app()->getBaseUrl(true).str_repla
                     </div>
                 </div>
                 <!-- IMAGENes OFF -->
-                <div class="col-md-7">
+                <div class="col-md-6">
                     <div class="page-header">
-                                <h1><?php echo $model->nombre; ?> <small><?php echo $model->modelo; ?></small></h1>
+                                
                                 <span>Por: <a href="<?php echo Yii::app()->baseUrl.'/marcas/'.$model->marca->nombre; ?>"><?php echo $model->marca->nombre; ?></a></span>
-                                <p><span>Agregar a Favoritos: 
-                                    <?php
-
-                                        if(!Yii::app()->user->isGuest){
-                                            $like = UserFavoritos::model()->findByAttributes(array('user_id'=>Yii::app()->user->id,'producto_id'=>$model->id));
-                                        }
+                                <div class="row-fluid">
+                                    <div class="col-md-6">
+                                        <span>
+                                            <?php
+        
+                                                if(!Yii::app()->user->isGuest){
+                                                    $like = UserFavoritos::model()->findByAttributes(array('user_id'=>Yii::app()->user->id,'producto_id'=>$model->id));
+                                                }
+                                            ?>
+                                            <button id="Favorito" onclick='AddFavorito()' title="Agregar a Favoritos" class="btn-link btn-link-active">
+                                            <?php
+                                                if(isset($like)){ // le ha dado like    
+                                                    echo '<span id="like" class="entypo">&hearts;</span>';
+                                                }else{
+                                                    echo "<span id='like' class='entypo icon_personaling_big'>&#9825;</span>";
+                                                }
+                                            ?>
+                                            </button>
+                                            <small>Producto Favorito</small>
+                                        </span>
+                                    </div>
+                                     <?php
+                                        $link = "http://telotengo.com/sigmatiendas/producto/detalle/".$model->id;
+                                        $tweetText = "SigmaSystems | ".$model->nombre." ".$model->modelo.". Por ".$model->marca->nombre;
                                     ?>
-                                    <button id="Favorito" onclick='AddFavorito()' title="Agregar a Favoritos" class="btn-link btn-link-active">
-                                    <?php
-                                        if(isset($like)){ // le ha dado like    
-                                            echo '<span id="like" class="entypo">&hearts;</span>';
-                                        }else{
-                                            echo "<span id='like' class='entypo icon_personaling_big'>&#9825;</span>";
-                                        }
-                                    ?>
-                                    </button>
-
-                               </span></p>
+                                    <div class="col-md-3">
+                                        
+                                        <div class="fb-share-button" data-href=<?php echo $link; ?> data-layout="button">
+                                            
+                                        </div>
+                                
+                                    </div>
+                                    <div class="col-md-3">
+                                        <a  href="https://twitter.com/share" class="twitter-share-button" data-count="none" data-text="<?php echo $tweetText; ?>"
+                                    data-hashtags="LaMejorTecnologia" data-via="Sigmatiendas">Tweet</a>
+                                    </div>
+                                </div>
+                                
+                               
+                              
 
                                 <?php
                                 if($calificacion_promedio >= 0 && $calificacion_promedio < 1){
@@ -400,24 +424,14 @@ Yii::app()->clientScript->registerMetaTag(Yii::app()->getBaseUrl(true).str_repla
                             </dl>
                         </div>
                     <!-- REDES SOCIALES -->
-                    <?php
-                        $link = "http://telotengo.com/sigmatiendas/producto/detalle/".$model->id;
-                        $tweetText = "SigmaSystems | ".$model->nombre." ".$model->modelo.". Por ".$model->marca->nombre;
-                    ?>
-                    <div class="fb-share-button" data-href=<?php echo $link; ?> data-layout="button"></div>
-                    <a  href="https://twitter.com/share" class="twitter-share-button" data-count="none" data-text="<?php echo $tweetText; ?>"
-                        data-hashtags="LaMejorTecnologia" data-via="Sigmatiendas">Tweet</a>
+                   
                     
-                    <p><strong>Descripción del producto</strong></p>
-                    <?php
-                        echo $model->descripcion;
-                    ?>
                     
                     </div>
                 </div>
             </div>
         </section>
-        <section class="col-md-2">
+        <section class="col-md-3">
             <div>
                 <div>
                     <h2><small>Bs.</small><?php echo $inventario_menor_precio->precio; ?></span></h2>
@@ -454,95 +468,105 @@ Yii::app()->clientScript->registerMetaTag(Yii::app()->getBaseUrl(true).str_repla
 
             </div>
         </section>
+        <section class="row-fluid">
+            <div class="col-md-12 descBox">
+                <p><strong>Descripción del producto</strong></p>
+                    <?php
+                        echo $model->descripcion;
+                    ?>
+                
+            </div>
+            
+        </section>
+        
 
-    </div>
-    </div>
-	
-    <hr/>
-	
-	<h3>Preguntas.</h3>
-	<hr/>
-	
-	<div class="well">
-	<div class="row padding_left_large padding_right_large "> 
-		<div>
-	
-	<?php
-	
-	if(!Yii::app()->user->isGuest)
-	{
-		$pregunta = new Pregunta;
+   <section class="row-fluid margin_top">
+       <div class="col-md-12"></div>   
+        <h3>Preguntas</h3>
+         <hr/>
+    
+    <div class="well">
+    <div class="row padding_left_large padding_right_large "> 
+        <div>
+    
+    <?php
+    
+    if(!Yii::app()->user->isGuest)
+    {
+        $pregunta = new Pregunta;
 
-		$form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
-			'id'=>'pregunta-form',
-			'enableAjaxValidation'=>false,
-			'enableClientValidation'=>true,
-			'type'=>'horizontal',
-			'clientOptions'=>array(
-				'validateOnSubmit'=>true, 
-			),
-			'htmlOptions' => array(
-		        'enctype' => 'multipart/form-data',
-		    ),
-		));
-	?> 
-		
-	<div class="form-group">
-		<?php echo $form->textAreaRow($pregunta,'pregunta',array('class'=>'form-control','maxlength'=>350)); ?>
-	</div>
-	
-	<?php echo CHtml::hiddenField('id', $model->id, array('id'=>'id')); ?>
-	
-	<div class="form-actions">
-		<?php $this->widget('bootstrap.widgets.TbButton', array(
-			'buttonType'=>'submit',
-			'type'=>'primary',
-			'label'=>'Preguntar',
-		)); ?>
-	</div>
-	
+        $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
+            'id'=>'pregunta-form',
+            'enableAjaxValidation'=>false,
+            'enableClientValidation'=>true,
+            'type'=>'horizontal',
+            'clientOptions'=>array(
+                'validateOnSubmit'=>true, 
+            ),
+            'htmlOptions' => array(
+                'enctype' => 'multipart/form-data',
+            ),
+        ));
+    ?> 
+        
+    <div class="form-group">
+        <?php echo $form->textAreaRow($pregunta,'pregunta',array('class'=>'form-control','maxlength'=>350)); ?>
+    </div>
+    
+    <?php echo CHtml::hiddenField('id', $model->id, array('id'=>'id')); ?>
+    
+    <div class="form-actions">
+        <?php $this->widget('bootstrap.widgets.TbButton', array(
+            'buttonType'=>'submit',
+            'type'=>'primary',
+            'label'=>'Preguntar',
+        )); ?>
+    </div>
+    
 <?php $this->endWidget(); 
 
 ?>
 
-	</div>
-	</div>	
-	<hr/>
+    </div>
+    </div>  
+    <hr/>
 <?php } // is not guest ?>
 
-	<h4>Anteriores</h4>
-	
-	<?php
-		$preguntas = Pregunta::model()->findAllByAttributes(array('producto_id'=>$model->id));
-	
-		if(count($preguntas)>0){
-			foreach($preguntas as $preg){
-				echo '<b>Pregunta:</b> '.$preg->pregunta;
-				echo " - <small>".date('d/m/Y',strtotime($preg->fecha))."</small>";
-				
-				$respuestas = Respuesta::model()->findAllByAttributes(array('pregunta_id'=>$preg->id));
-				
-				if(count($respuestas)>0){
-					foreach($respuestas as $respuesta){
-						echo '<div class="row padding_left_large padding_right_large ">';
-						echo "Respuesta: ".$respuesta->comentario;
-						echo " - <small>".$respuesta->fecha."</small>";
-						echo '</div>';					
-					}
-				}
-				
-				echo "<hr/>";
-				
-			}
-		}
-		else {
-			echo "Este producto aún no tiene preguntas.";
-		}
-	
-	?>
-	
+    <h4>Anteriores</h4>
+    
+    <?php
+        $preguntas = Pregunta::model()->findAllByAttributes(array('producto_id'=>$model->id));
+    
+        if(count($preguntas)>0){
+            foreach($preguntas as $preg){
+                echo '<b>Pregunta:</b> '.$preg->pregunta;
+                echo " - <small>".date('d/m/Y',strtotime($preg->fecha))."</small>";
+                
+                $respuestas = Respuesta::model()->findAllByAttributes(array('pregunta_id'=>$preg->id));
+                
+                if(count($respuestas)>0){
+                    foreach($respuestas as $respuesta){
+                        echo '<div class="row padding_left_large padding_right_large ">';
+                        echo "Respuesta: ".$respuesta->comentario;
+                        echo " - <small>".$respuesta->fecha."</small>";
+                        echo '</div>';                  
+                    }
+                }
+                
+                echo "<hr/>";
+                
+            }
+        }
+        else {
+            echo "Este producto aún no tiene preguntas.";
+        }
+    
+    ?>
+        </div></section>    
     </div>
 </div>
+	
+
 
 <!- MODAL WINDOW ON -> 
 

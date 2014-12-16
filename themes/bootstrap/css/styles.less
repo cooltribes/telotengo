@@ -291,7 +291,9 @@ body{
             padding: 0px !important;
             background: none !important;
         }
-
+#mainHeader{
+  position:inherit !important; background-color: #127ab5 !important; padding: 5px 0 0 0 !important; margin:0px !important;
+}
 .main-content{
   padding:10px 0px !important;
 }
@@ -386,7 +388,9 @@ body{
             background-color:#FFF;
             color: #198ac9;
         }
-        
+        #homeButton{
+          boder-left:1px solid #FFF;
+        }
         #busqueda{ 
             width: 100%;
             list-style: none;
@@ -510,6 +514,42 @@ body{
 }
 ul.dropdown a:link, ul.dropdown a:visited{
   color:none;
-  
 }
+.descBox{
+  border: 1px solid #CCC;
+  max-height: 300px;
+  overflow-y: scroll;
+  padding-top: 1em;
+}
+
+.modal-dialog{
+  left:0%;
+}
+
+
+@media (min-width: 5465px) {
+   #page{ min-height: 2000px;}   
+}
+@media (min-width: 5000px) and (max-width: 5464px) {
+   #page{ min-height: 1843px;}  
+}
+@media (min-width: 4051px) and (max-width: 4999px) {
+   #page{ min-height: 1393px;}  
+}
+@media (min-width: 2698px) and (max-width: 4050px) {
+   #page{ min-height: 1140px;}   
+}
+@media (min-width: 1800px) and (max-width: 2697px) {
+   #page{ min-height: 700px;}   
+}
+@media (min-width: 1518px) and (max-width: 1799px) {
+   #page{ min-height: 400px;}   
+}
+@media (min-width: 1350px) and (max-width: 1517px) {
+   #page{ min-height: 350px;}   
+}
+@media (max-width: 1349px) {
+   #page{ min-height: 200px;}   
+}
+
 
