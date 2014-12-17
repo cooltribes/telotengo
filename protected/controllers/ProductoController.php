@@ -374,17 +374,19 @@ class ProductoController extends Controller
         	}else{
         		
         	}
-        }
-
+        } 
+        
         // Si el contador de repeticiones es igual al numero de valores buscados, este es el inventario que necesito
         // De lo contario, busco un inventario basado en la caracteristica clickeada, sin tomar en cuenta las demás seleccionadas
         if($found){
 	        $inventario = Inventario::model()->findByPk($inventario_buscado_id);
 		}else{
+
+			// Revisar Mongo DB. La combinacion no la consigue en Caracteristica por tanto da error
+			// el error es que las pulgadas de la pantalla se envian en numero y en mongo tienen las pulgadas (ejm 11 \"")
+
 			$caracteristica_nosql = Caracteristica::model()->findByAttributes(array('producto_id'=>$_POST['producto_id'], 'valor'=>$_POST['clicked']));
     		$inventario = Inventario::model()->findByPk($caracteristica_nosql->inventario_id);
-    		var_dump($caracteristica_nosql);
-    		Yii::app()->end(); 
 		}
         
 		if(isset($inventario)){
