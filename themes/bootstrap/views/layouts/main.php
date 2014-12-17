@@ -4,6 +4,9 @@
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
 <link rel="icon" href="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/favicon75.png" type="image/x-icon">
 <link rel="shortcut icon" href="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/favicon75.png" type="image/x-icon">
+<?php  Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/styles.css',null); ?>
+        <?php  Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/styles.css',null); ?>
+
 <?php
 Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_menu/css/helper.css');
 Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_menu/css/dropdown/dropdown.vertical.css');
@@ -45,8 +48,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
 		<?php //Yii::app()->less->files = array('less/styles.less'=>'css/syles.css');
 				//Yii::app()->less->register(); ?>
 		<?php Yii::app()->bootstrap->register(); ?>
-		<?php  Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/styles.css',null); ?>
-		<?php  Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/styles.css',null); ?>
+		
 	</head>
 
 	<body>
@@ -54,9 +56,10 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
      <!-- HEADER ON -->
 
    
-    <nav class="navegacion-superior navbar-default navbar-fixed-top" style="position:inherit; background-color: #127ab5; padding: 5px 0 0 0; " >
+    <nav class="navegacion-superior navbar-default navbar-fixed-top" id="mainHeader" >
         <div class="container"> 
-            <div class="navbar-left">                
+            <div class="navbar-left">  
+                <div class="links_menu">            
                         <a href="http://facebook.com/sigmatiendas">
                             <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/ICON-facebook.png" alt="Facebook" width="25" height="25">
                         </a>
@@ -64,16 +67,19 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                         <a href="https://twitter.com/Sigmatiendas">
                             <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/twitter.png" alt="Twitter" width="25" height="25">
                         </a>
-                        <a href="http://youtube.com/Sigmaoficial">
-                            <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/ICON-youtube.png" alt="Youtube" width="25" height="25">
-                        </a>
                         <a href="http://instagram.com/sigmatiendas">
                             <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/instagram.png" alt="Instagram" width="25" height="25">
                         </a>
+                        <a href="http://youtube.com/Sigmaoficial">
+                            <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/ICON-youtube.png" alt="Youtube" width="25" height="25">
+                        </a>
+                          
+                        
+                        
                         <a class="linkSuperior" href="http://twitter.com/sigmatiendas">
                            Síguenos en @Sigmatiendas
                         </a> 
-                        
+                </div>          
             </div>
             <div class="navbar-right">
                 <ul class="links_menu">
@@ -92,14 +98,23 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
             <div class="container">
                 <div class="navbar">
                     <div class="row-fluid">
-                        <div class="col-md-3">  
-                           <a href="<?php echo Yii::app()->baseUrl; ?>/" title="Inicio">
-                                <img src="http://sigmatiendas.com/skin/frontend/fortis/default/images/sigma-systems-logo.png" width="190px"/>
-                            </a> 
+                        <div class="col-md-4 no_padding">
+                            <div class="row-fluid">
+                                <div class="col-md-6 no_padding">   
+                                   <a href="<?php echo Yii::app()->baseUrl; ?>/" title="Inicio">
+                                        <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/logo.png" width="100%"/>
+                                   </a>
+                                </div>
+                                <div class="col-md-6 no_padding" style="line-height: 80px;">   
+                                   <a href="<?php echo Yii::app()->baseUrl; ?>/" title="Inicio">
+                                        <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/slogan.png" width="100%"/>
+                                   </a>
+                                </div>
+                            </div> 
                         </div>
-                        <div class="col-md-9">  
+                        <div class="col-md-8">  
                             <div class="row" style="text-align:right">
-                                <span class="white">Vive la <span class="red">Experiencia</span> tecnológica</span>
+                               <!-- <span class="white">Vive la <span class="red">Experiencia</span> tecnológica</span> -->
                             </div>
                             <div class="row">
                             <ul class="no_list_style userButtons">
@@ -234,10 +249,11 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                 </div>
                 <div class="width:100%">
                     <ul class="dropdown categoriesMenu" style="display: table; width:100%;">
-                
-                        <li class="dir">
-                            <span class="glyphicon glyphicon-home glyphiconLarge"></span>
-                        </li>
+                      
+                            <li class="dir" id="homeButton">
+                                  <a href="<?php echo  Yii::app()->baseUrl; ?>"><span class="glyphicon glyphicon-home glyphiconLarge"></span></a>
+                            </li>
+                        
                  
                         <?php
                         $categorias = Categoria::model()->findAllByAttributes(array('id_padre'=>0));
@@ -307,49 +323,55 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
 			<div class="clear"></div>
             
 			<footer role="contentinfo" class="footer margin_top_large">
-              	<div class="row foot-main">
-                    <div class="col-md-7 col-md-offset-1">
-                        <div class="row-fluid foot-section">
-                            <div class="col-md-4 col-md-offset-2">
-                                <h2 class="foot-title"> Sobre nosotros </h2>
-                                <ul class="foot-list">
-                                    <li><a href="<?php echo Yii::app()->baseUrl; ?>/site/info" title="Quienes somos">¿Quiénes Somos?</a></li>
-                                    <li><a href="#" title="Términos de Uso">Términos de Uso</a></li>
-                                    <li><a href="<?php echo Yii::app()->baseUrl; ?>/site/contact">Contacto</a></li>
-                                </ul>
-                            </div>
-                           
-                            <div class="col-md-4">
-                                <div>
-                                    <h2 class="foot-title">Servicio al cliente</h2>
+              	<div class="content">
+                  	<div class="row-fluid foot-main">
+                        <div class="col-md-7 col-md-offset-1">
+                            <div class="row-fluid foot-section">
+                                <div class="col-md-4 col-md-offset-2">
+                                    <h2 class="foot-title"> Sobre nosotros </h2>
                                     <ul class="foot-list">
-                                        <li><a href="<?php echo Yii::app()->baseUrl; ?>/user/login">Inicia sesión</a></li>
-                                        <li><a href="#" title="Preguntas Frecuentes">Preguntas Frecuentes</a></li>
-                                        <li><a href="#" title="Formas de Pago">Formas de Pago</a></li>
-                                        <li><a href="#" title="Políticas de Privacidad">Políticas de Privacidad</a></li>
-                                        <li><a href="#" title="Políticas de Envíos, Devoluciones y Cancelaciones">Políticas de Envíos, Devoluciones y Cancelaciones</a></li>
-                                  </ul> 
-                                </div> 
+                                        <li><a href="<?php echo Yii::app()->baseUrl; ?>/site/info" title="Quienes somos">¿Quiénes Somos?</a></li>
+                                        <li><a href="#" title="Términos de Uso">Términos de Uso</a></li>
+                                        <li><a href="<?php echo Yii::app()->baseUrl; ?>/site/contact">Contacto</a></li>
+                                    </ul>
+                                </div>
+                               
+                                <div class="col-md-4">
+                                    <div>
+                                        <h2 class="foot-title">Servicio al cliente</h2>
+                                        <ul class="foot-list">
+                                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/user/login">Inicia sesión</a></li>
+                                            <li><a href="#" title="Preguntas Frecuentes">Preguntas Frecuentes</a></li>
+                                            <li><a href="#" title="Formas de Pago">Formas de Pago</a></li>
+                                            <li><a href="#" title="Políticas de Privacidad">Políticas de Privacidad</a></li>
+                                            <li><a href="#" title="Políticas de Envíos, Devoluciones y Cancelaciones">Políticas de Envíos, Devoluciones y Cancelaciones</a></li>
+                                      </ul> 
+                                    </div> 
+                                </div>
                             </div>
+                       </div>              
+                        
+    					<div class="col-md-3 foot-section white" >
+                            <h2 class="foot-title">Sigmasys C.A.</h2>
+                                <strong>0276-3442626</strong>
+                                <p>
+                                <div>Av. Libertador, Centro Comercial Las Lomas, Local Nº 30, San Cristóbal, Edo. Táchira.</div>
+                                </p>
+                          <p>&copy; Sigmasys C.A <?php echo date('Y');?></p> 
                         </div>
-                   </div>              
-                    
-					<div class="col-md-3 foot-section white" >
-                        <h2 class="foot-title">Sigmasys C.A.</h2>
-                            <strong>0276-3442626</strong>
-                            <p>
-                            <div>Av. Libertador, Centro Comercial Las Lomas, Local Nº 30, San Cristóbal, Edo. Táchira.</div>
-                            </p>
-                      <p>&copy; Sigmasys C.A <?php echo date('Y');?></p> 
                     </div>
                 </div>
-                
             </footer>
 		
 		<!-- page -->
 	</body>
 </html>
 <script>
+    $('#homeButton').hover(function(e){
+            $('#homeButton>a>span').css('color','#198ac9');
+        },function(e){
+            $('#homeButton>a>span').css('color','#FFF');
+        });
     $('#busqueda').keyup(function(e){
             if(e.keyCode == 13)
             {

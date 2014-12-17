@@ -107,10 +107,12 @@ body{
 .margin_bottom_xsmall_minus{margin-bottom:-7px}
 
 /* No margin */
-.no_margin_left{ margin-left:0;}
-.no_margin_right{ margin-right:0;}
-.no_margin_top{ margin-top:0;}
+.no_margin_left{ margin-left:0 !important;}
+.no_margin_right{ margin-right:0 !important;}
+.no_margin_top{ margin-top:0 !important;}
 .no_margin_bottom{ margin-bottom:0 !important;}
+.no_margin{ margin:0 !important;}
+
 
 /* Paddings */
 .padding_top_large{padding-top:4.68em}
@@ -142,6 +144,14 @@ body{
 .padding_medium{padding:1.56em}
 .padding_small{padding:1em}
 .padding_xsmall{padding:0.5em}
+
+/* NO PADDING */
+.no_padding_left{ padding-left:0 !important;}
+.no_padding_right{ padding-right:0 !important;}
+.no_padding_top{ padding-top:0 !important;}
+.no_padding_bottom{ padding-bottom:0 !important;}
+.no_padding{ padding:0 !important;}
+
 
 
 /* Textos */
@@ -278,9 +288,18 @@ body{
  */
 
 body{
-            padding: 0px;
-            background: none;
+            padding: 0px !important;
+            background: none !important;
         }
+#mainHeader{
+  position:inherit !important; background-color: #127ab5 !important; padding: 5px 0 0 0 !important; margin:0px !important;
+}
+.main-content{
+  padding:10px 0px !important;
+}
+#homeButton{
+  border-left:#FFF solid 1px;
+}
 
 .links_menu{
   list-style: none; 
@@ -325,10 +344,11 @@ body{
             -moz-transition: background-color 300ms ease-in-out;
             -webkit-transition: background-color 300ms ease-in-out;
             -o-transition: background-color 300ms ease-in-out;
+            text-decoration:none;
             
         }
         .button:hover{
-            text-decoration:none;
+            
             background-color: #2a9bda;
             padding-top:7px;
             padding-bottom:13px;
@@ -336,8 +356,8 @@ body{
             
         }  
 }
-     
-        ul.dropdown.categoriesMenu *.dir{
+      
+        ul.dropdown.categoriesMenu *.dir, ul.dropdown.categoriesMenu *.dir{
             background-image: none;
             background-color: #ec1f24;
             line-height: 2.8em;
@@ -350,18 +370,27 @@ body{
             float:none;
             text-align:center;
             cursor:pointer;
+            a{
+              color:#FFF;
+            }
+            
         }
         ul.dropdown.categoriesMenu *.dir ul{
             width:100%;
         }
-        ul.dropdown.categoriesMenu>li>span:hover{
+        ul.dropdown.categoriesMenu>li>a:hover{
+            color: #198ac9;
+        }
+        ul.dropdown.categoriesMenu>li>a:hover{
             color: #198ac9;
         }
         ul.dropdown.categoriesMenu *.dir:hover{
             background-color:#FFF;
             color: #198ac9;
         }
-        
+        #homeButton{
+          boder-left:1px solid #FFF;
+        }
         #busqueda{ 
             width: 100%;
             list-style: none;
@@ -483,4 +512,44 @@ body{
 .thumbnail:hover{
   border:1px solid #888;
 }
+ul.dropdown a:link, ul.dropdown a:visited{
+  color:none;
+}
+.descBox{
+  border: 1px solid #CCC;
+  max-height: 300px;
+  overflow-y: scroll;
+  padding-top: 1em;
+}
+
+.modal-dialog{
+  left:0%;
+}
+
+
+@media (min-width: 5465px) {
+   #page{ min-height: 2000px;}   
+}
+@media (min-width: 5000px) and (max-width: 5464px) {
+   #page{ min-height: 1843px;}  
+}
+@media (min-width: 4051px) and (max-width: 4999px) {
+   #page{ min-height: 1393px;}  
+}
+@media (min-width: 2698px) and (max-width: 4050px) {
+   #page{ min-height: 1140px;}   
+}
+@media (min-width: 1800px) and (max-width: 2697px) {
+   #page{ min-height: 700px;}   
+}
+@media (min-width: 1518px) and (max-width: 1799px) {
+   #page{ min-height: 400px;}   
+}
+@media (min-width: 1350px) and (max-width: 1517px) {
+   #page{ min-height: 350px;}   
+}
+@media (max-width: 1349px) {
+   #page{ min-height: 200px;}   
+}
+
 
