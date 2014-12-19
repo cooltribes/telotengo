@@ -443,7 +443,7 @@ Yii::app()->clientScript->registerMetaTag(Yii::app()->getBaseUrl(true).str_repla
                 <a href="#" class="btn btn-success btn-block btn-lg" onclick="agregar_bolsa()">Comprar</a>
                 <div class="text_align_center margin_top_small">
                     <?php
-	                if(!Yii::app()->user->isGuest){
+	                if(!Yii::app()->user->isGuest){ 
 	                	
 		                $this->widget('bootstrap.widgets.TbButton', array(
 							'icon'=>'glyphicon glyphicon-heart',

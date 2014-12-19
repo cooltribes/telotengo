@@ -36,7 +36,7 @@ class ProductoController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete','update','eliminar','orden','aprobar','rechazar','poraprobar','calificaciones','eliminarCalificacion','importar'),
+				'actions'=>array('admin','delete','update','eliminar','orden','aprobar','rechazar','poraprobar','calificaciones','eliminarCalificacion','importar','inventario'),
 				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -966,6 +966,40 @@ class ProductoController extends Controller
 		$this->render('_view_seo',array(
 			'model'=>$model,
 			'seo'=>$seo,
+		));
+	}
+
+	/* inventario */
+	public function actionInventario()
+	{
+		if(isset($_GET['id'])){
+			$id = $_GET['id'];
+			if(!$inventario = Inventario::model()->findByAttributes(array('producto_id'=>$id)))
+				$inventario = new Inventario;
+
+			$producto = Producto::model()->findByPk($id);
+		}
+		else {
+			$inventario = new Inventario;
+			$id="";
+			$producto = new Producto;
+		}
+		
+		if(isset($_POST['Inventario'])){
+			$inventario->attributes = $_POST['Inventario'];
+			$inventario->sku = $_POST['Inventario']['sku'];
+			$inventario->producto_id = $_POST['Inventario']['producto_id'];
+			$inventario->almacen_id = $_POST['Inventario']['almacen_id'];
+			$inventario->precio_tienda = $_POST['Inventario']['precio_tienda'];
+			
+			$inventario->save();	
+			
+			Yii::app()->user->setFlash('success',"Inventario guardado exitosamente.");
+		}
+		
+		$this->render('inventario',array(
+			'producto'=>$producto,
+			'model'=>$inventario,
 		));
 	}
 	
