@@ -114,12 +114,13 @@ class BolsaController extends Controller
 
 		$user = Yii::app()->user->id;
 		$bolsa = Bolsa::model()->findByAttributes(array('users_id'=>$user));
-		
+		/* Se usa POST de inventarioId para recibir inventario en vez de caracteristicas */
 		if(isset($bolsa)){ 
 			 
 			$ag = new BolsaHasInventario; 
 			$ag->bolsa_id = $bolsa->id;
-			$ag->inventario_id = $_POST['inventario_seleccionado_id'];
+			//$ag->inventario_id = $_POST['inventario_seleccionado_id'];
+			$ag->inventario_id = $_POST['inventario_id']; 
 			$ag->cantidad = 1; 
 			
 			if($ag->save()){
@@ -139,7 +140,8 @@ class BolsaController extends Controller
 			
 			$ag = new BolsaHasInventario;
 			$ag->bolsa_id = $nueva->id;
-			$ag->inventario_id = $_POST['inventario_seleccionado_id'];
+			//$ag->inventario_id = $_POST['inventario_seleccionado_id'];
+			$ag->inventario_id = $_POST['inventario_id'];
 			$ag->cantidad = 1;
 			
 			if($ag->save()){

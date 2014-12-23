@@ -36,7 +36,7 @@ class ProductoController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete','update','eliminar','orden','aprobar','rechazar','poraprobar','calificaciones','eliminarCalificacion','importar'),
+				'actions'=>array('admin','delete','update','eliminar','orden','aprobar','rechazar','poraprobar','calificaciones','eliminarCalificacion','importar','inventario'),
 				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -374,17 +374,19 @@ class ProductoController extends Controller
         	}else{
         		
         	}
-        }
-
+        } 
+        
         // Si el contador de repeticiones es igual al numero de valores buscados, este es el inventario que necesito
         // De lo contario, busco un inventario basado en la caracteristica clickeada, sin tomar en cuenta las demás seleccionadas
         if($found){
 	        $inventario = Inventario::model()->findByPk($inventario_buscado_id);
 		}else{
+
+			// Revisar Mongo DB. La combinacion no la consigue en Caracteristica por tanto da error
+			// el error es que las pulgadas de la pantalla se envian en numero y en mongo tienen las pulgadas (ejm 11 \"")
+
 			$caracteristica_nosql = Caracteristica::model()->findByAttributes(array('producto_id'=>$_POST['producto_id'], 'valor'=>$_POST['clicked']));
     		$inventario = Inventario::model()->findByPk($caracteristica_nosql->inventario_id);
-    		var_dump($caracteristica_nosql);
-    		Yii::app()->end(); 
 		}
         
 		if(isset($inventario)){
@@ -964,6 +966,40 @@ class ProductoController extends Controller
 		$this->render('_view_seo',array(
 			'model'=>$model,
 			'seo'=>$seo,
+		));
+	}
+
+	/* inventario */
+	public function actionInventario()
+	{
+		if(isset($_GET['id'])){
+			$id = $_GET['id'];
+			if(!$inventario = Inventario::model()->findByAttributes(array('producto_id'=>$id)))
+				$inventario = new Inventario;
+
+			$producto = Producto::model()->findByPk($id);
+		}
+		else {
+			$inventario = new Inventario;
+			$id="";
+			$producto = new Producto;
+		}
+		
+		if(isset($_POST['Inventario'])){
+			$inventario->attributes = $_POST['Inventario'];
+			$inventario->sku = $_POST['Inventario']['sku'];
+			$inventario->producto_id = $_POST['Inventario']['producto_id'];
+			$inventario->almacen_id = $_POST['Inventario']['almacen_id'];
+			$inventario->precio_tienda = $_POST['Inventario']['precio_tienda'];
+			
+			$inventario->save();	
+			
+			Yii::app()->user->setFlash('success',"Inventario guardado exitosamente.");
+		}
+		
+		$this->render('inventario',array(
+			'producto'=>$producto,
+			'model'=>$inventario,
 		));
 	}
 	

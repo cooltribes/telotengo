@@ -204,9 +204,14 @@ Yii::app()->clientScript->registerMetaTag(Yii::app()->getBaseUrl(true).str_repla
                             'enableAjaxValidation'=>false,
                         ));
                         
-                        echo CHtml::hiddenField('inventario_seleccionado_id', $inventario_menor_precio->id, array('id'=>'inventario_seleccionado_id'));
+                        // se deja comentada la siguiente linea por el cambio del inventario, de caracteristica a inventario comun
+                        // echo CHtml::hiddenField('inventario_seleccionado_id', $inventario_menor_precio->id, array('id'=>'inventario_seleccionado_id'));
 
-                        $this->endWidget();
+                        // deberia haber un inventario por producto, precio y cantidad
+                        $inventario = Inventario::model()->findByAttributes(array('producto_id'=>$model->id)); 
+                        echo CHtml::hiddenField('inventario_id', $inventario->id, array('id'=>'inventario_id'));
+
+                        $this->endWidget(); 
 
                         $caracteristicas_menor_precio = Caracteristica::model()->findAllByAttributes(array('inventario_id'=>$inventario_menor_precio->id));
 
@@ -253,172 +258,170 @@ Yii::app()->clientScript->registerMetaTag(Yii::app()->getBaseUrl(true).str_repla
 
                                 <?php
                                 // Características
-                                $caract = array();  
+                                if(Yii::app()->params['características']){ 
 
-                                // $inventarios_all tiene todos los inventarios. Se usa para buscar las características disponibles para este producto
-                                $inventarios_all = Inventario::model()->findAllByAttributes(array('producto_id'=>$model->id));
+                                    $caract = array();  
 
-                                echo CHtml::hiddenField('producto_id', $model->id, array('id'=>'producto_id'));
-                            
-                                // Recorrer cada una de las categorías asociadas al producto para buscar sus características
-                                foreach ($model->categorias as $categoria){
-                                    $categoria_caracteristicas = CategoriaHasCaracteristicaSql::model()->findAllByAttributes(array('categoria_id'=>$categoria->id));
+                                    // $inventarios_all tiene todos los inventarios. Se usa para buscar las características disponibles para este producto
+                                    $inventarios_all = Inventario::model()->findAllByAttributes(array('producto_id'=>$model->id));
 
-                                    // Para cada categoría busco las características
-                                    foreach ($categoria_caracteristicas as $c_caracteristica) {
-                                        if(!in_array($c_caracteristica->caracteristica->nombre, $caract)){ 
-                                            array_push($caract,$c_caracteristica->caracteristica->nombre);
+                                    echo CHtml::hiddenField('producto_id', $model->id, array('id'=>'producto_id'));
+                                
+                                    // Recorrer cada una de las categorías asociadas al producto para buscar sus características
+                                    foreach ($model->categorias as $categoria){
+                                        $categoria_caracteristicas = CategoriaHasCaracteristicaSql::model()->findAllByAttributes(array('categoria_id'=>$categoria->id));
 
-                                            $caracteristica_producto = CaracteristicasProducto::model()->findByAttributes(array('producto_id'=>$model->id, 'caracteristica_id'=>$c_caracteristica->caracteristica_id));;
-                                            
-                                            if($caracteristica_producto){
-                                                ?>
-                                                <dt class="padding_xsmall"><?php echo $c_caracteristica->caracteristica->nombre; ?></dt>
-                                                <dd class="padding_xsmall">
-                                                    <div class="btn-group" data-toggle="buttons">
-                                                        <?php
-                                                        // Para cada característica asociada a una categoría, busco los diferentes valores cargados en MongoDB
-                                                        $criteria = new EMongoCriteria(array(
-                                                            'conditions'=>array(
-                                                                'caracteristica_id'=>array('==' => $c_caracteristica->caracteristica->id), 
-                                                                'producto_id'=>array('==' => $model->id), 
-                                                            ),
-                                                            'sort'=>array('valor' => EMongoCriteria::SORT_ASC),
-                                                        ));
-                                                        //$criteria->condition = "caracteristica_id = ".$c_caracteristica->caracteristica->id.' AND producto_id = '.$model->id;
-                                                        $caracteristicas_nosql = Caracteristica::model()->findAll($criteria);
-                                                        
-                                                        //$caracteristicas_nosql = Caracteristica::model()->findAllByAttributes(array('caracteristica_id'=>$c_caracteristica->caracteristica->id, 'producto_id'=>$model->id), array('order'=>'valor'));
-                                                        // En MongoDB hay muchos valores repetidos para cada característica, es necesario guardar valores únicos en $printed
-                                                        $printed = array();
-                                                        foreach ($caracteristicas_nosql as $c_nosql) {
-                                                            if(!in_array($c_nosql->valor, $printed)){
-                                                                $printed[] = $c_nosql->valor;
-                                                                //echo $c_nosql->valor.'<br/>';
-                                                                
-                                                            }
-                                                        }
+                                        // Para cada categoría busco las características
+                                        foreach ($categoria_caracteristicas as $c_caracteristica) {
+                                            if(!in_array($c_caracteristica->caracteristica->nombre, $caract)){ 
+                                                array_push($caract,$c_caracteristica->caracteristica->nombre);
 
-                                                        // Muestro los valores guardados en $printed como características disponibles para este producto
-                                                        foreach ($printed as $valor) {
-                                                            $active = '';
-                                                            foreach ($caracteristicas_menor_precio as $caracteristica_mp) {
-                                                                /*print_r($caracteristica_mp->_id);
-                                                                echo '<br/></br>';
-                                                                print_r($c_nosql->_id);*/
-                                                                //echo $caracteristica_mp->caracteristica_id.' == '.$c_nosql->caracteristica_id.'</br>';
-                                                                //echo $caracteristica_mp->valor.' == '.$c_nosql->valor.'<br/></br>';
-                                                                if($caracteristica_mp->caracteristica_id == $c_caracteristica->caracteristica_id && $caracteristica_mp->valor == $valor){
-                                                                    $active = 'active';
+                                                $caracteristica_producto = CaracteristicasProducto::model()->findByAttributes(array('producto_id'=>$model->id, 'caracteristica_id'=>$c_caracteristica->caracteristica_id));;
+                                                
+                                                if($caracteristica_producto){
+                                                    ?>
+                                                    <dt class="padding_xsmall"><?php echo $c_caracteristica->caracteristica->nombre; ?></dt>
+                                                    <dd class="padding_xsmall">
+                                                        <div class="btn-group" data-toggle="buttons">
+                                                            <?php
+                                                            // Para cada característica asociada a una categoría, busco los diferentes valores cargados en MongoDB
+                                                            $criteria = new EMongoCriteria(array(
+                                                                'conditions'=>array(
+                                                                    'caracteristica_id'=>array('==' => $c_caracteristica->caracteristica->id), 
+                                                                    'producto_id'=>array('==' => $model->id), 
+                                                                ),
+                                                                'sort'=>array('valor' => EMongoCriteria::SORT_ASC),
+                                                            ));
+                                                            //$criteria->condition = "caracteristica_id = ".$c_caracteristica->caracteristica->id.' AND producto_id = '.$model->id;
+                                                            $caracteristicas_nosql = Caracteristica::model()->findAll($criteria);
+                                                            
+                                                            //$caracteristicas_nosql = Caracteristica::model()->findAllByAttributes(array('caracteristica_id'=>$c_caracteristica->caracteristica->id, 'producto_id'=>$model->id), array('order'=>'valor'));
+                                                            // En MongoDB hay muchos valores repetidos para cada característica, es necesario guardar valores únicos en $printed
+                                                            $printed = array();
+                                                            foreach ($caracteristicas_nosql as $c_nosql) {
+                                                                if(!in_array($c_nosql->valor, $printed)){
+                                                                    $printed[] = $c_nosql->valor;
+                                                                    //echo $c_nosql->valor.'<br/>';
+                                                                    
                                                                 }
                                                             }
-                                                            ?>
-                                                            <label class="btn btn-default radio_caracteristicas <?php echo $active; ?>" >
-                                                                <input type="radio" name="<?php //echo $caracteristica_sql->id; ?>" id="<?php //echo $c_nosql->_id; ?>" value="<?php echo $valor; ?>" /> <?php echo $valor; ?>
-                                                            </label>
-                                                            <?php
-                                                        }
-                                                        ?>
-                                                        
-                                                    </div>
-                                                </dd>
-                                                <?php
-                                            }
-                                            //print_r($c_caracteristica);
-                                            //echo '<br/><br/>';
 
+                                                            // Muestro los valores guardados en $printed como características disponibles para este producto
+                                                            foreach ($printed as $valor) {
+                                                                $active = '';
+                                                                foreach ($caracteristicas_menor_precio as $caracteristica_mp) {
+                                                                    /*print_r($caracteristica_mp->_id);
+                                                                    echo '<br/></br>';
+                                                                    print_r($c_nosql->_id);*/
+                                                                    //echo $caracteristica_mp->caracteristica_id.' == '.$c_nosql->caracteristica_id.'</br>';
+                                                                    //echo $caracteristica_mp->valor.' == '.$c_nosql->valor.'<br/></br>';
+                                                                    if($caracteristica_mp->caracteristica_id == $c_caracteristica->caracteristica_id && $caracteristica_mp->valor == $valor){
+                                                                        $active = 'active';
+                                                                    }
+                                                                }
+                                                                ?>
+                                                                <label class="btn btn-default radio_caracteristicas <?php echo $active; ?>" >
+                                                                    <input type="radio" name="<?php //echo $caracteristica_sql->id; ?>" id="<?php //echo $c_nosql->_id; ?>" value="<?php echo $valor; ?>" /> <?php echo $valor; ?>
+                                                                </label>
+                                                                <?php
+                                                            }
+                                                            ?>
+                                                            
+                                                        </div>
+                                                    </dd>
+                                                    <?php
+                                                }
+                                                //print_r($c_caracteristica);
+                                                //echo '<br/><br/>';
+
+                                            }
                                         }
                                     }
-                                }
-                         
-                                //print_r($model->categorias);
-                                // $caracteristicas_all almacena todas las caracteristicas encontradas en nosql para este producto, 
-                                /*$caracteristicas_all = array();
-                                $caracteristicas_agrupadas = array();
-                                foreach ($inventarios_all as $inventario) {
-                                    $caracteristicas_nosql = Caracteristica::model()->findAllByAttributes(array('inventario_id'=>$inventario->id));
-                                    foreach ($caracteristicas_nosql as $caracteristica) {
-                                        //if(isset($características_all[$caracteristica->caracteristica->id])){
-                                            $caracteristicas_all[$caracteristica->caracteristica_id][] = $caracteristica;
-                                            if(!in_array($caracteristica->valor, $caracteristicas_agrupadas)){
-                                                $caracteristicas_agrupadas[] = $caracteristica->valor;
-                                            }
-                                        //}
-                                    }
-                                    
-                                }*/
 
-                                //print_r($caracteristicas_all);
-
-                                // Lógica nueva, esperemos que funcione
-
-                               /* foreach ($caracteristicas_agrupadas as $value) {
-                                    
-                                }
+                                    } // llave del parametro de las caracteristicas
 
 
-
-                                // Lógica anterior, si esta no funciona descomentar esto y comenzar de nuevo
-
-                                /*foreach ($caracteristicas_all as $key => $caracteristica_all) {
-                                    //echo $key.' --> ';
-                                    //var_dump($caracteristica_all);
-                                    //echo 'br/><br/>';
-                                    //echo 'Key: '.$key.'<br/>';
-                                    //print_r($caracteristicas_nosql);
-                                    $caracteristica_sql = CaracteristicasSql::model()->findByPk($key);
-                                    //$caracteristicas_array = array();
-                                    ?>
-                                    <dt class="padding_xsmall"><?php echo $caracteristica_sql->nombre; ?></dt>
-                                    <dd class="padding_xsmall">
-                                        <div class="btn-group" data-toggle="buttons">
-                                            <?php
-                                            foreach ($caracteristica_all as $c_nosql) {
-                                                /*echo $key.' --> ';
-                                                var_dump($c_nosql);
-                                                echo '<br/><br/>';
-                                                //$caracteristicas_array[] = array('label'=>$value, 'value'=>$key);
-                                                $active = '';
-                                                foreach ($caracteristicas_menor_precio as $caracteristica_mp) {
-                                                    /*print_r($caracteristica_mp->_id);
-                                                    echo '<br/></br>';
-                                                    print_r($c_nosql->_id);
-                                                    //echo $caracteristica_mp->caracteristica_id.' == '.$c_nosql->caracteristica_id.'</br>';
-                                                    //echo $caracteristica_mp->valor.' == '.$c_nosql->valor.'<br/></br>';
-                                                    if($caracteristica_mp->caracteristica_id == $c_nosql->caracteristica_id && $caracteristica_mp->valor == $c_nosql->valor && $caracteristica_mp->_id == $c_nosql->_id){
-                                                        $active = 'active';
-                                                    }
+                                    //print_r($model->categorias);
+                                    // $caracteristicas_all almacena todas las caracteristicas encontradas en nosql para este producto, 
+                                    /*$caracteristicas_all = array();
+                                    $caracteristicas_agrupadas = array();
+                                    foreach ($inventarios_all as $inventario) {
+                                        $caracteristicas_nosql = Caracteristica::model()->findAllByAttributes(array('inventario_id'=>$inventario->id));
+                                        foreach ($caracteristicas_nosql as $caracteristica) {
+                                            //if(isset($características_all[$caracteristica->caracteristica->id])){
+                                                $caracteristicas_all[$caracteristica->caracteristica_id][] = $caracteristica;
+                                                if(!in_array($caracteristica->valor, $caracteristicas_agrupadas)){
+                                                    $caracteristicas_agrupadas[] = $caracteristica->valor;
                                                 }
-                                                ?>
-                                                <label class="btn btn-default <?php echo $active; ?>">
-                                                    <input type="radio" name="<?php echo $caracteristica_sql->id; ?>" id="<?php echo $c_nosql->_id; ?>" value="<?php echo $c_nosql->valor; ?>"> <?php echo $c_nosql->valor; ?>
-                                                </label>
-                                                <!-- <a href="#" class="btn-default btn"><?php //echo $value; ?></a> -->
+                                            //}
+                                        }
+                                        
+                                    }*/
+
+                                    //print_r($caracteristicas_all);
+
+                                    // Lógica nueva, esperemos que funcione
+
+                                   /* foreach ($caracteristicas_agrupadas as $value) {
+                                        
+                                    }
+
+
+
+                                    // Lógica anterior, si esta no funciona descomentar esto y comenzar de nuevo
+
+                                    /*foreach ($caracteristicas_all as $key => $caracteristica_all) {
+                                        //echo $key.' --> ';
+                                        //var_dump($caracteristica_all);
+                                        //echo 'br/><br/>';
+                                        //echo 'Key: '.$key.'<br/>';
+                                        //print_r($caracteristicas_nosql);
+                                        $caracteristica_sql = CaracteristicasSql::model()->findByPk($key);
+                                        //$caracteristicas_array = array();
+                                        ?>
+                                        <dt class="padding_xsmall"><?php echo $caracteristica_sql->nombre; ?></dt>
+                                        <dd class="padding_xsmall">
+                                            <div class="btn-group" data-toggle="buttons">
                                                 <?php
-                                            }
-                                            /*$this->widget('bootstrap.widgets.TbButtonGroup', array(
-                                                'buttonType' => 'button',
-                                                'type' => 'info',
-                                                'toggle' => 'radio', // 'checkbox' or 'radio'
-                                                'buttons' => $caracteristicas_array,
-                                            ));*/
-                                            ?>
-                                        <!-- </div>
-                                    </dd> -->
-                                    <?php
-                                /*}*/
+                                                foreach ($caracteristica_all as $c_nosql) {
+                                                    /*echo $key.' --> ';
+                                                    var_dump($c_nosql);
+                                                    echo '<br/><br/>';
+                                                    //$caracteristicas_array[] = array('label'=>$value, 'value'=>$key);
+                                                    $active = '';
+                                                    foreach ($caracteristicas_menor_precio as $caracteristica_mp) {
+                                                        /*print_r($caracteristica_mp->_id);
+                                                        echo '<br/></br>';
+                                                        print_r($c_nosql->_id);
+                                                        //echo $caracteristica_mp->caracteristica_id.' == '.$c_nosql->caracteristica_id.'</br>';
+                                                        //echo $caracteristica_mp->valor.' == '.$c_nosql->valor.'<br/></br>';
+                                                        if($caracteristica_mp->caracteristica_id == $c_nosql->caracteristica_id && $caracteristica_mp->valor == $c_nosql->valor && $caracteristica_mp->_id == $c_nosql->_id){
+                                                            $active = 'active';
+                                                        }
+                                                    }
+                                                    ?>
+                                                    <label class="btn btn-default <?php echo $active; ?>">
+                                                        <input type="radio" name="<?php echo $caracteristica_sql->id; ?>" id="<?php echo $c_nosql->_id; ?>" value="<?php echo $c_nosql->valor; ?>"> <?php echo $c_nosql->valor; ?>
+                                                    </label>
+                                                    <!-- <a href="#" class="btn-default btn"><?php //echo $value; ?></a> -->
+                                                    <?php
+                                                }
+                                                /*$this->widget('bootstrap.widgets.TbButtonGroup', array(
+                                                    'buttonType' => 'button',
+                                                    'type' => 'info',
+                                                    'toggle' => 'radio', // 'checkbox' or 'radio'
+                                                    'buttons' => $caracteristicas_array,
+                                                ));*/
+                                                ?>
+                                            <!-- </div>
+                                        </dd> -->
+                                        <?php
+                                    /*}*/
 
-                                //print_r($caracteristicas_menor_precio);
-
-                                ?>
-
-                                
-                                
-                                <?php 
-                                
+                                    //print_r($caracteristicas_menor_precio);                                
                                 
 								                                
-                                ?> 
+                                ?>
                                 <dt class="padding_xsmall">Fecha estimada de entrega</dt>
                                 <dd class="padding_xsmall">3-8 días</dd>                        
                             </dl>
@@ -440,7 +443,7 @@ Yii::app()->clientScript->registerMetaTag(Yii::app()->getBaseUrl(true).str_repla
                 <a href="#" class="btn btn-success btn-block btn-lg" onclick="agregar_bolsa()">Comprar</a>
                 <div class="text_align_center margin_top_small">
                     <?php
-	                if(!Yii::app()->user->isGuest){
+	                if(!Yii::app()->user->isGuest){ 
 	                	
 		                $this->widget('bootstrap.widgets.TbButton', array(
 							'icon'=>'glyphicon glyphicon-heart',
