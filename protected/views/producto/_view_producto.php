@@ -225,21 +225,51 @@ Yii::app()->clientScript->registerMetaTag(Yii::app()->getBaseUrl(true).str_repla
                         <div class="col-lg-12">
                             <dl class="dl-horizontal">
 								
-								<dt class="padding_xsmall oferta lean" style="display: none;"></dt>
-								<dd class="padding_xsmall oferta" style="display: none;"> ¡EN OFERTA! </dd>
-								
-								<dt class="padding_xsmall fechas" style="display: none;">Hasta: </dt>
-								<dd class="padding_xsmall fecha" style="display: none;"></dd>
-								
+                                <?php
+                                if($inventario->hasFlashSale()){
+                                    $flash = Flashsale::model()->findByAttributes(array('inventario_id'=>$inventario->id));
+                                ?>
+								    <dt class="padding_xsmall oferta lean"></dt>
+								    <dd class="padding_xsmall oferta"> ¡EN OFERTA! </dd>
+
+                                    <dt class="padding_xsmall fechas">Hasta:</dt>
+    								<dd class="padding_xsmall fecha"><?php echo date('d-m-Y',strtotime($flash->fecha_fin)); ?> ó </dd>
+								<?php
+                                }
+                                ?>
                             	<dt class="padding_xsmall">Disponibilidad </dt>
-                                <dd class="padding_xsmall text-danger"> Sólo quedan <span id='inventario_cantidad'><?php echo $inventario_menor_precio->cantidad; ?><span></dd>
+                                <dd class="padding_xsmall text-danger"> Sólo quedan
+                                    <?php if($inventario->hasFlashSale()){
+                                        echo $flash->cantidad;
+                                    }else{
+                                ?>
+                                    <span id='inventario_cantidad'>
+                                        <?php echo $inventario->cantidad; ?>
+                                    <span>
+                                        <?php } ?>
+                                </dd>
                             	
-                               <!-- <dt class="padding_xsmall">Precio en tiendas</dt>
+                                <?php if($inventario->hasFlashSale()){
+                                ?>
+                                    <dt class="padding_xsmall oferta lean">Precio Anterior:</dt>
+                                    <dd class="padding_xsmall oferta" style="text-decoration: line-through;">Bs. <?php echo $inventario->precio; ?></dd>
 
-                                <dd class="padding_xsmall precio_tienda">Bs. <?php echo $inventario_menor_precio->precio_tienda; ?></dd> -->
+                                    <dt class="padding_xsmall oferta lean">Descuento:</dt>
+                                    <dd class="padding_xsmall oferta">Bs. <?php echo $flash->descuento; ?></dd>
+                                <?php }
+                                ?>
+
                                 <dt class="padding_xsmall">Precio</dt>
-                                <dd class="padding_xsmall precio">Bs. <?php echo $inventario_menor_precio->precio; ?></dd>
-
+                                <dd class="padding_xsmall precio">Bs.
+                                <?php
+                                    if($inventario->hasFlashSale()){
+                                        echo $inventario->precio-$flash->descuento;
+                                    }else{
+                                        echo $inventario->precio;
+                                    }
+                                    ?>
+                                </dd>
+                                    
                                 <!-- <dt class="padding_xsmall">Ahorras</dt>
                                 <dd class="padding_xsmall descuento">Bs. 
                                 <?php	
@@ -437,7 +467,15 @@ Yii::app()->clientScript->registerMetaTag(Yii::app()->getBaseUrl(true).str_repla
         <section class="col-md-3">
             <div>
                 <div>
-                    <h2><small>Bs.</small><?php echo $inventario_menor_precio->precio; ?></span></h2>
+                    <h2><small>Bs.</small>
+                    <?php
+                        if($inventario->hasFlashSale()){
+                            echo $inventario->precio-$flash->descuento; 
+                        }else{
+                            echo $inventario->precio;
+                        }
+                    ?>
+                    </span></h2>
                 </div>
                 <h4>Costo de Envio: <span class="text-success">Gratis</span></h4>
                 <a href="#" class="btn btn-success btn-block btn-lg" onclick="agregar_bolsa()">Comprar</a>

@@ -1,8 +1,8 @@
   <!-- CONTENIDO ON -->
-    <div class="container-fluid" style="padding: 0 15px;">
+<div class="container-fluid" style="padding: 0 15px;">
 
 <?php
-$this->breadcrumbs=array(
+$this->breadcrumbs=array( 
 	'Bolsa',
 );
 

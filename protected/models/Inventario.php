@@ -257,5 +257,14 @@ class Inventario extends CActiveRecord
 		
 		return $rangos;
 	}
-	
+
+	public function hasFlashSale(){
+		$tiene = Flashsale::model()->findByAttributes(array('inventario_id'=>$this->id));
+		if(isset($tiene->descuento)){
+			return TRUE;
+		}else{
+			return FALSE;
+		}
+	}
+
 }
