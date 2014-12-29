@@ -246,7 +246,7 @@ Yii::app()->clientScript->registerMetaTag(Yii::app()->getBaseUrl(true).str_repla
                                     <span id='inventario_cantidad'>
                                         <?php echo $inventario->cantidad; ?>
                                     <span>
-                                        <?php } ?>
+                                        <?php } ?> 
                                 </dd>
                             	
                                 <?php if($inventario->hasFlashSale()){
