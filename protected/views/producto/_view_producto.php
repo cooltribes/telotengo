@@ -527,9 +527,7 @@ Yii::app()->clientScript->registerMetaTag(Yii::app()->getBaseUrl(true).str_repla
          <hr/>
     
     <div class="well">
-    <div class="row padding_left_large padding_right_large "> 
-        <div>
-    
+
     <?php
     
     if(!Yii::app()->user->isGuest)
@@ -550,17 +548,19 @@ Yii::app()->clientScript->registerMetaTag(Yii::app()->getBaseUrl(true).str_repla
         ));
     ?> 
         
-    <div class="form-group">
-        <?php echo $form->textAreaRow($pregunta,'pregunta',array('class'=>'form-control','maxlength'=>350)); ?>
-    </div>
+  
+        <?php echo $form->textAreaRow($pregunta,'pregunta',array('class'=>'form-control','maxlength'=>350, 'style'=>'resize:none','value'=>"Escribe aquí tu pregunta",'labelOptions'=>array('style'=>'display:none'))); ?>
+
     
     <?php echo CHtml::hiddenField('id', $model->id, array('id'=>'id')); ?>
     
-    <div class="form-actions">
+  <div class="margin_bottom_large">
         <?php $this->widget('bootstrap.widgets.TbButton', array(
             'buttonType'=>'submit',
             'type'=>'primary',
             'label'=>'Preguntar',
+            'htmlOptions'=>array( 'class'=>'pull-right margin_bottom margin_top_small' )
+           
         )); ?>
     </div>
     
@@ -568,35 +568,35 @@ Yii::app()->clientScript->registerMetaTag(Yii::app()->getBaseUrl(true).str_repla
 
 ?>
 
-    </div>
-    </div>  
-    <hr/>
+ 
+   
 <?php } // is not guest ?>
 
-    <h4>Anteriores</h4>
-    
     <?php
         $preguntas = Pregunta::model()->findAllByAttributes(array('producto_id'=>$model->id));
     
         if(count($preguntas)>0){
+           
             foreach($preguntas as $preg){
-                echo '<b>Pregunta:</b> '.$preg->pregunta;
-                echo " - <small>".date('d/m/Y',strtotime($preg->fecha))."</small>";
+                echo "<div class='well' style='background-color:#F5FAFF'>".$preg->pregunta;
+                echo " - <small>Preguntado el ".date('d/m/Y',strtotime($preg->fecha))."</small><hr/>";
                 
                 $respuestas = Respuesta::model()->findAllByAttributes(array('pregunta_id'=>$preg->id));
                 
                 if(count($respuestas)>0){
                     foreach($respuestas as $respuesta){
-                        echo '<div class="row padding_left_large padding_right_large ">';
-                        echo "Respuesta: ".$respuesta->comentario;
-                        echo " - <small>".$respuesta->fecha."</small>";
+                        echo '<div class="row padding_left_large padding_right_large text_align_right">';
+                        echo "<b>".$respuesta->comentario."</b>";
+                        echo " - <small> Respondido el ".$respuesta->fecha."</small>";
                         echo '</div>';                  
                     }
                 }
                 
-                echo "<hr/>";
+                echo "</div>";
                 
             }
+
+
         }
         else {
             echo "Este producto aún no tiene preguntas.";
@@ -974,6 +974,17 @@ Yii::app()->clientScript->registerMetaTag(Yii::app()->getBaseUrl(true).str_repla
               },
         });
     }
+</script>
+
+<script>
+$( "#Pregunta_pregunta" ).focusin(function() {
+    $( "#Pregunta_pregunta" ).val('');      
+});
+$( "#Pregunta_pregunta" ).focusout(function() {
+    if($( "#Pregunta_pregunta" ).val()=='')  
+        $( "#Pregunta_pregunta" ).val('Escribe aquí tu pregunta');      
+ 
+});
 </script>
 
 <!-- CONTENIDO OFF -->
