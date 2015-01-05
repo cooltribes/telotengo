@@ -15,7 +15,7 @@
                         <div>
                             <p class="well well-sm"> Número de pedido: <span><?php echo $model->id; ?></span> </p>
                             <div class="padding_xsmall">
-                                Subtotal: <span><?php echo $model->total; ?> Bs.</span>
+                                Subtotal: <span><?php echo $model->total-$model->envio-$model->iva; ?> Bs.</span>
                             </div>
                             <div class="padding_xsmall">
                                 Envio: <span><?php echo $model->envio; ?> Bs.</span>
@@ -72,9 +72,16 @@
                                         <td><?php echo $im; ?></td>
                                         <td>
                                             <div><?php echo $orden_inventario->inventario->producto->nombre; ?></div>
-                                            <div><?php echo $caracteristicas; ?></div>
                                         </td>
-                                        <td><?php echo $orden_inventario->precio; ?> Bs.</td>
+
+                                        <td><?php 
+                                            if($orden_inventario->inventario->hasFlashSale()){
+                                                echo $orden_inventario->inventario->flashSalePrice();
+                                            }else{ // <td>'.$inventario->precio.' Bs.</td>
+                                                echo $orden_inventario->precio;
+                                            } 
+
+                                        //echo $orden_inventario->precio; ?> Bs.</td>
                                         <td><?php echo $orden_inventario->cantidad; ?></td>
                                     </tr>
                                     <?php
@@ -88,7 +95,7 @@
                         <a href="<?php echo Yii::app()->baseUrl; ?>" class="btn btn-success btn-lg">Seguir Comprando</a>
                     </div>
 
-            </div>
+            </div> 
             <!-- COLUMNA PRINCIPAL DERECHA OFF // -->
         </div>
     </div>

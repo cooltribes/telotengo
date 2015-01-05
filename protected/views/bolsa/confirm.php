@@ -370,28 +370,27 @@
             echo CHtml::hiddenField('envio', $envio, array('id'=>'envio'));
             echo CHtml::hiddenField('balance', 0, array('id'=>'balance'));
             echo CHtml::hiddenField('balanceUsado', 0, array('id'=>'balanceUsado'));
+
 		}
 			?>                       	          
-			
-			
             
         </div>
         <div class="col-sm-4 col-sm-offset-1">
             <h3> Resumen</h3>
-            
-               
-            
-            
+            <?php
+                $iva = $subtotal * 0.12;
+                CHtml::hiddenField('iva', $iva, array('id'=>'iva'));
+            ?>
             <div class="padding_xsmall">
-                <span>Subtotal: <strong><?php echo $subtotal; ?> Bs.</strong></span>
+                <span>Subtotal: <strong><?php echo $subtotal-$iva; ?> Bs.</strong></span>
             </div>
             <div class="padding_xsmall">
                 <span>Envio: <strong><span class="envio">0,00</span> Bs.</strong></span>
             </div>
             <div class="padding_xsmall">
-                <span>IVA: <strong>0,00 Bs.</strong></span>
+                <span>IVA: <strong><?php echo $iva; ?> Bs.</strong></span>
             </div>
-            <div id="total_balance" style="display: none;">
+            <div id="total_balance" style="display: none;">5
             </div>
             <div id="total_compra">
                 <h4>Total: <strong><span class="total"><?php echo $subtotal; ?></span> Bs.</strong> </h4>
@@ -510,6 +509,7 @@
         if($(this).val() != ''){
             $('#addressHid').val($(this).val());
             var path = location.pathname.split('/');
+            var valorEnvioAnterior = $('#envio').val();
             $.ajax({
                     url: "<?php echo Yii::app()->createUrl('bolsa/calcularEnvio'); ?>",
                     type: "post",
@@ -520,9 +520,11 @@
                         var envio = parseFloat(data.subtotal.replace(",", "."));
                         $('.envio').html(envio);
                         $('#envio').val(envio);
-                        var total = parseFloat(data.subtotal.replace(",", ".")) + parseFloat($('#subtotal').val().replace(",", "."));
-                        $('#subtotal').val( parseFloat($('#subtotal').val()) + parseFloat(envio) );
-                        $('.total').html(total);
+                        //alert(valorEnvioAnterior);
+                        //var total = parseFloat(data.subtotal.replace(",", ".")) + parseFloat($('#subtotal').val().replace(",", "."));
+                        var total = envio + parseFloat($('#subtotal').val().replace(",", ".")) - valorEnvioAnterior;
+                        $('#subtotal').val( parseFloat($('#subtotal').val()) + parseFloat(envio) - valorEnvioAnterior );
+                        $('.total').html(total); 
                     },
             });
         }

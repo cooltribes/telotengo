@@ -468,10 +468,12 @@ class BolsaController extends Controller
 			}
 		}
 
+		$iva = ($_POST['subtotal']-$_POST['envio'])*0.12; // iva
+
 		$orden = new Orden();
 		$orden->descuento = 0;
-		$orden->iva = 0;
-		$orden->total = $_POST['subtotal']; // $subtotal + $_POST['envio']; //falta agregar el iva
+		$orden->iva = $iva;
+		$orden->total = $_POST['subtotal'];
 		$orden->fecha = date('Y-m-d H:i:s');
 		$orden->users_id = intval($user->id);
 		$orden->envio = $_POST['envio'];

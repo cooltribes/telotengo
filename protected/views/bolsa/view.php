@@ -120,19 +120,16 @@ $subtotal = 0;
                 ?>
                 </section>
                 <section class="col-sm-4">
-                    
+                    <?php $iva = $subtotal * 0.12; ?>
                     <div class="well">
                         <h3>Resumen</h3>
                         <hr>
                         <div class="text_align_center">
                             <div class="padding_xsmall">
-                                Subtotal: <span><?php echo $subtotal; ?> Bs.</span>
+                                Subtotal: <span><?php echo $subtotal-$iva; ?> Bs.</span>
                             </div>
                             <div class="padding_xsmall">
-                                Envio: <span>0,00 Bs.</span>
-                            </div>
-                            <div class="padding_xsmall">
-                                IVA: <span>0,00 Bs.</span>
+                                IVA: <span><?php echo $iva; ?> Bs.</span>
                             </div>
                             <div class="padding_small">
                                 <h4>
