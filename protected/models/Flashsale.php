@@ -62,10 +62,10 @@ class Flashsale extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'cantidad' => 'Cantidad',
-			'descuento' => 'Descuento',
+			'descuento' => 'Descuento sobre el precio',
 			'fecha_inicio' => 'Fecha Inicio',
 			'fecha_fin' => 'Fecha Fin',
-			'estado' => 'Estado',
+			'estado' => 'Estado', 
 			'inventario_id' => 'Inventario',
 		);
 	}

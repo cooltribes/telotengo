@@ -1,8 +1,8 @@
   <!-- CONTENIDO ON -->
-    <div class="container-fluid" style="padding: 0 15px;">
+<div class="container-fluid" style="padding: 0 15px;">
 
 <?php
-$this->breadcrumbs=array(
+$this->breadcrumbs=array( 
 	'Bolsa',
 );
 
@@ -48,10 +48,14 @@ $subtotal = 0;
 								if($inventario->estado ==1){
 								
 									$principal = Imagenes::model()->findByAttributes(array('orden'=>1,'producto_id'=>$inventario->producto_id));
-	    							
-									$producto = Producto::model()->findByPk($inventario->producto_id);
-									$subtotal += ($inventario->precio)*($uno->cantidad);
-																		
+	    							$producto = Producto::model()->findByPk($inventario->producto_id);
+									
+									if($inventario->hasFlashSale()){
+										$subtotal += ($inventario->flashSalePrice())*($uno->cantidad);
+									}else{
+										$subtotal += ($inventario->precio)*($uno->cantidad);
+									}	
+
 	    							if($principal->getUrl())
 	    								$im = CHtml::image(str_replace(".","_thumb.",$principal->getUrl()), "Preview", array("height"=>"100px", "width" => "100px",'class'=>'img-responsive'));
 	    							else 
@@ -71,20 +75,29 @@ $subtotal = 0;
 	    								}
 	    								$cont++;
 	    							}
-									
-									echo ' <tr>
+									// <div>'.$caracteristicas.'</div>';
+									echo '
+										<tr>
 		                                <td>'.$im.'</td>
 		                                <td>
-		                                    <div>'.$producto->nombre.' '.$marca->nombre.'</div>
-		                                    <div>'.$caracteristicas.'</div>
-		                                </td>
-		                                <td>'.$inventario->precio.' Bs.</td>
+		                                    <div>'.$producto->nombre.' '.$marca->nombre.'</div>';
+		                                    
+		                                    if($inventario->hasFlashSale())
+		                                    	echo '<div>Aplica Oferta</div>';
+
+		                                    echo '
+		                                </td>';
+		                                if($inventario->hasFlashSale()){
+		                                	echo'<td>'.$inventario->flashSalePrice().' Bs.</td>';
+		                                }else{
+		                                echo '	
+		                                	<td>'.$inventario->precio.' Bs.</td>';
+		                                }
+
+		                                echo '
 		                                <td>'.$uno->cantidad.'</td>
 		                                <td>
-		                                    <!-- <div>
-		                                        <a href="">Editar</a>
-		                                    </div> -->
-		                                    <div>
+		                                	<div>
 		                                        <a style="cursor: pointer" onclick="eliminar('.$inventario->id.')" >Eliminar</a>
 		                                    </div>
 		                           		</td>
@@ -107,19 +120,16 @@ $subtotal = 0;
                 ?>
                 </section>
                 <section class="col-sm-4">
-                    
+                    <?php $iva = $subtotal * 0.12; ?>
                     <div class="well">
                         <h3>Resumen</h3>
                         <hr>
                         <div class="text_align_center">
                             <div class="padding_xsmall">
-                                Subtotal: <span><?php echo $subtotal; ?> Bs.</span>
+                                Subtotal: <span><?php echo $subtotal-$iva; ?> Bs.</span>
                             </div>
                             <div class="padding_xsmall">
-                                Envio: <span>0,00 Bs.</span>
-                            </div>
-                            <div class="padding_xsmall">
-                                IVA: <span>0,00 Bs.</span>
+                                IVA: <span><?php echo $iva; ?> Bs.</span>
                             </div>
                             <div class="padding_small">
                                 <h4>
