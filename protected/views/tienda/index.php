@@ -4,7 +4,7 @@
 	
 <?php // $this->breadcrumbs=array(	'Tienda',);?>
 <div class="container">
-<div class="row-fluid">
+<div class="row-fluid margin_top">
     
 <?php
 

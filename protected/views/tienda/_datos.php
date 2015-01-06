@@ -12,16 +12,16 @@
                     echo "<a href='".Yii::app()->baseUrl."/producto/detalle/".$data->id."''>".$im."</a>";
                     echo "</div>";
                 }
-            echo '<a href="'.Yii::app()->baseUrl.'/producto/detalle/'.$data->id.'"><h3 class="productName no_margin_top no_margin_bottom"> '.$data->nombre.' </h3></a>';
             $marca = Marca::model()->findByPk($data->marca_id);
-    	   
-            if($data->hasFlashsale()){
-                $a = "marcas/".$marca->nombre;
-                echo '<small><span class="muted">por </span>'.CHtml::link($marca->nombre,array($a)).'<p class="lead">Aplica oferta.</p></small>';
-            }else{
-                $a = "marcas/".$marca->nombre;
-                echo '<small><span class="muted">por </span>'.CHtml::link($marca->nombre,array($a)).'</small>';
-            }
+             $a = "marcas/".$marca->nombre;
+    
+            echo '
+                    <h3 class="productName no_margin_top no_margin_bottom"><a href="'.Yii::app()->baseUrl.'/producto/detalle/'.$data->id.'"> '.$data->nombre.'</a><br/><small><span class="muted">por </span>'.CHtml::link($marca->nombre,array($a)).'</small></h3>';
+            
+    	   echo '<p class="lead margin_bottom_small">';
+            if($data->hasFlashsale())
+                echo 'Aplica oferta';
+            echo '</p>';
         							
             echo '<p>Bs.<big>'.$inventario_menor_precio->precio.'</big><a role="button" href="'.Yii::app()->baseUrl.'/producto/detalle/'.$data->id.'" 
                     class="btn btn-xs btn-danger pull-right">Comprar ahora »</a>';

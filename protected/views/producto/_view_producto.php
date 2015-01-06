@@ -505,10 +505,10 @@ Yii::app()->clientScript->registerMetaTag(Yii::app()->getBaseUrl(true).str_repla
                 'validateOnSubmit'=>true, 
             ),
             'htmlOptions' => array(
-                'enctype' => 'multipart/form-data',
+                'enctype' => 'multipart/form-data', 
             ),
         ));
-    ?> 
+    ?>  
         
   
         <?php echo $form->textAreaRow($pregunta,'pregunta',array('class'=>'form-control','maxlength'=>350, 'style'=>'resize:none','value'=>"Escribe aquí tu pregunta",'labelOptions'=>array('style'=>'display:none'))); ?>

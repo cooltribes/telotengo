@@ -276,8 +276,27 @@ body{
             min-height: 3em;       /* height is 2x line-height, so two lines will display */
             overflow: hidden;  /* prevents extra lines from being visible */
         }
-   
+     .lead{
+       height:28px;
+       margin:0px;
+       line-height:28px;  
+     }
+     h3{
+       height:80px;
+       small{
+         
+         .muted{
+            color:#000;
+            font-size:75%;
+         }
+         a{ font-size:75%;}
+       }
+    }
    }
+   .caja:hover{
+     box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+   }
+   
     
 
 /* CAJA DE PRODUCTO OFF
@@ -444,6 +463,7 @@ body{
       
         .no_list_style, ul{
             list-style-type: none;
+            padding-left:10px;
              
         }
         .clientService{
@@ -503,7 +523,16 @@ body{
 
 //================ DETALLE PRODUCTO =====================
 
-
+#marca-listado{
+  max-height:718px;
+  overflow-y:scroll;
+  direction: rtl;
+  overflow-x:auto;
+  text-align:left;
+  ul{
+    padding: 0 0 0 10px;
+  }
+}
 .thumbnail{
   height:65px; 
   overflow:hidden;
