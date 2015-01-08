@@ -194,6 +194,11 @@ class SiteController extends Controller
 	public function actionLicencias(){
 		$this->render('licencias');
 	}
+    public function actionMailTest(){
+        $body="BODY";
+        $undercomment="UNDERCOMMENT";
+        $this->render('mail_template',array('body'=>$body,'undercomment'=>$undercomment));
+    }
 
 		/**
 	 * Arma el cuerpo del mensaje que se va a mostrar y lo devuelve como texto para colocarlo en el frontend
