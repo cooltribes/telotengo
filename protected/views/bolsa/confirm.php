@@ -102,7 +102,8 @@
 								if(data.div.indexOf("div") != -1){ // Si encuentra "div" se guardó la dirección
 									$("#addresses").append(data.div);
                                     $("#addressHid").val(data.id);
-									$("#address-form").find("input[type=text], select").val("");
+                                    $("#address-form").find("input[type=text], select").val("");
+                                    calcular_envio(data.id,$("#envio").val());
                                    
 								}  
 								else{									
@@ -379,7 +380,7 @@
             <h3> Resumen</h3>
             <?php
                 $iva = $subtotal * 0.12;
-                CHtml::hiddenField('iva', $iva, array('id'=>'iva'));
+                echo CHtml::hiddenField('iva', $iva, array('id'=>'iva'));
             ?>
             <div class="padding_xsmall">
                 <span>Subtotal: <strong><?php echo $subtotal-$iva; ?> Bs.</strong></span>
@@ -508,12 +509,16 @@
     $('.address_radio').change(function(){
         if($(this).val() != ''){
             $('#addressHid').val($(this).val());
-            var path = location.pathname.split('/');
-            var valorEnvioAnterior = $('#envio').val();
-            $.ajax({
+            calcular_envio($(this).val(),$('#envio').val());
+        }
+    });
+    
+    function calcular_envio(dirId,valorEnvioAnterior){
+                    var path = location.pathname.split('/');
+        $.ajax({
                     url: "<?php echo Yii::app()->createUrl('bolsa/calcularEnvio'); ?>",
                     type: "post",
-                    data: { direccion_id : $(this).val(), numero_productos : $('#numero_productos').val(), subtotal : $('#subtotal').val(), peso : $('#peso').val() },
+                    data: { direccion_id : dirId, numero_productos : $('#numero_productos').val(), subtotal : $('#subtotal').val(), peso : $('#peso').val() },
                     dataType: 'json',
                     success: function(data){
                         console.log(data);
@@ -522,14 +527,13 @@
                         $('#envio').val(envio);
                         //alert(valorEnvioAnterior);
                         //var total = parseFloat(data.subtotal.replace(",", ".")) + parseFloat($('#subtotal').val().replace(",", "."));
-                        var total = envio + parseFloat($('#subtotal').val().replace(",", ".")) - valorEnvioAnterior;
-                        $('#subtotal').val( parseFloat($('#subtotal').val()) + parseFloat(envio) - valorEnvioAnterior );
+                        var total = envio + parseFloat($('#subtotal').val().replace(",", ".")); 
+                       
                         $('.total').html(total); 
                     },
-            });
-        }
-    });
-
+            });            
+                
+    }
 	$("#place_order").click(function(event){
 	  	var pass_address = false;
 		var pass_payment_method = false;
