@@ -10,8 +10,6 @@
 	<td><?php echo $data->fecha; ?></td>
 	<td><?php echo $data->total; ?></td>
 	<td><?php echo $data->balance; ?></td>
-	<td><?php echo $empresa->razon_social; ?>
-	</td>
 	<?php 
 		
 		switch ($data->estado) {

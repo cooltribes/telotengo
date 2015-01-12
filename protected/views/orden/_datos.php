@@ -7,9 +7,9 @@
 	 
 	<td><?php echo $data->id; ?></td>
 	<td><?php echo $data->fecha; ?></td>
-	<td><?php echo $data->total; ?></td>
+	<td><?php echo $data->total; ?></td> 
 	<td><?php echo $usuario->profile->first_name." ".$usuario->profile->last_name; ?></td>
-	<td><?php echo $empresa->razon_social; ?></td>
+	<td><?php //echo $empresa->razon_social; ?></td>
 	<?php echo $data->getStatus($data->estado); ?>
 	
 	<?php		
@@ -18,7 +18,7 @@
 	<div class="dropdown">
 	<a class="dropdown-toggle btn" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="admin_pedidos_detalles.php"> 
 	<i class="icon-cog"></i> <b class="caret"></b>
-	</a> 
+	</a>  
  
 		<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
 			<li><a tabindex="-1" href="'.Yii::app()->createUrl('/orden/detalle',array('id'=>$data->id)).'"><i class="glyphicon glyphicon-cog"></i> Ver en Detalle </a></li>

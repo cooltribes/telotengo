@@ -33,7 +33,6 @@ $this->breadcrumbs=array(
 	            <th scope="col">Fecha</th>
 	            <th scope="col">Total Bs.</th>
 	            <th scope="col">Balance Usado Bs.</th>
-	            <th scope="col">Vendedor</th>
 	            <th scope="col">Estado</th>
 	            <th scope="col">Acción</th>
 	        </tr>

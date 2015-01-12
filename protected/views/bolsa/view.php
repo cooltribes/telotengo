@@ -143,7 +143,10 @@ $subtotal = 0;
                     </div>
                     <div class="text_,align_center">
                         <div>  
-                            <small>Fecha estimada de entrega 01/02/2014 - 03/02/2014</small>
+                            <p><i class="icon-calendar"></i><small>
+                    			<?php echo 'Fecha estimada de entrega' ?>:
+                    			<?php echo date('d/m/Y', strtotime('+1 day'));?>  - <?php echo date('d/m/Y', strtotime('+1 week')); ?>
+                    		</small></p>
                         </div>
                         <div>
                             <small><a href="#">Ver Políticias de Envíos y Devoluciones</a></small>
