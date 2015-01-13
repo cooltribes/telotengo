@@ -524,6 +524,14 @@ class BolsaController extends Controller
 
 				if($orden_inventario->save()){
 					$inventario->cantidad -= $uno->cantidad;
+					
+					if($inventario->hasFlashSale()){
+						// descontando la cantidad tambien del flash sale
+						$flashsale = Flashsale::model()->findByAttributes(array('inventario_id'=>$inventario->id));
+						$flashsale->cantidad -= $uno->cantidad;
+						$flashsale->save();
+					}
+
 					if($inventario->save()){
 						// enviar mail de compra
 						$message = new YiiMailMessage;
@@ -538,6 +546,7 @@ class BolsaController extends Controller
 								";
 						$params = array('subject'=>$subject, 'body'=>$body);
 						$message->subject = $subject;
+						$message->view = "mail_template";
 						$message->setBody($params, 'text/html');                
 						$message->addTo($user->email);
 						$message->from = array(Yii::app()->params["adminEmail"] => 'Sigma Tiendas');
