@@ -220,6 +220,7 @@ Yii::app()->clientScript->registerMetaTag(Yii::app()->getBaseUrl(true).str_repla
                         //foreach($inventarios as $r)
                         //  var_dump($r);
 
+
                     ?>
                     <div class="row">
                         <div class="col-lg-12">
@@ -238,7 +239,7 @@ Yii::app()->clientScript->registerMetaTag(Yii::app()->getBaseUrl(true).str_repla
                                 }
                                 ?>
                             	<dt class="padding_xsmall">Disponibilidad </dt>
-                                <dd class="padding_xsmall text-danger"> Sólo quedan
+                                <dd class="padding_xsmall text-danger"> Sólo quedan 
                                     <?php if($inventario->hasFlashSale()){
                                         echo $flash->cantidad;
                                     }else{

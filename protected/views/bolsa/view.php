@@ -9,13 +9,20 @@ $this->breadcrumbs=array(
 $subtotal = 0; 
 ?> 
         <div class="row">
-        	<?php if(Yii::app()->user->hasFlash('error')){?>
-			    <div class="alert in alert-block fade alert-danger text_align_center">
-			        <?php echo Yii::app()->user->getFlash('error'); ?>
-			    </div>
-			<?php } ?>
             <div class="col-md-8 col-md-push-2 " >
                 <div><h1>Bolsa</h1></div>
+
+        		<?php if(Yii::app()->user->hasFlash('success')){?>
+				    <div class="alert in alert-block fade alert-success text_align_center">
+				        <?php echo Yii::app()->user->getFlash('success'); ?>
+				    </div>
+				<?php } ?>
+				<?php if(Yii::app()->user->hasFlash('error')){?>
+				    <div class="alert in alert-block fade alert-error text_align_center">
+				        <?php echo Yii::app()->user->getFlash('error'); ?>
+				    </div>
+				<?php } ?>
+                
                 <section class="col-sm-8 main-content">
                 <?php
                 	if(isset($model))

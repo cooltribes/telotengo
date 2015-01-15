@@ -101,6 +101,15 @@ class Flashsale extends CActiveRecord
 		));
 	}
 
+	public function isLastOne(){
+		
+		if($this->cantidad==1){ 
+			return TRUE; 
+		}else if($this->cantidad>1){
+			return FALSE;
+		}
+	}
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
