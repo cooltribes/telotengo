@@ -162,14 +162,14 @@ class BolsaController extends Controller
 	public function actionEliminar()
 	{
 		$id = $_POST['num'];
-		
+		 
 		$user = Yii::app()->user->id; 
 		$bolsa = Bolsa::model()->findByAttributes(array('users_id'=>$user));
 
 		$bh = BolsaHasInventario::model()->findByAttributes(array('bolsa_id'=>$bolsa->id,'inventario_id'=>$id));
 		
 		$bh->delete();
-		
+		Yii::app()->user->setFlash('success', 'Se ha eliminado correctamente el producto de la bolsa');
 		echo 'ok';
 	}
 	
@@ -524,6 +524,21 @@ class BolsaController extends Controller
 
 				if($orden_inventario->save()){
 					$inventario->cantidad -= $uno->cantidad;
+					
+					if($inventario->hasFlashSale()){
+						// descontando la cantidad tambien del flash sale
+						$flashsale = Flashsale::model()->findByAttributes(array('inventario_id'=>$inventario->id));
+						
+						if($flashsale->isLastOne()){
+							$flashsale->cantidad = 0;
+							$flashsale->estado = 0; // inactivo 
+						}else{
+							$flashsale->cantidad -= $uno->cantidad;
+						}
+
+						$flashsale->save();
+					}
+
 					if($inventario->save()){
 						// enviar mail de compra
 						$message = new YiiMailMessage;
@@ -538,6 +553,7 @@ class BolsaController extends Controller
 								";
 						$params = array('subject'=>$subject, 'body'=>$body);
 						$message->subject = $subject;
+						$message->view = "mail_template";
 						$message->setBody($params, 'text/html');                
 						$message->addTo($user->email);
 						$message->from = array(Yii::app()->params["adminEmail"] => 'Sigma Tiendas');

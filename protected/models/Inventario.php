@@ -260,7 +260,7 @@ class Inventario extends CActiveRecord
 
 	public function hasFlashSale(){
 		$tiene = Flashsale::model()->findByAttributes(array('inventario_id'=>$this->id));
-		if(isset($tiene->descuento)){
+		if(isset($tiene->descuento) && ($tiene->estado == 1) ){
 			return TRUE;
 		}else{
 			return FALSE;

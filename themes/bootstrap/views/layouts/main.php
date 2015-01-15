@@ -171,6 +171,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                                 <div class="white">Cuenta<b class="caret"></b></div>
                             </a>
                             <ul class="dropdown-menu">
+                                <li><a href="<?php echo Yii::app()->baseUrl; ?>/orden/listado">Tus pedidos</a></li>
                                 <li><a href="<?php echo Yii::app()->baseUrl; ?>/user/user/tucuenta">Tu Cuenta</a></li>
                                 <li><a href="<?php echo Yii::app()->baseUrl; ?>/user/profile/edit">Editar perfil</a></li> 
                                 <!-- <li><a href="<?php echo Yii::app()->baseUrl."/user/profile/profile/id/".Yii::app()->user->id; ?>">Mi perfil público</a></li> -->

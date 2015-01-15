@@ -13,7 +13,7 @@
                     <div class="lead"></div>
 
                     <div class="col-sm-offset-5 padding_medium">
-                        <a href="/site" class="btn btn-success btn-lg">Ir al inicio</a>
+                        <a href="<?php echo Yii::app()->getHomeUrl(); ?>" class="btn btn-success btn-lg">Ir al inicio</a>
                     </div>
 
             </div>

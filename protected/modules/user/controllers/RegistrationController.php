@@ -60,6 +60,7 @@ class RegistrationController extends Controller
 								$message = new YiiMailMessage;
 	                            $subject = 'Gracias por registrarte en Sigma Tiendas';                                
 	                            $message->subject = $subject;
+	                            $message->view = "mail_template";
 	                            $body = '<h2>¡Bienvenido a Sigma Tiendas!</h2>
 	                                Recibes este correo electrónico porque te has registrado en Sigmatiendas.com. 
 	                                Por favor valida tu cuenta haciendo clic en el enlace que aparece a continuación:
