@@ -37,7 +37,7 @@
 
     <table width="100%">
         <tr>
-            <td width="3%"></td>
+         
             <td><?php echo $body; ?></td>
         </tr>
         <tr>
