@@ -199,13 +199,15 @@ class SiteController extends Controller
         $undercomment="UNDERCOMMENT";
         $model=Orden::model()->findByPk(49);
         $message = new YiiMailMessage;
-                                $subject = 'Gracias por registrarte en Sigma Tiendas';                                
+                               // $subject = 'Gracias por registrarte en Sigma Tiendas';   
+                               $subject = 'Tu compra en Sigma Tiendas';                                
                                 $message->subject = $subject;
-                                $message->view = "mail_order_detail";
-                                $body = '<h2>¡Bienvenido a Sigma Tiendas!</h2>
+                                $message->view = "mail_template";
+                                /*$body = '<h2>¡Bienvenido a Sigma Tiendas!</h2>
                                     Recibes este correo electrónico porque te has registrado en Sigmatiendas.com. 
                                     Por favor valida tu cuenta haciendo clic en el enlace que aparece a continuación:
-                                    <br/><br/><a href="#">Clic aquí</a>';
+                                    <br/><br/><a href="#">Clic aquí</a>';*/
+                                $body=$this->renderPartial('/mail/mail_order_detail', array( 'model'=>$model ),true);
                                 $message->from = array(Yii::app()->params['adminEmail'] => "Sigma Tiendas");
                                 $params=array('model'=>$model,'body'=>$body);
                                 $message->setBody($params, 'text/html');                
