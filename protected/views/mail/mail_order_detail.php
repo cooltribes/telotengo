@@ -1,25 +1,15 @@
-<div class="container-fluid" style="padding: 0 15px;">
-    <div class="container">
-        <div class="row-fluid">
-            <!-- COLUMNA PRINCIPAL DERECHA ON // OJO: esta de primera para mejorar el SEO sin embargo por CSS se ubica visualmente a la derecha -->
-            <div class="main-content" role="main">
-                    <div class="margin_top_small margin_bottom_small">
-                        <div class="alert alert-success">
-                            <h2>
-                               Compra confirmada
-                            </h2>
-                            Tu compra se ha realizado con éxito, en los proximos segundos recibirás una email con los datos
-                        </div>   
-                    </div>
-                    
-              
-                    <section class="row-fluid">
-                        
+                         
+<div style="color: #3c763d; background-color: #dff0d8; border-color: #d6e9c6;" >
+    Gracias por comprar en nuestra tienda, a continuación te mostramos un resumen de tu orden.
+</div>                        
+                         
+                         
+                         
                          <h1>Pedido N° <?php echo $model->id; ?> </h1>
-                         <hr class="no_margin_top"/>
-                         <div class="col-md-4 well" style="background: #FFF" >
+                         <hr style="margin-top:0px"/>
+                         <div>
                             
-                            <table class="table" id="summary">
+                            <table>
                                 <tr>
                                     <td>Subtotal</td>
                                     <td><strong><?php echo $model->total-$model->envio-$model->iva; ?> Bs</strong></td>
@@ -45,14 +35,14 @@
                             </table>
                             
                             <div>  
-                                <p class="text-muted">Fecha estimada de entrega<br/><?php echo date('d/m/Y', strtotime($model->fecha.'+1 day'));?> - <?php echo date('d/m/Y', strtotime($model->fecha.'+1 week')); ?></p>
+                                <p>Fecha estimada de entrega<br/><?php echo date('d/m/Y', strtotime($model->fecha.'+1 day'));?> - <?php echo date('d/m/Y', strtotime($model->fecha.'+1 week')); ?></p>
                             </div>                            
                         </div>
                         
                                                
-                        <div class="col-md-8 no_padding_right">
+                        <div>
                             
-                        <table class="table" id="orderDetail">
+                        <table>
                             <thead>
                               <tr>
                
@@ -79,7 +69,7 @@
                                     $principal = Imagenes::model()->findByAttributes(array('orden'=>1,'producto_id'=>$orden_inventario->inventario->producto_id));
                                                                         
                                     if($principal->getUrl())
-                                        $im = CHtml::image(str_replace(".","_thumb.",$principal->getUrl()), "Preview", array("height"=>"100px", "width" => "100px",'class'=>'img-responsive'));
+                                        $im = CHtml::image($_SERVER['SERVER_NAME'].str_replace(".","_thumb.",$principal->getUrl()), "Preview", array("height"=>"100px", "width" => "100px",'class'=>'img-responsive'));
                                     else 
                                         $im = '<img src="http://placehold.it/100x100" width="100%">';   
                                     ?>
@@ -107,12 +97,3 @@
                         </div>
                         
                     </section>
-                    <div class="col-sm-offset-5 padding_medium">
-                        <a href="<?php echo Yii::app()->baseUrl; ?>" class="btn btn-success btn-lg">Seguir Comprando</a>
-                    </div>
-
-            </div> 
-            <!-- COLUMNA PRINCIPAL DERECHA OFF // -->
-        </div>
-    </div>
-</div>

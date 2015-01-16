@@ -24,7 +24,7 @@ class SiteController extends Controller
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
 				'actions'=>array('index','error','contact','login','logout','captcha','busqueda','tiendas','info','soporte','garantia','convenios',
-								'corporativo','licencias'), 
+								'corporativo','licencias','mailtest'), 
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -197,7 +197,26 @@ class SiteController extends Controller
     public function actionMailTest(){
         $body="BODY";
         $undercomment="UNDERCOMMENT";
-        $this->render('mail_template',array('body'=>$body,'undercomment'=>$undercomment));
+        $model=Orden::model()->findByPk(49);
+        $message = new YiiMailMessage;
+                                $subject = 'Gracias por registrarte en Sigma Tiendas';                                
+                                $message->subject = $subject;
+                                $message->view = "mail_order_detail";
+                                $body = '<h2>¡Bienvenido a Sigma Tiendas!</h2>
+                                    Recibes este correo electrónico porque te has registrado en Sigmatiendas.com. 
+                                    Por favor valida tu cuenta haciendo clic en el enlace que aparece a continuación:
+                                    <br/><br/><a href="#">Clic aquí</a>';
+                                $message->from = array(Yii::app()->params['adminEmail'] => "Sigma Tiendas");
+                                $params=array('model'=>$model,'body'=>$body);
+                                $message->setBody($params, 'text/html');                
+                                $message->addTo('cruiz@upsidecorp.ch');
+
+                                Yii::app()->mail->send($message);
+        
+        
+        
+        
+
     }
 
 		/**
