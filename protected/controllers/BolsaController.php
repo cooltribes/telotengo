@@ -540,29 +540,7 @@ class BolsaController extends Controller
 					}
 
 					if($inventario->save()){
-						// enviar mail de compra
-						$message = new YiiMailMessage;
-						$message->view = "mail_template";
-						$subject = 'Tu compra en Sigma Tiendas #'.$orden->id.' ha sido enviada';
-						$body = "Nos complace informarte que tu pedido #".$orden->id." se ha registrado correctamente
-								<br/>
-								Recuerda registrar los datos de tu pago en la siguiente dirección <a href='telotengo.com/sigmatiendas/orden/detalleusuario/".$orden->id."'>Registrar Pago</a>
-								<br/>
-								Gracias por confiar en nosotros
-								<br/> 
-								";
-						$params = array('subject'=>$subject, 'body'=>$body);
-						$message->subject = $subject;
-						$message->view = "mail_template";
-						$message->setBody($params, 'text/html');                
-						$message->addTo($user->email);
-						$message->from = array(Yii::app()->params["adminEmail"] => 'Sigma Tiendas');
-						Yii::app()->mail->send($message);
-
-						$post_data = array(
-							'status' => 'ok',
-						    'order' => $orden->id,
-						);
+						// no hago nada
 					}else{
 						Yii::trace('UserID: '.$user->id.' Error al guardar compra (inventario):'.print_r($inventario->getErrors(),true), 'registro');
 						$post_data = array(
@@ -575,16 +553,38 @@ class BolsaController extends Controller
 				}
 				$uno->delete();
 			}
+
+			$message = new YiiMailMessage;
+			$message->view = "mail_template";
+			$subject = 'Tu compra en Sigma Tiendas #'.$orden->id.' ha sido enviada';
+			$body = "Nos complace informarte que tu pedido #".$orden->id." se ha registrado correctamente
+					<br/>
+					Recuerda registrar los datos de tu pago en la siguiente dirección <a href='telotengo.com/sigmatiendas/orden/detalleusuario/".$orden->id."'>Registrar Pago</a>
+					<br/> 
+					Gracias por confiar en nosotros
+					<br/> 
+					";
+			$params = array('subject'=>$subject, 'body'=>$body);
+			$message->subject = $subject;
+			$message->view = "mail_template";
+			$message->setBody($params, 'text/html');                
+			$message->addTo($user->email);
+			$message->from = array(Yii::app()->params["adminEmail"] => 'Sigma Tiendas');
+			Yii::app()->mail->send($message);
+
+			$post_data = array(
+				'status' => 'ok',
+			    'order' => $orden->id,
+			);
+
 		}else{
 			Yii::trace('UserID: '.$user->id.' Error al guardar compra (orden):'.print_r($orden->getErrors(),true), 'registro');
 		    $post_data = array(
                             'status' => "error",
                         );
-        }
-       
-       echo json_encode($post_data);
-
-
+        }       
+		
+		echo json_encode($post_data);
 	}
 
 	/* 1. Paso
