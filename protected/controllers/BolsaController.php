@@ -477,6 +477,7 @@ class BolsaController extends Controller
 		$orden->fecha = date('Y-m-d H:i:s');
 		$orden->users_id = intval($user->id);
 		$orden->envio = $_POST['envio'];
+		$orden->direccionEnvio_id = $_POST['address_id'];
 
 		// $subtotal = $subtotal - $_POST['balance'];
 		if($_POST['balance']>0){
@@ -560,8 +561,8 @@ class BolsaController extends Controller
 			$body = "Nos complace informarte que tu pedido #".$orden->id." se ha registrado correctamente
 					<br/>
 					Recuerda registrar los datos de tu pago en la siguiente dirección <a href='telotengo.com/sigmatiendas/orden/detalleusuario/".$orden->id."'>Registrar Pago</a>
-					<br/> 
-					Gracias por confiar en nosotros
+					<br/>
+ 					Gracias por confiar en nosotros
 					<br/> 
 					";
 			$params = array('subject'=>$subject, 'body'=>$body);

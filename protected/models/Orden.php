@@ -88,7 +88,7 @@ class Orden extends CActiveRecord
 			array('descuento, envio, iva, total', 'numerical'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, descuento, envio, iva, total, fecha, estado, users_id, tipo_pago_id, tipo_guia, tracking, balance', 'safe', 'on'=>'search'),
+			array('id, descuento, envio, iva, total, fecha, estado, users_id, tipo_pago_id, tipo_guia, tracking, balance, direccionEnvio_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -103,6 +103,7 @@ class Orden extends CActiveRecord
 			'detalleOrdens' => array(self::HAS_MANY, 'DetalleOrden', 'orden_id'),
 			'tipoPago' => array(self::BELONGS_TO, 'TipoPago', 'tipo_pago_id'),
 			'users' => array(self::BELONGS_TO, 'Users', 'users_id'),
+			'direccionEnvio' => array(self::BELONGS_TO, 'DireccionEnvio','direccionEnvio_id'),
 			'ordenHasInventarios' => array(self::HAS_MANY, 'OrdenHasInventario', 'orden_id'),
 			'totalpagado' => array(self::STAT, 'DetalleOrden', 'orden_id',
             	'select' => 'SUM(monto)',
@@ -129,6 +130,7 @@ class Orden extends CActiveRecord
 			'tipo_guia' => 'Tipo Guía',
 			'tracking' => 'Tracking',
 			'balance' => 'Balance',
+			'direccionEnvio_id' => 'ID Direccion Envio',
 		);
 	}
 
@@ -162,6 +164,7 @@ class Orden extends CActiveRecord
 		$criteria->compare('tipo_guia',$this->tipo_guia);
 		$criteria->compare('tracking',$this->tracking);
 		$criteria->compare('balance',$this->balance);
+		$criteria->compare('direccionEnvio_id',$this->direccionEnvio_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
