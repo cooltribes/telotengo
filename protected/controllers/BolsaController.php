@@ -477,6 +477,7 @@ class BolsaController extends Controller
 		$orden->fecha = date('Y-m-d H:i:s');
 		$orden->users_id = intval($user->id);
 		$orden->envio = $_POST['envio'];
+		$orden->direccionEnvio_id = $_POST['address_id'];
 
 		// $subtotal = $subtotal - $_POST['balance'];
 		if($_POST['balance']>0){
@@ -556,14 +557,15 @@ class BolsaController extends Controller
 
 			$message = new YiiMailMessage;
 			$message->view = "mail_template";
-			$subject = 'Tu compra en Sigma Tiendas #'.$orden->id.' ha sido enviada';
-			$body = "Nos complace informarte que tu pedido #".$orden->id." se ha registrado correctamente
+			$subject = 'Tu compra en Sigma Tiendas #'.$orden->id.' ha sido enviada'; 
+			/*$body = "Nos complace informarte que tu pedido #".$orden->id." se ha registrado correctamente
 					<br/>
 					Recuerda registrar los datos de tu pago en la siguiente dirección <a href='telotengo.com/sigmatiendas/orden/detalleusuario/".$orden->id."'>Registrar Pago</a>
+					<br/>
+ 					Gracias por confiar en nosotros
 					<br/> 
-					Gracias por confiar en nosotros
-					<br/> 
-					";
+					";*/
+			$body=$this->renderPartial('/mail/mail_order_detail', array( 'model'=>$orden ),true);		
 			$params = array('subject'=>$subject, 'body'=>$body);
 			$message->subject = $subject;
 			$message->view = "mail_template";

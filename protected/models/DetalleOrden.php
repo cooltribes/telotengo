@@ -51,7 +51,7 @@ class DetalleOrden extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('monto, fecha, estado, nombre, cedula, orden_id, tipo_pago_id', 'required'),
+			array('monto, fecha, estado, nombre, confirmacion, cedula, orden_id, tipo_pago_id', 'required'),
 			array('estado, orden_id, tipo_pago_id', 'numerical', 'integerOnly'=>true),
 			array('monto', 'numerical'),
 			array('confirmacion, cedula', 'length', 'max'=>45),

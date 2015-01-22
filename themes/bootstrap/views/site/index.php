@@ -15,7 +15,7 @@ $('.carousel').carousel('cycle');
 </script>
 
 <div class="container">
-
+ 
        
     <div class="row-fluid">
 
@@ -62,7 +62,7 @@ $('.carousel').carousel('cycle');
             <hr/>
             	<?php            	
             	$prod = new Producto;
-				$productos = $prod->front();
+				$productos = $prod->front(); 
 				
 				foreach($productos as $produc)
 				{
@@ -168,22 +168,22 @@ $('.carousel').carousel('cycle');
                <div class="carousel-inner">
                   <div class="item active row-fluid">
                      <div class="col-md-3">
-                        <a>
+                        <a href="<?php echo Yii::app()->baseUrl."/marcas/Blackberry"; ?>">
                             <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/marcas/blackberry.png" />
                         </a> 
                      </div>
                      <div class="col-md-3">
-                        <a>
+                        <a href="<?php echo Yii::app()->baseUrl."/marcas/Lenovo"; ?>">
                             <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/marcas/lenovo.png" />
                         </a> 
                      </div>
                      <div class="col-md-3">
-                        <a>
+                        <a href="<?php echo Yii::app()->baseUrl."/marcas/Samsung"; ?>">
                             <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/marcas/samsung.png" />
                         </a> 
                      </div>
                      <div class="col-md-3">
-                        <a>
+                        <a href="<?php echo Yii::app()->baseUrl."/marcas/HP"; ?>">
                             <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/marcas/hp.png" />
                         </a> 
                      </div>
@@ -192,22 +192,22 @@ $('.carousel').carousel('cycle');
                   
                   <div class="item row-fluid">
                      <div class="col-md-3">
-                        <a>
+                        <a href="<?php echo Yii::app()->baseUrl."/marcas/Caselogic"; ?>">
                             <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/marcas/caselogic.png" />
                         </a> 
                      </div>
                      <div class="col-md-3">
-                        <a>
+                        <a href="<?php echo Yii::app()->baseUrl."/marcas/Sandisk"; ?>"> 
                             <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/marcas/sandisk.png" />
                         </a> 
                      </div>
                      <div class="col-md-3">
-                        <a>
+                        <a href="<?php echo Yii::app()->baseUrl."/marcas/Kingston"; ?>">
                             <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/marcas/kingston.png" />
                         </a> 
                      </div>
                      <div class="col-md-3">
-                        <a>
+                        <a href="<?php echo Yii::app()->baseUrl."/marcas/Siragon"; ?>">
                             <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/marcas/siragon.png" />
                         </a> 
                      </div>
@@ -215,22 +215,22 @@ $('.carousel').carousel('cycle');
                   
                   <div class="item row-fluid">
                         <div class="col-md-3">
-                        <a>
+                        <a href="<?php echo Yii::app()->baseUrl."/marcas/Argom"; ?>">
                             <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/marcas/argom.png" />
                         </a> 
                      </div>
                      <div class="col-md-3">
-                        <a>
+                        <a href="<?php echo Yii::app()->baseUrl."/marcas/Quo"; ?>">
                             <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/marcas/quo.png" />
                         </a> 
                      </div>
                      <div class="col-md-3">
-                        <a>
+                        <a href="<?php echo Yii::app()->baseUrl."/marcas/Nyck"; ?>">
                             <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/marcas/nyck.png" />
                         </a> 
                      </div>
                      <div class="col-md-3">
-                        <a>
+                        <a href="<?php echo Yii::app()->baseUrl."/marcas/Forza"; ?>">
                             <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/marcas/forza.png" />
                         </a> 
                      </div>

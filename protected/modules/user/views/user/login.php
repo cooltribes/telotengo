@@ -9,47 +9,57 @@
 		<div class="col-md-offset-3 col-md-6">
 			<h1><?php echo UserModule::t("Login"); ?></h1>
 
-			<?php if(Yii::app()->user->hasFlash('loginMessage')): ?>
+			<section>
+        	<p><?php echo 'Por favor complete el formulario con los datos de su cuenta'; ?></p>
+        		<?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+					'id'=>'login-form',
+					'htmlOptions'=>array('class'=>''),
+				    'type'=>'inline',
+					'enableClientValidation'=>true,
+					'clientOptions'=>array(
+						'validateOnSubmit'=>true,
+					),
+				)); ?>
+          		
+          		<fieldset>            
+		            <div class="control-group row-fluid">
+		            	 <div class="controls">
+		            	 	<?php echo CHtml::activeLabelEx($model,'username'); ?>
+		            		<?php echo $form->textFieldRow($model,'username',array("class"=>"form-control","placeholder"=>"correoelectronico@cuenta.com")); ?>
+		            		<?php echo $form->error($model,'username'); ?>
+		            	</div>  
+		            </div>
+            		<div class="control-group row-fluid"> 
+             			<div class="controls">
+	            			<?php echo CHtml::activeLabelEx($model,'password'); ?>
+            				<?php echo $form->passwordFieldRow($model,'password',array('class'=>'form-control')); ?>
+                     		<span class="help-block muted text_align_right padding_right">
+                     		<?php echo $form->error($model,'password'); ?>
+                		</div>
+    				</div>
 
-			<div class="alert in alert-block fade alert-success text_align_center">
-				<?php echo Yii::app()->user->getFlash('loginMessage'); ?>
-			</div> 
+    				<div class="help-block">
+						<p class="hint">
+						<?php echo CHtml::link("Registro",Yii::app()->getModule('user')->registrationUrl); ?> | <?php echo CHtml::link("Olvidé mi contraseña",Yii::app()->getModule('user')->recoveryUrl); ?>
+						</p>
+					</div>
 
-			<?php endif; ?>
+	            	<?php echo $form->checkBoxRow($model,'rememberMe'); ?>
+	            
+	            	<div class="padding_top_medium padding_bottom_medium">
+					<?php $this->widget('bootstrap.widgets.TbButton', array(
+			            'buttonType'=>'submit',
+			            'type'=>'danger',
+			            'size'=>'large',
+			            'label'=>"Iniciar sesión",
+			            'htmlOptions'=>array('class'=>'btn-block'),
+			        )); ?>
+	        		</div>
+          		</fieldset>
 
-			<p><?php echo 'Por favor complete el formulario con los datos de su cuenta'; ?></p>
-			<div class="form ">
-				<?php echo CHtml::beginForm(); ?>
-				
-				<?php echo CHtml::errorSummary($model); ?>
-				
-				<div class="form-group">
-					<?php echo CHtml::activeLabelEx($model,'username'); ?>
-					<?php echo CHtml::activeTextField($model,'username', array('class'=>'form-control','placeholder'=>'Nombre de usuario o correo electrónico') ) ?>
-				</div>
-				
-				<div class="form-group">
-					<?php echo CHtml::activeLabelEx($model,'password'); ?>
-					<?php echo CHtml::activePasswordField($model,'password', array('class'=>'form-control','placeholder'=>'Contraseña') ) ?>
-				</div>
-				
-				<div class="help-block">
-					<p class="hint">
-					<?php echo CHtml::link("Registro",Yii::app()->getModule('user')->registrationUrl); ?> | <?php echo CHtml::link("Olvidé mi contraseña",Yii::app()->getModule('user')->recoveryUrl); ?>
-					</p>
-				</div>
-				
-				<div class="checkbox rememberMe">
-					<?php echo CHtml::activeCheckBox($model,'rememberMe'); ?>
-					<?php echo CHtml::activeLabelEx($model,'rememberMe'); ?>
-				</div>
-
-				<div class="submit">
-					<?php echo CHtml::submitButton("Iniciar sesión", array('class'=>'btn btn-default')); ?>
-				</div>
-				
-				<?php echo CHtml::endForm(); ?>
-			</div><!-- form -->
+        	<?php $this->endWidget(); ?>
+  			</section>
+		
 		</div>
 	</div>
 </div>

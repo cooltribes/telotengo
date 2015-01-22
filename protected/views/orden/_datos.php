@@ -13,6 +13,9 @@
 	<?php echo $data->getStatus($data->estado); ?>
 	
 	<?php		
+
+	// <li><a tabindex="-1" href="'.Yii::app()->createUrl('/orden/verproductos',array('id'=>$data->id)).'" ><i class="glyphicon glyphicon-th-list"></i> Ver Artículos </a></li>
+
 	echo '<td>
 
 	<div class="dropdown">
@@ -22,17 +25,31 @@
  
 		<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
 			<li><a tabindex="-1" href="'.Yii::app()->createUrl('/orden/detalle',array('id'=>$data->id)).'"><i class="glyphicon glyphicon-cog"></i> Ver en Detalle </a></li>
-			<li><a tabindex="-1" href="'.Yii::app()->createUrl('/orden/verproductos',array('id'=>$data->id)).'" ><i class="glyphicon glyphicon-th-list"></i> Ver Artículos </a></li>
+			<li><a tabindex="-1" onclick="modal('.$data->id.')" href="#"><i class="glyphicon glyphicon-th-list"></i> Ver Artículos </a></li>
 			<li><a tabindex="-1" href="'.Yii::app()->createUrl('/orden/cancelar',array('id'=>$data->id)).'" ><i class="glyphicon glyphicon-remove"></i> Cancelar Orden </a></li>  
 			<li><a tabindex="-1" href="'.Yii::app()->createUrl('/orden/delete',array('id'=>$data->id)).'" ><i class="glyphicon glyphicon-trash"></i> Eliminar </a></li> 
 		</ul>
         </div>
         
     </td>
-      ';
-	
+    ';
 	?>
-	
-	
-	
+
 </tr>
+
+<script>
+function modal(id){
+
+	$.ajax({ 
+		type: "post",
+		//'url' :'/site/orden/modalventas/'+id,
+		'url' : '<?php echo $this->createUrl('orden/modalorden',array('id'=>$data->id)); ?>',
+		data: { 'orden':id}, 
+		'success': function(data){
+			$('#myModal').html(data);
+			$('#myModal').modal();
+		},
+		'cache' :false}); 
+
+}
+</script>

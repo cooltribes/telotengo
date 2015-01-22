@@ -22,9 +22,8 @@ class LoginController extends Controller
 						$this->redirect(Yii::app()->controller->module->returnUrl);
 					else
 						$this->redirect(Yii::app()->user->returnUrl);
-				}else{
-					print_r($model->getErrors());
 				}
+				
 			}
 			// display the login form
 			$this->render('/user/login',array('model'=>$model));

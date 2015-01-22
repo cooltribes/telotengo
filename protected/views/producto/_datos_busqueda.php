@@ -15,11 +15,13 @@
     $marca = Marca::model()->findByPk($data->marca_id);
 		
 	echo "<td><p><strong>".$data->nombre." por <small>".$marca->nombre."</small></strong></p>
-			<p>Descripción del producto: ".(strlen($data->descripcion)<180?$data->descripcion:substr($data->descripcion,-180,180).'...')."
+
+			<p>Descripción del producto: ".(strlen($data->descripcion)<180?$data->descripcion:substr($data->descripcion,-180,180).'...')." ...
 			</p>
 		</td>";								
 								
-    echo ' <td><a href="'.Yii::app()->baseUrl.'/producto/agregarInventario?producto_id='.$data->id.'" class="margin_top btn btn-info btn-sm">Editar Inventario</a></td>';
+    echo ' <td><a href="'.Yii::app()->baseUrl.'/producto/inventario/'.$data->id.'" class="margin_top btn btn-info btn-sm">Vender este producto</a></td>';
+
 
 ?>   
     							

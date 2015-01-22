@@ -994,9 +994,11 @@ class ProductoController extends Controller
 			$inventario->almacen_id = $_POST['Inventario']['almacen_id'];
 			$inventario->precio_tienda = $_POST['Inventario']['precio_tienda'];
 			
+			$producto->saveAttributes(array('estado'=>1));
+
 			$inventario->save();	
 			
-			Yii::app()->user->setFlash('success',"Inventario guardado exitosamente.");
+			Yii::app()->user->setFlash('success',"Inventario guardado exitosamente. El producto está ahora activo.");
 		}
 		
 		$this->render('inventario',array(

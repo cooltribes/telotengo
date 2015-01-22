@@ -60,17 +60,17 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
         <div class="container"> 
             <div class="navbar-left">  
                 <div class="links_menu">            
-                        <a href="http://facebook.com/sigmatiendas">
+                        <a href="http://facebook.com/sigmatiendas" target="_blank">
                             <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/ICON-facebook.png" alt="Facebook" width="25" height="25">
                         </a>
                    
-                        <a href="https://twitter.com/Sigmatiendas">
+                        <a href="https://twitter.com/Sigmatiendas" target="_blank">
                             <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/twitter.png" alt="Twitter" width="25" height="25">
                         </a>
-                        <a href="http://instagram.com/sigmatiendas">
+                        <a href="http://instagram.com/sigmatiendas" target="_blank">
                             <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/instagram.png" alt="Instagram" width="25" height="25">
                         </a>
-                        <a href="http://youtube.com/Sigmaoficial">
+                        <a href="http://youtube.com/Sigmaoficial" target="_blank">
                             <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/ICON-youtube.png" alt="Youtube" width="25" height="25">
                         </a>
                           

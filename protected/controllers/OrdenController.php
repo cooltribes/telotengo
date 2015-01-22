@@ -35,7 +35,7 @@ class OrdenController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete','verproductos','aceptarpago','rechazarpago','enviar','devolucion','procesarDevolucion'),
+				'actions'=>array('admin','delete','verproductos','aceptarpago','rechazarpago','enviar','devolucion','procesarDevolucion','modalorden'),
 				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -729,4 +729,66 @@ class OrdenController extends Controller
 			Yii::app()->end();
 		}
 	}
+
+	public function actionModalorden($id){
+		
+		$id = $_POST['orden'];
+	
+		$ordenInventario = OrdenHasInventario::model()->findAllByAttributes(array('orden_id'=>$id));
+
+		$html='';
+		$html=$html.'<div class="modal-header">';
+    	$html=$html.'<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>';
+    	$html=$html.'<h3>Productos comprados</h3>';
+  		$html=$html.'</div>';
+  		$html=$html.'<div class="modal-body">';
+    	$html=$html.'';
+
+    	// Tabla ON
+    	//Header de la tabla ON
+   		$html=$html.'<div class="well well-small margin_top well_personaling_small"><h3>Orden #'.$id.'</h3>';
+      	$html=$html.'<table width="50%" border="0" cellspacing="0" cellpadding="0" class="table table-bordered table-hover table-striped">';
+        $html=$html.'<thead><tr>';
+        $html=$html.'<th scope="col"></th>';
+        $html=$html.'<th scope="col">Producto</th>';
+        $html=$html.'<th scope="col">Cantidad</th>';
+        $html=$html.'<th scope="col">Precio /th>';
+        $html=$html.'</tr>';
+        $html=$html.'</thead><tbody>';
+        
+		foreach($ordenInventario as $cadaInventario){
+			$inventario = Inventario::model()->findByPk($cadaInventario->inventario_id);
+			$producto = $inventario->producto;
+	 
+			$html=$html.'<tr>';
+
+			$principal = Imagenes::model()->findByAttributes(array('orden'=>1,'producto_id'=>$inventario->producto_id));
+                                                                    
+            if($principal->getUrl())
+                $im = CHtml::image(str_replace(".","_thumb.",$principal->getUrl()), "Thumbnail",
+                		array("height"=>"100px", "width" => "100px",'class'=>'img-responsive'));
+            else
+                $im = '<img src="http://placehold.it/100x100" width="100%">';   
+
+            // imagen
+	        $html=$html.'<td>'.$im.'</td>';
+	        // nombre
+	        $html=$html.'<td><strong>'.$producto->nombre.'</strong></td>';
+	        // Cantidad
+	        $html=$html.'<td>'.$inventario->cantidad.'</td>';
+	        
+	        $html=$html.'<td>';
+			$html=$html.number_format($inventario->precio, 2, ',', '.')."  Bs.";
+	        $html=$html.'</td>';     
+
+        	$html=$html.'<tr>';
+		}
+
+        //Cuerpo de la tabla OFF
+        $html=$html.'</tbody></table></div>';
+        // Tabla OFF
+  		$html=$html.'</div></div>';
+		echo $html;
+	}
+
 }
