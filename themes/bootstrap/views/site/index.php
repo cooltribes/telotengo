@@ -15,7 +15,7 @@ $('.carousel').carousel('cycle');
 </script>
 
 <div class="container">
-
+ 
        
     <div class="row-fluid">
 
@@ -62,7 +62,7 @@ $('.carousel').carousel('cycle');
             <hr/>
             	<?php            	
             	$prod = new Producto;
-				$productos = $prod->front();
+				$productos = $prod->front(); 
 				
 				foreach($productos as $produc)
 				{

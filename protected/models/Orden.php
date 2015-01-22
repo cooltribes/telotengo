@@ -165,6 +165,7 @@ class Orden extends CActiveRecord
 		$criteria->compare('tracking',$this->tracking);
 		$criteria->compare('balance',$this->balance);
 		$criteria->compare('direccionEnvio_id',$this->direccionEnvio_id);
+		$criteria->order = "id DESC";
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
