@@ -20,23 +20,20 @@
     <div class="row-fluid">
     <!-- COLUMNA PRINCIPAL DERECHA ON // OJO: esta de primera para mejorar el SEO sin embargo por CSS se ubica visualmente a la derecha -->
         <div>
-        <div>
-            <h1>
-               Pedido #<?php echo $model->id; ?>
-            </h1>
-        </div>
+     
+            <h1>Pedido N° <?php echo $model->id; ?> <small class="pull-right"><?php echo $model->getStatus($model->estado); ?><?php echo ($model->estado== 3)?'<br><a class="smallRLink" id="envioLink" onclick="shippingDisplay()">Enviar Pedido</a>':''; ?></small></h1>
+            <hr class="no_margin_top"/>
         <?php 
         if($model->estado == 3) // dinero confirmado
         {
         ?>
-        <section>
-            <h3>Acciones:</h3>                        
-            <div class="alert alert-block form-inline ">
-                <h4 class="alert-heading "> Enviar pedido:</h4>
-                    <p>
-                    <input name="" id="tracking" type="text" placeholder="Numero de Tracking">
-                    <a onclick="enviarPedido(<?php echo $model->id; ?>)" class="btn" title="Enviar pedido">Enviar</a> </p>
-                    Tipo de guía: 
+
+                                    
+            <div id="envioForm" class="alert alert-block form-inline well hide">
+          
+                   <div class="row-fluid"> 
+                        <div class="col-md-12">
+                            Guía
                     <?php
                                 
                     switch ($model->tipo_guia) {
@@ -53,8 +50,18 @@
                             break;
                     }
                     ?>
+                        </div>    
+                        <div class="col-md-11">
+                            <input name="" id="tracking" type="text" placeholder="Numero de Tracking" class="form-control">
+                        </div>
+        
+                            <a class="btn btn-info col-md-1"" onclick="enviarPedido(<?php echo $model->id; ?>)" class="btn" title="Enviar pedido">Enviar</a> 
+                       
+                   </div>
+                   
+                    
             </div>
-        </section>
+
         <?php
         }
         ?>
@@ -107,46 +114,53 @@
                     }
                     ?>
                     
+                     <?php $width=$model->balance>0?12:18;?>
+                         <table width="100%" align="right" style="margin-bottom: 30px;">
+                               <thead>
+                                   <tr align="right">
+                                       <th><h3>Enviado a</h3></th>
+                                       <th width=" <?php echo $width;?>%"><h3 class="text_align_right">Subtotal</h3></th>
+                                       <th width=" <?php echo $width;?>%"><h3 class="text_align_right">Envio</h3></th>
+                                       <th width=" <?php echo $width;?>%"><h3 class="text_align_right">IVA</h3></th>
+                                      
+                                   <?php if($model->balance>0): ?>
+                                       <th width=" <?php echo $width;?>%"><h3 class="text_align_right">Balance</h3></th>
+                                   <?php endif; ?>
+                                       <th width=" <?php echo $width;?>%"><h3 class="text_align_right">Total</h3></th>
+                                       
+                                   </tr>
+                               </thead>
+                               <tbody>
+                                    <tr align="right">
+                                        <td align="left">
+                                        <?php if(isset($model->direccionEnvio)){
+                                            echo $model->direccionEnvio->nombre."<br/>";
+                                            echo $model->direccionEnvio->direccion_1."<br/>";
+                                            if(strlen($model->direccionEnvio->direccion_2)>3)echo $model->direccionEnvio->direccion_2."<br/>";
+                                            echo $model->direccionEnvio->ciudad->nombre." - ".$model->direccionEnvio->provincia->nombre."<br/>";
+                                            echo $model->direccionEnvio->telefono."<br/>";
+                                        }?>                                        
+                                       <span class="muted">
+                                           Fecha estimada de entrega <?php echo date('d/m/Y', strtotime($model->fecha.'+1 day'));?> - <?php echo date('d/m/Y', strtotime($model->fecha.'+1 week')); ?>                                           
+                                       </span> 
+                                        </td>
+                                        <td class="quantity"><strong><?php echo $model->total-$model->envio-$model->iva; ?> Bs</strong></td>
+                                        <td class="quantity"><strong><?php echo $model->envio; ?> Bs</strong></td>
+                                        <td class="quantity"><strong><?php echo $model->iva; ?> Bs</strong></td>
+                                        <?php if($model->balance>0): ?>                           
+                                        <td class="quantity"><strong><?php echo $model->balance; ?> Bs</strong></td>                               
+                                        <?php endif; ?>
+                                        <td class="quantity"><strong><?php echo $model->total; ?> Bs</strong></td>
+                                    </tr>
+                                    
+                                </tbody>
+                            </table>
+                    
+                    
+                    
                     <section>
-                        <h3>Resumen:</h3>
                         <div>
-                            <p class="well well-sm"> Estado: <span>
-                            <?php
-		
-								switch ($model->estado) {
-							    case 1:
-							        echo "En espera de pago"; 
-							        break;
-							    case 2:
-							        echo "En espera de confirmación"; 
-							        break;
-							    case 3:
-							        echo "Pago Confirmado";
-							        break;
-								case 4:
-									echo "Orden Enviada";
-									break;
-								case 5:	
-									echo "Orden Cancelada";
-									break;
-								case 6:
-									echo "Pago Rechazado";
-									break;
-								case 7:
-									echo "Pago Insuficiente";
-									break;
-								case 8: 
-									echo "Entregado   ".CHtml::link('Procesar devolución', $this->createUrl('devolucion', array('id'=>$model->id)), array('class'=>'btn btn-danger btn-xs'));
-									break;
-								case 9:
-									echo "Orden Devuelta";
-									break;
-								case 10:
-									echo "Parcialmente Devuelto";
-									break;	
-								}
-						
-							?></span> </p>
+                            
 
                             <?php
                             if($model->estado == 9 || $model->estado == 10){ //hay alguna devolución, muestro el detalle
@@ -266,9 +280,10 @@
                                       
                         </div>                        
                         <div>
+                            
                         	<?php
-                        	
-                        		$template = '{summary}
+                        	if($dataProvider->totalItemCount>0)
+                        	{	$template = '{summary}
 							    <h2>Pagos</h2><table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-bordered table-hover table-striped">
 							        <tr>
 							            <th scope="col">Pago #</th>
@@ -300,9 +315,9 @@
 									)
 									),					
 								));  
-                        	
+								}
                         	?>
-                            <h4>Detalles del pedido</h4>
+                        
                         <table class="table">
                             <thead>
                               <tr>
@@ -328,11 +343,11 @@
                                     }
 
                                     $principal = Imagenes::model()->findByAttributes(array('orden'=>1,'producto_id'=>$orden_inventario->inventario->producto_id));
-                                                                        
-                                    if($principal->getUrl())
+                                                 
+                                    if(!is_null($principal))
                                         $im = CHtml::image(str_replace(".","_thumb.",$principal->getUrl()), "Preview", array("height"=>"100px", "width" => "100px",'class'=>'img-responsive'));
                                     else 
-                                        $im = '<img src="http://placehold.it/100x100" width="100%">';   
+                                        $im = '<img src="http://placehold.it/25x25" width="100%">';   
                                     ?>
                                     <tr>
                                         <td><?php echo $im; ?></td>
@@ -348,24 +363,7 @@
                                 ?>
                             </tbody>
                         </table>
-                        <div class="padding_xsmall">
-                                Subtotal: <span><?php echo $model->total-$model->envio; ?> Bs.</span>
-                            </div>
-                            <div class="padding_xsmall">
-                                Envio: <span><?php echo $model->envio; ?> Bs.</span>
-                            </div>
-                            <div class="padding_xsmall">
-                                IVA: <span><?php echo $model->iva; ?> Bs.</span>
-                            </div>
-                            <div class="">
-                                <h3>
-                                    Total: <strong><?php echo $model->total; //+$model->envio+$model->iva; ?> Bs.</strong>
-                                </h3>
-                            </div>
-                            <div>  
-                                <p class="text-muted"><?php echo 'Fecha estimada de entrega: ' ?><?php echo date('d/m/Y', strtotime('+1 day'));?>  - <?php echo date('d/m/Y', strtotime('+1 week'));  ?>
-                                </p>
-                            </div>                  
+                                         
                         </div>
                     </section>
 
@@ -396,3 +394,14 @@
         
     }
 </script>
+ <script>
+        function shippingDisplay(){
+            if($('#envioForm').hasClass('hide')){
+                $('#envioForm').removeClass('hide');
+                $('#envioLink').html('Ocultar');
+            }else{
+                $('#envioForm').addClass('hide');
+                $('#envioLink').html('Registrar Pago');
+            }
+        }
+    </script>

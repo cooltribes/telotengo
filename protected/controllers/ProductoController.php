@@ -60,10 +60,12 @@ class ProductoController extends Controller
 	public function actionSeleccion() 
 	{
 		if(isset($_POST['busqueda'])){
-			unset(Yii::app()->session['busqueda']);
-			
-			Yii::app()->session['busqueda'] = $_POST['busqueda'];
-			$this->redirect(array('busqueda'));
+		    $producto = new Producto;
+            $producto->unsetAttributes();     
+            $producto->nombre = $_POST['busqueda'];        
+            $dataProvider = $producto->searchTwo();
+                    
+            $this->render('seleccion',array('dataProvider'=>$dataProvider));
 		}
 		else
 			$this->render('seleccion');
