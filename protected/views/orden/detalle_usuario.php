@@ -1,3 +1,4 @@
+
 <?php
 $this->breadcrumbs=array(
 	'Pedidos'=>array('listado'),
@@ -7,12 +8,142 @@ $this->breadcrumbs=array(
     <div class="container">
         <div class="row-fluid">
             <!-- COLUMNA PRINCIPAL DERECHA ON // OJO: esta de primera para mejorar el SEO sin embargo por CSS se ubica visualmente a la derecha -->
-            <div class="col-md-10 col-md-offset-1 main-content" role="main">
-                    <div>
-                        <h1>
-                           Pedido #<?php echo $model->id; ?>
-                        </h1> 
-                    </div>   
+            <div class="main-content" role="main">  
+    
+             <h1>Pedido N° <?php echo $model->id; ?> <small class="pull-right"><?php echo $model->getStatus($model->estado); ?><?php echo ($model->estado== 1 || $model->estado==7)?'<br><a class="smallRLink" onclick="paymentDisplay()">Registrar Pago</a>':''; ?></small></h1>
+             <hr class="no_margin_top"/>
+             <?php 
+             if( $model->estado== 1 || $model->estado==7){
+                            
+                            $detalle = new DetalleOrden;
+                                
+                            echo '<div id="pagoForm" class="well well-md row-fluid hide">
+                                <div class="row-fluid padding_left">
+            
+                                     '
+                                    ;
+
+                            $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
+                                'id'=>'pago-form',
+                                'enableAjaxValidation'=>false,
+                                'enableClientValidation'=>true,
+                                'type'=>'horizontal',
+                                'clientOptions'=>array(
+                                    'validateOnSubmit'=>true,
+                                ),
+                                'htmlOptions' => array( 
+                                    'enctype' => 'multipart/form-data',
+                                ),
+                            ));
+                            
+                            echo $form->errorSummary($model);
+                                  
+                            echo "<div class='col-md-4'>";
+                            echo $form->textFieldRow($detalle,'nombre',array('class'=>'form-control','maxlength'=>45));
+                            echo $form->error($detalle,'nombre');
+            
+                           echo '</div>';                       
+                            echo "<div class='col-md-4'>";
+                            echo $form->textFieldRow($detalle,'cedula',array('class'=>'form-control','maxlength'=>45));
+                            echo $form->error($detalle,'cedula');
+                           echo '</div>';
+                            
+                            echo "<div class='col-md-4'>";
+                            echo $form->textFieldRow($detalle,'confirmacion',array('class'=>'form-control','maxlength'=>45));
+                            echo $form->error($detalle,'confirmacion');
+                            echo '</div>';
+
+                            echo "<div class='col-md-4'>";
+                            echo $form->textFieldRow($detalle,'monto',array('class'=>'form-control','maxlength'=>45));
+                            echo $form->error($detalle,'monto');
+                            echo '</div>';
+                            
+
+                            
+                            echo "<div class='col-md-4'>";
+                           
+                            echo $form->labelEx($model,'fecha',array('class'=>'control-label'));
+                                $this->widget('zii.widgets.jui.CJuiDatePicker',array(
+                                    'name'=>'publishDate',
+                                    'model'=>$detalle,
+                                    'name'=>'DetalleOrden[fecha]',
+                                    // additional javascript options for the date picker plugin
+                                    'options'=>array(
+                                        'showAnim'=>'fold',
+                                    ),
+                                    'htmlOptions'=>array(
+                             
+                                        'class'=>'form-control'
+                                    ),
+                                ));  
+                            echo $form->error($detalle,'fecha'); 
+                            echo '</div>'; 
+                            
+                            echo $form->hiddenField($detalle,'orden_id',array('type'=>"hidden",'value'=>$model->id));
+    
+                            echo "<div class='col-md-4'>";
+                            echo '<label class="control-label required">&nbsp;</label>';
+                                $this->widget('bootstrap.widgets.TbButton', array(
+                                    'buttonType'=>'submit',
+                                    'type'=>'danger',
+                                    'label'=>'Enviar',
+                                    'htmlOptions'=>array('class'=>'form-control'),
+                                ));
+  
+    
+                            $this->endWidget();
+                            
+                            echo '<hr/> </div>';
+                            
+                            echo '</div></div>';
+                            }   
+             
+             
+             ?>   
+
+
+            <?php $width=$model->balance>0?12:18;?>
+              <table width="100%" align="right" style="margin-bottom: 30px;">
+                               <thead>
+                                   <tr align="right">
+                                       <th><h3>Enviado a</h3></th>
+                                       <th width=" <?php echo $width;?>%"><h3 class="text_align_right">Subtotal</h3></th>
+                                       <th width=" <?php echo $width;?>%"><h3 class="text_align_right">Envio</h3></th>
+                                       <th width=" <?php echo $width;?>%"><h3 class="text_align_right">IVA</h3></th>
+                                      
+                                   <?php if($model->balance>0): ?>
+                                       <th width=" <?php echo $width;?>%"><h3 class="text_align_right">Balance</h3></th>
+                                   <?php endif; ?>
+                                       <th width=" <?php echo $width;?>%"><h3 class="text_align_right">Total</h3></th>
+                                       
+                                   </tr>
+                               </thead>
+                               <tbody>
+                                    <tr align="right">
+                                        <td align="left">
+                                        <?php if(isset($model->direccionEnvio)){
+                                            echo $model->direccionEnvio->nombre."<br/>";
+                                            echo $model->direccionEnvio->direccion_1."<br/>";
+                                            if(strlen($model->direccionEnvio->direccion_2)>3)echo $model->direccionEnvio->direccion_2."<br/>";
+                                            echo $model->direccionEnvio->ciudad->nombre." - ".$model->direccionEnvio->provincia->nombre."<br/>";
+                                            echo $model->direccionEnvio->telefono."<br/>";
+                                        }?>                                        
+                                       <span class="muted">
+                                           Fecha estimada de entrega <?php echo date('d/m/Y', strtotime($model->fecha.'+1 day'));?> - <?php echo date('d/m/Y', strtotime($model->fecha.'+1 week')); ?>                                           
+                                       </span> 
+                                        </td>
+                                        <td class="quantity"><strong><?php echo $model->total-$model->envio-$model->iva; ?> Bs</strong></td>
+                                        <td class="quantity"><strong><?php echo $model->envio; ?> Bs</strong></td>
+                                        <td class="quantity"><strong><?php echo $model->iva; ?> Bs</strong></td>
+                                        <?php if($model->balance>0): ?>                           
+                                        <td class="quantity"><strong><?php echo $model->balance; ?> Bs</strong></td>                               
+                                        <?php endif; ?>
+                                        <td class="quantity"><strong><?php echo $model->total; ?> Bs</strong></td>
+                                    </tr>
+                                    
+                                </tbody>
+                            </table>
+                 
                     
 				<?php if(Yii::app()->user->hasFlash('success')){?>
 				    <div class="alert in alert-block fade alert-success text_align_center">
@@ -26,43 +157,11 @@ $this->breadcrumbs=array(
 				<?php } ?>
                     
                     <section>
-                        <h3>Resumen:</h3>
-                        <div>
-                            <p class="well well-md"> Estado: <span>
+                      
+                          
                          
                             <?php
-							switch ($model->estado) {
-							    case 1:
-							        echo "En espera de pago"; 
-							        break;
-							    case 2:
-							        echo "En espera de confirmación"; 
-							        break;
-							    case 3:
-							        echo "Pago Confirmado";
-							        break;
-								case 4:
-									echo "Orden Enviada";
-									break;
-								case 5:	
-									echo "Orden Cancelada";
-									break;
-								case 6:
-									echo "Pago Rechazado";
-									break;
-								case 7:
-									echo "Pago Insuficiente";
-									break;
-								case 8: 
-									echo "Entregado</td>";
-									break;
-								case 9:
-									echo "Orden Devuelta";
-									break;
-								case 10:
-									echo "Parcialmente Devuelto";
-									break;	
-							}
+							
 
 		                    if($model->estado==4||$model->estado==8||$model->estado==9||$model->estado==10){
 		                        ?>
@@ -233,75 +332,7 @@ $this->breadcrumbs=array(
                                 <?php
                             }
                             
-		                    if( $model->estado== 1 || $model->estado==7){
-							
-							$detalle = new DetalleOrden;
-								
-							echo '<div class="well well-md row-fluid">
-								<div class="row padding_left">
-									<div class="col-md-6 1">
-									Registrar Pago '
-									;
-
-							$form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
-								'id'=>'pago-form',
-								'enableAjaxValidation'=>false,
-								'enableClientValidation'=>true,
-								'type'=>'horizontal',
-								'clientOptions'=>array(
-									'validateOnSubmit'=>true,
- 								),
-								'htmlOptions' => array( 
-							        'enctype' => 'multipart/form-data',
-							    ),
-							));
-							
-							echo $form->errorSummary($model);
-		
-							echo '<div class="form-group">';
-							echo $form->textFieldRow($detalle,'nombre',array('class'=>'form-control','maxlength'=>45));
-							echo $form->error($detalle,'nombre');
-							echo '</div>';
-							
-							echo '<div class="form-group">';
-							echo $form->textFieldRow($detalle,'cedula',array('class'=>'form-control','maxlength'=>45));
-							echo $form->error($detalle,'cedula');
-							echo '</div>';
-							
-							echo '<div class="form-group">';
-							echo $form->textFieldRow($detalle,'confirmacion',array('class'=>'form-control','maxlength'=>45));
-							echo $form->error($detalle,'confirmacion');
-							echo '</div>';
-
-							echo '<div class="form-group">';
-							echo $form->textFieldRow($detalle,'monto',array('class'=>'form-control','maxlength'=>45));
-							echo $form->error($detalle,'monto');
-							echo '</div>';
-							
-							echo '<div class="form-group">';
-						    	echo $form->labelEx($model,'fecha');
-									$this->widget('application.extensions.timepicker.timepicker', array(
-										'model'=>$detalle,
-										'name'=>'fecha',
-									));
-							echo $form->error($detalle,'fecha'); 
-						    echo '</div>';
-							
-							echo $form->hiddenField($detalle,'orden_id',array('type'=>"hidden",'value'=>$model->id));
-	
-							echo '<div class="form-actions">';
-								$this->widget('bootstrap.widgets.TbButton', array(
-									'buttonType'=>'submit',
-									'type'=>'danger',
-									'label'=>'Enviar',
-									'htmlOptions'=>array('class'=>'form-control'),
-								));
-							echo '</div>';
-	
-							$this->endWidget();
-							
-							echo '</div></div></div>';
-							}	
+		                    
 								
 							
 							?></span> </p>
@@ -349,7 +380,7 @@ $this->breadcrumbs=array(
                             ?>                          
                         </div>                        
                         <div>
-                            <h4>Detalles del pedido</h4>
+                
                         <table class="table">
                             <thead>
                               <tr>
@@ -434,25 +465,7 @@ $this->breadcrumbs=array(
                                 ?>
                             </tbody>
                         </table>
-                        <div class="padding_xsmall">
-                            Subtotal: <span><?php echo $model->total-$model->envio; ?> Bs.</span>
-                        </div>
-                        <div class="padding_xsmall">
-                            Envio: <span><?php echo $model->envio; ?> Bs.</span>
-                        </div>
-                        <div class="padding_xsmall">
-                            IVA: <span><?php echo $model->iva; ?> Bs.</span>
-                        </div>
-                        <div class="">
-                            <h3>
-                                Total: <strong><?php echo $model->total; //+$model->envio+$model->iva; ?> Bs.</strong>
-                            </h3>
-                        </div>
-                        <div>  
-                            <p class="text-muted">Fecha estimada de entrega
-                            <?php echo date('d/m/Y', strtotime($model->fecha . '+1 day'));?> - <?php echo date('d/m/Y', strtotime($model->fecha.'+1 week')); ?></</p>
-
-                        </div>  
+                        
                         </div>
                     </section>
 
@@ -460,3 +473,14 @@ $this->breadcrumbs=array(
             <!-- COLUMNA PRINCIPAL DERECHA OFF // -->
         </div>
     </div>
+    <script>
+        function paymentDisplay(){
+            if($('#pagoForm').hasClass('hide')){
+                $('#pagoForm').removeClass('hide');
+                $('.smallRLink').html('Ocultar');
+            }else{
+                $('#pagoForm').addClass('hide');
+                $('.smallRLink').html('Registrar Pago');
+            }
+        }
+    </script>

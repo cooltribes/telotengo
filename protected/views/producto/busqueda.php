@@ -10,7 +10,7 @@
 	?>
 	<!-- COLUMNA PRINCIPAL DERECHA ON // OJO: esta de primera para mejorar el SEO sin embargo por CSS se ubica visualmente a la derecha -->
 	<div>
-		<?php echo CHtml::button('Regresar',array('submit' => array('producto/seleccion'), 'class'=>'btn btn-danger')); ?>
+		<?php //echo CHtml::button('Regresar',array('submit' => array('producto/seleccion'), 'class'=>'btn btn-danger')); ?>
     	
     	<div class="page-header">
         	<h1> Resultados de la busqueda - <?php echo Yii::app()->session['busqueda']; ?> </h1>
