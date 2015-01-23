@@ -119,6 +119,6 @@ $this->breadcrumbs=array(
 		
 		?>
 
-	<div id="productosOrden" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"></div>	
+	<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">GÜEVO</div>	
 
 </div>
