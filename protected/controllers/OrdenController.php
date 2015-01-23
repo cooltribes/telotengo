@@ -777,7 +777,7 @@ class OrdenController extends Controller
 	        // Cantidad
 	        $html=$html.'<td>'.$inventario->cantidad.'</td>';
 	        
-	        $html=$html.'<td>';
+	        $html=$html.'<td>'; 
 			$html=$html.number_format($inventario->precio, 2, ',', '.')."  Bs.";
 	        $html=$html.'</td>';     
 
