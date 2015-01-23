@@ -8,7 +8,7 @@
    	else 
     	$im= '<img src="http://placehold.it/100" width="100%">';
     							  
-    echo " <td>".$im."</td>";
+    echo " <td>".$im."</td>"; 
     
 	 echo " <td>".$data->codigo."</td>";
 	
