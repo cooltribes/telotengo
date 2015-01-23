@@ -17,7 +17,7 @@
 			
 			<!-- Nav tabs -->
 			<!-- SUBMENU ON -->
-			<?php echo $this->renderPartial('_menu', array('model'=>$model, 'activo'=>'inventario')); ?>
+			<?php echo $this->renderPartial('_menu', array('model'=>$producto, 'activo'=>'inventario')); ?>
 			<!-- SUBMENU OFF -->
 
 			<div class="well">
