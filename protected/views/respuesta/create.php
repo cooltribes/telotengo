@@ -1,7 +1,7 @@
 <div class="container">
 	<?php
 	$this->breadcrumbs=array(
-		'Preguntas'=>array('Admin'),
+		'Preguntas'=>array('pregunta/admin'),
 		'Aportar Respuesta',
 	);
 	?>
