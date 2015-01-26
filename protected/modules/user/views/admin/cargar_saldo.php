@@ -1,5 +1,5 @@
 <!-- CONTENIDO ON -->
-<div class="container-fluid" style="padding: 0 15px;">
+<div class="container">
 	<?php
 	$this->breadcrumbs=array(
 		'Usuarios'=>array('admin'),
@@ -7,11 +7,13 @@
 	);
 	?>
 
-	<div class="row">
+	<div class="row-fluid">
 		<!-- COLUMNA PRINCIPAL DERECHA ON // OJO: esta de primera para mejorar el SEO sin embargo por CSS se ubica visualmente a la derecha -->
-		<div class="col-md-10  col-md-push-2 main-content" role="main">
+		<div>
 			<div class="well">
 				<div class="row padding_left_medium">
+				<h3>Cargar Saldo: <?php echo $usuario->email; ?></h3>
+				<hr/>
 					<div class="col-md-6 1">
 						<?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
 							'id'=>'saldo-form',

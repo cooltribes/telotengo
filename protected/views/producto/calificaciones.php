@@ -8,7 +8,7 @@ $this->breadcrumbs=array(
 
 ?>
 
-<div class="row">
+<div class="row-fluid">
         <!-- COLUMNA PRINCIPAL DERECHA ON // OJO: esta de primera para mejorar el SEO sin embargo por CSS se ubica visualmente a la derecha -->
 
         <div class="col-md-12" role="main">
@@ -27,11 +27,10 @@ $this->breadcrumbs=array(
 	
 	<hr />
 	
-	<div class="row margin_top margin_bottom ">
+	<div>
 		Producto: <?php echo $model->nombre; ?></br>
 		Modelo: <?php echo $model->modelo; ?></br>
 		Marca: <?php echo $model->marca->nombre; ?></br>
-		Descripción: <?php echo $model->descripcion; ?></br>
 
 		Calificación promedio: <?php echo $calificacion_promedio; ?></br>
 	</div>

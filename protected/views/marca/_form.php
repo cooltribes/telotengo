@@ -1,7 +1,7 @@
 
 <div class="well">
 	<div class="row padding_left_medium">
-		<div class="col-md-6 1">
+		<div class="col-md-8">
 
 <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
 	'id'=>'marca-form',
@@ -32,7 +32,7 @@
 	</div>
 	
 	<div class="form-group">
-	    <label> Logotipo </label>
+	    <label> Logo </label>
 		<?php                      
 			echo CHtml::activeFileField($model, 'Urlimagen',array('name'=>'url'));
 			echo $form->error($model, 'Urlimagen'); 

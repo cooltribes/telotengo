@@ -78,6 +78,7 @@ class AdminController extends Controller
 
 		$this->render('cargar_saldo',array(
 			'balance'=>$balance,
+			'usuario'=>$usuario,
 		));
 	}
 

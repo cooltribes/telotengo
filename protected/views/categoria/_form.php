@@ -1,7 +1,6 @@
-
 <div class="well">
 	<div class="row padding_left_medium">
-		<div class="col-md-6 1">
+		<div class="col-md-8">
 
 
 <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
