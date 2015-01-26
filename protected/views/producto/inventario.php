@@ -30,18 +30,18 @@
 						));
 						?> 
 							<?php echo $form->errorSummary($model); ?>
-							<div class="form-group">
+							<div class="form-group col-md-6 col-md-offset-3">
 								<label>SKU</label>
 								<?php echo $form->textField($model,'sku',array('class'=>'form-control','maxlength'=>150)); ?>
 								<?php echo $form->error($model,'sku'); ?>
 							</div>
-							<div class="form-group"> 
+							<div class="form-group col-md-6 col-md-offset-3"> 
 								<label>Precio</label>
 								<?php echo $form->textField($model,'precio',array('class'=>'form-control','maxlength'=>150)); ?>
 								<?php echo $form->error($model,'precio');  ?>
 							</div>
 							
-							<div class="form-group">
+							<div class="form-group col-md-6 col-md-offset-3">
 								<label>Cantidad a Vender</label>
 								<?php echo $form->textField($model,'cantidad',array('class'=>'form-control','maxlength'=>50)); ?>
 								<?php echo $form->error($model,'cantidad'); ?>
@@ -52,13 +52,13 @@
 								echo CHtml::hiddenField('Inventario[producto_id]', $producto->id, array('id'=>'Inventario_producto_id'));
 								echo CHtml::hiddenField('Inventario[precio_tienda]',1, array('id'=>'Inventario_precio_tienda'));
 							?> 
-
+                            <div class="form-group col-md-6 col-md-offset-3">
 							<?php $this->widget('bootstrap.widgets.TbButton', array(
 								'buttonType'=>'submit',
-								'htmlOptions'=>array('class'=>'btn btn-primary margin_top_small col-md-3'),
+								'htmlOptions'=>array('class'=>'btn btn-primary margin_top_small form-control'),
 								'label'=>$model->isNewRecord ? 'Agregar' : 'Guardar',
 							)); ?>
-
+                            </div> 
 						<?php $this->endWidget(); ?>
 					</div> 
 
