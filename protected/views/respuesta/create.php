@@ -7,10 +7,11 @@
 	?>
 	<div class="row-fluid">
 		<div>
-			<h2>Aportar Respuesta</h2>
-				<div>
+			
+				<div class="well preguntaHeader margin_bottom"> 
 					Pregunta: <?php echo $pregunta->pregunta; ?>
 				</div>
+				<h2 class="margin_top">Aportar Respuesta</h2><hr class="no_margin_top"/>
 				<?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
 		</div>
 	</div>

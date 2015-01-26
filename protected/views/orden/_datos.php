@@ -46,8 +46,8 @@ function modal(id){
 		'url' : '<?php echo $this->createUrl('orden/modalorden',array('id'=>$data->id)); ?>',
 		data: { 'orden':id}, 
 		'success': function(data){
-			$('#myModal').html(data);
-			$('#myModal').modal();
+			$('#productosOrden').html(data);
+			$('#productosOrden').modal();
 		},
 		'cache' :false}); 
 

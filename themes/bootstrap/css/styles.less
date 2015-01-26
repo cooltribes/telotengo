@@ -46,7 +46,7 @@ body{
    -webkit-box-shadow: @shadow;
    -o-box-shadow: @shadow;
 }
-.bg_white{background-color: @white;}
+.bg_white{background-color: @white !important;}
 
 /*------------------------------------ Miscelaneos ------------------------------------*/
 
@@ -152,7 +152,14 @@ body{
 .no_padding_bottom{ padding-bottom:0 !important;}
 .no_padding{ padding:0 !important;}
 
+/* NO BORDER */
+.no_border_left{ border-left:0 !important;}
+.no_border_right{ border-right:0 !important;}
+.no_border_top{ border-top:0 !important;}
+.no_border_bottom{ border-bottom:0 !important;}
+.no_border{ border:0 !important;}
 
+.no_resize{ resize:none;}
 
 /* Textos */
 .text_align_left {
@@ -220,6 +227,18 @@ body{
   float: right;
   margin-top: 5px;
   cursor:pointer;
+}
+.mediumRLink{
+  font-size: 16PX;
+  COLOR: #333;
+  TEXT-DECORATION: UNDERLINE;
+  float: right;
+  cursor:pointer;
+}
+.preguntaHeader{
+  font-size:20px;
+  font-style:italic;
+  text-align:center;
 }
 
 /* ==========================================================================
@@ -624,6 +643,9 @@ ul.dropdown a:link, ul.dropdown a:visited{
 }
 
 #productosOrden{
-  width:70%;
-  margin: 0 auto;
+  width:50%;
+  margin:auto;
+  background:#FFF;
+  max-height: 440px;
+  overflow-y:scroll;
 }

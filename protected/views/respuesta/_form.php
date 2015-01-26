@@ -11,15 +11,16 @@
 
 	<?php echo $form->errorSummary($model); ?>
 	
-	<div class="form-group"> 
-		<?php echo $form->textAreaRow($model,'comentario',array('class'=>'span5','maxlength'=>300)); ?>
+	<div class="col-md-12 "> 
+		<?php echo $form->textAreaRow($model,'comentario',array('class'=>'form-control no_resize','maxlength'=>300)); ?>
 	</div>
 	
-	<div class="form-actions">
+	<div class="col-md-2 col-md-offset-10 margin_top_small">
 		<?php $this->widget('bootstrap.widgets.TbButton', array(
 			'buttonType'=>'submit',
 			'type'=>'primary',
 			'label'=>'Responder',
+			'htmlOptions'=>array('class'=>'row-fluid')
 		)); ?>
 	</div>
 

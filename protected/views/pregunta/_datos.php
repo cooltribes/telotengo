@@ -34,8 +34,8 @@ echo"<tr>";
 	</a> 
 	 
 		<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-			<li><a tabindex="-1" href="'.Yii::app()->createUrl('/respuesta/create',array('id'=>$data->id)).'" ><i class="glyphicon glyphicon-plus"></i> Aportar Respuesta </a></li>
-			<li><a tabindex="-1" href="'.Yii::app()->createUrl('/respuesta/listado',array('id'=>$data->id)).'" ><i class="glyphicon glyphicon-th-large"></i> Manejar Respuestas </a></li>
+
+			<li><a tabindex="-1" href="'.Yii::app()->createUrl('/respuesta/listado',array('id'=>$data->id)).'" ><i class="glyphicon glyphicon-th-large"></i> Respuestas </a></li>
 			<li><a tabindex="-1" href="'.Yii::app()->createUrl('/pregunta/delete',array('id'=>$data->id)).'" ><i class="glyphicon glyphicon-trash"></i> Eliminar Pregunta </a></li>
 		</ul>
         </div>
