@@ -19,6 +19,19 @@ Yii::app()->clientScript->registerMetaTag(Yii::app()->getBaseUrl(true).str_repla
 ?>
     <div class="row-fluid main-content">
 
+        <?php if(Yii::app()->user->hasFlash('success')){?>
+            <div class="alert in alert-block fade alert-success text_align_center">
+                <a href="#" class="close" data-dismiss="alert">&times;</a>
+                <?php echo Yii::app()->user->getFlash('success'); ?>
+            </div>
+        <?php } ?>
+        <?php if(Yii::app()->user->hasFlash('error')){?>
+            <div class="alert alert-danger text_align_center">
+                <a href="#" class="close" data-dismiss="alert">&times;</a>
+                <?php echo Yii::app()->user->getFlash('error'); ?>
+            </div>
+        <?php } ?>
+
         <section role="main">
             <h1><?php echo $model->nombre; ?> <small><?php echo $model->modelo; ?></small></h1>
             <hr/>
@@ -874,14 +887,19 @@ Yii::app()->clientScript->registerMetaTag(Yii::app()->getBaseUrl(true).str_repla
 		var url = "<?php echo Yii::app()->baseUrl."/wishlist/listado"; ?>";
 		var nombre = $('#Wishlist_nombre').attr('value');
 		
-        $.ajax({
-            url: "<?php echo Yii::app()->createUrl('wishlist/crearagregar'); ?>",
-            type: "post",
-            data: { nombrewish: nombre, producto_id:producto, user_id: usuario},
-            success: function(data){
-                location.href=url;
-			},
-        });
+        var pattern = /^[+-]?[0-9]{1,9}(?:\,[0-9]{1,2})?$/;
+
+        if(nombre.length>0){ 
+
+            $.ajax({ 
+                url: "<?php echo Yii::app()->createUrl('wishlist/crearagregar'); ?>",
+                type: "post",
+                data: { nombrewish: nombre, producto_id:producto, user_id: usuario},
+                success: function(data){
+                    location.href=url;
+    			},
+            });
+        }else{ alert("Ingrese un nombre"); }
 		
 	}
 

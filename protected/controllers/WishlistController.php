@@ -31,7 +31,7 @@ class WishlistController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','listado','add','modalchoose','agregar','crearagregar','productos','eliminarproducto','eliminar'),
+				'actions'=>array('create','update','listado','add','modalchoose','agregar','crearagregar','productos','eliminarproducto','eliminar','enviarbolsa'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -223,8 +223,8 @@ class WishlistController extends Controller
 		$datos=$datos.CHtml::activeLabel($model,'nombre');
 		$datos=$datos.CHtml::activeTextField($model,'nombre',array('class'=>'form-control','maxlength'=>65));
 		$datos=$datos.CHtml::error($model, 'nombre');
-		$datos=$datos."</div>";
-		
+		$datos=$datos."</div>"; 
+	
 		$datos=$datos.CHtml::hiddenField('id_user', $user->id, array('id'=>'id_user'));
 		$datos=$datos.CHtml::hiddenField('id_producto', $producto->id, array('id'=>'id_producto'));
 		
@@ -263,7 +263,7 @@ class WishlistController extends Controller
 	/**
 	 * Crear y agregar al nuevo wishlist
 	 */
-	public function actionCrearagregar()
+	public function actionCrearagregar() 
 	{
 		$wish = new Wishlist;
 		$wish->nombre = $_POST['Wishlist']['nombre'];
@@ -275,11 +275,16 @@ class WishlistController extends Controller
 			$wishlisthas->wishlist_id = $wish->id;
 			$wishlisthas->producto_id = $_POST['id_producto']; 
 			$wishlisthas->save();
-		}
 			
-		Yii::app()->user->setFlash('success',"Producto agregado a la nueva lista de deseos.");
+			Yii::app()->user->setFlash('success',"Producto agregado a la nueva lista de deseos.");
 		
-		$this->redirect(array('wishlist/listado'));	
+			$this->redirect(array('wishlist/listado'));	
+		}
+		else{
+			Yii::app()->user->setFlash('error',"Ingrese un nombre para la lista de deseos");
+			$this->redirect(array('producto/detalle/'.$_POST['id_producto']));	
+		}	
+		
 	}
 	
 	/**
@@ -346,6 +351,53 @@ class WishlistController extends Controller
 		Yii::app()->user->setFlash('success',"Producto eliminado de la lista.");
 		
 		$this->redirect(array('productos','id'=>$wish));
+	}
+
+	/**
+	 * Pasa el producto de Wishlist a Bolsa y redirecciona
+	 */
+	public function actionEnviarBolsa($id){
+			
+		$wishlisthas = WishlistHasProducto::model()->findByPk($id);
+		
+		$user = Yii::app()->user->id;
+		$bolsa = Bolsa::model()->findByAttributes(array('users_id'=>$user));
+		$inventario = Inventario::model()->findByAttributes(array('producto_id'=>$wishlisthas->producto_id));
+
+		if(isset($bolsa)){ 
+			$ag = new BolsaHasInventario; 
+			$ag->bolsa_id = $bolsa->id;
+			$ag->inventario_id = $inventario->id; 
+			$ag->cantidad = 1;
+
+			if($ag->save()){
+				Yii::app()->user->setFlash('success', 'Se ha agregado correctamente el producto a la bolsa.');
+			}else{
+				Yii::trace('Wishlist a Bolsa: Wishlisthas '.$wishlisthas->id.' Error al pasar :'.print_r($detalle->getErrors(),true), 'Wish a Bolsa');
+				Yii::app()->user->setFlash('error', 'Error al agregar.');
+			}	
+		} 
+		else{ // no tenia bolsa aún
+			$nueva = new Bolsa;
+			$nueva->users_id = $user;
+			$nueva->save();
+			
+			$ag = new BolsaHasInventario;
+			$ag->bolsa_id = $nueva->id;
+			$ag->inventario_id = $inventario->id; 
+			$ag->cantidad = 1;
+			
+			if($ag->save()){
+				Yii::app()->user->setFlash('success', 'Se ha agregado correctamente el producto a la bolsa.');
+			}else{
+				Yii::trace('Wishlist a Bolsa: Wishlisthas '.$wishlisthas->id.' Error al pasar :'.print_r($detalle->getErrors(),true), 'Wish a Bolsa');
+				Yii::app()->user->setFlash('error', 'Error al agregar.');
+			}
+							
+		}
+
+		$wishlisthas->delete();
+		$this->redirect(array('bolsa/view'));
 	}
 
 	/**

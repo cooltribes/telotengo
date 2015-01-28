@@ -39,12 +39,12 @@ $('.carousel').carousel('cycle');
                      </a>
                   </div>
                   <div class="item">
-                     <a href="http://sigmatiendas.com/index.php/computadoras-impresoras/licencias.html" target="_blank">
+                     <a href="categorias/licencias" target="_blank">
                          <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/slider2.jpg" width="100%" title="Licencias Originales">
                      </a>
                   </div>
                   <div class="item">
-                     <a href="http://sigmatiendas.com/index.php/computadoras-impresoras/equipos.html" target="_blank">
+                     <a href="categorias/equipos" target="_blank">
                          <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/slider3.jpg" width="100%" title="Impresoras">
                      </a>
                   </div>

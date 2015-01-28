@@ -15,32 +15,21 @@ $this->breadcrumbs=array(
 		    </div>
 		<?php } ?>
 		<?php if(Yii::app()->user->hasFlash('error')){?>
-		    <div class="alert in alert-block fade alert-error text_align_center">
+		    <div class="alert in alert-block fade alert-danger text_align_center">
 		        <?php echo Yii::app()->user->getFlash('error'); ?>
 		    </div>
 		<?php } ?>
 
-	    <div class="row margin_top margin_bottom ">
-	        <div class="span4">
-	            <form class="no_margin_bottom form-search">
-	            <div class="input-prepend"> <span class="add-on"><i class="icon-search"></i></span>
-	            		<input class="span3" id="query" name="query" type="text" placeholder="Buscar">
-	                	<a href="#" class="btn" id="btn_search_event">Buscar</a>
-	           		</form>
-	           	</div>         
-	        </div>
-	        
+	    <div class="row margin_top margin_bottom ">	        
 	        <div class="pull-right">
 	        <?php
-	        	echo CHtml::link('Agregar lista de deseo', $this->createUrl('create'), array('class'=>'btn btn-success', 'role'=>'button'));
+	        	echo CHtml::link('Agregar lista de deseos', $this->createUrl('create'), array('class'=>'btn btn-success', 'role'=>'button'));
 	        ?>
 			</div>
-			
 	    </div>
 	    <hr/>
-	    
-	<?php
 	
+	<?php
 	$template = '{summary}
 	    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-bordered table-hover table-striped">
 	        <tr>

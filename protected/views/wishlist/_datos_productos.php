@@ -23,6 +23,7 @@ echo"<tr>";
 	</a>  
 	
 		<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+			<li><a tabindex="-1" href="'.Yii::app()->createUrl('/wishlist/enviarbolsa',array('id'=>$data->id)).'" ><i class="glyphicon glyphicon-shopping-cart"></i> Enviar producto al carrito </a></li>
 			<li><a tabindex="-1" href="'.Yii::app()->createUrl('/wishlist/eliminarproducto',array('id'=>$data->id)).'" ><i class="glyphicon glyphicon-trash"></i> Eliminar Producto </a></li>
 		</ul>
         </div></td>
