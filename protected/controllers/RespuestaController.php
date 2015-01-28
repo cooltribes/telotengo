@@ -148,9 +148,27 @@ class RespuestaController extends Controller
 		$model->pregunta_id = $id;
 		
 		$dataProvider = $model->search();
+        
+        if(isset($_POST['Respuesta']))
+        {
+            $model->attributes=$_POST['Respuesta'];
+            $model->fecha = date('Y-m-d H:i:s');
+            $model->pregunta_id = $id;
+            $model->users_id = Yii::app()->user->id;
+            
+            $user = User::model()->findByPk(Yii::app()->user->id);
+            
+            if($model->save())
+                Yii::app()->user->setFlash('success',"Respuesta aportada correctamente.");
+                
+               
+            
+        }
 		
 		$this->render('listado',array(  
 			'dataProvider'=>$dataProvider,
+			'pregunta'=>$model->pregunta,
+			'model'=>$model,
 		));
 	}
 	

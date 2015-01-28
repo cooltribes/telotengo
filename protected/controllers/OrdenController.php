@@ -737,22 +737,24 @@ class OrdenController extends Controller
 		$ordenInventario = OrdenHasInventario::model()->findAllByAttributes(array('orden_id'=>$id));
 
 		$html='';
-		$html=$html.'<div class="modal-header">';
+		$html=$html.'<div class="modal-header no_border">';
     	$html=$html.'<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>';
-    	$html=$html.'<h3>Productos comprados</h3>';
+
   		$html=$html.'</div>';
   		$html=$html.'<div class="modal-body">';
     	$html=$html.'';
 
     	// Tabla ON
     	//Header de la tabla ON
-   		$html=$html.'<div class="well well-small margin_top well_personaling_small"><h3>Orden #'.$id.'</h3>';
-      	$html=$html.'<table width="50%" border="0" cellspacing="0" cellpadding="0" class="table table-bordered table-hover table-striped">';
+   		$html=$html.'<div class="margin_bottom"><h1 class="no_margin_top">Productos incluídos <small>Pedido N° '.$id.'</small></h1><hr class="no_margin_top"/></div>';
+        
+        
+      	$html=$html.'<table width="50%" border="0" cellspacing="0" cellpadding="0" class="table">';
         $html=$html.'<thead><tr>';
         $html=$html.'<th scope="col"></th>';
-        $html=$html.'<th scope="col">Producto</th>';
+        $html=$html.'<th scope="col"></th>';
         $html=$html.'<th scope="col">Cantidad</th>';
-        $html=$html.'<th scope="col">Precio /th>';
+        $html=$html.'<th scope="col">Precio </th>';
         $html=$html.'</tr>';
         $html=$html.'</thead><tbody>';
         

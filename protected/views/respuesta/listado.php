@@ -16,9 +16,13 @@ $this->breadcrumbs=array(
 }
 ?>
 <div class="container">
-	<h1>Respuestas</h1>
+    <div class="well preguntaHeader margin_bottom">
+        " <?php echo $pregunta->pregunta; ?> "
+        
+    </div>
+	<h1>Respuestas<a class="mediumRLink pull-right margin_top_small" id="answerLink" onclick="answerDisplay()">Aportar Respuesta <span class="glyphicon glyphicon-plus-sign"></span></a></h1>
 		
-		<hr/>
+		<hr class="no_margin_top"/>
 	    
 	    <?php if(Yii::app()->user->hasFlash('success')){?>
 		    <div class="alert in alert-block fade alert-success text_align_center">
@@ -30,6 +34,16 @@ $this->breadcrumbs=array(
 		        <?php echo Yii::app()->user->getFlash('error'); ?>
 		    </div>
 		<?php } ?>
+	    
+	    <div id="answerForm" class="alert alert-block form-inline well hide">
+          
+                   <div class="row-fluid"> 
+                        <?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
+                   </div>
+                   
+                    
+            </div>
+	    
 	    
 	    
 		<?php
@@ -68,3 +82,14 @@ $this->breadcrumbs=array(
 		?>
 
 </div>
+ <script>
+        function answerDisplay(){
+            if($('#answerForm').hasClass('hide')){
+                $('#answerForm').removeClass('hide');
+                $('#answerLink').html('Ocultar');
+            }else{
+                $('#answerForm').addClass('hide');
+                $('#answerLink').html('Aportar Respuesta <span class="glyphicon glyphicon-plus-sign"></span> ');
+            }
+        }
+    </script>

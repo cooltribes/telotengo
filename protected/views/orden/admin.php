@@ -21,17 +21,24 @@ $this->breadcrumbs=array(
 		    </div>
 		<?php } ?>
 
-	    <div class="row-fluid margin_top">
-	        <div class="col-md-4">
-	            <form class="no_margin_bottom form-search">
-	            	<div class="input-prepend"> <span class="add-on"><i class="icon-search"></i></span>
-	            		<input class="col-md-9" id="query" name="query" type="text" placeholder="Buscar por ID">
-	                	<a href="#" class="btn btn-danger btn-sm margin_left_small" id="btn_search_event">Buscar</a>
-	           		</div>         
-	           	</form>
-	        </div>
+	   <div class="row-fluid margin_top">
+            <div class="col-md-6">
+                <div class="row-fluid">
+                <form class="no_margin_bottom form-search">
+                    <div class="input-prepend"> <span class="add-on"><i class="icon-search"></i></span>
+                       <div class="col-md-8">
+                           <input class="form-control" id="query" name="query" type="text" placeholder="Buscar por ID">
+                       </div>
+                        
+                        <a href="#" class="btn btn-danger col-md-3" id="btn_search_event">Buscar</a>
+                    </div>         
+                </form>
+                </div>
+            </div>
+            
+        </div>
 			
-	    </div>
+
 	    <hr/>
 	    
 	    <?php
@@ -119,6 +126,6 @@ $this->breadcrumbs=array(
 		
 		?>
 
-	<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"></div>	
+	<div id="productosOrden" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"></div>	
 
 </div>

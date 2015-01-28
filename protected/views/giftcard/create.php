@@ -10,11 +10,13 @@ $this->breadcrumbs=array(
 
 ?>
 <div class="container">
-	<h1>Gift Card</h1>
+	<h1>Generar Gift Card</h1>
+	<hr class="no_margin_top">
+	
 	<section class="bg_color3  span9 offset1 margin_bottom_small padding_small box_1">
             <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
                 'id'=>'giftcard-form',
-                //'enableAjaxValidation' => true,
+                //'enableAjaxValidation' => tr- .  m          ue,
                 'clientOptions' => array(
                     'validateOnSubmit' => true,
                 ),
@@ -22,11 +24,11 @@ $this->breadcrumbs=array(
                  // 'class' => 'form-horizontal',
                 ),
                 'type' => 'horizontal',
-            )); ?>
+            )); ?> 
     
 
 		<fieldset>
-			<legend>Generar nueva Gift Card</legend>
+
                         
                          <?php echo $form->errorSummary($model); ?>
                         
@@ -89,6 +91,7 @@ $this->breadcrumbs=array(
 
             <?php $this->endWidget(); ?>
         </section>
+</div>
 </div>
 <script type="text/javascript">
 	    
