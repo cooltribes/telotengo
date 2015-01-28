@@ -541,7 +541,10 @@ class BolsaController extends Controller
 					}
 
 					if($inventario->save()){
-						// no hago nada
+						if($inventario->cantidad == 0){
+							$producto = Producto::model()->findByPk($inventario->producto_id);
+							$producto->saveAttributes(array('estado'=>0)); // Quedó fuera de stock. pasa a Inactivo
+						}
 					}else{
 						Yii::trace('UserID: '.$user->id.' Error al guardar compra (inventario):'.print_r($inventario->getErrors(),true), 'registro');
 						$post_data = array(
