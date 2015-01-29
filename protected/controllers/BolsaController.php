@@ -137,7 +137,7 @@ class BolsaController extends Controller
 				$cantidad = $bolsaHas->cantidad + 1;
 				$bolsaHas->saveAttributes(array('cantidad'=>$cantidad));
 			}	
-		} 
+		}
 		else{
 			$nueva = new Bolsa;
 			$nueva->users_id = $user;
