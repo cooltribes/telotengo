@@ -1,8 +1,6 @@
-<div class="container margin_top tu_perfil">
-    <div class="page-header">
-        <h1>Avatar</h1>     
-    </div>
-
+<div class="container">
+    <h1>Avatar</h1>     
+    <hr class="no_margin_top" />
 <?php
 $this->breadcrumbs=array(
 	'Tu Cuenta'=>array('/user/user/tucuenta'),
@@ -10,19 +8,18 @@ $this->breadcrumbs=array(
 );
 
 ?>
-
 		<?php if(Yii::app()->user->hasFlash('success')){?>
 		    <div class="alert in alert-block fade alert-success text_align_center">
 		        <?php echo Yii::app()->user->getFlash('success'); ?>
 		    </div>
 		<?php } ?>
 		<?php if(Yii::app()->user->hasFlash('error')){?>
-		    <div class="alert in alert-block fade alert-error text_align_center">
+		    <div class="alert in alert-block fade alert-danger text_align_center">
 		        <?php echo Yii::app()->user->getFlash('error'); ?>
 		    </div>
 		<?php } ?>
 
-    <div class="row">
+    <div class="row-fluid">
 
 		<?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
 			'id'=>'marca-form',

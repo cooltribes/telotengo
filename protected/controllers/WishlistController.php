@@ -158,7 +158,7 @@ class WishlistController extends Controller
 	}
 	
 	/**
-	 * Agregar Wishlist.
+	 * Modal para Agregar Wishlist.
 	 */
 	public function actionModalchoose()
 	{
@@ -174,16 +174,16 @@ class WishlistController extends Controller
 		
 		$datos=$datos."	<div class='modal-header'>"; 
 		$datos=$datos. "<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>×</button>";
-		$datos=$datos."<h3 id='myModalLabel'> Agregar ";
+		$datos=$datos."<h4 id='myModalLabel'> Agregar ";
 		$datos=$datos. $producto->nombre;
-		$datos=$datos." a una lista de deseos.</h3></div>";	
+		$datos=$datos." a una lista de deseos.</h4></div>";	
 // fin del header
 
 		$datos=$datos."<div class='modal-body'>";
 		if(count($wishlist)>0){
 			//listado con los wishlist
-			$datos=$datos."<div><h4>Tus listas</h4>";
-      		$datos=$datos."<table width='100%' border='0' cellspacing='0' cellpadding='0' class='table table-bordered table-condensed'>";
+			$datos=$datos."<div class='no_margin_top'><h4>Tus listas</h4>";
+      		$datos=$datos."<table width='100%' border='0' cellspacing='0' cellpadding='0' class='text-center table table-bordered table-condensed'>";
 	        $datos=$datos."<tr>";
 	        $datos=$datos."<th scope='row'>Nombre</th>";
 			$datos=$datos."<th scope='row'>Fecha de creación</th>";
@@ -194,32 +194,19 @@ class WishlistController extends Controller
 				$datos=$datos."<tr>";
 				$datos=$datos."<td>".$wish->nombre."</td>";
 				$datos=$datos."<td>".date('d/m/Y', strtotime($wish->fecha))."</td>";
-				$datos=$datos."<td><button class='small btn btn-info' onclick='add(".$wish->id.",".$producto->id.",".$user->id.");'><span class='glyphicon glyphicon-heart'></span> Añadir a esta lista</button></td>";
+				$datos=$datos."<td><button class='small btn btn-primary' onclick='add(".$wish->id.",".$producto->id.",".$user->id.");'><span class='glyphicon glyphicon-heart'></span> Añadir a esta lista</button></td>";
 		        $datos=$datos."</tr>";
 			}
 			$datos=$datos."</table></div>"; 
 			
 		}
-		$datos=$datos."<hr/>";
+
 		$datos=$datos."<div>O agregue este producto a una nueva lista</div>";
 
 		$model = new Wishlist;
-		
-		/*$form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
-				'id'=>'new-wishlist-form',
-				'action'=>Yii::app()->baseUrl.'/wishlist/crearagregar',
-				'enableAjaxValidation'=>false,
-				'enableClientValidation'=>true,
-				'type'=>'horizontal',
-				'clientOptions'=>array(
-					'validateOnSubmit'=>true, 
-				),
-				'htmlOptions'=>array('class'=>'form-horizontal','role'=>"form"),
-			));*/
-
 		$datos .= '<form method="post" action="'.Yii::app()->baseUrl.'/wishlist/crearagregar'.'" id="new-wishlist-form" class="form-horizontal" role="form" enctype="multipart/form-data">';
 
-		$datos=$datos.'<div class="form-group">';
+		$datos=$datos.'<div>';
 		$datos=$datos.CHtml::activeLabel($model,'nombre');
 		$datos=$datos.CHtml::activeTextField($model,'nombre',array('class'=>'form-control','maxlength'=>65));
 		$datos=$datos.CHtml::error($model, 'nombre');
@@ -228,17 +215,13 @@ class WishlistController extends Controller
 		$datos=$datos.CHtml::hiddenField('id_user', $user->id, array('id'=>'id_user'));
 		$datos=$datos.CHtml::hiddenField('id_producto', $producto->id, array('id'=>'id_producto'));
 		
-		$datos=$datos."<button class='small btn btn-info'>Crear</button>";
+		$datos=$datos."<button class='margin_top_small btn btn-primary'>Crear</button>";
 		$datos=$datos."</div>";
 
 		$datos=$datos."</form>";
-		
-		$datos=$datos."<hr/>";
 		$datos=$datos."</div>";
 		// fin del body
-		
-		$datos=$datos."<div class='modal-footer'>";
-		$datos=$datos."</div>";	
+
 		$datos=$datos."</div>";	
 		$datos=$datos."</div>";
 

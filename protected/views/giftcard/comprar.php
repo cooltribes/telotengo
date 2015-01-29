@@ -23,22 +23,24 @@ $this->breadcrumbs = array(
     ?>	
     <!-- FLASH OFF --> 
     <h1>Compra una Gift Card</h1>
-    <section class="bg_color3  span12 margin_bottom_small padding_medium box_1">
+    <section class="col-md-12 margin_bottom_small">
+    <hr class="no_margin_top" />
         <?php
         $form = $this->beginWidget("bootstrap.widgets.TbActiveForm", array(
             'id' => 'form-enviarGift',
             'type' => 'horizontal',
             'clientOptions' => array(
-                'validateOnSubmit' => true,
+                //'validateOnSubmit' => true,
+                'enableAjaxValidation'=>true,
             )
         ));
         ?>
-            <div class="row margin_top">
+            <div class="row-fluid margin_top">
                 <div class="col-md-6">
                     <div>
                         <p class="lead">1. Selecciona un diseño para la Gift Card </p>
                         <ul class="thumbnails" id="plantillas">
-                            <li class="active" id="GC-gift_card_one">
+                            <li class="active no_margin" id="GC-gift_card_one">
                                 <a href="#">
                                 <div>
                                     <img src="<?php echo Yii::app()->baseUrl; ?>/images/giftcards/GIFTCARD-xmas-200x123.jpg">
@@ -50,20 +52,19 @@ $this->breadcrumbs = array(
                     </div>
                 <div class="row-fluid">
                 <br/>
-                <p class="lead">2. Seleccione el monto</p>
-                    <?php echo $form->errorSummary($model); ?>
-                        <div class="control-group">
-                            <label class="control-label required" for="BolsaGC_monto">Monto.
-                                <span class="required">*</span>
-                            </label>
-                            <div class="col-md-3">
-                                <span class="add-on">Bs.</span>
-                                <?php echo CHtml::activeDropDownList($model, 'monto', Giftcard::getMontos(), array('class' => 'col-md-1 form-control',)); ?>
+                <p class="lead no_margin">2. Seleccione el monto (Bs.)</p>
+                    <?php echo $form->errorSummary(array($model,$envio)); ?>
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <?php //echo CHtml::activeDropDownList($model, 'monto', Giftcard::getMontos(), array('class' => 'col-md-1 form-control',)); 
+                                echo $form->dropDownList($model, 'monto',Giftcard::getMontos(), array('empty' => 'Seleccione Monto...', 'class' => 'form-control'));
+                                echo $form->error($model, 'monto');
+                                ?>
                             </div>
                         </div>
                 </div>
                 <div>
-                    <p class="lead">3. Personalízala.</p>                                       
+                    <p class="lead no_margin">3. Personalízala.</p>                                       
                     <?php
                         echo $form->textFieldRow($envio, 'nombre', array(
                             'placeholder' => "Nombre del beneficiario",
@@ -73,9 +74,9 @@ $this->breadcrumbs = array(
                     <?php
                         echo $form->textAreaRow($envio, 'mensaje', array(
                             'placeholder' => "Mensaje", 'maxlength' => '150','class'=>"form-control"));
-                    ?>
+                    ?> 
                     <br/>
-                    <p class="lead">
+                    <p class="lead no_margin">
                     4. ¿A quién la envías?
                     </p>
                         <input type="hidden" name="entrega" value="2" >
@@ -162,22 +163,8 @@ $this->breadcrumbs = array(
     });
 
     $('#plantillas li').click(function(e) {
-
-        $("body").addClass("aplicacion-cargando");
-        $(this).siblings().removeClass('active');
-        $(this).addClass('active');
-
-        var urlImg = $(this).attr('id');
-        urlImg = urlImg.split("-");
-        
-        $('#<?php echo CHtml::activeId($model, "plantilla_url") ?>').val(urlImg[1]);
-
-        $(".contenedorPreviewGift img").attr("src",
-                "<?php echo Yii::app()->baseUrl; ?>/images/giftcards/" + urlImg[1] + "_x470.jpg");
                 
         e.preventDefault();
-        
-
     });
     
     $(".contenedorPreviewGift img").load(function(e){

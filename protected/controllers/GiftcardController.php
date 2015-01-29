@@ -61,6 +61,8 @@ class GiftcardController extends Controller
         $modeldos->plantilla_url = "gift_card_one"; //Default      
         $envio = new EnvioGiftcard();
 
+        $this->performAjaxValidation($envio);
+
         if(isset($_POST['BolsaGC']))
         {    
             $modeldos->attributes = $_POST['BolsaGC'];
