@@ -3,7 +3,7 @@ $this->breadcrumbs=array(
 	UserModule::t('Users')=>array('/user'),
 	UserModule::t('Manage'),
 );
-
+ 
 ?>
 <div class="container">
 	<h1>Administrar usuarios</h1>

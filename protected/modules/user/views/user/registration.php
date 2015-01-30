@@ -29,6 +29,8 @@ $this->breadcrumbs=array(
     						'disableAjaxValidationAttributes'=>array('RegistrationForm_verifyCode'),
     						'clientOptions'=>array(
     							'validateOnSubmit'=>true,
+    							'validateOnChange'=>false,
+    							'validateOnType'=>false,
     						),
     						'htmlOptions' => array('enctype'=>'multipart/form-data', 'class'=>'form-horizontal','role'=>"form"),
     					)); ?>
