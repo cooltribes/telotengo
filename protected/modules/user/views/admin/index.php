@@ -76,3 +76,55 @@ $this->breadcrumbs=array(
 
     
 </div>
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+</div>
+<div id="saldoCarga" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+</div>
+
+<script>
+    function carga(id){
+
+    $.ajax({
+        type: "post",
+        'url' :'<?php echo  CController::createUrl('admin/cargaSaldo');?>',
+        data: { 'id':id}, 
+        'success': function(data){
+            $('#saldoCarga').html(data);
+            $('#saldoCarga').modal(); 
+        },
+        'cache' :false});
+
+}
+    
+    
+    
+    
+    function saldo(id){ 
+        
+        var cant=$("#cant").val();
+        var desc=0;
+        var id =id.toString();
+        var pattern = /^[+-]?[0-9]{1,9}(?:\,[0-9]{1,2})?$/;
+       
+    /*   if($('#discount').attr('checked')=='checked')
+        desc=1;
+      */ 
+        
+        if (pattern.test(cant)&&cant.length>0) { 
+          
+           $.ajax({
+            type: "post",
+            dataType: "json",
+            url :'<?php echo  CController::createUrl('admin/addSaldo');?>',
+            data: { 'cant':cant,'id':id,'desc':desc}, 
+            'success': function(data){
+                $('#saldoCarga').modal('hide'); 
+                window.location.reload();                                       
+            },
+            'cache' :false});
+        }else{
+            alert("Formato de cantidad no válido");
+         }     
+}
+    
+</script>

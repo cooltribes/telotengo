@@ -25,7 +25,7 @@ class AdminController extends Controller
 	{
 		return array(
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete','create','update','view','cargarSaldo','reclamos','eliminarReclamo','eliminarComentario'),
+				'actions'=>array('admin','addSaldo','delete','create','update','view','cargarSaldo','reclamos','eliminarReclamo','eliminarComentario','cargaSaldo'),
 				'users'=>UserModule::getAdmins(),
 			),
 			array('deny',  // deny all users
@@ -248,5 +248,47 @@ class AdminController extends Controller
 		}
 		return $this->_model;
 	}
+
+    public function actionCargaSaldo(){
+        if(isset($_POST['id'])&&!isset($_POST['cant']))
+            {   $id=$_POST['id'];
+                
+                $saldo=Balance::model()->getSaldo($_POST['id']);             
+                $html='<div class="modal-header no_border no_padding_bottom row-fluid">';
+                 $html=$html.'<h3 class="no_margin_top col-md-11">Cargar Saldo<small class="pull-right margin_top_xsmall">Saldo Actual: '.Yii::app()->numberFormatter->formatDecimal($saldo).' Bs</small></h3>';
+                $html=$html.'<div class="col-md-1"><button type="button" class="close pull-right" data-dismiss="modal" aria-hidden="true">&times;</button></div>';
+                $html=$html.'</div><hr class="no_margin_top"/><div class=padding_small>';
+                
+                $html=$html.'<div class="modal-body no_padding row-fluid">';
+                $html=$html."<div class='col-md-8 col-md-offset-2'>";
+                $html=$html. CHtml::TextField('cant','',array('id'=>'cant','class'=>'form-control ','placeholder'=>'Escribe la cantidad separando los decimales con coma (,)')).
+                "</div><div class='col-md-8 col-md-offset-2 margin_top_small'><a onclick='saldo(".$_POST['id'].")' class='btn btn-danger form-control'>Cargar Cantidad</a></div></div></div>";
+
+                echo $html;
+            }
+    }
+
+    public function actionAddSaldo()
+    {
+        $balance = new Balance();
+        $usuario = User::model()->findByPk($_POST['id']);
+        $response=array();
+        if(isset($_POST['cant'])){
+            $balance->total=$_POST['cant'];
+            $balance->orden_id = 0; // carga de saldo desde admin, no tiene orden_id
+            $balance->user_id = $_POST['id'];
+            $balance->tipo = 3; // carga desde el admin
+            if($balance->save()){
+                Yii::app()->user->setFlash('success',"Saldo cargado"); 
+                $reponse['status']="success";              
+            }else{
+                Yii::app()->user->setFlash('error',"Saldo no cargado");
+                $reponse['status']="error"; 
+            }
+        }
+        echo json_encode($response);
+
+       
+    }
 	
 }

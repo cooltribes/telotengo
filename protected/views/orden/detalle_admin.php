@@ -19,7 +19,7 @@
 	
     <div class="row-fluid">
     <!-- COLUMNA PRINCIPAL DERECHA ON // OJO: esta de primera para mejorar el SEO sin embargo por CSS se ubica visualmente a la derecha -->
-        <div>
+  
      
             <h1>Pedido N° <?php echo $model->id; ?> <small class="pull-right"><?php echo $model->getStatus($model->estado); ?><?php echo ($model->estado== 3)?'<br><a class="smallRLink" id="envioLink" onclick="shippingDisplay()">Enviar Pedido</a>':''; ?></small></h1>
             <hr class="no_margin_top"/>
@@ -65,54 +65,7 @@
         <?php
         }
         ?>
-        <?php
-            if($model->estado==4||$model->estado==8||$model->estado==9||$model->estado==10){
-        ?>
-            <div class="well well-small margin_top_small well_personaling_small">
-                <h3 class="braker_bottom "> Transporte </h3>
-                    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-bordered table-hover table-striped">
-                    <tr>
-                        <th scope="col">Fecha</th>
-                        <!--  <th scope="col">Tipo</th>-->
-                        <th scope="col">Transportista</th>
-                        <th scope="col">Costo de envio</th>
-                        <th scope="col">Numero de seguimiento</th>
-                        <th scope="col"></th>
-                    </tr>
-                    <tr>
-                        <td><?php
-                            echo date("d/m/Y",strtotime(Estado::model()->getDate($model->id, $model->estado)));?>
-                        </td>
-                        <!-- <td>Delivery</td>-->
-                        <td> 
-                            <?php
-
-                            switch ($model->tipo_guia) {
-                                case 0:
-                                    echo 'Zoom';
-                                    break;
-                                case 1:
-                                    echo 'Zoom';
-                                    break;
-                                case 2:
-                                    echo 'DHL';
-                                    break;
-                                default:
-                                    break;
-                            }
-                            ?>
-                        </td>
-                        <td><?php echo number_format($model->envio, 2, ',', '.'); ?> Bs.</td>
-                        <td><?php echo $model->tracking; ?></td>
-                        <td><a href="#" title="Editar"><i class="icon-edit"></i></a></td>
-                    </tr>
-                            </table>
-
-                        </div>      
-                        <?php
-                        // envío
-                    }
-                    ?>
+        <section class="row-fluid">
                     
                      <?php $width=$model->balance>0?12:18;?>
                          <table width="100%" align="right" style="margin-bottom: 30px;">
@@ -156,10 +109,69 @@
                                 </tbody>
                             </table>
                     
+            </section>        
+                    
+           <section>
+               
+               <?php
+            if($model->estado==4||$model->estado==8||$model->estado==9||$model->estado==10){
+        ?>
+            <div class="well well-small margin_top_small well_personaling_small">
+                <h3 class="braker_bottom "> Transporte </h3>
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-bordered table-hover table-striped">
+                    <tr>
+                        <th scope="col">Fecha</th>
+                        <!--  <th scope="col">Tipo</th>-->
+                        <th scope="col">Transportista</th>
+                        <th scope="col">Costo de envio</th>
+                        <th scope="col">Numero de seguimiento</th>
+                        <th scope="col"></th>
+                    </tr>
+                    <tr>
+                        <td><?php
+                            echo date("d/m/Y",strtotime(Estado::model()->getDate($model->id, $model->estado)));?>
+                        </td>
+                        <!-- <td>Delivery</td>-->
+                        <td> 
+                            <?php
+
+                            switch ($model->tipo_guia) {
+                                case 0:
+                                    echo 'Zoom';
+                                    break;
+                                case 1:
+                                    echo 'Zoom';
+                                    break;
+                                case 2:
+                                    echo 'DHL';
+                                    break;
+                                default:
+                                    break;
+                            }
+                            ?>
+                        </td>
+                        <td><?php echo number_format($model->envio, 2, ',', '.'); ?> Bs.</td>
+                        <td><?php echo $model->tracking; ?></td>
+                        <td><a href="#" title="Editar"><i class="icon-edit"></i></a></td>
+                    </tr>
+                            </table>
+
+       </div>      
+                        <?php
+                        // envío
+                    }
+                    ?>
+               
+               
+               
+           </section>         
                     
                     
-                    <section>
-                        <div>
+                 
+                    
+                    
+
+                     
                             
 
                             <?php
@@ -168,6 +180,8 @@
                                 $envio = 0;
                                 $total = 0;
                                 ?>
+                                  <section> 
+                                
                                 <div class="well well-sm">
                                     Productos devueltos:
                                     <table class="table">
@@ -233,11 +247,13 @@
                                     </tr>        
                                     </table>
                                 </div>
+                                </section>
                                 <?php
                             }
                             ?>
 
-
+            </section>
+         
                             <?php
                             // Mostrar reclamos y comentarios, si hay
                             $reclamos = Reclamo::model()->findAllByAttributes(array('orden_id'=>$model->id));
@@ -246,40 +262,46 @@
                                 $envio = 0;
                                 $total = 0;
                                 ?>
-                                <div class="well well-sm">
-                                    <div class="panel-heading">
-                                        Reclamos:
+                                <section class="margin_bottom_large">
+                                <h3>Reclamos</h3><hr class="no_margin_top"/>
+                                <div class="well margin_bottom">
+                                    
+                                        
                                         <?php
                                         foreach ($reclamos as $reclamo) {
                                             $comentarios = ReclamoComentarios::model()->findAllByAttributes(array('reclamo_id'=>$reclamo->id));
                                             ?>
                                             <div>
                                                 <?php
-                                                echo $reclamo->comentario.'</br>';
-                                                echo 'Fecha: '.$reclamo->fecha.'</br>';
-                                                echo CHtml::link('<span class="label label-info">Responder</span>', $this->createUrl('responderReclamo', array('id'=>$reclamo->id)));
+                                                echo "<div class='well bg_white'><strong>".$reclamo->comentario."</strong>";
+                                                  echo " - <small>Enviado el ".date('d/m/Y',strtotime($reclamo->fecha))."</small>";
+                                                echo CHtml::link('<span class="label label-info pull-right">Responder</span>', $this->createUrl('responderReclamo', array('id'=>$reclamo->id)))."<hr/>";
 
                                                 if($comentarios){
-                                                    echo '<div>Comentarios: <ul>';
+                                                    echo '<div class="row padding_left_large padding_right_large text_align_right">';
                                                     foreach ($comentarios as $comentario) {
-                                                        echo '<li>'.$comentario->comentario.' | '.$comentario->fecha.'</li>';
+                                                        echo $comentario->comentario;
+                                                        echo " - <small>Enviado el ".date('d/m/Y',strtotime($reclamo->fecha))."</small>";
                                                     }
-                                                    echo '</ul></div>';
+                                                    echo '</div>';
                                                 }
+                                                echo "</div>"
                                                 ?>
                                             </div>
-                                            <hr>
+                                        
                                             <?php
                                         }
                                         ?>
-                                    </div>
+                                   
                                 </div>
+                                </section>
                                 <?php
                             }
                             ?>
                                       
-                        </div>                        
-                        <div>
+                                            
+                        <section>
+                            
                             
                         	<?php
                         	if($dataProvider->totalItemCount>0)
@@ -317,7 +339,9 @@
 								));  
 								}
                         	?>
-                        
+                        </section>
+                        <section>
+                            <h3>Productos</h3><hr class="no_margin_top"/>
                         <table class="table">
                             <thead>
                               <tr>
@@ -363,9 +387,10 @@
                                 ?>
                             </tbody>
                         </table>
+                        </section>
                                          
-                        </div>
-                    </section>
+                       
+                    
 
             </div>
             <!-- COLUMNA PRINCIPAL DERECHA OFF // -->

@@ -171,7 +171,9 @@ body{
 .text_align_center {
   text-align: center;
 }
-
+.pointer{
+  cursor:pointer; 
+}
 /* titles */
 .title_xlarge{
     font-size:45px;
@@ -613,7 +615,15 @@ ul.dropdown a:link, ul.dropdown a:visited{
     #pago-form>.col-md-4{
         height:80px;
     }  
-
+    .lineRadios>div>div>.radio{
+        margin-right:15px;
+        float:left
+    }
+    .prodFlash{
+      width: 60%;
+      margin: 20px auto;
+      text-align: center;
+    }
 
 
 
@@ -640,12 +650,66 @@ ul.dropdown a:link, ul.dropdown a:visited{
 }
 @media (max-width: 1349px) {
    #page{ min-height: 200px;}   
-}
+} 
 
 #productosOrden{
   width:50%;
   margin:auto;
   background:#FFF;
+  height:auto;
   max-height: 440px;
   overflow-y:scroll;
+}
+#changeAvatar{
+  width:40%;
+  margin:auto;
+  background:#FFF;
+  height:auto;
+  max-height: 500px;
+  overflow-y:scroll;
+}
+#saldoCarga{
+  width:40%;
+  margin:auto;
+  background:#FFF;
+  height:220px;
+  overflow-y:scroll;
+}
+.error{
+    input{ border-color: #b94a48;}
+}
+  .errorMessage{ 
+   color: #b94a48;
+  }
+.errorSummary{
+  color: #b94a48;
+background-color: #f2dede;
+border-color: #eed3d7;
+padding: 10px;
+margin-bottom: 20px;
+}
+.foot_option{
+  padding-top:.3em;
+  opacity:.3;
+  margin-top:-1.6em;
+  background-color:#000;
+  .glyphicon{
+    color:white !important;
+  }
+}
+.foot_option:hover{
+  cursor:pointer;
+  opacity:.7;
+  margin-top:-2em;
+  padding-bottom:.4em;
+  background-color:#000;
+  .glyphicon{
+    opacity:1;
+  }
+}
+.width60{
+  width:60%;
+}
+.margin_center{
+  margin: 0 auto;
 }

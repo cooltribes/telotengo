@@ -290,11 +290,16 @@ class Producto extends CActiveRecord
 		    'sort'=>array(
 		        'attributes'=>array(
 		             'id',
-		        ),
+		        ), 
 		    ),
 		));
 
 		return $dataProvider;
+	}
+	
+	public function getSuggestions($quantity){
+	    
+	    return $this->findAll(array('limit'=>5,'offset'=>0,'order'=>'id DESC'));
 	}
 	
 }

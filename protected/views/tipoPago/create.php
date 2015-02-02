@@ -1,5 +1,5 @@
 <!-- CONTENIDO ON -->
-     <div class="container-fluid" style="padding: 0 15px;">
+     <div class="container">
 
 <?php
 $this->breadcrumbs=array(
@@ -9,11 +9,11 @@ $this->breadcrumbs=array(
 
 ?>
 
-	<div class="row">
+	<div class="row-fluid">
         <!-- COLUMNA PRINCIPAL DERECHA ON // OJO: esta de primera para mejorar el SEO sin embargo por CSS se ubica visualmente a la derecha -->
 
-        <div class="col-md-10  col-md-push-2 main-content" role="main">
-			<h1>Tipo de Pago<small> - Nuevo</small></h1>
+        <div>
+			 <h1><?php echo $model->isNewRecord ? 'Crear Tipo de Pago' : 'Tipo de pago - <small>'.$model->nombre.'</small>'; ?></h1><hr class="no_margin_top"/>
 
 <?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
 

@@ -56,6 +56,49 @@ class UserController extends Controller
 	public function actionTucuenta()
 	{
 		$model = User::model()->findByPk(Yii::app()->user->id);
+        
+        if(isset($_POST['url']))
+        {
+            if(!is_dir(Yii::getPathOfAlias('webroot').'/images/user/'))
+            {
+                mkdir(Yii::getPathOfAlias('webroot').'/images/user/',0777,true);
+            }
+            
+                $rnd = rand(0,9999);  
+                $images=CUploadedFile::getInstanceByName('url');
+
+                if (isset($images) && count($images) > 0) {
+                    $model->avatar_url = "{$rnd}-{$images}";
+                    $model->save();
+                    
+                    $nombre = Yii::getPathOfAlias('webroot').'/images/user/'.$model->id;
+                    $extension_ori = ".jpg";
+                    $extension = '.'.$images->extensionName;
+                   
+                    if ($images->saveAs($nombre . $extension)) {
+            
+                        $model->avatar_url = '/images/user/'.$model->id .$extension;
+                        $model->save();
+                                        
+                        Yii::app()->user->setFlash('success',"Avatar modificado exitosamente.");
+    
+                        $image = Yii::app()->image->load($nombre.$extension);
+                        $image->resize(270, 270);
+                        $image->save($nombre.'_thumb'.$extension);                  
+                    }
+                    else {
+                        $marca->delete();
+                    }
+                    
+                }else{
+                    if($model->save()){
+                        Yii::app()->user->setFlash('success',"Avatar modificado  exitosamente.");
+                    }else{
+                        Yii::app()->user->setFlash('error',"Avatar no pudo ser modificado.");
+                    }
+                }// isset
+
+        }
 		
 		$empresas = new EmpresasHasUsers;
 		$empresas->users_id = $model->id;
@@ -66,8 +109,8 @@ class UserController extends Controller
 		$provider = $redes->search();
 		
 		$dataProvider = $empresas->search();
-		
-		$this->render('tu_cuenta',array('model'=>$model,'dataProvider'=>$dataProvider,'provider'=>$provider,));
+		$productos=Producto::model()->getSuggestions(5);
+		$this->render('tu_cuenta',array('model'=>$model,'dataProvider'=>$dataProvider,'provider'=>$provider,'productos'=>$productos));
 	}
 
 	public function actionFavoritos(){

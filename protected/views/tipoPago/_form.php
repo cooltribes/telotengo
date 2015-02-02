@@ -1,7 +1,6 @@
 
-<div class="well">
-	<div class="row padding_left_medium">
-		<div class="col-md-6 1">
+<div class="row-fluid">
+
 
 <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
 	'id'=>'tipo-pago-form',
@@ -16,13 +15,13 @@
     ),
 )); ?>
 
-	<?php echo $form->errorSummary($model); ?>
+
 	
-	<div class="form-group">
+	<div class="col-md-6 col-md-offset-3">
 		<?php echo $form->textFieldRow($model,'nombre',array('class'=>'form-control','maxlength'=>45)); ?>
 	</div>
 	
-	<div class="form-group">
+	<div class="col-md-6 col-md-offset-3 margin_top_small">
 		<label> Logotipo </label>
 		<?php                      
 			echo CHtml::activeFileField($model, 'imagen_url',array('name'=>'url'));
@@ -30,27 +29,29 @@
 		?>
    </div>
     
-    <div class="form-group">
+   
 		<?php 
-			if($model->isNewRecord)
-				echo '';
-			else {
-				echo '<label> Actual : </label>';
+			if(!$model->isNewRecord): ?>
+	 <div  class="col-md-6 col-md-offset-3 margin_small">
+        <?php
+				echo '<label> Actual </label>';
 				echo CHtml::image(Yii::app()->request->baseUrl.'/images/tipopago/'.$model->id.'_thumb.jpg',"image");
-			} 
-		?>
+                
+         ?>       
 	</div>
+	<?php	endif; ?>
 	
-	<div class="form-actions">
+	
+	<div class="col-md-6 col-md-offset-3 margin_top_small">
 		<?php $this->widget('bootstrap.widgets.TbButton', array(
 			'buttonType'=>'submit',
 			'type'=>'primary',
 			'label'=>$model->isNewRecord ? 'Crear' : 'Guardar',
+			 'htmlOptions'=>array('class'=>'form-control')
 		)); ?>
 	</div>
 	
-	</div>
-	</div>
+
 	</div>
 
 <?php $this->endWidget(); ?>
