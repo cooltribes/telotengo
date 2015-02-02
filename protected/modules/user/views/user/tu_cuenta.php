@@ -18,18 +18,20 @@ $this->breadcrumbs=array(
 		    </div>
 		<?php } ?>
 
-    <div class="row">
+    <div class="row-fluid">
         <aside class="col-lg-3">
             <div>            	
                 <div class="card">
                 	<?php 
 	                	if($model->avatar_url){
-	                		echo CHtml::image(str_replace(".", "_thumb.", Yii::app()->baseUrl.$model->avatar_url),"Avatar",array('style'=>'border-radius: 50px;'));
+	                		echo CHtml::image(str_replace(".", "_thumb.", Yii::app()->baseUrl.$model->avatar_url),"Avatar",array('width'=>'100%','style'=>'border-radius: 50px;'));
 	                	}else{
-	                		echo '<img src="http://placehold.it/300x300" class="img-responsive" alt="Responsive image">';
+	                		echo '<img src="http://placehold.it/300x300" width="100%" class="img-responsive" alt="Responsive image">';
 						}
-                	?>
-                    <div class="card_content vcard">
+                        
+                	?><div title="Cambiar avatar" class="text-center foot_option" onclick="$('#changeAvatar').modal()"><span class="glyphicon glyphicon-open"></span></div>
+                	
+                    <div class="card_content vcard" style="color:white">
                         <h4 class="fn"><?php echo $model->profile->first_name." ".$model->profile->last_name; ?></h4>
                         <p class="muted">Miembro desde: <?php echo date('d/m/Y', strtotime($model->create_at)); ?></p>
                         
@@ -38,6 +40,7 @@ $this->breadcrumbs=array(
 						    60%
 						  	</div>
 						</div>
+						
 						
 						
 						<p class="muted">60% del perfil completado.</p>
@@ -84,16 +87,14 @@ $this->breadcrumbs=array(
         </aside>
         <div class="col-lg-9">
         	
-<table width="100%" border="0" cellspacing="0" cellpadding="0" class="table ">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="table no_border">
+   
     <tr>
-      	<th scope="col" colspan="6"> Totales </th>
-    </tr>
-    <tr>
-      	<td><p class="">3</p> Pedidos Activos </td>
-      	<td><p class="">2</p> Pagos Requeridos </td>
-      	<td><p class="">1</p> Entregas Sin Confirmar </td>
-      	<td><p class="">2</p> Compras Sin Calificar </td>
-		<td><p class="">1</p> Entregas Sin Calificar </td>
+      	<td><p class=""><?php echo "1"; ?></p> Pedidos Activos </td>
+      	<td><p class=""><?php echo "1"; ?></p> Pagos Requeridos </td>
+      	<td><p class=""><?php echo "1"; ?></p> Entregas Sin Confirmar </td>
+      	<td><p class=""><?php echo "1"; ?></p> Compras Sin Calificar </td>
+		<td><p class=""><?php echo "1"; ?></p> Entregas Sin Calificar </td>
     </tr>
 </table> 
     <section class="bg_color3 margin_bottom_small padding_small box_1">
@@ -101,6 +102,9 @@ $this->breadcrumbs=array(
     	<h5><?php echo Balance::model()->getTotal(); ?> Bs.</h5> 
     </section>
     <section class="bg_color3 margin_bottom_small padding_small box_1">
+    <?php if($provider->totalItemCount>0): ?> 
+        
+		
 		<h3> Redes sociales registradas </h3>
 					
 				<?php
@@ -134,31 +138,32 @@ $this->breadcrumbs=array(
 					)); 
 					
 					?>
-					    
-    </section>      
+	<?php else: ?>
+	    <span>No tienes redes sociales en tu perfil, regístralas <a href="#">aquí</a>...</span>			 	    
+    
+    <?php endif; ?>     
+	</section> 
 	
+<section class="bg_color3 margin_bottom_small padding_small box_1">	
+		
 		<h3> Productos que te pueden gustar </h3>
 		</hr>
 		
 <ul class="thumbnails">
+	
+    <? foreach($productos as $producto): ?>
 	<li class="span2">
     	<a href="#" class="thumbnail"><img src="http://placehold.it/200x200" alt=""></a>
 	</li>
+  	<?php endforeach; ?>
   	
-  	<li class="span2">
-    	<a href="#" class="thumbnail"><img src="http://placehold.it/200x200" alt=""></a>
-	</li>
-	
-	<li class="span2">
-    	<a href="#" class="thumbnail"><img src="http://placehold.it/200x200" alt=""></a>
-	</li>
-	
-	<li class="span2">
-    	<a href="#" class="thumbnail"><img src="http://placehold.it/200x200" alt=""></a>
-	</li>
 </ul>
 	
+</section>	
         </div>
     </div>
 </div>
+    <div id="changeAvatar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+        <?php echo $this->renderPartial('avatar', array( 'model'=>$model ),true); ?>
+    </div>
 <!-- /container -->

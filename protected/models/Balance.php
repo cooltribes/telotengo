@@ -119,6 +119,15 @@ class Balance extends CActiveRecord
 
 		return $total;
 	}
+    public function getSaldo($user_id){
+        $todas = Balance::model()->findAllByAttributes(array('user_id'=>$user_id));
+        $total = 0;
+
+        foreach($todas as $bal)
+            $total += $bal->total;
+
+        return $total;
+    }
 
 	/**
 	 * Returns the static model of the specified AR class.

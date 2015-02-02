@@ -29,26 +29,23 @@ $this->breadcrumbs=array(
 
 		<fieldset>
 
-                        
-                         <?php echo $form->errorSummary($model); ?>
-                        
-                        <div class="control-group input-prepend<?php echo $model->hasErrors("monto")?" error":""; ?>">
-                            <label class="control-label required" for="Giftcard_monto"> Monto <span class="required">*</span>
-                            </label>
-                            <div class="controls">
-                                <span class="add-on">Bs.</span>
+                        <div class="row-fluid">
+                            <div class ="col-md-6 col-md-offset-3">
+                                <label class="control-label required" for="Giftcard_monto"> Monto <span class="required">*</span>
+                                </label>
                                 <?php echo CHtml::activeDropDownList($model, 'monto', 
-                                        Giftcard::getMontos(), array('class' => 'col-md-1')); ?>
+                                        Giftcard::getMontos('Bs'), array('class' => 'form-control')); ?>
+                                
                             </div>
-                        </div>
-                        
-                        <div class="control-group input-prepend<?php echo $model->hasErrors("monto")?" error":""; ?>">
-                            <label class="control-label required"> Valido desde <span class="required">*</span>
+                            <div class ="col-md-6 col-md-offset-3">
+                                <label class="control-label required"> Valido desde <span class="required">*</span>
+                            </label>
                             <?php
                                 $this->widget('zii.widgets.jui.CJuiDatePicker',array(
                                     'model' => $model,
                                     'attribute' => "inicio_vigencia",
                                     'language' => 'es',
+                                    'htmlOptions'=>array('class'=>'form-control'),
                                     // additional javascript options for the date picker plugin
                                     'options'=>array(
                                         'showAnim'=>'fold',
@@ -57,16 +54,17 @@ $this->breadcrumbs=array(
                                 ));
 
                             ?>
-                            </label>
-                        </div>
-
-                        <div class="control-group input-prepend<?php echo $model->hasErrors("monto")?" error":""; ?>">
-                            <label class="control-label required"> Valido Hasta <span class="required">*</span>
-                            <?php
+                            
+                                
+                            </div>
+                            <div class ="col-md-6 col-md-offset-3">
+                                <label class="control-label required"> Valido Hasta <span class="required">*</span></label>
+                                <?php
                                 $this->widget('zii.widgets.jui.CJuiDatePicker',array(
                                     'model' => $model,
                                     'attribute' => "fin_vigencia",
                                     'language' => 'es',
+                                    'htmlOptions'=>array('class'=>'form-control'),
                                     // additional javascript options for the date picker plugin
                                     'options'=>array(
                                         'showAnim'=>'fold',
@@ -75,25 +73,27 @@ $this->breadcrumbs=array(
                                 ));
 
                             ?> 
-                            </label>
+                            </div>
+                            
+                            <div class ="col-md-6 col-md-offset-3">
+                                <?php echo $form->textFieldRow($model, 'beneficiario', array(
+                            'placeholder' => 'email del destinatario','class'=>'form-control'
+                        )); ?> 
+                                
+                            </div>
+                          <?php $this->endWidget(); ?>
+                         <div class ="col-md-6 col-md-offset-3 margin_top">
+                             <button type="submit" name="Enviar" class="btn btn-danger form-control"><i class="icon-gift icon-white"></i> Enviar Gift Card </button>
                         </div>
-                        <div>
-                        <?php echo $form->textFieldRow($model, 'beneficiario', array(
-                            'placeholder' => 'email del destinatario'
-                        )); ?>      
+                        
                         </div>
-			<div class="control-group row">
-				<div class="controls pull-right">  
-                    <button type="submit" name="Enviar" class="btn btn-danger"><i class="icon-gift icon-white"></i> Enviar Gift Card </button>
-				</div>
-			</div>
+                      
 		</fieldset>
 
-            <?php $this->endWidget(); ?>
-        </section>
+                    </section>
 </div>
 </div>
-<script type="text/javascript">
+<script type="text/javascript"> 
 	    
         $('#<?php echo CHtml::activeId($model, 'inicio_vigencia') ?>').datepicker({
             dateFormat: "dd-mm-yy",

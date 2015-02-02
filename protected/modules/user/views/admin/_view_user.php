@@ -32,12 +32,11 @@ echo "<tr>";
 			<li><a tabindex="-1" href="'.Yii::app()->createUrl('/user/profile/profile',array('id'=>$data->id)).'"><i class="glyphicon glyphicon-cog"></i> Ver Usuario </a></li>
 			<li><a tabindex="-1" href="'.Yii::app()->createUrl('/user/admin/create',array('id'=>$data->id)).'"><i class="glyphicon glyphicon-cog"></i> Editar </a></li>
 			<li><a tabindex="-1" href="'.Yii::app()->createUrl('/user/admin/delete',array('id'=>$data->id)).'"><i class="glyphicon glyphicon-trash"></i> Eliminar </a></li>
-			<li><a tabindex="-1" href="'.Yii::app()->createUrl('/user/admin/cargarSaldo',array('id'=>$data->id)).'"><i class="glyphicon glyphicon-usd"></i> Cargar Saldo </a></li>
+			<li><a tabindex="-1" class="pointer" onclick="carga('.$data->id.')"><i class="glyphicon glyphicon-usd"></i> Cargar Saldo </a></li>
 		</ul>
 	    </div></td>
 	    
-	    <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	    </div>		
+	    		
 			';
 		
 echo"</tr>";

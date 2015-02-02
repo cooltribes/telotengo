@@ -24,40 +24,51 @@
 
 		<div role="main">
     		<h1> Venta Flash </h1>
-        	
-        	<div class="well">
-            	<div class="row-fluid">
-                	<div>
-            	 
-					<h4> Buscar producto en el catalogo</h4>
-			
-				 	<?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
-						'id'=>'busqueda-form',
-						'enableAjaxValidation'=>false,
-						'htmlOptions' => array('class' => ''),
-					)); ?>
-				
-					<div class="form-group">
-						<div>
-							<?php echo CHtml::textField("busqueda",'', array('class'=>'form-control','placeholder'=>"Nombre del producto")); ?>
-						</div>
-					
-						<div class="form-actions">
-						<?php $this->widget('bootstrap.widgets.TbButton', array(
-							'buttonType'=>'submit',
-							'type'=>'danger',
-							'label'=>'Buscar',
-							'htmlOptions' => array('class'=>"margin_top_small"),
-						)); ?>
-						</div>
-					</div>
-				
-				<?php $this->endWidget(); ?>	
-						
-			</div>
-		</div>
-		</div>
+    		<hr class="no_margin_top"/>
+        	<div class="row-fluid well">
+             
+            
+                    <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
+                        'id'=>'busqueda-form',
+                        'enableAjaxValidation'=>false,
+                        'htmlOptions' => array('class' => 'padding_left_small'),
+                    )); ?>
+                
+                    
+                        <div class="col-md-10"> 
+                            <?php echo CHtml::textField("busqueda",'', array('class'=>'form-control','placeholder'=>'Nombre del producto')); ?>
+                        </div>
+                    
+                        <div class="col-md-2">
+                        <?php $this->widget('bootstrap.widgets.TbButton', array(
+                            'buttonType'=>'submit',
+                    
+                            'label'=>'Buscar',
+                            'htmlOptions' => array('class'=>'btn-danger form-control'),
+                        )); ?>
+                       </div>   
+        
+                <?php $this->endWidget(); ?>    
+            <!--    
+            <h4> O Agregar un nuevo producto </h4>
+            
+             <div class="control-group"> -->
+                    <?php /*$this->widget('bootstrap.widgets.TbButton', array(
+                'label'=>'Añadir Producto',
+                'url' => Yii::app()->baseUrl.'/producto/create',
+                'type'=>'primary', // null, 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
+                'size'=>'normal', // null, 'large', 'small' or 'mini'
+            )); */ ?>
+            <!--    </div> -->
+                
+        
+        </div>   
 	</div>
 	
 </div>
-</div>			
+</div>
+<?php   if(isset($dataProvider)){
+            $this->renderPartial('busqueda',array('dataProvider'=>$dataProvider,'busqueda'=>$busqueda)); 
+        
+        }
+?>			

@@ -1,6 +1,5 @@
-<div class="well">
-	<div class="row padding_left_medium">
-		<div class="col-md-8">
+
+		<div class="row-fluid">
 
 
 <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
@@ -16,13 +15,13 @@
     ),
 )); ?>
 	
-	<?php echo $form->errorSummary($model); ?>
+	<?php // echo $form->errorSummary($model); ?>
 	
-	<div class="form-group">
+	<div class="col-md-6 col-md-offset-3 margin_top_small">
 		<?php echo $form->textFieldRow($model,'nombre',array('class'=>'form-control','maxlength'=>80)); ?>
 	</div>
 	
-	<div class="form-group">
+	<div class="col-md-6 col-md-offset-3 margin_top_small">
 		<label>Categoría padre </label>
 	<?php
 	
@@ -30,21 +29,21 @@
  
 		$list = CHtml::listData($models, 'id', 'nombre');
 		
-		echo $form->dropDownList($model, 'id_padre', $list, array('prompt'=>'Seleccione en el caso competente.','class'=>'form-control'));
+		echo $form->dropDownList($model, 'id_padre', $list, array('prompt'=>'Seleccione de ser necesario','class'=>'form-control'));
 		
 		// echo CHtml::dropDownList($model, 'id_padre', $list, array('empty' => 'No depende.','class'=>'form-control'));
 	?>
 	</div>	
 	
-	<div class="form-group">
+	<div class="col-md-6 col-md-offset-3 margin_top_small">
 	<?php echo $form->textFieldRow($model,'url_amigable',array('class'=>'form-control','maxlength'=>150)); ?>
 	</div>
 	
-	<div class="form-group">
+	<div class="col-md-6 col-md-offset-3 lineRadios margin_top_small">
 		<?php echo $form->radioButtonListInlineRow($model, 'destacado', array(1 => 'Si', 0 => 'No',)); ?>
 	</div>
 	
-	<div class="form-group" id="descripcion" <?php if($model->destacado==0) echo 'style="display: none;"'; ?>>
+	<div class="col-md-6 col-md-offset-3 margin_top_small" id="descripcion" <?php if($model->destacado==0) echo 'style="display: none;"'; ?>>
     	<label>Descripción </label>
 			<?php // echo $form->textArea($model,'descripcion',array('class'=>'span5','maxlength'=>300)); ?>
 			<?php $this->widget('ext.yiiredactor.widgets.redactorjs.Redactor', array(
@@ -57,14 +56,16 @@
 	
 	<?php // echo $form->textFieldRow($model,'imagen_url',array('class'=>'span5','maxlength'=>250)); ?>
 	
-	<div class="form-group">
+
 		<?php 
-			if($model->imagen_url != "")
-				echo CHtml::image(Yii::app()->request->baseUrl.'/images/categoria/'.$model->id.'_thumb.jpg',"image");
-		?>
+			if($model->imagen_url != ""):?>
+				<div class="col-md-6 col-md-offset-3 margin_top_small">
+			<?php 	echo CHtml::image(Yii::app()->request->baseUrl.'/images/categoria/'.$model->id.'_thumb.jpg',"image"); ?>
+		
 	</div>
+	   <?php endif; ?>
 	
-	<div class="form-group">
+	<div class="col-md-6 col-md-offset-3 margin_top_small">
 	    <label> Logotipo </label>
 			<?php                       
 			echo CHtml::activeFileField($model, 'imagen_url',array('name'=>'url'));
@@ -72,18 +73,18 @@
 			?>
     </div>
 	
-	<div class="form-actions">
+	<div class="col-md-6 col-md-offset-3 margin_top">
 		<?php $this->widget('bootstrap.widgets.TbButton', array(
 			'buttonType'=>'submit',
 			'type'=>'primary',
 			'label'=>$model->isNewRecord ? 'Crear' : 'Guardar',
+			'htmlOptions'=>array('class'=>'form-control')
 		)); ?>
 	</div>
 	
 	
 	</div>
-	</div>
-	</div>
+
 
 
 <?php $this->endWidget(); ?>

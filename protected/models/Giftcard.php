@@ -39,6 +39,18 @@ Estados
         4000 => 4000,
         5000 => 5000,
     );
+    
+    public static $montosCurr = array(
+        200 => '200 Bs',
+        500 => '500 Bs',
+        1000 => '1000 Bs',
+        1500 => '1500 Bs',
+        2000 => '2000 Bs',
+        3000 => '3000 Bs',
+        4000 => '4000 Bs',
+        5000 => '5000 Bs',
+    );
+    
 
     /**
      * @return string the associated database table name
@@ -144,9 +156,12 @@ Estados
     }
 
 
-   public static function getMontos() {
-        return self::$montos;                       
-    }
+   public static function getMontos($curr = NULL) {
+        if(is_null($curr))    
+            return self::$montos;
+        else                      
+            return self::$montosCurr;
+   }
 
     /*Retorna los ultimos 4 digitos del codigo con formato*/
     public function getMascaraCodigo($codigo) {

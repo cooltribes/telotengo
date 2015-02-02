@@ -76,7 +76,7 @@ class FlashsaleController extends Controller
 			
 			$caracteristicas = Caracteristica::model()->findAllByAttributes(array('inventario_id'=>$inventario_id));	
 			$codigo=""; 
-				
+			/*	
 			foreach($caracteristicas as $caracteristica){
 				$carac_sql = CaracteristicasSql::model()->findByPk($caracteristica->caracteristica_id);
 					
@@ -84,7 +84,7 @@ class FlashsaleController extends Controller
 				$valor = $caracteristica->valor;
 					
 				$codigo = $codigo."<b>".$nombre."</b>: ".$valor.". ";
-			}
+			}*/
 				$codigo=$codigo."<b>Cantidad en existencia: </b>".$inventario->cantidad;
 			
 			// Uncomment the following line if AJAX validation is needed
@@ -169,17 +169,19 @@ class FlashsaleController extends Controller
 	
 	// seleccion entre crear o buscar
 	public function actionSeleccion() 
-	{
-		if(isset($_POST['busqueda'])){
-			unset(Yii::app()->session['busqueda']);
-				
-			Yii::app()->session['busqueda'] = $_POST['busqueda'];
-			
-			$this->redirect(array('busqueda'));
-		}
-		else
-			$this->render('seleccion');
-	}
+    {
+        if(isset($_POST['busqueda'])){
+            $producto = new Producto;
+            $producto->unsetAttributes();     
+            $producto->nombre = $_POST['busqueda'];        
+            $dataProvider = $producto->searchTwo(); 
+                    
+            $this->render('seleccion',array('dataProvider'=>$dataProvider,'busqueda'=>$_POST['busqueda']));
+        }
+        else
+            $this->render('seleccion');
+    }
+
 
 	// el usuario decidio buscar el producto
 	public function actionBusqueda()

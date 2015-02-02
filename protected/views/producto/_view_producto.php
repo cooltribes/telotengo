@@ -505,7 +505,7 @@ Yii::app()->clientScript->registerMetaTag(Yii::app()->getBaseUrl(true).str_repla
                 <hr>
                 
                 <p class="text-muted">Vendido y enviado por:</p>
-                <p><strong>Sigma Sys C.A.</strong></p>
+                <p><strong>SigmaSys C.A.</strong></p>
                 <p><span>Desde San Cristóbal, Táchira</span></p>
 
             </div>
@@ -579,7 +579,7 @@ Yii::app()->clientScript->registerMetaTag(Yii::app()->getBaseUrl(true).str_repla
         if(count($preguntas)>0){
            
             foreach($preguntas as $preg){
-                echo "<div class='well' style='background-color:#F5FAFF'>".$preg->pregunta;
+                echo "<div class='well bg_white'>".$preg->pregunta;
                 echo " - <small>Preguntado el ".date('d/m/Y',strtotime($preg->fecha))."</small><hr/>";
                 
                 $respuestas = Respuesta::model()->findAllByAttributes(array('pregunta_id'=>$preg->id));

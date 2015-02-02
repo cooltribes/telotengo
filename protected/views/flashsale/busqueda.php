@@ -5,7 +5,7 @@
         <div>
 	        <div class="page-header">
             <h1>
-                Resultados de la busqueda - <?php echo Yii::app()->session['busqueda']; ?>
+                Resultados de la busqueda - <?php echo $busqueda; ?>
             </h1>
         </div>
                     

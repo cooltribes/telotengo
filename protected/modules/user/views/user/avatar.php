@@ -1,69 +1,65 @@
-<div class="container margin_top tu_perfil">
-    <div class="page-header">
-        <h1>Avatar</h1>     
-    </div>
-
-<?php
-$this->breadcrumbs=array(
-	'Tu Cuenta'=>array('/user/user/tucuenta'),
-	'Avatar',
-);
-
-?>
-
-		<?php if(Yii::app()->user->hasFlash('success')){?>
-		    <div class="alert in alert-block fade alert-success text_align_center">
-		        <?php echo Yii::app()->user->getFlash('success'); ?>
-		    </div>
-		<?php } ?>
-		<?php if(Yii::app()->user->hasFlash('error')){?>
-		    <div class="alert in alert-block fade alert-error text_align_center">
-		        <?php echo Yii::app()->user->getFlash('error'); ?>
-		    </div>
-		<?php } ?>
-
-    <div class="row">
-
-		<?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
-			'id'=>'marca-form',
-			'enableAjaxValidation'=>false,
-			'enableClientValidation'=>true,
-			'type'=>'horizontal',
-			'clientOptions'=>array(
-				'validateOnSubmit'=>true, 
-			),
-			'htmlOptions' => array(
-		        'enctype' => 'multipart/form-data',
-		    ),
-		)); ?>
-	
-		<div class="form-group">
-		    <label> Sube un avatar: </label>
-			<?php                      
-				echo CHtml::activeFileField($model, 'avatar_url',array('name'=>'url'));
-				echo $form->error($model, 'avatar_url'); 
-			?>
-	    </div>
-	
-		 <div class="form-group">
-		 	<div class="card">	
-			<?php 
-				if($model->avatar_url!=""){
-					echo '<label>Actual : </label>';
-					echo CHtml::image(Yii::app()->request->baseUrl.'/images/user/'.$model->id.'_thumb.jpg',"Avatar");
-				}
-			?>
-
-		<div class="form-actions">
-			<?php $this->widget('bootstrap.widgets.TbButton', array(
-				'buttonType'=>'submit',
-				'type'=>'primary',
-				'label'=>$model->isNewRecord ? 'Crear' : 'Guardar',
-			)); ?>
-		</div>
-	
-		<?php $this->endWidget(); ?>
-
+          
+<div class="modal-header no_border no_padding_bottom row-fluid">
+    <h3 class="no_margin_top col-md-11">Nuevo Avatar</h3>
+    <div class="col-md-1"><button type="button" class="close pull-right" data-dismiss="modal" aria-hidden="true">&times;</button>
     </div>
 </div>
-<!-- /container -->
+
+<hr class="no_margin_top"/>
+
+<div class=padding_small>
+    <div class="modal-body no_padding row-fluid">
+        
+            <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
+            'id'=>'marca-form',
+            'enableAjaxValidation'=>false,
+            'enableClientValidation'=>true,
+            'type'=>'horizontal',
+            'clientOptions'=>array(
+                'validateOnSubmit'=>true, 
+            ),
+            'htmlOptions' => array(
+                'enctype' => 'multipart/form-data',
+            ),
+        )); ?>
+    
+    </div>
+            
+
+         <?php 
+                if($model->avatar_url!=""){ ?>
+        <div class='col-md-8 col-md-offset-2 well bg_white'>
+            
+           <?php 
+                    echo '<label>Actual</label><br/>';
+                    echo "<div>".CHtml::image(Yii::app()->request->baseUrl.'/images/user/'.$model->id.'_thumb.jpg',"Avatar")."</div>";
+                ?>
+           
+        </div>
+     <?php   }
+            ?>
+        <div class='col-md-8 col-md-offset-2 well bg_white'>    
+            <label> Sube un avatar </label>
+            <?php                      
+                echo CHtml::activeFileField($model, 'avatar_url',array('name'=>'url'));
+                echo $form->error($model, 'avatar_url'); 
+            ?>
+
+        </div>
+        <div class='col-md-8 col-md-offset-2 margin_top_small no_padding'>
+            <?php $this->widget('bootstrap.widgets.TbButton', array(
+                'buttonType'=>'submit',
+                'type'=>'primary',
+                'htmlOptions'=>array('class'=>'form-control'),
+                'label'=>$model->isNewRecord ? 'Crear' : 'Guardar',
+            )); ?>
+
+    
+        <?php $this->endWidget(); ?>
+        
+        
+        </div>
+        
+    </div>
+</div>
+
