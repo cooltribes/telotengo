@@ -6,9 +6,9 @@ $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
 
 Yii::app()->clientScript->registerMetaTag("Vive la experiencia tecnológica. Sigma Systems", null, null, array('property' => 'og:description'), null);
 Yii::app()->clientScript->registerMetaTag(Yii::app()->request->hostInfo.Yii::app()->request->url , null, null, array('property' => 'og:url'), null);
-Yii::app()->clientScript->registerMetaTag('Sigmatiendas.com', null, null, array('property' => 'og:site_name'), null); 
-Yii::app()->clientScript->registerMetaTag($model->nombre, null, null, array('property' => 'og:title'), null); 
-Yii::app()->clientScript->registerMetaTag(Yii::app()->getBaseUrl(true).str_replace(".","_thumb.",$model->mainimage->url), null, null, array('property' => 'og:image'), null); 
+Yii::app()->clientScript->registerMetaTag('Sigma Tiendas', null, null, array('property' => 'og:site_name'), null); 
+Yii::app()->clientScript->registerMetaTag("Sigma Tiendas - ".$model->nombre, null, null, array('property' => 'og:title'), null); 
+Yii::app()->clientScript->registerMetaTag(Yii::app()->getBaseUrl(true).str_replace(".","_x90.",$model->mainimage->url)."?v=".time(), null, null, array('property' => 'og:image'), null); 
 
 ?>
 <!-- CONTENIDO ON -->
@@ -105,20 +105,14 @@ Yii::app()->clientScript->registerMetaTag(Yii::app()->getBaseUrl(true).str_repla
                                         $tweetText = "SigmaSystems | ".$model->nombre." ".$model->modelo.". Por ".$model->marca->nombre;
                                     ?>
                                     <div class="col-md-3">
-                                        
-                                        <div class="fb-share-button" data-href=<?php echo $link; ?> data-layout="button">
-                                            
-                                        </div>
-                                
+                                        <div class="fb-share-button" data-href=<?php echo $link; ?> data-layout="button"></div>
                                     </div>
+
                                     <div class="col-md-3">
                                         <a  href="https://twitter.com/share" class="twitter-share-button" data-count="none" data-text="<?php echo $tweetText; ?>"
                                     data-hashtags="LaMejorTecnologia" data-via="Sigmatiendas">Tweet</a>
                                     </div>
                                 </div>
-                                
-                               
-                              
 
                                 <?php
                                 if($calificacion_promedio >= 0 && $calificacion_promedio < 1){

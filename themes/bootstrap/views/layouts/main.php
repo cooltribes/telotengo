@@ -239,7 +239,15 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                                         </div>
                                     </a>
                                 </li>
- 
+                                <li class="button">
+                                    <a href="<?php echo Yii::app()->baseUrl; ?>/tienda">
+                                        <div class="white" >
+                                            <span class="glyphicon glyphicon glyphicon-th glyphiconLarge"></span><br/>
+                                            Tienda                         
+                                        </div>
+                                    </a>
+                                </li>
+
                 <?php   
                 }
                 ?>
