@@ -7,7 +7,7 @@ $this->breadcrumbs=array(
 <div class="container">
 	<h1>Productos en la lista: <?php echo $model->nombre; ?>.</h1>
 		
-		<hr/>
+		<hr class="no_margin_top" />
 
 		<?php if(Yii::app()->user->hasFlash('success')){?>
 		    <div class="alert in alert-block fade alert-success text_align_center">
@@ -15,7 +15,7 @@ $this->breadcrumbs=array(
 		    </div>
 		<?php } ?>
 		<?php if(Yii::app()->user->hasFlash('error')){?>
-		    <div class="alert in alert-block fade alert-error text_align_center">
+		    <div class="alert in alert-block fade alert-danger text_align_center">
 		        <?php echo Yii::app()->user->getFlash('error'); ?>
 		    </div>
 		<?php } ?>
@@ -26,7 +26,6 @@ $this->breadcrumbs=array(
 	        <tr>
 	        	<th scope="col">Imagen</th>
 	            <th scope="col">Nombre</th>
-	            <th scope="col">Descripcion</th>
 				<th scope="col">Acción</th>
 	        </tr>
 	    {items}

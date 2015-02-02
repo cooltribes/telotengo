@@ -157,12 +157,8 @@ $this->breadcrumbs=array(
 				<?php } ?>
                     
                     <section>
-                      
-                          
-                         
+     
                             <?php
-							
-
 		                    if($model->estado==4||$model->estado==8||$model->estado==9||$model->estado==10){
 		                        ?>
 
@@ -311,9 +307,11 @@ $this->breadcrumbs=array(
                                 $envio = 0;
                                 $total = 0;
                                 ?>
+                                
                                 <div class="well well-sm">
                                     <div class="panel-heading">
-                                    	Reclamos:
+                                    	Reclamos
+                                        <hr/>
                                     	<?php
                                     	foreach ($reclamos as $reclamo) {
                                     		?>

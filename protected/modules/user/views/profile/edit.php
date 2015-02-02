@@ -44,7 +44,7 @@ array('label'=>UserModule::t('Logout'), 'url'=>array('/user/logout')),
 						if ($widgetEdit = $field->widgetEdit($profile)) {
 							echo $widgetEdit;
 						} elseif ($field->range) {
-							echo $form->dropDownList($profile,$field->varname,Profile::range($field->range));
+							echo $form->dropDownList($profile,$field->varname,Profile::range($field->range),array('class'=>'form-control'));
 						} elseif ($field->field_type=="TEXT") {
 							echo $form->textArea($profile,$field->varname,array('rows'=>6, 'cols'=>50));
 						} else {

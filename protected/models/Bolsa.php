@@ -89,4 +89,20 @@ class Bolsa extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+
+	/*
+	Función para revisar si un inventario existe ya en la bolsa del usuario
+	*/
+	public function isProductAlready($inventario){
+
+		$productosBolsa = BolsaHasInventario::model()->findAllByAttributes(array('bolsa_id'=>$this->id));
+
+		foreach($productosBolsa as $producto){
+			if($producto->inventario_id == $inventario){
+				return true;
+			}
+		}
+		return false;
+	}
+
 }

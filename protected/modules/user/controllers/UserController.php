@@ -29,7 +29,8 @@ class UserController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('tucuenta','favoritos','quitarfav','usuariostienda','createuser','deleteuser','editrol','avatar','agregarsocial','deletesocial','privacidad','notificaciones'),
+				'actions'=>array('tucuenta','favoritos','quitarfav','usuariostienda','createuser','deleteuser','editrol','avatar',
+								'agregarsocial','deletesocial','privacidad','notificaciones','enviarbolsa'),
 				'users'=>array('@'),
 			),
 			array('deny',  // deny all users
@@ -123,6 +124,9 @@ class UserController extends Controller
 		));
 	}
 
+	/*
+	Action para quitar un producto de favorito
+	*/
 	public function actionQuitarFav($producto_id,$user_id){
 		$model = UserFavoritos::model()->findByAttributes(array('producto_id'=>$producto_id,'user_id'=>$user_id));
 		$model->delete();
@@ -130,6 +134,55 @@ class UserController extends Controller
 		Yii::app()->user->setFlash('success', 'Producto eliminado de los favoritos.');
 
 		$this->redirect(array('favoritos')); 
+	}
+
+	/*
+	Action para pasar un producto de favorito a la bolsa
+	*/
+	public function actionEnviarbolsa($producto_id,$user_id){
+		// Busqueda del producto favorito del usuario
+		$model = UserFavoritos::model()->findByAttributes(array('producto_id'=>$producto_id,'user_id'=>$user_id));
+
+		$user = Yii::app()->user->id;
+		$bolsa = Bolsa::model()->findByAttributes(array('users_id'=>$user_id));
+		$inventario = Inventario::model()->findByAttributes(array('producto_id'=>$producto_id));
+
+		// si el usuario tiene un carrito creado se agrega
+		if(isset($bolsa)){
+			$ag = new BolsaHasInventario; 
+			$ag->bolsa_id = $bolsa->id;
+			$ag->inventario_id = $inventario->id; 
+			$ag->cantidad = 1;
+
+			if($ag->save()){
+				Yii::app()->user->setFlash('success', 'Se ha agregado correctamente el producto a la bolsa.');
+			}else{
+				Yii::trace('WFavorito a Bolsa: '.$wishlisthas->id.' Error al pasar :'.print_r($detalle->getErrors(),true), 'Fav a Bolsa');
+				Yii::app()->user->setFlash('error', 'Error al agregar.');
+			}	
+		} 
+		else{ // no tenia carrito aún
+			$nueva = new Bolsa;
+			$nueva->users_id = $user;
+			$nueva->save();
+			
+			$ag = new BolsaHasInventario;
+			$ag->bolsa_id = $nueva->id;
+			$ag->inventario_id = $inventario->id; 
+			$ag->cantidad = 1;
+			
+			if($ag->save()){
+				Yii::app()->user->setFlash('success', 'Se ha agregado correctamente el producto a la bolsa.');
+			}else{
+				Yii::trace('Fav a Bolsa: '.$wishlisthas->id.' Error al pasar :'.print_r($detalle->getErrors(),true), 'Fav a Bolsa');
+				Yii::app()->user->setFlash('error', 'Error al agregar.');
+			}
+							
+		}
+
+		$model->delete();
+		// redireccion al carrito de compras con mensaje de aprobación
+		$this->redirect(array('/bolsa/view'));
 	}
 	
 	public function actionAgregarSocial(){

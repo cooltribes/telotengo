@@ -1,4 +1,4 @@
-<div class="container-fluid" style="padding: 0 15px;">
+<div class="container">
 
 <?php
 $this->breadcrumbs=array(
@@ -7,78 +7,69 @@ $this->breadcrumbs=array(
 );
 ?>	
 	
-	
-    <div class="container">
-        <div class="row">
-            <!-- COLUMNA PRINCIPAL DERECHA ON // OJO: esta de primera para mejorar el SEO sin embargo por CSS se ubica visualmente a la derecha -->
-            <div class="col-md-10 col-md-offset-1 main-content" role="main">
-                <div class="page-header">
-                    <h1>
-                       Procesar reclamo
-                    </h1> 
-                </div>   
-                    
-				<?php if(Yii::app()->user->hasFlash('success')){?>
-				    <div class="alert in alert-block fade alert-success text_align_center">
-				        <?php echo Yii::app()->user->getFlash('success'); ?> 
-				    </div>
-				<?php } ?>
-				<?php if(Yii::app()->user->hasFlash('error')){?>
-				    <div class="alert in alert-block fade alert-error text_align_center">
-				        <?php echo Yii::app()->user->getFlash('error'); ?>
-				    </div>
-				<?php } ?>
-                    
-                <section>
-                    <h3>Resumen de la compra:</h3>
-                    <div>
-                        <p class="well well-sm"> 
-                        	Vendedor: <?php echo $orden_inventario->inventario->almacen->empresas->razon_social; ?></br>
-                        	Producto: <?php echo $orden_inventario->inventario->producto->nombre.' | '.$caracteristicas; ?>
-						</p>
-                    </div>
+	<div class="row-fluid">
+	    <!-- COLUMNA PRINCIPAL DERECHA ON // OJO: esta de primera para mejorar el SEO sin embargo por CSS se ubica visualmente a la derecha -->
+	    <div>
+            
+			<?php if(Yii::app()->user->hasFlash('success')){?>
+			    <div class="alert in alert-block fade alert-success text_align_center">
+			        <?php echo Yii::app()->user->getFlash('success'); ?> 
+			    </div>
+			<?php } ?>
+			<?php if(Yii::app()->user->hasFlash('error')){?>
+			    <div class="alert in alert-block fade alert-danger text_align_center">
+			        <?php echo Yii::app()->user->getFlash('error'); ?>
+			    </div>
+			<?php } ?>
 
-                    <div class="well">
-						<div class="row padding_left_medium">
-							<div class="col-md-6 1">
-							<?php
-							$form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
-								'id'=>'reclamo-form',
-								'enableAjaxValidation'=>false,
-								'enableClientValidation'=>true,
-								'type'=>'horizontal',
-								'clientOptions'=>array(
-									'validateOnSubmit'=>true, 
-								),
-								'htmlOptions' => array(
-							        'enctype' => 'multipart/form-data',
-							    ),
+            <h3>Resumen de la compra:</h3>
+            <div class="well preguntaHeader margin_bottom"> 
+            	Producto: <?php echo $orden_inventario->inventario->producto->nombre; ?></br>
+				Fecha: <?php echo date('d-m-Y',strtotime($orden_inventario->orden->fecha)); ?>
+            </div>
+
+            <h3> Procesar Reclamo </h3>   
+            <hr class="no_margin_top" />
+                    
+            <div class="well">
+				<div class="row-fluid">
+					<div>
+						<?php
+						$form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
+							'id'=>'reclamo-form',
+							'enableAjaxValidation'=>false,
+							'enableClientValidation'=>true,
+							'type'=>'horizontal',
+							'clientOptions'=>array(
+								'validateOnSubmit'=>true, 
+							),
+							'htmlOptions' => array(
+						        'enctype' => 'multipart/form-data',
+						    ),
+						));
+						
+						echo $form->errorSummary($reclamo);
+						
+						echo $form->label($reclamo,'comentario');
+						echo $form->textArea($reclamo,'comentario',array('class'=>'form-control'));
+						echo $form->error($reclamo,'comentario');
+
+						echo '<div class="col-md-2 col-md-offset-10 margin_top_small no_padding">';
+							$this->widget('bootstrap.widgets.TbButton', array(
+								'buttonType'=>'submit',
+								'type'=>'primary',
+								'label'=>'Enviar',
+								'htmlOptions' => array('class'=>'form-control'),
 							));
-							
-							echo $form->errorSummary($reclamo);
-							
-							echo '<div class="form-group">';
-							echo $form->label($reclamo,'comentario');
-							echo $form->textArea($reclamo,'comentario',array('class'=>'form-control'));
-							echo $form->error($reclamo,'comentario');
-							echo '</div>';
+						echo '</div>';
 
-							echo '<div class="form-actions">';
-								$this->widget('bootstrap.widgets.TbButton', array(
-									'buttonType'=>'submit',
-									'type'=>'primary',
-									'label'=>'Enviar',
-								));
-							echo '</div>';
-	
-							$this->endWidget();
-							?>
-							</div>
-						</div>
+						$this->endWidget();
+						?>
 					</div>
+				</div>
 
 
-                </section>
+            </div>
 
             </div>
             <!-- COLUMNA PRINCIPAL DERECHA OFF // -->

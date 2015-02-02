@@ -5,7 +5,7 @@ $this->breadcrumbs=array(
 
 ?>
 <div class="container">
-	<h1>Mis Productos Favoritos</h1>
+	<h1>&hearts; Mis Productos Favoritos</h1>
 		
 		<hr/>
 
@@ -15,7 +15,7 @@ $this->breadcrumbs=array(
 		    </div>
 		<?php } ?>
 		<?php if(Yii::app()->user->hasFlash('error')){?>
-		    <div class="alert in alert-block fade alert-error text_align_center">
+		    <div class="alert in alert-block fade alert-danger text_align_center">
 		        <?php echo Yii::app()->user->getFlash('error'); ?>
 		    </div>
 		<?php } ?>

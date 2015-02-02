@@ -114,29 +114,35 @@ class BolsaController extends Controller
 
 		$user = Yii::app()->user->id;
 		$bolsa = Bolsa::model()->findByAttributes(array('users_id'=>$user));
+		
 		/* Se usa POST de inventarioId para recibir inventario en vez de caracteristicas */
 		if(isset($bolsa)){ 
-			 
-			$ag = new BolsaHasInventario; 
-			$ag->bolsa_id = $bolsa->id;
-			//$ag->inventario_id = $_POST['inventario_seleccionado_id'];
-			$ag->inventario_id = $_POST['inventario_id']; 
-			$ag->cantidad = 1; 
 			
-			if($ag->save()){
-				Yii::app()->user->setFlash('success', 'Se ha agregado correctamente el producto a la bolsa.');
-			}else{
-				var_dump($ag->getErrors());
-				Yii::app()->user->setFlash('error', 'Error al agregar.');
+			// Cuando aún no se ha agregado a bolsa el producto
+			if(!$bolsa->isProductAlready($_POST['inventario_id'])){
+				$ag = new BolsaHasInventario; 
+				$ag->bolsa_id = $bolsa->id;
+				$ag->inventario_id = $_POST['inventario_id']; 
+				$ag->cantidad = 1; 
+				
+				if($ag->save()){
+					Yii::app()->user->setFlash('success', 'Se ha agregado correctamente el producto a la bolsa.');
+				}else{
+					var_dump($ag->getErrors());
+					Yii::app()->user->setFlash('error', 'Error al agregar.');
+				}
+			}
+			else{ // ya estaba el producto, es solo sumarle uno a la cantidad
+				$bolsaHas = BolsaHasInventario::model()->findByAttributes(array('bolsa_id'=>$bolsa->id,'inventario_id'=>$_POST['inventario_id']));
+				$cantidad = $bolsaHas->cantidad + 1;
+				$bolsaHas->saveAttributes(array('cantidad'=>$cantidad));
 			}	
-		} 
+		}
 		else{
 			$nueva = new Bolsa;
 			$nueva->users_id = $user;
 			$nueva->save();
 			// bolsa creada
-			
-			// por ahora pondre producto->id envez de inventario
 			
 			$ag = new BolsaHasInventario;
 			$ag->bolsa_id = $nueva->id;
@@ -541,7 +547,10 @@ class BolsaController extends Controller
 					}
 
 					if($inventario->save()){
-						// no hago nada
+						if($inventario->cantidad == 0){
+							$producto = Producto::model()->findByPk($inventario->producto_id);
+							$producto->saveAttributes(array('estado'=>0)); // Quedó fuera de stock. pasa a Inactivo
+						}
 					}else{
 						Yii::trace('UserID: '.$user->id.' Error al guardar compra (inventario):'.print_r($inventario->getErrors(),true), 'registro');
 						$post_data = array(

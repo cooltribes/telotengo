@@ -29,6 +29,8 @@ $this->breadcrumbs=array(
     						'disableAjaxValidationAttributes'=>array('RegistrationForm_verifyCode'),
     						'clientOptions'=>array(
     							'validateOnSubmit'=>true,
+    							'validateOnChange'=>false,
+    							'validateOnType'=>false,
     						),
     						'htmlOptions' => array('enctype'=>'multipart/form-data', 'class'=>'form-horizontal','role'=>"form"),
     					)); ?>
@@ -254,7 +256,11 @@ $this->breadcrumbs=array(
 		                        var n = fecha.split("/"); // 0 mes, 1 dia, 2 año
 		                        
 		                        var a = n[2]+"-"+n[1]+"-"+n[0];
-		                       
+		                       	
+		                        $('#birth_day').val(n[1]);
+								$('#birth_month').val(n[0]);
+								$('#birth_year').val(n[2]);    
+
 		                        $('#fecha_nacimiento').val(a);
 		                        
 		                        if(response.gender == 'male')
@@ -262,6 +268,8 @@ $this->breadcrumbs=array(
 		                        
 		                        if(response.gender == 'female')
 		                        	$('#Profile_sexo_0').attr('checked',true);
+
+		                        $('#registration-form').submit();
 
 	                    }, {scope: 'email,user_birthday'});
 	        } else {
@@ -295,7 +303,7 @@ $this->breadcrumbs=array(
 		                        
 		                        if(response.gender == 'female')
 		                        	$('#Profile_sexo_0').attr('checked',true);
-		     	
+		     		
 	                    });
 	                    
 	                } else {

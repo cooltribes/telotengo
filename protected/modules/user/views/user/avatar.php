@@ -1,4 +1,3 @@
-          
 <div class="modal-header no_border no_padding_bottom row-fluid">
     <h3 class="no_margin_top col-md-11">Nuevo Avatar</h3>
     <div class="col-md-1"><button type="button" class="close pull-right" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -25,6 +24,7 @@
     
     </div>
             
+
 
          <?php 
                 if($model->avatar_url!=""){ ?>

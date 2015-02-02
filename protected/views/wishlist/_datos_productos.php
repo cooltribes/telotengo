@@ -5,7 +5,7 @@ echo"<tr>";
 		$principal = Imagenes::model()->findByAttributes(array('orden'=>1,'producto_id'=>$data->producto_id));
 	    							
 	    if($principal->getUrl()) 
-	    	$im = CHtml::image(str_replace(".","_x180.",$principal->getUrl()), "Imagen ", array());
+	    	$im = CHtml::image(str_replace(".","_x90.",$principal->getUrl()), "Imagen ", array());
 	   	else 
 	    	echo '<img src="http://placehold.it/100" width="100%">';
 	    							  
@@ -14,7 +14,6 @@ echo"<tr>";
 	$producto = Producto::model()->findByPk($data->producto_id);
 
    	echo "<td>".$producto->nombre."</td>";
-	echo "<td>".$producto->descripcion."</td>";
 
 	echo '<td>
 	<div class="dropdown">
@@ -23,6 +22,7 @@ echo"<tr>";
 	</a>  
 	
 		<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+			<li><a tabindex="-1" href="'.Yii::app()->createUrl('/wishlist/enviarbolsa',array('id'=>$data->id)).'" ><i class="glyphicon glyphicon-shopping-cart"></i> Enviar producto al carrito </a></li>
 			<li><a tabindex="-1" href="'.Yii::app()->createUrl('/wishlist/eliminarproducto',array('id'=>$data->id)).'" ><i class="glyphicon glyphicon-trash"></i> Eliminar Producto </a></li>
 		</ul>
         </div></td>

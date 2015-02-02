@@ -36,7 +36,7 @@
 	<div class="form-group">
 		<div class="col-sm-12">
 			<?php echo $form->labelEx($model,'superuser'); ?>
-			<?php echo $form->dropDownList($model,'superuser',User::itemAlias('AdminStatus')); ?>
+			<?php echo $form->dropDownList($model,'superuser',User::itemAlias('AdminStatus'),array('class'=>'form-control')); ?>
 			<?php echo $form->error($model,'superuser'); ?>
 		</div>
 	</div>
@@ -44,7 +44,7 @@
 	<div class="form-group">
 		<div class="col-sm-12">
 			<?php echo $form->labelEx($model,'status'); ?>
-			<?php echo $form->dropDownList($model,'status',User::itemAlias('UserStatus')); ?>
+			<?php echo $form->dropDownList($model,'status',User::itemAlias('UserStatus'),array('class'=>'form-control')); ?>
 			<?php echo $form->error($model,'status'); ?>
 		</div>
 	</div>
@@ -60,7 +60,7 @@
 			if ($widgetEdit = $field->widgetEdit($profile)) {
 				echo $widgetEdit;
 			} elseif ($field->range) {
-				echo $form->dropDownList($profile,$field->varname,Profile::range($field->range));
+				echo $form->dropDownList($profile,$field->varname,Profile::range($field->range),array('class'=>'form-control'));
 			} elseif ($field->field_type=="TEXT") {
 				echo CHtml::activeTextArea($profile,$field->varname,array('rows'=>6, 'cols'=>50));
 			} else {
@@ -75,9 +75,15 @@
 		}
 ?>
 	<div class="form-group">
-		<div class="col-sm-offset-2 col-sm-10">
-			<?php echo CHtml::submitButton($model->isNewRecord ? UserModule::t('Create') : UserModule::t('Save')); ?>
-		</div>
+	
+		<div class="form-actions col-sm-offset-2 col-sm-10 no_margin">
+			<?php $this->widget('bootstrap.widgets.TbButton', array(
+				'buttonType'=>'submit',
+				'type'=>'primary',
+				'label'=>$model->isNewRecord ? 'Crear' : 'Guardar',
+			)); ?>
+		</div> 
+
 	</div>
 
 <?php $this->endWidget(); ?>
