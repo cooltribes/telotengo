@@ -173,8 +173,13 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                             <ul class="dropdown-menu">
                                 <li><a href="<?php echo Yii::app()->baseUrl; ?>/orden/listado">Tus pedidos</a></li>
                                 <li><a href="<?php echo Yii::app()->baseUrl; ?>/user/user/tucuenta">Tu Cuenta</a></li>
-                                <li><a href="<?php echo Yii::app()->baseUrl; ?>/user/profile/edit">Editar perfil</a></li> 
-                                <!-- <li><a href="<?php echo Yii::app()->baseUrl."/user/profile/profile/id/".Yii::app()->user->id; ?>">Mi perfil público</a></li> -->
+                                <li><a href="<?php echo Yii::app()->baseUrl; ?>/user/profile/edit">Editar perfil</a></li>
+                                <li><a href="#">Direcciones </a>
+                                    <ul> 
+                                        <li><a href="<?php echo Yii::app()->baseUrl; ?>/direccionEnvio/listado">De Envío </a></li>
+                                        <li><a href="<?php echo Yii::app()->baseUrl; ?>/direccionFacturacion/listado">De Facturación</a></li>
+                                    </ul>
+                                </li>
                                 <li><a href="<?php echo Yii::app()->baseUrl; ?>/user/profile/changepassword">Cambiar Contraseña</a></li>       
                             </ul>
                         </li> 
@@ -239,7 +244,15 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                                         </div>
                                     </a>
                                 </li>
- 
+                                <li class="button">
+                                    <a href="<?php echo Yii::app()->baseUrl; ?>/tienda">
+                                        <div class="white" >
+                                            <span class="glyphicon glyphicon glyphicon-th glyphiconLarge"></span><br/>
+                                            Tienda                         
+                                        </div>
+                                    </a>
+                                </li>
+
                 <?php   
                 }
                 ?>

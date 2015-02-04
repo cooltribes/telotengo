@@ -7,11 +7,11 @@
                 $principal = Imagenes::model()->findByAttributes(array('orden'=>1,'producto_id'=>$data->id));
             							
             if($principal->getUrl()){
-                    echo '<div class="productImage">';
-                       $im = CHtml::image(str_replace(".","_thumb.",$principal->getUrl()), "Imagen",array('style'=>'width:100%'));
-                    echo "<a href='".Yii::app()->baseUrl."/producto/detalle/".$data->id."''>".$im."</a>";
-                    echo "</div>";
-                }
+                echo '<div class="productImage">';
+                $im = CHtml::image(str_replace(".","_thumb.",$principal->getUrl()), "Imagen",array('style'=>'width:100%'));
+                echo "<a href='".Yii::app()->baseUrl."/producto/detalle/".$data->id."''>".$im."</a>";
+                echo "</div>";
+            }
             $marca = Marca::model()->findByPk($data->marca_id);
              $a = "marcas/".$marca->nombre;
     

@@ -52,7 +52,7 @@ class TiendaController extends Controller
 		$producto = new Producto;
 		$producto->unsetAttributes();  
 		
-		$producto->estado = 1;
+		$producto->estado = 1; 
 		// $producto->destacado = 1;
 		
 		$dataProvider = $producto->search();

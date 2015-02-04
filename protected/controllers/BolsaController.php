@@ -802,6 +802,7 @@ class BolsaController extends Controller
 			                title='Registrar'>Registrar Pago</a>";
 			        $message->from = array(Yii::app()->params['adminEmail'] => "Sigma Tiendas");
 			        $message->subject = $subject;
+			        $message->view = "mail_template";
 			        $message->setBody($body, 'text/html');
 			        $message->addTo($user->email);
 			        Yii::app()->mail->send($message);

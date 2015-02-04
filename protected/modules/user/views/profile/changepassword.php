@@ -9,13 +9,15 @@ $this->breadcrumbs=array(
 		<div class="col-md-offset-3 col-md-5">
 			<h1><?php echo UserModule::t("Cambiar contraseña"); ?></h1>
 
+			<hr class="no_margin_top" />
+
 			<?php if(Yii::app()->user->hasFlash('success')){?>
 			    <div class="alert in alert-block fade alert-success text_align_center">
 			        <?php echo Yii::app()->user->getFlash('success'); ?>
 			    </div>
 			<?php } ?>
 			<?php if(Yii::app()->user->hasFlash('error')){?>
-			    <div class="alert in alert-block fade alert-error text_align_center">
+			    <div class="alert in alert-block fade alert-dabger text_align_center">
 			        <?php echo Yii::app()->user->getFlash('error'); ?>
 			    </div> 
 			<?php } ?>
