@@ -4,8 +4,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
     <body>
-  
-    <div style="background: -webkit-linear-gradient(#198ac9,#016eab);background: -o-linear-gradient(#198ac9,#016eab);background: -moz-linear-gradient(#198ac9,#016eab);background: linear-gradient(#198ac9,#016eab);
+    
+           <div style="background: -webkit-linear-gradient(#198ac9,#016eab);background: -o-linear-gradient(#198ac9,#016eab);background: -moz-linear-gradient(#198ac9,#016eab);background: linear-gradient(#198ac9,#016eab);
     height:100px; color:#FFF; text-decoration: none; font-size: 12px">
         <table width="98%" style="margin-left: 10px;">
             <tr>
@@ -67,6 +67,7 @@
             </td>
         </tr>
     </table>
-    <?php endif; ?>
+    <?php endif; ?>  
+
     </body>
 </html>
