@@ -20,16 +20,7 @@ $this->breadcrumbs=array(
 		    </div>
 		<?php } ?>
 
-	    <div class="row margin_top margin_bottom ">
-	        <div class="span4">
-	            <form class="no_margin_bottom form-search">
-	            <div class="input-prepend"> <span class="add-on"><i class="icon-search"></i></span>
-	            		<input class="span3" id="query" name="query" type="text" placeholder="Buscar">
-	                	<a href="#" class="btn" id="btn_search_event">Buscar</a>
-	           		</form>
-	           	</div>         
-	        </div>
-	        
+	    <div class="row margin_top margin_bottom ">	        
 	        <div class="pull-right">
 	        <?php
 	        	echo CHtml::link('Agregar dirección de facturación', $this->createUrl('create'), array('class'=>'btn btn-success', 'role'=>'button'));

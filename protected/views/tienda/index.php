@@ -68,9 +68,11 @@ $marcas = Marca::model()->findAll();
 
                 <ul class="col-md-offset-1 no_margin_left"> 
                     <?php 
-                	foreach($marcas as $marca) 
-					{
-						echo '<li class="marcas-listado padre" id="'.$marca->id.'"><a href="#">'.$marca->nombre.'</a></li>';
+                	foreach($marcas as $marca){
+                		#var_dump($marca->tieneActivos);
+                		#Yii::app()->end();
+						if($marca->tieneActivos)
+							echo '<li class="marcas-listado padre" id="'.$marca->id.'"><a href="#">'.$marca->nombre.'</a></li>';
 					}
 					?>               
                 </ul>     
@@ -174,7 +176,8 @@ $marcas = Marca::model()->findAll();
             <section class="row-fluid">
 			<!-- PRODUCTOS ON -->
 		    <?php
-			$template = '
+
+		    $template = '
 				{items}
 		      {pager}
 		    ';

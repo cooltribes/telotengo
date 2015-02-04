@@ -158,22 +158,22 @@ class ProductoController extends Controller
 			if(isset($_POST['Producto']))
 			{ 
 				$model->attributes=$_POST['Producto'];
-				
-				if(UserModule::isAdmin()){
+
+				/*if(UserModule::isAdmin()){
 					$model->estado = 1; // aprobado
 					$model->notificado = 1; // no aparece como notificacion
 				}
-				else
-				{
+				else{
 					$model->estado = 0; // solicitado	
 					$model->notificado = 0; // El administrador aun no ha visto
-				}
-				
+				}*/
+				$model->notificado = 1; // no aparece como notificacion
 				$model->interno = "por ahora"; // mientras definimos la estructura del mismo
 				$model->users_id =  Yii::app()->user->id;
-				
+				$model->estado = $_POST['Producto']["estado"];
+
 				if($model->save()){
-					
+
 					// autocompletando algo del seo
 					$tags = explode(" ",$model->nombre);
 					array_push($tags,$model->modelo);
@@ -238,7 +238,7 @@ class ProductoController extends Controller
 					
 					 	$this->redirect(array('producto/create/'.$model->id)); 
 					
-				} 
+				}
 			}
 			
 			$this->render('create',array(
