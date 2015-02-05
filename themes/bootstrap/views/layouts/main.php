@@ -121,6 +121,17 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                              <?php
                     if(Yii::app()->user->isAdmin()){
                 ?>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
                     <li class="button"><a href="<?php echo Yii::app()->baseUrl; ?>/site/logout" class="white">Salir</a> </li>
                     <li class="dropdown button">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -165,38 +176,48 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                 {
                  // usuario normal
                     ?>
-                        <li class="button"><a href="<?php echo Yii::app()->baseUrl; ?>/site/logout"><div class="white">Salir</div></a></li>
-                        <li class="dropdown button">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <div class="white">Cuenta<b class="caret"></b></div>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a href="<?php echo Yii::app()->baseUrl; ?>/orden/listado">Tus pedidos</a></li>
-                                <li><a href="<?php echo Yii::app()->baseUrl; ?>/user/user/tucuenta">Tu Cuenta</a></li>
-                                <li><a href="<?php echo Yii::app()->baseUrl; ?>/user/profile/edit">Editar perfil</a></li>
-                                <li><a href="#">Direcciones </a>
-                                    <ul> 
-                                        <li><a href="<?php echo Yii::app()->baseUrl; ?>/direccionEnvio/listado">De Envío </a></li>
-                                        <li><a href="<?php echo Yii::app()->baseUrl; ?>/direccionFacturacion/listado">De Facturación</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="<?php echo Yii::app()->baseUrl; ?>/user/profile/changepassword">Cambiar Contraseña</a></li>       
-                            </ul>
-                        </li> 
+                    
+     
+              <li class="button"><a href="<?php echo Yii::app()->baseUrl; ?>/site/logout"><div class="white">Salir</div></a></li>
                         
-                        <li class="dropdown button">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <div class="white">Direcciones<b class="caret"></b></div>
-                            </a>
+                <li class="menu-item dropdown button white">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cuenta<b class="caret"></b></a>
+                    <ul class="dropdown-menu"> 
+                        <li class="menu-item dropdown ">
+                           <a href="<?php echo Yii::app()->baseUrl; ?>/orden/listado"> Tus Pedidos</a>
+                        </li>
+                        <li class="menu-item dropdown ">
+                            <a href="<?php echo Yii::app()->baseUrl; ?>/user/user/tucuenta">Tu Cuenta</a>
+                        </li>
+                        <li class="menu-item dropdown ">
+                            <a href="<?php echo Yii::app()->baseUrl; ?>/user/profile/edit">Editar Perfil</a>
+                        </li>
+                        <li class="menu-item dropdown dropdown-submenu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Direcciones</a>
                             <ul class="dropdown-menu">
-                                <li>
-                                    <a href="<?php echo Yii::app()->baseUrl; ?>/direccionEnvio/listado">De Envío </a>
+                                <li class="menu-item ">
+                                     <a href="<?php echo Yii::app()->baseUrl; ?>/direccionEnvio/listado">De Envío </a>
                                 </li>
-                                <li>
+                                <li class="menu-item ">
                                     <a href="<?php echo Yii::app()->baseUrl; ?>/direccionFacturacion/listado">De Facturación</a>
                                 </li>
+                               <!-- <li class="menu-item dropdown dropdown-submenu">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Level 2</a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a href="#">Link 3</a>
+                                        </li>
+                                    </ul>
+                                </li>-->
                             </ul>
                         </li>
+                        <li class="menu-item dropdown">
+                           <a href="<?php echo Yii::app()->baseUrl; ?>/user/profile/changepassword"> Cambiar Contraseña</a>
+                        </li>
+                    </ul>
+                </li>
+            
+                     
                         <li class="button">
                             <a href="<?php echo Yii::app()->baseUrl; ?>/bolsa/view">
                                 <div class="white">
@@ -214,6 +235,12 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                                 </div>
                             </a>
                         </li> 
+                        
+            
+                        
+                        
+                        
+          
             
                 <?php
                         

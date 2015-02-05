@@ -6,7 +6,7 @@
 	);
 	?>
 
-	<h1><?php echo 'Recuperar contraseña'; ?></h1>
+	<h1><?php echo 'Recuperfar contraseña'; ?></h1>
 
 	<?php if(Yii::app()->user->hasFlash('recoveryMessage')): ?>
 	<div class="success">
