@@ -195,9 +195,9 @@ class SiteController extends Controller
 		$this->render('licencias');
 	}
     public function actionMailTest(){
-        $body="BODY";
+      $body="BODY";
         $undercomment="UNDERCOMMENT";
-        $model=Orden::model()->findByPk(49);
+        $model=OrdenGC::model()->findByPk(19);
         $message = new YiiMailMessage;
                                // $subject = 'Gracias por registrarte en Sigma Tiendas';   
                                $subject = 'Tu compra en Sigma Tiendas';                                
@@ -207,7 +207,7 @@ class SiteController extends Controller
                                     Recibes este correo electrónico porque te has registrado en Sigmatiendas.com. 
                                     Por favor valida tu cuenta haciendo clic en el enlace que aparece a continuación:
                                     <br/><br/><a href="#">Clic aquí</a>';*/
-                                $body=$this->renderPartial('/mail/mail_order_detail', array( 'model'=>$model ),true);
+                            $body=$this->renderPartial('/mail/mail_gc_gift', array( 'model'=>OrdenGC::model()->findByPk(19)),true);
                                 $message->from = array(Yii::app()->params['adminEmail'] => "Sigma Tiendas");
                                 $params=array('model'=>$model,'body'=>$body);
                                 $message->setBody($params, 'text/html');                
@@ -216,7 +216,7 @@ class SiteController extends Controller
                                 Yii::app()->mail->send($message);
         
         
-        
+       
         
 
     }

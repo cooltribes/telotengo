@@ -1,22 +1,10 @@
-<?php
-
-$this->setPageTitle(Yii::app()->name . " - Resumen de la orden");
-if (!Yii::app()->user->isGuest) { // que este logueado
-    $user = User::model()->findByPk(Yii::app()->user->id);
-?>
-
-<style>
-	#voucher div table{
-		border: solid 25px #FFF;
-	margin: 0 auto;
-	outline: solid 1px;
-	}
-</style>
-
-<div class="container margin_top">
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <?php
+<div class="container-fluid" style="padding: 0 15px;">
+    <div class="container">
+        <div class="row-fluid">
+            <!-- COLUMNA PRINCIPAL DERECHA ON // OJO: esta de primera para mejorar el SEO sin embargo por CSS se ubica visualmente a la derecha -->
+            <div class="main-content" role="main">
+                    <div class="margin_top_small margin_bottom_small">
+                        <?php
         if ($orden->estado == 3) { // Listo el pago
       ?>    
         <div class='alert alert-success margin_top_medium margin_bottom'>
@@ -34,102 +22,79 @@ if (!Yii::app()->user->isGuest) { // que este logueado
         }
         
         ?>
-        <section>
-            <h3> Resumen de la compra: </h3>
-              <p class="well well-small"><strong>Número de confirmación:</strong> <?php echo $orden->id; ?></p>                    
-              <hr/>
-              <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                <tr>
-                  <th class="text_align_left"><?php  echo Yii::t('contentForm','Subtotal'); ?>:</th>
-                    <td><?php echo 'Bs. ' . Yii::app()->numberFormatter->formatCurrency($orden->total, ''); ?></td>
-                  </tr>           
-                  <tr>
-                    <th class="text_align_left"><h4>Total:</h4></th>
-                    <td><h4><?php echo 'Bs. ' . Yii::app()->numberFormatter->formatCurrency($orden->total, ''); ?></h4></td>
-                  </tr>
-              </table>
-              <hr/> 
-              <p>Hemos enviado una notificación de pago a tu correo electrónico: <strong><?php echo $user->email; ?></strong> </p>
-              <p>
-              <a href="<?php echo Yii::app()->baseUrl; ?>/bolsa/registrarpagoGC/<?php echo $orden->id; ?>" class="btn btn-danger" title="Registrar pago">Registrar Pago</a>
-              </p>      
-             	<?php
-
-              if(Yii::app()->getSession()->get('tipoPago') == 2){ ?> 
-                <p><?php echo Yii::t('contentForm','Reference').": ".$referencia; ?></p>	
-                  <div style="margin: 0 auto; " id="voucher"><?php echo CHtml::decode($voucher); ?></div>
-                    <?php } ?>
-
-                    <h3 class="margin_top_small">Detalle de la Orden.</h3>
-                    <div>
-                        <table class='table table-condensed' width='100%' >
-                            <thead>                                
-                              <tr>
-                                <th colspan='2'>Gift Card</th>
-                                <th>Monto</th>
-                                <th></th>
+                    </div>
+                    
+              
+                    <section class="row-fluid">
+                        
+                         <h1 class="col-md-8">Pedido N° <?php echo $orden->id; ?> </h1>
+                         <div class="col-md-4 text-right margin_top_small">
+                               <a href="<?php echo Yii::app()->baseUrl; ?>" class="btn btn-success btn-lg">Seguir Comprando</a>
+                         </div>
+                         <div class="no_margin_top col-md-12 margin_bottom">
+                             <hr class="no_margin_top" />
+                         </div>
+                         
+                         <div class="col-md-4 well " style="background: #FFF" >
+                            
+                            <table class="table" id="summary">
+                                <tr>
+                                    <td>Subtotal</td>
+                                    <td><strong><?php echo $orden->total; ?> Bs</strong></td>
                                 </tr>
-                            </thead>
-                            <tbody>
+                              
+                              
+                               
+                                <tr>
+                                    <td class="total">Total</td>
+                                    <td class="total"><strong><?php echo $orden->total; ?> Bs</strong></td>
+                                </tr>
+                            </table>
+                            
+                            <div>  
+                                <?php    $user = User::model()->findByPk(Yii::app()->user->id);?>
+                                 <p>Hemos enviado una notificación de pago a tu correo electrónico: <strong><?php echo $user->email; ?></strong> </p>
+                            </div>                            
+                        </div>
+                        
+                                               
+                        <div class="col-md-4 no_padding_right">
+                            <hr class="no_margin_top margin_bottom_xsmall"/>
+                        
                               <?php                    
                               /*Por los momentos una sola giftcard por Compra*/
                               $giftcard = Giftcard::model()->findByAttributes(array("orden_id" => $orden->id));
                               $envio = new EnvioGiftcard();
                               $envio->attributes = Yii::app()->getSession()->get('envio');
                               ?>
-                              <tr>
-                              <td>
-                                <!--<img src='<?php echo Yii::app()->baseUrl; ?>/images/giftcards/gift_card_one_x114.png' class='margin_bottom'>-->
-                                <img src='<?php echo Yii::app()->baseUrl."/images/giftcards/GIFTCARD-xmas-470x288.jpg"; ?>'>
-                                    </td>
-                                    <td></td><td><?php 
-                                    /*
-                                      <td>
-                                        <strong><?php echo Yii::t('contentForm','Code');  ?>:</strong> <?php echo $giftcard->getMascaraCodigo(); ?><br/>
-                                        <strong><?php echo Yii::t('contentForm','Validity');  ?>:</strong> <?php echo Yii::t('contentForm','From1')." <i>".date("d-m-Y", $giftcard->getInicioVigencia()).
-                                                "</i>".Yii::t('contentForm','To')." <i>".date("d-m-Y", $giftcard->getFinVigencia())."</i>"; ?><br/>
-                                        <?php 
-                                        //si hay para y mensaje
-                                        if($entrega == 2){ ?>
-                                        <strong><?php echo Yii::t('contentForm','Sent to:');  ?></strong> <?php echo $envio->email; ?><br/>
-                                        <?php } ?>
-                                      </td>
-                                    */
-                                    echo 'Bs. '.$orden->total; ?></td>
-                                    <td>
-                                    <?php /*
-                                    //si era para imprimir
-                                        $this->widget("bootstrap.widgets.TbButton", array(
-                                           'buttonType' => "link" ,
-                                           'type' => "danger" ,
-                                           'icon' => "print white" ,
-                                           'label' => "Imprimir",
-                                           'url' => "javascript:print()" ,
-                                        ));
-                                    
-                                    //si era para enviar
-                                        echo "<br/><i>Además será enviada al correo electrónico</i>";  */
-                                    ?> 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </section> 
-                <hr/>
-                <a href="<?php echo Yii::app()->baseUrl; ?>/tienda/index" class="btn btn-danger" title="seguir comprando">Volver a la tienda</a> </div>
+                          <strong>Monto</strong><br/>
+                          <div class="text-right"><?php  echo 'Bs. '.$orden->total; ?></div> 
+                          <hr class="margin_bottom_small no_margin_top"/>
+                          <strong>Enviado a</strong>  <br/>           
+                          <div class="text-right"><?php  echo $orden->email; ?></div>   
+                          <hr class="margin_bottom_small no_margin_top"/> 
+                          <strong>Mensaje</strong>  <br/>        
+                          <div class="text-right"><?php  echo $orden->mensaje; ?></div>
+                          <hr class="margin_bottom_small no_margin_top"/>          
+                                    <!--<img src='<?php echo Yii::app()->baseUrl; ?>/images/giftcards/gift_card_one_x114.png' class='margin_bottom'>-->
+                                   
+                               
+                        </div>
+                        <div class="col-md-4 no_padding_right">
+                        <img class="padding_left_medium" width="100%" src='<?php echo Yii::app()->baseUrl."/images/giftcards/GIFTCARD-xmas-470x288.jpg"; ?>'>
+                               
+                        </div>
+                        
+                        
+                        
+                    </section>
+               
+
+            </div> 
+            <!-- COLUMNA PRINCIPAL DERECHA OFF // -->
         </div>
-    </div> 
-    <!-- /container -->
-<?php
-}// si esta logueado
-else {
-    // redirecciona al login porque se murió la sesión
-//	header('Location: /user/login');
-    $url = CController::createUrl("/user/login");
-    header('Location: ' . $url);
-}
-?>
+    </div>
+</div>
 <script type="text/javascript">
 /*<![CDATA[*/
     function printElem(elem)
