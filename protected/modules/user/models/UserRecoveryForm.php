@@ -29,7 +29,7 @@ class UserRecoveryForm extends CFormModel {
 	public function attributeLabels()
 	{
 		return array(
-			'login_or_email'=>'Nombre de usuario o correo electrónico',
+			'login_or_email'=>'Correo electrónico',
 		);
 	}
 	
