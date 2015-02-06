@@ -5,32 +5,36 @@
 		'Cambiar contraseña',
 	);
 	?>
+    <h1><?php echo 'Cambiar contraseña'; ?></h1>
+    <hr class="no_margin_top"/>
+<div class="row-fluid">
 
-	<h1><?php echo 'Cambiar contraseña'; ?></h1>
 
 
 	<div class="form">
 	<?php echo CHtml::beginForm(); ?>
 		<?php echo CHtml::errorSummary($form); ?>
 		
-		<div class="row">
-		<?php echo CHtml::activeLabelEx($form,'password'); ?>
-		<?php echo CHtml::activePasswordField($form,'password'); ?>
+		<div class="col-md-6 col-md-offset-3">
+		<?php echo CHtml::activeLabelEx($form,'password'); ?><br/>
+		<?php echo CHtml::activePasswordField($form,'password', array('class'=>'form-control')); ?>
 		<p class="hint">
-		<?php echo 'Al menos 4 caracteres'; ?>
+		<small><?php echo 'Al menos 4 caracteres'; ?></small>
 		</p>
 		</div>
 		
-		<div class="row">
-		<?php echo CHtml::activeLabelEx($form,'verifyPassword'); ?>
-		<?php echo CHtml::activePasswordField($form,'verifyPassword'); ?>
+		<div class="col-md-6 col-md-offset-3">
+		<?php echo CHtml::activeLabelEx($form,'verifyPassword'); ?><br/>
+		<?php echo CHtml::activePasswordField($form,'verifyPassword', array('class'=>'form-control')); ?>
 		</div>
 		
 		
-		<div class="row submit">
-		<?php echo CHtml::submitButton('Guardar'); ?>
+		<div class="col-md-6 col-md-offset-3">
+		<?php echo CHtml::submitButton('Guardar',array('class'=>'btn btn-danger form-control margin_top')); ?>
 		</div>
 
 	<?php echo CHtml::endForm(); ?>
 	</div><!-- form -->
+</div>
+
 </div>
