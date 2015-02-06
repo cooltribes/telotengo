@@ -8,6 +8,7 @@ class RecoveryController extends Controller
 	 * Recovery password
 	 */
 	public function actionRecovery () {
+	    
 		$form = new UserRecoveryForm;
 		if (Yii::app()->user->id) {
 		    	$this->redirect(Yii::app()->controller->module->returnUrl);
@@ -28,7 +29,7 @@ class RecoveryController extends Controller
 								}
 								$find->save();
 								Yii::app()->user->setFlash('success','Nueva contraseña guardada');
-								$this->redirect(Yii::app()->controller->module->recoveryUrl);
+								$this->redirect('login');
 							}
 						} 
 						$this->render('changepassword',array('form'=>$form2));
@@ -47,7 +48,7 @@ class RecoveryController extends Controller
 							$message->view = 'mail_template';
 							 
 							//userModel is passed to the view
-							$body = 'Has solicitado recuperar tu contraseña en Sigma Tiendas. Por favor haz click en el siguiente enlace para continuar: <br/><br/><a href="'.$activation_url.'">Click aquí</a>.';
+							$body=$this->renderPartial('//mail/mail_chngpsswd_request', array( 'activation_url'=>$activation_url ),true);
 							$message->setSubject('Recuperación de contraseña');
 							$message->setBody(array('body'=>$body), 'text/html');
 							 
@@ -56,7 +57,7 @@ class RecoveryController extends Controller
 							Yii::app()->mail->send($message);
 
 							Yii::app()->user->setFlash('success','Las instrucciones para la recuperación de la contraseña se han enviado a tu correo electrónico');
-			    			$this->refresh();
+			    			$this->redirect(Yii::app()->getBaseUrl());
 			    		}
 			    	}
 		    		$this->render('recovery',array('model'=>$form));

@@ -20,7 +20,16 @@ $('.carousel').carousel('cycle');
     <div class="row-fluid">
 
           <!-- COLUMNA PRINCIPAL DERECHA ON // OJO: esta de primera para mejorar el SEO sin embargo por CSS se ubica visualmente a la derecha -->
-
+        <?php if(Yii::app()->user->hasFlash('success')){?>
+            <div class="alert in alert-block fade alert-success text_align_center col-md-12 margin_top_small">
+                <?php echo Yii::app()->user->getFlash('success'); ?>
+            </div>
+        <?php } ?>
+        <?php if(Yii::app()->user->hasFlash('error')){?>
+            <div class="alert in alert-block fade alert-error text_align_center col-md-12 margin_top_small">
+                <?php echo Yii::app()->user->getFlash('error'); ?>
+            </div>
+        <?php } ?>
 
         <div class="col-md-12 main-content" role="main">
 			
