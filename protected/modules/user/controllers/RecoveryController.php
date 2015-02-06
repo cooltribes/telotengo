@@ -27,43 +27,39 @@ class RecoveryController extends Controller
 									$find->status = 1;
 								}
 								$find->save();
-								Yii::app()->user->setFlash('recoveryMessage','Nueva contraseña guardada');
+								Yii::app()->user->setFlash('success','Nueva contraseña guardada');
 								$this->redirect(Yii::app()->controller->module->recoveryUrl);
 							}
 						} 
 						$this->render('changepassword',array('form'=>$form2));
 		    		} else {
-		    			Yii::app()->user->setFlash('recoveryMessage','Enlace incorrecto');
+		    			Yii::app()->user->setFlash('error','Enlace incorrecto');
 						$this->redirect(Yii::app()->controller->module->recoveryUrl);
 		    		}
 		    	} else {
 			    	if(isset($_POST['UserRecoveryForm'])) {
 			    		$form->attributes=$_POST['UserRecoveryForm'];
-			    		if($form->validate()) {
+			    		if($form->validate()){
 			    			$user = User::model()->notsafe()->findbyPk($form->user_id);
 							$activation_url = 'http://' . $_SERVER['HTTP_HOST'].$this->createUrl(implode(Yii::app()->controller->module->recoveryUrl),array("activkey" => $user->activkey, "email" => $user->email));
 							
 							$message = new YiiMailMessage;
-							$message->subject = 'Has solicitado la recuperación de contraseña en Telotengo';
-							$content = 'Para crear una nueva contraseña, por favor visita el siguiente enlace: '.$activation_url;
-			    			/*$content = UserModule::t("You have requested the password recovery site {site_name}. To receive a new password, go to {activation_url}.",
-			    					array(
-			    						'{site_name}'=>Yii::app()->name,
-			    						'{activation_url}'=>$activation_url,
-			    					));*/
-
-			    			
-							$message->setBody($content, 'text/html');
+							$message->view = 'mail_template';
+							 
+							//userModel is passed to the view
+							$body = 'Has solicitado recuperar tu contraseña en Sigma Tiendas. Por favor haz click en el siguiente enlace para continuar: <br/><br/><a href="'.$activation_url.'">Click aquí</a>.';
+							$message->setSubject('Recuperación de contraseña');
+							$message->setBody(array('body'=>$body), 'text/html');
 							 
 							$message->addTo($user->email);
-							$message->from = Yii::app()->params['adminEmail'];
+							$message->from = array(Yii::app()->params['adminEmail'] => "Sigma Tiendas");
 							Yii::app()->mail->send($message);
-							
-							Yii::app()->user->setFlash('recoveryMessage','Las instrucciones para la recuperación de la contraseña se han enviado a tu correo electrónico');
+
+							Yii::app()->user->setFlash('success','Las instrucciones para la recuperación de la contraseña se han enviado a tu correo electrónico');
 			    			$this->refresh();
 			    		}
 			    	}
-		    		$this->render('recovery',array('form'=>$form));
+		    		$this->render('recovery',array('model'=>$form));
 		    	}
 		    }
 	}
