@@ -41,6 +41,12 @@
 	<?php if(isset($this->breadcrumbs)):?>
 		<?php $this->widget('zii.widgets.CBreadcrumbs', array(
 			'links'=>$this->breadcrumbs,
+			'tagName'=>'ul',
+	        'separator'=>'',
+	        'homeLink' => CHtml::link('Home', Yii::app()->homeUrl),
+	        'activeLinkTemplate'=>'<li><a href="{url}">{label}</a> <span class="divider">/</span></li>',
+	        'inactiveLinkTemplate'=>'<li><span>{label}</span></li>',
+			'htmlOptions'=>array ('class'=>'breadcrumb')
 		)); ?><!-- breadcrumbs -->
 	<?php endif?>
 

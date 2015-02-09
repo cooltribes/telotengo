@@ -2,8 +2,6 @@
 	<?php
 		$hasInventario = OrdenHasInventario::model()->findByAttributes(array('orden_id'=>$data->id));
 		$inventario = Inventario::model()->findByPk($hasInventario->inventario_id);
-		$almacen = Almacen::model()->findByPk($inventario->almacen_id);
-		$empresa = Empresas::model()->findByPk($almacen->empresas_id);
 	?>
 	
 	<td><?php echo $data->id; ?></td>
@@ -48,7 +46,6 @@
 	?>
 	
 	<?php
-		
 	echo '<td>
 
 	<div class="dropdown">
