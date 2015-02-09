@@ -6,15 +6,17 @@ $this->breadcrumbs=array(
 ?>
 
 <div class="container">
-	<div class="row">
-		<div class="col-sm-10 col-sm-offset-1">
+	<div class="row-fluid">
+		<h1><?php echo 'Regístrate en Sigmatiendas'; ?></h1>
+                <hr class="no_margin_top"/>
+		<div class="col-sm-12">
 			<?php 
 			if(Yii::app()->user->hasFlash('registration')): ?>
 				<div class="success">
 					<?php echo Yii::app()->user->getFlash('registration'); ?>
 				</div>
 			<?php else: ?>
-				<h1><?php echo 'Regístrate en Sigmatiendas'; ?></h1>
+				
 				<div class="align_center">
 				  <small>Si ya tienes una cuenta <?php echo CHtml::link('haz click aquí', $this->createUrl('/user/login'), array()); ?></small>  
 				</div>

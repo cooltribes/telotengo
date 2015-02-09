@@ -352,7 +352,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
   <!-- HEADER OFF -->
 
 		<div id="page">
-
+            <div id="principal row-fluid" style="clear: top"> 
 			<?php if(isset($this->breadcrumbs)):?>
 				<?php $this->widget('bootstrap.widgets.TbBreadcrumbs', array(
 					'links'=>$this->breadcrumbs,
@@ -360,10 +360,53 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
 			<?php endif?>
   
 			<?php echo $content; ?>
-            </div>
+           </div> 
+           </div>
 			<div class="clear"></div>
-            
-			<footer role="contentinfo" class="footer margin_top_large">
+          
+          
+          <div class="footer padding_bottom_small">
+              <div class="container">
+                  <div class="row-fluid">
+                      <div class="col-md-4 padding_left padding_right">
+                          <div style="width:100%;" class="foot-section padding_right padding_left">
+                              <h2 class="foot-title"> Sobre nosotros </h2>
+                                        <ul class="foot-list">
+                                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/site/info" title="Quienes somos">¿Quiénes Somos?</a></li>
+                                            <li><a href="#" title="Términos de Uso">Términos de Uso</a></li>
+                                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/site/contact">Contacto</a></li>
+                                        </ul>
+                          </div>
+                      </div>
+                      <div class="col-md-4 padding_left padding_right">
+                          <div style="width:100%;" class="foot-section padding_right padding_left">
+                              <h2 class="foot-title">Servicio al cliente</h2>
+                                            <ul class="foot-list">
+                                                <li><a href="<?php echo Yii::app()->baseUrl; ?>/user/login">Inicia sesión</a></li>
+                                                <li><a href="#" title="Preguntas Frecuentes">Preguntas Frecuentes</a></li>
+                                                <li><a href="#" title="Formas de Pago">Formas de Pago</a></li>
+                                                <li><a href="#" title="Políticas de Privacidad">Políticas de Privacidad</a></li>
+                                                <li><a href="#" title="Políticas de Envíos, Devoluciones y Cancelaciones">Políticas de Envíos, Devoluciones y Cancelaciones</a></li>
+                                          </ul> 
+                          </div>
+                      </div>
+                      <div class="col-md-4 padding_left padding_right">
+                          <div style="width:100%;" class="foot-section padding_right padding_left">
+                              <h2 class="foot-title">Sigmasys C.A.</h2>
+                                    <strong>0276-3442626</strong>
+                                    <p>
+                                    <div>Av. Libertador, Centro Comercial Las Lomas, Local Nº 30, San Cristóbal, Edo. Táchira.</div>
+                                    </p>
+                              <p>&copy; Sigmasys C.A <?php echo date('Y');?></p> 
+                              
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+	<!--
+	
+	<footer class="footer margin_top_large">
               	<div class="content">
                   	<div class="row-fluid foot-main">
                         <div class="col-md-7 col-md-offset-1">
@@ -402,7 +445,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                         </div>
                     </div>
                 </div>
-            </footer>
+    </footer>
 		
 		<!-- page -->
 	</body>

@@ -68,7 +68,7 @@ $('.carousel').carousel('cycle');
             
             <section class="row-fluid margin_top">
             <h2>Ofertas Especiales</h2>
-            <hr/>
+            <hr class="no_margin_top margin_bottom_medium" />
             	<?php            	
             	$prod = new Producto;
 				$productos = $prod->front(); 
@@ -132,7 +132,7 @@ $('.carousel').carousel('cycle');
             </section>
             <section class="row-fluid margin_top">
                 <h2>Ubícanos</h2>
-            <hr/>
+            <hr class="no_margin_top margin_bottom_medium" />
             <div class="row-fluid">
                 <div class="col-md-12" style="text-align: center">
                     <a href="<?php echo Yii::app()->baseUrl;?>/site/tiendas">
@@ -168,7 +168,7 @@ $('.carousel').carousel('cycle');
             
             <section class="row-fluid margin_top">
                 <h2>Marcas Destacadas</h2>
-            <hr/>
+            <hr class="no_margin_top margin_bottom_medium" />
             
             <div id="myCarousel2" class="carousel slide">
                <!-- Carousel indicators -->
