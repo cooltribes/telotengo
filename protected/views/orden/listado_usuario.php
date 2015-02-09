@@ -1,6 +1,4 @@
 <?php
-/* @var $this FlashsaleController */
-/* @var $model Flashsale */
 
 $this->breadcrumbs=array(
 	'Listado de Pedidos',
@@ -9,8 +7,9 @@ $this->breadcrumbs=array(
 ?>
 
 <div class="container">
+
 	<h1>Listado de Pedidos</h1>
-	<hr/>
+	<hr class="no_margin_top" />
 
 		<?php if(Yii::app()->user->hasFlash('success')){?>
 		    <div class="alert in alert-block fade alert-success text_align_center">
@@ -18,15 +17,13 @@ $this->breadcrumbs=array(
 		    </div>
 		<?php } ?>
 		<?php if(Yii::app()->user->hasFlash('error')){?>
-		    <div class="alert in alert-block fade alert-error text_align_center">
+		    <div class="alert in alert-block fade alert-danger text_align_center">
 		        <?php echo Yii::app()->user->getFlash('error'); ?>
 		    </div>
 		<?php } ?>
-
-	    <hr/>
-	    
+    
 	    <?php
-	$template = '{summary}
+		$template = '{summary}
 	    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-bordered table-hover table-striped">
 	        <tr>
 	            <th scope="col">Pedido #</th>
@@ -48,7 +45,6 @@ $this->breadcrumbs=array(
 		    'template'=>$template,
 		    'enableSorting'=>'true',
 		    'afterAjaxUpdate'=>" function(id, data) {
-							   
 								} ",
 			'pager'=>array(
 				'header'=>'',

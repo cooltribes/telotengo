@@ -10,6 +10,11 @@ Yii::app()->clientScript->registerMetaTag('Sigma Tiendas', null, null, array('pr
 Yii::app()->clientScript->registerMetaTag("Sigma Tiendas - ".$model->nombre, null, null, array('property' => 'og:title'), null); 
 Yii::app()->clientScript->registerMetaTag(Yii::app()->getBaseUrl(true).str_replace(".","_x90.",$model->mainimage->url)."?v=".time(), null, null, array('property' => 'og:image'), null); 
 
+$this->breadcrumbs=array(
+    'Tienda' => array('/tienda'),
+    'Producto',
+);
+
 ?>
 <!-- CONTENIDO ON -->
 <div class="container">

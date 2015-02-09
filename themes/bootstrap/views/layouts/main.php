@@ -356,8 +356,14 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
 			<?php if(isset($this->breadcrumbs)):?>
 				<?php $this->widget('bootstrap.widgets.TbBreadcrumbs', array(
 					'links'=>$this->breadcrumbs,
-				)); ?><!-- breadcrumbs -->
-			<?php endif?>
+                    'tagName'=>'ul',
+                    'separator'=>'',
+                    'homeLink' => CHtml::link('Inicio', Yii::app()->homeUrl),
+                    'activeLinkTemplate'=>'<li><a href="{url}">{label}</a> <span class="divider">/</span></li>',
+                    'inactiveLinkTemplate'=>'<li><span>{label}</span></li>',
+                    'htmlOptions'=>array ('class'=>'breadcrumb')
+            			)); ?><!-- breadcrumbs -->
+            		<?php endif?>
   
 			<?php echo $content; ?>
             </div>
