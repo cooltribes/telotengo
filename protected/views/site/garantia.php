@@ -1,6 +1,8 @@
-<div class="container margin_top" style="padding: 0 15px; margin-bottom: 15px;">
-	<div class="row">
-		<div class="col-md-offset-1 col-md-10">
+<div class="container margin_top">
+	<div class="row-fluid">
+		<div class="col-md-12">
+			<h3>Garantías</h3>
+			<hr class="no_margin_top" />
 			<p>En SIGMA SYSTEMS colocamos a disposici&oacute;n de nuestros clientes, productos de alt&iacute;sima calidad respaldados ante
 			defectos de fabricaci&oacute;n, conforme a los siguientes lapsos y condiciones de garant&iacute;as:
 			</p>

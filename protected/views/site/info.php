@@ -1,6 +1,8 @@
 <div class="container margin_top" style="padding: 0 15px; margin-bottom: 15px;">
 	<div class="row">
 		<div class="col-md-offset-2 col-md-8">
+		<h3>Quienes Somos</h3>
+		<hr class="no_margin_top" />
 		<p>
 			Somos una <strong>empresa líder </strong> en el mercado de ventas de equipos de computación y tecnología al mayor y al detal en la región andina, con 5 sucursales en las Ciudades de San Cristóbal, Mérida y El Vigía prestando atención a todo el territorio nacional.
 		</p>
