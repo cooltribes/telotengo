@@ -31,7 +31,8 @@ class WishlistController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','listado','add','modalchoose','agregar','crearagregar','productos','eliminarproducto','eliminar','enviarbolsa'),
+				'actions'=>array('create','update','listado','add','modalchoose','agregar','crearagregar','productos','eliminarproducto',
+								'eliminar','enviarbolsa','cambiarnombre','cambiar'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -61,7 +62,7 @@ class WishlistController extends Controller
 	 */
 	public function actionCreate()
 	{
-		if($_GET['id'])
+		if(isset($_GET['id']))
 			$model=Wishlist::model()->findByPk($_GET['id']);
 		else
 			$model=new Wishlist;
@@ -348,17 +349,27 @@ class WishlistController extends Controller
 		$inventario = Inventario::model()->findByAttributes(array('producto_id'=>$wishlisthas->producto_id));
 
 		if(isset($bolsa)){ 
-			$ag = new BolsaHasInventario; 
-			$ag->bolsa_id = $bolsa->id;
-			$ag->inventario_id = $inventario->id; 
-			$ag->cantidad = 1;
+			// Cuando aún no se ha agregado a bolsa el producto
+			if(!$bolsa->isProductAlready($inventario->id)){
+				$ag = new BolsaHasInventario; 
+				$ag->bolsa_id = $bolsa->id;
+				$ag->inventario_id = $inventario->id; 
+				$ag->cantidad = 1;
 
-			if($ag->save()){
+				if($ag->save()){
+					Yii::app()->user->setFlash('success', 'Se ha agregado correctamente el producto a la bolsa.');
+				}else{
+					Yii::trace('Wishlist a Bolsa: Wishlisthas '.$wishlisthas->id.' Error al pasar :'.print_r($detalle->getErrors(),true), 'Wish a Bolsa');
+					Yii::app()->user->setFlash('error', 'Error al agregar.');
+				}	
+			}
+			else{ // ya estaba el producto, es solo sumarle uno a la cantidad
+				$bolsaHas = BolsaHasInventario::model()->findByAttributes(array('bolsa_id'=>$bolsa->id,'inventario_id'=>$inventario->id));
+				$cantidad = $bolsaHas->cantidad + 1;
+				$bolsaHas->saveAttributes(array('cantidad'=>$cantidad));
+
 				Yii::app()->user->setFlash('success', 'Se ha agregado correctamente el producto a la bolsa.');
-			}else{
-				Yii::trace('Wishlist a Bolsa: Wishlisthas '.$wishlisthas->id.' Error al pasar :'.print_r($detalle->getErrors(),true), 'Wish a Bolsa');
-				Yii::app()->user->setFlash('error', 'Error al agregar.');
-			}	
+			}			
 		} 
 		else{ // no tenia bolsa aún
 			$nueva = new Bolsa;
@@ -381,6 +392,37 @@ class WishlistController extends Controller
 
 		$wishlisthas->delete();
 		$this->redirect(array('bolsa/view'));
+	}
+	/*
+	Nombre explicito, renderiza el modal
+	*/
+	public function actionCambiarNombre(){
+		$this->renderPartial('cambiarnombre', array('id'=>$_POST['id'],true));
+		Yii::app()->session['wish_id'] = $_POST['id'];
+	}
+
+	/*
+	Action para cambiar el valor que llega del modal
+	*/
+	public function actionCambiar(){
+		$model = Wishlist::model()->findByPk(Yii::app()->session['wish_id']);
+
+		$this->performAjaxValidation($model);
+
+		if(isset($_POST['Wishlist']) && $_POST['Wishlist']['nombre']!="")
+		{
+			$model->attributes=$_POST['Wishlist'];
+			$model->fecha = date('Y-m-d');
+			
+			if($model->save())
+			{
+				Yii::app()->user->setFlash('success',"Lista de deseos actualizada correctamente.");
+			}
+		}else{
+			Yii::app()->user->setFlash('error',"Ingrese un nombre para la lista.");
+		}
+
+		$this->redirect(array('listado'));
 	}
 
 	/**

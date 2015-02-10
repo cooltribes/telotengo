@@ -833,35 +833,6 @@ $this->breadcrumbs=array(
         });
     });
 
-    /*function get_inventario(valor, id_caracteristica, id_producto){
-        console.log(valor+' - '+id_caracteristica);
-        var path = location.pathname.split('/');
-        $.ajax({
-              url: "<?php echo Yii::app()->createUrl('producto/loadInventario'); ?>",
-              type: "post",
-              data: { valor : valor, caracteristica_id : id_caracteristica, producto_id : id_producto },
-              dataType : 'json',
-              success: function(data){
-                    console.log(data);
-                    $('input[type=radio]').each(function(){
-                        $(this).parent().removeClass('active');
-                    });
-                    $('.precio').html('Bs. '+data.inventario.precio);
-                    $('.precio_tienda').html('Bs. '+data.inventario.precio_tienda);
-                    $('input[type=radio]').each(function(){
-                        //console.log($(this).val());
-                        for (var key in data.caracteristicas) {
-                            //console.log(key + ' - ' + data.caracteristicas[key].valor);
-                            if($(this).val() == data.caracteristicas[key].valor){
-                                $(this).parent().addClass('active');
-                                //console.log($(this).closest());
-                            }
-                        }
-                   });
-              },
-        });
-    }*/
-
 	/*
 	 * Funcion para agregar a un wishlist 
 	 */

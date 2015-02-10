@@ -149,17 +149,27 @@ class UserController extends Controller
 
 		// si el usuario tiene un carrito creado se agrega
 		if(isset($bolsa)){
-			$ag = new BolsaHasInventario; 
-			$ag->bolsa_id = $bolsa->id;
-			$ag->inventario_id = $inventario->id; 
-			$ag->cantidad = 1;
 
-			if($ag->save()){
+			if(!$bolsa->isProductAlready($inventario->id)){ // el producto no está en la bolsa
+				$ag = new BolsaHasInventario; 
+				$ag->bolsa_id = $bolsa->id;
+				$ag->inventario_id = $inventario->id;
+				$ag->cantidad = 1;
+
+				if($ag->save()){
+					Yii::app()->user->setFlash('success', 'Se ha agregado correctamente el producto a la bolsa.');
+				}else{
+					Yii::trace('Favorito a Bolsa: '.$wishlisthas->id.' Error al pasar :'.print_r($detalle->getErrors(),true), 'Fav a Bolsa');
+					Yii::app()->user->setFlash('error', 'Error al agregar.');
+				}	
+			}
+			else{ // ya estaba el producto, es solo sumarle uno a la cantidad
+				$bolsaHas = BolsaHasInventario::model()->findByAttributes(array('bolsa_id'=>$bolsa->id,'inventario_id'=>$inventario->id));
+				$cantidad = $bolsaHas->cantidad + 1;
+				$bolsaHas->saveAttributes(array('cantidad'=>$cantidad));
+
 				Yii::app()->user->setFlash('success', 'Se ha agregado correctamente el producto a la bolsa.');
-			}else{
-				Yii::trace('WFavorito a Bolsa: '.$wishlisthas->id.' Error al pasar :'.print_r($detalle->getErrors(),true), 'Fav a Bolsa');
-				Yii::app()->user->setFlash('error', 'Error al agregar.');
-			}	
+			}			
 		} 
 		else{ // no tenia carrito aún
 			$nueva = new Bolsa;

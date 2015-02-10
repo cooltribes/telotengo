@@ -5,9 +5,9 @@ $this->breadcrumbs=array(
 
 ?>
 <div class="container">
-	<h1>Mis listas de deseos.</h1>
-		
-		<hr/>
+	<h1>Mis listas de deseos</h1>
+
+		<hr class="no_margin_top" />
 
 		<?php if(Yii::app()->user->hasFlash('success')){?>
 		    <div class="alert in alert-block fade alert-success text_align_center">
@@ -61,4 +61,29 @@ $this->breadcrumbs=array(
 		));  
 		
 		?>
+
+	<?php
+		echo CHtml::hiddenField("id_wishlist",0);
+	?>
+
+    <div id="changeAvatar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;">
+    </div>	
+
 </div>
+
+<script type="text/javascript"> 
+	function activarModal(id){
+
+		$('#id_wishlist').val(id);
+
+		 $.ajax({ 
+                url: "<?php echo Yii::app()->createUrl('wishlist/cambiarnombre'); ?>",
+                type: "post",
+                data: { id: id},
+                success: function(data){
+                	$("#changeAvatar").html(data);
+                    $("#changeAvatar").modal();
+    			},
+            });
+	}
+</script>
