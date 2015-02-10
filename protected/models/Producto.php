@@ -297,9 +297,9 @@ class Producto extends CActiveRecord
 		return $dataProvider;
 	}
 	
-	public function getSuggestions($quantity){
+	public function getSuggestions($user_id,$quantity){
 	    
-	    return $this->findAll(array('limit'=>5,'offset'=>0,'order'=>'id DESC'));
+	    return $this->findAll(array('limit'=>$quantity,'offset'=>0,'order'=>'id DESC'));
 	}
 	
 }
