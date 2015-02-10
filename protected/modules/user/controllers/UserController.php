@@ -109,7 +109,7 @@ class UserController extends Controller
 		$provider = $redes->search();
 		
 		$dataProvider = $empresas->search();
-		$productos=Producto::model()->getSuggestions(5);
+		$productos=Producto::model()->getSuggestions($model->id,6); 
 		$this->render('tu_cuenta',array('model'=>$model,'dataProvider'=>$dataProvider,'provider'=>$provider,'productos'=>$productos));
 	}
 

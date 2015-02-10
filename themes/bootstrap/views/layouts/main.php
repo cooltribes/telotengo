@@ -352,23 +352,25 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
   <!-- HEADER OFF -->
 
 		<div id="page">
-            <div id="principal row-fluid" style="clear: top"> 
-			<?php if(isset($this->breadcrumbs)):?>
-				<?php $this->widget('bootstrap.widgets.TbBreadcrumbs', array(
-					'links'=>$this->breadcrumbs,
-                    'tagName'=>'ul',
-                    'separator'=>'',
-                    'homeLink' => CHtml::link('Inicio', Yii::app()->homeUrl),
-                    'activeLinkTemplate'=>'<li><a href="{url}">{label}</a> <span class="divider">/</span></li>',
-                    'inactiveLinkTemplate'=>'<li><span>{label}</span></li>',
-                    'htmlOptions'=>array ('class'=>'breadcrumb')
-            			)); ?><!-- breadcrumbs -->
-            		<?php endif?>
+            <div id="principal row-fluid" style="clear: top">
+                <div class="container"> 
+        			<?php if(isset($this->breadcrumbs)):?> 
+        				<?php $this->widget('bootstrap.widgets.TbBreadcrumbs', array(
+        					'links'=>$this->breadcrumbs,
+                            'tagName'=>'ul',
+                            'separator'=>'',
+                            'homeLink' => CHtml::link('Inicio', Yii::app()->homeUrl),
+                            'activeLinkTemplate'=>'<li><a href="{url}">{label}</a> <span class="divider">/</span></li>',
+                            'inactiveLinkTemplate'=>'<li><span>{label}</span></li>',
+                            'htmlOptions'=>array ('class'=>'breadcrumb bg_white no_padding_left')
+                    			)); ?><!-- breadcrumbs -->
+                    		<?php endif?>
+                 </div>   		
   
-			<?php echo $content; ?>
+			     <?php echo $content; ?>
            </div> 
            </div>
-			<div class="clear"></div>
+			<div class="clear"></div> 
           
           
           <div class="footer padding_bottom_small">
