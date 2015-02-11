@@ -18,7 +18,7 @@ $subtotal = 0;
 				    </div>
 				<?php } ?>
 				<?php if(Yii::app()->user->hasFlash('error')){?>
-				    <div class="alert in alert-block fade alert-error text_align_center">
+				    <div class="alert in alert-block fade alert-danger text_align_center">
 				        <?php echo Yii::app()->user->getFlash('error'); ?>
 				    </div>
 				<?php } ?>
@@ -101,6 +101,16 @@ $subtotal = 0;
 		                                	<td>'.$inventario->precio.' Bs.</td>';
 		                                }
 
+		                                ?>
+		                                <td>
+		                                	<input type="number" min="0" max="<?php echo $inventario->cantidad; ?>" step="1" value="<?php echo $uno->cantidad; ?>"
+		                                			name="cantidad" id="<?php echo $inventario->id; ?>" class="cant">
+		                                	<div>
+		                                        <a style="cursor: pointer" onclick="update(<?php echo $inventario->id.",".$uno->bolsa->id; ?>)">Actualizar</a>
+		                                    </div>
+		                                </td>
+		                                <?php	
+
 		                                echo '
 		                                <td>'.$uno->cantidad.'</td>
 		                                <td>
@@ -169,9 +179,19 @@ $subtotal = 0;
 <!-- CONTENIDO OFF -->
 
 <script>
+	
+	$(".cant").keypress(function(){
+		console.log("merwebo");
+		var a = parseInt($(this).val());
+		if(isNaN(a)){
+			$(this).val('');
+			event.preventDefault();
+			$(this).val('0');
+			
+		}
+	});
 
-	function eliminar(id)
-	{
+	function eliminar(id){
 	
 	// llamada ajax para el controlador de bolsa	   
      	$.ajax({
@@ -188,6 +208,22 @@ $subtotal = 0;
 	       	}//success
 	       })
 
+	}
+ 
+	function update(id,bolsa)
+	{
+		cantidad = $("#"+id).val();
+		
+	 	$.ajax({
+	        type: "post",
+	        url: "actualizar", // action de actualizar
+	        data: { 'id':id, 'cantidad': cantidad, 'bolsa':bolsa}, 
+	        success: function (data) {
+				if(data=="ok"){
+					window.location.reload()
+				}
+	       	}//success
+	    })
 	}
 	
 </script>
