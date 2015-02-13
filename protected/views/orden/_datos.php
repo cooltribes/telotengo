@@ -2,7 +2,6 @@
 	<?php
 		$hasInventario = OrdenHasInventario::model()->findByAttributes(array('orden_id'=>$data->id)); 
 		$usuario = User::model()->findByPk($data->users_id);
-		$empresa = Empresas::model()->findByPk($hasInventario->inventario->almacen->empresas_id); 
 	?>
 	 
 	<td><?php echo $data->id; ?></td>

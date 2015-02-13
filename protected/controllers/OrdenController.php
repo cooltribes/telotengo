@@ -229,7 +229,7 @@ class OrdenController extends Controller
         if($bandera==FALSE){
 			unset($_SESSION['searchPedido']);
         }
-
+ 
 		$this->render('admin',array(
 			'model'=>$model,
 			'dataProvider'=>$dataProvider,
