@@ -177,8 +177,7 @@ class BolsaController extends Controller
 		$bh->delete();
 		Yii::app()->user->setFlash('success', 'Se ha eliminado correctamente el producto de la bolsa');
 		echo 'ok';
-	}
-	
+	}	
 
 	/**
 	 * Creates a new model.
@@ -257,8 +256,38 @@ class BolsaController extends Controller
  * 
  * */
 	public function actionActualizar(){
-		 
-		if (isset($_POST['accion'])){
+		
+		$id = $_POST['id'];
+		$cantidad = $_POST['cantidad'];
+		$bolsa_id = $_POST['bolsa'];
+
+		if($cantidad == 0){ // eliminar
+			$bolsa = Bolsa::model()->findByPk($bolsa_id); 
+			$bolsahas = BolsaHasInventario::model()->findByAttributes(array('bolsa_id'=>$bolsa->id,'inventario_id'=>$id));
+				
+			$bolsahas->delete();
+				
+			Yii::app()->user->setFlash('success',"Producto eliminado.");
+		}else{ // mayor
+			$bolsa = Bolsa::model()->findByPk($_POST['bolsa']); 
+			$bolsahas = BolsaHasInventario::model()->findByAttributes(array('bolsa_id'=>$bolsa->id,'inventario_id'=>$id));
+			$inventario = Inventario::model()->findByPk($bolsahas->inventario_id);
+			
+			if($inventario->cantidad < $cantidad){ // cantidad mayor a Stock
+				Yii::app()->user->setFlash('error',"Lo sentimos, no es posible actualizar la cantidad. La Cantidad es mayor a la existencia en inventario.");	
+			}
+			else{
+				$bolsahas->cantidad = $cantidad;
+				$bolsahas->save();
+
+				Yii::app()->user->setFlash('success',"Cantidad actualizada exitosamente.");
+			}
+					
+		}
+
+		echo 'ok';
+		
+		/*if (isset($_POST['accion'])){
 			
 			$arr = explode("-",$_POST['accion']);
 			 
@@ -325,7 +354,7 @@ class BolsaController extends Controller
 			}
 				 
 		echo 'ala';	
-		}
+		}*/
 		
 	} // actualizar
 

@@ -1,5 +1,6 @@
 <?php
 $this->breadcrumbs=array(
+	'Listas de deseo' => array('listado'),
 	'Productos en la lista',
 );
 
