@@ -106,13 +106,12 @@ $subtotal = 0;
 		                                	<input type="number" min="0" max="<?php echo $inventario->cantidad; ?>" step="1" value="<?php echo $uno->cantidad; ?>"
 		                                			name="cantidad" id="<?php echo $inventario->id; ?>" class="cant">
 		                                	<div>
-		                                        <a style="cursor: pointer" onclick="update(<?php echo $inventario->id.",".$uno->bolsa->id; ?>)">Actualizar</a>
+		                                        <a style="cursor: pointer" onclick="update(<?php echo $inventario->id.",".$uno->bolsa->id; ?>)"><small>Actualizar</small></a>
 		                                    </div>
 		                                </td>
 		                                <?php	
 
 		                                echo '
-		                                <td>'.$uno->cantidad.'</td>
 		                                <td>
 		                                	<div>
 		                                        <a style="cursor: pointer" onclick="eliminar('.$inventario->id.')" >Eliminar</a>
