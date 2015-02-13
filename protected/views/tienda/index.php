@@ -12,7 +12,7 @@ $categorias = Categoria::model()->findAll();
 $marcas = Marca::model()->findAll();
 
 ?>
-        <section class="col-md-2" role="main">
+        <section class="col-md-2 no_padding_left" role="main">
 
             <h3 class="no_margin_bottom">Categorías</h3><hr class="no_margin_top"/> 
             <div>
@@ -22,7 +22,7 @@ $marcas = Marca::model()->findAll();
           <?php        $categorias = Categoria::model()->findAllByAttributes(array('id_padre'=>0));
                         foreach ($categorias as $categoria) {
                             ?>
-                            <?php echo '<li class="categorias-listado padre" id="'.$categoria->id.'"><a href="#"><strong>'.$categoria->nombre.'</strong></a>'; ?>
+                            <?php echo '<li class="categorias-listado padre" id="'.$categoria->id.'"><a href="#">'.$categoria->nombre.'</a>'; ?>
                                 <?php
                                 $hijos = Categoria::model()->findAllByAttributes(array('id_padre'=>$categoria->id));
                                 if(sizeof($hijos) > 0){
@@ -172,7 +172,7 @@ $marcas = Marca::model()->findAll();
 	
 	?>
 
-        <div class="col-md-10">
+        <div class="col-md-10 no_padding">
             <section class="row-fluid">
 			<!-- PRODUCTOS ON -->
 		    <?php

@@ -89,7 +89,7 @@ $('.carousel').carousel('cycle');
     	                		$principal = Imagenes::model()->findByAttributes(array('orden'=>1,'producto_id'=>$producto->id)); ?>
     							<div class="productImage">
     					<?php	if($principal->getUrl())
-    								$im = CHtml::image(str_replace(".","_thumb.",$principal->getUrl()), "Imagen ", array("width"=>"100%","style"=>"max-height:240px; overflow-y:hidden"));
+    								$im = CHtml::image(str_replace(".","_thumb.",$principal->getUrl()), "Imagen ", array("width"=>"100%","style"=>"max-height:240px; overflow-y:hidden,max-width:240px; overflow-x:hidden"));
     							else 
     								echo '<img src="http://placehold.it/300x240" width="100%">';
     							 
