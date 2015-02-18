@@ -7,8 +7,20 @@
 	?>
 	<div class="row-fluid">
     	<!-- COLUMNA PRINCIPAL DERECHA ON // OJO: esta de primera para mejorar el SEO sin embargo por CSS se ubica visualmente a la derecha -->
+		<h1 class="col-md-10">Administrar Productos</h1>
+        <div class="col-md-2 margin_top_medium">
+                <?php
+         echo CHtml::link('Crear Producto', $this->createUrl('create'), array('class'=>'btn form-control btn-success', 'role'=>'button'));
+                ?>
+        </div>
+    </div>
+    
+    <div class="row-fluid">
+            <hr class="no_margin_top"/>
+		
+		
 		<div>
-			<h1>Administrar Productos</h1>
+			
 
 			<?php if(Yii::app()->user->hasFlash('success')){?>
 			    <div class="alert in alert-block fade alert-success text_align_center">
@@ -20,17 +32,19 @@
 			        <?php echo Yii::app()->user->getFlash('error'); ?>
 			    </div>
 			<?php } ?>
-			<hr />
-		
+
 		<div class="row-fluid margin_top">
-	        <div class="col-md-4">
-	            <form class="no_margin_bottom form-search">
-	            	<div class="input-prepend"><span class="add-on"><i class="icon-search"></i></span>
-	            		<input class="col-md-9" id="query" name="query" type="text" placeholder="Buscar">
-	                	<a href="#" class="btn btn-sm btn-danger margin_left_small" id="btn_search_event">Buscar</a>
-	           		</div>         
-           		</form>
-	        </div>
+	         <form class="no_margin_bottom form-search row-fluid">
+                         <div class="col-md-3 col-md-offset-8 no_padding_right">
+                             <input class="form-control no_radius_right" id="query" name="query" type="text" placeholder="Escribe tu criterio de búsqueda">                   
+                         </div>
+                         <div class="col-md-1 no_padding_left">
+                             <a href="#" class="btn form-control btn-sigmablue no_radius_left" id="btn_search_event">Buscar</a>
+                         </div>
+                                
+             </form>
+	        
+	       
 
 		<?php
 		Yii::app()->clientScript->registerScript('query1',
@@ -83,14 +97,10 @@
 		);	
 		?>
 		
-	        <div class="pull-right">
-	        <?php
-	        	echo CHtml::link('Crear Producto', $this->createUrl('create'), array('class'=>'btn btn-success', 'role'=>'button'));
-	        ?>
-			</div>
+	     
 			
 	    </div>
-	    <hr/>
+
 	    
 		<?php
 		$template = '{summary}
@@ -115,6 +125,7 @@
 		    'itemView'=>'_prod',
 		    'template'=>$template,
 		    'enableSorting'=>'true',
+		     'summaryCssClass'=>'pull-left',
 		    'afterAjaxUpdate'=>" function(id, data) {
 							   
 								} ",

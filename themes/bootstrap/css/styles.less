@@ -161,6 +161,43 @@ body{
 
 .no_resize{ resize:none;}
 
+.no_radius_top{
+  -webkit-border-top-left-radius:0 !important;
+  -moz-border-top-left-radius:0 !important;
+  border-top-left-radius:0 !important;
+  -webkit-border-top-right-radius:0 !important;
+  -moz-border-top-right-radius:0 !important;
+  border-top-right-radius:0 !important;
+}
+
+.no_radius_bottom{
+  -webkit-border-bottom-left-radius:0 !important;
+  -moz-border-bottom-left-radius:0 !important;
+  border-bottom-left-radius:0 !important; 
+  -webkit-border-bottom-right-radius:0 !important;
+  -moz-border-bottom-right-radius:0 !important;
+  border-bottom-right-radius:0 !important;
+}
+
+.no_radius_right{
+  -webkit-border-bottom-right-radius:0 !important;
+  -moz-border-bottom-right-radius:0 !important;
+  border-bottom-right-radius:0 !important;
+  -webkit-border-top-right-radius:0 !important;
+  -moz-border-top-right-radius:0 !important;
+  border-top-right-radius:0 !important;
+}
+
+.no_radius_left{
+  -webkit-border-bottom-left-radius:0 !important;
+  -moz-border-bottom-left-radius:0 !important;
+  border-bottom-left-radius:0 !important;
+  -webkit-border-top-left-radius:0 !important;
+  -moz-border-top-left-radius:0 !important;
+  border-top-left-radius:0 !important;
+}
+
+
 /* Textos */
 .text_align_left {
   text-align: left;
@@ -206,6 +243,25 @@ body{
   .border_radius(@radius:4px);
 }
 
+.btn-sigmablue{
+  color: #ffffff ;
+  background-color: #0071b9;
+  border: 0px ;
+}
+
+.btn-sigmablue:hover{
+
+  background-color: #2a9bda;
+  color:#FFF;
+
+}
+
+.btn-sigmablue:visited{
+
+  background-color: #2a9bda;
+  color:#DDD;
+
+}
 .btn-warning {
     background-color: @yellow;
     border-color: darken(@yellow, 20%);
@@ -465,11 +521,11 @@ body{
         #busqueda{ 
             width: 100%;
             list-style: none;
-            height: 2.8em;            
+            //height: 2.8em;            
         }        
         .menu, .menu>ul, .menu>ul>li{
             background: #ec1f24;
-        }
+        } 
         
         ul.dropdown ul li{
             background-color: #FFF;
@@ -668,12 +724,16 @@ ul.dropdown a:link, ul.dropdown a:visited{
   overflow-y:scroll;
 }
 #changeAvatar{
+  
+}
+#wishlistName{
   width:40%;
   margin:auto;
   background:#FFF;
   height:auto;
-  max-height: 500px;
-  overflow-y:scroll;
+  max-height: 290px;
+  overflow-y:auto;
+  
 }
 #saldoCarga{
   width:40%;
@@ -781,11 +841,11 @@ body,html{
   min-height: 100%;
   #principal {
     overflow-y:auto;
-    overflow-x:hidden;
+
     padding-bottom:150px; /* this needs to be bigger than footer height*/
     #content{
       .container{
-        padding: 0px !important;
+      
 
       }
     }

@@ -10,12 +10,13 @@ $this->breadcrumbs=array(
 
 <div class="container">
 <div class="row-fluid ">
-    <h1 class="col-md-10">Administrar Ventas Flash</h1>
-    <div class="col-md-2 margin_top_medium">
-            <?php
-     echo CHtml::link('Nueva Venta Flash', $this->createUrl('seleccion'), array('class'=>'btn form-control btn-success', 'role'=>'button'));
-            ?>
-    </div></div>
+        <h1 class="col-md-10">Administrar Ventas Flash</h1>
+        <div class="col-md-2 margin_top_medium">
+                <?php
+         echo CHtml::link('Nueva Venta Flash', $this->createUrl('seleccion'), array('class'=>'btn form-control btn-success', 'role'=>'button'));
+                ?>
+        </div>
+</div>
 	<hr class="no_margin_top"/>
 
 		<?php if(Yii::app()->user->hasFlash('success')){?>

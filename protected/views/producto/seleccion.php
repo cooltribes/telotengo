@@ -25,8 +25,8 @@
     		<h1> Editar Inventario </h1>
         	
         
-            	<div class="row-fluid well">
-             
+            	<div class="row-fluid well bg_white">
+              
 			
 					<?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
 						'id'=>'busqueda-form',
@@ -35,16 +35,16 @@
 					)); ?>
 				
 					
-						<div class="col-md-10">
-							<?php echo CHtml::textField("busqueda",'', array('class'=>'form-control','placeholder'=>'Busca el producto que deseas modificar')); ?>
-						</div>
-					
-						<div class="col-md-2">
+						<div class="col-md-10 no_padding_right">
+							<?php echo CHtml::textField("busqueda",'', array('class'=>'form-control no_radius_right no_padding_right','placeholder'=>'Busca el producto que deseas modificar')); ?>
+						</div> 
+					  
+						<div class="col-md-2 no_padding_left">
 						<?php $this->widget('bootstrap.widgets.TbButton', array(
 							'buttonType'=>'submit',
 					
 							'label'=>'Buscar',
-							'htmlOptions' => array('class'=>'btn-danger form-control'),
+							'htmlOptions' => array('class'=>'btn btn-sigmablue form-control no_radius_left'),
 						)); ?>
 					   </div>	
 		

@@ -15,11 +15,11 @@ $marcas = Marca::model()->findAll();
 ?> 
 
     <div class="row-fluid"> 
-    <h1><?php echo $model->nombre;?> <small>en Sigmatiendas</small></h1>
+    <h1><?php echo $model->nombre;?> <small>en Sigmatiendas</small></h1> <hr class="no_margin_top"/>
         
         <!-- PRODUCTOS ON -->
         <div class="col-md-12">
-            <section class="row">
+            <section>
 
     <?php
     $template = '

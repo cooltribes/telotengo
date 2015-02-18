@@ -4,15 +4,16 @@
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
 <link rel="icon" href="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/favicon75.png" type="image/x-icon">
 <link rel="shortcut icon" href="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/favicon75.png" type="image/x-icon">
-<?php  Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/styles.css',null); ?>
-        <?php  Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/styles.css',null); ?>
+<?php  //Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/styles.css',null); ?>
+
 
 <?php
 Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_menu/css/helper.css');
 Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_menu/css/dropdown/dropdown.vertical.css');
 Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_menu/css/dropdown/themes/default/default.css');
 ?>
-
+<?php Yii::app()->bootstrap->register(); ?>
+<?php  Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/styles.css',null); ?>
 	<head>
 		
 		<meta charset="utf-8">
@@ -47,7 +48,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
 		
 		<?php //Yii::app()->less->files = array('less/styles.less'=>'css/syles.css');
 				//Yii::app()->less->register(); ?>
-		<?php Yii::app()->bootstrap->register(); ?>
+	
 		
 	</head>
 
@@ -247,14 +248,14 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                 }
                 else { 
                 ?> 
-                                <li class="button">
-                                    <a href="<?php echo Yii::app()->baseUrl; ?>/site/index">                           
+                                 <!--  <li class="button">
+                                 <a href="<?php // echo Yii::app()->baseUrl; ?>/site/index">                           
                                         <div class="white" >
                                             <span class="glyphicon glyphicon-user glyphiconLarge"></span><br/>
                                             Tu cuenta
                                         </div> 
                                     </a>
-                                </li>
+                                </li>-->
                                 <li class="button"> 
                                     <a href="<?php echo Yii::app()->baseUrl; ?>/user/login">
                                         <div class="white" >
@@ -292,7 +293,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                     <ul class="dropdown categoriesMenu" style="display: table; width:100%;">
                       
                             <li class="dir" id="homeButton">
-                                  <a href="<?php echo  Yii::app()->baseUrl; ?>"><span class="glyphicon glyphicon-home glyphiconLarge"></span></a>
+                                  <a href="<?php echo  Yii::app()->baseUrl; ?>"><span class="margin_top_xsmall glyphicon glyphicon-home glyphiconLarge"></span></a>
                             </li>
                         
                  
@@ -300,7 +301,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                         $categorias = Categoria::model()->findAllByAttributes(array('id_padre'=>0));
                         foreach ($categorias as $categoria) {
                             ?>
-                            <li class="dir"><?php echo $categoria->nombre; ?>
+                            <li class="dir" onclick="window.location.href = '<?php echo Yii::app()->baseUrl.'/categorias'.'/'.$categoria->url_amigable; ?>';"><?php echo $categoria->nombre; ?>
                                 <?php
                                 $hijos = Categoria::model()->findAllByAttributes(array('id_padre'=>$categoria->id));
                                 if(sizeof($hijos) > 0){
@@ -352,7 +353,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
   <!-- HEADER OFF -->
 
 		<div id="page">
-            <div id="principal row-fluid" style="clear: top">
+            <div id="principal" style="clear: top">
                 <div class="container"> 
         			<?php if(isset($this->breadcrumbs)):?> 
         				<?php $this->widget('bootstrap.widgets.TbBreadcrumbs', array(
@@ -366,8 +367,9 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                     			)); ?><!-- breadcrumbs -->
                     		<?php endif?>
                  </div>   		
-  
+
 			     <?php echo $content; ?>
+			    
            </div> 
            </div>
 			<div class="clear"></div> 

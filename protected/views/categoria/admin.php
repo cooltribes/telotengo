@@ -17,8 +17,16 @@ $('.search-form form').submit(function(){
 ");
 ?> 
 <div class="container">
-	<h1>Administrar Categorias</h1>
-	<hr/>
+    <div class="row-fluid">
+    <h1 class="col-md-10">Administrar Categorías</h1>
+        <div class="col-md-2 margin_top_medium">
+                <?php
+         echo CHtml::link('Crear Categoría', $this->createUrl('create'), array('class'=>'btn form-control btn-success', 'role'=>'button'));
+                ?>
+        </div></div>
+    
+    <hr class="no_margin_top"/>
+
 
 		<?php if(Yii::app()->user->hasFlash('success')){?>
 		    <div class="alert in alert-block fade alert-success text_align_center">
@@ -30,25 +38,19 @@ $('.search-form form').submit(function(){
 		        <?php echo Yii::app()->user->getFlash('error'); ?>
 		    </div>
 		<?php } ?>
-
-	    <div class="row margin_top margin_bottom ">
-	        <div class="span4">
-	            <form class="no_margin_bottom form-search">
-	            	<div class="input-prepend"> <span class="add-on"><i class="icon-search"></i></span>
-	            		<input class="span3" id="query" name="query" type="text" placeholder="Buscar">
-	                	<a href="#" class="btn" id="btn_search_event">Buscar</a>
-	           		</div>         
-	           	</form>
-	        </div>
-	        
-	        <div class="pull-right">
-	        <?php
-	        	echo CHtml::link('Crear Categoría', $this->createUrl('create'), array('class'=>'btn btn-success', 'role'=>'button'));
-	        ?>
-			</div>
-			
-	    </div>
-	    <hr/>
+        
+        <form class="no_margin_bottom form-search row-fluid">
+                         <div class="col-md-3 col-md-offset-8 no_padding_right">
+                             <input class="form-control no_radius_right" id="query" name="query" type="text" placeholder="Escribe tu criterio de búsqueda">                   
+                         </div>
+                         <div class="col-md-1 no_padding_left">
+                             <a href="#" class="btn form-control btn-sigmablue no_radius_left" id="btn_search_event">Buscar</a>
+                         </div>
+                                
+        </form>
+        
+        
+	 
 	    
 	    <?php
 	$template = '{summary}
@@ -70,6 +72,7 @@ $('.search-form form').submit(function(){
 		    'dataProvider'=>$dataProvider,
 		    'itemView'=>'_datos',
 		    'template'=>$template,
+		              'summaryCssClass'=>'pull-left',
 		    'enableSorting'=>'true',
 		    'afterAjaxUpdate'=>" function(id, data) {
 							   

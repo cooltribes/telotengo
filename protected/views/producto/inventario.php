@@ -1,9 +1,14 @@
+<?php 
+$this->breadcrumbs=array(
+        'Productos'=>array('admin'),
+        'Inventario',
+    );?>
 <div class="container">
 	<div class="row-fluid">
 		<!-- COLUMNA PRINCIPAL DERECHA ON // OJO: esta de primera para mejorar el SEO sin embargo por CSS se ubica visualmente a la derecha -->
-		<div>
+		<div class="margin_top_large">
 			<h2>Inventario para : <small><?php echo $producto->nombre; ?></small></h2>
-			<hr />
+			<hr class="no_margin_top" />
 			<?php if(Yii::app()->user->hasFlash('success')){?>
 			    <div class="alert in alert-block fade alert-success text_align_center">
 			        <?php echo Yii::app()->user->getFlash('success'); ?>
