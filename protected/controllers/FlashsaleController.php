@@ -94,8 +94,11 @@ class FlashsaleController extends Controller
 		if(isset($_POST['Flashsale'])) 
 		{
 			$model->attributes=$_POST['Flashsale'];
-			
-			$flashsales = Flashsale::model()->findAllByAttributes(array('inventario_id'=>$model->inventario_id,'estado'=>1)); // del inventario y activa
+
+			$model->fecha_inicio = date('Y-m-d',strtotime($_POST['Flashsale']['fecha_inicio']));
+			$model->fecha_fin = date('Y-m-d',strtotime($_POST['Flashsale']['fecha_fin']));
+
+			$flashsales = Flashsale::model()->findByAttributes(array('inventario_id'=>$model->inventario_id,'estado'=>1)); // del inventario y activa
 			
 			if(!count($flashsales)>0){
 				if($model->save()){
@@ -104,8 +107,15 @@ class FlashsaleController extends Controller
 				}
 			}
 			else {
-				Yii::app()->user->setFlash('error',"No puede crear una venta flash a un producto que ya tiene una venta activa.");
-				$this->redirect(array('admin'));
+				if($flashsales->id != $model->id){
+					Yii::app()->user->setFlash('error',"No puede crear una venta flash a un producto que ya tiene una venta activa.");
+					$this->redirect(array('admin'));
+				}else{ // se está editando
+					if($model->save()){
+						Yii::app()->user->setFlash('success',"Flashsale editado correctamente.");
+						$this->redirect(array('admin'));
+					}
+				}
 			}
 		} 
 

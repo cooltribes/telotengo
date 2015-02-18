@@ -7,10 +7,6 @@
 	<div class="row-fluid">
 		<div class=" col-md-5">
 
-
-	
-	
-
 	<div class="prodFlash">
 		<?php 
 
@@ -64,6 +60,7 @@
                           
                                     'model'=>$model,
                                     'name'=>'Flashsale[fecha_inicio]',
+                                    'value'=>date("d/m/Y",strtotime($model->fecha_inicio)),
                                     // additional javascript options for the date picker plugin
                                     'options'=>array(
                                         'showAnim'=>'fold',
@@ -87,6 +84,7 @@
                                    
                                     'model'=>$model,
                                     'name'=>'Flashsale[fecha_fin]',
+                                    'value'=>date("d/m/Y",strtotime($model->fecha_fin)),
                                     // additional javascript options for the date picker plugin
                                     'options'=>array(
                                         'showAnim'=>'fold',

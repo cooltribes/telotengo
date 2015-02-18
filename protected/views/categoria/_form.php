@@ -60,7 +60,7 @@
 		<?php 
 			if($model->imagen_url != ""):?>
 				<div class="col-md-6 col-md-offset-3 margin_top_small">
-			<?php 	echo CHtml::image(Yii::app()->request->baseUrl.'/images/categoria/'.$model->id.'_thumb.jpg',"image"); ?>
+			<?php 	echo CHtml::image(Yii::app()->request->baseUrl.'/images/categoria/'.str_replace(".png","",$model->imagen_url).'_thumb.jpg',"image"); ?>
 		
 	</div>
 	   <?php endif; ?>
