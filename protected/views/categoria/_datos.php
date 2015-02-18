@@ -4,12 +4,10 @@ $ima ='';
 
 echo"<tr>";
 
-	$ima = CHtml::image(Yii::app()->baseUrl.'/images/categoria/'.$data->id.'_thumb.jpg', $data->nombre);
+	$ima = CHtml::image(Yii::app()->baseUrl.'/images/categoria/'.str_replace(".png","",$data->imagen_url).'_thumb.jpg', $data->nombre);
 
-	if (is_file($ima))
+	if ($ima)
    		echo "<td>".$ima."</td>";
-   	else 
-		echo '<td><img src="http://placehold.it/100" align="Nombre de la categoria"/> </td>';
    	
    	echo "<td>".$data->nombre."</td>";
 	echo "<td>".$data->url_amigable."</td>";
@@ -27,8 +25,8 @@ echo"<tr>";
 	</a> 
 	
 		<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-			<li><a tabindex="-1" href="'.Yii::app()->createUrl('/categoria/create',array('id'=>$data->id)).'" ><i class="icon-cog"></i> Editar </a></li>
-			<li><a tabindex="-1" href="'.Yii::app()->createUrl('/categoria/delete',array('id'=>$data->id)).'" ><i class="icon-trash"></i> Eliminar </a></li>
+			<li><a tabindex="-1" href="'.Yii::app()->createUrl('/categoria/create',array('id'=>$data->id)).'" ><i class="glyphicon glyphicon-cog"></i> Editar </a></li>
+			<li><a tabindex="-1" href="'.Yii::app()->createUrl('/categoria/delete',array('id'=>$data->id)).'" ><i class="glyphicon glyphicon-trash"></i> Eliminar </a></li>
 		</ul>
         </div></td>
         

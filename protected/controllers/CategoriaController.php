@@ -97,25 +97,25 @@ class CategoriaController extends Controller
 				
 				$categoria->save();
 		        
-		        $nombre = Yii::getPathOfAlias('webroot').'/images/categoria/'.$categoria->id;
+		        $nombre = Yii::getPathOfAlias('webroot').'/images/categoria/'.$images->name;
 		        $extension_ori = ".jpg";
 				$extension = '.'.$images->extensionName;
 		       
-		       	if ($images->saveAs($nombre . $extension)) {
+		       	if ($images->saveAs($nombre)) {
 		
-		       		$categoria->imagen_url = $categoria->id .$extension;
+		       		$categoria->imagen_url = $images->name;
 		            $categoria->save();
 									
 					Yii::app()->user->setFlash('success',"Categoria guardada exitosamente.");
 
-					$image = Yii::app()->image->load($nombre.$extension);
+					$image = Yii::app()->image->load($nombre);
 					$image->resize(150, 150);
-					$image->save($nombre.'_thumb'.$extension);
+					$image->save(str_replace(".png","",$nombre).'_thumb'.$extension);
 					
 					if($extension == '.png'){
-						$image = Yii::app()->image->load($nombre.$extension);
+						$image = Yii::app()->image->load($nombre);
 						$image->resize(150, 150);
-						$image->save($nombre.'_thumb.jpg');
+						$image->save(str_replace(".png","",$nombre).'_thumb.jpg');
 					}	
 					
 				}
@@ -322,6 +322,7 @@ class CategoriaController extends Controller
 		if(isset($_GET['alias'])){
 			$categoria = Categoria::model()->findByAttributes(array('url_amigable'=>$_GET['alias']));
 			Yii::app()->session['categoria'] = $categoria->id;
+			$id_padre = $categoria->id_padre;
 		}
 		
 		if(isset($_GET['ajax'])){
@@ -339,13 +340,23 @@ class CategoriaController extends Controller
 		    ),
 		));
 
-		$this->render('storefront',
-			array(
-				'model'=>$categoria,
-				'dataProvider'=>$dataProvider,
-			)
-		);	
-		
+		if($id_padre != 0){ // es subcategoria
+			$this->render('storefront',
+				array(
+					'model'=>$categoria,
+					'dataProvider'=>$dataProvider,
+				)
+			);	
+		}
+		else{ // categoria principal
+			$this->render('subcategorias',
+				array(
+					'model'=>$categoria,
+					'dataProvider'=>$dataProvider,
+					'categoria' => $categoria->id,
+				)
+			);	
+		}
 	}	
 	
 	
