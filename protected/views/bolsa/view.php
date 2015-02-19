@@ -1,5 +1,5 @@
   <!-- CONTENIDO ON -->
-<div class="container-fluid" style="padding: 0 15px;">
+<div class="container" style="padding: 0 15px;">
 
 <?php
 $this->breadcrumbs=array( 
@@ -8,8 +8,8 @@ $this->breadcrumbs=array(
 
 $subtotal = 0; 
 ?> 
-        <div class="row">
-            <div class="col-md-8 col-md-push-2 " >
+        <div class="row-fluid">
+            <div class="col-md-12" >
                 <div><h1>Bolsa</h1></div>
 
         		<?php if(Yii::app()->user->hasFlash('success')){?>
@@ -41,7 +41,7 @@ $subtotal = 0;
                             <th></th>
                             <th>Nombre del producto</th>
                             <th>Precio</th>
-                            <th>Cantidad</th>
+                            <th class="text-center">Cantidad</th>
                             <th></th>
                           </tr>
                         </thead>
@@ -102,9 +102,9 @@ $subtotal = 0;
 		                                }
 
 		                                ?>
-		                                <td>
+		                                <td align="center">
 		                                	<input type="number" min="0" max="<?php echo $inventario->cantidad; ?>" step="1" value="<?php echo $uno->cantidad; ?>"
-		                                			name="cantidad" id="<?php echo $inventario->id; ?>" class="cant">
+		                                			name="cantidad" id="<?php echo $inventario->id; ?>" class="cant text-center">
 		                                	<div>
 		                                        <a style="cursor: pointer" onclick="update(<?php echo $inventario->id.",".$uno->bolsa->id; ?>)"><small>Actualizar</small></a>
 		                                    </div>
@@ -174,7 +174,7 @@ $subtotal = 0;
         </div>
         <!-- COLUMNA PRINCIPAL DERECHA OFF // -->
 
-    </div>
+
 <!-- CONTENIDO OFF -->
 
 <script>

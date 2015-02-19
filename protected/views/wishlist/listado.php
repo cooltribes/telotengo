@@ -5,7 +5,15 @@ $this->breadcrumbs=array(
 
 ?>
 <div class="container">
-	<h1>Mis listas de deseos</h1>
+    <div class="row-fluid">
+        <h1 class="col-md-10">Mis listas de deseos</h1>
+        <div class="col-md-2 margin_top_medium">
+            <?php
+                echo CHtml::link('<i class="glyphicon glyphicon-plus"></i> Nueva lista', $this->createUrl('create'), array('class'=>'btn btn-success', 'role'=>'button'));
+            ?>
+        </div>
+    </div>
+	
 
 		<hr class="no_margin_top" />
 
@@ -20,15 +28,7 @@ $this->breadcrumbs=array(
 		    </div>
 		<?php } ?>
 
-	    <div class="row margin_top margin_bottom ">	        
-	        <div class="pull-right">
-	        <?php
-	        	echo CHtml::link('Agregar lista de deseos', $this->createUrl('create'), array('class'=>'btn btn-success', 'role'=>'button'));
-	        ?>
-			</div>
-	    </div>
-	    <hr/>
-	
+	  
 	<?php
 	$template = '{summary}
 	    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-bordered table-hover table-striped">
@@ -66,7 +66,7 @@ $this->breadcrumbs=array(
 		echo CHtml::hiddenField("id_wishlist",0);
 	?>
 
-    <div id="changeAvatar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;">
+    <div id="wishlistName" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;">
     </div>	
 
 </div>
@@ -81,8 +81,8 @@ $this->breadcrumbs=array(
                 type: "post",
                 data: { id: id},
                 success: function(data){
-                	$("#changeAvatar").html(data);
-                    $("#changeAvatar").modal();
+                	$("#wishlistName").html(data);
+                    $("#wishlistName").modal();
     			},
             });
 	}

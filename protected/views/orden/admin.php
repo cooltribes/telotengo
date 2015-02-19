@@ -7,8 +7,13 @@ $this->breadcrumbs=array(
 ?>
 
 <div class="container">
-	<h1>Administrar Pedidos</h1>
-	<hr/>
+	<div class="row-fluid">
+    <h1 class="col-md-10">Administrar Pedidos</h1>
+        <div class="col-md-2 margin_top_medium">
+               
+        </div></div>
+    
+    <hr class="no_margin_top"/>
 
 		<?php if(Yii::app()->user->hasFlash('success')){?>
 		    <div class="alert in alert-block fade alert-success text_align_center">
@@ -21,25 +26,21 @@ $this->breadcrumbs=array(
 		    </div>
 		<?php } ?>
 
-	   <div class="row-fluid margin_top">
-            <div class="col-md-6">
-                <div class="row-fluid">
-                <form class="no_margin_bottom form-search">
-                    <div class="input-prepend"> <span class="add-on"><i class="icon-search"></i></span>
-                       <div class="col-md-8">
-                           <input class="form-control" id="query" name="query" type="text" placeholder="Buscar por ID">
-                       </div>
-                        
-                        <a href="#" class="btn btn-danger col-md-3" id="btn_search_event">Buscar</a>
-                    </div>         
-                </form>
-                </div>
-            </div>
-            
-        </div>
+	   <form class="no_margin_bottom form-search row-fluid">
+                         <div class="col-md-3 col-md-offset-8 no_padding_right">
+                             <input class="form-control no_radius_right" id="query" name="query" type="text" placeholder="Buscar por ID">                   
+                         </div>
+                         <div class="col-md-1 no_padding_left">
+                             <a href="#" class="btn form-control btn-sigmablue no_radius_left" id="btn_search_event">Buscar</a>
+                         </div>
+                                
+        </form>
+	   
+	   
+	   
 			
 
-	    <hr/>
+
 	    
 	    <?php
 		Yii::app()->clientScript->registerScript('query1',
@@ -115,6 +116,7 @@ $this->breadcrumbs=array(
 		    'dataProvider'=>$dataProvider,
 		    'itemView'=>'_datos',
 		    'template'=>$template,
+		    'summaryCssClass'=>'pull-left',
 		    'enableSorting'=>'true',
 			'pager'=>array(
 				'header'=>'',

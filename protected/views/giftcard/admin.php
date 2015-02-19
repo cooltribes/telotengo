@@ -10,8 +10,20 @@ $this->breadcrumbs=array(
 ?>
 
 <div class="container">
-	<h1>Administrar Gift Cards</h1>
-	<hr/>
+
+	
+	<div class="row-fluid">
+    <h1 class="col-md-10">Administrar Gift Cards</h1>
+        <div class="col-md-2 margin_top_medium">
+                <?php
+         echo CHtml::link('Generar Gift Card', $this->createUrl('create'), array('class'=>'btn form-control btn-success', 'role'=>'button'));
+                ?>
+        </div></div>
+    
+    <hr class="no_margin_top"/>
+	
+	
+	
 
 		<?php if(Yii::app()->user->hasFlash('success')){?>
 		    <div class="alert in alert-block fade alert-success text_align_center"> 
@@ -24,13 +36,7 @@ $this->breadcrumbs=array(
 		    </div>
 		<?php } ?>
 
-			<div class="pull-right">
-	        <?php
-	        	echo CHtml::link('Generar Gift Card', $this->createUrl('create'), array('class'=>'btn btn-success', 'role'=>'button'));
-	        ?>
-			</div>
-
-	    <hr/>
+		
 	    
 	    <?php
 	$template = '{summary}

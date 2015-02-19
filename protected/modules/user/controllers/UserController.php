@@ -105,7 +105,7 @@ class UserController extends Controller
 		
 		$redes = new Redes;
 		$redes->users_id = $model->id;
-		
+		 
 		$provider = $redes->search();
 		
 		$dataProvider = $empresas->search();

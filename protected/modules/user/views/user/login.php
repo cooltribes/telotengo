@@ -5,12 +5,22 @@
 			UserModule::t("Login"),
 		);
 	?>
-	<div class="row">
-		<div class="col-md-offset-3 col-md-6">
-			<h1><?php echo UserModule::t("Login"); ?></h1>
+	<div class="row-fluid">
+		
+		<h1 class="col-md-10"><?php echo UserModule::t("Login"); ?></h1>
+        <div class="col-md-2 margin_top_medium">
+                <?php
+         echo CHtml::link("Crear cuenta",Yii::app()->getModule('user')->registrationUrl, array('class'=>'btn form-control btn-success', 'role'=>'button'));
+                ?>
+        </div></div>
+		<hr class="no_margin_top"/>
+		<div class="col-md-offset-3 col-md-6 margin_top">
+			
 
 			<section>
+      
         	<p><?php echo 'Por favor complete el formulario con los datos de su cuenta'; ?></p>
+        	
         		<?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 					'id'=>'login-form',
 					'htmlOptions'=>array('class'=>''),
@@ -40,7 +50,7 @@
 
     				<div class="help-block">
 						<p class="hint">
-						<?php echo CHtml::link("Registro",Yii::app()->getModule('user')->registrationUrl); ?> | <?php echo CHtml::link("Olvidé mi contraseña",Yii::app()->getModule('user')->recoveryUrl); ?>
+						<?php echo CHtml::link("Recuperar contraseña",Yii::app()->getModule('user')->recoveryUrl); ?>
 						</p>
 					</div>
 

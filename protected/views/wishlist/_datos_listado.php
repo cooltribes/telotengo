@@ -11,7 +11,7 @@ echo"<tr>";
 	echo '<td>
 	<div class="dropdown">
 	<a class="dropdown-toggle btn" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="admin_pedidos_detalles.php">
-	<i class="icon-cog"></i> <b class="caret"></b>
+	<i class="glyphicon glyphicon-cog"></i> <b class="caret"></b>
 	</a> 
 	
 		<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
