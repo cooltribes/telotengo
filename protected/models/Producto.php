@@ -301,5 +301,17 @@ class Producto extends CActiveRecord
 	    
 	    return $this->findAll(array('limit'=>$quantity,'offset'=>0,'order'=>'id DESC'));
 	}
+
+	/*
+	Funcion para conseguir el URL Amigable del producto en caso de tenerlo. 
+	*/
+	public function getUrl(){
+		$seo = Seo::model()->findByAttributes(array('producto_id'=>$this->id));
+		if($seo->amigable != ""){
+			return Yii::app()->baseUrl."/productos/".$seo->amigable;
+		}else{
+			return Yii::app()->baseUrl."/producto/detalle/".$this->id;
+		}
+	}
 	
 }

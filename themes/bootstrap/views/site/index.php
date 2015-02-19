@@ -99,23 +99,19 @@ $('.carousel').carousel('cycle');
     							
     				<?php
     						$marca = Marca::model()->findByPk($producto->marca_id);
-    							
-								
-    							echo '<h3 class="productName no_margin_top no_margin_bottom"> '.$producto->nombre.' </h3></a>';
-    							if($producto->hasFlashsale()){
-                                    $a = "marcas/".$marca->nombre;
-                                    echo '<small><span class="muted">por </span>'.CHtml::link($marca->nombre,array($a)).'<p class="lead">Aplica oferta.</p></small>';
-                                }else{
-                                    $a = "marcas/".$marca->nombre;
-                                    echo '<small><span class="muted">por </span>'.CHtml::link($marca->nombre,array($a)).'</small>';
-                                }
-                                echo "</a>";
-								/*if(strlen($producto->descripcion) > 45)
-									echo "<p>".substr($producto->descripcion,0,40).' ... <br/>';
-								else
-									echo '<p>'.$producto->descripcion.'<br/>';
-								*/
-								
+    						$a = "marcas/".$marca->nombre;
+            
+                            echo '
+                            <h3 class="productName no_margin_top no_margin_bottom">
+                                <a href="'.$producto->getUrl().'"> '.$producto->nombre.'</a><br/>
+                                <small><span class="muted">por </span>'.CHtml::link($marca->nombre,array($a)).'</small>
+                            </h3>';
+                            
+                            echo '<p class="lead margin_bottom_small">';
+                            if($producto->hasFlashsale())
+                                echo 'Aplica oferta';
+                            echo '</p>';            	
+
     		   
     							echo '<p>Bs.<big>'.$inventario_menor_precio->precio.'</big><a role="button" href="'.Yii::app()->baseUrl.'/producto/detalle/'.$producto->id.'" class="btn btn-xs btn-danger pull-right">Comprar ahora »</a>';
     							

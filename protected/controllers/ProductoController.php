@@ -303,10 +303,19 @@ class ProductoController extends Controller
 				$this->redirect(array('detalle','id'=>$model->producto_id));
 			}		
 		}
+		
 
-		if(isset($_GET['id'])){
-			$model = Producto::model()->findByPk($_GET['id']);
-			$marca = Marca::model()->findByPk($_GET['id']);
+		if( isset($_GET['id']) || isset($_GET['alias']) ){
+
+			if(isset($_GET['alias'])){
+				$seo = Seo::model()->findByAttributes(array('amigable'=>$_GET['alias']));
+				$model = Producto::model()->findByPk($seo->producto_id);
+				$marca = Marca::model()->findByPk($model->marca_id);
+			}else if(isset($_GET['id'])){
+				$model = Producto::model()->findByPk($_GET['id']);
+				$marca = Marca::model()->findByPk($_GET['id']);
+			}
+			
 			$numero_calificaciones = CalificacionProducto::model()->countByAttributes(array('producto_id'=>$model->id));
 			$calificacion_total = 0;
 			$calificacion_promedio = 0;

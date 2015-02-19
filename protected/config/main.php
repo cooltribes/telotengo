@@ -129,6 +129,7 @@ return array(
 				'marcas/<alias:[a-zA-Z0-9_-]+>'=>'marca/store', 
 				'tiendas/<alias:[a-zA-Z0-9_-]+>'=>'tienda/storefront',
 				'categorias/<alias:[a-zA-Z0-9_-]+>'=>'categoria/store',
+				'productos/<alias:[a-zA-Z0-9_-]+>'=>'producto/detalle',
 				'<controller:\w+>/<id:\d+>'=>'<controller>/view',
 				'<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
 				'<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
