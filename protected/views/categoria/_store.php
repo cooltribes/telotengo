@@ -10,7 +10,7 @@
             if($principal->getUrl()){
                     echo '<div class="productImage">';
                        $im = CHtml::image(str_replace(".","_thumb.",$principal->getUrl()), "Imagen",array('style'=>'width:100%'));
-                    echo "<a href='".Yii::app()->baseUrl."/producto/detalle/".$item->id."''>".$im."</a>";
+                    echo "<a href='".$item->getUrl()."''>".$im."</a>";
                     echo "</div>";
                 }
            // echo '<a href="'.Yii::app()->baseUrl.'/producto/detalle/'.$item->id.'"><h3 class="productName no_margin_top no_margin_bottom"> '.$item->nombre.' </h3></a>';
@@ -19,7 +19,7 @@
             
             echo '
             <h3 class="productName no_margin_top no_margin_bottom">
-                <a href="'.Yii::app()->baseUrl.'/producto/detalle/'.$item->id.'"> '.$item->nombre.'</a><br/>
+                <a href="'.$item->getUrl().'"> '.$item->nombre.'</a><br/>
                 <small><span class="muted">por </span>'.CHtml::link($marca->nombre,array($a)).'</small>
             </h3>';
             

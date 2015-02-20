@@ -36,7 +36,7 @@ echo"<tr>";
 	<i class="icon-cog"></i> <b class="caret"></b>
 	</a>
 		<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-			<li><a tabindex="-1" href="'.Yii::app()->createUrl('/producto/detalle',array('id'=>$data->id)).'" ><i class="glyphicon glyphicon-zoom-in"></i> Ver </a></li>
+			<li><a tabindex="-1" href="'.$data->getUrl().'" ><i class="glyphicon glyphicon-zoom-in"></i> Ver </a></li>
 			<li><a tabindex="-1" href="'.Yii::app()->createUrl('/producto/create',array('id'=>$data->id)).'" ><i class="glyphicon glyphicon-cog"></i> Editar </a></li>
 			<li><a tabindex="-1" href="'.Yii::app()->createUrl('/producto/delete',array('id'=>$data->id)).'" ><i class="glyphicon glyphicon-trash"></i> Eliminar </a></li>
 			<li><a tabindex="-1" href="'.Yii::app()->createUrl('/producto/calificaciones',array('id'=>$data->id)).'" ><i class="glyphicon glyphicon-star"></i> Calificaciones </a></li>
