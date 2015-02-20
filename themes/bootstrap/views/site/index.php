@@ -93,15 +93,15 @@ $('.carousel').carousel('cycle');
     							else 
     								echo '<img src="http://placehold.it/300x240" width="100%">';
     							 
-    							echo "<a href='".Yii::app()->baseUrl.'/producto/detalle/'.$producto->id."'>".$im; ?>
+    							echo "<a href='".$producto->getUrl()."'>".$im; ?>
     							
     							</div>
     							
     				<?php
     						$marca = Marca::model()->findByPk($producto->marca_id);
-    						$a = "marcas/".$marca->nombre;?>
+    						$a = "marcas/".$marca->nombre; ?>
             
-                            <div>
+                            <div class="namep">
                             <h3 class="productName no_margin_top no_margin_bottom">
                                 <a href="<?php echo $producto->getUrl()?>"> <?php echo $producto->nombre; ?></a>
                                
@@ -110,13 +110,13 @@ $('.carousel').carousel('cycle');
                             </div>
                             
                              
-                       <?php     echo '<div class="lead margin_bottom_small">';
-                            if($producto->hasFlashsale())
-                                echo 'Aplica oferta';
+                      <div class="lead margin_bottom_small">
+                        <?php    if($producto->hasFlashsale())
+                               echo 'Aplica oferta'; ?>
                 
-                            echo '</div>';            	
+                       </div>        	
 
-    		   
+    		   <?php
     							echo '<p>Bs.<big>'.$inventario_menor_precio->precio.'</big><a role="button" href="'.Yii::app()->baseUrl.'/producto/detalle/'.$producto->id.'" class="btn btn-xs btn-danger pull-right">Comprar ahora »</a>';
     							
     	                	}

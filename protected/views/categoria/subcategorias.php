@@ -1,10 +1,23 @@
 <!-- CONTENIDO ON -->
 <div class="container margin_top">
 
-	<h1><?php echo $categoria->nombre; ?></h1><hr class="no_margin_top"/>
+	<!--<h1><?php echo $categoria->nombre; ?></h1><hr class="no_margin_top"/>-->
 	<div class="row-fluid">
 	    <div class="col-md-3">
-	        
+	        <h3 class="no_margin_bottom">Marcas</h3><hr class="no_margin_top"/> 
+            <div id="marca-listado">
+
+                <ul class="col-md-offset-1 no_margin_left"> 
+                    <?php 
+                    $marcas=Marca::model()->findAll();
+                    foreach($marcas as $marca){
+
+                        if($marca->tieneActivos)
+                            echo '<li class="marcas-listado padre" id="'.$marca->id.'"><a href="#">'.$marca->nombre.'</a></li>';
+                    }
+                    ?>               
+                </ul>     
+            </div>
 	    </div>
 	    <div class="col-md-9 no_padding_right">
 	        <div class="row-fluid">

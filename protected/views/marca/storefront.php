@@ -1,5 +1,3 @@
-<!-- CONTENIDO ON -->
-<div class="container-fluid margin_top margin_bottom" style="padding: 0 15px;">
 
 <?php
 $this->breadcrumbs=array(
@@ -14,9 +12,9 @@ $marcas = Marca::model()->findAll();
 
 ?>
 
-	<div class="row"> 
+	<div class="row-fluid"> 
   	<!-- SIDE BAR DE FILTROS ON -->
-	    <section class="col-md-2"  role="main">
+	    <section class="col-md-2 no_padding_left"  role="main">
         	<h3 class="no_margin_bottom">Categorías</h3><hr class="no_margin_top"/> 
         	<div>
               <ul class="no_list_style">
@@ -24,7 +22,7 @@ $marcas = Marca::model()->findAll();
           <?php        $categorias = Categoria::model()->findAllByAttributes(array('id_padre'=>0));
                         foreach ($categorias as $categoria) {
                             ?>
-                            <?php echo '<li class="categorias-listado padre" id="'.$categoria->id.'"><a href="#"><strong>'.$categoria->nombre.'</strong></a>'; ?>
+                            <?php echo '<li class="categorias-listado padre" id="'.$categoria->id.'"><a href="#">'.$categoria->nombre.'</a>'; ?>
                                 <?php
                                 $hijos = Categoria::model()->findAllByAttributes(array('id_padre'=>$categoria->id));
                                 if(sizeof($hijos) > 0){
@@ -156,5 +154,5 @@ $marcas = Marca::model()->findAll();
         </div>
   <!-- PRODUCTOS OFF -->
     </div>
-</div>
+
 <!-- CONTENIDO OFF -->
