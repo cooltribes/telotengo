@@ -353,7 +353,7 @@ class CategoriaController extends Controller
 				array(
 					'model'=>$categoria,
 					'dataProvider'=>$dataProvider,
-					'categoria' => $categoria->id,
+					'categoria' => $categoria,
 				)
 			);	
 		}
