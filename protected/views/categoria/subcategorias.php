@@ -36,15 +36,7 @@
                       </a>
                   </div>    
                 <?php endforeach;?>
-	            
-	            
 	                
-	            
-	            
-	            
-	            
-	            
-	            
 	        </div>
             
         </div>
