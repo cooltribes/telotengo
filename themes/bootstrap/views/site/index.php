@@ -99,18 +99,22 @@ $('.carousel').carousel('cycle');
     							
     				<?php
     						$marca = Marca::model()->findByPk($producto->marca_id);
-    						$a = "marcas/".$marca->nombre;
+    						$a = "marcas/".$marca->nombre;?>
             
-                            echo '
+                            <div>
                             <h3 class="productName no_margin_top no_margin_bottom">
-                                <a href="'.$producto->getUrl().'"> '.$producto->nombre.'</a><br/>
-                                <small><span class="muted">por </span>'.CHtml::link($marca->nombre,array($a)).'</small>
-                            </h3>';
+                                <a href="<?php echo $producto->getUrl()?>"> <?php echo $producto->nombre; ?></a>
+                               
+                            </h3>
+                            <span> <small><span class="muted">por </span><?php echo CHtml::link($marca->nombre,array($a)); ?></small></span>
+                            </div>
                             
-                            echo '<p class="lead margin_bottom_small">';
+                             
+                       <?php     echo '<div class="lead margin_bottom_small">';
                             if($producto->hasFlashsale())
                                 echo 'Aplica oferta';
-                            echo '</p>';            	
+                
+                            echo '</div>';            	
 
     		   
     							echo '<p>Bs.<big>'.$inventario_menor_precio->precio.'</big><a role="button" href="'.Yii::app()->baseUrl.'/producto/detalle/'.$producto->id.'" class="btn btn-xs btn-danger pull-right">Comprar ahora »</a>';
