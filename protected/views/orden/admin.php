@@ -36,10 +36,56 @@ $this->breadcrumbs=array(
                                 
         </form>
 	   
-	   
-	   
+		<?php
+		Yii::app()->clientScript->registerScript('query1',
+			"var ajaxUpdateTimeout;
+			var ajaxRequest;
+			$('#btn_search_event').click(function(){
+				ajaxRequest = $('#query').serialize();
+				clearTimeout(ajaxUpdateTimeout);
+				
+				ajaxUpdateTimeout = setTimeout(function () {
+					$.fn.yiiListView.update(
+					'list-auth-categorias',
+					{
+					type: 'POST',	
+					url: '" . CController::createUrl('orden/admin') . "',
+					data: ajaxRequest}
+					)
+					},
+			300);
+			return false;
+			});",CClientScript::POS_READY
+		);
+		
+		// Codigo para actualizar el list view cuando presionen ENTER
+		
+		Yii::app()->clientScript->registerScript('query',
+			"var ajaxUpdateTimeout;
+			var ajaxRequest; 
 			
-
+			$(document).keypress(function(e) {
+			    if(e.which == 13) {
+					ajaxRequest = $('#query').serialize();
+					clearTimeout(ajaxUpdateTimeout);
+					
+					ajaxUpdateTimeout = setTimeout(function () {
+						$.fn.yiiListView.update(
+						'list-auth-categorias',
+						{
+						type: 'POST',	
+						url: '" . CController::createUrl('orden/admin') . "',
+						data: ajaxRequest}
+						
+						)
+						},
+				
+				300);
+				return false;
+			    }
+			});",CClientScript::POS_READY
+		);	
+		?>
 
 	    
 	    <?php

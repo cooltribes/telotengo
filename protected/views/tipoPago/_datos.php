@@ -24,8 +24,8 @@ echo"<tr>";
 	</a> 
 	
 		<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-			<li><a tabindex="-1" href="'.Yii::app()->createUrl('/TipoPago/create',array('id'=>$data->id)).'" ><i class="icon-cog"></i> Editar </a></li>
-			<li><a tabindex="-1" href="'.Yii::app()->createUrl('/TipoPago/delete',array('id'=>$data->id)).'" ><i class="icon-trash"></i> Eliminar </a></li>
+			<li><a tabindex="-1" href="'.Yii::app()->createUrl('/TipoPago/create',array('id'=>$data->id)).'" ><i class="glyphicon glyphicon-cog"></i> Editar </a></li>
+			<li><a tabindex="-1" href="'.Yii::app()->createUrl('/TipoPago/delete',array('id'=>$data->id)).'" ><i class="glyphicon glyphicon-trash"></i> Eliminar </a></li>
 		</ul>
         </div></td>
         

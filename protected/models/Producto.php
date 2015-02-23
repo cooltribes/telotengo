@@ -244,15 +244,19 @@ class Producto extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('nombre',$this->nombre,true);
 		$criteria->compare('descripcion',$this->descripcion,true);
-		$criteria->compare('destacado',$this->destacado,true);
-		$criteria->compare('marca_id',$this->marca_id,true);
-		$criteria->compare('modelo',$this->modelo,true);
-		$criteria->compare('estado',$this->estado,true);
-		$criteria->compare('users_id',$this->users_id,true);
-		$criteria->compare('notificado',$this->notificado,true);
+		$criteria->compare('destacado',$this->destacado);
+		$criteria->compare('marca_id',$this->marca_id);
+		$criteria->compare('modelo',$this->modelo);
+		$criteria->compare('estado',$this->estado);
+		$criteria->compare('users_id',$this->users_id);
+		$criteria->compare('notificado',$this->notificado); 
+		$criteria->compare('codigo',$this->codigo); 
+		$criteria->compare('interno',$this->interno); 
+		$criteria->compare('isbn',$this->isbn);
+		$criteria->compare('peso',$this->peso);
 		
 		return new CActiveDataProvider($this, array(
-       		'pagination'=>array('pageSize'=>10,),
+
        		'criteria'=>$criteria,
 		));
 		
@@ -307,8 +311,12 @@ class Producto extends CActiveRecord
 	*/
 	public function getUrl(){
 		$seo = Seo::model()->findByAttributes(array('producto_id'=>$this->id));
-		if($seo->amigable != ""){
-			return Yii::app()->baseUrl."/productos/".$seo->amigable;
+		if(isset($seo)){
+			if($seo->amigable != ""){
+				return Yii::app()->baseUrl."/productos/".$seo->amigable;
+			}else{
+				return Yii::app()->baseUrl."/producto/detalle/".$this->id;
+			}
 		}else{
 			return Yii::app()->baseUrl."/producto/detalle/".$this->id;
 		}

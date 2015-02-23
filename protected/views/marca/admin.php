@@ -5,7 +5,15 @@ $this->breadcrumbs=array(
 
 ?>
 <div class="container">
-	<h1>Administrar Marcas</h1>
+	<div class="row-fluid">
+    	<!-- COLUMNA PRINCIPAL DERECHA ON // OJO: esta de primera para mejorar el SEO sin embargo por CSS se ubica visualmente a la derecha -->
+		<h1 class="col-md-10">Administrar Marcas</h1>
+        <div class="col-md-2 margin_top_medium">
+                <?php
+         echo CHtml::link('Nueva Marca', $this->createUrl('create'), array('class'=>'btn form-control btn-success', 'role'=>'button'));
+                ?>
+        </div>
+    </div>
 		
 		<hr/>
 
@@ -21,25 +29,70 @@ $this->breadcrumbs=array(
 		<?php } ?>
 
 	    <div class="row margin_top margin_bottom ">
-	        <div class="span4">
-	            <form class="no_margin_bottom form-search">
-		            <div class="input-prepend">
-		            	<span class="add-on"><i class="icon-search"></i></span>
-		            	<input class="span3" id="query" name="query" type="text" placeholder="Buscar">
-		                <a href="#" class="btn" id="btn_search_event">Buscar</a>
-		           	</div>         
-	           	</form>
-	        </div>
-	        
-	        <div class="pull-right">
-	        <?php
-	        	echo CHtml::link('Crear Marca', $this->createUrl('create'), array('class'=>'btn btn-success', 'role'=>'button'));
-	        ?>
-			</div>
+	         <form class="no_margin_bottom form-search row-fluid">
+                 <div class="col-md-3 col-md-offset-8 no_padding_right">
+                     <input class="form-control no_radius_right" id="query" name="query" type="text" placeholder="Escribe tu criterio de búsqueda">                   
+                 </div>
+                 <div class="col-md-1 no_padding_left">
+                     <a href="#" class="btn form-control btn-sigmablue no_radius_left" id="btn_search_event">Buscar</a>
+                 </div>   
+             </form>
 			
 	    </div>
-	    <hr/>
-	    
+
+
+		<?php
+		Yii::app()->clientScript->registerScript('query1',
+			"var ajaxUpdateTimeout;
+			var ajaxRequest;
+			$('#btn_search_event').click(function(){
+				ajaxRequest = $('#query').serialize();
+				clearTimeout(ajaxUpdateTimeout);
+				
+				ajaxUpdateTimeout = setTimeout(function () {
+					$.fn.yiiListView.update(
+					'list-auth-marcas',
+					{
+					type: 'POST',	
+					url: '" . CController::createUrl('marca/admin') . "',
+					data: ajaxRequest}
+					)
+					},
+			300);
+			return false;
+			});",CClientScript::POS_READY
+		);
+		
+		// Codigo para actualizar el list view cuando presionen ENTER
+		
+		Yii::app()->clientScript->registerScript('query',
+			"var ajaxUpdateTimeout;
+			var ajaxRequest; 
+			
+			$(document).keypress(function(e) {
+			    if(e.which == 13) {
+					ajaxRequest = $('#query').serialize();
+					clearTimeout(ajaxUpdateTimeout);
+					
+					ajaxUpdateTimeout = setTimeout(function () {
+						$.fn.yiiListView.update(
+						'list-auth-marcas',
+						{
+						type: 'POST',	
+						url: '" . CController::createUrl('marca/admin') . "',
+						data: ajaxRequest}
+						
+						)
+						},
+				
+				300);
+				return false;
+			    }
+			});",CClientScript::POS_READY
+		);	
+		?>
+
+
 		<?php
 		$template = '{summary}
 	    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-bordered table-hover table-striped">

@@ -40,14 +40,34 @@ class AdminController extends Controller
 	{
 		$model = new User();
 		$model->unsetAttributes();  // clear any default values
-        
+        $bandera=false;
+		$dataProvider = $model->search();
+
+		/* Para mantener la paginacion en las busquedas */
+		if(isset($_GET['ajax']) && isset($_SESSION['searchBox']) && !isset($_POST['query'])){
+			$_POST['query'] = $_SESSION['searchBox'];
+			$bandera=true;
+		}
+
+		/* Para buscar desde el campo de texto */
+		if (isset($_POST['query'])){
+			$bandera=true;
+			unset($_SESSION['searchBox']);
+			$_SESSION['searchBox'] = $_POST['query'];
+            $model->email = $_POST["query"];
+            $dataProvider = $model->search();
+        }	
+
+        if($bandera==FALSE){
+			unset($_SESSION['searchBox']);
+        }
+
         if(isset($_GET['User']))
             $model->attributes=$_GET['User'];
 
-        $model->search();
-
         $this->render('index',array(
             'model'=>$model,
+            'dataProvider' => $dataProvider,
         ));
 	}
 

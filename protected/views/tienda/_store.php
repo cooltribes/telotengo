@@ -14,7 +14,7 @@
    	else 
     	echo '<img src="http://placehold.it/300x260" width="100%">';
     							  
-    echo "<a href='".Yii::app()->baseUrl."/producto/detalle/".$data['id']."'>".$im."</a>";
+    echo "<a href='".$prod->getUrl()."'>".$im."</a>";
     							
     $marca = Marca::model()->findByPk($data['marca_id']);
 	
