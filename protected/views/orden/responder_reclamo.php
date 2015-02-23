@@ -1,21 +1,17 @@
-<div class="container-fluid" style="padding: 0 15px;">
+<div class="container">
 
 <?php
 $this->breadcrumbs=array(
 	'Pedidos'=>array('ventas'),
+	'Reclamos'=>array('/user/admin/reclamos'),
 	'Responder Reclamo',
 );
 ?>	
-	
-	
-    <div class="container">
         <div class="row">
             <!-- COLUMNA PRINCIPAL DERECHA ON // OJO: esta de primera para mejorar el SEO sin embargo por CSS se ubica visualmente a la derecha -->
             <div class="col-md-10 col-md-offset-1 main-content" role="main">
                 <div class="page-header">
-                    <h1>
-                       Responder reclamo
-                    </h1> 
+                    <h1>Responder reclamo</h1> 
                 </div>   
                     
 				<?php if(Yii::app()->user->hasFlash('success')){?>
@@ -24,7 +20,7 @@ $this->breadcrumbs=array(
 				    </div>
 				<?php } ?>
 				<?php if(Yii::app()->user->hasFlash('error')){?>
-				    <div class="alert in alert-block fade alert-error text_align_center">
+				    <div class="alert in alert-block fade alert-danger text_align_center">
 				        <?php echo Yii::app()->user->getFlash('error'); ?>
 				    </div>
 				<?php } ?>
@@ -83,5 +79,5 @@ $this->breadcrumbs=array(
             </div>
             <!-- COLUMNA PRINCIPAL DERECHA OFF // -->
         </div>
-    </div>
+
 </div>

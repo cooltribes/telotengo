@@ -205,12 +205,31 @@ class MarcaController extends Controller
 	{
 		$marca = new Marca; 
 		$marca->unsetAttributes();
-		
+		$bandera=false;
+		$dataProvider = $marca->search();
+
+		/* Para mantener la paginacion en las busquedas */
+		if(isset($_GET['ajax']) && isset($_SESSION['searchMarca']) && !isset($_POST['query'])){
+			$_POST['query'] = $_SESSION['searchMarca'];
+			$bandera=true;
+		}
+
+		/* Para buscar desde el campo de texto */
+		if (isset($_POST['query'])){
+			$bandera=true;
+			unset($_SESSION['searchMarca']);
+			$_SESSION['searchMarca'] = $_POST['query'];
+            $marca->nombre = $_POST['query'];
+            $dataProvider = $marca->search();
+        }	
+
+        if($bandera==FALSE){
+			unset($_SESSION['searchMarca']);
+        }
+/*
 		if (isset($_POST['query'])){
 			$marca->nombre = $_POST['query'];
-		}
-		
-		$dataProvider = $marca->search();
+		}*/
 		
 		$this->render('admin',
 			array('model'=>$marca,

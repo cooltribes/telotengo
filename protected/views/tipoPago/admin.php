@@ -2,11 +2,9 @@
 $this->breadcrumbs=array(
 	'Tipos de pago',
 );
-
 ?>
-<div class="container">
 
-	
+<div class="container">
 	<div class="row-fluid">
     <h1 class="col-md-10">Administrar Tipos de pagos</h1>
         <div class="col-md-2 margin_top_medium">
@@ -28,17 +26,6 @@ $this->breadcrumbs=array(
 		        <?php echo Yii::app()->user->getFlash('error'); ?>
 		    </div>
 		<?php } ?>
-
-	      
-	     <form class="no_margin_bottom form-search row-fluid">
-                         <div class="col-md-3 col-md-offset-8 no_padding_right">
-                             <input class="form-control no_radius_right" id="query" name="query" type="text" placeholder="Escribe tu criterio de búsqueda">                   
-                         </div>
-                         <div class="col-md-1 no_padding_left">
-                             <a href="#" class="btn form-control btn-sigmablue no_radius_left" id="btn_search_event">Buscar</a>
-                         </div>
-                                
-        </form>
 	    
 	<?php
 	$template = '{summary}

@@ -1,13 +1,12 @@
 <?php
 $this->breadcrumbs=array(
-	UserModule::t('Users')=>array('/user'),
-	UserModule::t('Manage'),
+	"Administrar Usuarios",
 );
- 
 ?>
+
 <div class="container">
 	<div class="row-fluid">
-	 <h1 class="col-md-10">Administrar Ventas Flash</h1>
+	 <h1 class="col-md-10">Administrar Usuarios</h1>
         <div class="col-md-2 margin_top_medium">
                 <?php
          echo CHtml::link('Crear Usuario', $this->createUrl('create'), array('class'=>'btn form-control btn-success', 'role'=>'button'));
@@ -26,28 +25,69 @@ $this->breadcrumbs=array(
 		        <?php echo Yii::app()->user->getFlash('error'); ?>
 		    </div>
 		<?php } ?>
+     
+	   	<form class="no_margin_bottom form-search row-fluid formularionuevo">
+			<div class="col-md-3 col-md-offset-8 no_padding_right">
+				<input class="form-control no_radius_right" id="query" name="query" type="text" placeholder="Buscar">	                 
+			</div>
+			<div class="col-md-1 no_padding_left">
+				<a href="#" class="btn form-control btn-sigmablue no_radius_left" id="btn_search_event">Buscar</a>
+			</div>
+		</form>
 
 
-	        
-	            <form class="no_margin_bottom form-search row-fluid">
-        	             <div class="col-md-3 col-md-offset-8 no_padding_right">
-        	                 <input class="form-control no_radius_right" id="query" name="query" type="text" placeholder="Buscar">	                 
-        	             </div>
-                         <div class="col-md-1 no_padding_left">
-                             <a href="#" class="btn form-control btn-sigmablue no_radius_left" id="btn_search_event">Buscar</a>
-                         </div>
-        	                	
-	           </form>
-	               
-	  
-	        
-	     
+		<?php
+		Yii::app()->clientScript->registerScript('query1',
+			"var ajaxUpdateTimeout;
+			var ajaxRequest;
+			$('#btn_search_event').click(function(){
+				ajaxRequest = $('#query').serialize();
+				clearTimeout(ajaxUpdateTimeout);
+				
+				ajaxUpdateTimeout = setTimeout(function () {
+					$.fn.yiiListView.update(
+					'list-auth-categorias',
+					{
+					type: 'POST',	
+					url: '" . CController::createUrl('admin/admin') . "',
+					data: ajaxRequest}
+					)
+					},
+			300);
+			return false;
+			});",CClientScript::POS_READY
+		);
+		// Codigo para actualizar el list view cuando presionen ENTER
+		
+		Yii::app()->clientScript->registerScript('query',
+			"var ajaxUpdateTimeout;
+			var ajaxRequest; 
 			
-
-
-	    
+			$(document).keypress(function(e) {
+			    if(e.which == 13) {
+					ajaxRequest = $('#query').serialize();
+					clearTimeout(ajaxUpdateTimeout);
+					
+					ajaxUpdateTimeout = setTimeout(function () {
+						$.fn.yiiListView.update(
+						'list-auth-categorias',
+						{
+						type: 'POST',	
+						url: '" . CController::createUrl('admin/admin') . "',
+						data: ajaxRequest}
+						
+						)
+						},
+				
+				300);
+				return false;
+			    }
+			});",CClientScript::POS_READY
+		);	
+		?>
+	           
 	    <?php
-	$template = '{summary}
+		$template = '{summary}
 	    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-bordered table-hover table-striped">
 	        <tr>
 	            <th scope="col">ID</th>
@@ -64,7 +104,7 @@ $this->breadcrumbs=array(
 
 			$this->widget('zii.widgets.CListView', array(
 		    'id'=>'list-auth-categorias',
-		    'dataProvider'=>$model->search(),
+		    'dataProvider'=>$dataProvider,
 		    'itemView'=>'_view_user',
 		    'template'=>$template,
 		    'enableSorting'=>'true',
