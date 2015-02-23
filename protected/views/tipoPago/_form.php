@@ -20,26 +20,33 @@
 	<div class="col-md-6 col-md-offset-3">
 		<?php echo $form->textFieldRow($model,'nombre',array('class'=>'form-control','maxlength'=>45)); ?>
 	</div>
+		 <div class="col-md-6 col-md-offset-3 margin_top_small">	
+		  <div class="row-fluid">
+		     <div><label> Logotipo </label></div> 
+		     
+		      
+		  </div>   
+	<?php 
+			if(!$model->isNewRecord): ?>
+            <div class="col-md-4">
+        <?php
+			
+				echo CHtml::image(Yii::app()->request->baseUrl.'/images/tipopago/'.$model->id.'_thumb.jpg',"image");
+                
+         ?>       
+            </div>
+	<?php	endif; ?>
 	
-	<div class="col-md-6 col-md-offset-3 margin_top_small">
-		<label> Logotipo </label>
+		<div class="col-md-8">
 		<?php                      
 			echo CHtml::activeFileField($model, 'imagen_url',array('name'=>'url'));
 			echo $form->error($model, 'imagen_url'); 
 		?>
+		</div>
    </div>
     
    
-		<?php 
-			if(!$model->isNewRecord): ?>
-	 <div  class="col-md-6 col-md-offset-3 margin_small">
-        <?php
-				echo '<label> Actual </label>';
-				echo CHtml::image(Yii::app()->request->baseUrl.'/images/tipopago/'.$model->id.'_thumb.jpg',"image");
-                
-         ?>       
-	</div>
-	<?php	endif; ?>
+	
 	
 	
 	<div class="col-md-6 col-md-offset-3 margin_top_small">
