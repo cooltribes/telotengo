@@ -16,8 +16,7 @@
            // echo '<a href="'.Yii::app()->baseUrl.'/producto/detalle/'.$item->id.'"><h3 class="productName no_margin_top no_margin_bottom"> '.$item->nombre.' </h3></a>';
             $marca = Marca::model()->findByPk($item->marca_id);
             $a = "marcas/".$marca->nombre;?>
-            
-<<<<<<< HEAD
+
                             <div class="namep">
                             <h3 class="productName no_margin_top no_margin_bottom">
                                 <a href="<?php echo $item->getUrl()?>"> <?php echo $item->nombre; ?></a>

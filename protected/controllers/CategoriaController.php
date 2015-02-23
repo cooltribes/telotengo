@@ -354,6 +354,7 @@ class CategoriaController extends Controller
 					'model'=>$categoria,
 					'dataProvider'=>$dataProvider,
 					'categoria' => $categoria,
+					'rangos' => Inventario::model()->getLimitesCategoria($categoria->id)
 				)
 			);	
 		}
