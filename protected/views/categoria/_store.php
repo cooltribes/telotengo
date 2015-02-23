@@ -1,4 +1,4 @@
-<article class="col-md-3">
+<article class="col-md-4">
 
        <div class="caja">
             <?php
