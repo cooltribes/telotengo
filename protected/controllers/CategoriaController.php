@@ -27,7 +27,7 @@ class CategoriaController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','store'),
+				'actions'=>array('index','view','store','substore'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -377,7 +377,52 @@ class CategoriaController extends Controller
 				)
 			);	
 		}
-	}	
+	}
+     public function actionSubstore(){
+            
+        if(isset($_POST['marca'])){
+            if($_POST['marca']>0){
+                 Yii::app()->session['catMarca']=$_POST['marca'];
+                if(isset(Yii::app()->session['catMax'])) unset(Yii::app()->session['catMax']);
+                if(isset(Yii::app()->session['catMin'])) unset(Yii::app()->session['catMin']);
+            }
+        }
+           
+        
+        if(isset($_POST['min'])&&isset($_POST['max'])){
+             Yii::app()->session['catMax']=$_POST['max'];
+              Yii::app()->session['catMin']=$_POST['min'];
+               if(isset(Yii::app()->session['catMarca'])) unset(Yii::app()->session['catMarca']);
+        }
+         if(isset( Yii::app()->session['catMarca']))
+            $condition=" AND pr.marca_id = ".  Yii::app()->session['catMarca']." "; 
+        if(isset( Yii::app()->session['catMax'])&&isset( Yii::app()->session['catMin']))
+            $condition=" AND p.precio >".  Yii::app()->session['catMin']." AND p.precio <".  Yii::app()->session['catMax']." ";  
+           
+        $ids=Yii::app()->session['categoria'];
+        
+        $categoria=Categoria::model()->findByPk($ids);
+        if($categoria->id_padre>0)
+            $ids.=','.$categoria->id_padre;     
+        $sql='select pr.id from tbl_inventario p JOIN tbl_producto pr ON pr.id=p.producto_id JOIN tbl_marca m ON pr.marca_id=m.id 
+        JOIN tbl_categoria_has_tbl_producto c ON c.producto_id=pr.id 
+        where c.categoria_id IN ('.$ids.') '.$condition;   
+        //$sql='select b.id from tbl_categoria_has_tbl_producto a, tbl_producto b  where a.categoria_id = '.Yii::app()->session['categoria'].' and b.id = a.producto_id';
+        $data=array();
+        $dataProvider=new CSqlDataProvider($sql, array(
+            'sort'=>array(
+                'attributes'=>array(
+                     'id',
+                ),
+            ),
+        ));
+        $data['status']="ok";
+        $data['render']=$this->renderPartial('substore',array(
+            'dataProvider'=>$dataProvider, 'categoria'=>$categoria->nombre
+        ),true);
+        
+        echo json_encode($data);
+    }	
 	
 	
 }

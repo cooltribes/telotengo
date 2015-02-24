@@ -19,7 +19,8 @@ $marcas = Marca::model()->findAll();
         
         <!-- PRODUCTOS ON -->
         <div class="col-md-12">
-            <section>
+            
+            <section class="row-fluid">
 
     <?php
     $template = '
