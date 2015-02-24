@@ -55,7 +55,7 @@
                             <input name="" id="tracking" type="text" placeholder="Numero de Tracking" class="form-control">
                         </div>
         
-                            <a class="btn btn-info col-md-1"" onclick="enviarPedido(<?php echo $model->id; ?>)" class="btn" title="Enviar pedido">Enviar</a> 
+                            <a class="btn btn-info col-md-1" onclick="enviarPedido(<?php echo $model->id; ?>)" class="btn" title="Enviar pedido">Enviar</a> 
                        
                    </div>
                    
@@ -67,7 +67,7 @@
         ?>
         <section class="row-fluid">
                     
-                     <?php $width=$model->balance>0?12:18;?>
+                     <?php $width=$model->balance>0?12:18; ?>
                          <table width="100%" align="right" style="margin-bottom: 30px;">
                                <thead>
                                    <tr align="right">
@@ -281,7 +281,7 @@
                                                     echo '<div class="row padding_left_large padding_right_large text_align_right">';
                                                     foreach ($comentarios as $comentario) {
                                                         echo $comentario->comentario;
-                                                        echo " - <small>Enviado el ".date('d/m/Y',strtotime($reclamo->fecha))."</small>";
+                                                        echo " - <small>Enviado el ".date('d/m/Y',strtotime($comentario->fecha))."</small></br>";
                                                     }
                                                     echo '</div>';
                                                 }

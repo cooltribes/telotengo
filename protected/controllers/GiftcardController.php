@@ -123,17 +123,18 @@ class GiftcardController extends Controller
             $user = User::model()->findByPk(Yii::app()->user->id);
 
             $message = new YiiMailMessage;
-            $subject = 'Te han enviado una Gift Card desde Sigma Tiendas';                                
-            $message->subject = $subject;
-            $body = '<h2>¡'.$user->profile->first_name.' '.$user->profile->last_name.' te ha enviado una Gift Card!</h2>
+            $message->view = "mail_template";
+            $subject = 'Te han enviado una Gift Card desde Sigma Tiendas';  
+            $body = '<h2>¡'.$user->profile->first_name.' '.$user->profile->last_name.' te ha enviado una tarjeta de regalo!</h2>
                 Monto: '.$model->monto.' Bs. Estos podrán ser cargados a tu cuenta para usarlos en cualquier compra. <br><br>
                 Código: '.$model->codigo.'. <br><br> 
-                Puedes cargar tu Gift Card en <a href="sigmatiendas.com">Sigma Tiendas</a>.';
-            $message->from = array(Yii::app()->params['adminEmail'] => "Sigma Tiendas");
-            $message->setBody($body, 'text/html');
-            $message->view = "mail_template";           
+                Puedes cargar tu Gift Card en <a href="telotengo.com/sigmatiendas/giftcard/aplicar">Sigma Tiendas</a>.';
+            $params = array('subject'=>$subject, 'body'=>$body);
+            $message->subject = $subject;
+            $message->view = "mail_template";
+            $message->setBody($params, 'text/html');                
             $message->addTo($model->beneficiario);
-
+            $message->from = array(Yii::app()->params["adminEmail"] => 'Sigma Tiendas');
             Yii::app()->mail->send($message);
 
             if($model->save()){

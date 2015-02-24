@@ -273,12 +273,31 @@ class CategoriaController extends Controller
 	{
 		$model = new Categoria;
 		$model->unsetAttributes();
-		
-		if(isset($_POST['query'])){
-			$marca->nombre = $_POST['query'];
-		}
-		
+		$bandera=false;
 		$dataProvider = $model->search();
+
+		/* Para mantener la paginacion en las busquedas */
+		if(isset($_GET['ajax']) && isset($_SESSION['searchCate']) && !isset($_POST['query'])){
+			$_POST['query'] = $_SESSION['searchCate'];
+			$bandera=true;
+		}
+
+		/* Para buscar desde el campo de texto */
+		if (isset($_POST['query'])){
+			$bandera=true;
+			unset($_SESSION['searchCate']);
+			$_SESSION['searchCate'] = $_POST['query'];
+            $model->nombre = $_POST['query'];
+            $dataProvider = $model->search();
+        }	
+
+        if($bandera==FALSE){
+			unset($_SESSION['searchCate']);
+        }
+
+		if(isset($_POST['query'])){
+			$model->nombre = $_POST['query'];
+		}
 		
 		$this->render('admin',
 			array('model'=>$model,

@@ -1,12 +1,11 @@
 <?php
-/* @var $this GiftcardController */
-/* @var $model Giftcard */
-
 $this->breadcrumbs = array(
     'Comprar GiftCard',
 );
 ?>
 <div class="container">
+    <h1>Compra una Gift Card</h1>
+    <hr class="no_margin_top">
 
     <!-- FLASH ON --> 
     <?php
@@ -22,10 +21,8 @@ $this->breadcrumbs = array(
     );
     ?>	
     <!-- FLASH OFF --> 
-    <h1>Compra una Gift Card</h1>
-    <section class="col-md-12 margin_bottom_small">
-    <hr class="no_margin_top" />
-        <?php
+
+    <?php
         $form = $this->beginWidget("bootstrap.widgets.TbActiveForm", array(
             'id' => 'form-enviarGift',
             'type' => 'horizontal',
@@ -34,7 +31,7 @@ $this->breadcrumbs = array(
                 'enableAjaxValidation'=>true,
             )
         ));
-        ?>
+    ?>
             <div class="row-fluid margin_top">
                 <div class="col-md-6">
                     <div>
