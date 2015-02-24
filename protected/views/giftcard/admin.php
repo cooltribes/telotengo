@@ -42,14 +42,14 @@ $this->breadcrumbs=array(
 	$template = '{summary}
 	    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-bordered table-hover table-striped">
 	        <tr>
-	            <th scope="col">Tarjeta #</th>
+	            <th scope="col">ID</th>
 	            <th scope="col">Fecha de Compra</th>
 	            <th scope="col">Fecha de Cobro</th>
 	            <th scope="col">Total (Bs.)</th>
 	            <th scope="col">Comprador</th>
 	            <th scope="col">Beneficiario</th>
 	            <th scope="col">Estado</th>
-	            <th scope="col">Acción</th>
+	            <th scope="col"></th>
 	        </tr>
 	    {items}
 	    </table>

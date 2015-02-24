@@ -63,7 +63,7 @@ class Seo extends CActiveRecord
 			'id' => 'ID',
 			'descripcion' => 'Descripcion',
 			'tags' => 'Tags',
-			'amigable' => 'Amigable',
+			'amigable' => 'URL Amigable',
 			'producto_id' => 'Producto',
 		);
 	}

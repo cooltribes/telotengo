@@ -94,13 +94,14 @@
 			
 		<div class="well">
     	    <div class="row padding_left_small">
-                <div class="col-md-6">
+                <div class="col-md-6 col-md-offset-3">
                     <div class="form-group">
-                        <label for="exampleInputFile">Cargue o agregue las imagenes aqui</label>
+                        <label for="exampleInputFile">Carga las imágenes aqui</label>
 	                            	
 						              <?php
 						            	$this->widget('CMultiFileUpload', array(
 						                'name' => 'url',
+						                'remove'=>'Quitar',
 						                'accept' => 'jpeg|jpg|gif|png', // useful for verifying files
 						                'duplicate' => 'El archivo está duplicado.', // useful, i think
 						                'denied' => 'Tipo de archivo invalido.', // useful, i think
@@ -121,11 +122,11 @@
 									
 						            <?php echo $form->error($imagen, 'url'); ?>
 						            
-						            <div class="margin_top_small">
+						            <div class="margin_top_small pull-right">
 						                <?php $this->widget('bootstrap.widgets.TbButton', array(
 									'buttonType'=>'submit',
 									'type'=>'primary',
-									'label'=>'Subir imagen',
+									'label'=>'Cargar imagen(es)',
 									'htmlOptions'=>array('class'=>'btn-lg'),
 								)); ?>
 								
@@ -133,20 +134,23 @@
 	                            	
                         </div>                
 				</div>
-			</div>		
+			</div>
+			
+			
+					
         </div>
         
         <?php $this->endWidget(); ?>	 
 
-        <div class="well well-small">
-          <h3>Instrucciones:</h3>
-          <ul>
-            <li> Ten en cuenta que la primera imagen será la principal del producto</li>
-            <li>Arrastra las imágenes para organizarlas</li>
-          </ul>
+        <div class="alert alert-info text-center">
+
+          
+             Recuerda que la primera imagen será la principal del producto<br/>
+            Arrastra las imágenes para ordenar la forma de mostrarlas en tienda
+         
         </div>
         
-        <div class="row">
+        <div class="row-fluid">
         
         	<?php
 			$imagenes = $model->imagenes;
