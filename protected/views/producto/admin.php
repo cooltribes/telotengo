@@ -40,9 +40,7 @@
                              <a href="#" class="btn form-control btn-sigmablue no_radius_left" id="btn_search_event">Buscar</a>
                          </div>
                                 
-             </form>
-	        
-	       
+             </form>	       
 
 		<?php
 		Yii::app()->clientScript->registerScript('query1',

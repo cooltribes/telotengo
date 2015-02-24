@@ -138,6 +138,7 @@ Estados
         $criteria->compare('comprador',$this->comprador);
         $criteria->compare('beneficiario',$this->beneficiario);
         $criteria->compare('orden_id',$this->orden_id);
+        $criteria->order = "inicio_vigencia DESC";
 
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,
