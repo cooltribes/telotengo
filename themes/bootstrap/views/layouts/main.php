@@ -124,17 +124,8 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                 ?>
                     
                     
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    <li class="button"><a href="<?php echo Yii::app()->baseUrl; ?>/site/logout" class="white">Salir</a> </li>
-                    <li class="dropdown button">
+                    <li class="button glyph-padding"><a href="<?php echo Yii::app()->baseUrl; ?>/site/logout" class="white">Salir</a> </li>
+                    <li class="dropdown button glyph-padding">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <span class="white">Administración<b class="caret"></b></span>
                         </a>
@@ -147,14 +138,14 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                         </ul>
                     </li>    
                      
-                    <li class="dropdown button">
+                    <li class="dropdown button glyph-padding">
                         <a href="#" class="dropdown-toggle white" data-toggle="dropdown">Pedidos<b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/orden/admin">Todos</a></li> 
                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/user/admin/reclamos">Reclamos</a></li>
                         </ul>
                     </li>       
-                    <li class="dropdown button">
+                    <li class="dropdown button glyph-padding">
                         <a href="#" class="dropdown-toggle white" data-toggle="dropdown">Productos<b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/create">Crear nuevo</a></li> 
@@ -179,10 +170,12 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                     ?>
                     
      
-              <li class="button"><a href="<?php echo Yii::app()->baseUrl; ?>/site/logout"><div class="white">Salir</div></a></li>
+              <li class="button glyph-padding"><a href="<?php echo Yii::app()->baseUrl; ?>/site/logout"><div class="white">Salir</div></a></li>
                         
-                <li class="menu-item dropdown button white">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cuenta<b class="caret"></b></a>
+                <li class="menu-item dropdown button">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <span class="glyphicon glyphicon-user glyphiconLarge"></span><br/>
+                    Cuenta<b class="caret"></b></a>
                     <ul class="dropdown-menu"> 
                         <li class="menu-item dropdown ">
                            <a href="<?php echo Yii::app()->baseUrl; ?>/orden/listado"> Tus Pedidos</a>
@@ -222,17 +215,18 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                         <li class="button">
                             <a href="<?php echo Yii::app()->baseUrl; ?>/bolsa/view">
                                 <div class="white">
-                                    <span class="glyphicon glyphicon-shopping-cart"></span> Tu Carrito de compras 
+                                    <span class="glyphicon glyphicon-shopping-cart glyphiconLarge"></span><br/> Tu Carrito de compras 
                                 </div>
                             </a>
                         </li>
                           
-                        <li class="button"><a href="<?php echo Yii::app()->baseUrl; ?>/tienda/"><div class="white">Tienda</div></a></li> 
+                        <li class="button"><a href="<?php echo Yii::app()->baseUrl; ?>/tienda/"><div class="white"><span class="glyphicon glyphicon glyphicon-th glyphiconLarge"></span><br/>
+                                            Tienda </div></a></li> 
                        
                         <li class="button">
                             <a href="<?php echo Yii::app()->baseUrl; ?>/giftcard/comprar">
                                 <div class="white">
-                                    <span class="glyphicon glyphicon-gift"></span> Comprar Giftcard
+                                    <span class="glyphicon glyphicon-gift glyphiconLarge"></span><br/> Comprar Giftcard
                                 </div>
                             </a>
                         </li> 

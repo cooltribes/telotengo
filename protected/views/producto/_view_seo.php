@@ -30,7 +30,7 @@ $this->breadcrumbs=array(
  
 		<div class="well">
             <div class="row-fluid">
-                <div class="col-md-8">
+                <div class="col-md-6 col-md-offset-3">
 					  
 				<?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
 					'id'=>'seo-form',
@@ -55,11 +55,12 @@ $this->breadcrumbs=array(
 	                <div class=" muted">Dirección URL del producto</div>
 	            </div>
 	            				
-				<div class="form-actions">
+				<div class="form-group">
 					<?php $this->widget('bootstrap.widgets.TbButton', array(
 						'buttonType'=>'submit',
 						'type'=>'primary',
 						'label'=>'Guardar',
+						'htmlOptions'=>array('class'=>'form-control')
 					)); ?>
 				</div>
 					
