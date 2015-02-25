@@ -47,7 +47,7 @@
                         'buttonType'=>'submit',
                         'type' => 'danger',
                         'size' => 'large', 
-                        'label'=>'Guardar',
+                        'label'=>'Aplicar',
                         'htmlOptions' => array('class'=>"form-control"),
                     )); ?>
 

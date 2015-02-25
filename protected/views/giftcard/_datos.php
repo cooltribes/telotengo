@@ -13,7 +13,8 @@
 				<i class="icon-cog"></i><b class="caret"></b>
 			</a>
 			<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-				<li><a tabindex="-1" href="'.Yii::app()->createUrl('/Giftcard/inactivar',array('id'=>$data->id)).'" ><i class="glyphicon glyphicon-cog"></i> inactivar </a></li>
+				<li><a tabindex="-1" href="'.Yii::app()->createUrl('/Giftcard/reenviar',array('id'=>$data->id)).'" ><i class="glyphicon glyphicon-envelope"></i> Reenviar Mail </a></li>
+				<li><a tabindex="-1" href="'.Yii::app()->createUrl('/Giftcard/inactivar',array('id'=>$data->id)).'" ><i class="glyphicon glyphicon-cog"></i> Inactivar </a></li>
 				<li><a tabindex="-1" href="'.Yii::app()->createUrl('/Giftcard/delete',array('id'=>$data->id)).'" ><i class="glyphicon glyphicon-trash"></i> Eliminar </a></li>
 			</ul>
         </div>
