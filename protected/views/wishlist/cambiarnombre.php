@@ -10,8 +10,8 @@
 
 <hr class="no_margin_top"/>
 
-    <div class="padding_small">
-        <div class="modal-body no_padding row-fluid">
+
+        <div class="modal-body padding_small row-fluid">
             
             <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
                 'id'=>'nombre-form',
@@ -50,5 +50,5 @@
             
             </div>
         </div>
-    </div>
+    
 </div>

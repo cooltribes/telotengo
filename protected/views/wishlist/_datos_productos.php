@@ -13,7 +13,7 @@ echo"<tr>";
 
 	$producto = Producto::model()->findByPk($data->producto_id);
 
-   	echo "<td><a href='".."' ".$producto->nombre."</td>";
+   	echo "<td><a href='".$producto->getUrl()."'> ".$producto->nombre."</a></td>";
 
 	echo '<td>
 	<div class="dropdown">

@@ -6,8 +6,8 @@
 
 <hr class="no_margin_top"/>
 
-<div class=padding_small>
-    <div class="modal-body no_padding row-fluid"> 
+
+    <div class="padding_small modal-body no_padding row-fluid"> 
         
             <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
             'id'=>'marca-form',
@@ -22,7 +22,7 @@
             ),
         )); ?>
     
-    </div>
+    
             
 
 

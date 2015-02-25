@@ -5,12 +5,13 @@
 $this->breadcrumbs=array( 
 	'Bolsa',
 );
-
+ 
 $subtotal = 0; 
 ?> 
-        <div class="row-fluid">
-            <div class="col-md-12" >
-                <div><h1>Bolsa</h1></div>
+        <div class="row-fluid"> 
+            <div><h1>Bolsa</h1><hr class="no_margin_top"/></div>
+            <div class="col-md-12 no_padding" >
+               
 
         		<?php if(Yii::app()->user->hasFlash('success')){?>
 				    <div class="alert in alert-block fade alert-success text_align_center">
@@ -23,7 +24,8 @@ $subtotal = 0;
 				    </div>
 				<?php } ?>
                 
-                <section class="col-sm-8 main-content">
+                <section class="col-sm-8 main-content no_padding_left padding_right">
+                    
                 <?php
                 	if(isset($model))
 					{
@@ -95,10 +97,10 @@ $subtotal = 0;
 		                                    echo '
 		                                </td>';
 		                                if($inventario->hasFlashSale()){
-		                                	echo'<td>'.$inventario->flashSalePrice().' Bs.</td>';
+		                                	echo'<td class="text-right">Bs. '.$inventario->flashSalePrice().'</td>';
 		                                }else{
 		                                echo '	
-		                                	<td>'.$inventario->precio.' Bs.</td>';
+		                                	<td class="text-right">Bs. '.$inventario->precio.'</td>';
 		                                }
 
 		                                ?>
@@ -135,39 +137,39 @@ $subtotal = 0;
 				}
                 ?>
                 </section>
-                <section class="col-sm-4">
+                <section class="col-sm-4 no_padding_right">
                     <?php $iva = $subtotal * 0.12; ?>
-                    <div class="well">
-                        <h3>Resumen</h3>
-                        <hr>
-                        <div class="text_align_center">
+                 
+                        <div class="text_align_center well bg_white">
                             <div class="padding_xsmall">
-                                Subtotal: <span><?php echo $subtotal-$iva; ?> Bs.</span>
+                                Subtotal: <span>Bs. <?php echo $subtotal-$iva; ?></span>
                             </div>
                             <div class="padding_xsmall">
-                                IVA: <span><?php echo $iva; ?> Bs.</span>
+                                IVA: <span>Bs. <?php echo $iva; ?></span>
                             </div>
                             <div class="padding_small">
                                 <h4>
-                                    Total: <strong><?php echo $subtotal; ?> Bs.</strong>
+                                    Total: <strong>Bs. <?php echo $subtotal; ?></strong>
                                 </h4>
                             </div>
-                            <?php
-                            echo CHtml::link('<span class="glyphicon glyphicon-shopping-cart"></span> Comprar', $this->createUrl('authenticate'), array('class'=>'btn btn-success btn-lg'));
-                            ?>
-                        </div>
-                    </div>
-                    <div class="text_,align_center">
+                            <div class="text_center">
                         <div>  
-                            <p><i class="icon-calendar"></i><small>
-                    			<?php echo 'Fecha estimada de entrega' ?>:
-                    			<?php echo date('d/m/Y', strtotime('+1 day'));?>  - <?php echo date('d/m/Y', strtotime('+1 week')); ?>
-                    		</small></p>
+                              <small><p class="no_margin_bottom"><i class="icon-calendar"></i>
+                             <?php echo 'Fecha estimada de entrega' ?>:</small>   
+                             <?php echo date('d/m/Y', strtotime('+1 day'));?>  - <?php echo date('d/m/Y', strtotime('+1 week')); ?>
+                          </p>
                         </div>
-                        <div>
+                        <div class="text-center">
                             <small><a href="#">Ver Políticias de Envíos y Devoluciones</a></small>
                         </div>
                     </div>
+                            
+                            <?php
+                            echo CHtml::link('<span class="glyphicon glyphicon-shopping-cart"></span> Comprar', $this->createUrl('authenticate'), array('class'=>'btn btn-success btn-lg margin_top'));
+                            ?>
+                        </div>
+                    
+                    
                 </section>
                 
             </div>
