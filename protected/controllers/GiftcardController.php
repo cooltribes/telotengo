@@ -31,7 +31,7 @@ class GiftcardController extends Controller
                 'users'=>array('@'),
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions 
-                'actions'=>array('admin','delete','create','update','inactivar','sinpago','poraprobar','aprobar','rechazar'), 
+                'actions'=>array('admin','delete','create','update','inactivar','sinpago','poraprobar','aprobar','rechazar','reenviar'), 
                 'users'=>array('admin'), 
             ), 
             array('deny',  // deny all users 
@@ -127,7 +127,7 @@ class GiftcardController extends Controller
             $subject = 'Te han enviado una Gift Card desde Sigma Tiendas';  
             $body = '<h2>¡'.$user->profile->first_name.' '.$user->profile->last_name.' te ha enviado una tarjeta de regalo!</h2>
                 Monto: '.$model->monto.' Bs. Estos podrán ser cargados a tu cuenta para usarlos en cualquier compra. <br><br>
-                Código: '.$model->codigo.'. <br><br> 
+                Código: '.$model->codigo.' <br><br> 
                 Puedes cargar tu Gift Card en <a href="telotengo.com/sigmatiendas/giftcard/aplicar">Sigma Tiendas</a>.';
             $params = array('subject'=>$subject, 'body'=>$body);
             $message->subject = $subject;
@@ -146,7 +146,33 @@ class GiftcardController extends Controller
         $this->render('create',array( 
             'model'=>$model, 
         )); 
-    } 
+    }
+
+    /* Action para reenviar el giftcard en el caso que sea necesario */
+    public function actionReenviar($id){   
+        $model = Giftcard::model()->findByPk($id);
+        $user = User::model()->findByPk(Yii::app()->user->id); // carga en usuario al admin
+
+        $message = new YiiMailMessage;
+        $message->view = "mail_template";
+        $subject = 'Te han enviado una Gift Card desde Sigma Tiendas';  
+        $body = '<h2>¡'.$user->profile->first_name.' '.$user->profile->last_name.' te ha enviado una tarjeta de regalo!</h2>
+            Monto: '.$model->monto.' Bs. Estos podrán ser cargados a tu cuenta para usarlos en cualquier compra. <br><br>
+            Código: '.$model->codigo.'. <br><br> 
+            Puedes cargar tu Gift Card en <a href="telotengo.com/sigmatiendas/giftcard/aplicar">Sigma Tiendas</a>.';
+        $params = array('subject'=>$subject, 'body'=>$body);
+        $message->subject = $subject;
+        $message->view = "mail_template";
+        $message->setBody($params, 'text/html');                
+        $message->addTo($model->beneficiario);
+        $message->from = array(Yii::app()->params["adminEmail"] => 'Sigma Tiendas');
+        Yii::app()->mail->send($message);
+
+        if($model->save()){
+            Yii::app()->user->setFlash('success',"Gift Card Reenviado exitosamente."); 
+            $this->redirect(array('admin')); 
+        }
+    }
 
      /* Inactivar desde administrador */ 
     public function actionInactivar($id){
@@ -223,27 +249,52 @@ class GiftcardController extends Controller
 
     public function actionAplicar(){
         $model = new Giftcard;
+        $user = User::model()->findByPk(Yii::app()->user->id);
 
         if(isset($_POST['Giftcard'])){
             $gc = Giftcard::model()->findByAttributes(array('codigo'=>$_POST['Giftcard']['codigo']));
 
-            if(isset($gc)){
-                if($gc->estado==1){ // enviada
-                    $balance = new Balance;
-                    $balance->total = $gc->monto;
-                    $balance->orden_id = 0;
-                    $balance->user_id = Yii::app()->user->id;
-                    $balance->tipo = 2; // Giftcard
+            if(isset($gc)){ // existe
+                if($gc->beneficiario == $user->email){ // Asegurando que quien cobre sea el beneficiario
+                    if($gc->estado==1){ // enviada
+                        $balance = new Balance;
+                        $balance->total = $gc->monto;
+                        $balance->orden_id = 0;
+                        $balance->user_id = Yii::app()->user->id;
+                        $balance->tipo = 2; // Giftcard
 
-                    if($balance->save()){
-                        $gc->saveAttributes(array('estado'=>2)); // aplicada
-                        Yii::app()->user->setFlash('success',"Su Gift Card ha sido aplicada correctamente y ya se encuentra el saldo disponible.");
-                    }    
+                        if($balance->save()){
+                            $gc->saveAttributes(array('estado'=>2)); // aplicada
+                            Yii::app()->user->setFlash('success',"Su Gift Card ha sido aplicada correctamente y ya se encuentra el saldo disponible.");
+                        }   
+
+                        /* Enviando email de confirmación */
+                        $model = Giftcard::model()->findByPk($gc->id);
+                        
+                        $message = new YiiMailMessage;
+                        $message->view = "mail_template";
+                        $subject = 'Se ha cargado tu tarjeta de regalo en Sigma Tiendas';  
+                        $body = '<h2>¡Se ha cargado el balance de tu tarjeta de regalo!</h2>
+                            Monto Tarjeta de Regalo: '.$model->monto.' Bs.<br><br>
+                            Balance total disponible: <b>'.Balance::model()->getTotal().' Bs.</b>. <br><br>
+                            Sigmatiendas.com';
+                        $params = array('subject'=>$subject, 'body'=>$body);
+                        $message->subject = $subject;
+                        $message->view = "mail_template";
+                        $message->setBody($params, 'text/html');                
+                        $message->addTo($gc->beneficiario);
+                        $message->from = array(Yii::app()->params["adminEmail"] => 'Sigma Tiendas');
+                        Yii::app()->mail->send($message);
+                    }
+                    else{
+                        Yii::app()->user->setFlash('error', 'La Gift Card ya fue aplicada o se encuentra inactiva.');
+                        $this->redirect(array('aplicar'));
+                    }
                 }
                 else{
-                    Yii::app()->user->setFlash('error', 'La Gift Card ya fue aplicada o se encuentra inactiva.');
-                    $this->redirect(array('aplicar'));
-                }
+                        Yii::app()->user->setFlash('error', 'Este código esá asociado a otro usuario. Inicie sesión con las credenciales correspondientes');
+                        $this->redirect(array('aplicar'));
+                    }
             }
             else{
                 Yii::app()->user->setFlash('error', 'El código de Gift Card que ingresó no existe.');

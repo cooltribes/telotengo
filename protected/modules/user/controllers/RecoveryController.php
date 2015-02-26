@@ -50,8 +50,9 @@ class RecoveryController extends Controller
 							//userModel is passed to the view
 							$body=$this->renderPartial('//mail/mail_chngpsswd_request', array( 'activation_url'=>$activation_url ),true);
 							$message->setSubject('Recuperación de contraseña');
-							$message->setBody(array('body'=>$body), 'text/html');
-							 
+							$message->setBody(array('body'=>$body,"undercomment"=>"¿No pediste restablecer tu contraseña? Si no pediste cambiar tu contraseña,
+								es probable que otro usuario haya introducido tu nombre de usuario o dirección de correo electrónico por error al intentar restablecer su contraseña.
+								Si ese es el caso, no es necesario tomar ninguna medida y puedes ignorar este mensaje."), 'text/html');
 							$message->addTo($user->email);
 							$message->from = array(Yii::app()->params['adminEmail'] => "Sigma Tiendas");
 							Yii::app()->mail->send($message);
