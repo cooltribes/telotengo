@@ -50,6 +50,7 @@
             <?php $this->widget('bootstrap.widgets.TbButton', array(
                 'buttonType'=>'submit',
                 'type'=>'primary',
+                'url'=>$this->createUrl('addAddress',array('img'=>1)),
                 'htmlOptions'=>array('class'=>'form-control'),
                 'label'=>$model->isNewRecord ? 'Crear' : 'Guardar',
             )); ?>

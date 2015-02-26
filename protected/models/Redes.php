@@ -56,7 +56,7 @@ class Redes extends CActiveRecord
 			'id' => 'ID',
 			'tipo_id' => 'Tipo',
 			'users_id' => 'Users',
-			'valor' => 'Valor',
+			'valor' => 'URL',
 		);
 	}
 

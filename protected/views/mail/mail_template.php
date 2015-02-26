@@ -52,7 +52,7 @@
             <td width="100%"><div style=" width:100%; height:3px; background-color:#ba1928; width:100%; margin-bottom: 20px;"></div></td>
         </tr>
         <tr>
-            <td width="3%"></td>
+
             <td> <?php if(isset($undercomment)) echo $undercomment; ?></td>
         </tr>
         <tr>

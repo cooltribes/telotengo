@@ -9,7 +9,7 @@ $this->breadcrumbs=array(
         <h1 class="col-md-10">Mis listas de deseos</h1>
         <div class="col-md-2 margin_top_medium">
             <?php
-                echo CHtml::link('<i class="glyphicon glyphicon-plus"></i> Nueva lista', $this->createUrl('create'), array('class'=>'btn btn-success', 'role'=>'button'));
+                echo CHtml::link('<i class="glyphicon glyphicon-plus"></i> Nueva lista', $this->createUrl('create'), array('class'=>'btn btn-success pull-right', 'role'=>'button'));
             ?>
         </div>
     </div>

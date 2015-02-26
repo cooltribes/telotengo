@@ -335,6 +335,7 @@ class OrdenController extends Controller
 		{
 			$modeloDetalle = New DetalleOrden;
 			$modeloDetalle->attributes = $_POST['DetalleOrden'];
+            $modeloDetalle->fecha = date("Y-m-d h:i:s",strtotime(str_replace('/', '-',$_POST['DetalleOrden']['fecha'])));
 
 			$modeloDetalle->estado=0; // pago enviado, queda en Default en espera de decision del administrador
 			$modeloDetalle->tipo_pago_id = 2; // deposito o transferencia
@@ -344,7 +345,8 @@ class OrdenController extends Controller
 			Yii::app()->user->setFlash('success',"Su pago se ha registrado exitosamente.");
 			
 			$model->estado = 2; // en espera de confirmacion
-			$model->save();
+		      $model->save();
+		
 		}
 		
 		$this->render('detalle_usuario',array(

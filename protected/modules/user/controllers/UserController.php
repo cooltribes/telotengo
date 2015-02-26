@@ -53,7 +53,7 @@ class UserController extends Controller
 	/**
 	 * Tu cuenta
 	 */
-	public function actionTucuenta()
+	public function actionTucuenta($img = 0)
 	{
 		$model = User::model()->findByPk(Yii::app()->user->id);
         
@@ -93,8 +93,11 @@ class UserController extends Controller
                 }else{
                     if($model->save()){
                         Yii::app()->user->setFlash('success',"Avatar modificado  exitosamente.");
+                      
+                        
                     }else{
                         Yii::app()->user->setFlash('error',"Avatar no pudo ser modificado.");
+                        
                     }
                 }// isset
 

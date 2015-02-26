@@ -1,7 +1,7 @@
-<div class="container-fluid" style="padding: 0 15px;">
-	
-<div class="row">
-<div class="col-md-10 col-md-push-2 main-content" role="main">
+<div class="container" style="padding: 0 15px;">
+<h1>Agregar Red Social</h1>
+<hr class="no_margin_top"> 	
+
 
 <?php
 $this->breadcrumbs=array(
@@ -10,12 +10,11 @@ $this->breadcrumbs=array(
 );
 ?>
 
-<div class="well">
-	<div class="row padding_left_medium">
-		<div class="col-md-6 1">
 
-<h3>Agregar Red Social</h3>
-<hr>
+	<div class="row-fluid">
+	
+
+
 
 <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
     'id'=>'social-form',
@@ -29,36 +28,36 @@ $this->breadcrumbs=array(
 
     <?php echo $form->errorSummary($model); ?>
 
-    <div class="form-group">
-        <?php echo $form->label($model,'tipo_id', array('class'=>'col-sm-2 control-label')); ?>
-        <div class="col-sm-10">
-            <?php echo $form->dropDownList($model,'tipo_id', CHtml::listData(TipoRedes::model()->findAllByAttributes(array('estado'=>1)), 'id', 'nombre'), array('empty' => 'Seleccione...', 'class' => 'form-control')); ?>
-        </div>
-        <?php echo $form->error($model,'tipo_id'); ?>
+    <div class="col-md-6 col-md-offset-3">
+       
+    
+            <?php echo $form->dropDownListRow($model,'tipo_id', CHtml::listData(TipoRedes::model()->findAllByAttributes(array('estado'=>1)), 'id', 'nombre'), array('empty' => 'Seleccione...', 'class' => 'form-control')); ?>
+        
+            <?php echo $form->error($model,'tipo_id'); ?>
     </div>
 
-    <div class="form-group">
-        <?php echo $form->labelEx($model,'valor', array('class'=>'col-sm-2 control-label')); ?>
-        <div class="col-sm-10">
-            <?php echo $form->textField($model,'valor', array('class'=>'form-control', 'placeholder'=>'', 'maxlength'=>205)); ?>
-        </div>
+   <div class="col-md-6 col-md-offset-3 margin_top_small">
+     
+         <?php echo $form->textFieldRow($model,'valor', array('class'=>'form-control', 'placeholder'=>'', 'maxlength'=>205)); ?>
+
         <?php echo $form->error($model,'valor'); ?>
     </div>
 
-    <div class="form-actions">
+     <div class="col-md-6 col-md-offset-3">
         <?php $this->widget('bootstrap.widgets.TbButton', array(
             'buttonType'=>'submit',
             'type'=>'primary',
             'label'=>'Guardar',
+            'htmlOptions'=>array('class'=>'form-control margin_top ')
         )); ?>
 
     </div>
 
 <?php $this->endWidget(); ?>
 
+
 </div>
-</div>
-</div>
-</div>
+
+
 </div>
 </div>

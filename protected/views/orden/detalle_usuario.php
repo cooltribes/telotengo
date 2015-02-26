@@ -12,6 +12,18 @@ $this->breadcrumbs=array(
     
              <h1>Pedido N° <?php echo $model->id; ?> <small class="pull-right"><?php echo $model->getStatus($model->estado); ?><?php echo ($model->estado== 1 || $model->estado==7)?'<br><a class="smallRLink" onclick="paymentDisplay()">Registrar Pago</a>':''; ?></small></h1>
              <hr class="no_margin_top"/>
+             <?php if(Yii::app()->user->hasFlash('success')){?>
+                    <div class="alert in alert-block fade alert-success text_align_center">
+                        <?php echo Yii::app()->user->getFlash('success'); ?> 
+                    </div>
+                <?php } ?>
+                <?php if(Yii::app()->user->hasFlash('error')){?>
+                    <div class="alert in alert-block fade alert-danger text_align_center">
+                        <?php echo Yii::app()->user->getFlash('error'); ?>
+                    </div>
+                <?php } ?>
+             
+             
              <?php 
              if( $model->estado== 1 || $model->estado==7){
                             
@@ -70,6 +82,7 @@ $this->breadcrumbs=array(
                                     // additional javascript options for the date picker plugin
                                     'options'=>array(
                                         'showAnim'=>'fold',
+                                        'dateFormat'=>'dd/mm/yy',
                                     ),
                                     'htmlOptions'=>array(
                              
@@ -145,16 +158,7 @@ $this->breadcrumbs=array(
                             </table>
                  
                     
-				<?php if(Yii::app()->user->hasFlash('success')){?>
-				    <div class="alert in alert-block fade alert-success text_align_center">
-				        <?php echo Yii::app()->user->getFlash('success'); ?> 
-				    </div>
-				<?php } ?>
-				<?php if(Yii::app()->user->hasFlash('error')){?>
-				    <div class="alert in alert-block fade alert-danger text_align_center">
-				        <?php echo Yii::app()->user->getFlash('error'); ?>
-				    </div>
-				<?php } ?>
+				
                     
                     <section>
      

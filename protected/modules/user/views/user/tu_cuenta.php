@@ -125,7 +125,7 @@ $this->breadcrumbs=array(
                                 
                                 ?>
                 <?php else: ?>
-                 <div class="alert alert-info"><span>No tienes redes sociales en tu perfil, regístralas <b><a href="#">aquí</a></b>...</span> </div>                   
+                 <div class="alert alert-info"><span>No tienes redes sociales en tu perfil, regístralas <b><a href="agregarsocial">aquí</a></b>...</span> </div>                   
                 
                 <?php endif; ?>     
         </section>
