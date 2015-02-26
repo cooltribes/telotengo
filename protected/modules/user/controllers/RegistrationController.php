@@ -62,11 +62,12 @@ class RegistrationController extends Controller
 	                            $message->subject = $subject;
 	                            $message->view = "mail_template";
 	                            $body = '<h2>¡Bienvenido a Sigma Tiendas!</h2>
-	                                Recibes este correo electrónico porque te has registrado en Sigmatiendas.com. 
-	                                Por favor valida tu cuenta haciendo clic en el enlace que aparece a continuación:
-	                                <br/><br/><a href="'.$activation_url.'">Clic aquí</a>';
+	                                Este correo electrónico indica el comienzo de tu registro en Sigmatiendas.com.
+	                                <br/>Por favor valida tu cuenta haciendo clic en el enlace que aparece a continuación:
+
+	                                <br/><br/><a href="'.$activation_url.'">Haz clic aquí para validar tu cuenta</a>';
 	                            $message->from = array(Yii::app()->params['adminEmail'] => "Sigma Tiendas");
-	                            $message->setBody($body, 'text/html');                
+	                            $message->setBody(array("body"=>$body, "undercomment"=>"El siguiente paso es completar tu perfil, para que puedas realizar compras de manera más fácil y cómoda."),'text/html');              
 	                            $message->addTo($model->email);
 
 	                            Yii::app()->mail->send($message);

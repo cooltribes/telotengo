@@ -119,48 +119,33 @@ class OrdenController extends Controller
 				$estado = new Estado;
 										
 				$estado->estado = 4;
-				$estado->user_id = Yii::app()->user->id; // quien cancelo la orden
+				$estado->user_id = Yii::app()->user->id; // usuario que envio la orden, admin
 				$estado->fecha = date("Y-m-d H:i:s");
 				$estado->orden_id = $orden->id;
 						
 				if($estado->save())
 				{
 						$user = User::model()->findByPk($orden->users_id);		
-						/*$message            = new YiiMailMessage;
-						$message->view = "mail_template";
-						$subject = 'Tu compra en Personaling #'.$orden->id.' ha sido enviada';
-						$body = "Nos complace informarte que tu pedido #".$orden->id." esta en camino y pronto podrás disfrutar de tu compra
-								<br/>
-								<br/>
-								Puedes hacer seguimiento a tu pedido a través de la página de Zoom: http://www.grupozoom.com con el siguiente número de seguimiento: ".$orden->tracking." <br/> 
-								";
-						$params              = array('subject'=>$subject, 'body'=>$body);
-						$message->subject    = $subject;
-						$message->setBody($params, 'text/html');                
-						$message->addTo($user->email);
-						$message->from = array('operaciones@personaling.com' => 'Tu Personal Shopper Digital');
-						Yii::app()->mail->send($message);*/
 						
-					/*
-						// Enviar correo cuando se envia la compra
-						$user = User::model()->findByPk($orden->user_id);
-						$message             = new YiiMailMessage;
-						//this points to the file test.php inside the view path
-						$message->view = "mail_template";
-						$subject = 'Tu compra en Pesonaling #'.$orden->id.' ha sido enviada';
-						$body = "Nos complace informarte que tu pedido #".$orden->id." ha sido enviado </br>
-								</br>
-								Empresa: Zoom </br>
-								Número de seguimiento: ".$orden->tracking." </br> 
-								";
-						$params              = array('body'=>$body);
-						$message->subject    = $subject;
-						$message->setBody($params, 'text/html');
-						$message->addTo($user->email);
-						$message->from = array('operaciones@personaling.com' => 'Tu Personal Shopper Digital');
-						
-						Yii::app()->mail->send($message);					
-					*/
+						/* Enviando email de confirmación */
+                        $message = new YiiMailMessage;
+                        $subject = 'Tu compra #'.$orden->id.' ha sido despachada';                                
+                        $message->subject = $subject;
+                        $message->view = "mail_template";
+                        $body = '<h2>Felicidades</h2>
+                            Tu compra #'.$orden->id.' ya está en camino y en los próximos días llegará hasta tus manos.
+                            <br/><br/>Datos de despacho:
+							<br/>No. de Referencia: '.$orden->tracking.'
+							<br/>Dirección destino: '.$orden->direccionEnvio->direccion_1.', '.$orden->direccionEnvio->ciudad->nombre.', '.$orden->direccionEnvio->provincia->nombre.'
+							<br/>Recibe: '.$orden->direccionEnvio->nombre.'
+							<br/>Envío por: DHL / Pago a destino
+							<br/>Monto de envío: '.$orden->envio.'
+							<br/><br/>Gracias por confiar en nosotros';
+                        $message->from = array(Yii::app()->params['adminEmail'] => "Sigma Tiendas");
+                        $message->setBody(array("body"=>$body, "undercomment"=>"Si tienes alguna pregunta acerca de tu cuenta, o cualquier otro asunto, por favor contáctanos en soporte@sigmatiendas.com"),'text/html');              
+                        $message->addTo($user->email);
+
+                        Yii::app()->mail->send($message);
 					
 					Yii::app()->user->setFlash('success', 'Se ha enviado la orden.');
 					
