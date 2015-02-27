@@ -91,7 +91,7 @@ class Producto extends CActiveRecord
 			'calificacionProductos' => array(self::HAS_MANY, 'CalificacionProducto', 'producto_id'),
 			'categorias' => array(self::MANY_MANY, 'Categoria', 'tbl_categoria_has_tbl_producto(categoria_id, producto_id)'),
 			'categoriaHasTblProductos' => array(self::HAS_MANY, 'CategoriaHasTblProducto', 'producto_id'),
-			'inventarios' => array(self::HAS_MANY, 'Inventario', 'producto_id'),
+			'inventarios' => array(self::HAS_ONE, 'Inventario', 'producto_id'),
 			'preguntas' => array(self::HAS_MANY, 'Pregunta', 'producto_id'),
 			'marca' => array(self::BELONGS_TO, 'Marca', 'marca_id'),
 			'imagenes' => array(self::HAS_MANY, 'Imagenes', 'producto_id','order' => 'k.orden ASC', 'alias' => 'k'),
@@ -320,6 +320,11 @@ class Producto extends CActiveRecord
 		}else{
 			return Yii::app()->baseUrl."/producto/detalle/".$this->id;
 		}
+	}
+
+	/* Funcion para conseguir los ultimos 3 productos*/
+	public function getLast(){
+	    return $this->findAll(array('limit'=>4,'offset'=>0,'order'=>'id DESC', 'condition'=>'estado=1'));
 	}
 	
 }

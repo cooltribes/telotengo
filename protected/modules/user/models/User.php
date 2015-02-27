@@ -227,6 +227,11 @@ class User extends CActiveRecord
 		
     }
 
+	/* Funcion para conseguir los ultimos registrados */
+	public function getLast(){
+	    return $this->findAll(array('limit'=>4,'offset'=>0,'order'=>'id DESC'));
+	}
+
     public function hasEmpresasVendedoras() {
     	$empresas = EmpresasHasUsers::model()->countByAttributes(array('users_id'=>$this->id));
         if($empresas > 0){

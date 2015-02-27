@@ -102,7 +102,7 @@ class Orden extends CActiveRecord
 		return array(
 			'detalleOrdens' => array(self::HAS_MANY, 'DetalleOrden', 'orden_id'),
 			'tipoPago' => array(self::BELONGS_TO, 'TipoPago', 'tipo_pago_id'),
-			'users' => array(self::BELONGS_TO, 'Users', 'users_id'),
+			'users' => array(self::BELONGS_TO, 'User', 'users_id'),
 			'direccionEnvio' => array(self::BELONGS_TO, 'DireccionEnvio','direccionEnvio_id'),
 			'ordenHasInventarios' => array(self::HAS_MANY, 'OrdenHasInventario', 'orden_id'),
 			'totalpagado' => array(self::STAT, 'DetalleOrden', 'orden_id',
@@ -266,6 +266,11 @@ class Orden extends CActiveRecord
 			return false; 
 
 		
+	}
+
+	/* Funcion para conseguir las ultimas ventas */
+	public function getLast(){
+	    return $this->findAll(array('limit'=>4,'offset'=>0,'order'=>'id DESC'));
 	}
 
 	public function getStatus($status){
