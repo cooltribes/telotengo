@@ -62,7 +62,7 @@ else
 
 			    		foreach($ultimas_compras as $orden){
 			    			echo "<tr>";
-			    			echo "<td>".$orden->users->profile->first_name." ".$orden->users->profile->last_name."</td>";
+			    			echo "<td><a href='".Yii::app()->baseUrl."/orden/detalle/".$orden->id."'>".$orden->users->profile->first_name." ".$orden->users->profile->last_name."</a></td>";
 			    			echo $orden->getStatus($orden->estado);
 			    			echo "<td>".date('d-m-Y',strtotime($orden->fecha))."</td>";
 			    			echo "<td>".$orden->envio." Bs.</td>";
@@ -87,7 +87,7 @@ else
 
 			    		foreach($ultimos_usuarios as $users){
 			    			echo "<tr>";
-			    			echo "<td>".$users->profile->first_name." ".$users->profile->last_name."</td>";
+	echo "<td><a href='".Yii::app()->baseUrl."/user/profile/profile/id/".$users->id."'>".$users->profile->first_name." ".$users->profile->last_name."</a></td>";
 			    			echo "<td>".$users->email."</td>";
 			    			echo "<td>".date('d-m-Y',strtotime($users->create_at))."</td>";
 			    			echo "<td>";

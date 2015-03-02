@@ -23,9 +23,9 @@ class ActivationController extends Controller
                 $message->view = "mail_template";
                 $body = 'Bienvenido(a) a SigmaTiendas.
 
-                	<br/><br/>Tu correo electrónico registrado: '.$_GET['email'].'
+                	<br/><br/>Tu correo electrónico registrado: '.$_GET['email'].', 
 
-                	Cuando accedas a tu cuenta, podrás:<br/>
+                	Cuando accedas a tu cuenta, podrás:<br/><br/>
                 	<br/>– Proceder más rápido en el proceso de compra
                 	<br/>– Verificar el estado de tus pedidos
                 	<br/>– Ver Pedidos antiguos
