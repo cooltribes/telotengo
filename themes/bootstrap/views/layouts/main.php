@@ -176,12 +176,12 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <span class="glyphicon glyphicon-user glyphiconLarge"></span><br/>
                     Cuenta<b class="caret"></b></a>
-                    <ul class="dropdown-menu"> 
-                        <li class="menu-item dropdown ">
-                           <a href="<?php echo Yii::app()->baseUrl; ?>/orden/listado"> Tus Pedidos</a>
-                        </li>
+                    <ul class="dropdown-menu">
                         <li class="menu-item dropdown ">
                             <a href="<?php echo Yii::app()->baseUrl; ?>/user/user/tucuenta">Tu Cuenta</a>
+                        </li>
+                        <li class="menu-item dropdown ">
+                           <a href="<?php echo Yii::app()->baseUrl; ?>/orden/listado"> Tus Pedidos</a>
                         </li>
                         <li class="menu-item dropdown ">
                             <a href="<?php echo Yii::app()->baseUrl; ?>/user/profile/edit">Editar Perfil</a>
