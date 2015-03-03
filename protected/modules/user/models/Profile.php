@@ -172,7 +172,7 @@ class Profile extends UActiveRecord
 		return $data[$fieldName];
 	}
 	
-	public function getFields() {
+	public function getFields(){
 		if ($this->regMode) {
 			if (!$this->_modelReg)
 				$this->_modelReg=ProfileField::model()->forRegistration()->findAll();
@@ -183,4 +183,41 @@ class Profile extends UActiveRecord
 			return $this->_model;
 		}
 	}
+
+	public function getPercentage(){
+
+		$porcentaje = 0;
+		$usuario = $this->user;
+		$redes = Redes::model()->findAllByAttributes(array('users_id'=>$usuario->id));
+		$wish = Wishlist::model()->findAllByAttributes(array('users_id'=>$usuario->id));
+
+		if($usuario->avatar_url!="")
+			$porcentaje += 30;
+
+		if(isset($redes) && count($redes)>1) // redes sociales
+			$porcentaje += 25;
+
+		if($this->telefono != "") // telefono
+			$porcentaje += 10;
+
+		if($this->sexo) // genero
+			$porcentaje += 10;
+
+		if(isset($wish) && count($wish)>0) // wishlist
+			$porcentaje += 25;
+
+		return $porcentaje;
+	}
+
+	public function isAllPercentage(){
+		$total = $this->getPercentage();
+
+		if($total == 100){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+
 }

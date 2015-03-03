@@ -41,14 +41,11 @@ $this->breadcrumbs=array(
                         <p class="muted">Miembro desde: <?php echo date('d/m/Y', strtotime($model->create_at)); ?></p>
                         
                        	<div class="progress">
-							<div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-						    60%
+							<div class="progress-bar" role="progressbar" aria-valuenow="<?php echo $model->profile->getPercentage(); ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $model->profile->getPercentage(); ?>%;">
+						    <?php echo $model->profile->getPercentage(); ?>%
 						  	</div>
-						</div>
-						
-						
-						
-						<p class="muted margin_top_minus"><small>60% del perfil completado.</small></p>
+						</div>					
+						<p class="muted margin_top_minus"><small><?php echo $model->profile->getPercentage()."% del perfil completado."; ?></small></p>
                         
                     </div>
                 </div>
