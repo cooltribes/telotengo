@@ -261,7 +261,25 @@ class WishlistController extends Controller
 			$wishlisthas->save();
 			
 			Yii::app()->user->setFlash('success',"Producto agregado a la nueva lista de deseos.");
-		
+			
+			$user = User::model()->findByPk($_POST['id_user']);
+			$porcentaje = $user->profile->isAllPercentage();
+                if($porcentaje && ($user->perfil_completo==0)){
+                	$user->perfil_completo = 1;
+                	if($user->save()){
+                		# Sumar 500 bs al balance
+                		$balance = new Balance;
+                		$balance->total = 500;
+                		$balance->orden_id = 0;
+                		$balance->user_id = $user->id;
+                		$balance->tipo = 5;
+                		$balance->save();
+                		Yii::app()->user->setFlash('success', 'Producto agregado a la nueva lista de deseos. Además hemos sumado 500 Bs a tu saldo.');
+               			$user->mailCompletarPerfil(); // correo por completar perfil
+               		}
+                }
+
+
 			$this->redirect(array('wishlist/listado'));	
 		}
 		else{
