@@ -37,26 +37,59 @@ else
 			        <?php echo Yii::app()->user->getFlash('error'); ?>
 			    </div>
 			<?php } ?>
-
-        	<div class="bg_color3 margin_bottom_small padding_small">
-        		<div class="col-md-3">Ventas totales: <?php echo Yii::app()->numberFormatter->formatDecimal($sumatoria); ?> Bs.</div>
-        		<div class="col-md-3">Usuarios registrados: <?php echo $usuarios; ?></div>
-        		<div class="col-md-3">Promedio de venta: <?php echo Yii::app()->numberFormatter->formatDecimal($promedio); ?> Bs/Venta.</div>
-        		<div class="col-md-3">Productos activos: <?php echo $productos_activos; ?></div>
-        	</div>
+                
+        	<div class="row-fluid">
+        	    
+        	    
+        	           <div class="col-md-2 text-right">
+        	               <h3 class="no_margin_bottom"><?php echo $usuarios; ?></h3>
+        	               <h4>Usuarios registrados</h4>
+        	           </div>
+        	           <div class="col-md-2 text-right">
+                           <h3 class="no_margin_bottom"><?php echo $ventas ?></h3>
+                           <h4>Ventas Registradas</h4>
+                       </div>
+                       <div class="col-md-2 text-right">
+                           <h3 class="no_margin_bottom"><?php echo Yii::app()->numberFormatter->formatDecimal($sumatoria); ?><small> Bs</small></h3>
+                           <h4>Total Vendido</h4>
+                       </div>
+                       <div class="col-md-3 text-right">
+                           <h3 class="no_margin_bottom"><?php echo Yii::app()->numberFormatter->formatDecimal($promedio); ?><small> Bs/Venta</small></h3>
+                           <h4>Promedio de venta</h4>
+                       </div>
+                       <div class="col-md-2 text-right">
+                            <h3 class="no_margin_bottom"><?php echo $productos_activos; ?></h3>
+                            <h4>Productos activos</h4>
+                       </div>
+        	            
+        	            
+        	            
+        	                 	            
+        	            
+        	           
+          	       
+                  
+                       
+                        
+                                                
+                        
+                      
+           
+            </div>
 	      
     	<div class="row">
         	<div class="col-lg-12 margin_top">
-         		<div class="well"> 
-					<h4>Últimas compras</h4>
-					<hr class="no_margin_top" />
+         		
+					<h4 class="margin_top">Últimas compras</h4>
+					<hr class="margin_top_xsmall_minus"/>
+
 					<table class="table-striped table">
 			    		<tr>
-			    			<td>Cliente</td>
-			    			<td>Estado</td>
-			    			<td>Fecha</td>
-			    			<td>Envio</td>
-			    			<td>Total</td>
+			    			<td class="no_border bg_white no_padding_bottom"><b>Cliente</b></td>
+			    			<td class="no_border bg_white no_padding_bottom"><b>Estado</b></td>
+			    			<td class="no_border bg_white no_padding_bottom"><b>Fecha</b></td>
+			    			<td class="no_border bg_white no_padding_bottom"><b>Envio</b></td>
+			    			<td class="no_border bg_white no_padding_bottom"><b>Total</b></td>
 			    		</tr>
 			    		<?php $ultimas_compras = Orden::model()->getLast();
 
@@ -71,17 +104,18 @@ else
 			    		}
 			    		?>
 			    	</table>
-				</div>
+			
 
-				<div class="well">
-			    	<h4>Ultimos usuarios registrados</h4>
-			    	<hr class="no_margin_top" />
+			
+			    	<h4 class="margin_top">Ultimos usuarios registrados</h4>
+			    	<hr class="margin_top_xsmall_minus"/>
+	
 			    	<table class="table-striped table">
 			    		<tr>
-			    			<td>Nombre</td>
-			    			<td>Email</td>
-			    			<td>Fecha de registro</td>
-			    			<td>Estado</td>
+			    			<td class="no_border bg_white no_padding_bottom"><b>Nombre</b></td>
+			    			<td class="no_border bg_white no_padding_bottom"><b>Email</b></td>
+			    			<td class="no_border bg_white no_padding_bottom"><b>Fecha de registro</b></td>
+			    			<td class="no_border bg_white no_padding_bottom"><b>Estado</b></td>
 			    		</tr>
 			    		<?php $ultimos_usuarios = User::model()->getLast();
 
@@ -110,18 +144,17 @@ else
 			    		}
 			    		?>
 			    	</table>
-				</div>
+			
 
-				<div class="well">
-			    	<h4>Ultimos productos añadidos</h4>
-			    	<hr class="no_margin_top" />
+			    	<h4 class="margin_top">Ultimos productos añadidos</h4>
+			    	<hr class="margin_top_xsmall_minus"/>
 			    	<table class="table-striped table">
 			    		<tr>
-			    			<td>Nombre</td>
-			    			<td>Marca</td>
-			    			<td>Destacado</td>
-			    			<td>Precio</td>
-			    			<td>Cantidad</td>
+			    			<td class="no_border bg_white no_padding_bottom"><b>Nombre</b></td>
+			    			<td class="no_border bg_white no_padding_bottom"><b>Marca</b></td>
+			    			<td class="no_border bg_white no_padding_bottom"><b>Destacado</b></td>
+			    			<td class="no_border bg_white no_padding_bottom"><b>Precio</b></td>
+			    			<td class="no_border bg_white no_padding_bottom"><b>Cantidad</b></td>
 			    		</tr>
 			    		<?php $ultimos_productos = Producto::model()->getLast();
 
@@ -137,7 +170,7 @@ else
 			    		?>
 
 			    	</table>
-				</div>
+		
 
 		</div>
       </div>
