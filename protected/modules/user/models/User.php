@@ -78,7 +78,7 @@ class User extends CActiveRecord
 			array('username', 'unique', 'message' => UserModule::t("This user's name already exists.")),
 			//array('username', 'match', 'pattern' => '/^[A-Za-z0-9_@]+$/u','message' => UserModule::t("Incorrect symbols (A-z0-9aaa).")),
 			array('email', 'unique', 'message' => UserModule::t("This user's email address already exists.")),
-			array('id, username, password, email, activkey, create_at, lastvisit_at, superuser, status, type, newsletter, facebook_id, avatar_url', 'safe', 'on'=>'search'),
+			array('id, username, password, email, activkey, create_at, lastvisit_at, superuser, status, type, newsletter, facebook_id, avatar_url, perfil_completo', 'safe', 'on'=>'search'),
 		):array()));
 	}
 
@@ -117,6 +117,7 @@ class User extends CActiveRecord
 			'type' => '¿Vas a registrar una empresa?',
 			'newsletter' => '¿Quieres recibir novedades por email?',
 			'avatar_url'=>'Avatar',
+			'perfil_completo' => 'Perfil Completo',
 		);
 	}
 	
@@ -136,7 +137,7 @@ class User extends CActiveRecord
                 'condition'=>'superuser=1',
             ),
             'notsafe'=>array(
-            	'select' => 'id, username, password, email, activkey, create_at, lastvisit_at, superuser, status, facebook_id, avatar_url',
+            	'select' => 'id, username, password, email, activkey, create_at, lastvisit_at, superuser, status, facebook_id, avatar_url, perfil_completo',
             ),
         );
     }
@@ -145,7 +146,7 @@ class User extends CActiveRecord
     {
         return CMap::mergeArray(Yii::app()->getModule('user')->defaultScope,array(
             'alias'=>'user',
-            'select' => 'user.id, user.username, user.email, user.create_at, user.lastvisit_at, user.superuser, user.status, user.type, user.avatar_url, user.facebook_id, user.activkey',
+            'select' => 'user.id, user.username, user.email, user.create_at, user.lastvisit_at, user.superuser, user.status, user.type, user.avatar_url, user.facebook_id, user.activkey, user.perfil_completo',
         ));
     }
 	
@@ -240,4 +241,28 @@ class User extends CActiveRecord
         	return false;
         }
     }
+
+    /* 
+	Action de enviar email al momento de completar el perfil
+	*/
+	public function mailCompletarPerfil(){
+		$user = User::model()->findByPk(Yii::app()->user->id);
+
+		$message = new YiiMailMessage;
+        $subject = 'Haz completado tu perfil';                                
+        $message->subject = $subject;
+        $message->view = "mail_template";
+        $body = '<h2>¡Felicitaciones, '.$user->profile->first_name.'!</h2>
+				Nos complace informarte que te obsequiaremos un monto de Bs. 500 en tu saldo de cuenta, que podrás usar en tu próxima compra. <br/><br/>
+				Para ver tu saldo de tu cuenta ingresa en la sección <b>Tu Perfil</b>.<br/>
+				Recuerda que a tu saldo de cuenta puedes ir abonando también con Tarjetas de regalo.<br/>
+				Para más información puedes visitar la sección Formas de Pago de nuestra página web.<br/><br/>
+				¡Disfruta tus compras en SigmaTiendas!';
+        $message->from = array(Yii::app()->params['adminEmail'] => "Sigma Tiendas");
+        $message->setBody(array("body"=>$body, "undercomment"=>"Si tienes alguna pregunta acerca de tu cuenta, o cualquier otro asunto, por favor contáctanos en soporte@sigmatiendas.com"),'text/html');              
+        $message->addTo($user->email);
+
+        Yii::app()->mail->send($message);
+	}
+
 }

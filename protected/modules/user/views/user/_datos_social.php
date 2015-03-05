@@ -5,7 +5,7 @@
 	?>
 
 	<td><?php echo $tipo->nombre; ?></td> 
-	<td><?php echo $data->valor; ?></td>
+	<td><a href="<?php echo $data->valor; ?>" target="_blank"><?php echo $data->valor; ?></a></td>
 	
 	<?php
 	

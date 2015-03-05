@@ -84,7 +84,26 @@ class UserController extends Controller
     
                         $image = Yii::app()->image->load($nombre.$extension);
                         $image->resize(270, 270);
-                        $image->save($nombre.'_thumb'.$extension);                  
+                        $image->save($nombre.'_thumb'.$extension);
+
+                        # enviar correo por perfil completo
+                        $porcentaje = $model->profile->isAllPercentage();
+
+		                if($porcentaje && $model->perfil_completo==0){
+		                	$model->perfil_completo = 1;
+		                	if($model->save()){
+		                		# Sumar 500 bs al balance
+		                		$balance = new Balance;
+		                		$balance->total = 500;
+		                		$balance->orden_id = 0;
+		                		$balance->user_id = $model->id;
+		                		$balance->tipo = 5;
+		                		$balance->save();
+		                		Yii::app()->user->setFlash('success', 'Avatar modificado exitosamente. Además hemos sumado 500 Bs a tu saldo.');
+		               			$model->mailCompletarPerfil(); // correo por completar perfil
+		               		}
+		                }
+
                     }
                     else {
                         $marca->delete();
@@ -204,12 +223,30 @@ class UserController extends Controller
 		
 		if(isset($_POST['Redes'])){
 			
-			$user = User::model()->findByPk(Yii::app()->user->id);	
+			$user = User::model()->findByPk(Yii::app()->user->id);
+			$profile = $user->profile;
 			$model->users_id = $user->id;
 			
             $model->attributes=$_POST['Redes'];
             if($model->save()){
                 Yii::app()->user->setFlash('success', 'Datos guardados con éxito');
+                $porcentaje = $user->profile->isAllPercentage();
+
+                if($porcentaje && ($user->perfil_completo==0)){
+                	$user->perfil_completo = 1;
+                	if($user->save()){
+                		# Sumar 500 bs al balance
+                		$balance = new Balance;
+                		$balance->total = 500;
+                		$balance->orden_id = 0;
+                		$balance->user_id = $user->id;
+                		$balance->tipo = 5;
+                		$balance->save();
+                		Yii::app()->user->setFlash('success', 'Datos guardados con éxito. Además hemos sumado 500 Bs a tu saldo.');
+               			$user->mailCompletarPerfil(); // correo por completar perfil
+               		}
+                }
+
             }else{
             	Yii::app()->user->setFlash('error','Error al guardar los datos');
             }
@@ -219,7 +256,7 @@ class UserController extends Controller
 		$this->render('agregar_dato',array(
 			'model'=>$model,
 		));
-	}
+	}	
 
 	public function actionPrivacidad(){
 			
