@@ -1,93 +1,86 @@
-<div class="container-fluid" style="padding: 0 15px;">
+<div class="container">
 
 <?php
 $this->breadcrumbs=array(
 	'Pedidos'=>array('admin'),
 	'Devolución',
 );
-
 ?>
-	
+
 	<?php if(Yii::app()->user->hasFlash('success')){?>
 		<div class="alert in alert-block fade alert-success text_align_center">
 	<?php echo Yii::app()->user->getFlash('success'); ?> 
 	</div>
 	<?php } ?>
 	<?php if(Yii::app()->user->hasFlash('error')){?>
-		<div class="alert in alert-block fade alert-error text_align_center">
+		<div class="alert in alert-block fade alert-danger text_align_center">
 			<?php echo Yii::app()->user->getFlash('error'); ?>
 		</div>
 	<?php } ?>	
-	
-    <div class="container">
-        <div class="row">
-            <!-- COLUMNA PRINCIPAL DERECHA ON // OJO: esta de primera para mejorar el SEO sin embargo por CSS se ubica visualmente a la derecha -->
-            <div class="col-md-10 col-md-offset-1 main-content" role="main">
-                    <div class="page-header">
-                        <h1>
-                           Procesar devolución - Pedido #<?php echo $model->id; ?>
-                        </h1>
-                    </div>
-                    
-                    <section>
-                                             
-                        <div>
 
-                            <h4>Detalles del pedido</h4>
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th>Nombre del producto</th>
-                                        <th>Precio</th>
-                                        <th>Cantidad</th>
-                                        <th>Motivo</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <input type="hidden" id="orden_id" value="<?php echo $model->id; ?>" />
-                                    <?php
-                                    foreach ($model->ordenHasInventarios as $orden_inventario) {
-                                        $caracteristicas_nosql = Caracteristica::model()->findAllByAttributes(array('inventario_id'=>$orden_inventario->inventario->id));                                                     
-                                        $caracteristicas = '';
-                                        $cont = 1;
-                                        foreach ($caracteristicas_nosql as $c_nosql) {
-                                            if($cont == sizeof($caracteristicas_nosql)){
-                                                $caracteristicas .= $c_nosql->valor;
-                                            }else{
-                                                $caracteristicas .= $c_nosql->valor.', ';
-                                            }
-                                            $cont++;
-                                        }
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1 main-content" role="main">
+            <div class="page-header">
+                <h1>Procesar devolución - Pedido #<?php echo $model->id; ?></h1>
+            </div>                    
+    
+        <section>                                     
+            <div>
+                <h4>Detalles del pedido</h4>
+                    <table class="table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Imagen</th>
+                            <th>Nombre del producto</th>
+                            <th>Marca</th>
+                            <th>Precio</th>
+                            <th>Cantidad</th>
+                            <th>Motivo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <input type="hidden" id="orden_id" value="<?php echo $model->id; ?>" />
+                        <?php
+                        foreach ($model->ordenHasInventarios as $orden_inventario) {
+                            $inventario = Inventario::model()->findByAttributes(array('id'=>$orden_inventario->inventario->id)); // consigo existencia actual y precio
+                            $indiv = Producto::model()->findByPk($inventario->producto_id); // consigo nombre
+                            $marca = Marca::model()->findByPk($indiv->marca_id);
 
-                                       
-                                        ?>
-                                        <tr>
-                                            <td>
-                                                <input id="precio-<?php echo $orden_inventario->id; ?>" type='hidden' value="<?php echo $orden_inventario->precio; ?>" />
-                                                <input class='check' id="<?php echo $orden_inventario->id; ?>" type='checkbox' value='' />
-                                            </td>
-                                            <td>
-                                                <div><?php echo $orden_inventario->inventario->producto->nombre; ?></div>
-                                                <div><?php echo $caracteristicas; ?></div>
-                                            </td>
-                                            <td><?php echo $orden_inventario->precio; ?> Bs.</td>
-                                            <td><?php echo $orden_inventario->cantidad; ?></td>
-                                            <td>
-                                                <select disabled="true" id="motivo-<?php echo $orden_inventario->id; ?>" class="input-medium">
-                                                    <option>-- Seleccione --</option>
-                                                    <option>Cambio por otro articulo</option>
-                                                    <option>Devolución por artículo dañado</option>
-                                                    <option>Devolución por insatisfacción</option>
-                                                    <option>Devolución por pedido equivocado</option>
-                                                </select>
-                                            </td>
-                                        </tr>
-                                        <?php
-                                    }
-                                    ?>
-                                </tbody>
-                            </table>
+                            ?>
+                            <tr>
+                                <td>
+                                    <input id="precio-<?php echo $orden_inventario->id; ?>" type='hidden' value="<?php echo $orden_inventario->precio; ?>" />
+                                    <input class='check' id="<?php echo $orden_inventario->id; ?>" type='checkbox' value='' />
+                                </td>
+                                <td><?php
+                                    $imagen = Imagenes::model()->findByAttributes(array('producto_id'=>$indiv->id));
+                                    $foto = CHtml::image(Yii::app()->baseUrl.str_replace(".","_thumb.",$imagen->url), "Imagen ", array("width" => "70", "height" => "70"));
+                                    echo $foto;
+                                ?></td>
+                                <td>
+                                    <div><?php echo $orden_inventario->inventario->producto->nombre; ?></div>
+                                </td>
+                                <td><?php echo $marca->nombre; ?></td>
+                                <td><?php echo $orden_inventario->precio; ?> Bs.</td>
+                                <td><?php echo $orden_inventario->cantidad; ?></td>
+                                <td>
+                                    <select disabled="true" id="motivo-<?php echo $orden_inventario->id; ?>" class="form-control input-medium">
+                                        <option>-- Seleccione --</option>
+                                        <option>Cambio por otro articulo</option>
+                                        <option>Devolución por artículo dañado</option>
+                                        <option>Devolución por insatisfacción</option>
+                                        <option>Devolución por pedido equivocado</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <?php
+                        }
+                        ?>
+                    </tbody>
+                    </table>
+                    <br/>
+                    <table class="pull-right table">
                             <tr>
                                 <th colspan="7"><div class=""><strong>Resumen</strong></div></th>
                             </tr>       

@@ -23,17 +23,12 @@ $this->breadcrumbs=array(
                     </div>
                 <?php } ?>
              
-             
              <?php 
-             if( $model->estado== 1 || $model->estado==7){
-                            
-                            $detalle = new DetalleOrden;
-                                
-                            echo '<div id="pagoForm" class="well well-md row-fluid hide">
-                                <div class="row-fluid padding_left">
-            
-                                     '
-                                    ;
+            if( $model->estado== 1 || $model->estado==7){                
+                $detalle = new DetalleOrden;
+    
+                echo '<div id="pagoForm" class="well well-md row-fluid hide">
+                        <div class="row-fluid padding_left">';
 
                             $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
                                 'id'=>'pago-form',
@@ -157,11 +152,7 @@ $this->breadcrumbs=array(
                                 </tbody>
                             </table>
                  
-                    
-				
-                    
                     <section>
-     
                             <?php
 		                    if($model->estado==4||$model->estado==8||$model->estado==9||$model->estado==10){
 		                        ?>
@@ -203,32 +194,10 @@ $this->breadcrumbs=array(
 		                                    <td><?php echo $model->tracking; ?></td>
 		                                </tr>
 		                            </table>
-
-		                            <?php if(!is_null($tracking))
-		                            { 
-		                                ?>
-		                                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-bordered table-hover table-striped">
-		                                    <tr>
-		                                        <th scope="col">Fecha</th>
-		                                        <!--  <th scope="col">Tipo</th>-->
-		                                        <th scope="col">Estatus</th>
-		                                    </tr>
-		                                    <?php 
-		                                    foreach ($tracking as $track){
-		                                        echo "<tr>
-		                                            <td>".$track->fecha."</td><td>".$track->descripcion_estatus."</td>        
-		                                        </tr>";
-		                                    }
-		                                    ?>
-		                                </table>
-		                                <?php 
-		                            }
-		                            ?>
 		                        </div>      
 		                        <?php
 		                        // envío
 		                    }
-
 
                             if($model->estado == 9 || $model->estado == 10){ //hay alguna devolución, muestro el detalle
                                 $total_devoluciones = 0;
@@ -237,7 +206,8 @@ $this->breadcrumbs=array(
                                 ?>
                                 <div class="well well-md">
                                     Productos devueltos:
-                                    <table class="table">
+                                    <hr class="no_margin_top" />
+                                    <table class="table table-striped ">
                                         <thead>
                                             <tr>
                                                 <th>Nombre del producto</th>
@@ -252,24 +222,10 @@ $this->breadcrumbs=array(
                                             foreach ($model->ordenHasInventarios as $orden_inventario) {
                                                 $devolucion = Devolucion::model()->findByAttributes(array('orden_has_inventario_id'=>$orden_inventario->id));
                                                 if($devolucion){
-                                                    $caracteristicas_nosql = Caracteristica::model()->findAllByAttributes(array('inventario_id'=>$orden_inventario->inventario->id));                                                     
-                                                    $caracteristicas = '';
-                                                    $cont = 1;
-                                                    foreach ($caracteristicas_nosql as $c_nosql) {
-                                                        if($cont == sizeof($caracteristicas_nosql)){
-                                                            $caracteristicas .= $c_nosql->valor;
-                                                        }else{
-                                                            $caracteristicas .= $c_nosql->valor.', ';
-                                                        }
-                                                        $cont++;
-                                                    }
-
-                                                   
                                                     ?>
                                                     <tr>
                                                         <td>
                                                             <div><?php echo $orden_inventario->inventario->producto->nombre; ?></div>
-                                                            <div><?php echo $caracteristicas; ?></div>
                                                         </td>
                                                         <td><?php echo Yii::app()->numberFormatter->formatDecimal($orden_inventario->precio); ?> Bs.</td>
                                                         <td><?php echo $orden_inventario->cantidad; ?></td>
@@ -283,6 +239,7 @@ $this->breadcrumbs=array(
                                             ?>
                                         </tbody>
                                     </table>
+                                    <table class="table">
                                     <tr>
                                         <th colspan="7"><div class=""><strong>Resumen</strong></div></th>
                                     </tr>       
@@ -333,17 +290,12 @@ $this->breadcrumbs=array(
                                 </div>
                                 <?php
                             }
-                            
-		                    
-								
 							
 							?></span> </p>
                             
                             <?php
-                            
-                            if($total>0)
-							{
-								
+                            $detalle = DetalleOrden::model()->findByAttributes(array('orden_id'=>$model->id));
+                            if($detalle->monto>0){	
 								$template = '{summary}
 							    <h2>Pagos</h2><table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-bordered table-hover table-striped">
 							        <tr>
@@ -376,9 +328,7 @@ $this->breadcrumbs=array(
 									),					
 								));  
 									
-							}
-                            
-                            
+							}                           
                             ?>                          
                         </div>                        
                         <div>
@@ -450,12 +400,10 @@ $this->breadcrumbs=array(
 		                                            		echo '<li>'.CHtml::link('<i class="glyphicon glyphicon-star"></i> Calificar vendedor', $this->createUrl('calificarVendedor', array('id'=>$orden_inventario->id))).'</li>';
 		                                            	}
 		                                            }
-		                                            //if($model->estado==5||$model->estado==8||$model->estado==9||$model->estado==10){
 		                                            	$reclamo = Reclamo::model()->findByAttributes(array('orden_id'=>$orden_inventario->orden->id, 'empresa_id'=>$orden_inventario->inventario->almacen->empresas_id));
 		                                            	if(!$reclamo){
 		                                            		echo '<li>'.CHtml::link('<i class="glyphicon glyphicon-exclamation-sign"></i> Hacer un reclamo', $this->createUrl('reclamo', array('id'=>$orden_inventario->id))).'</li>';
 		                                            	}
-		                                            //}
 		                                            ?>
 												
 												</ul>
