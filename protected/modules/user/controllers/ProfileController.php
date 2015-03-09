@@ -96,9 +96,29 @@ class ProfileController extends Controller
 			if($model->validate()&&$profile->validate()) {
 				$model->save();
 				$profile->save();
+				Yii::app()->user->setFlash("success", "Cambios actualizados.");
+
+				if($profile->telefono!="" && $profile->sexo){
+					$porcentaje = $profile->isAllPercentage();
+
+	                if($porcentaje && ($model->perfil_completo==0)){
+	                	$model->perfil_completo = 1;
+	                	if($model->save()){
+	                		# Sumar 500 bs al balance
+	                		$balance = new Balance;
+	                		$balance->total = 500;
+	                		$balance->orden_id = 0;
+	                		$balance->user_id = $model->id;
+	                		$balance->tipo = 5;
+	                		$balance->save();
+	                		Yii::app()->user->setFlash('success', 'Cambios actualizados. Además hemos sumado 500 Bs a tu saldo.');
+	               			$model->mailCompletarPerfil(); // correo por completar perfil
+	               		}// save
+	                }// porcentaje
+				} // telefono y genero
+
                 Yii::app()->user->updateSession();
-				Yii::app()->user->setFlash('profileMessage',UserModule::t("Changes is saved."));
-				$this->redirect(array('/user/profile'));
+				$this->redirect(array('/user/user/tucuenta'));
 			} else $profile->validate();
 		}
 
