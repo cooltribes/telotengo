@@ -124,7 +124,8 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                 ?>
                     
                     
-                    <li class="button glyph-padding"><a href="<?php echo Yii::app()->baseUrl; ?>/site/logout" class="white">Salir</a> </li>
+                    <li class="button glyph-padding"><a href="<?php echo Yii::app()->baseUrl; ?>/site/logout" class="white">
+                        Salir</a> </li>
                     <li class="dropdown button glyph-padding">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <span class="white">Administración<b class="caret"></b></span>
@@ -166,7 +167,8 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                     ?>
                     
      
-              <li class="button glyph-padding"><a href="<?php echo Yii::app()->baseUrl; ?>/site/logout"><div class="white">Salir</div></a></li>
+              <li class="button"><a href="<?php echo Yii::app()->baseUrl; ?>/site/logout">
+                  <span class="glyphicon glyphicon-off glyphiconLarge"></span><br/>Salir</a></li>
                         
                 <li class="menu-item dropdown button">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
