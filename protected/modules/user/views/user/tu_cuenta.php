@@ -181,6 +181,10 @@ $this->breadcrumbs=array(
                             array('label'=>'Preguntas Frencuentes', 'icon'=>'glyphicon glyphicon-th', 'url'=>'#'),
                             array('label'=>'¿Cómo funciona?', 'icon'=>'glyphicon glyphicon-question-sign', 'url'=>'#'),
                             array('label'=>'Servicio al cliente', 'icon'=>'glyphicon glyphicon-bookmark', 'url'=>'#'),
+                            
+                            array('label'=>'Salir', 'active'=>false),
+                            array('label'=>'Cerrar Sesión', 'icon'=>'glyphicon glyphicon-off', 'url'=>Yii::app()->baseUrl.'/user/logout'),
+                            
                         ),
                     )); ?>
                     

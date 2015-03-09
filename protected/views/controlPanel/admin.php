@@ -50,12 +50,12 @@ else
                            <h4>Ventas Registradas</h4>
                        </div>
                        <div class="col-md-2 text-right">
-                           <h3 class="no_margin_bottom"><?php echo Yii::app()->numberFormatter->formatDecimal($sumatoria); ?><small> Bs</small></h3>
-                           <h4>Total Vendido</h4>
+                           <h3 class="no_margin_bottom"><?php echo Yii::app()->numberFormatter->formatDecimal($sumatoria); ?></h3>
+                           <h4>Total Vendido<br/><small>(Bs)</small></h4>
                        </div>
                        <div class="col-md-3 text-right">
-                           <h3 class="no_margin_bottom"><?php echo Yii::app()->numberFormatter->formatDecimal($promedio); ?><small> Bs/Venta</small></h3>
-                           <h4>Promedio de venta</h4>
+                           <h3 class="no_margin_bottom"><?php echo Yii::app()->numberFormatter->formatDecimal($promedio); ?></h3>
+                           <h4>Promedio de venta<br/><small>(Bs/Venta)</small></h4>
                        </div>
                        <div class="col-md-2 text-right">
                             <h3 class="no_margin_bottom"><?php echo $productos_activos; ?></h3>
