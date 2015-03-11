@@ -10,8 +10,9 @@ $this->breadcrumbs=array(
             <!-- COLUMNA PRINCIPAL DERECHA ON // OJO: esta de primera para mejorar el SEO sin embargo por CSS se ubica visualmente a la derecha -->
             <div class="main-content" role="main">  
     
-             <h1>Pedido N° <?php echo $model->id; ?> <small class="pull-right"><?php echo $model->getStatus($model->estado); ?><?php echo ($model->estado== 1 || $model->estado==7)?'<br><a class="smallRLink" onclick="paymentDisplay()">Registrar Pago</a>':''; ?></small></h1>
-             <hr class="no_margin_top"/>
+            <h1>Pedido N° <?php echo $model->id; ?> <small class="pull-right"><?php echo $model->getStatus($model->estado); ?><?php echo ($model->estado== 1 || $model->estado==7)?'<br><a class="smallRLink" onclick="paymentDisplay()">Registrar Pago</a>':''; ?></small></h1>
+            <?php echo ($model->estado==4)?'<a class="btn btn-info" href="'.Yii::app()->baseUrl.'/orden/devolucion/'.$model->id.'">Hacer Devolución</a>':''; ?>
+            <hr class="no_margin_top"/>
              <?php if(Yii::app()->user->hasFlash('success')){?>
                     <div class="alert in alert-block fade alert-success text_align_center">
                         <?php echo Yii::app()->user->getFlash('success'); ?> 
@@ -205,9 +206,9 @@ $this->breadcrumbs=array(
                                 $total = 0;
                                 ?>
                                 <div class="well well-md">
-                                    Productos devueltos:
+                                    <h3>Productos devueltos:</h3>
                                     <hr class="no_margin_top" />
-                                    <table class="table table-striped ">
+                                    <table class="table table-striped">
                                         <thead>
                                             <tr>
                                                 <th>Nombre del producto</th>
@@ -239,7 +240,7 @@ $this->breadcrumbs=array(
                                             ?>
                                         </tbody>
                                     </table>
-                                    <table class="table">
+                                    <table class="table margin_top_large">
                                     <tr>
                                         <th colspan="7"><div class=""><strong>Resumen</strong></div></th>
                                     </tr>       

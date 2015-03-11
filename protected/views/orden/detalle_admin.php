@@ -5,21 +5,20 @@
     	'Detalle',
     );
     ?>
-	
+
 	<?php if(Yii::app()->user->hasFlash('success')){?>
 		<div class="alert in alert-block fade alert-success text_align_center">
 	<?php echo Yii::app()->user->getFlash('success'); ?> 
 	</div>
 	<?php } ?>
 	<?php if(Yii::app()->user->hasFlash('error')){?>
-		<div class="alert in alert-block fade alert-error text_align_center">
+		<div class="alert in alert-block fade alert-danger text_align_center">
 			<?php echo Yii::app()->user->getFlash('error'); ?>
 		</div>
 	<?php } ?>	
 	
     <div class="row-fluid">
     <!-- COLUMNA PRINCIPAL DERECHA ON // OJO: esta de primera para mejorar el SEO sin embargo por CSS se ubica visualmente a la derecha -->
-  
      
             <h1>Pedido N° <?php echo $model->id; ?> <small class="pull-right"><?php echo $model->getStatus($model->estado); ?><?php echo ($model->estado== 3)?'<br><a class="smallRLink" id="envioLink" onclick="shippingDisplay()">Enviar Pedido</a>':''; ?></small></h1>
             <hr class="no_margin_top"/>
@@ -183,7 +182,7 @@
                                   <section> 
                                 
                                 <div class="well well-sm">
-                                    Productos devueltos:
+                                    <h3>Productos devueltos:</h3>
                                     <table class="table">
                                         <thead>
                                             <tr>
@@ -230,6 +229,7 @@
                                             ?>
                                         </tbody>
                                     </table>
+                                    <table class="table margin_top_large">
                                     <tr>
                                         <th colspan="7"><div class=""><strong>Resumen</strong></div></th>
                                     </tr>       

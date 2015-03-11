@@ -156,6 +156,9 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/flashsale/admin">Ventas Flash</a></li>
                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/pregunta/admin">Preguntas</a></li>
                         </ul>
+                    </li>
+                    <li class="button glyph-padding">
+                        <a href="<?php echo Yii::app()->baseUrl; ?>/ControlPanel/admin" class="white">Panel de Control</a>
                     </li>       
                         
                 <?php        
