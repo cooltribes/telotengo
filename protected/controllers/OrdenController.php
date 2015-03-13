@@ -431,7 +431,7 @@ class OrdenController extends Controller
 			}
 			
 			$orden->save();
-			
+			Yii::app()->user->setFlash('success',"Devolución exitosa.");
 			echo "ok";
 		}
 	}
