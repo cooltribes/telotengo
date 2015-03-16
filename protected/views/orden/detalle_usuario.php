@@ -295,8 +295,10 @@ $this->breadcrumbs=array(
 							?></span> </p>
                             
                             <?php
+
                             $detalle = DetalleOrden::model()->findByAttributes(array('orden_id'=>$model->id));
-                            if($detalle->monto>0){	
+                            if(isset($detalle)){
+                                if($detalle->monto > 0){                         	
 								$template = '{summary}
 							    <h2>Pagos</h2><table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-bordered table-hover table-striped">
 							        <tr>
@@ -328,7 +330,7 @@ $this->breadcrumbs=array(
 									)
 									),					
 								));  
-									
+								}
 							}                           
                             ?>                          
                         </div>                        

@@ -1,5 +1,5 @@
 <div style="color: #3c763d; background-color: #dff0d8; border-color: #d6e9c6; padding: 10px; text-align: center; margin-top: 20px; margin-bottom: 40px" >
-    Gracias por comprar en nuestra tienda, a continuación te mostramos un resumen de tu orden.
+    Gracias por comprar en nuestra tienda. A continuación te mostramos un resumen de tu orden.
 </div>                        
                          <h1 style="margin-bottom: 1px; ">Pedido N° <?php echo $model->id; ?> </h1>
                          <hr style="margin-top:0px"/>
@@ -42,12 +42,7 @@
                                     </tr>
                                     
                                 </tbody>
-                            </table>
-                            
-                                                    
-                     
-                        
-                                               
+                            </table>        
                        
                         <h2 style="margin-bottom:1px; margin-top: 30px;">Detalle del pedido</h2>
                         <hr style="margin-top:0 0 20px 0"/>    

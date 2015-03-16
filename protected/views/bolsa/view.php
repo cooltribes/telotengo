@@ -1,17 +1,15 @@
   <!-- CONTENIDO ON -->
 <div class="container" style="padding: 0 15px;">
-
 <?php
 $this->breadcrumbs=array( 
-	'Bolsa',
+	'Carrito de compras',
 );
  
 $subtotal = 0; 
 ?> 
         <div class="row-fluid"> 
-            <div><h1>Bolsa</h1><hr class="no_margin_top"/></div>
+            <div><h1>Carrito de compras</h1><hr class="no_margin_top"/></div>
             <div class="col-md-12 no_padding" >
-               
 
         		<?php if(Yii::app()->user->hasFlash('success')){?>
 				    <div class="alert in alert-block fade alert-success text_align_center">
@@ -35,8 +33,8 @@ $subtotal = 0;
                         
 					if(isset($bolsa_has) && count($bolsa_has)>0 )
 					{	
-						
-                ?>
+							
+                ?>  <h5 class="alert alert-info alert-block no_margin_top">Tienes <?php echo count($bolsa_has); ?> producto(s) en el carrito de compras.</h5>
                     <table class="table">
                         <thead>
                           <tr>
@@ -133,7 +131,7 @@ $subtotal = 0;
                     </table>
                 <?php
                 }else{
-					echo "No tienes productos en el carrito. ¿Por qué no ves si algo te gusta? </br> <a href=http://telotengo.com/'".Yii::app()->baseUrl."/tienda'>Ir a la Tienda</a>" ;
+					echo "No tienes productos en el carrito. ¿Por qué no ves si algo te gusta? </br> <a href='http://telotengo.com/".Yii::app()->baseUrl."/tienda'>Ir a la Tienda</a>" ;
 				}
                 ?>
                 </section>
