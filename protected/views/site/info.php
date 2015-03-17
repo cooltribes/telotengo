@@ -1,6 +1,6 @@
-<div class="container margin_top" style="padding: 0 15px; margin-bottom: 15px;">
-	<div class="row">
-		<div class="col-md-offset-2 col-md-8">
+<div class="container margin_top">
+	<div class="row-fluid">
+		<div class="col-md-12">
 		<h3>Quienes Somos</h3>
 		<hr class="no_margin_top" />
 		<p>

@@ -25,6 +25,7 @@ array('label'=>UserModule::t('Logout'), 'url'=>array('/user/logout')),
 	<div class="row">
 		<div class="col-md-offset-3 col-md-5">
 			<h1><?php echo UserModule::t('Editar perfil'); ?></h1>
+			<hr class="no_margin_top" />
 			<?php $form=$this->beginWidget('CActiveForm', array(
 			'id'=>'profile-form',
 			'enableAjaxValidation'=>true,
@@ -63,7 +64,7 @@ array('label'=>UserModule::t('Logout'), 'url'=>array('/user/logout')),
 				</div>
 
 				<div class="submit">
-					<?php echo CHtml::submitButton($model->isNewRecord ? UserModule::t('Create') : UserModule::t('Save'), array('class'=>'btn btn-default')); ?>
+					<?php echo CHtml::submitButton($model->isNewRecord ? UserModule::t('Create') : UserModule::t('Save'), array('class'=>'btn btn-danger btn-lg form-control')); ?>
 				</div>
 
 			<?php $this->endWidget(); ?>

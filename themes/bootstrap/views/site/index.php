@@ -146,12 +146,12 @@ $('.carousel').carousel('cycle');
              
                     <div class="col-md-4">
                         <div class="content">
-                        <iframe style="border: none; background-color: #ffffff; overflow: hidden; width: 100%; height: 370px;" src="http://www.facebook.com/plugins/likebox.php?href=https%3A%2F%2Fwww.facebook.com%2Fsigmatiendas&amp;width=400&amp;height=370&amp;colorscheme=light&amp;show_faces=true&amp;header=true&amp;stream=false&amp;show_border=true&amp;appId=123361354501719" frameborder="0" scrolling="no" width="320" height="370"></iframe>
+                        <iframe style="border: none; background-color: #ffffff; overflow: hidden; width: 100%; height: 350px;" src="http://www.facebook.com/plugins/likebox.php?href=https%3A%2F%2Fwww.facebook.com%2Fsigmatiendas&amp;width=400&amp;height=370&amp;colorscheme=light&amp;show_faces=true&amp;header=true&amp;stream=false&amp;show_border=true&amp;appId=123361354501719" frameborder="0" scrolling="no" width="320" height="350"></iframe>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4" style="height: 350px;">
                         <div class="content">
-                        <a class="twitter-timeline" href="https://twitter.com/Sigmatiendas" data-widget-id="530834988501975040">Tweets por @Sigmatiendas</a>
+                        <a class="twitter-timeline" height="350" href="https://twitter.com/Sigmatiendas" data-widget-id="530834988501975040">Tweets por @Sigmatiendas</a>
                         <script type="text/javascript">// <![CDATA[
                         !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
                         // ]]></script>

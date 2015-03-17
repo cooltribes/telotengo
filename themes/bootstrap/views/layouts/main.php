@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
 <link rel="icon" href="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/favicon75.png" type="image/x-icon">
-<link rel="shortcut icon" href="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/favicon75.png" type="image/x-icon">
+<link rel="shortcut icon" href="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/favicon.ico" type="image/x-icon">
 <?php  //Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/styles.css',null); ?>
 
 
@@ -74,10 +74,8 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                         <a href="http://youtube.com/Sigmaoficial" target="_blank">
                             <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/ICON-youtube.png" alt="Youtube" width="25" height="25">
                         </a>
-                          
-                        
-                        
-                        <a class="linkSuperior" href="http://twitter.com/sigmatiendas">
+
+                        <a class="linkSuperior" href="http://twitter.com/sigmatiendas" target="_blank">
                            Síguenos en @Sigmatiendas
                         </a> 
                 </div>          
@@ -367,9 +365,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
 			    
            </div> 
            </div>
-			<div class="clear"></div> 
-          
-          
+        <div class="clear"></div> 
           <div class="footer padding_bottom_small">
               <div class="container">
                   <div class="row-fluid">
