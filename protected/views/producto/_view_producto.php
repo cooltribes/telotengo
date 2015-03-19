@@ -51,7 +51,7 @@ $this->breadcrumbs=array(
                 <div class=" col-md-6">
                 	<div class='imagen_principal'> 
                     <figure>
-                        <img width="100%" src="<?php echo Yii::app()->baseUrl.$main_image; ?>" alt="<?php echo $model->nombre; ?>" id="principal">
+                        <img width="100%" src="<?php echo Yii::app()->baseUrl.$main_image; ?>" alt="<?php echo $model->nombre; ?>" id="mainImage">
                     </figure>
                     </div>
                     <div class="margin_top_small">
@@ -465,7 +465,7 @@ $this->breadcrumbs=array(
                                 
 								                                
                                 ?>
-                                <dt class="padding_xsmall">Fecha estimada de entrega</dt>
+                                <dt class="padding_xsmall">Tiempo de entrega</dt>
                                 <dd class="padding_xsmall">3-8 días</dd>                        
                             </dl>
                         </div>
@@ -670,13 +670,13 @@ $this->breadcrumbs=array(
 	
     $(document).ready(function(){
 
-    	var source = $('#principal').attr("src");
+    	var source = $('#mainImage').attr("src");
     	var imgZ = source.replace(".","_orig.");
     	
     	$('.imagen_principal').zoom({url: imgZ});
     	
     		$(".imagen_principal").hover(function(){ 
-    			var source = $('#principal').attr("src");
+    			var source = $('#mainImage').attr("src");
     			var imgZ = source.replace(".","_orig.");
     			
     			if(imgZ.indexOf(".png")> -1){ // consiguio png
@@ -692,11 +692,14 @@ $this->breadcrumbs=array(
 	
 	
 	$(".thumbnailclick").click(function(){
-     	var image = $("#principal");
+     	var image = $('#mainImage');
      	var thumbnail = $(this).attr("src");
-     	
+     	  
+        console.log(image);
+        console.log(thumbnail);
+        
      	var cambio = thumbnail.replace("_x90.",".");
-     	
+
      	// primero cargo la imagen del zoom y aseguro que al momento de hacer el cambio de imagen principal esté listo el zoom
      	var source = cambio;
 		var imgZ = source.replace(".","_orig.");
@@ -711,11 +714,11 @@ $this->breadcrumbs=array(
     	}   	 
           
         // cambio de la principal  	
-     	$("#principal").fadeOut("slow",function(){
-     		$("#principal").attr("src", cambio);
+     	$("#mainImage").fadeOut("slow",function(){
+     		$("#mainImage").attr("src", cambio);
      	});
 
-      	$("#principal").fadeIn("slow",function(){});
+      	$("#mainImage").fadeIn("slow",function(){});
 
     });
 

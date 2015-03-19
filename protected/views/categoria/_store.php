@@ -9,7 +9,7 @@
                                         
             if($principal->getUrl()){
                     echo '<div class="productImage">';
-                       $im = CHtml::image(str_replace(".","_thumb.",$principal->getUrl()), "Imagen",array('style'=>'width:100%'));
+                       $im = CHtml::image(str_replace(".","_thumb.",$principal->getUrl()), "Imagen");
                     echo "<a href='".$item->getUrl()."''>".$im."</a>";
                     echo "</div>";
                 }

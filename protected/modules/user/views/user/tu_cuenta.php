@@ -1,8 +1,6 @@
 <div class="container margin_top tu_perfil">
     <div>
-
-           <h1 class="no_margin_bottom">Tu Cuenta<small class="pull-right margin_top_xsmall">Saldo disponible: <b><?php echo Balance::model()->getTotal(); ?>  Bs.</b></small></h1>
-            
+       <h1 class="no_margin_bottom">Tu Cuenta<small class="pull-right margin_top_xsmall">Saldo disponible: <b><?php echo Balance::model()->getTotal(); ?>  Bs.</b></small></h1>
     </div>
     <hr class="no_margin_top"/>
 <?php
@@ -16,7 +14,7 @@ $this->breadcrumbs=array(
 		    </div>
 		<?php } ?>
 		<?php if(Yii::app()->user->hasFlash('error')){?>
-		    <div class="alert in alert-block fade alert-error text_align_center">
+		    <div class="alert in alert-block fade alert-danger text_align_center">
 		        <?php echo Yii::app()->user->getFlash('error'); ?>
 		    </div>
 		<?php } ?>
@@ -87,9 +85,7 @@ $this->breadcrumbs=array(
                 <h3 class="no_margin_bottom">Redes sociales registradas</h3><hr class="no_margin_top"/>
                 <?php if($provider->totalItemCount>0): ?> 
                     
-                    
-                    
-                                
+
                             <?php
                             $template2 = '{summary}
                                 <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-bordered table-hover table-striped">
@@ -118,7 +114,7 @@ $this->breadcrumbs=array(
                                         'class'=>'pagination pagination-right',
                                     )
                                     ),                  
-                                )); 
+                                ));
                                 
                                 ?>
                 <?php else: ?>

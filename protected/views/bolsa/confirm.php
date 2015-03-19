@@ -40,7 +40,7 @@
                 <div class="row-fluid">
                     <div class="form-group col-sm-9">
                         <label for="nombre" class="sr-only">Nombre</label>
-                        <?php echo $form->textField($newAddress,'nombre',array('class'=>'form-control','maxlength'=>50, 'placeholder'=>'Nombre')); ?>
+                        <?php echo $form->textField($newAddress,'nombre',array('class'=>'form-control','maxlength'=>50, 'placeholder'=>'Nombre de la persona que recibe el envío')); ?>
                         <?php echo $form->error($newAddress, 'nombre'); ?>
                     </div>
                     <div class="form-group col-sm-9">
