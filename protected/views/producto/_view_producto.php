@@ -49,7 +49,7 @@ $this->breadcrumbs=array(
                 ?>
                 
                 <div class=" col-md-6">
-                	<div class='imagen_principal'> 
+                	<div class='imagen_principal' style="overflow:hidden; max-height: 300px;"> 
                     <figure>
                         <img width="100%" src="<?php echo Yii::app()->baseUrl.$main_image; ?>" alt="<?php echo $model->nombre; ?>" id="mainImage">
                     </figure>

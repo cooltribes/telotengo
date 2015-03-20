@@ -7,7 +7,7 @@
                 $principal = Imagenes::model()->findByAttributes(array('orden'=>1,'producto_id'=>$data->id));
                                         
             if($principal->getUrl()){
-                    echo '<div class="productImage">';
+                    echo '<div class="productImage" style="overflow:hidden;">';
                        $im = CHtml::image(str_replace(".","_thumb.",$principal->getUrl()), "Imagen",array('style'=>'width:100%'));
                     echo "<a href='".$data->getUrl()."''>".$im."</a>";
                     echo "</div>";

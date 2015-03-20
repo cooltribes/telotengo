@@ -52,7 +52,7 @@ class TiendaController extends Controller
 		$producto = new Producto;
 		$producto->unsetAttributes();  
 		
-		$producto->estado = 1; // solo activos
+		$producto->estado = 1;  // solo activos
 		$dataProvider = $producto->search();	
 		
 		$rangos = Inventario::model()->getLimites();

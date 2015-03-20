@@ -62,7 +62,7 @@
 							<div class="form-group">
 								<label>Marcas</label>  
 								<?php              
-				                $models = Marca::model()->findAll(array('order' => 'id'));
+				                $models = Marca::model()->findAll(array('order' => 'nombre'));
 								$list = CHtml::listData($models,'id', 'nombre'); 
 								
 								echo CHtml::dropDownList('Producto[marca_id]', $model->marca_id, $list, array('empty' => 'Seleccione...', 'class' => 'form-control')); 

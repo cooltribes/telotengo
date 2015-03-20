@@ -139,7 +139,7 @@ class OrdenController extends Controller
 							<br/>No. de Referencia: '.$orden->tracking.'
 							<br/>Dirección destino: '.$orden->direccionEnvio->direccion_1.', '.$orden->direccionEnvio->ciudad->nombre.', '.$orden->direccionEnvio->provincia->nombre.'
 							<br/>Recibe: '.$orden->direccionEnvio->nombre.'
-							<br/>Envío por: DHL / Pago a destino
+							<br/>Envío por: Zoom
 							<br/>Monto de envío: '.$orden->envio.'
 							<br/><br/>Gracias por confiar en nosotros';
                         $message->from = array(Yii::app()->params['adminEmail'] => "Sigma Tiendas");
