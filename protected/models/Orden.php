@@ -300,4 +300,32 @@ class Orden extends CActiveRecord
 
 	} // get
 	
+	// Devuelve la cantidad de pedidos activos (estados 1 a 4)
+	public function totalActivos(){
+		$user = User::model()->findByPk(Yii::app()->user->id);
+		$pedidos = Orden::model()->findAllByAttributes(array('users_id'=>$user->id));
+		$activo=0;
+
+		foreach($pedidos as $pedido){
+			if($pedido->estado < 5)
+				$activo++;
+		}
+
+		return $activo;
+	}
+
+	// Devuelve la cantidad de pedidos por pagar
+	public function pagosRequeridos(){
+		$user = User::model()->findByPk(Yii::app()->user->id);
+		$pedidos = Orden::model()->findAllByAttributes(array('users_id'=>$user->id));
+		$requeridos=0;
+
+		foreach($pedidos as $pedido){
+			if($pedido->estado == 1)
+				$requeridos++;
+		}
+
+		return $requeridos;
+	}
+
 }

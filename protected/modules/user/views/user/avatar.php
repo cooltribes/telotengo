@@ -5,9 +5,7 @@
 </div>
 
 <hr class="no_margin_top"/>
-
-
-    <div class="padding_small modal-body no_padding row-fluid"> 
+    <div class="padding_small modal-body no_padding row-fluid">
         
             <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
             'id'=>'marca-form',
@@ -21,10 +19,6 @@
                 'enctype' => 'multipart/form-data',
             ),
         )); ?>
-    
-    
-            
-
 
          <?php 
                 if($model->avatar_url!=""){ ?>
@@ -46,7 +40,7 @@
             ?>
 
         </div>
-        <div class='col-md-8 col-md-offset-2 margin_top_small no_padding'>
+        <div class='col-md-8 col-md-offset-2 margin_top_small margin_bottom_small no_padding'>
             <?php $this->widget('bootstrap.widgets.TbButton', array(
                 'buttonType'=>'submit',
                 'type'=>'primary',

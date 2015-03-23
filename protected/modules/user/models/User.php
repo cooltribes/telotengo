@@ -265,4 +265,23 @@ class User extends CActiveRecord
         Yii::app()->mail->send($message);
 	}
 
+	public function cantidadListas(){
+		$user = User::model()->findByPk(Yii::app()->user->id);
+		$wishlists = Wishlist::model()->findAllByAttributes(array('users_id'=>$user->id));
+		$total=0;
+
+		foreach($wishlists as $wish){
+			$productos = WishlistHasProducto::model()->findAllByAttributes(array('wishlist_id'=>$wish->id));
+			$total+=count($productos);
+		}
+		return $total;
+	}
+
+	public function cantidadCarro(){
+		$user = User::model()->findByPk(Yii::app()->user->id);
+		$bolsa = Bolsa::model()->findByAttributes(array('users_id'=>$user->id));
+		$productosBolsa = BolsaHasInventario::model()->findAllByAttributes(array('bolsa_id'=>$bolsa->id));		
+
+		return count($productosBolsa);
+	}
 }

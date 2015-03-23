@@ -271,7 +271,7 @@ $this->breadcrumbs=array(
 								$('#birth_month').val(n[0]);
 								$('#birth_year').val(n[2]);    
 
-		                        $('#fecha_nacimiento').val(a);
+		                        $('#Profile_fecha_nacimiento').val(a);
 		                        
 		                        if(response.gender == 'male')
 		                        	$('#Profile_sexo_1').attr('checked',true);
@@ -306,7 +306,7 @@ $this->breadcrumbs=array(
 		                        
 		                      	var a = n[2]+"-"+n[1]+"-"+n[0];
 		                       
-		                        $('#fecha_nacimiento').val(a);
+		                        $('#Profile_fecha_nacimiento').val(a);
 		                        
 		                        if(response.gender == 'male')
 		                        	$('#Profile_sexo_1').attr('checked',true);
