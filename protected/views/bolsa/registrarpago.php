@@ -1,15 +1,16 @@
 <div class="container">
-    <div class="row">
-	    <div class="col-md-10 col-md-offset-1 main-content">
-
-	    <h2>Registrar Pago de Gift Card</h2>
-	    <hr/>
+    <div class="row-fluid">
+	    <div class="col-md-12">
+	    <h3>Registrar Pago de Gift Card</h3>
+	    <hr class="no_margin_top" />
 
 	    	<div class="well">
 				<div class="row-fluid">
-					<h3>Datos</h3> 
 					<h4>Destinatario: <small><?php echo $model->email; ?></small></h4>
+					 <hr class="no_margin_top" />
 					<h4>Monto: <small><?php echo $model->total; ?></small></h4>
+					 <hr class="no_margin_top" />
+
 			<?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
 			        'id'=>'pago-form', 
 			        'enableAjaxValidation'=>false,

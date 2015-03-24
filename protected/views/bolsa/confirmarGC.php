@@ -21,14 +21,14 @@ if (!Yii::app()->user->isGuest) { // que este logueado
 
 <div class="container margin_top">
     <div class="row-fluid">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <h2>Confirmar compra de Gift Card</h2>
             <hr/>
         </div>
     </div>
     <input type="hidden" id="tarjeta" value="<?php echo(Yii::app()->getSession()->get('idTarjeta')); ?>" />
         <div class="row margin_top_xsmall">
-            <section class="col-md-4"> 
+            <section class="col-md-3"> 
                 <div class="well">
                     <h4 class="braker_bottom">Información de la compra</h4>
                     <div class="margin_bottom_small">
@@ -51,7 +51,7 @@ if (!Yii::app()->user->isGuest) { // que este logueado
                     </p>
                 </div>
             </section>
-            <section class="col-md-4">
+            <section class="col-md-6">
                 <div class="well">
                     <h4>Método de pago seleccionado</h4>
                         <div class=" margin_bottom">
@@ -82,7 +82,7 @@ if (!Yii::app()->user->isGuest) { // que este logueado
                         </div>
                 </div>
             </section>
-            <section class="col-md-4"> 
+            <section class="col-md-3"> 
             <!-- Resumen de Productos ON -->
                 <div class="well">
                     <h5>Total de Gift Cards: 1</h5>
