@@ -26,7 +26,7 @@ $('.carousel').carousel('cycle');
             </div>
         <?php } ?>
         <?php if(Yii::app()->user->hasFlash('error')){?>
-            <div class="alert in alert-block fade alert-error text_align_center col-md-12 margin_top_small">
+            <div class="alert in alert-block fade alert-danger text_align_center col-md-12 margin_top_small">
                 <?php echo Yii::app()->user->getFlash('error'); ?>
             </div>
         <?php } ?>
@@ -67,7 +67,7 @@ $('.carousel').carousel('cycle');
             
             
             <section class="row-fluid margin_top">
-            <h2>Ofertas Especiales</h2>
+            <h2>Ofertas Especiales<small class="pull-right no_margin"><a href="<?php echo Yii::app()->baseUrl."/site/ofertas" ?>">Más ofertas</a></small></h2>
             <hr class="no_margin_top margin_bottom_medium" />
             	<?php            	
             	$prod = new Producto;
@@ -81,7 +81,6 @@ $('.carousel').carousel('cycle');
                     ?>
     					<article class="col-md-3">
                     		<div class="caja"> 
-                    		
                     		<?php 
     	                 	
     	                	if($producto->mainimage) // tiene imagen

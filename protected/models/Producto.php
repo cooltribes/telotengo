@@ -262,9 +262,19 @@ class Producto extends CActiveRecord
 		
 	}
 
+	# 4 productos destacados en frontpage
 	public function front(){
 		$sql ="SELECT pro.id as id FROM tbl_producto pro, tbl_inventario inv where inv.producto_id = pro.id and pro.destacado=1 and inv.cantidad > 0
 				GROUP BY pro.id ORDER BY RAND() LIMIT 4";
+		$num = Yii::app()->db->createCommand($sql)->query();
+		
+		return $num;
+	}
+
+	# todos los destacados
+	public function destacados(){
+		$sql ="SELECT pro.id as id FROM tbl_producto pro, tbl_inventario inv where inv.producto_id = pro.id and pro.destacado=1 and inv.cantidad > 0
+				GROUP BY pro.id ORDER BY RAND()";
 		$num = Yii::app()->db->createCommand($sql)->query();
 		
 		return $num;

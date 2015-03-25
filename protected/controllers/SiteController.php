@@ -24,7 +24,7 @@ class SiteController extends Controller
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
 				'actions'=>array('index','error','contact','login','logout','captcha','busqueda','tiendas','info','soporte','garantia','convenios',
-								'corporativo','licencias'), 
+								'corporativo','licencias','ofertas'), 
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -302,4 +302,10 @@ class SiteController extends Controller
 		));	
 		
 	}
+
+
+	public function actionOfertas(){
+		$this->render('ofertas');
+	}
+
 }
