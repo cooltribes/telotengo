@@ -636,7 +636,15 @@ class OrdenController extends Controller
 			//$diferencia_pago = round(($detalle->monto - $orden->total),3,PHP_ROUND_HALF_DOWN);
 			
 			if($diferencia_pago >= 0){ // Pago completo o de más 
-			
+				
+				$productosOrden = OrdenHasInventario::model()->findAllByAttributes(array('orden_id'=>$orden->id));
+
+				foreach($productosOrden as $inv){
+					$inventario = Inventario::model()->findByPk($inv->inventario_id); // se busca el inventario al que apunta
+					$inventario->cantidad -= $inv->cantidad; // se descuenta la cantidad comprada ya que se aprobó el pago
+					$inventario->save();
+				}					
+
 				$orden->estado = 3; // pago confirmado
 				$orden->save();
 				 
@@ -652,10 +660,11 @@ class OrdenController extends Controller
 
 					$balance->save();
 
-					// Enviar mail de saldo positivo y de pago aceptado
+					// Enviar mail de saldo positivo
 
 				} // si es mayor hace el balance
 
+				// mail de pago aceptado
 			} 
 			else{ // pago incompleto
 				$diferencia_pago = 0 - $diferencia_pago;

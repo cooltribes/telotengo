@@ -11,7 +11,7 @@
 		</p>
 		<p>
 			<strong>
-				"A tu casa y oficina... la mejor tecnología"
+				"Vive la experiencia tecnológica"
 			</strong>
 		</p>
 
@@ -54,5 +54,18 @@
 			<iframe src="http://www.youtube.com/embed/yVn8ptRjBkU" frameborder="0" width="720" height="400"></iframe>
 		</p>
 		</div>
+
+		<div class="col-md-12">
+			<h3>VALORES</h3>
+			<p><b>Servicio.</b> Centrar nuestro esfuerzo en la satisfacción del cliente, apórtales soluciones y una asesoría acertada. Permitiéndoles tener un estilo de vida dinámico y actual.
+			<p><b>Compromiso.</b> Debemos planificar, vivir y reaccionar de forma acertada para impulsar y sacar adelante el proyecto de empresa que es Sigma Systems.
+			<p><b>Pasión.</b> Sentir la seguridad, el sentimiento, la fuerza interna de que nuestras acciones diarias nos permitirán crecer y realizarnos como empresa
+			<p><b>Excelencia.</b> Dirigimos nuestras actuaciones hacia la consecución de los objetivos del proyecto empresarial y de la rentabilidad para nuestros accionistas, tratando de superar las expectativas.
+			<p><b>Innovación.</b> Promover las mejoras continuas, aumentar la curiosidad y el placer por la renovación, usando conceptos de vanguardia y creatividad para alcanzar la máxima calidad desde los criterios de rentabilidad.
+			<p><b>Talento humano.</b> Aseguramos de poder brindar oportunidades de desarrollo del personal; basadas en educación, el mérito y en la aportación profesional.
+			<p><b>Sentido de pertenecía.</b> Hacer que cada individuo de la empresa se sienta acompañado por pares y tenga la capacidad de ayudar a desarrollar la identidad de la empresa, de compartir los valores, creencias, y hasta los gustos.
+			<p><b>Conducta ética.</b> Actuamos con profesionalidad, integridad moral, lealtad y respeto a las personas.
+			<p><b>Comunidad y medio ambiente.</b> Nos comprometemos social y culturalmente con la comunidad y adaptamos nuestras estrategias empresariales a la preservación del medioambiente.
+
 	</div>
 </div>

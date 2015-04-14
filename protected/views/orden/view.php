@@ -40,7 +40,7 @@
                     </div>
                     
                     <div class="margin_top_xsmall alert alert-danger">
-                        <strong>Importante</strong>: una vez realizado el pago debes notificarlo indicando el monto, número de compra y número de depósito al correo electrónico: info@sigmatiendas.com
+                        <strong>Importante</strong>: una vez realizado el pago debes notificarlo indicando los datos del depósito <a href="<?php echo Yii::app()->baseUrl.'/orden/detalleusuario/'.$model->id; ?>">Aquí</a>
                     </div>
               
                     <section class="row-fluid">

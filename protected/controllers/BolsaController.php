@@ -559,7 +559,7 @@ class BolsaController extends Controller
 				$orden_inventario->orden_id = $orden->id;
 
 				if($orden_inventario->save()){
-					$inventario->cantidad -= $uno->cantidad;
+					//$inventario->cantidad -= $uno->cantidad; // quitar de aqui, descontar cuando apruebe el admin el deposito. Se necesita inventario y OrdenHas
 					
 					if($inventario->hasFlashSale()){
 						// descontando la cantidad tambien del flash sale

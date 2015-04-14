@@ -64,7 +64,11 @@
 			} elseif ($field->field_type=="TEXT") {
 				echo CHtml::activeTextArea($profile,$field->varname,array('rows'=>6, 'cols'=>50));
 			} else {
-				echo $form->textField($profile,$field->varname,array('size'=>60,'maxlength'=>(($field->field_size)?$field->field_size:255), 'class'=>'form-control'));
+				if($field->varname != "fecha_nacimiento")
+					echo $form->textField($profile,$field->varname,array('size'=>60,'maxlength'=>(($field->field_size)?$field->field_size:255), 'class'=>'form-control'));
+				else
+					echo $form->textField($profile,$field->varname,array('size'=>60,'maxlength'=>(($field->field_size)?$field->field_size:255), 'class'=>'form-control','placeholder'=>'Ejemplo: 01-01-2000'));
+				
 			}
 			 ?>
 			<?php echo $form->error($profile,$field->varname); ?>
