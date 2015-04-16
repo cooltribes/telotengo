@@ -660,11 +660,44 @@ class OrdenController extends Controller
 
 					$balance->save();
 
-					// Enviar mail de saldo positivo
+					// Enviando mail de saldo positivo
+					$user = User::model()->findByPk($orden->users_id);		
+					
+                    $message = new YiiMailMessage;
+                    $subject = 'Tu compra #'.$orden->id.' te dejó un balance positivo';                                
+                    $message->subject = $subject;
+                    $message->view = "mail_template";
+                    $body = '<h2>Hola '.$user->email.'</h2>
+                        El pago de tu compra #'.$orden->id.' fue mayor a lo que debías pagar. Es por esto que hemos sumado la diferencia a tu balance.<br/>
+                        Un total de '.$diferencia_pago.' Bs. han sido sumados a tu balance para que puedas seguir comprando sin problemas.<br/>
+						<br/><br/>Gracias por confiar en nosotros';
+                    $message->from = array(Yii::app()->params['adminEmail'] => "Sigma Tiendas");
+                    $message->setBody(array("body"=>$body, "undercomment"=>"Si tienes alguna pregunta acerca de tu cuenta, o cualquier otro asunto, por favor contáctanos en soporte@sigmatiendas.com"),'text/html');              
+                    $message->addTo($user->email);
+
+                    Yii::app()->mail->send($message);
+					
+					Yii::app()->user->setFlash('success', 'Se ha enviado la orden.');
 
 				} // si es mayor hace el balance
 
 				// mail de pago aceptado
+
+				$user = User::model()->findByPk($orden->users_id);		
+				
+                $message = new YiiMailMessage;
+                $subject = 'Hemos aceptado tu pago';                                
+                $message->subject = $subject;
+                $message->view = "mail_template"; 
+                $body = '<h2>Hola '.$user->email.'</h2>
+                    El pago de tu compra #'.$orden->id.' ha sido aceptado.<br/>
+                    En las próximas horas estaremos enviando tu compra.<br/>
+					<br/><br/>Gracias por confiar en nosotros';
+                $message->from = array(Yii::app()->params['adminEmail'] => "Sigma Tiendas");
+                $message->setBody(array("body"=>$body, "undercomment"=>"Si tienes alguna pregunta acerca de tu cuenta, o cualquier otro asunto, por favor contáctanos en soporte@sigmatiendas.com"),'text/html');              
+                $message->addTo($user->email);
+
+                Yii::app()->mail->send($message);
 			} 
 			else{ // pago incompleto
 				$diferencia_pago = 0 - $diferencia_pago;

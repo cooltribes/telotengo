@@ -29,6 +29,12 @@ echo"<tr>";
 	$marca = Marca::model()->findByPk($data->marca_id);
 	
 	echo "<td>".$marca->nombre."</td>"; 
+
+	$inventario = Inventario::model()->findByAttributes(array('producto_id'=>$data->id));
+	if(isset($inventario))
+		echo "<td>".$inventario->cantidad."</td>"; 
+	else
+		echo "<td>0</td>";
 	
 	echo '<td>
 	<div class="dropdown">

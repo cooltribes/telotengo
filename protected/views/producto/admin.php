@@ -108,6 +108,7 @@
 	            <th scope="col">Peso (Kg.)</th>
 	            <th scope="col">Destacado</th>
 	            <th scope="col">Marca</th>
+	            <th scope="col">Cantidad disponible</th>
 	            <th scope="col">Acción</th>
 	        </tr>
 	    {items}
