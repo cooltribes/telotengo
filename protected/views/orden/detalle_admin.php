@@ -79,6 +79,10 @@
                                        <th width=" <?php echo $width;?>%"><h3 class="text_align_right">Balance</h3></th>
                                    <?php endif; ?>
                                        <th width=" <?php echo $width;?>%"><h3 class="text_align_right">Total</h3></th>
+
+                                    <?php if($model->estado == 7 || $model->cuantosPagos($model->id) > 0): ?>                           
+                                        <th width=" <?php echo $width;?>%"><h3 class="text_align_right">Por pagar</h3></th>                          
+                                    <?php endif; ?>
                                        
                                    </tr>
                                </thead>
@@ -103,6 +107,10 @@
                                         <td class="quantity"><strong><?php echo $model->balance; ?> Bs</strong></td>                               
                                         <?php endif; ?>
                                         <td class="quantity"><strong><?php echo $model->total; ?> Bs</strong></td>
+
+                                        <?php if($model->estado == 7 || $model->cuantosPagos($model->id) > 0): ?>                           
+                                            <td class="quantity"><strong><?php echo $model->totalDeuda($model->id); ?> Bs</strong></td>                               
+                                        <?php endif; ?>
                                     </tr>
                                     
                                 </tbody>

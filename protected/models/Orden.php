@@ -328,4 +328,31 @@ class Orden extends CActiveRecord
 		return $requeridos;
 	}
 
+	public function totalDeuda($id){
+		$user = User::model()->findByPk(Yii::app()->user->id);
+		$pedido = Orden::model()->findByPk($id);
+		$total = 0;
+		$pagos = DetalleOrden::model()->findAllByAttributes(array('orden_id'=>$id,'estado'=>1));
+
+		foreach($pagos as $pago){
+			$total += $pago->monto;
+		}
+
+		return $pedido->total - $total;
+	}
+
+	public function cuantosPagos($id){
+		$user = User::model()->findByPk(Yii::app()->user->id);
+		$pedido = Orden::model()->findByPk($id);
+		$total = 0;
+		$pagos = DetalleOrden::model()->findAllByAttributes(array('orden_id'=>$id,'estado'=>1));
+
+		if(count($pagos)>0){
+			return count($pagos);
+		}
+		else{
+			return 0;
+		}
+	}
+
 }
