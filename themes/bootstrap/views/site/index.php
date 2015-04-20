@@ -33,7 +33,44 @@ $('.carousel').carousel('cycle');
 
         <div class="col-md-12 main-content" role="main">
 			
-			<div id="myCarousel" class="carousel slide">
+        <?php    
+        // barra de busqueda
+
+         $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+                                    'id'=>'form-busqueda',
+                                    'action'=>Yii::app()->createUrl('tienda/index'),
+                                    'htmlOptions' => array(
+                                        'enctype' => 'multipart/form-data',
+                                    ),
+                                )); 
+        ?>
+        <div class="row-fluid">
+            <div class="col-md-10" style="padding-left: 0;">
+                <!-- <input class="form-control no_radius_right" id="busqueda" name="busqueda" type="text" placeholder="¿Qué estás buscando?"> -->
+                <?php echo CHtml::textField('busqueda', '', 
+                                    array('id'=>'busqueda','placeholder'=>'¿Qué estás buscando?','class'=>'form-control no_radius_right'));
+                ?>
+                <?php echo CHtml::hiddenField('textobuscado', 'si', 
+                            array('id'=>'textobuscado')); ?>
+            </div>
+            <div class="col-md-2 pull-right" style="padding: 0;">
+                <!-- <a href="#" class="btn form-control btn-sigmablue no_radius_left" id="btn_search_event">Buscar</a> -->
+                <?php $this->widget('bootstrap.widgets.TbButton', array(
+                                'buttonType'=>'submit',
+                                'htmlOptions'=>array('class'=>'btn form-control btn-sigmablue no_radius_left'),
+                                'label'=>'Buscar',
+                            ));
+
+                $this->endWidget(); 
+
+                ?>                 
+            </div>
+        </div>
+
+        <?php
+        // Boton                
+        ?>
+			<div id="myCarousel" class="carousel slide margin_top_small">
                <!-- Carousel indicators -->
                <ol class="carousel-indicators">
                   <li data-target="#myCarousel" data-slide-to="0" class="active"></li>

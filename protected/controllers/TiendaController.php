@@ -48,13 +48,24 @@ class TiendaController extends Controller
 	}
 	
 	public function actionIndex()
-	{
+	{	
+		
 		$producto = new Producto;
 		$producto->unsetAttributes();  
 		
 		$producto->estado = 1;  // solo activos
-		$dataProvider = $producto->search();	
+
+		if(isset($_POST['textobuscado'])){ // viene de la busqueda general
+			$producto->nombre = $_POST['busqueda'];
+			Yii::app()->getSession()->add('nombrebusqueda', $_POST['busqueda']);
+		}else{
+			unset(Yii::app()->session['nombrebusqueda']);
+		}
+
+		$dataProvider = $producto->search();
+		print_r($dataProvider->getData());
 		
+		Yii::app()->end();
 		$rangos = Inventario::model()->getLimites();
 		
 		$this->render('index',array(
@@ -71,7 +82,11 @@ class TiendaController extends Controller
 		$producto->unsetAttributes();  
 		// $producto->destacado = 1; 
 		$producto->estado = 1;
-		
+			
+			if (isset(Yii::app()->session['nombrebusqueda'])) { // busqueda
+				$producto->nombre = Yii::app()->session['nombrebusqueda'];				
+			}
+
 			if (isset($_POST['categoria']) && $_POST['categoria']!="todas"){ // categorias
 				$producto->categoria_id = $_POST['categoria'];				
 				Yii::app()->getSession()->add('categoria', $_POST['categoria']);

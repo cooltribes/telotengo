@@ -169,7 +169,7 @@ $marcas = Marca::model()->findAll();
 		return false;
 		});",CClientScript::POS_READY
 	);
-	
+
 	?>
 
         <div class="col-md-10 no_padding">
