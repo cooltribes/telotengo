@@ -56,21 +56,23 @@ class TiendaController extends Controller
 		$producto->estado = 1;  // solo activos
 
 		if(isset($_POST['textobuscado'])){ // viene de la busqueda general
-			//echo $_POST['busqueda'];
-			//Yii::app()->end();
+			#echo $_POST['busqueda'];
+			#Yii::app()->end();
 
 			$producto->nombre = $_POST['busqueda'];
 			Yii::app()->getSession()->add('nombrebusqueda', $_POST['busqueda']);
+			$dataProvider = $producto->busquedaPrincipal();
+
+			$rangos = Inventario::model()->getLimitesTexto();
 		}else{
 			#echo $producto->nombre."<br>";
 			$producto->nombre = "";
 			unset(Yii::app()->session['nombrebusqueda']);
+			$dataProvider = $producto->search();
+
+			$rangos = Inventario::model()->getLimites();
 		}
-		//echo $producto->nombre;
-		$dataProvider = $producto->search();
-		print_r($dataProvider->getData());
-		//Yii::app()->end();
-		$rangos = Inventario::model()->getLimites();
+		
 		
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
@@ -88,7 +90,8 @@ class TiendaController extends Controller
 		$producto->estado = 1;
 			
 			if (isset(Yii::app()->session['nombrebusqueda'])) { // busqueda
-				$producto->nombre = Yii::app()->session['nombrebusqueda'];				
+				$producto->nombre = Yii::app()->session['nombrebusqueda'];
+				$rangos = Inventario::model()->getLimitesTexto();				
 			}
 
 			if (isset($_POST['categoria']) && $_POST['categoria']!="todas"){ // categorias

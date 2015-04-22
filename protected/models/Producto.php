@@ -134,12 +134,12 @@ class Producto extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('nombre',$this->nombre,true);
+		$criteria->compare('nombre',$this->nombre);
 		$criteria->compare('descripcion',$this->descripcion);
 		$criteria->compare('destacado',$this->destacado);
 		$criteria->compare('marca_id',$this->marca_id);
 		$criteria->compare('modelo',$this->modelo);
-		$criteria->compare('estado',$this->estado);
+		$criteria->compare('t.estado',$this->estado);
 		$criteria->compare('users_id',$this->users_id);
 		$criteria->compare('notificado',$this->notificado); 
 		$criteria->compare('codigo',$this->codigo); 
@@ -149,8 +149,30 @@ class Producto extends CActiveRecord
 		$criteria->join ='JOIN tbl_imagenes ON tbl_imagenes.producto_id = t.id AND tbl_imagenes.orden=1';
 	//	$criteria->join .='JOIN tbl_inventario ON tbl_inventario.producto_id = t.id AND tbl_inventario.cantidad > 0';
 		$criteria->with = array('inventarios');
-		$criteria->condition = "inventarios.cantidad > '0'";
+		$criteria->addCondition("inventarios.cantidad > '0' ");
 		$criteria->group="t.id";
+		
+		$criteria->together = true;
+			
+		return new CActiveDataProvider($this, array(
+			'criteria'=>$criteria,
+			'pagination'=>array('pageSize'=>9,),
+		));
+	}
+
+	/*
+	Funcion de busqueda para el textfield del main page
+	*/
+	public function busquedaPrincipal(){
+
+		$criteria=new CDbCriteria;
+
+		$criteria->addCondition('UPPER(nombre) LIKE UPPER("%'.$this->nombre.'%")');
+		$criteria->addCondition('t.estado = 1');
+		$criteria->with = array('inventarios');
+		#$criteria->with = array('mainimage');
+		$criteria->addcondition("inventarios.cantidad > 0");
+		#$criteria->group="t.id";
 		
 		$criteria->together = true;
 		
