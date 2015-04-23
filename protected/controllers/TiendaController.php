@@ -91,7 +91,8 @@ class TiendaController extends Controller
 			
 			if (isset(Yii::app()->session['nombrebusqueda'])) { // busqueda
 				$producto->nombre = Yii::app()->session['nombrebusqueda'];
-				$rangos = Inventario::model()->getLimitesTexto();				
+				$rangos = Inventario::model()->getLimitesTexto();
+
 			}
 
 			if (isset($_POST['categoria']) && $_POST['categoria']!="todas"){ // categorias
@@ -133,7 +134,7 @@ class TiendaController extends Controller
 		
 				$this->render('index',
 				array('index'=>$producto,
-				'dataProvider'=>$dataProvider,'categorias'=>$categorias,
+				'dataProvider'=>$dataProvider,'categorias'=>$categorias,'rangos'=>$rangos,
 				));	
 			
 			}
