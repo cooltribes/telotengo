@@ -40,41 +40,27 @@ else
                 
         	<div class="row-fluid">
         	    
-        	    
-        	           <div class="col-md-2 text-right">
+        	           <div class="col-md-2 text-center">
         	               <h3 class="no_margin_bottom"><?php echo $usuarios; ?></h3>
-        	               <h4>Usuarios registrados</h4>
+        	               <h5>Usuarios registrados</h5>
         	           </div>
-        	           <div class="col-md-2 text-right">
+        	           <div class="col-md-2 text-center">
                            <h3 class="no_margin_bottom"><?php echo $ventas ?></h3>
-                           <h4>Ventas Registradas</h4>
+                           <h5>Ventas Registradas</h5>
                        </div>
-                       <div class="col-md-2 text-right">
+                       <div class="col-md-3 text-center">
                            <h3 class="no_margin_bottom"><?php echo Yii::app()->numberFormatter->formatDecimal($sumatoria); ?></h3>
-                           <h4>Total Vendido<br/><small>(Bs)</small></h4>
+                           <h5>Total Vendido<br/><small>(Bs)</small></h5>
                        </div>
-                       <div class="col-md-3 text-right">
+                       <div class="col-md-3 text-center">
                            <h3 class="no_margin_bottom"><?php echo Yii::app()->numberFormatter->formatDecimal($promedio); ?></h3>
-                           <h4>Promedio de venta<br/><small>(Bs/Venta)</small></h4>
+                           <h5>Promedio de venta<br/><small>(Bs/Venta)</small></h5>
                        </div>
-                       <div class="col-md-2 text-right">
+                       <div class="col-md-2 text-center">
                             <h3 class="no_margin_bottom"><?php echo $productos_activos; ?></h3>
-                            <h4>Productos activos</h4>
+                            <h5>Productos activos</h5>
                        </div>
-        	            
-        	            
-        	            
-        	                 	            
-        	            
-        	           
-          	       
-                  
-                       
-                        
-                                                
-                        
-                      
-           
+        	                   
             </div>
 	      
     	<div class="row">

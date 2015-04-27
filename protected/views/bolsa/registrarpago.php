@@ -6,10 +6,13 @@
 
 	    	<div class="well">
 				<div class="row-fluid">
-					<h4>Destinatario: <small><?php echo $model->email; ?></small></h4>
-					 <hr class="no_margin_top" />
-					<h4>Monto: <small><?php echo $model->total; ?></small></h4>
-					 <hr class="no_margin_top" />
+					<div class="alert alert-success">
+						<h4>Destinatario: <?php echo $model->email; ?></h4>
+					</div>
+					<div class="alert alert-success">
+						<h4>Monto: <small><?php echo $model->total; ?></small></h4>
+					</div>
+					<hr class="no_margin_top" />
 
 			<?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
 			        'id'=>'pago-form', 

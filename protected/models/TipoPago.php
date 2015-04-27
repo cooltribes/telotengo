@@ -120,11 +120,6 @@ class TipoPago extends CActiveRecord
 				<li><strong>Dirección</strong>: Avenida libertador  C.C Las Lomas local 30,  San Cristóbal,  Edo. Táchira.</li>
 				<li><strong>Teléfono</strong>: 02763442626</li>
 			</ul>
-			<div class='alert alert-danger'>
-				<strong>Importante</strong>: 
-					Una vez realizado el pago debes notificarlo indicando el monto, número de compra y número de depósito al correo electrónico: 
-						ventas@sigmatiendas.com
-			</div>
 		";
 	}
 }
