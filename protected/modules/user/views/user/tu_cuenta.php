@@ -191,8 +191,9 @@ $this->breadcrumbs=array(
         <?php echo $this->renderPartial('avatar', array( 'model'=>$model ),true); ?>
     </div>
 
-    <div id="datosPago" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none; min-height: 600px;">
-        <?php echo $this->renderPartial('_datospago',true); ?>
+    <div id="datosPago" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false"
+        style=" width:50%; margin:auto; background:#FFF; height:auto; max-height: 606px; overflow-y:auto;">
+        <?php echo $this->renderPartial('_datospago'); ?>
     </div>
 
 </div>
