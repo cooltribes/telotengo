@@ -115,7 +115,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                             <div class="row" style="text-align:right">
                                <!-- <span class="white">Vive la <span class="red">Experiencia</span> tecnológica</span> -->
                             </div>
-                            <div class="row">
+                            <div class="row" style="margin-top: 10px;">
                             <ul class="no_list_style userButtons">
                              <?php
                     if(Yii::app()->user->isAdmin()){

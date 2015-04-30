@@ -53,6 +53,7 @@ $('.carousel').carousel('cycle');
                 <?php echo CHtml::hiddenField('textobuscado', 'si', 
                             array('id'=>'textobuscado')); ?>
             </div>
+            <!-- Busuqeda -->
             <div class="col-md-2 pull-right" style="padding: 0;">
                 <!-- <a href="#" class="btn form-control btn-sigmablue no_radius_left" id="btn_search_event">Buscar</a> -->
                 <?php $this->widget('bootstrap.widgets.TbButton', array(
