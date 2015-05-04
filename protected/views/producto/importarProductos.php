@@ -1,6 +1,5 @@
 <div class="container">
     <div class="row-fluid margin_top_small">
-        <div class="col-md-10 col-md-offset-1"> 
     
      	<!-- FLASH ON -->
         <?php if(Yii::app()->user->hasFlash('success')){?>
@@ -9,7 +8,7 @@
             </div>
         <?php } ?>
         <?php if(Yii::app()->user->hasFlash('error')){?>
-            <div class="alert in alert-block fade alert-error text_align_center">
+            <div class="alert in alert-block fade alert-danger text_align_center">
                 <?php echo Yii::app()->user->getFlash('error'); ?>
             </div>
         <?php } ?>
@@ -32,7 +31,7 @@
             ?>
             <fieldset>                
                 <legend>Subir archivo: </legend>
-                <div class="well col-md-5">
+                <div class="well col-md-12">
                     <?php
                     $this->widget('CMultiFileUpload', array(
                         'name' => 'archivoCarga',
@@ -60,7 +59,6 @@
             </fieldset>
             <?php $this->endWidget(); ?>
         </div>	
-        </div>
     </div>
 </div>
 <script type="text/javascript">

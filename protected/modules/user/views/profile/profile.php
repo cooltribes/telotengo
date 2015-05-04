@@ -9,7 +9,7 @@ $this->breadcrumbs=array(
 	    </div>
 	<?php } ?>
 	<?php if(Yii::app()->user->hasFlash('error')){?>
-	    <div class="alert in alert-block fade alert-Danger text_align_center">
+	    <div class="alert in alert-block fade alert-danger text_align_center">
 	        <?php echo Yii::app()->user->getFlash('error'); ?>
 	    </div> 
 	<?php } ?>
@@ -78,10 +78,10 @@ $this->breadcrumbs=array(
 							}
 						}
 						else
-							echo '<div class="padding_left_small"><h5> El usuario no tiene ningun producto en listas de deseos.</h5></div>';								
+							echo '<h5> El usuario no tiene ningun producto en listas de deseos.</h5>';								
 					}
 					else
-						echo '<div class="padding_left_small"><h5> El usuario no tiene ningun producto en listas de deseos.</h5><div>';	
+						echo '<h5> El usuario no tiene ningun producto en listas de deseos.</h5>';	
 					
 					?>		
 																	

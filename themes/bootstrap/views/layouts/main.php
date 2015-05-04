@@ -153,7 +153,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/seleccion">Agregar Inventario</a></li>
                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/flashsale/admin">Ventas Flash</a></li>
                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/pregunta/admin">Preguntas</a></li>
-                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/pregunta/admin">Carga masiva</a></li>
+                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/importar">Importar productos</a></li>
                         </ul>
                     </li>
                     <li class="button glyph-padding">
