@@ -71,7 +71,7 @@ class MarcaController extends Controller
 			$marca->attributes = $_POST['Marca'];
 			//$marca->urlImagen = $_POST['Marca']['Urlimagen'];
 		
-			echo($_POST['url']);
+			#echo($_POST['url']);
 		
 			if(!is_dir(Yii::getPathOfAlias('webroot').'/images/marca/'))
 				{
@@ -81,28 +81,43 @@ class MarcaController extends Controller
 			$rnd = rand(0,9999);  
 			$images=CUploadedFile::getInstanceByName('url');
 			
-			var_dump($images);
-			echo "<br>".count($images);
+			#var_dump($images);
+			#echo "<br>".count($images);
 			if (isset($images) && count($images) > 0) {
 				$marca->url_imagen = "{$rnd}-{$images}";
 				
 				$marca->save();
-		        
+
 		        $nombre = Yii::getPathOfAlias('webroot').'/images/marca/'.$marca->id;
 		        $extension_ori = ".jpg";
 				$extension = '.'.$images->extensionName;
-		       
+
 		       	if ($images->saveAs($nombre . $extension)) {
-		
-		       		$marca->url_imagen = $marca->id .$extension;
+					
+		       		$marca->url_imagen = $marca->id.$extension;
 		            $marca->save();
 									
 					Yii::app()->user->setFlash('success',"Marca guardada exitosamente.");
+
+					$nombre_thumbJ = $nombre.'_thumb.jpg';
+					$nombre_thumbP = $nombre.'_thumb.png';
+					
+					if(file_exists($nombre_thumbJ)){
+						unlink($nombre_thumbJ);
+					}
+
+					if(file_exists($nombre_thumbP)){
+						unlink($nombre_thumbP);
+					}
+
+				#	echo $nombre.$extension;
+				#	Yii::app()->end();
 
 					$image = Yii::app()->image->load($nombre.$extension);
 					$image->resize(150, 150);
 					$image->save($nombre.'_thumb'.$extension);
 					
+
 					if($extension == '.png'){
 						$image = Yii::app()->image->load($nombre.$extension);
 						$image->resize(150, 150);
@@ -111,6 +126,8 @@ class MarcaController extends Controller
 					
 				}
 				else {
+					echo "error";
+					Yii::app()->end();
 		        	$marca->delete();
 				}
 		        
@@ -124,28 +141,8 @@ class MarcaController extends Controller
 			
 		                $this->redirect(array('admin'));
 		}
-		
-		
-		$this->render('create',array('model'=>$marca));
-		
-		/*
-		
-		$model=new Marca;
 
-		// $this->performAjaxValidation($model);
-		
-		if(isset($_POST['Marca']))
-		{
-			$model->attributes=$_POST['Marca'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
-		}
-
-		$this->render('create',array(
-			'model'=>$model,
-		));*/
-		
-		
+		$this->render('create',array('model'=>$marca));		
 	}
 
 	/**
