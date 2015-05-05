@@ -27,13 +27,13 @@ echo"<tr>";
 	</a> 
 	 
 		<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-			<li><a tabindex="-1" href="'.Yii::app()->createUrl('/marca/create',array('id'=>$data->id)).'" ><i class="icon-cog"></i> Editar </a></li>
-			<li><a tabindex="-1" href="'.Yii::app()->createUrl('/marca/delete',array('id'=>$data->id)).'" ><i class="icon-trash"></i> Eliminar </a></li>
+			<li><a tabindex="-1" href="'.Yii::app()->createUrl('/marca/create',array('id'=>$data->id)).'" ><i class="glyphicon glyphicon-cog"></i> Editar </a></li>
+			<li><a tabindex="-1" href="'.Yii::app()->createUrl('/marca/delete',array('id'=>$data->id)).'" ><i class="glyphicon glyphicon-trash"></i> Eliminar </a></li>
 		</ul>
         </div></td>
         
         <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        </div>		
+        </div>		 
 			';
 	
 echo"</tr>";
