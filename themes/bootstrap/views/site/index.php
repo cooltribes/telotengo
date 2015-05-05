@@ -43,9 +43,9 @@ $('.carousel').carousel('cycle');
                                         'enctype' => 'multipart/form-data',
                                     ),
                                 )); 
-        ?>
+        ?> 
         <div class="row-fluid">
-            <div class="col-md-10" style="padding-left: 0;">
+            <div class="col-md-10 col-xs-9 no_padding">
                 <!-- <input class="form-control no_radius_right" id="busqueda" name="busqueda" type="text" placeholder="¿Qué estás buscando?"> -->
                 <?php echo CHtml::textField('busqueda', '', 
                                     array('id'=>'busqueda','placeholder'=>'¿Qué estás buscando?','class'=>'form-control no_radius_right'));
@@ -54,7 +54,7 @@ $('.carousel').carousel('cycle');
                             array('id'=>'textobuscado')); ?>
             </div>
             <!-- Busuqeda -->
-            <div class="col-md-2 pull-right" style="padding: 0;">
+            <div class="col-md-2 col-xs-3 no_padding">
                 <!-- <a href="#" class="btn form-control btn-sigmablue no_radius_left" id="btn_search_event">Buscar</a> -->
                 <?php $this->widget('bootstrap.widgets.TbButton', array(
                                 'buttonType'=>'submit',

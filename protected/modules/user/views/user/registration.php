@@ -17,14 +17,20 @@ $this->breadcrumbs=array(
 				</div>
 			<?php else: ?>
 				
-				<div class="align_center">
-				  <small>Si ya tienes una cuenta <?php echo CHtml::link('haz click aquí', $this->createUrl('/user/login'), array()); ?></small>  
-				</div>
+				
 				 		
 				
 				<div class="row-fluid">
-				    <div class="col-md-9">
-    				<div class="form-horizontal margin_top" role="form">
+				    <div class="col-md-9 col-md-offset-3">
+				        <div class="col-sm-9 no_padding" style="text-align: center">
+                        
+                            <a title="Registrate con facebook" id="boton_facebook" class="transition_all form-control" onclick="check_fb()" href="#">Regístrate con Facebook</a>
+                           <div class="margin_top margin_bottom">
+                             ó Ingresa tus datos
+                           </div>
+                       </div>    
+                        
+    				<div class="form-horizontal" role="form">
     					<?php $form=$this->beginWidget('UActiveForm', array(
     						'id'=>'registration-form',
     						'enableAjaxValidation'=>true,
@@ -159,14 +165,11 @@ $this->breadcrumbs=array(
     
     					<?php $this->endWidget(); ?>
 				</div>
-				
-				</div>
-				<div class="col-md-3">
-                    <div  style="padding-top: 55%; text-align: center">
-                        ó<br/><br/>
-                        <a title="Registrate con facebook" id="boton_facebook" class="transition_all" onclick="check_fb()" href="#">Regístrate con Facebook</a>
-                    </div>
+				<div class="align_center col-sm-9 margin_top">
+                  <small>Si ya tienes una cuenta <?php echo CHtml::link('haz click aquí', $this->createUrl('/user/login'), array()); ?></small>  
                 </div>
+				</div>
+
 				</div><!-- form -->
 			<?php endif; ?>
 		</div>
