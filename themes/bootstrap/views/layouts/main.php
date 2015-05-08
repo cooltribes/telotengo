@@ -57,7 +57,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
      <!-- HEADER ON -->
 
    
-    <nav class="navegacion-superior navbar-default navbar-fixed-top" id="mainHeader" >
+    <nav class="navegacion-superior navbar-default navbar-fixed-top min992" id="mainHeader" >
         <div class="container"> 
             <div class="navbar-left">  
                 <div class="links_menu">            
@@ -97,7 +97,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
             <div class="container">
                 <div class="navbar">
                     <div class="row-fluid">
-                        <div class="col-md-4 no_padding">
+                        <div class="col-md-4 col-xs-4 no_padding">
                             <div class="row-fluid">
                                 <div class="col-md-6 no_padding">   
                                    <a href="<?php echo Yii::app()->baseUrl; ?>/" title="Inicio">
@@ -345,6 +345,93 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
      
 		
   <!-- HEADER OFF -->
+  
+<nav class="navbar navbar-default max991" id="navMobile">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed margin_top_medium" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand no_padding" href="<?php echo Yii::app()->baseUrl; ?>/" title="Inicio">
+         <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/logo.png" width="100%"/>
+      </a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Categorías <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <?php foreach ($categorias as $categoria): ?>
+                            <li><a href="<?php echo Yii::app()->baseUrl.'/categorias'.'/'.$categoria->url_amigable; ?>"><?php echo $categoria->nombre; ?></a>
+                                
+                            </li>
+            <?php endforeach; ?>            
+            
+            
+            
+            
+          </ul>
+        </li>
+      </ul>
+     
+      
+ <!-- ************** USER MENU *************************-->     
+      <ul class="nav navbar-nav navbar-right">
+          <?php
+                    if(Yii::app()->user->isGuest):
+           ?>
+           <li><a href="#">Tienda</a></li>
+           <li><a href="#">Registrate</a></li>
+           <li><a href="#">Inicia Sesión</a></li>
+           
+           <?php    else: 
+           ?>
+           <li><a href="<?php echo Yii::app()->baseUrl; ?>/giftcard/comprar">Comprar giftcard</a></li>
+           <li><a href="<?php echo Yii::app()->baseUrl; ?>/bolsa/view">Carrito</a></li>
+           <li><a href="<?php echo Yii::app()->baseUrl; ?>/tienda/">Tienda</a></li>
+           
+           <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Tu Cuenta <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="<?php echo Yii::app()->baseUrl; ?>/user/user/tucuenta">Tu cuenta</a></li>
+                <li><a href="<?php echo Yii::app()->baseUrl; ?>/orden/listado">Tus pedidos</a></li>
+                <li><a href="<?php echo Yii::app()->baseUrl; ?>/user/profile/edit">Editar perfil</a></li>
+                <li>
+                    <a href="<?php echo Yii::app()->baseUrl; ?>/direccionEnvio/listado">Direcciones de envío </a>
+                </li>
+                <li>
+                    <a href="<?php echo Yii::app()->baseUrl; ?>/direccionFacturacion/listado">Direcciones de facturación</a>
+                </li>               
+              </ul>
+            </li>
+            <li><a href="<?php echo Yii::app()->baseUrl; ?>/site/logout">Salir</a></li>
+            
+           
+           <?php endif; ?>
+           
+           
+           
+       
+        
+      </ul>
+      
+      
+      
+      
+      
+      
+      
+ <!-- ************* USER MENU OFF *************************-->     
+ 
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
 
 		<div id="page">
             <div id="principal" style="clear: top">

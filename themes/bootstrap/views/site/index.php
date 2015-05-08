@@ -43,9 +43,9 @@ $('.carousel').carousel('cycle');
                                         'enctype' => 'multipart/form-data',
                                     ),
                                 )); 
-        ?>
+        ?> 
         <div class="row-fluid">
-            <div class="col-md-10" style="padding-left: 0;">
+            <div class="col-md-10 col-xs-9 no_padding">
                 <!-- <input class="form-control no_radius_right" id="busqueda" name="busqueda" type="text" placeholder="¿Qué estás buscando?"> -->
                 <?php echo CHtml::textField('busqueda', '', 
                                     array('id'=>'busqueda','placeholder'=>'¿Qué estás buscando?','class'=>'form-control no_radius_right'));
@@ -54,7 +54,7 @@ $('.carousel').carousel('cycle');
                             array('id'=>'textobuscado')); ?>
             </div>
             <!-- Busuqeda -->
-            <div class="col-md-2 pull-right" style="padding: 0;">
+            <div class="col-md-2 col-xs-3 no_padding">
                 <!-- <a href="#" class="btn form-control btn-sigmablue no_radius_left" id="btn_search_event">Buscar</a> -->
                 <?php $this->widget('bootstrap.widgets.TbButton', array(
                                 'buttonType'=>'submit',
@@ -213,92 +213,36 @@ $('.carousel').carousel('cycle');
                <!-- Carousel items -->
                <div class="carousel-inner">
                   <div class="item active row-fluid">
-                     <div class="col-md-3">
-                        <a href="<?php echo Yii::app()->baseUrl."/marcas/Blackberry"; ?>">
-                            <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/marcas/blackberry.png" />
-                        </a> 
-                     </div>
-                     <div class="col-md-3">
-                        <a href="<?php echo Yii::app()->baseUrl."/marcas/Lenovo"; ?>">
-                            <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/marcas/lenovo.png" />
-                        </a> 
-                     </div>
-                     <div class="col-md-3">
-                        <a href="<?php echo Yii::app()->baseUrl."/marcas/Samsung"; ?>">
-                            <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/marcas/samsung.png" />
-                        </a> 
-                     </div>
-                     <div class="col-md-3">
-                        <a href="<?php echo Yii::app()->baseUrl."/marcas/HP"; ?>">
-                            <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/marcas/hp.png" />
-                        </a> 
-                     </div>
-                     
+
+                <?php
+                    $marcas = Marca::model()->findAllByAttributes(array('destacado'=>1));
+                    $count = 1;
+
+                    foreach ($marcas as $marca) {
+                        echo '<div class="col-md-3">';
+                        echo '<a href="'.Yii::app()->baseUrl.'/marcas/'.$marca->nombre.'">';
+                        echo '<img src="'.Yii::app()->baseUrl.'/images/marca/'.$marca->url_imagen.'" />';
+                        echo '</a></div>'; 
+                        
+                        if($count%4 == 0)
+                            echo "</div><div class='item row-fluid'>";
+
+                        $count++; 
+                     } 
+                ?>
+
                   </div>
-                  
-                  <div class="item row-fluid">
-                     <div class="col-md-3">
-                        <a href="<?php echo Yii::app()->baseUrl."/marcas/Caselogic"; ?>">
-                            <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/marcas/caselogic.png" />
-                        </a> 
-                     </div>
-                     <div class="col-md-3">
-                        <a href="<?php echo Yii::app()->baseUrl."/marcas/Sandisk"; ?>"> 
-                            <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/marcas/sandisk.png" />
-                        </a> 
-                     </div>
-                     <div class="col-md-3">
-                        <a href="<?php echo Yii::app()->baseUrl."/marcas/Kingston"; ?>">
-                            <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/marcas/kingston.png" />
-                        </a> 
-                     </div>
-                     <div class="col-md-3">
-                        <a href="<?php echo Yii::app()->baseUrl."/marcas/Siragon"; ?>">
-                            <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/marcas/siragon.png" />
-                        </a> 
-                     </div>
-                  </div>
-                  
-                  <div class="item row-fluid">
-                        <div class="col-md-3">
-                        <a href="<?php echo Yii::app()->baseUrl."/marcas/Argom"; ?>">
-                            <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/marcas/argom.png" />
-                        </a> 
-                     </div>
-                     <div class="col-md-3">
-                        <a href="<?php echo Yii::app()->baseUrl."/marcas/Quo"; ?>">
-                            <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/marcas/quo.png" />
-                        </a> 
-                     </div>
-                     <div class="col-md-3">
-                        <a href="<?php echo Yii::app()->baseUrl."/marcas/Nyck"; ?>">
-                            <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/marcas/nyck.png" />
-                        </a> 
-                     </div>
-                     <div class="col-md-3">
-                        <a href="<?php echo Yii::app()->baseUrl."/marcas/Forza"; ?>">
-                            <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/marcas/forza.png" />
-                        </a> 
-                     </div>
-                  </div>
-                  
                </div>
                <!-- Carousel nav -->
-
             </div> 
-            
-             
             </section>
-
         </div>
-
         <!-- COLUMNA PRINCIPAL DERECHA OFF // -->
         <!-- COLUMNA IZQUIERDA (MENU) ON // -->
-
         <!-- COLUMNA IZQUIERDA (MENU) OFF // -->
     </div>
      <!-- CONTENIDO OFF -->
-</div>                                       
+</div>                                      
 <script>
 	 
 	 $('.link').popover({

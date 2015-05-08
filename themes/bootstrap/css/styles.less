@@ -340,7 +340,41 @@ body{
   .padding_top;
   border-top:1px solid rgba(0,0,0,.03);
 }
+
+/* ============================== header mobile ===============  */
+    #navMobile{
+          background: -webkit-linear-gradient(#198ac9,#016eab);
+          background: -o-linear-gradient(#198ac9,#016eab);
+          background: -moz-linear-gradient(#198ac9,#016eab);
+          background: linear-gradient(#198ac9,#016eab);
+    }
+    
+    #navMobile a{
+        color: white;
+    }
+    #navMobile .navbar-nav > .open > a{
+        background-color: #ec1f24;
+    }
+    #navMobile .dropdown-menu{
+        background: #0094cc;
+    }
+    #navMobile .navbar-nav>.dropdown>a .caret{
+       border-top-color: white;
+       border-bottom-color: white; 
+    }
+    #navMobile .navbar-toggle:hover, .navbar-default .navbar-toggle:focus{
+        background-color: #0094cc;    
+    }
+    #navMobile .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus{
+        background-color: #198ac9;
+    }
+    #navMobile .navbar-collapse{
+        max-height: 600px;
+    }
   
+ 
+ 
+/* =============================================================  */
 /* Cuerpo de la pagina OFF
    ========================================================================== */
 
@@ -895,3 +929,22 @@ body,html{
 
 
 //--------------------------------------
+
+@media (min-width: 992px){
+  .min992{
+    display: block;
+  }
+  .max991{
+    display: none;
+  }
+  
+}
+
+@media (max-width: 991px){
+  .min992{
+    display: none;
+  }
+  .max991{
+    display: block;
+  }
+}
