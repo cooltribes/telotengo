@@ -25,7 +25,8 @@ class AdminController extends Controller
 	{
 		return array(
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','addSaldo','delete','create','update','view','cargarSaldo','reclamos','eliminarReclamo','eliminarComentario','cargaSaldo'),
+				'actions'=>array('admin','addSaldo','delete','create','update','view','cargarSaldo','reclamos','eliminarReclamo',
+								'eliminarComentario','cargaSaldo','invitarUsuario'),
 				'users'=>UserModule::getAdmins(),
 			),
 			array('deny',  // deny all users
@@ -183,6 +184,52 @@ class AdminController extends Controller
 			'profile'=>$profile,
 		));
 	}
+
+
+	/**
+	 * Genera un invitación a un nuevo usuario
+	 */
+	public function actionInvitarUsuario()
+	{
+		$model = new User;
+		$profile = new Profile;
+
+		#enviar mail a usuaario
+
+		$this->performAjaxValidation(array($model));
+		
+		if(isset($_POST['User']))
+		{
+			$model->attributes=$_POST['User'];
+			$model->status = 1; #Activo
+			$model->username = $_POST['User']['email']; #Mismo Mail
+			$model->password = User::generarPassword();
+			$model->quien_invita = Yii::app()->user->id;
+
+			$model->activkey=Yii::app()->controller->module->encrypting(microtime().$model->password);
+			$profile->first_name = "Usuario";
+			$profile->last_name = "Invitado";
+			$profile->cedula = "10111222";
+			$profile->fecha_nacimiento = "1980-01-01";
+			$profile->user_id=0;
+
+			if($model->validate()&&$profile->validate()) {
+				$model->password=Yii::app()->controller->module->encrypting($model->password);
+				if($model->save()) {
+					$profile->user_id=$model->id;
+					$profile->save();
+					Yii::app()->user->setFlash('success',"Usuario invitado correctamente");
+				}
+				$this->redirect(array('admin'));
+			}
+		}
+
+		$this->render('invitar',array(
+			'model'=>$model,
+			'profile'=>$profile,
+		));
+	}
+
 
 	/**
 	 * Updates a particular model.
