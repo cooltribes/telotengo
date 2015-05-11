@@ -15,7 +15,6 @@ class RegistrationForm extends User {
 			array('password', 'length', 'max'=>128, 'min' => 4,'tooShort' => 'Debe tener al menos 4 caracteres'),
 			array('email', 'email', 'message'=>'No es un correo electrónico válido'),
 			array('username', 'unique', 'message' => 'El nombre de usuario ya existe'),
-			array('email', 'unique', 'message' => 'El correo electrónico ya está siendo utilizado'),
 			//array('verifyPassword', 'compare', 'compareAttribute'=>'password', 'message' => UserModule::t("Retype Password is incorrect.")),
 			//array('username', 'match', 'pattern' => '/^[A-Za-z0-9_@-.]+$/u','message' => UserModule::t("Incorrect symbols (A-z0-9).")),
 			array('type, newsletter', 'numerical', 'integerOnly'=>true),

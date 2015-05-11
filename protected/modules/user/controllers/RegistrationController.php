@@ -19,7 +19,7 @@ class RegistrationController extends Controller
 	/**
 	 * Registration user
 	 */
-	public function actionRegistration() {
+	public function actionRegistration(){
             $model = new RegistrationForm;
             $profile = new Profile;
             $profile->regMode = true;
@@ -30,12 +30,44 @@ class RegistrationController extends Controller
 				echo UActiveForm::validate(array($model,$profile));
 				Yii::app()->end();
 			}
-			
+
 		    if (Yii::app()->user->id) {
 		    	$this->redirect(Yii::app()->controller->module->profileUrl);
 		    } else {
 		    	if(isset($_POST['RegistrationForm'])) {
 					$model->attributes=$_POST['RegistrationForm'];
+
+					if(isset($model->email)){
+						#Revisar si esta invitado en la base de datos
+						$usuario = User::model()->findByAttributes(array('email'=>$model->email));
+
+						if(isset($usuario)){ #el usuario existe en la base de datos, tiene invitacion
+
+							#revisar que tipo de invitacion tiene
+							switch ($usuario->type) {
+								case User::TYPE_INVITADO_EMPRESA:
+									# code...
+									break;
+								case User::TYPE_INVITADO_CLIENTE:
+									#code
+									break;
+								default:
+									# code...
+									break;
+							}
+
+						}
+						else{
+							#el usuario no esta y esta realizando una solicitud
+							Yii::app()->getSession()->add('usuarionuevo', $model->email);
+							$this->redirect(Yii::app()->baseUrl.'/user/user/datos');
+						}	
+					}
+			
+						#generar password
+						
+
+
 					$profile->attributes=((isset($_POST['Profile'])?$_POST['Profile']:array()));
 					if($model->validate()&&$profile->validate())
 					{

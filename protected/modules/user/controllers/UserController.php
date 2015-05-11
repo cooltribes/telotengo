@@ -25,7 +25,7 @@ class UserController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
+				'actions'=>array('index','view','datos'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -589,4 +589,27 @@ class UserController extends Controller
 		}
 		return $this->_model;
 	}
+
+	/*
+	Función para tomar los datos personales de una solicitud
+	*/
+	public function actionDatos(){
+		$model = new RegistrationForm;
+        $profile = new Profile;
+        $profile->regMode = true;	
+
+        	if(isset($_POST['RegistrationForm'])) {
+				$model->attributes=$_POST['RegistrationForm'];
+
+				$profile->attributes=((isset($_POST['Profile'])?$_POST['Profile']:array()));
+					if($model->validate()&&$profile->validate())
+					{
+					}
+			}
+
+		$this->render('datos',array('model'=>$model,'profile'=>$profile));
+
+	}
+
+
 }
