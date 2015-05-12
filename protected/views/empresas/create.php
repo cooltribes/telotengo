@@ -1,36 +1,27 @@
 <!-- CONTENIDO ON -->
-     <div class="container-fluid" style="padding: 0 15px;">
+<div class="container">
+	<div class="row-fluid">
+		<?php if(Yii::app()->user->hasFlash('success')){?>
+		    <div class="alert in alert-block fade alert-success text_align_center">
+		        <?php echo Yii::app()->user->getFlash('success'); ?>
+		    </div>
+		<?php } ?>
+		<?php if(Yii::app()->user->hasFlash('error')){?>
+		    <div class="alert in alert-block fade alert-danger text_align_center">
+		        <?php echo Yii::app()->user->getFlash('error'); ?>
+		    </div>
+		<?php } ?>
+		<h1>Telotengo.com <small>Solicitud</small></h1>
+		<hr class="no_margin_top"/>
+		<div class="col-sm-12">			
+			<div class="col-sm-10 no_padding" style="text-align: center">
+	            <div class="margin_top margin_bottom alert in alert-block fade alert-info text_align_center">
+	                Y ahora permítenos conocer acerca de tu empresa:
+	            </div>
+	        </div>    
 
-<?php
-$this->breadcrumbs=array(
-	'Empresas'=>array('admin'),
-	'Crear',
-);
+			<?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
 
-?>
-<?php if(Yii::app()->user->hasFlash('success')){?>
-	    <div class="alert in alert-block fade alert-success text_align_center">
-	        <?php echo Yii::app()->user->getFlash('success'); ?>
-	    </div>
-	<?php } ?>
-	<?php if(Yii::app()->user->hasFlash('error')){?>
-	    <div class="alert in alert-block fade alert-error text_align_center">
-	        <?php echo Yii::app()->user->getFlash('error'); ?>
-	    </div>
-	<?php } ?>
-
-<div class="row">
-        <!-- COLUMNA PRINCIPAL DERECHA ON // OJO: esta de primera para mejorar el SEO sin embargo por CSS se ubica visualmente a la derecha -->
-
-        <div class="col-md-10  col-md-push-2 main-content" role="main">
-			<h1>Empresas<small> - Solicitud</small></h1>
-
-			<h3><?php echo '¡Bienvenido, '.$profile->first_name.' '.$profile->last_name.'!'; ?></h3>
-
-<h6>Ingresa a continuación los datos de tu empresa.</h6>
-
-<?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
-
-</div>
-</div>
+		</div>
+	</div>
 </div>

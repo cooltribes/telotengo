@@ -1,6 +1,5 @@
-<div class="well">
-	<div class="row padding_left_small">
-		<div class="col-md-6 1">
+<div class="row-fluid">
+	<div class="col-md-10">
 
 <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
 	'id'=>'empresas-form',
@@ -13,20 +12,6 @@
 )); ?>
 
 	<?php echo $form->errorSummary($model); ?>
-
-	<?php
-	if(UserModule::isAdmin()){
-		?>
-		<div class="form-group">
-			<?php echo $form->labelEx($empresa_user,'users_id', array('class'=>'col-sm-2')); ?>
-			<div class="col-sm-10">
-		    	<?php echo $form->dropDownList($empresa_user,'users_id', CHtml::listData(User::model()->findAllByAttributes(array('superuser'=>0)), 'id', 'username')); ?>
-		    </div>	
-		    <?php echo $form->error($empresa_user,'users_id'); ?>
-		</div>
-		<?php
-	}
-	?>
 
 	<div class="form-group">
 		<?php echo $form->labelEx($model,'razon_social', array('class'=>'col-sm-2')); ?>
@@ -121,6 +106,5 @@
 
 <?php $this->endWidget(); ?>
 
-	</div>
 	</div>
 	</div>

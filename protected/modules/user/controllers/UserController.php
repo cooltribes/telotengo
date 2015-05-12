@@ -598,18 +598,52 @@ class UserController extends Controller
         $profile = new Profile;
         $profile->regMode = true;	
 
-        	if(isset($_POST['RegistrationForm'])) {
-				$model->attributes=$_POST['RegistrationForm'];
 
-				$profile->attributes=((isset($_POST['Profile'])?$_POST['Profile']:array()));
-					if($model->validate()&&$profile->validate())
-					{
-					}
+        // ajax validator
+		if(isset($_POST['ajax']) && $_POST['ajax']==='registration-form')
+		{
+			echo UActiveForm::validate(array($model,$profile));
+			Yii::app()->end();
+		}
+
+		if(isset($_POST['Profile'])){
+			$profile->attributes=((isset($_POST['Profile'])?$_POST['Profile']:array()));
+
+			$soucePassword = User::generarPassword();
+
+			$model->email = Yii::app()->session['usuarionuevo'];
+			$model->status = 1; #Activo
+			$model->username = Yii::app()->session['usuarionuevo']; #Mismo Mail
+			$model->activkey = UserModule::encrypting(microtime().$soucePassword);
+			$model->password = UserModule::encrypting($soucePassword);
+			$model->verifyPassword = UserModule::encrypting($model->verifyPassword);
+			$model->quien_invita = 0; #el mismo, modificado luego del save
+			$model->type = User::TYPE_USUARIO_SOLICITA;
+
+			$profile->user_id=0;
+			
+			if($model->validate()&&$profile->validate()){
+				if($model->save()){
+					$model->quien_invita = $model->id;
+					$model->save();
+
+					$profile->user_id=$model->id;
+					$profile->save();
+					
+					#enviar correo de que se ha inscrito (?)
+
+					#Log in
+					/*$identity = new UserIdentity($model->username,$soucePassword);
+					$identity->authenticate();
+					Yii::app()->user->login($identity,0);*/
+
+					#pedir nuevos datos
+					$this->redirect(array('/empresas/create'));
+				}
 			}
+		}
 
-		$this->render('datos',array('model'=>$model,'profile'=>$profile));
-
+	$this->render('datos',array('model'=>$model,'profile'=>$profile));
 	}
-
 
 }

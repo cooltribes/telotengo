@@ -10,16 +10,26 @@
  * 
  */ 
 
-
 const STATUS_NOACTIVE=0;
 const STATUS_ACTIVE=1;
+
+/*
+Tipos de empresa (tipo):
+1 = empresa vendedora 
+2 = Como cliente
+3 = realizó la solicitud y hay que verificar
+*/
+
+const TYPE_EMPRESA = 1;
+const TYPE_CLIENTE = 2;
+const TYPE_USUARIO_SOLICITA = 3;
 
 /**
  * This is the model class for table "tbl_empresas".
  *
  * The followings are the available columns in table 'tbl_empresas':
  * @property integer $id
- * @property string $nombre
+ * @property string $telefono
  * @property string $razon_social
  * @property string $rif
  * @property integer $estado
@@ -31,12 +41,6 @@ const STATUS_ACTIVE=1;
  * @property Documentos[] $documentoses
  * @property EmpresasHasTblUsers[] $empresasHasTblUsers
  */
-
-/*
-Tipos de empresa (tipo):
-1 = empresa compradora
-2 = empresa vendedora (ya pasó por el proceso de verificación de telotengo)
-*/
 
 class Empresas extends CActiveRecord
 {
@@ -69,16 +73,17 @@ class Empresas extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('razon_social, rif, direccion, mail', 'required'),
+			array('razon_social, rif, direccion, mail, ciudad', 'required'),
 			array('estado, destacado, tipo', 'numerical', 'integerOnly'=>true),
-			array('nombre, url', 'length', 'max'=>255),
+			array('url', 'length', 'max'=>255),
 			array('direccion, mail, web' ,'length', 'max'=>255),
 			array('razon_social', 'length', 'max'=>205),
+			array('ciudad', 'length', 'max'=>150),
 			array('rif', 'length', 'max'=>45),
 			array('rif', 'match',
 				'pattern' => '/^[JGVE][-][0-9]{7,10}$/', // ^[JGVE]{1}[-][0-9]{7,10}$ Vieja: ^[JGVE]{1}[-][0-9]\d{8}$
             	'message' => 'Formato no valido para el rif.',
-            	'allowEmpty'=>false, 
+            	'allowEmpty'=>false,
        	 	), 
        	 	array('numero', 'match',
 				'pattern' => '/^[0-9]{7,10}$/',
@@ -89,7 +94,7 @@ class Empresas extends CActiveRecord
 			
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, nombre, razon_social, rif, estado, destacado, tipo, url, direccion, mail, web, numero, prefijo', 'safe', 'on'=>'search'),
+			array('id, telefono, razon_social, rif, estado, destacado, tipo, url, direccion, mail, web, numero, prefijo, ciudad', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -115,8 +120,8 @@ class Empresas extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'nombre' => 'Nombre',
-			'razon_social' => 'Razón Social',
+			'telefono' => 'Teléfono',
+			'razon_social' => 'Nombre o Razón Social',
 			'rif' => 'RIF',
 			'estado' => 'Estado',
 			'destacado' => 'Destacado',
@@ -125,6 +130,7 @@ class Empresas extends CActiveRecord
 			'direccion' => 'Dirección principal',
 			'mail' => 'Email',
 			'web' => 'Pagina Web',
+			'ciudad' => "Ciudad",
 		);
 	}
 
@@ -140,7 +146,7 @@ class Empresas extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('nombre',$this->nombre,true);
+		$criteria->compare('telefono',$this->telefono);
 		$criteria->compare('razon_social',$this->razon_social,true);
 		$criteria->compare('rif',$this->rif,true);
 		$criteria->compare('estado',$this->estado);
@@ -149,6 +155,7 @@ class Empresas extends CActiveRecord
 		$criteria->compare('direccion',$this->direccion);
 		$criteria->compare('mail',$this->mail);
 		$criteria->compare('web',$this->web);
+		$criteria->compare('ciudad',$this->ciudad);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

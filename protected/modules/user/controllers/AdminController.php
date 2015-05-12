@@ -194,8 +194,6 @@ class AdminController extends Controller
 		$model = new User;
 		$profile = new Profile;
 
-		#enviar mail a usuaario
-
 		$this->performAjaxValidation(array($model));
 		
 		if(isset($_POST['User']))
@@ -212,6 +210,8 @@ class AdminController extends Controller
 			$profile->cedula = "10111222";
 			$profile->fecha_nacimiento = "1980-01-01";
 			$profile->user_id=0;
+
+			#enviar mail
 
 			if($model->validate()&&$profile->validate()) {
 				$model->password=Yii::app()->controller->module->encrypting($model->password);
