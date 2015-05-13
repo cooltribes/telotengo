@@ -14,8 +14,8 @@
 		<h1>Telotengo.com <small>Solicitud</small></h1>
 		<hr class="no_margin_top"/>
 		<div class="col-sm-12">			
-			<div class="col-sm-10 no_padding" style="text-align: center">
-	            <div class="margin_top margin_bottom alert in alert-block fade alert-info text_align_center">
+			<div class="no_padding" style="text-align: center">
+	            <div class="margin_bottom alert in alert-block fade alert-info text_align_center">
 	                Y ahora permítenos conocer acerca de tu empresa:
 	            </div>
 	        </div>    

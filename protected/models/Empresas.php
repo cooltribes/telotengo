@@ -20,9 +20,9 @@ Tipos de empresa (tipo):
 3 = realizó la solicitud y hay que verificar
 */
 
-const TYPE_EMPRESA = 1;
-const TYPE_CLIENTE = 2;
-const TYPE_USUARIO_SOLICITA = 3;
+const TYPE_EMPRESA = 2;
+const TYPE_CLIENTE = 3;
+const TYPE_USUARIO_SOLICITA = 4;
 
 /**
  * This is the model class for table "tbl_empresas".

@@ -26,8 +26,8 @@ class EmpresasController extends Controller
 	public function accessRules()
 	{
 		return array(
-			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','create'),
+			array('allow',  // allow all users
+				'actions'=>array('index','view','create','solicitudFinalizada'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -71,7 +71,6 @@ class EmpresasController extends Controller
 
 		if(isset($_POST['Empresas'])){
 			$model->attributes=$_POST['Empresas'];
-			
 			$model->estado = 1; # solicitado 
 			$model->tipo = $user->type; # el mismo tipo de empresa que recibio en la invitación
 
@@ -81,7 +80,7 @@ class EmpresasController extends Controller
 				$empresa_user->rol = 'Administrador';
 				$empresa_user->save();
 
-				$this->redirect(array('registrofinalizado','id'=>$model->id));
+				$this->redirect(array('solicitudFinalizada'));
 			}
 		}
 
@@ -90,6 +89,16 @@ class EmpresasController extends Controller
 			'user' => $user,
 			'profile' => $user->profile,
 		));
+	}
+
+	/*
+	Action para el finalizar la solicitud
+	*/
+	public function actionSolicitudFinalizada()
+	{
+		Yii::app()->user->setFlash('success', 'Solicitud realizada con éxito. Pronto estaremos en contacto contigo.');
+
+		$this->render('solicitudFinalizada');
 	}
 
 	public function actionComplete($user = NULL, $empresa_id)
