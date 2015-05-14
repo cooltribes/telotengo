@@ -201,15 +201,17 @@ class AdminController extends Controller
 			$model->attributes=$_POST['User'];
 			$model->status = 1; #Activo
 			$model->username = $_POST['User']['email']; #Mismo Mail
+			$model->email = $_POST['User']['email']; #Mismo Mail
 			$model->password = User::generarPassword();
 			$model->quien_invita = Yii::app()->user->id;
-
 			$model->activkey=Yii::app()->controller->module->encrypting(microtime().$model->password);
+			
 			$profile->first_name = "Usuario";
 			$profile->last_name = "Invitado";
 			$profile->cedula = "10111222";
 			$profile->fecha_nacimiento = "1980-01-01";
 			$profile->user_id=0;
+			$profile->sexo = 2; # hombre
 
 			#enviar mail
 

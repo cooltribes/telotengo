@@ -42,20 +42,17 @@ class RegistrationController extends Controller
 						$usuario = User::model()->findByAttributes(array('email'=>$model->email));
 
 						if(isset($usuario)){ #el usuario existe en la base de datos, tiene invitacion
-
 							#revisar que tipo de invitacion tiene
 							switch ($usuario->type) {
 								case User::TYPE_INVITADO_EMPRESA:
 									# code...
 									break;
 								case User::TYPE_INVITADO_CLIENTE:
-									#code
-									break;
-								default:
-									# code...
+									#el usuario está invitado como cliente
+									Yii::app()->getSession()->add('invitadocliente',$usuario->id);
+									$this->redirect(Yii::app()->baseUrl.'/user/user/datos');
 									break;
 							}
-
 						}
 						else{
 							#el usuario no esta y esta realizando una solicitud

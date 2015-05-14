@@ -598,7 +598,6 @@ class UserController extends Controller
         $profile = new Profile;
         $profile->regMode = true;	
 
-
         // ajax validator
 		if(isset($_POST['ajax']) && $_POST['ajax']==='registration-form')
 		{
@@ -610,24 +609,32 @@ class UserController extends Controller
 			$profile->attributes=((isset($_POST['Profile'])?$_POST['Profile']:array()));
 
 			$soucePassword = User::generarPassword();
-
-			$model->email = Yii::app()->session['usuarionuevo'];
-			$model->status = 1; #Activo
-			$model->username = Yii::app()->session['usuarionuevo']; #Mismo Mail
-			$model->activkey = UserModule::encrypting(microtime().$soucePassword);
-			$model->password = UserModule::encrypting($soucePassword);
-			$model->verifyPassword = UserModule::encrypting($model->verifyPassword);
-			$model->quien_invita = 0; #el mismo, modificado luego del save
-			$model->type = User::TYPE_USUARIO_SOLICITA;
-
-			$profile->user_id=0;
 			
+			if(isset(Yii::app()->session['usuarionuevo'])){
+				$model->email = Yii::app()->session['usuarionuevo'];
+				$model->status = 1; #Activo
+				$model->username = Yii::app()->session['usuarionuevo']; #Mismo Mail
+				$model->activkey = UserModule::encrypting(microtime().$soucePassword);
+				$model->password = UserModule::encrypting($soucePassword);
+				$model->verifyPassword = UserModule::encrypting($model->verifyPassword);
+				$model->quien_invita = 0; #el mismo, modificado luego del save
+				$model->type = User::TYPE_USUARIO_SOLICITA;
+				$profile->user_id=0;
+			}elseif(isset(Yii::app()->session['invitadocliente'])){
+				$model = User::model()->findByPk(Yii::app()->session['invitadocliente']);
+				$profile = $model->profile;
+				$profile->attributes=((isset($_POST['Profile'])?$_POST['Profile']:array()));
+				$profile->user_id =$model->id;
+			}
+
 			if($model->validate()&&$profile->validate()){
 				if($model->save()){
-					$model->quien_invita = $model->id;
-					$model->save();
+					if(isset(Yii::app()->session['usuarionuevo'])){
+						$model->quien_invita = $model->id;
+						$model->save();
+					}
 
-					$profile->user_id=$model->id;
+					$profile->user_id = $model->id;
 					$profile->save();
 					
 					#enviar correo de que se ha inscrito (?)

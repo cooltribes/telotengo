@@ -64,13 +64,19 @@ class EmpresasController extends Controller
 		$model = new Empresas;
 		$empresa_user = new EmpresasHasUsers();
 
-		$user = User::model()->findByAttributes(array('email'=>Yii::app()->session["usuarionuevo"]));
+		if(isset(Yii::app()->session["usuarionuevo"])){
+			$user = User::model()->findByAttributes(array('email'=>Yii::app()->session["usuarionuevo"]));
+		}
+		elseif(isset(Yii::app()->session["invitadocliente"])){
+			$user = User::model()->findByPk(Yii::app()->session["invitadocliente"]);
+		}
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
 		if(isset($_POST['Empresas'])){
 			$model->attributes=$_POST['Empresas'];
+			$model->telefono=$_POST['Empresas']['telefono'];
 			$model->estado = 1; # solicitado 
 			$model->tipo = $user->type; # el mismo tipo de empresa que recibio en la invitación
 

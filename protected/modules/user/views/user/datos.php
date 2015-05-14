@@ -21,8 +21,21 @@ $this->breadcrumbs=array(
 				    <div class="col-md-10 col-md-offset-2">
 				        <div class="col-sm-10 no_padding" style="text-align: center">
                             <div class="margin_top margin_bottom alert in alert-block fade alert-info text_align_center">
-                                No hemos encontrado algún registro de invitación a este correo electrónico, <br/>
-                                por lo que iniciaremos un proceso de validación que nos permitirá generar una para hacertela llegar a <?php echo Yii::app()->session['usuarionuevo']; ?>.
+                                <?php
+                                if(isset(Yii::app()->session['invitadocliente'])){
+                                    $usuario = User::model()->findByPk(Yii::app()->session['invitadocliente']);
+                                    $quieninvita = User::model()->findByPk($usuario->quien_invita);
+                                ?>
+                                    Bienvenido <?php echo $usuario->email.", ".$quieninvita->email; ?> te ha invitado a formar parte del <br/> Marketplace Telotengo.com
+                                    donde podrás ver sus inventarios en tiempo real y realizar órdenes de compra instantáneas
+                                <?php
+                                }elseif(isset(Yii::app()->session['usuarionuevo'])){
+                                ?>
+                                    No hemos encontrado algún registro de invitación a este correo electrónico, <br/>
+                                    por lo que iniciaremos un proceso de validación que nos permitirá generar una para hacertela llegar a <?php echo Yii::app()->session['usuarionuevo']; ?>.
+                                <?php
+                                }
+                                ?>
                             </div>
                             <div class="margin_top margin_bottom">
                                 Por favor completa los siguientes datos personales
