@@ -52,6 +52,11 @@ class RegistrationController extends Controller
 									Yii::app()->getSession()->add('invitadocliente',$usuario->id);
 									$this->redirect(Yii::app()->baseUrl.'/user/user/datos');
 									break;
+								case User::TYPE_USUARIO_SOLICITA:
+									#Usuario ya solicitó pero no recibió respuesta.
+									Yii::app()->getSession()->add('usuario_solicitud',$usuario->id);
+									$this->redirect(Yii::app()->baseUrl.'/user/user/respuesta');
+									break;
 							}
 						}
 						else{

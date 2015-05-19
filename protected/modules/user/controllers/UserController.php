@@ -25,7 +25,7 @@ class UserController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','datos'),
+				'actions'=>array('index','view','datos','respuesta'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -48,6 +48,15 @@ class UserController extends Controller
 		$this->render('view',array(
 			'model'=>$model,
 		));
+	}
+
+	/*
+	Action para el finalizar la solicitud con respuesta adecuada
+	*/
+	public function actionRespuesta(){
+		$user = User::model()->findByPk(Yii::app()->session['usuario_solicitud']);
+
+		$this->render('respuesta',array('user'=>$user));
 	}
 	
 	/**
