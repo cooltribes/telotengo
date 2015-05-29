@@ -88,13 +88,13 @@ class Empresas extends CActiveRecord
        	 	array('numero', 'match',
 				'pattern' => '/^[0-9]{7,10}$/',
             	'message' => 'Formato no valido -> introduzca solo números (Mínimo 7, Máximo 10).',
-       	 	), 
+       	 	),
        	 	array('prefijo','compare','compareValue'=>'0','operator'=>'!=','allowEmpty'=>false, 'message'=>'Seleccione una opción'),
-       	 	array('numero','required','message'=>'Introduzca los numeros del RIF.'),
+       	 	array('numero','required','message'=>'Introduzca los numeros del RIF.'), 
 			
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, telefono, razon_social, rif, estado, destacado, tipo, url, direccion, mail, web, numero, prefijo, ciudad', 'safe', 'on'=>'search'),
+			array('id, telefono, razon_social, rif, estado, destacado, tipo, url, direccion, mail, web, numero, prefijo, ciudad, comentario', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -131,6 +131,7 @@ class Empresas extends CActiveRecord
 			'mail' => 'Email',
 			'web' => 'Pagina Web',
 			'ciudad' => "Ciudad",
+			'comentario' => 'Comentario', 
 		);
 	}
 
@@ -156,6 +157,7 @@ class Empresas extends CActiveRecord
 		$criteria->compare('mail',$this->mail);
 		$criteria->compare('web',$this->web);
 		$criteria->compare('ciudad',$this->ciudad);
+		$criteria->compare('comentario',$this->comentario);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

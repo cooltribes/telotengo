@@ -54,9 +54,38 @@ class UserController extends Controller
 	Action para el finalizar la solicitud con respuesta adecuada
 	*/
 	public function actionRespuesta(){
+		
 		$user = User::model()->findByPk(Yii::app()->session['usuario_solicitud']);
+		$empresasHasUsers = EmpresasHasUsers::model()->findByAttributes(array('users_id'=>$user->id));
+		$empresa = $empresasHasUsers->empresas; 
 
-		$this->render('respuesta',array('user'=>$user));
+		if(isset($_POST['Empresas']['comentario'])){
+			 if($_POST['Empresas']['comentario'] == ""){
+			 	Yii::app()->user->setFlash('error',"Tu comentario no se puede enviar vacío.");
+			 	$this->render('respuesta',array('user'=>$user,'empresa'=>$empresa));
+			 }else{
+			 	$empresa->saveAttributes(array('comentario'=>$_POST['Empresas']['comentario']));
+
+			 	#enviar mail a admin
+			 	$message = new YiiMailMessage;
+                $subject = 'El usuario '.$user->email.' agregó un comentario en su solicitud.';                                
+                $message->subject = $subject;
+                $message->view = "mail_template";
+                $body = 'El usuario '.$user->email.' agregó un comentario en su solicitud de empresas.
+                    <br/><br/>Comentario:<br/>
+                    '.$empresa->comentario.'
+                    <br/><br/>El usuario se encuentra en la espera de respuesta.';
+                $message->from = array(Yii::app()->params['adminEmail'] => "Sigma Tiendas");
+                $message->setBody(array("body"=>$body),'text/html');              
+                $message->addTo(Yii::app()->params['contacto']);
+                Yii::app()->mail->send($message);
+
+				Yii::app()->user->setFlash('success',"El comentario fue enviado correctamente. En las próximas horas tendrás respuesta.");
+			 	$this->redirect(Yii::app()->getBaseUrl(true));
+			 }
+		}else{
+			$this->render('respuesta',array('user'=>$user,'empresa'=>$empresa));
+		}
 	}
 	
 	/**
