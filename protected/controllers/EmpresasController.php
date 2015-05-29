@@ -78,12 +78,17 @@ class EmpresasController extends Controller
 			$model->attributes=$_POST['Empresas'];
 			$model->telefono=$_POST['Empresas']['telefono'];
 			$model->estado = 1; # solicitado 
+			$model->forma_legal = $_POST['Empresas']['forma_legal'];
+			$model->sector = $_POST['Empresas']['sector'];
+			$model->cargo = $_POST['Empresas']['cargo'];
+			$model->num_empleados = $_POST['Empresas']['num_empleados'];
+
 			$model->tipo = $user->type; # el mismo tipo de empresa que recibio en la invitación
 
 			if($model->save()){
 				$empresa_user->empresas_id = $model->id;
 				$empresa_user->users_id = $user->id;
-				$empresa_user->rol = 'Administrador';
+				$empresa_user->rol = $_POST['Empresas']['cargo'];
 				$empresa_user->save();
 
 				$this->redirect(array('solicitudFinalizada'));

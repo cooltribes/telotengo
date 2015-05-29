@@ -655,7 +655,7 @@ class UserController extends Controller
 				$model->activkey = UserModule::encrypting(microtime().$soucePassword);
 				$model->password = UserModule::encrypting($soucePassword);
 				$model->verifyPassword = UserModule::encrypting($model->verifyPassword);
-				$model->quien_invita = 0; #el mismo, modificado luego del save
+				$model->quien_invita = 0; #el mismo, se modifica cuando tenga ID luego del save
 				$model->type = User::TYPE_USUARIO_SOLICITA;
 				$profile->user_id=0;
 			}elseif(isset(Yii::app()->session['invitadocliente'])){
@@ -675,7 +675,7 @@ class UserController extends Controller
 					$profile->user_id = $model->id;
 					$profile->save();
 					
-					#enviar correo de que se ha inscrito (?)
+					#enviar correo de que se ha inscrito (?) incluyendo su password generado
 
 					#Log in
 					/*$identity = new UserIdentity($model->username,$soucePassword);
