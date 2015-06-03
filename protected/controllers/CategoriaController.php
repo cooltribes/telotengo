@@ -69,18 +69,17 @@ class CategoriaController extends Controller
 		}
 		
 		if(isset($_POST['Categoria'])){
+
 			$categoria->attributes = $_POST['Categoria'];
-			$categoria->destacado = $_POST['Categoria']['destacado'];
-			$categoria->descripcion= $_POST['Categoria']['descripcion'];
-			
+
 			if($_POST['Categoria']['id_padre'] != "") // significa que depende
 				$categoria->id_padre = $_POST['Categoria']['id_padre'];
 			else
 				$categoria->id_padre = 0;
 			
+			$categoria->ultimo=$_POST['Categoria']['ultimo'];
 			
-			
-			echo($_POST['url']);
+			/*echo($_POST['url']);
 		
 			if(!is_dir(Yii::getPathOfAlias('webroot').'/images/categoria/'))
 				{
@@ -91,8 +90,8 @@ class CategoriaController extends Controller
 			$images=CUploadedFile::getInstanceByName('url');
 			
 			var_dump($images);
-			echo "<br>".count($images);
-			if (isset($images) && count($images) > 0) {
+			echo "<br>".count($images);*/
+			/*if (isset($images) && count($images) > 0) {
 				$categoria->imagen_url = "{$rnd}-{$images}";
 				
 				$categoria->save();
@@ -129,7 +128,13 @@ class CategoriaController extends Controller
 		        }else{
 		        	Yii::app()->user->setFlash('error',"Categoria no pudo ser guardada.");
 		        }
-			}// isset
+			}// isset */
+			
+				if($categoria->save()){
+		        	Yii::app()->user->setFlash('success',"Categoria guardada exitosamente.");
+		        }else{
+		        	Yii::app()->user->setFlash('error',"Categoria no pudo ser guardada.");
+		        }
 			
 		    	$this->redirect(array('admin'));
 		}

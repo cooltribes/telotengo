@@ -21,6 +21,7 @@ class Categoria extends CActiveRecord
 	 * @param string $className active record class name.
 	 * @return Categoria the static model class
 	 */
+	
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
@@ -115,5 +116,38 @@ class Categoria extends CActiveRecord
 	public function getChildren(){
 		return Categoria::model()->findAllByAttributes(array('id_padre'=>$this->id),array('order'=>'nombre ASC'));
 	}
-
+	
+	
+	
+	public function recursividad($lista, &$todos=Array(), $nivel=0)
+	{
+		#$todos = Array();
+			
+			$sublista=Categoria::model()->findAllByAttributes(array('id_padre'=>$lista));
+			if(isset($sublista))
+			{  $nivel++;
+				foreach($sublista as $sub)
+				{		
+					#array_push($todos,array($sub->id=>$sub->nombre));
+					array_push($todos,str_repeat(html_entity_decode('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'),$nivel-1).$sub->nombre."+".$sub->id);		
+					$this->recursividad($sub->id, $todos, $nivel);
+				}
+			}
+	return $todos;		
+	}
+	
+	public function combinar(&$cat=Array())
+	{
+		$valor=array();
+		$nom=array();
+		foreach($cat as $cate)
+		  { 
+		  	 $cats=explode("+", $cate);
+			 array_push($valor,$cats[0]);
+			 array_push($nom,$cats[1]);
+		  }
+		$combinar=array_combine($nom,$valor);
+		return $combinar;
+	}
+	
 }

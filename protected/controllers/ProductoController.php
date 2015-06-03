@@ -32,7 +32,7 @@ class ProductoController extends Controller
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
 				'actions'=>array('seleccion','busqueda','create','hijos','imagenes','seo','create','caracteristicas','agregarCaracteristica','eliminarCaracteristica','agregarInventario',
-								 'agregarInventarioAjax','eliminarInventario','multi','orden'),
+								 'agregarInventarioAjax','eliminarInventario','multi','orden', 'clasificar', 'niveles', 'nivelPartial', 'crearProducto'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -70,7 +70,22 @@ class ProductoController extends Controller
 		else
 			$this->render('seleccion');
 	}
-
+	
+	public function actionClasificar()
+	{
+		$this->render('clasificar');
+	}
+	
+	public function actionNiveles()
+	{
+		if (isset($_POST['id']))
+        {	
+			echo $this->renderPartial('nivelPartial', array('id'=>$_POST['id'],'nivel'=>$_POST['nivel']),true);
+			Yii::app()->end();
+		}
+			
+		
+	}
 	
 	// el usuario decidio buscar el producto
 	public function actionBusqueda() 
@@ -134,9 +149,22 @@ class ProductoController extends Controller
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
 	 */
+	public function actionCrearProducto()
+	{
+		if(isset($_GET['id'])) //buscar los atributos correspondientes a esa categoria, para llenarlos a continuacion (categoriaAtributo)..
+		{
+			$model=1; //por ahora	//aqui voy a crear un nuevo producto en base a una categoria, pero ese producto no existe aun....
+			$this->render('crearProducto',array( /// aqui va el modelo nuevo 
+				'model'=>$model,
+			));
+		}
+		
+	}
+	
 	public function actionCreate()
 	{
 		$user = Yii::app()->user->id;
+
 		//$empresas_user = EmpresasHasUsers::model()->findAllByAttributes(array('users_id'=>$user));
 		
 		$u = User::model()->findByPk($user);
