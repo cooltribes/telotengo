@@ -35,7 +35,7 @@ class CategoriaController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete','create','update','upload','listimages'),
+				'actions'=>array('admin','delete','create','update','upload','listimages', 'menu', 'categoriaRelacionada', 'catRela', 'crearAvanzar'),
 				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -59,17 +59,109 @@ class CategoriaController extends Controller
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
 	 */
-	public function actionCreate($id = null)
+	 
+	 public function actionMenu($id,$opcion)
+	 {
+	 	$this->render('menu',array(
+			'model'=>$id,'opcion'=>$opcion
+		));
+	 }
+	 
+	 public function actionCategoriaRelacionada() ///falta avanzar
 	{
-		
-		if(!$id){
-			$categoria = new Categoria;
-		}else{
-			$categoria = Categoria::model()->findByPk($id);
+		if(isset($_GET['id'])){
+			$id = $_GET['id'];			
+			$model = Categoria::model()->findByPk($id);
+			/// Categoria Atributo deberia ir aqui
+		}
+		else {
+			$model = new Categoria;
 		}
 		
-		if(isset($_POST['Categoria'])){
+		$this->render('categoriaRelacionada',array(
+			'model'=>$model));
+	}
+	
+	
+	public function actionCatRela() ///falta avanzar
+	{
+		#var_dump($_POST['check']);
+		
+		$cadena="";
+		$cat_id=explode(",", $_POST['check']);	
+		$idProducto = $_POST['idProd']; //mi id
+		$categoria=Categoria::model()->findByPk($idProducto);
+		$tota=count($cat_id);
+		$i=1;
 
+			foreach($cat_id as $each)
+			{
+				$cada_uno=explode("-", $each);
+				if($tota-$i==0)
+					$cadena=$cadena.$cada_uno[1];
+				else	
+					$cadena=$cadena.$cada_uno[1].",";		
+				
+				$i++;
+			}
+			$categoria->categorias_relacionadas=$cadena;
+			if($categoria->save())
+		  		echo("ok");
+	}
+	
+	public function actioncrearAvanzar() //el primer guardar de la 1era pestana
+	{
+		
+		$categoria = new Categoria;  ///falta la imagen
+		
+		if($_POST['oculta']=="")
+			$categoria = new Categoria;
+		else 
+			$categoria = Categoria::model()->findByPk($_POST['oculta']);
+		
+		if(isset($_POST['padre']))
+			$categoria->id_padre = $_POST['padre'];
+		else 
+			$categoria->id_padre = 0;
+		
+		$categoria->nombre=$_POST['nombre'];
+		$categoria->ultimo=$_POST['ultimo'];
+		
+		//$this->redirect(array('admin'));
+		
+		if($categoria->save())
+			echo $categoria->id;
+			
+	}
+	
+	public function actionCreate($id=NULL)
+	{
+		
+		if(!isset($_POST['Categoria'])) // si es primera vez que entra
+		{
+			$categoria = new Categoria;
+		}else{
+			if($id!="") // si viene por get
+			{
+				$categoria = Categoria::model()->findByPk($id);
+			}
+			else 
+			{
+			   if($_POST['Categoria']['oculta']=="") // si nunca se ha creado y se va a crear
+				{
+					$categoria = new Categoria;
+				}
+				else 
+				{
+					$categoria = Categoria::model()->findByPk($_POST['Categoria']['oculta']); //si ya lo ha creado y sobrescribe
+				}
+			}
+
+			
+		}
+		
+		if(isset($_POST['Categoria'])){   ///falta la imagen
+			
 			$categoria->attributes = $_POST['Categoria'];
 
 			if($_POST['Categoria']['id_padre'] != "") // significa que depende
@@ -136,29 +228,9 @@ class CategoriaController extends Controller
 		        	Yii::app()->user->setFlash('error',"Categoria no pudo ser guardada.");
 		        }
 			
-		    	$this->redirect(array('admin'));
 		}
 		
 		$this->render('create',array('model'=>$categoria));
-		
-		/*
-		$model=new Categoria;
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
-		if(isset($_POST['Categoria']))
-		{
-			$model->attributes=$_POST['Categoria'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
-		}
-
-		$this->render('create',array(
-			'model'=>$model,
-		));
-		*/
-		
 	}
 
 	/**

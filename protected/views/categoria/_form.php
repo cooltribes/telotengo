@@ -16,9 +16,15 @@
 )); ?>
 	
 	<?php // echo $form->errorSummary($model); ?>
+	<?php 
+	if(isset($model->nombre))
+	 	echo $form->hiddenField($model,'oculta',array('value'=>$model->id, 'id'=>'oculta')); 
+	else	
+	 	echo $form->hiddenField($model,'oculta',array('value'=>'', 'id'=>'oculta'));
+	 	?>
 	
 	<div class="col-md-6 col-md-offset-3 margin_top_small">
-		<?php echo $form->textFieldRow($model,'nombre',array('class'=>'form-control','maxlength'=>80)); ?>
+		<?php echo $form->textFieldRow($model,'nombre',array('class'=>'form-control','maxlength'=>80, 'id'=>'nombre')); ?>
 	</div>
 	
 	<div class="col-md-6 col-md-offset-3 margin_top_small">
@@ -34,17 +40,17 @@
 		
 		echo CHtml::activeDropDownList($model,'id_padre', Categoria::model()->combinar($cat),
                                array('empty'=>'Si no posee Categorias, no seleccione',
-                                'class'=>'form-control'));
+                                'class'=>'form-control', 'id'=>'padre'));
 
 		
 	?>
 	</div>
 	
-	<div class="col-md-6 col-md-offset-3 margin_top_small">
+	<div class="col-md-6 col-md-offset-3 margin_top_small" id="ultimo">
 		<label>Ultima Categoria</label> <br>
-			<?php echo $form->radioButton($model,'ultimo',array('value'=>1,'uncheckValue'=>null)); ?>
+			<?php echo $form->radioButton($model,'ultimo',array('value'=>1,'uncheckValue'=>null, 'id'=>'ultimo1')); ?>
 			<label for="si">Si</label>
-			<?php echo $form->radioButton($model,'ultimo',array('value'=>0,'uncheckValue'=>null)); ?>
+			<?php echo $form->radioButton($model,'ultimo',array('value'=>0,'uncheckValue'=>null, 'id'=>'ultimo2')); ?>
 			<label for="no">No</label>
 		
 	</div>	
@@ -94,6 +100,10 @@
 			'label'=>$model->isNewRecord ? 'Crear' : 'Guardar',
 			'htmlOptions'=>array('class'=>'form-control')
 		)); ?>
+
+		                <ul class="nav nav-stacked nav-tabs margin_top">
+                   			 <li><a id="avanzar" style="cursor: pointer" title="Guardar y avanzar">Guardar y avanzar</a></li>
+                		</ul>
 	</div>
 	
 	
@@ -105,7 +115,43 @@
 
 <script>
 
-	
+
+
+	$('#avanzar').on('click', function(event) {
+		
+		event.preventDefault();
+		
+		var nombre=$("#nombre").val();
+		var padre=$("#padre").val();
+		var oculta=$("#oculta").val();
+		var ultimo;
+		
+		 if($('#ultimo1').is(':checked')) 
+		 	ultimo=$("#ultimo1").val();
+		 else
+		 	ultimo=$("#ultimo2").val();
+		
+		
+		if(nombre!="")
+		{
+			$.ajax({
+	         url: "<?php echo Yii::app()->createUrl('Categoria/crearAvanzar') ?>",
+             type: 'POST',
+	         data:{
+                    nombre:nombre, padre:padre, ultimo:ultimo, oculta:oculta
+                   },
+	        success: function (data) {
+	        	
+      			window.location.href = '../categoria/categoriaRelacionada/'+data+'';
+	       	}
+	       })
+		}
+		
+
+		}
+	);
+
+	/*
 	$('#Categoria_destacado_0').click(function() {
 		//alert('mostrar');
 		
@@ -116,6 +162,6 @@
 	$('#Categoria_destacado_1').click(function() {
 		//alert('esconder');
 		$("#descripcion").hide();		
-	});	
+	});	*/
 	
 </script>

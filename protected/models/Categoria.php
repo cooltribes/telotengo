@@ -150,4 +150,25 @@ class Categoria extends CActiveRecord
 		return $combinar;
 	}
 	
+	public function verificar($idGeneralP, $idCadaUno)
+	{
+		//return $idCadaUno;
+		$categoria=Categoria::model()->findByPk($idGeneralP);
+		if($categoria->categorias_relacionadas!="")
+		{
+			$cat_id=explode(",", $categoria->categorias_relacionadas);
+			foreach($cat_id as $each)
+			{
+				if($idCadaUno==$each)
+				{	
+					return $idCadaUno;
+				}	
+			}
+			return 0;
+		}
+		else {
+			return 0;
+		}
+	}
+	
 }
