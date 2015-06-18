@@ -14,6 +14,7 @@ $this->breadcrumbs=array(
     <div>
 	       <h1><?php echo $model->isNewRecord ? 'Crear Categoría' : 'Categoría - <small>'.$model->nombre.'</small>'; ?></h1><hr class="no_margin_top"/>
 
+<?php echo $this->renderPartial('menu', array('model'=>$model,'opcion'=>1)); ?>
 <?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
 
 </div>

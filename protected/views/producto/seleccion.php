@@ -49,17 +49,17 @@
 					   </div>	
 		
 				<?php $this->endWidget(); ?>	
-			<!--	
+				
 			<h4> O Agregar un nuevo producto </h4>
 			
-			 <div class="control-group"> -->
-					<?php /*$this->widget('bootstrap.widgets.TbButton', array(
+			 <div class="control-group">
+					<?php $this->widget('bootstrap.widgets.TbButton', array(
 			    'label'=>'Añadir Producto',
-			    'url' => Yii::app()->baseUrl.'/producto/create',
+			    'url' => Yii::app()->baseUrl.'/producto/clasificar',
 			    'type'=>'primary', // null, 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
 			    'size'=>'normal', // null, 'large', 'small' or 'mini'
-			)); */ ?>
-			<!--	</div> -->
+			));  ?>
+				</div> 
 				
 		
 		</div>
