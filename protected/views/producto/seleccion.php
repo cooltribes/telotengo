@@ -1,4 +1,4 @@
-<!-- CONTENIDO ON -->
+<!-- CONTENIDO ON --> 
 <div class="container">
 	<div class="row-fluid">
 	<?php

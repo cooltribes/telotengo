@@ -1,7 +1,7 @@
 <!-- FLASH ON -->
 <?php 
 
- $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
+ $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array( 
 	'id'=>'categoria-form',
 	'enableAjaxValidation'=>false,
 	'enableClientValidation'=>true,

@@ -2,7 +2,7 @@
 		<div class="row-fluid">
 
 
-<?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
+<?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array( 
 	'id'=>'categoria-form',
 	'enableAjaxValidation'=>false,
 	'enableClientValidation'=>true,
