@@ -35,49 +35,51 @@
 
 	<div class="form-group">
 		<div class="col-sm-12">
-			<?php echo $form->labelEx($model,'superuser'); ?>
-			<?php echo $form->dropDownList($model,'superuser',User::itemAlias('AdminStatus'),array('class'=>'form-control')); ?>
-			<?php echo $form->error($model,'superuser'); ?>
-		</div>
-	</div>
-
-	<div class="form-group">
-		<div class="col-sm-12">
 			<?php echo $form->labelEx($model,'status'); ?>
 			<?php echo $form->dropDownList($model,'status',User::itemAlias('UserStatus'),array('class'=>'form-control')); ?>
 			<?php echo $form->error($model,'status'); ?>
 		</div>
 	</div>
-<?php 
+
+	<div class="form-group">
+		<div class="col-sm-12">
+			<?php echo $form->labelEx($model,'type'); ?>
+			<?php echo $form->dropDownList($model,'type',User::itemAlias('UserType'),array('class'=>'form-control')); ?>
+			<?php echo $form->error($model,'type'); ?>
+		</div>
+	</div>
+
+	<?php 
 		$profileFields=$profile->getFields();
 		if ($profileFields) {
 			foreach($profileFields as $field) {
 			?>
-	<div class="form-group">
-		<div class="col-sm-12">
-			<?php echo $form->labelEx($profile,$field->varname); ?>
-			<?php 
-			if ($widgetEdit = $field->widgetEdit($profile)) {
-				echo $widgetEdit;
-			} elseif ($field->range) {
-				echo $form->dropDownList($profile,$field->varname,Profile::range($field->range),array('class'=>'form-control'));
-			} elseif ($field->field_type=="TEXT") {
-				echo CHtml::activeTextArea($profile,$field->varname,array('rows'=>6, 'cols'=>50));
-			} else {
-				if($field->varname != "fecha_nacimiento")
-					echo $form->textField($profile,$field->varname,array('size'=>60,'maxlength'=>(($field->field_size)?$field->field_size:255), 'class'=>'form-control'));
-				else
-					echo $form->textField($profile,$field->varname,array('size'=>60,'maxlength'=>(($field->field_size)?$field->field_size:255), 'class'=>'form-control','placeholder'=>'Ejemplo: 01-01-2000'));
-				
-			}
-			 ?>
-			<?php echo $form->error($profile,$field->varname); ?>
+		<div class="form-group">
+			<div class="col-sm-12">
+				<?php echo $form->labelEx($profile,$field->varname); ?>
+				<?php 
+				if ($widgetEdit = $field->widgetEdit($profile)) {
+					echo $widgetEdit;
+				} elseif ($field->range) {
+					echo $form->dropDownList($profile,$field->varname,Profile::range($field->range),array('class'=>'form-control'));
+				} elseif ($field->field_type=="TEXT") {
+					echo CHtml::activeTextArea($profile,$field->varname,array('rows'=>6, 'cols'=>50));
+				} else {
+					if($field->varname != "fecha_nacimiento")
+						echo $form->textField($profile,$field->varname,array('size'=>60,'maxlength'=>(($field->field_size)?$field->field_size:255), 'class'=>'form-control'));
+					else
+						echo $form->textField($profile,$field->varname,array('size'=>60,'maxlength'=>(($field->field_size)?$field->field_size:255), 'class'=>'form-control','placeholder'=>'Ejemplo: 01-01-2000'));
+					
+				}
+				 ?>
+				<?php echo $form->error($profile,$field->varname); ?>
+			</div>
 		</div>
-	</div>
 			<?php
 			}
 		}
-?>
+	?>	
+
 	<div class="form-group">
 	
 		<div class="form-actions col-sm-offset-2 col-sm-10 no_margin">

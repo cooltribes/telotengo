@@ -12,8 +12,8 @@
 	<td><?php echo $profile->telefono; ?></td>
 	<td><?php echo $empresa->razon_social; ?></td>
 	<td><?php echo $empresahas->rol; ?></td>
-	
-	<?php
+	 
+	<?php 
 		
 	echo '<td>
 

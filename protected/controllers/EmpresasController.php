@@ -26,12 +26,12 @@ class EmpresasController extends Controller
 	public function accessRules()
 	{
 		return array(
-			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
+			array('allow',  // allow all users
+				'actions'=>array('index','view','create','solicitudFinalizada'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','listado','cancelar', 'complete', 'agregarDocumento', 'eliminarDocumento', 'agregarDato', 'eliminarDato','getAlmacenes','inventarios','ventas'),
+				'actions'=>array('update','listado','cancelar', 'complete', 'agregarDocumento', 'eliminarDocumento', 'agregarDato', 'eliminarDato','getAlmacenes','inventarios','ventas'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -59,60 +59,57 @@ class EmpresasController extends Controller
 	 * Creates a new model. 
 	 * If creation is successful, the browser will be redirected to the 'view' page.
 	 */
-	public function actionCreate($user = NULL)
+	public function actionCreate()
 	{
 		$model = new Empresas;
 		$empresa_user = new EmpresasHasUsers();
-		if(!$user){
-			$user = User::model()->findByPk(Yii::app()->user->id);
+
+		if(isset(Yii::app()->session["usuarionuevo"])){
+			$user = User::model()->findByAttributes(array('email'=>Yii::app()->session["usuarionuevo"]));
+		}
+		elseif(isset(Yii::app()->session["invitadocliente"])){
+			$user = User::model()->findByPk(Yii::app()->session["invitadocliente"]);
 		}
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Empresas']))
-		{
+		if(isset($_POST['Empresas'])){
 			$model->attributes=$_POST['Empresas'];
-			//$model->rif = $model->prefijo."-".$model->numero;
-				
-			$model->estado = 1; // solicitado 
-			if($_POST['vender'] == '1'){
-				$model->tipo = 2; // empresa vendedora 
-			}
+			$model->telefono=$_POST['Empresas']['telefono'];
+			$model->estado = 1; # solicitado 
+			$model->forma_legal = $_POST['Empresas']['forma_legal'];
+			$model->sector = $_POST['Empresas']['sector'];
+			$model->cargo = $_POST['Empresas']['cargo'];
+			$model->num_empleados = $_POST['Empresas']['num_empleados'];
+
+			$model->tipo = $user->type; # el mismo tipo de empresa que recibio en la invitación
+
 			if($model->save()){
-				//$empresa_user = new EmpresasHasUsers();
 				$empresa_user->empresas_id = $model->id;
-				if(isset($_POST['EmpresasHasUsers'])){
-					$empresa_user->attributes=$_POST['EmpresasHasUsers'];
-				}else{
-					$empresa_user->users_id = $user->id;
-				}
-				$empresa_user->rol = 'Administrador';
+				$empresa_user->users_id = $user->id;
+				$empresa_user->rol = $_POST['Empresas']['cargo'];
 				$empresa_user->save();
-				if($_POST['vender'] == 0){
-					Yii::app()->user->setFlash('success',"Hemos recibido correctamente los datos del registro para la empresa.");
-					$this->redirect(array('view','id'=>$model->id));
-				}else{
-					//Yii::app()->user->setFlash('success',"Empresa vendedora");
-					$this->redirect(array('complete','empresa_id'=>$model->id));
-				}
+
+				$this->redirect(array('solicitudFinalizada'));
 			}
 		}
 
-		if($user->superuser == 1){
-			$this->render('create_admin',array(
-				'model'=>$model,
-				'user' => $user,
-				'profile' => $user->profile,
-				'empresa_user' => $empresa_user,
-			));
-		}else{
-			$this->render('create',array(
-				'model'=>$model,
-				'user' => $user,
-				'profile' => $user->profile,
-			));
-		}
+		$this->render('create',array(
+			'model'=>$model,
+			'user' => $user,
+			'profile' => $user->profile,
+		));
+	}
+
+	/*
+	Action para el finalizar la solicitud
+	*/
+	public function actionSolicitudFinalizada()
+	{
+		Yii::app()->user->setFlash('success', 'Solicitud realizada con éxito. Pronto estaremos en contacto contigo.');
+
+		$this->render('solicitudFinalizada');
 	}
 
 	public function actionComplete($user = NULL, $empresa_id)

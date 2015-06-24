@@ -6,6 +6,11 @@ class User extends CActiveRecord
 	const STATUS_ACTIVE=1;
 	const STATUS_BANNED=-1;
 	
+	const TYPE_ADMIN = 1;
+	const TYPE_INVITADO_EMPRESA = 2;
+	const TYPE_INVITADO_CLIENTE = 3;
+	const TYPE_USUARIO_SOLICITA = 4;
+
 	//TODO: Delete for next version (backward compatibility)
 	const STATUS_BANED=-1;
 	
@@ -29,9 +34,10 @@ class User extends CActiveRecord
 	/*
 	Tipos de usuario (type):
 	1 = admin
-	2 = persona natural
-	3 = persona jurídica
-	*/
+	2 = Usuario invitado como empresa
+	3 = Usuario invitado como cliente
+	4 = Usuario que solicita participar enviando datos
+		*/
 
 	/**
 	 * Returns the static model of the specified AR class.
@@ -68,17 +74,17 @@ class User extends CActiveRecord
 			array('superuser', 'in', 'range'=>array(0,1)),
             array('create_at', 'default', 'value' => date('Y-m-d H:i:s'), 'setOnEmpty' => true, 'on' => 'insert'),
             array('lastvisit_at', 'default', 'value' => '0000-00-00 00:00:00', 'setOnEmpty' => true, 'on' => 'insert'),
-			array('username, email, superuser, status', 'required'),
+			array('email, type', 'required'),
 			array('superuser, status', 'numerical', 'integerOnly'=>true),
 			array('id, username, password, email, activkey, create_at, lastvisit_at, superuser, status, type, newsletter, facebook_id, avatar_url', 'safe', 'on'=>'search'),
 		):((Yii::app()->user->id==$this->id)?array(
-			array('username, email', 'required'),
+			array('email', 'required'),
 			array('username', 'length', 'max'=>40, 'min' => 3,'message' => UserModule::t("Incorrect username (length between 3 and 40 characters).")),
 			array('email', 'email'),
 			array('username', 'unique', 'message' => UserModule::t("This user's name already exists.")),
 			//array('username', 'match', 'pattern' => '/^[A-Za-z0-9_@]+$/u','message' => UserModule::t("Incorrect symbols (A-z0-9aaa).")),
 			array('email', 'unique', 'message' => UserModule::t("This user's email address already exists.")),
-			array('id, username, password, email, activkey, create_at, lastvisit_at, superuser, status, type, newsletter, facebook_id, avatar_url, perfil_completo', 'safe', 'on'=>'search'),
+			array('id, username, password, email, activkey, create_at, lastvisit_at, superuser, status, type, newsletter, facebook_id, avatar_url, perfil_completo, quien_invita', 'safe', 'on'=>'search'),
 		):array()));
 	}
 
@@ -114,10 +120,10 @@ class User extends CActiveRecord
 			'lastvisit_at' => UserModule::t("Last visit"),
 			'superuser' => UserModule::t("Superuser"),
 			'status' => UserModule::t("Status"),
-			'type' => '¿Vas a registrar una empresa?',
+			'type' => 'Tipo de invitación',
 			'newsletter' => '¿Quieres recibir novedades por email?',
 			'avatar_url'=>'Avatar',
-			'perfil_completo' => 'Perfil Completo',
+			'quien_invita' => '¿Quien realizó la invitación?',
 		);
 	}
 	
@@ -137,7 +143,7 @@ class User extends CActiveRecord
                 'condition'=>'superuser=1',
             ),
             'notsafe'=>array(
-            	'select' => 'id, username, password, email, activkey, create_at, lastvisit_at, superuser, status, facebook_id, avatar_url, perfil_completo',
+            	'select' => 'id, username, password, email, activkey, create_at, lastvisit_at, superuser, status, facebook_id, avatar_url, quien_invita',
             ),
         );
     }
@@ -146,7 +152,7 @@ class User extends CActiveRecord
     {
         return CMap::mergeArray(Yii::app()->getModule('user')->defaultScope,array(
             'alias'=>'user',
-            'select' => 'user.id, user.username, user.email, user.create_at, user.lastvisit_at, user.superuser, user.status, user.type, user.avatar_url, user.facebook_id, user.activkey, user.perfil_completo',
+            'select' => 'user.id, user.username, user.email, user.create_at, user.lastvisit_at, user.superuser, user.status, user.type, user.avatar_url, user.facebook_id, user.activkey, user.quien_invita',
         ));
     }
 	
@@ -160,6 +166,10 @@ class User extends CActiveRecord
 			'AdminStatus' => array(
 				'0' => UserModule::t('No'),
 				'1' => UserModule::t('Yes'),
+			),
+			'UserType' => array (
+				self::TYPE_INVITADO_EMPRESA => "Invitar como empresa",
+				self::TYPE_INVITADO_CLIENTE => "Invitar como cliente",
 			),
 		);
 		if (isset($code))
@@ -284,4 +294,29 @@ class User extends CActiveRecord
 
 		return count($productosBolsa);
 	}
+
+    static function generarPassword(){
+        $cantNum = 4;
+        $cantLet = 4;
+        
+        $l = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        
+        $LETRAS = str_split($l);
+        $NUMEROS = range(0, 9);
+
+        $codigo = array();
+        //Seleccionar cantLet letras
+        for ($i = 0; $i < $cantLet; $i++) {
+            $codigo[] = $LETRAS[array_rand($LETRAS)];
+        }
+        for ($i = 0; $i < $cantNum; $i++) {
+            $codigo[] = array_rand($NUMEROS);
+        }
+        
+        shuffle($codigo);
+        $codigo = implode("", $codigo);
+        
+        return $codigo;
+    }   
+
 }

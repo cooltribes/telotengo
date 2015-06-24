@@ -33,7 +33,7 @@ echo"<tr>";
         </div></td>
         
         <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        </div>		
+        </div>		 
 			';
 	
 echo"</tr>";

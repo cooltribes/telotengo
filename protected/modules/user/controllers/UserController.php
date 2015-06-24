@@ -25,7 +25,7 @@ class UserController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
+				'actions'=>array('index','view','datos','respuesta'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -48,6 +48,44 @@ class UserController extends Controller
 		$this->render('view',array(
 			'model'=>$model,
 		));
+	}
+
+	/*
+	Action para el finalizar la solicitud con respuesta adecuada
+	*/
+	public function actionRespuesta(){
+		
+		$user = User::model()->findByPk(Yii::app()->session['usuario_solicitud']);
+		$empresasHasUsers = EmpresasHasUsers::model()->findByAttributes(array('users_id'=>$user->id));
+		$empresa = $empresasHasUsers->empresas; 
+
+		if(isset($_POST['Empresas']['comentario'])){
+			 if($_POST['Empresas']['comentario'] == ""){
+			 	Yii::app()->user->setFlash('error',"Tu comentario no se puede enviar vacío.");
+			 	$this->render('respuesta',array('user'=>$user,'empresa'=>$empresa));
+			 }else{
+			 	$empresa->saveAttributes(array('comentario'=>$_POST['Empresas']['comentario']));
+
+			 	#enviar mail a admin
+			 	$message = new YiiMailMessage;
+                $subject = 'El usuario '.$user->email.' agregó un comentario en su solicitud.';                                
+                $message->subject = $subject;
+                $message->view = "mail_template";
+                $body = 'El usuario '.$user->email.' agregó un comentario en su solicitud de empresas.
+                    <br/><br/>Comentario:<br/>
+                    '.$empresa->comentario.'
+                    <br/><br/>El usuario se encuentra en la espera de respuesta.';
+                $message->from = array(Yii::app()->params['adminEmail'] => "Sigma Tiendas");
+                $message->setBody(array("body"=>$body),'text/html');              
+                $message->addTo(Yii::app()->params['contacto']);
+                Yii::app()->mail->send($message);
+
+				Yii::app()->user->setFlash('success',"El comentario fue enviado correctamente. En las próximas horas tendrás respuesta.");
+			 	$this->redirect(Yii::app()->getBaseUrl(true));
+			 }
+		}else{
+			$this->render('respuesta',array('user'=>$user,'empresa'=>$empresa));
+		}
 	}
 	
 	/**
@@ -589,4 +627,68 @@ class UserController extends Controller
 		}
 		return $this->_model;
 	}
+
+	/*
+	Función para tomar los datos personales de una solicitud
+	*/
+	public function actionDatos(){
+		$model = new RegistrationForm;
+        $profile = new Profile;
+        $profile->regMode = true;	
+
+        // ajax validator
+		if(isset($_POST['ajax']) && $_POST['ajax']==='registration-form')
+		{
+			echo UActiveForm::validate(array($model,$profile));
+			Yii::app()->end();
+		}
+
+		if(isset($_POST['Profile'])){
+			$profile->attributes=((isset($_POST['Profile'])?$_POST['Profile']:array()));
+
+			$soucePassword = User::generarPassword();
+			
+			if(isset(Yii::app()->session['usuarionuevo'])){
+				$model->email = Yii::app()->session['usuarionuevo'];
+				$model->status = 1; #Activo
+				$model->username = Yii::app()->session['usuarionuevo']; #Mismo Mail
+				$model->activkey = UserModule::encrypting(microtime().$soucePassword);
+				$model->password = UserModule::encrypting($soucePassword);
+				$model->verifyPassword = UserModule::encrypting($model->verifyPassword);
+				$model->quien_invita = 0; #el mismo, se modifica cuando tenga ID luego del save
+				$model->type = User::TYPE_USUARIO_SOLICITA;
+				$profile->user_id=0;
+			}elseif(isset(Yii::app()->session['invitadocliente'])){
+				$model = User::model()->findByPk(Yii::app()->session['invitadocliente']);
+				$profile = $model->profile;
+				$profile->attributes=((isset($_POST['Profile'])?$_POST['Profile']:array()));
+				$profile->user_id =$model->id;
+			}
+
+			if($model->validate()&&$profile->validate()){
+				if($model->save()){
+					if(isset(Yii::app()->session['usuarionuevo'])){
+						$model->quien_invita = $model->id;
+						$model->save();
+					}
+
+					$profile->user_id = $model->id;
+					$profile->save();
+					
+					#enviar correo de que se ha inscrito (?) incluyendo su password generado
+
+					#Log in
+					/*$identity = new UserIdentity($model->username,$soucePassword);
+					$identity->authenticate();
+					Yii::app()->user->login($identity,0);*/
+
+					#pedir nuevos datos
+					$this->redirect(array('/empresas/create'));
+				}
+			}
+		}
+
+	$this->render('datos',array('model'=>$model,'profile'=>$profile));
+	}
+
 }

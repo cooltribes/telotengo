@@ -2,7 +2,7 @@
 <div class="container">
      	
 <?php
-$this->breadcrumbs=array(
+$this->breadcrumbs=array( 
 	'Categorias'=>array('admin'),
 	'Crear',
 );

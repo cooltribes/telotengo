@@ -3,6 +3,22 @@ echo "<tr>";
 	echo '<td>'.$data->id.'</td>';
 	echo "<td>".$data->email."</td>";
 	echo "<td>".$data->profile->first_name.' '.$data->profile->last_name."</td>";
+	
+	echo "<td>";
+		switch ($data->type) {
+			case User::TYPE_INVITADO_EMPRESA:
+				echo 'Invitado como empresa';
+				break;
+			case User::TYPE_INVITADO_CLIENTE:
+				echo 'Invitado como cliente';
+				break;
+			case User::TYPE_USUARIO_SOLICITA:
+				echo 'Usuario realizó solicitud';
+				break;
+		}
+	echo "</td>";
+	$user = User::model()->findByPk($data->quien_invita);
+	echo "<td>".$user->email."</td>";
 	echo "<td>";
 		switch ($data->status) {
 			case User::STATUS_NOACTIVE:
