@@ -220,6 +220,20 @@ class AdminController extends Controller
 				if($model->save()) {
 					$profile->user_id=$model->id;
 					$profile->save();
+					
+					#opcion de que sea invitado por admin para ser parte de empresa
+					if($model->type == 2){
+						$cargo = $_POST['cargo'];
+						$empresa_id = $_POST['empresas'];
+						
+						#agregar a empresa tiene usuarios
+						$nuevo = new EmpresasHasUsers;
+						$nuevo->empresas_id = $empresa_id;
+						$nuevo->users_id = $model->id;
+						$nuevo->rol = $cargo;
+						$nuevo->save();
+					}
+
 					Yii::app()->user->setFlash('success',"Usuario invitado correctamente");
 				}
 				$this->redirect(array('admin'));

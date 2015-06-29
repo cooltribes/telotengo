@@ -9,7 +9,6 @@
 
 	<?php echo $form->errorSummary(array($model,$profile)); ?>
 
-
 	<div class="form-group">
 		<div class="col-sm-12">
 			<?php echo $form->labelEx($model,'email'); ?>
@@ -21,8 +20,34 @@
 	<div class="form-group">
 		<div class="col-sm-12">
 			<?php echo $form->labelEx($model,'type'); ?>
-			<?php echo $form->dropDownList($model,'type',User::itemAlias('UserType'),array('class'=>'form-control')); ?>
+			<?php echo $form->dropDownList($model,'type',User::itemAlias('UserType'),array('class'=>'form-control','empty' => 'Seleccione una opción')); ?>
 			<?php echo $form->error($model,'type'); ?>
+		</div>
+	</div>
+
+	<?php
+		$models = Empresas::model()->findAll();
+		$list = CHtml::listData($models, 'id', 'razon_social'); 
+
+	?>
+	<h3>Solo para el caso de invitar como miembro de empresa</h3>
+
+	<div class="form-group">
+		<div class="col-sm-12">
+			<label>Empresa</label>
+			<?php echo CHtml::dropDownList('empresas','',$list,array('id'=>'empresas','class'=>'form-control','disabled'=>'disabled')); ?>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<div class="col-sm-12">
+			<label>Cargo</label>
+			<?php echo CHtml::dropDownList('cargo','',
+				array(	'Dueño o Socio' => 'Dueño o Socio',
+						'Junta Directiva' => 'Junta Directiva',
+						'Gerente' => 'Gerente',
+						'Empleado' => 'Empleado'),
+				array('id'=>'cargo','class'=>'form-control','disabled'=>'disabled')); ?>
 		</div>
 	</div>
 
@@ -41,3 +66,19 @@
 <?php $this->endWidget(); ?>
 
 </div><!-- form -->
+
+<script type="text/javascript">
+	
+$('#User_type').on('change', function() {
+  //alert($(this).val()); 
+  if($(this).val()==2){ // empresa
+  	 $('#empresas').prop('disabled', false);
+  	 $('#cargo').prop('disabled', false);
+  }else{
+  	 $('#empresas').prop('disabled', 'disabled');
+  	 $('#cargo').prop('disabled', 'disabled');
+  }
+
+});
+
+</script>
