@@ -37,9 +37,10 @@ $this->breadcrumbs=array(
                                 }elseif(isset(Yii::app()->session['invitadoempresa'])){
                                     $usuario = User::model()->findByPk(Yii::app()->session['invitadoempresa']);
                                     $quieninvita = User::model()->findByPk($usuario->quien_invita);
-                                    #$hasusers = EmpresasHasUsers::model()->findByAttributes(array('users_id'=>$usuario>id));
+                                    $hasusers = EmpresasHasUsers::model()->findByAttributes(array('users_id'=>$usuario->id)); 
+                                    $empresa = Empresas::model()->findByPk($hasusers->empresas_id);
                                 ?>
-                                    Bienvenido <?php echo $usuario->email.", ".$quieninvita->email; ?> te ha invitado a formar parte de EMPRESA en Telotengo.
+                                    Bienvenido <?php echo $usuario->email.", ".$quieninvita->email; ?> te ha invitado a formar parte de <?php echo $empresa->razon_social; ?> en Telotengo.
                                 <?php
                                     }
                                 ?>
