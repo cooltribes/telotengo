@@ -1,6 +1,6 @@
 <?php
 
-class AtributoController extends Controller
+class ColorController extends Controller
 {
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -32,7 +32,7 @@ class AtributoController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('create','update', 'busqueda'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -62,81 +62,29 @@ class AtributoController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$model=new Atributo;
-
+		$model=new Color;
+		#$model->scenario="create"; 
 		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-		if(isset($_POST['Atributo']))
+		 //$this->performAjaxValidation($model);
+
+		if(isset($_POST['Color']))
 		{
-			$model->attributes=$_POST['Atributo'];
-			if($_POST['Atributo']['tipo']!=3)
+			$model->attributes=$_POST['Color'];
+			#$model->nombre=ucwords($_POST['Color']['nombre']); //convierte cada primera letra en mayusculas
+			if(!$model->save())
 			{
-					$model->multiple=0;
-					$model->rango="";
+				print_r($model->getError());
 			}
-			$model->descripcion=$_POST['Atributo']['descripcion'];
-			if($model->save())
+			else {
 				$this->redirect(array('admin'));
-		}
-		else {
-	
-		
-			if(isset($_POST['nombre'])) // si viene algo por json
-			{
-			
-				$vector=$_POST['vector'];
-				if($_POST['idAct']=="")
-				{
-					$model=new Atributo;	
-				}
-				else 
-				{
-					$model=Atributo::model()->findByPk($_POST['idAct']);
-				}
-					
-				$model->nombre=$_POST['nombre'];
-				$model->obligatorio=$_POST['obligatorio'];
-				$model->tipo=$_POST['tipo'];
-				$model->descripcion=$_POST['descripcion'];
 				
-				if($_POST['tipo']==3)
-				{
-					$model->tipo_unidad="";	
-					$model->multiple=$_POST['multiple'];
-					$suma=1;
-					$multiplicacion=2;
-					$cadena="";
-					$i=0;
-					$rango="";
-					foreach($vector as $vec)
-					{
-						if($vec!="noIndexado")
-						{
-							if($i==0)
-								$cadena=$suma."==".$vec;
-							else 
-								$cadena=$cadena.",".$suma."==".$vec;	
-							$i++;	
-							$suma=$suma*$multiplicacion;
-						}			
-					}
-					$model->rango=$cadena;
-				}
-				else
-				{
-					$model->multiple=0;
-					$model->rango="";
-				}
-			   $model->save();	
-			}	
-			
+			}
 		}
 
 		$this->render('create',array(
 			'model'=>$model,
 		));
 	}
-
 
 	/**
 	 * Updates a particular model.
@@ -148,23 +96,20 @@ class AtributoController extends Controller
 		$model=$this->loadModel($id);
 
 		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+	   #  $this->performAjaxValidation($model);
 
-		if(isset($_POST['Atributo']))
+		if(isset($_POST['Color']))
 		{
-			$model->attributes=$_POST['Atributo'];
-			if($_POST['Atributo']['tipo']!=3)
-			{
-					$model->multiple=0;
-					$model->rango=""; 
-			}
-			else 
-			{
-				$model->tipo_unidad="";	
-			}
-			$model->descripcion=$_POST['Atributo']['descripcion'];
+			$model->attributes=$_POST['Color'];
+			$model->nombre=ucwords($_POST['Color']['nombre']); //convierte cada primera letra en mayusculas	
 			if($model->save())
+			{
 				$this->redirect(array('admin'));
+			}
+			else {
+				print_r($model->getError());
+			}
+				
 		}
 
 		$this->render('update',array(
@@ -191,7 +136,7 @@ class AtributoController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Atributo');
+		$dataProvider=new CActiveDataProvider('Color');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
@@ -202,33 +147,33 @@ class AtributoController extends Controller
 	 */
 	public function actionAdmin()
 	{
-		$atributo = new Atributo; 
-		$atributo->unsetAttributes();
+		$color = new Color; 
+		$color->unsetAttributes();
 		$bandera=false;
-		$dataProvider = $atributo->search();
+		$dataProvider = $color->search();
 
 		/* Para mantener la paginacion en las busquedas */
-		if(isset($_GET['ajax']) && isset($_SESSION['searchAtributo']) && !isset($_POST['query'])){
-			$_POST['query'] = $_SESSION['searchAtributo'];
+		if(isset($_GET['ajax']) && isset($_SESSION['searchColor']) && !isset($_POST['query'])){
+			$_POST['query'] = $_SESSION['searchColor'];
 			$bandera=true;
 		}
 
 		/* Para buscar desde el campo de texto */
 		if (isset($_POST['query'])){
 			$bandera=true;
-			unset($_SESSION['searchAtributo']);
-			$_SESSION['searchAtributo'] = $_POST['query'];
-            $atributo->nombre = $_POST['query'];
-            $dataProvider = $atributo->search();
+			unset($_SESSION['searchColor']);
+			$_SESSION['searchColor'] = $_POST['query'];
+            $color->nombre = $_POST['query'];
+            $dataProvider = $color->search();
         }	
 
         if($bandera==FALSE){
-			unset($_SESSION['searchAtributo']);
+			unset($_SESSION['searchColor']);
         }
 
 		
 		$this->render('admin',
-			array('model'=>$atributo,
+			array('model'=>$color,
 			'dataProvider'=>$dataProvider,
 		));	
 	}
@@ -237,12 +182,12 @@ class AtributoController extends Controller
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.
 	 * @param integer $id the ID of the model to be loaded
-	 * @return Atributo the loaded model
+	 * @return Color the loaded model
 	 * @throws CHttpException
 	 */
 	public function loadModel($id)
 	{
-		$model=Atributo::model()->findByPk($id);
+		$model=Color::model()->findByPk($id);
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
@@ -250,14 +195,59 @@ class AtributoController extends Controller
 
 	/**
 	 * Performs the AJAX validation.
-	 * @param Atributo $model the model to be validated
+	 * @param Color $model the model to be validated
 	 */
 	protected function performAjaxValidation($model)
 	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='atributo-form')
+		if(isset($_POST['ajax']) && $_POST['ajax']==='color-form')
 		{
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
+	}
+	
+	
+	public function actionBusqueda()
+	{
+		$nombre=$_POST['nombre'];
+		$idAct=$_POST['idAct'];
+		$busqueda=Color::model()->findByAttributes(array('nombre'=>$nombre));
+		if($busqueda=="")
+		{
+			echo "1";
+			if($idAct=="")
+				$guardar=1;
+			else
+				$guardar=2;
+		}
+		else 
+		{
+			if($busqueda->id==$idAct)
+			{
+				echo "1";
+				$guardar=2;
+			}	
+			else
+			{
+				echo "0";
+				$guardar=0;	
+			}
+						
+		}
+		if($guardar==1)
+		{
+			$color = new Color; 
+			$color->nombre=$nombre;
+			$color->save();
+		}
+		if($guardar==2)
+		{
+			$model=Color::model()->findByPk($idAct);
+			$model->nombre=$nombre;
+			$model->save();
+		}
+		
+		
+	
 	}
 }

@@ -20,6 +20,13 @@
 		<?php echo $form->textFieldRow($model,'nombre',array('class'=>'form-control','maxlength'=>80, 'id'=>'nombre')); 	?>
 	</div>
 	
+	
+	<div class="col-md-6 col-md-offset-3 margin_top_small">
+		<?php echo $form->labelEx($model,'descripcion'); ?>
+		<?php echo $form->textArea($model,'descripcion', array('id'=>'descripcion', 'rows'=>6, 'cols'=>50)); ?>
+		<?php echo $form->error($model,'descripcion'); ?>
+	</div>
+	
 
 	<div class="col-md-6 col-md-offset-3 margin_top_small">
 		<?php
@@ -161,7 +168,8 @@ $(document).ready(function() {
 		var obligatorio;
 		var tipo
 		var nombre=$("#nombre").val();
-		
+		var idAct="<?php echo($model->id);?>";
+		var descripcion=$('#descripcion').val();
 		if($('#Atributo_obligatorio_0').is(':checked')) 
 		 	obligatorio=$("#Atributo_obligatorio_0").val();
 		 else
@@ -207,13 +215,13 @@ $(document).ready(function() {
 	         url: "<?php echo Yii::app()->createUrl('Atributo/create') ?>",
              type: 'POST',
 	         data:{
-                    nombre:nombre, vector:vector, obligatorio:obligatorio, multiple:multiple, tipo:tipo
+                    nombre:nombre, vector:vector, obligatorio:obligatorio, multiple:multiple, tipo:tipo, descripcion:descripcion, idAct:idAct
                    },
 	        success: function (data) {
 	        	
 	        	//alert (data);
       			//window.location.href = '../categoria/categoriaRelacionada/'+data+'';
-      			window.location.href = '../atributo/admin/';
+      			window.location.href = '../admin/';
 	       	}
 	       })
 		//alert('bien');

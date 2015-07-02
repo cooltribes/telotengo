@@ -131,6 +131,9 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                         <ul class="dropdown-menu">
                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/user/admin">Usuarios</a></li>
                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/marca/admin">Marcas</a></li>
+                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/atributo/admin">Atributo</a></li>
+                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/unidad/admin">Unidad</a></li>
+                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/color/admin">Color</a></li>
                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/categoria/admin">Categorías</a></li>
                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/giftcard/admin">Gift Cards</a></li>
                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/TipoPago/admin">Tipos de Pago</a> </li>
