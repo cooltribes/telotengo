@@ -35,7 +35,7 @@ class CategoriaController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete','create','update','upload','listimages', 'menu', 'categoriaRelacionada', 'catRela', 'crearAvanzar'),
+				'actions'=>array('admin','delete','create','update','upload','listimages', 'menu', 'categoriaRelacionada', 'catRela', 'crearAvanzar', 'categoriaAtributo', 'catAtrib'),
 				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -501,5 +501,45 @@ class CategoriaController extends Controller
         echo json_encode($data);
     }	
 	
+	public function actionCategoriaAtributo()
+	{
+		$this->render('categoriaAtributo');
+	}
 	
+	public function actionCatAtrib()
+	{
+		$vector=$_POST['vector'];
+		$idAct=$_POST['idAct'];
+		
+		$categoriaAtributo = CategoriaAtributo::model()->findAllByAttributes(array('categoria_id'=>$idAct)); //borrar antiguos
+		if($categoriaAtributo)
+		{
+			foreach($categoriaAtributo as $cat)
+			{
+				$cat->activo=0;
+				$cat->save();
+			}
+		}
+
+				
+		foreach($vector as $vec) //agregar nuevos
+		{
+			$categoriaAtributo = CategoriaAtributo::model()->findByAttributes(array('categoria_id'=>$idAct, 'atributo_id'=>$vec));
+			if(!$categoriaAtributo)
+			{
+				$model=new CategoriaAtributo;
+				$model->atributo_id=$vec;
+				$model->categoria_id=$idAct;
+				$model->activo=1;	
+				$model->save();
+			}
+			else
+			{
+				$categoriaAtributo->activo=1;
+				$categoriaAtributo->save();	
+			}
+		}
+
+		
+	}
 }
