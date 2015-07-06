@@ -1,7 +1,7 @@
 <?php $nivel+=1;?>
 
 		<?php 
-		$categorias = Categoria::model()->findAllByAttributes(array('id_padre' => $id));
+		$categorias = Categoria::model()->findAllByAttributes(array('id_padre' => $id)); 
 		if(isset($categorias))
 		{
 			foreach($categorias as $cate)

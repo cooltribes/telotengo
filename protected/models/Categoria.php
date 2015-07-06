@@ -3,7 +3,7 @@
 /**
  * This is the model class for table "tbl_categoria".
  *
- * The followings are the available columns in table 'tbl_categoria':
+ * The followings are the available columns in table 'tbl_categoria': 
  * @property integer $id
  * @property string $nombre
  * @property string $url_amigable

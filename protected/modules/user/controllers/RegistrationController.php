@@ -43,9 +43,11 @@ class RegistrationController extends Controller
 
 						if(isset($usuario)){ #el usuario existe en la base de datos, tiene invitacion
 							#revisar que tipo de invitacion tiene
-							switch ($usuario->type) {
+							switch ($usuario->type){
 								case User::TYPE_INVITADO_EMPRESA:
 									# Flujo de cuando se invita a formar parte de una empresa
+									Yii::app()->getSession()->add('invitadoempresa',$usuario->id);
+									$this->redirect(Yii::app()->baseUrl.'/user/user/datos');
 									break;
 								case User::TYPE_INVITADO_CLIENTE:
 									#el usuario está invitado como cliente

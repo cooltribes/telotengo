@@ -663,6 +663,11 @@ class UserController extends Controller
 				$profile = $model->profile;
 				$profile->attributes=((isset($_POST['Profile'])?$_POST['Profile']:array()));
 				$profile->user_id =$model->id;
+			}elseif(isset(Yii::app()->session['invitadoempresa'])){ #como empresa
+				$model = User::model()->findByPk(Yii::app()->session['invitadoempresa']);
+				$profile = $model->profile;
+				$profile->attributes=((isset($_POST['Profile'])?$_POST['Profile']:array()));
+				$profile->user_id = $model->id;
 			}
 
 			if($model->validate()&&$profile->validate()){
@@ -682,8 +687,16 @@ class UserController extends Controller
 					$identity->authenticate();
 					Yii::app()->user->login($identity,0);*/
 
-					#pedir nuevos datos
-					$this->redirect(array('/empresas/create'));
+					/*
+					Ya existe la empresa. Por lo que no se solicitan mas datos.
+					*/ 
+					if(isset(Yii::app()->session['invitadoempresa'])){ 
+						$this->redirect(array('/empresas/solicitudFinalizada'));				
+					}else{
+						#pedir nuevos datos
+						$this->redirect(array('/empresas/create'));
+					}					
+					
 				}
 			}
 		}

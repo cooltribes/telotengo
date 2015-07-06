@@ -1,5 +1,5 @@
 	<!-- FLASH ON --> 
-<?php $this->widget('bootstrap.widgets.TbAlert', array( 
+<?php $this->widget('bootstrap.widgets.TbAlert', array(
         'block'=>true, // display a larger alert block?
         'fade'=>true, // use transitions?
         'closeText'=>'&times;', // close link text - if set to false, no close link is displayed
@@ -8,37 +8,19 @@
             'error'=>array('block'=>true, 'fade'=>true, 'closeText'=>'&times;'), // success, info, warning, error or danger
         ),
     )
-); ?>	
+); ?>	 
 <!-- FLASH OFF -->
 
 <input id="opcion" type="hidden" value="<?php echo $opcion; ?>" />
 
 	<!-- SUBMENU ON -->
-	<style>
-	    .nav>li, .nav>li>a{
-	        display:inline;
-	    }
-	   .nav>li.active>a{
-            background-color: #eeeeee;
-        }
-	    
-	</style>
    <div class="navbar margin_top">
     <div class="navbar-inner">
       <ul class="nav">
         <li id="1"><?php echo CHtml::link('Creacion',array('create',
                                      'id'=>$model->id,)); ?></li>
-        <li id="2"><?php echo CHtml::link('Categorias relacionadas',array('categoriaRelacionada',
+        <li id="2"><?php echo CHtml::link('Opciones de Atributo',array('opciones',
                                      'id'=>$model->id,)); ?></li>
-        <!-- <li id="3"><a href="#">SEO</a></li> -->
-    
-       
-                
-        
-        <!-- <li id="7"><?php echo CHtml::link('Inventario',array('inventario',
-                                     'id'=>$model->id,)); ?></li> 
-        <li id="8"><a href="#">Envíos y Transporte</a></li>
-        <li id="9"><a href="#">Ventas Cruzadas</a></li> -->
       </ul>
     </div>
   </div>

@@ -34,8 +34,17 @@ $this->breadcrumbs=array(
                                     No hemos encontrado algún registro de invitación a este correo electrónico, <br/>
                                     por lo que iniciaremos un proceso de validación que nos permitirá generar una para hacertela llegar a <?php echo Yii::app()->session['usuarionuevo']; ?>.
                                 <?php
-                                }
+                                }elseif(isset(Yii::app()->session['invitadoempresa'])){
+                                    $usuario = User::model()->findByPk(Yii::app()->session['invitadoempresa']);
+                                    $quieninvita = User::model()->findByPk($usuario->quien_invita);
+                                    $hasusers = EmpresasHasUsers::model()->findByAttributes(array('users_id'=>$usuario->id)); 
+                                    $empresa = Empresas::model()->findByPk($hasusers->empresas_id);
                                 ?>
+                                    Bienvenido <?php echo $usuario->email.", ".$quieninvita->email; ?> te ha invitado a formar parte de <?php echo $empresa->razon_social; ?> en Telotengo.
+                                <?php
+                                    }
+                                ?>
+
                             </div>
                             <div class="margin_top margin_bottom">
                                 Por favor completa los siguientes datos personales
