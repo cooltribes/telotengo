@@ -14,21 +14,17 @@
         'enctype' => 'multipart/form-data',
     ),
 )); ?>
-	
+	 
 	<?php // echo $form->errorSummary($model); ?>
-	<?php 
-	if(isset($model->nombre))
-	 	echo $form->hiddenField($model,'oculta',array('value'=>$model->id, 'id'=>'oculta')); 
-	else	
-	 	echo $form->hiddenField($model,'oculta',array('value'=>'', 'id'=>'oculta'));
-	 	?>
+	 
+
 	
 	<div class="col-md-6 col-md-offset-3 margin_top_small">
 		<?php echo $form->textFieldRow($model,'nombre',array('class'=>'form-control','maxlength'=>80, 'id'=>'nombre')); ?>
 	</div>
 	
 	<div class="col-md-6 col-md-offset-3 margin_top_small">
-		<label>Predecesor</label>
+		<label>Predecesor</label>  
 	<?php
 
 

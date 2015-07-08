@@ -21,17 +21,20 @@
 	   .nav>li.active>a{
             background-color: #eeeeee;
         }
-	    
+	      
 	</style>
    <div class="navbar margin_top">
     <div class="navbar-inner">
       <ul class="nav">
-        <li id="1"><?php echo CHtml::link('Creacion',array('create',
+        <li id="1"><?php echo CHtml::link('Información General',array('create',
                                      'id'=>$model->id,)); ?></li>
         <li id="2"><?php echo CHtml::link('Categorias relacionadas',array('categoriaRelacionada',
                                      'id'=>$model->id,)); ?></li>
+
+        <li id="3"><?php echo CHtml::link('Atributos',array('categoriaAtributo',
+                                     'id'=>$model->id,)); ?></li>
         <!-- <li id="3"><a href="#">SEO</a></li> -->
-    
+     
        
                 
         
