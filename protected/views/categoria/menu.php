@@ -14,6 +14,15 @@
 <input id="opcion" type="hidden" value="<?php echo $opcion; ?>" />
 
 	<!-- SUBMENU ON -->
+	<style>
+	    .nav>li, .nav>li>a{
+	        display:inline;
+	    }
+	   .nav>li.active>a{
+            background-color: #eeeeee;
+        }
+	    
+	</style>
    <div class="navbar margin_top">
     <div class="navbar-inner">
       <ul class="nav">
@@ -23,12 +32,7 @@
                                      'id'=>$model->id,)); ?></li>
         <!-- <li id="3"><a href="#">SEO</a></li> -->
     
-        <li id="6"><?php echo CHtml::link('Tallas y Colores',array('tallacolor',
-                                     'id'=>$model->id,)); ?></li>
-		<li id="4"><?php echo CHtml::link('Imágenes',array('imagenes',
-                                     'id'=>$model->id,)); ?></li>
-        <li id="7"><?php echo CHtml::link('SEO',array('seo',
-                                     'id'=>$model->id,)); ?></li>
+       
                 
         
         <!-- <li id="7"><?php echo CHtml::link('Inventario',array('inventario',

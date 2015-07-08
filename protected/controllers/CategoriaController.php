@@ -1,7 +1,7 @@
 <?php
 
 class CategoriaController extends Controller
-{
+{ 
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
@@ -85,28 +85,22 @@ class CategoriaController extends Controller
 	
 	public function actionCatRela() ///falta avanzar
 	{
-		#var_dump($_POST['check']);
-		
+	
 		$cadena="";
 		$cat_id=explode(",", $_POST['check']);	
-		$idProducto = $_POST['idProd']; //mi id
-		$categoria=Categoria::model()->findByPk($idProducto);
-		$tota=count($cat_id);
-		$i=1;
+
 
 			foreach($cat_id as $each)
 			{
-				$cada_uno=explode("-", $each);
-				if($tota-$i==0)
-					$cadena=$cadena.$cada_uno[1];
-				else	
-					$cadena=$cadena.$cada_uno[1].",";		
-				
-				$i++;
+				$relacionada=new CategoriaRelacion;
+                $relacionada->categoria1=$_POST['categoria'];
+                $relacionada->categoria2=$each;
+                if(!$relacionada->save()){
+                    print_r($relacionada->errors);
+                }
+                
 			}
-			$categoria->categorias_relacionadas=$cadena;
-			if($categoria->save())
-		  		echo("ok");
+
 	}
 	
 	public function actioncrearAvanzar() //el primer guardar de la 1era pestana
@@ -171,19 +165,18 @@ class CategoriaController extends Controller
 			
 			$categoria->ultimo=$_POST['Categoria']['ultimo'];
 			
-			/*echo($_POST['url']);
-		
+			
 			if(!is_dir(Yii::getPathOfAlias('webroot').'/images/categoria/'))
 				{
 	   				mkdir(Yii::getPathOfAlias('webroot').'/images/categoria/',0777,true);
-	 			}
+	 			} 
 			
 			$rnd = rand(0,9999);  
-			$images=CUploadedFile::getInstanceByName('url');
+			$images=CUploadedFile::getInstanceByName('url_imagen');
 			
 			var_dump($images);
-			echo "<br>".count($images);*/
-			/*if (isset($images) && count($images) > 0) {
+			echo "<br>".count($images);
+			if (isset($images) && count($images) > 0) {
 				$categoria->imagen_url = "{$rnd}-{$images}";
 				
 				$categoria->save();
@@ -220,7 +213,7 @@ class CategoriaController extends Controller
 		        }else{
 		        	Yii::app()->user->setFlash('error',"Categoria no pudo ser guardada.");
 		        }
-			}// isset */
+			}// isset 
 			
 				if($categoria->save()){
 		        	Yii::app()->user->setFlash('success',"Categoria guardada exitosamente.");

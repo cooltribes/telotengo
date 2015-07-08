@@ -8,7 +8,7 @@
 	'enableClientValidation'=>true,
 	'type'=>'horizontal',
 	'clientOptions'=>array(
-		'validateOnSubmit'=>true, 
+		'validateOnSubmit'=>true,  
 	),
 	'htmlOptions' => array(
         'enctype' => 'multipart/form-data',
@@ -28,7 +28,7 @@
 	</div>
 	
 	<div class="col-md-6 col-md-offset-3 margin_top_small">
-		<label>Categoría padre </label>
+		<label>Predecesor</label>
 	<?php
 
 
@@ -39,7 +39,7 @@
 		
 		
 		echo CHtml::activeDropDownList($model,'id_padre', Categoria::model()->combinar($cat),
-                               array('empty'=>'Si no posee Categorias, no seleccione',
+                               array('empty'=>'Seleccione de ser necesario',
                                 'class'=>'form-control', 'id'=>'padre'));
 
 		
@@ -75,23 +75,25 @@
     </div>-->
 	
 	<?php // echo $form->textFieldRow($model,'imagen_url',array('class'=>'span5','maxlength'=>250)); ?>
-	
+	<div class="col-md-6 col-md-offset-3 margin_top_small">
+    <?php echo $form->textFieldRow($model,'url_amigable',array('class'=>'form-control','maxlength'=>150)); ?>
+    </div>
 
 		<?php 
-			/*if($model->imagen_url != ""):?>
+			if($model->imagen_url != ""):?>
 				<div class="col-md-6 col-md-offset-3 margin_top_small">
 			<?php 	echo CHtml::image(Yii::app()->request->baseUrl.'/images/categoria/'.str_replace(".png","",$model->imagen_url).'_thumb.jpg',"image"); ?>
 		
 	</div>
-	   <?php endif; */?>
+	   <?php endif;?>
 	
-	<!--<div class="col-md-6 col-md-offset-3 margin_top_small">
+	<div class="col-md-6 col-md-offset-3 margin_top_small">
 	    <label> Logotipo </label>
 			<?php                       
-			echo CHtml::activeFileField($model, 'imagen_url',array('name'=>'url'));
+			echo CHtml::activeFileField($model, 'imagen_url',array('name'=>'imagen_url'));
 			echo $form->error($model, 'imagen_url'); 
 			?>
-    </div>-->
+    </div>
 	
 	<div class="col-md-6 col-md-offset-3 margin_top">
 		<?php $this->widget('bootstrap.widgets.TbButton', array(
@@ -100,10 +102,10 @@
 			'label'=>$model->isNewRecord ? 'Crear' : 'Guardar',
 			'htmlOptions'=>array('class'=>'form-control')
 		)); ?>
-
-		                <ul class="nav nav-stacked nav-tabs margin_top">
-                   			 <li><a id="avanzar" style="cursor: pointer" title="Guardar y avanzar">Guardar y avanzar</a></li>
-                		</ul>
+ 
+		              
+                   			<button id="avanzar" style="cursor: pointer" class="btn btn-block boton_link transition_all btn" title="Guardar y avanzar">Guardar y avanzar
+                	
 	</div>
 	
 	
@@ -134,7 +136,7 @@
 		
 		if(nombre!="")
 		{
-			$.ajax({
+			$.ajax({ 
 	         url: "<?php echo Yii::app()->createUrl('Categoria/crearAvanzar') ?>",
              type: 'POST',
 	         data:{
@@ -142,7 +144,7 @@
                    },
 	        success: function (data) {
 	        	
-      			window.location.href = '../categoria/categoriaRelacionada/'+data+'';
+      			window.location.href = '<?php echo Yii::app()->baseUrl ?>/categoria/categoriaRelacionada/'+data;
 	       	}
 	       })
 		}

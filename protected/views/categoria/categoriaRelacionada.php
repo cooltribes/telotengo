@@ -1,4 +1,8 @@
 <!-- FLASH ON -->
+<script>
+    var related = new Array();
+    
+</script>
 <?php 
 
  $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array( 
@@ -19,10 +23,10 @@
 <div class="container margin_top">
   <div class="page-header">
     <h1>Categorias Relacionadas</small></h1>
-    <h2 ><?php echo $model->nombre."  [<small class='t_small'>Ref: "./*$model->codigo.*/"</small>]"; ?></h2>
+    <h2 ><?php echo $model->nombre?></h2>
   </div>
   <!-- SUBMENU ON -->
-  <input id="producto" type="hidden" value="<?php echo $model->id ?>" />
+  <input id="categoria" type="hidden" value="<?php echo $model->id ?>" />
   <?php echo $this->renderPartial('menu', array('model'=>$model,'opcion'=>5)); ?> 
   <!-- SUBMENU OFF -->
   <?php 
@@ -44,14 +48,7 @@ $this->widget('bootstrap.widgets.TbAlert', array(
       <div class="bg_color3  margin_bottom_small padding_small box_1">
         <form method="post" action="/aiesec/user/registration?template=1" id="registration-form"   class="form-stacked form-horizontal" enctype="multipart/form-data">
           <fieldset>
-            <?php $this->widget('bootstrap.widgets.TbButton', array(
-	    'buttonType' => 'link',
-	    'label'=>'Crear Nueva Categoría',
-	    'type'=>'', // null, 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
-	    'size'=>'normal', // null, 'large', 'small' or 'mini'
-	    'url' =>'../../categoria/create',
-	    'htmlOptions' => array('class'=>'btn pull-right margin_bottom_small'),
-		)); ?>
+            
             <legend>Listado de Categorías</legend>
             <div class="span6">
               <?php
@@ -67,19 +64,22 @@ $this->widget('bootstrap.widgets.TbAlert', array(
 			}		
 		}
 
-		nodos($cat);
+		nodos($cat,$model->id);
 		
-			function nodos($items){
+			function nodos($items,$id){
 				echo "<ul class='no_bullets'>";
 				foreach ($items as $item){
-						 $verificar=$item->verificar(Yii::app()->session['id'],$item->id);
-						if($verificar==0)	
-							echo "<li><label><input id='cat-".$item->id."' type='checkbox' value='' /> ".$item->nombre."</label></li>";
-						else
-							echo "<li><label><input id='cat-".$item->id."' type='checkbox' value='' checked /> ".$item->nombre."</label></li>";
-						if ($item->hasChildren()){
-							nodos($item->getChildren());
-						}
+						 $verificar=CategoriaRelacion::model()->areRelated(Yii::app()->session['id'],$item->id);
+						if($id != $item->id)
+                         {  
+                            if($verificar==0)   
+                                echo "<li><label><input class='itemCheck' id='cat-".$item->id."' type='checkbox' value='".$item->id."' /> ".$item->nombre."</label></li>";
+                            else
+                                echo "<li><label><input class='itemCheck' id='cat-".$item->id."' type='checkbox' value='".$item->id."' checked /> ".$item->nombre."</label></li>";
+                            if ($item->hasChildren()){
+                                nodos($item->getChildren(),$id);
+                            }
+                         }
 					}
 				echo "</ul>";
 				return 1;
@@ -146,9 +146,9 @@ $this->widget('bootstrap.widgets.TbAlert', array(
 			    var accion = $('#accion').attr('value');
 			    
 			   // alert(checkValues); 
-				var producto = $('#producto').attr('value'); 
+				var categoria = $('#categoria').attr('value'); 
 			
-			this.data += '&idProd='+producto+'&check='+checkValues+'&accion='+accion;
+			this.data += '&categoria='+categoria+'&check='+related+'&accion='+accion;
 			}",
 			
 			'data'=>array('a'=>'5'),
@@ -160,45 +160,9 @@ $this->widget('bootstrap.widgets.TbAlert', array(
 			}",
 			),
 			)); ?>
-          <ul class="nav nav-stacked nav-tabs margin_top">
-          	
-          	<li>
-          		
-          		 <?php $this->widget('bootstrap.widgets.TbButton', array(
-			'buttonType'=>'ajaxButton',
-			'label'=>'Guardar y avanzar',
-			'url'=>array('categoria/catRela'), // ReCatProd Relacion Categorias a producto
-			'htmlOptions'=>array('id'=>'avanzar','class'=>'btn btn-block boton_link transition_all'),
-			'ajaxOptions'=>array(
-			'type' => 'POST',
-			'beforeSend' => "function( request )
-			{
-				 var checkValues = $(':checkbox:checked').map(function() {
-			        return this.id;
-			    }).get().join();
-				
-			    $('#accion').attr('value', 'avanzar');
-			    var accion = $('#accion').attr('value');
-				
-				//alert(checkValues);
-				var producto = $('#producto').attr('value');
-				
-			this.data += '&idProd='+producto+'&check='+checkValues+'&accion='+accion;
-			}",
 			
-			'data'=>array('a'=>'5'),
-			'success'=>"function(data){
-				
-					//window.location.href = '../tallacolor/'+data+'';
-				
-			}",
-			),
-			)); ?>
-          		
-          		
-          	</li>
-          	
-          </ul>
+			<button id="avanzar" style="cursor: pointer" class="btn btn-block boton_link transition_all btn" title="Guardar y avanzar">Guardar y avanzar
+     
         </div>
       </div>
       <script type="text/javascript"> 
@@ -216,14 +180,32 @@ $this->widget('bootstrap.widgets.TbAlert', array(
 <?php $this->endWidget(); ?>
 <script>
 	$(document).ready(function(){
-		
+	
 	jQuery.each($('.idsCategorias'), function() {
 
 		var id = $(this).attr('value');
     	$('#cat-'+id).attr('checked',true);
-   	});		
+   	});	
+   	
+       	$('.itemCheck').click(function(event){ 
+        
+            if($(this).is(':checked')){
+                if(related.indexOf($(this).val())==-1){
+                    related.push($(this).val());
+                }   
+            }else{
+                if(related.indexOf($(this).val())!=-1){
+                    related.splice(related.indexOf($(this).val()),1);
+                } 
+                
+            }
+        });
+        
+        	
 		
 	               
 	});
+	
+    
 	
 </script> 
