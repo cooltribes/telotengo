@@ -29,6 +29,20 @@
 		<?php echo $form->dropDownList($model,'id_marca', CHtml::listData(Marca::model()->findAll(array('order' => 'nombre')), 'id', 'nombre'),array('id'=>'id_marca','class'=>'form-control','empty'=>'Seleccione una marca')); ?>
 		<?php echo $form->error($model,'id_marca'); ?>
 	</div>
+	
+	<div class="col-md-6 col-md-offset-3 margin_top_small">
+	<label>Categoria</label> <br>
+		<?php echo CHtml::textField('nombreCategorias',Categoria::model()->findByPk($model->id_categoria)->nombre,array('disabled'=>'disabled','id'=>'nombre','class'=>'form-control'));?>
+	</div>
+	
+		<div class="col-md-6 col-md-offset-3 margin_top_small" id="activo">
+		<label>Activo</label> <br>
+			<?php echo $form->radioButtonList($model,'activo', array(
+                        1=>'Si',
+                        0=>'No',
+                )); ?>
+		
+	</div>	
 
 	
 	<div id="principale" class="col-md-6 col-md-offset-3 margin_top" class="btn btn-danger form-control">
@@ -44,7 +58,6 @@
 	<div id="avanzar" class="col-md-6 col-md-offset-3 margin_top">
 			<a class="btn btn-danger form-control"  title="Guardar">Guardar</a>
 	</div>
-	
 <?php $this->endWidget(); ?>
 
 <script>
@@ -58,6 +71,15 @@ $(document).ready(function() {
 		event.preventDefault();
 		var marca=$('#id_marca').val();
 		var nombre=$('#nombre').val().toLowerCase();// colocar todo en minusculas
+		var categoria="<?php echo $model->id_categoria;?>";
+		var activo;
+		
+		if($('#ProductoPadre_activo_0').is(':checked')) 
+		 	activo=$("#ProductoPadre_activo_0").val();
+		 else
+		 	activo=$("#ProductoPadre_activo_1").val();
+		
+		alert(categoria);
 		nombre=nombre.charAt(0).toUpperCase() + nombre.slice(1); // poner la primera letra en mayusculas
 		if(nombre=="" || marca=="")
 		{
@@ -70,7 +92,7 @@ $(document).ready(function() {
 		         url: "<?php echo Yii::app()->createUrl('productoPadre/busqueda') ?>",
 	             type: 'POST',
 		         data:{
-	                    nombre:nombre, idAct:idAct, marca:marca
+	                    nombre:nombre, idAct:idAct, marca:marca, categoria:categoria, activo:activo
 	                   },
 		        success: function (data) {
 					

@@ -15,7 +15,7 @@ $this->breadcrumbs=array(
 		<h1 class="col-md-10">Administrar Productos Padres</h1>
         <div class="col-md-2 margin_top_medium">
                 <?php
-         echo CHtml::link('Nuevo Producto Padre', $this->createUrl('create'), array('class'=>'btn form-control btn-success', 'role'=>'button'));
+         echo CHtml::link('Nuevo Producto Padre', Yii::app()->baseUrl."/producto/clasificar", array('class'=>'btn form-control btn-success', 'role'=>'button'));
                 ?>
         </div>
     </div>
@@ -99,6 +99,8 @@ $this->breadcrumbs=array(
 	    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-bordered table-hover table-striped">
 	        <tr>
 	            <th scope="col">Nombre</th>
+	            <th scope="col">Categoria</th>
+	            <th scope="col">Activo</th>
 	            <th scope="col">Editar</th>
 	        </tr>
 	    {items}

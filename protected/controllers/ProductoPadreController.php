@@ -2,6 +2,9 @@
 
 class ProductoPadreController extends Controller
 {
+	
+	
+	//public $nombreCategoria;
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
@@ -36,7 +39,7 @@ class ProductoPadreController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete', 'busqueda'),
+				'actions'=>array('admin','delete', 'busqueda', 'cambiarStatus'),
 				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -198,6 +201,8 @@ class ProductoPadreController extends Controller
 		$nombre=$_POST['nombre'];
 		$idAct=$_POST['idAct'];
 		$marca=$_POST['marca'];
+		$categoria=$_POST['categoria'];
+		$activo=$_POST['activo'];
 		$busqueda=ProductoPadre::model()->findByAttributes(array('nombre'=>$nombre));
 		if($busqueda=="")
 		{
@@ -226,6 +231,8 @@ class ProductoPadreController extends Controller
 			$productoPadre = new ProductoPadre; 
 			$productoPadre->nombre=$nombre;
 			$productoPadre->id_marca=$marca;
+			$productoPadre->id_categoria=$categoria;
+			$productoPadre->activo=$activo;
 			$productoPadre->save();
 		}
 		if($guardar==2)
@@ -233,10 +240,21 @@ class ProductoPadreController extends Controller
 			$model=ProductoPadre::model()->findByPk($idAct);
 			$model->nombre=$nombre;
 			$model->id_marca=$marca;
+			$model->id_categoria=$categoria;
+			$model->activo=$activo;
 			$model->save();
 		}
 		
 		
 	
+	}
+	
+	public function actionCambiarStatus()
+	{
+		$idAct=$_POST['id'];
+		$status=$_POST['status'];
+		$model=ProductoPadre::model()->findByPk($idAct);
+		$model->activo=$status;
+		$model->save();
 	}
 }
