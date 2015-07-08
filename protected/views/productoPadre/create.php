@@ -10,6 +10,11 @@ $this->breadcrumbs=array(
 );
 
 
+if($_GET['id'])
+{
+	$model->id_categoria=$_GET['id'];
+	//$model->nombreCategoria=Categoria::model()->findByPk($_GET['id'])->nombre; 
+}
 ?>
 
 	<div class="row-fluid">

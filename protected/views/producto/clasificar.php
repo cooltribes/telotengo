@@ -88,11 +88,11 @@
 	       })		      
 	}
 	
-	function seleccion(id)
+	function seleccion(id, nombre)
 	{
-		$("#texto").html("<h4><strong>"+id+" </strong></h4>");
+		//$("#texto").html("<h4><strong>"+id+" </strong></h4>");
 		$("#texto").show();
-		$("#boton").attr("href", "crearProducto/"+id);
+		$("#boton").attr("href", "../productoPadre/create/"+id);
 		$("#boton").show();
 	}
 	
