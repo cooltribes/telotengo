@@ -8,13 +8,12 @@
 	
 	
 </style>
+ 
+  
 
-
-<?php $categoria=69;//////SUPONGAMOS QUE RECIBIMOS UN ID POR POST O POR GET..... LE VOY ASIGNAR 
-$model=Categoria::model()->findByPk($categoria);
-?>
 
 <div class="container">
+    <?php echo $this->renderPartial('menu', array('model'=>$model,'opcion'=>3)); ?>
   <div class="row">
         <div class="col-md-12 text-center"><h3>Atributo con Categoria</h3></div>
   		<div class="col-sm-4 col-sm-offset-1">

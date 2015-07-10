@@ -76,19 +76,19 @@ class CategoriaController extends Controller
 		}
 		else {
 			$model = new Categoria;
-		}
+		} 
 		
 		$this->render('categoriaRelacionada',array(
-			'model'=>$model));
-	}
-	
+			'model'=>$model)); 
+	} 
+	 
 	
 	public function actionCatRela() ///falta avanzar
 	{
 	
-		$cadena="";
-		$cat_id=explode(",", $_POST['check']);	
-
+		$cadena=""; 
+		$cat_id=explode(",", $_POST['check']);	 
+        $bool=true;  
 
 			foreach($cat_id as $each)
 			{
@@ -97,9 +97,13 @@ class CategoriaController extends Controller
                 $relacionada->categoria2=$each;
                 if(!$relacionada->save()){
                     print_r($relacionada->errors);
-                }
+                    $bool=false;
+                }                
                 
 			}
+            if($bool)
+                $this->render('categoriaAtributo',array('model'=>Categoria::model()->findByPk($_POST['categoria'])));
+         
 
 	}
 	
@@ -125,22 +129,23 @@ class CategoriaController extends Controller
 		
 		if($categoria->save())
 			echo $categoria->id;
-			
+			 
 	}
 	
-	public function actionCreate($id=NULL)
+	public function actionCreate($id = null)
 	{
+    	if(!is_null($id)) // si viene por get
+            {
+                $categoria = Categoria::model()->findByPk($id);
+            }
+        else{	    
 		
-		if(!isset($_POST['Categoria'])) // si es primera vez que entra
-		{
-			$categoria = new Categoria;
-		}else{
-			if($id!="") // si viene por get
-			{
-				$categoria = Categoria::model()->findByPk($id);
-			}
-			else 
-			{
+    		if(!isset($_POST['Categoria'])) // si es primera vez que entra
+    		{
+    			$categoria = new Categoria;
+    		}else{
+			
+			
 			   if($_POST['Categoria']['oculta']=="") // si nunca se ha creado y se va a crear
 				{
 					$categoria = new Categoria;
@@ -149,10 +154,8 @@ class CategoriaController extends Controller
 				{
 					$categoria = Categoria::model()->findByPk($_POST['Categoria']['oculta']); //si ya lo ha creado y sobrescribe
 				}
-			}
-
-			
-		}
+            }
+        }
 		
 		if(isset($_POST['Categoria'])){   ///falta la imagen
 			
@@ -333,7 +336,7 @@ class CategoriaController extends Controller
 		$dataProvider=new CActiveDataProvider('Categoria');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
-		));
+		)); 
 	}
 
 	/**
@@ -494,13 +497,14 @@ class CategoriaController extends Controller
         echo json_encode($data);
     }	
 	
-	public function actionCategoriaAtributo()
-	{
-		$this->render('categoriaAtributo');
+	public function actionCategoriaAtributo($id = null)
+	{  if(!is_null($id)){
+    		$this->render('categoriaAtributo',array('model'=>Categoria::model()->findByPk($id)));
+    	}
 	}
 	
 	public function actionCatAtrib()
-	{
+	{ 
 		$vector=$_POST['vector'];
 		$idAct=$_POST['idAct'];
 		
