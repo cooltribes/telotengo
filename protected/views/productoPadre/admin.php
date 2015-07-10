@@ -16,7 +16,9 @@ $this->breadcrumbs=array(
         <div class="col-md-2 margin_top_medium">
                 <?php
          echo CHtml::link('Nuevo Producto Padre', Yii::app()->baseUrl."/producto/clasificar", array('class'=>'btn form-control btn-success', 'role'=>'button'));
-                ?>
+         echo CHtml::link('Crear Variacion', Yii::app()->baseUrl."/producto/create", array('class'=>'btn form-control btn-warning', 'role'=>'button'));
+		        ?>
+		        <br> 
         </div>
     </div>
 		<hr/>

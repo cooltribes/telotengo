@@ -39,7 +39,7 @@ class ProductoPadreController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete', 'busqueda', 'cambiarStatus'),
+				'actions'=>array('admin','delete', 'busqueda', 'cambiarStatus', 'autocomplete'),
 				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -256,5 +256,19 @@ class ProductoPadreController extends Controller
 		$model=ProductoPadre::model()->findByPk($idAct);
 		$model->activo=$status;
 		$model->save();
+	}
+	
+	public function actionAutocomplete()
+	{
+	    	$res =array();
+	    	if (isset($_GET['term'])) 
+			{
+				$qtxt ="SELECT nombre FROM tbl_producto_padre WHERE nombre LIKE :nombre";
+				$command =Yii::app()->db->createCommand($qtxt);
+				$command->bindValue(":nombre", '%'.$_GET['term'].'%', PDO::PARAM_STR);
+				$res =$command->queryColumn();
+	    	}
+	     	echo CJSON::encode($res);
+	    	Yii::app()->end();
 	}
 }

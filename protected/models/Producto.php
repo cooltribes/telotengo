@@ -68,17 +68,18 @@ class Producto extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('nombre, descripcion, marca_id, codigo, interno, peso', 'required'),
-			array('destacado, marca_id', 'numerical', 'integerOnly'=>true),
-			array('peso', 'numerical'),
+			array('nombre, padre_id, modelo, color_id', 'required'),
+			array('destacado', 'numerical', 'integerOnly'=>true),
+			//array('peso', 'numerical'),
 			array('nombre', 'length', 'max'=>60), 
 			//array('descripcion', 'length', 'max'=>1000),
 			array('modelo', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, nombre, descripcion, destacado, marca_id, modelo, estado, users_id, notificado, codigo, interno, isbn, peso', 'safe', 'on'=>'search'),
+			array('id, nombre, descripcion, destacado, modelo, estado, users_id, notificado, codigo, interno, isbn', 'safe', 'on'=>'search'),
+			/////////////////////////////////LO DE ARRIBA HAY QUE CORREGIRLO////////////////////////////////////
 		);
-	}
+	} 
  
 	/** 
 	 * @return array relational rules.
@@ -93,10 +94,11 @@ class Producto extends CActiveRecord
 			'categoriaHasTblProductos' => array(self::HAS_MANY, 'CategoriaHasTblProducto', 'producto_id'),
 			'inventarios' => array(self::HAS_ONE, 'Inventario', 'producto_id'),
 			'preguntas' => array(self::HAS_MANY, 'Pregunta', 'producto_id'),
-			'marca' => array(self::BELONGS_TO, 'Marca', 'marca_id'),
+			//'marca' => array(self::BELONGS_TO, 'Marca', 'marca_id'),
 			'imagenes' => array(self::HAS_MANY, 'Imagenes', 'producto_id','order' => 'k.orden ASC', 'alias' => 'k'),
 			'mainimage' => array(self::HAS_ONE, 'Imagenes', 'producto_id','on' => 'orden=1'),
 			'caracteristicasProducto' => array(self::HAS_MANY, 'CaracteristicasProducto', 'producto_id'),
+			'padre' => array(self::BELONGS_TO, 'ProductoPadre', 'padre_id'),
 		);
 	}
 
@@ -110,7 +112,6 @@ class Producto extends CActiveRecord
 			'nombre' => 'Nombre',
 			'descripcion' => 'Descripcion',
 			'destacado' => 'Destacado',
-			'marca_id' => 'Marca',
 			'modelo' => 'Modelo',
 			'estado' => 'Estado',
 			'users_id' => 'Ususario',
@@ -118,7 +119,8 @@ class Producto extends CActiveRecord
 			'codigo' => 'Código',
 			'interno' => 'Código interno',
 			'isbn' => 'ISBN',
-			'peso' => 'Peso',
+			'padre_id' => 'Producto Padre',
+			'color_id' => 'Color Padre',
 		);
 	}
 
@@ -137,7 +139,6 @@ class Producto extends CActiveRecord
 		$criteria->compare('nombre',$this->nombre);
 		$criteria->compare('descripcion',$this->descripcion);
 		$criteria->compare('destacado',$this->destacado);
-		$criteria->compare('marca_id',$this->marca_id);
 		$criteria->compare('modelo',$this->modelo);
 		$criteria->compare('t.estado',$this->estado);
 		$criteria->compare('users_id',$this->users_id);
@@ -145,7 +146,6 @@ class Producto extends CActiveRecord
 		$criteria->compare('codigo',$this->codigo); 
 		$criteria->compare('interno',$this->interno); 
 		$criteria->compare('isbn',$this->isbn);
-		$criteria->compare('peso',$this->peso);
 		$criteria->join ='JOIN tbl_imagenes ON tbl_imagenes.producto_id = t.id AND tbl_imagenes.orden=1';
 	//	$criteria->join .='JOIN tbl_inventario ON tbl_inventario.producto_id = t.id AND tbl_inventario.cantidad > 0';
 		$criteria->with = array('inventarios');
@@ -193,15 +193,10 @@ class Producto extends CActiveRecord
 		$criteria->compare('nombre',$this->nombre,true);
 		$criteria->compare('descripcion',$this->descripcion,true);
 		$criteria->compare('destacado',$this->destacado);
-		$criteria->compare('marca_id',$this->marca_id);
 		$criteria->compare('modelo',$this->modelo);
 		$criteria->compare('estado',$this->estado);
-		$criteria->compare('users_id',$this->users_id);
-		$criteria->compare('notificado',$this->notificado); 
-		$criteria->compare('codigo',$this->codigo); 
-		$criteria->compare('interno',$this->interno); 
 		$criteria->compare('isbn',$this->isbn);
-		$criteria->compare('peso',$this->peso);
+
 		$criteria->join ='JOIN tbl_imagenes ON tbl_imagenes.producto_id = t.id AND tbl_imagenes.orden=1';
 		
 		$criteria->together = true;
@@ -219,7 +214,6 @@ class Producto extends CActiveRecord
 		$criteria->compare('t.id',$this->id);
 		$criteria->compare('t.descripcion',$this->descripcion,true);
 		$criteria->compare('t.destacado',$this->destacado);
-		$criteria->compare('t.marca_id',$this->marca_id);
 		$criteria->compare('t.modelo',$this->modelo);
 		$criteria->compare('t.nombre',$this->nombre,true);
 		$criteria->compare('t.estado',$this->estado,true);
@@ -267,15 +261,11 @@ class Producto extends CActiveRecord
 		$criteria->compare('nombre',$this->nombre,true);
 		$criteria->compare('descripcion',$this->descripcion,true);
 		$criteria->compare('destacado',$this->destacado);
-		$criteria->compare('marca_id',$this->marca_id);
 		$criteria->compare('modelo',$this->modelo);
 		$criteria->compare('estado',$this->estado);
-		$criteria->compare('users_id',$this->users_id);
-		$criteria->compare('notificado',$this->notificado); 
-		$criteria->compare('codigo',$this->codigo); 
-		$criteria->compare('interno',$this->interno); 
+
 		$criteria->compare('isbn',$this->isbn);
-		$criteria->compare('peso',$this->peso);
+
 		
 		return new CActiveDataProvider($this, array(
 
