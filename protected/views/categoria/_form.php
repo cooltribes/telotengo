@@ -4,11 +4,11 @@
 
 <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array( 
 	'id'=>'categoria-form',
-	'enableAjaxValidation'=>false,
-	'enableClientValidation'=>true,
+	'enableAjaxValidation'=>true,
+	'enableClientValidation'=>false,
 	'type'=>'horizontal',
 	'clientOptions'=>array(
-		'validateOnSubmit'=>true,  
+		'validateOnSubmit'=>false,  
 	),
 	'htmlOptions' => array(
         'enctype' => 'multipart/form-data',
@@ -17,10 +17,16 @@
 	 
 	<?php // echo $form->errorSummary($model); ?>
 	 
-
+    <?php 
+    if(isset($model->nombre))
+        echo $form->hiddenField($model,'oculta',array('value'=>$model->id, 'id'=>'oculta')); 
+    else    
+        echo $form->hiddenField($model,'oculta',array('value'=>'', 'id'=>'oculta'));
+        ?>
 	
 	<div class="col-md-6 col-md-offset-3 margin_top_small">
 		<?php echo $form->textFieldRow($model,'nombre',array('class'=>'form-control','maxlength'=>80, 'id'=>'nombre')); ?>
+
 	</div>
 	
 	<div class="col-md-6 col-md-offset-3 margin_top_small">
@@ -78,15 +84,15 @@
 		<?php 
 			if($model->imagen_url != ""):?>
 				<div class="col-md-6 col-md-offset-3 margin_top_small">
-			<?php 	echo CHtml::image(Yii::app()->request->baseUrl.'/images/categoria/'.str_replace(".png","",$model->imagen_url).'_thumb.jpg',"image"); ?>
+			<?php 	echo CHtml::image($model->getImgUrl(true),$model->nombre); ?>
 		
 	</div>
 	   <?php endif;?>
 	
-	<div class="col-md-6 col-md-offset-3 margin_top_small">
+	<div class="col-md-6 col-md-offset-3 margin_top_small"> 
 	    <label> Logotipo </label>
 			<?php                       
-			echo CHtml::activeFileField($model, 'imagen_url',array('name'=>'imagen_url'));
+			echo CHtml::activeFileField($model, 'imagen_url',array('name'=>'imagen'));
 			echo $form->error($model, 'imagen_url'); 
 			?>
     </div>
