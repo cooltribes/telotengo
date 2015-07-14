@@ -19,7 +19,7 @@ echo"<tr>";
 	 
 		<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
 			<li><a tabindex="-1" href="'.Yii::app()->createUrl('/productoPadre/update',array('id'=>$data->id)).'" ><i class="glyphicon glyphicon-cog"></i> Editar </a></li>
-			<li><a tabindex="-1" href="'.Yii::app()->createUrl('/productoPadre/delete',array('id'=>$data->id)).'" ><i class="glyphicon glyphicon-trash"></i> Eliminar </a></li>
+			<li><a tabindex="-1" href="'.Yii::app()->createUrl('/producto/create',array('id'=>$data->id)).'" ><i class="glyphicon glyphicon-ok"></i> Crear Variacion </a></li>
 			';
 		if($data->activo==1)
 			echo '<li><a href="" id="activo'.$data->id.'" tabindex="-1" onclick="cambiarStatus('.$data->id.', 0)"><i class="glyphicon glyphicon-pencil"></i> Desacctivar </a></li>';

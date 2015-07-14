@@ -36,7 +36,7 @@ class ProductoController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete','update','eliminar','orden','aprobar','rechazar','poraprobar','calificaciones','eliminarCalificacion','importar','inventario'),
+				'actions'=>array('admin','delete','update','eliminar','orden','aprobar','rechazar','poraprobar','calificaciones','eliminarCalificacion','importar','inventario', 'verificarPadre', 'verificarNombre'),
 				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -163,6 +163,51 @@ class ProductoController extends Controller
 	
 	public function actionCreate()
 	{
+		$model=new Producto;
+		if(isset($_GET['id']))
+		{
+			$model->padre_id=$_GET['id'];
+			//$model->padre->nombre;
+		}
+		// Uncomment the following line if AJAX validation is needed
+		  $this->performAjaxValidation($model);
+
+		if(isset($_POST['Producto']))
+		{
+			if(isset($_POST['padre_id']))
+			{
+				/*echo "ojala";
+				Yii::app()->end();	*/	
+				$modelado=ProductoPadre::model()->findByAttributes(array('nombre'=>$_POST['padre_id']));	
+			//	Yii::app()->end();
+				$model->padre_id=$modelado->id;
+			}
+			//echo "entro";Yii::app()->end();	
+			$model->attributes=$_POST['Producto'];
+			$model->fabricante=$_POST['Producto']['fabricante'];
+			$model->annoFabricacion=$_POST['Producto']['annoFabricacion'];
+			$model->upc=$_POST['Producto']['upc'];
+			$model->ean=$_POST['Producto']['ean'];
+			$model->gtin=$_POST['Producto']['gtin'];
+			$model->isbn=$_POST['Producto']['isbn'];
+			$model->color=$_POST['Producto']['color'];
+			if($model->save())
+			{
+					$this->render('create',array(
+					'model'=>$model,
+		));
+			}
+			
+		}
+
+		$this->render('create',array(
+			'model'=>$model,
+		));
+	}
+	
+	
+	/*public function actionCreate()
+	{
 		$user = Yii::app()->user->id;
 
 		//$empresas_user = EmpresasHasUsers::model()->findAllByAttributes(array('users_id'=>$user));
@@ -195,7 +240,7 @@ class ProductoController extends Controller
 					$model->estado = 0; // solicitado	
 					$model->notificado = 0; // El administrador aun no ha visto
 				}*/
-				$model->notificado = 1; // no aparece como notificacion
+				/*$model->notificado = 1; // no aparece como notificacion
 				$model->interno = "por ahora"; // mientras definimos la estructura del mismo
 				$model->users_id =  Yii::app()->user->id;
 				$model->estado = $_POST['Producto']["estado"];
@@ -284,7 +329,7 @@ class ProductoController extends Controller
 		
 			
 			
-	}
+	}*/
 	
 	/**
 	 * Imagenes
@@ -1399,6 +1444,32 @@ class ProductoController extends Controller
 			ini_set('memory_limit', '32M');
 			$this->render('importarProductos');
 		}
+
+	public function actionVerificarPadre()
+	{
+		$nombre=$_POST['nombre'];
+		$model=ProductoPadre::model()->findByAttributes(array('nombre'=>$nombre));
+		if($model)
+			echo "1";
+		else 
+			echo "0";
+		
+		
+	}
+	
+	public function actionVerificarNombre()
+	{
+		$nombre=$_POST['nombre'];
+		$model=Producto::model()->findByAttributes(array('nombre'=>$nombre));
+		if($model)
+			echo "1";
+		else 
+			echo "0";
+		
+		
+	}
+	
+
 
 
 }
