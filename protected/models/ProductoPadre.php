@@ -47,6 +47,7 @@ class ProductoPadre extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'idMarca' => array(self::BELONGS_TO, 'Marca', 'id_marca'),
+			'idCategoria' => array(self::BELONGS_TO, 'Categoria', 'id_categoria'),
 		);
 	}
 

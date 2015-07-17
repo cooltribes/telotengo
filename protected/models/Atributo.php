@@ -130,6 +130,43 @@ class Atributo extends CActiveRecord
 	
 	public function getTiposAtributos() 
 	{
-   		return array('1'=>'INT', '2'=>'FLOAT','3'=>'Range', '4'=>'Varchar', '5'=>'Date', '6'=>'Boolean', '7'=>'Text');
+   		return array('1'=>'int', '2'=>'float','3'=>'range', '4'=>'varchar', '5'=>'date', '6'=>'boolean', '7'=>'text');
   	}
+	
+	public function buscarTipo($id)
+	{
+		$array=array('1'=>'int', '2'=>'float','3'=>'range', '4'=>'varchar', '5'=>'date', '6'=>'boolean', '7'=>'text');
+		return $array[$id];
+	}
+	public function buscarObligatorio()
+	{
+		if ($this->obligatorio==1)
+		 return "required";
+		else
+		 return "";
+	}
+	
+	public function buscarPatron()
+	{
+		if($this->tipo==1) //entero
+		{
+			$int='pattern="\d*"';	
+			return $int;
+		}
+		if($this->tipo==2) //float
+		{
+			$float='pattern="\d*.\d*"';	
+			return $float;
+		}
+		return "";
+	}
+	
+	public function buscarMensaje()
+	{
+		if($this->tipo==1) //entero
+			return 'title="Este no es un numero entero"';
+		if($this->tipo==2) //float
+			return 'title="Este no es un numero flotante"';
+		return "";
+	}
 }
