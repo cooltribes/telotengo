@@ -36,7 +36,7 @@ class ProductoController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete','update','eliminar','orden','aprobar','rechazar','poraprobar','calificaciones','eliminarCalificacion','importar','inventario', 'verificarPadre', 'verificarNombre'),
+				'actions'=>array('admin','delete','update','eliminar','orden','aprobar','rechazar','poraprobar','calificaciones','eliminarCalificacion','importar','inventario', 'verificarPadre', 'verificarNombre', 'details'),
 				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -1467,6 +1467,20 @@ class ProductoController extends Controller
 			echo "0";
 		
 		
+	}
+	
+	public function actionDetails()
+	{
+			//$GET['id'];
+			$id=1480;
+			$producto=Producto::model()->findByPk($id);
+			$categoria=Categoria::model()->findByPk($producto->padre->idCategoria->id);
+			$categoriaAtributo=CategoriaAtributo::model()->findAllByAttributes(array('categoria_id'=>$categoria->id, 'activo'=>1));
+			$this->render('details',array(
+				'producto'=>$producto,
+				'categoria'=>$categoria,
+				'categoriaAtributo'=>$categoriaAtributo,		
+		));
 	}
 	
 
