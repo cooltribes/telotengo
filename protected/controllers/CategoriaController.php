@@ -35,7 +35,7 @@ class CategoriaController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete','create','update','upload','listimages', 'menu', 'categoriaRelacionada', 'catRela', 'crearAvanzar', 'categoriaAtributo', 'catAtrib'),
+				'actions'=>array('admin','delete','create','update','upload','listimages', 'menu', 'categoriaRelacionada', 'catRela', 'crearAvanzar', 'categoriaAtributo', 'catAtrib','categoriaSeo'),
 				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -153,7 +153,7 @@ class CategoriaController extends Controller
 				{
 					$categoria = Categoria::model()->findByPk($_POST['Categoria']['oculta']); //si ya lo ha creado y sobrescribe
 				}
-            }
+            } 
         }
 		
         $this->performAjaxValidation($categoria);
@@ -161,6 +161,8 @@ class CategoriaController extends Controller
 		if(isset($_POST['Categoria'])){   ///falta la imagen
 
 			$categoria->attributes = $_POST['Categoria'];
+            $categoria->setSeo();
+
 
 			if($_POST['Categoria']['id_padre'] != "") // significa que depende
 				$categoria->id_padre = $_POST['Categoria']['id_padre'];
@@ -168,8 +170,6 @@ class CategoriaController extends Controller
 				$categoria->id_padre = 0;
 			
 			$categoria->ultimo=$_POST['Categoria']['ultimo'];
-			
-			
 			if(!is_dir(Yii::getPathOfAlias('webroot').'/images/categoria/'))
 				{
 	   				mkdir(Yii::getPathOfAlias('webroot').'/images/categoria/',0777,true);
@@ -181,17 +181,15 @@ class CategoriaController extends Controller
 			
 			$rnd = rand(0,9999);  
 			$images=CUploadedFile::getInstanceByName('imagen');
-			
+            
 			
            
 			if (isset($images) && count($images) > 0) {
 				$categoria->imagen_url = "{$rnd}-{$images}";
 				
-				$categoria->save();
-		        
-		       
-		      
-                 $nombre = Yii::getPathOfAlias('webroot').'/images/categoria/'.$categoria->id.'/'.$categoria->id;
+				
+				 
+				$nombre = Yii::getPathOfAlias('webroot').'/images/categoria/'.$categoria->id.'/'.$categoria->id;
 				$extension = '.'.$images->extensionName;
 		       	if ($images->saveAs($nombre . $extension)) {
 		             
@@ -207,7 +205,7 @@ class CategoriaController extends Controller
 					if($extension == '.png'){
 						$image = Yii::app()->image->load($nombre.$extension);
 						$image->resize(150, 150);
-						$image->save(str_replace(".png","",$nombre).'_thumb.jpg');
+						$image->save(str_replace(".png","",$nombre.$extension).'_thumb.jpg');
 					}	
 					
 				}
@@ -257,6 +255,29 @@ class CategoriaController extends Controller
 			'model'=>$model,
 		));
 	}
+    
+     
+    public function actionCategoriaSeo($id) 
+    {
+        $model=$this->loadModel($id);
+        if(!$model->seo)
+            $model->setSeo();
+        $seo=$model->seo;
+
+        // Uncomment the following line if AJAX validation is needed
+        // $this->performAjaxValidation($model);
+
+        if(isset($_POST['Seo']))
+        {
+            $seo->attributes=$_POST['Seo'];
+            $seo->save();
+                
+        }
+
+        $this->render('categoriaSeo',array(
+            'model'=>$seo, 'categoria'=>$model
+        ));
+    }
 	
 	// imagenes de la extension html editor
 	public function actionUpload()

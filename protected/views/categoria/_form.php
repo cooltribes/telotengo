@@ -30,7 +30,7 @@
 	</div>
 	
 	<div class="col-md-6 col-md-offset-3 margin_top_small">
-		<label>Predecesor</label>  
+		<label>Categoría Padre</label>  
 	<?php
 
 
@@ -77,9 +77,6 @@
     </div>-->
 	
 	<?php // echo $form->textFieldRow($model,'imagen_url',array('class'=>'span5','maxlength'=>250)); ?>
-	<div class="col-md-6 col-md-offset-3 margin_top_small">
-    <?php echo $form->textFieldRow($model,'url_amigable',array('class'=>'form-control','maxlength'=>150)); ?>
-    </div>
 
 		<?php 
 			if($model->imagen_url != ""):?>
