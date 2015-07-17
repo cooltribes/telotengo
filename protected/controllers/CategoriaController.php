@@ -99,11 +99,10 @@ class CategoriaController extends Controller
                     print_r($relacionada->errors);
                     $bool=false;
                 }                
-                
+                  
 			}
-            if($bool)
-                $this->render('categoriaAtributo',array('model'=>Categoria::model()->findByPk($_POST['categoria'])));
-         
+            
+          
 
 	}
 	
@@ -157,8 +156,10 @@ class CategoriaController extends Controller
             }
         }
 		
+        $this->performAjaxValidation($categoria);
+        
 		if(isset($_POST['Categoria'])){   ///falta la imagen
-			
+
 			$categoria->attributes = $_POST['Categoria'];
 
 			if($_POST['Categoria']['id_padre'] != "") // significa que depende
@@ -172,35 +173,39 @@ class CategoriaController extends Controller
 			if(!is_dir(Yii::getPathOfAlias('webroot').'/images/categoria/'))
 				{
 	   				mkdir(Yii::getPathOfAlias('webroot').'/images/categoria/',0777,true);
-	 			} 
+	 			}
+            if(!is_dir(Yii::getPathOfAlias('webroot').'/images/categoria/'.$categoria->id))
+                {
+                    mkdir(Yii::getPathOfAlias('webroot').'/images/categoria/'.$categoria->id,0777,true);
+                } 
 			
 			$rnd = rand(0,9999);  
-			$images=CUploadedFile::getInstanceByName('url_imagen');
+			$images=CUploadedFile::getInstanceByName('imagen');
 			
-			var_dump($images);
-			echo "<br>".count($images);
+			
+           
 			if (isset($images) && count($images) > 0) {
 				$categoria->imagen_url = "{$rnd}-{$images}";
 				
 				$categoria->save();
 		        
-		        $nombre = Yii::getPathOfAlias('webroot').'/images/categoria/'.$images->name;
-		        $extension_ori = ".jpg";
-				$extension = '.'.$images->extensionName;
 		       
-		       	if ($images->saveAs($nombre)) {
-		
-		       		$categoria->imagen_url = $images->name;
+		      
+                 $nombre = Yii::getPathOfAlias('webroot').'/images/categoria/'.$categoria->id.'/'.$categoria->id;
+				$extension = '.'.$images->extensionName;
+		       	if ($images->saveAs($nombre . $extension)) {
+		             
+		       		$categoria->imagen_url = $categoria->id.$extension;
 		            $categoria->save();
 									
 					Yii::app()->user->setFlash('success',"Categoria guardada exitosamente.");
 
-					$image = Yii::app()->image->load($nombre);
+					$image = Yii::app()->image->load($nombre.$extension);
 					$image->resize(150, 150);
 					$image->save(str_replace(".png","",$nombre).'_thumb'.$extension);
 					
 					if($extension == '.png'){
-						$image = Yii::app()->image->load($nombre);
+						$image = Yii::app()->image->load($nombre.$extension);
 						$image->resize(150, 150);
 						$image->save(str_replace(".png","",$nombre).'_thumb.jpg');
 					}	

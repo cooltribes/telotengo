@@ -16,11 +16,12 @@
  */
 class Categoria extends CActiveRecord
 {
-	/**
+	/** 
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
 	 * @return Categoria the static model class
 	 */
+	public $oculta;
 	
 	public static function model($className=__CLASS__)
 	{
@@ -101,7 +102,7 @@ class Categoria extends CActiveRecord
 		$criteria->compare('descripcion',$this->descripcion,true);
 
 		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
+			'criteria'=>$criteria, 
 		));
 	}
 	
@@ -170,5 +171,13 @@ class Categoria extends CActiveRecord
 			return 0;
 		}
 	}
+    
+    public function getImgUrl($thumbnail = false){
+        if(!$thumbnail){
+            return Yii::app()->request->baseUrl."/images/categoria/".$this->id."/".$this->imagen_url;
+        }else{
+            return Yii::app()->request->baseUrl."/images/categoria/".$this->id."/".str_replace('.','_thumb.',$this->imagen_url);
+        }
+    }
 	
 }
