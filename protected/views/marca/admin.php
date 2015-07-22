@@ -5,6 +5,19 @@ $this->breadcrumbs=array(
 
 ?>
 <div class="container">
+    <?php if(Yii::app()->user->hasFlash('success')){?>
+            <div class="alert in alert-block fade alert-success text_align_center">
+                <?php echo Yii::app()->user->getFlash('success'); ?>
+            </div>
+        <?php } ?>
+        <?php if(Yii::app()->user->hasFlash('error')){?>
+            <div class="alert in alert-block fade alert-danger text_align_center">
+                <?php echo Yii::app()->user->getFlash('error'); ?>
+            </div>
+        <?php } ?>
+    
+</div>
+<div class="container">
 	<div class="row-fluid">
     	<!-- COLUMNA PRINCIPAL DERECHA ON // OJO: esta de primera para mejorar el SEO sin embargo por CSS se ubica visualmente a la derecha -->
 		<h1 class="col-md-10">Administrar Marcas</h1>
@@ -16,16 +29,7 @@ $this->breadcrumbs=array(
     </div>
 		<hr/>
 
-		<?php if(Yii::app()->user->hasFlash('success')){?>
-		    <div class="alert in alert-block fade alert-success text_align_center">
-		        <?php echo Yii::app()->user->getFlash('success'); ?>
-		    </div>
-		<?php } ?>
-		<?php if(Yii::app()->user->hasFlash('error')){?>
-		    <div class="alert in alert-block fade alert-danger text_align_center">
-		        <?php echo Yii::app()->user->getFlash('error'); ?>
-		    </div>
-		<?php } ?>
+		
 
 	    <div class="row margin_top margin_bottom ">
 	         <form class="no_margin_bottom form-search row-fluid">

@@ -99,6 +99,7 @@ class Producto extends CActiveRecord
 			'mainimage' => array(self::HAS_ONE, 'Imagenes', 'producto_id','on' => 'orden=1'),
 			'caracteristicasProducto' => array(self::HAS_MANY, 'CaracteristicasProducto', 'producto_id'),
 			'padre' => array(self::BELONGS_TO, 'ProductoPadre', 'padre_id'),
+			'seo' => array(self::BELONGS_TO, 'Seo', 'id_seo')
 		);
 	}
 
@@ -123,7 +124,7 @@ class Producto extends CActiveRecord
 			'color_id' => 'Color Padre',
 		);
 	}
-
+ 
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
@@ -348,5 +349,22 @@ class Producto extends CActiveRecord
 	public function getLast(){
 	    return $this->findAll(array('limit'=>4,'offset'=>0,'order'=>'id DESC', 'condition'=>'estado=1'));
 	}
+    
+    public function setSeo(){ 
+        if(!$this->seo){
+            $seo=new Seo;
+            $seo->amigable=strtolower($this->cleanUrl($this->nombre)); 
+            $seo->save();            
+            $this->id_seo =$seo->id;
+            return $this->save(); 
+        }
+        return false;
+    }
+    public function cleanUrl($string){
+       $string = str_replace(' ', '-', $string); // Replaces all spaces with hyphens.
+       $string = preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.    
+       return preg_replace('/-+/', '-', $string);
+    }     
+    
 	
 }

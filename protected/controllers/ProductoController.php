@@ -184,6 +184,7 @@ class ProductoController extends Controller
 			}
 			//echo "entro";Yii::app()->end();	
 			$model->attributes=$_POST['Producto'];
+            $model->setSeo();
 			$model->fabricante=$_POST['Producto']['fabricante'];
 			$model->annoFabricacion=$_POST['Producto']['annoFabricacion'];
 			$model->upc=$_POST['Producto']['upc'];
@@ -334,7 +335,7 @@ class ProductoController extends Controller
 	/**
 	 * Imagenes
 	 */
-	public function actionImagenes()
+	public function actionImagenes($id)
 	{
 		
 		if(isset($_GET['id'])){
@@ -1017,13 +1018,28 @@ class ProductoController extends Controller
     }
 		
 	
-	/**
+	/** 
 	 * seo
 	 */
-	public function actionSeo()
+	public function actionSeo($id)
 	{
+		  
 		if(isset($_GET['id'])){
-			
+		    $model=Producto::model()->findByPk($id);
+              if(is_null($model->seo))
+                    $model->setSeo();  
+            
+		}
+		    
+        else{
+            throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
+            Yii::app()->end;
+        }
+              
+			 
+    
+    /* 
+             *  
 			$id = $_GET['id'];
 			if(!$seo = Seo::model()->findByAttributes(array('producto_id'=>$id)))
 				$seo = new Seo;
@@ -1033,12 +1049,18 @@ class ProductoController extends Controller
 		else {
 			$seo = new Seo;
 			$id="";
-			$model = new Producto;
-		}
+			$model = new Producto;*/
+			
+			
+            
+		  
+		
+        $seo=$model->seo;
+
 		
 		if(isset($_POST['Seo'])){
 			$seo->attributes = $_POST['Seo'];
-			$seo->producto_id = $_GET['id'];
+
 			
 			$seo->save();	
 			
