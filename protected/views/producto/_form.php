@@ -68,11 +68,13 @@
                     				</span>	
 							<?php
 							 }
-							 else
+							 else 
 							 {
-							 	 echo $form->labelEx($model,'padre_id');	
+
 							 	 echo CHtml::textField('nombrePadre', $model->padre->nombre, array('id'=>'nombrePadre','class'=>'form-control','maxlength'=>100, 
-										'width'=>100,'disabled'=>'disabled')); 
+										'width'=>100,'disabled'=>'disabled'));
+                                 echo CHtml::hiddenField('padre_id', $model->padre->nombre);  
+                                 
 							 }
 								?>
 								
@@ -184,7 +186,7 @@
 							-->
 							<?php $this->widget('bootstrap.widgets.TbButton', array(
 								'buttonType'=>'submit',
-								'htmlOptions'=>array('class'=>'btn btn-primary margin_top_small col-md-3', 'id'=>'button_send'),
+								'htmlOptions'=>array('class'=>'btn btn-primary margin_top_small form-control', 'id'=>'button_send'),
 								'label'=>$model->isNewRecord ? 'Agregar' : 'Guardar',
 							)); ?>
 

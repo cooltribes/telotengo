@@ -356,18 +356,13 @@ class Producto extends CActiveRecord
     public function setSeo(){ 
         if(!$this->seo){
             $seo=new Seo;
-            $seo->amigable=strtolower($this->cleanUrl($this->nombre)); 
+            $seo->amigable=Funciones::cleanUrlSeo($this->nombre); 
             $seo->save();            
             $this->id_seo =$seo->id;
             return $this->save(); 
         }
         return false;
     }
-    public function cleanUrl($string){
-       $string = str_replace(' ', '-', $string); // Replaces all spaces with hyphens.
-       $string = preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.    
-       return preg_replace('/-+/', '-', $string);
-    }     
     
 	
 }

@@ -23,12 +23,17 @@ echo"<tr>";
 	 
 		<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
 			<li><a tabindex="-1" href="'.Yii::app()->createUrl('/productoPadre/update',array('id'=>$data->id)).'" ><i class="glyphicon glyphicon-cog"></i> Editar </a></li>
-			<li><a tabindex="-1" href="'.Yii::app()->createUrl('/producto/create',array('id'=>$data->id)).'" ><i class="glyphicon glyphicon-ok"></i> Crear Variacion </a></li>
+			<li><a tabindex="-1" href="#" onclick="submit('.$data->id.')"><i class="glyphicon glyphicon-ok"></i> Crear Variacion </a></li>
 			';
 		if($data->activo==1){?>
 				<li><a class="pointer" id=<?php echo $data->id;?> tabindex="-1" onclick="desactivarActivar(<?php echo $data->id;?>)"><i class="glyphicon glyphicon-remove"></i> Desactivar </a></li><?php }
 			else{?><li><a class="pointer" id=<?php echo $data->id;?>  tabindex="-1" onclick="desactivarActivar(<?php echo $data->id;?>)"><i class="glyphicon glyphicon-ok"></i> Activar </a></li><?php } 
 			
+        ?>
+            <form id="form<?php echo $data->id?>" action="../producto/create" method="post">
+                <input type="hidden" name="padre"  value="<?php echo $data->id?>"/>
+            </form>
+        <?php
 		echo '</ul>
         </div></td>
         
@@ -65,7 +70,15 @@ echo"</tr>";
 	       })
 		
 	}
+<<<<<<< HEAD
 
+=======
+	
+	function submit(id){
+	    $('#form'+id).submit();
+	}
+	
+>>>>>>> 7459cc7bfc8d5d476b3fec14fa7114d560a0b478
 			
 		
 		
