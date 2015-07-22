@@ -19,8 +19,13 @@ echo"<tr>";
 	 
 		<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
 			<li><a tabindex="-1" href="'.Yii::app()->createUrl('/productoPadre/update',array('id'=>$data->id)).'" ><i class="glyphicon glyphicon-cog"></i> Editar </a></li>
-			<li><a tabindex="-1" href="'.Yii::app()->createUrl('/producto/create',array('id'=>$data->id)).'" ><i class="glyphicon glyphicon-ok"></i> Crear Variacion </a></li>
+			<li><a tabindex="-1" href="#" onclick="submit('.$data->id.')"><i class="glyphicon glyphicon-ok"></i> Crear Variacion </a></li>
 			';
+        ?>
+            <form id="form<?php echo $data->id?>" action="../producto/create" method="post">
+                <input type="hidden" name="padre"  value="<?php echo $data->id?>"/>
+            </form>
+        <?php
 		if($data->activo==1)
 			echo '<li><a href="" id="activo'.$data->id.'" tabindex="-1" onclick="cambiarStatus('.$data->id.', 0)"><i class="glyphicon glyphicon-pencil"></i> Desacctivar </a></li>';
 		else
@@ -53,6 +58,10 @@ echo"</tr>";
 					window.location.reload();
 		       	}
 		       })
+	}
+	
+	function submit(id){
+	    $('#form'+id).submit();
 	}
 	
 			

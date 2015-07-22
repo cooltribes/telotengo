@@ -36,7 +36,7 @@ class ProductoController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete','update','eliminar','orden','aprobar','rechazar','poraprobar','calificaciones','eliminarCalificacion','importar','inventario', 'verificarPadre', 'verificarNombre', 'details', 'caracteristicas'),
+				'actions'=>array('admin','delete','update','eliminar','orden','aprobar','rechazar','poraprobar','calificaciones','eliminarCalificacion','importar','inventario', 'verificarPadre', 'verificarNombre', 'details', 'caracteristicas','activarDesactivar'),
 				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -161,28 +161,38 @@ class ProductoController extends Controller
 		
 	}
 	
-	public function actionCreate()
+	public function actionCreate($id = null)
 	{
-		$model=new Producto;
-		if(isset($_GET['id']))
-		{
-			$model->padre_id=$_GET['id'];
-			//$model->padre->nombre;
-		}
+		    
+         if(is_null($id)){
+             $model=new Producto;
+             echo "NULL";
+            
+         }
+         else{
+             $model=Producto::model()->findByPk($id);
+         }
+
+         if(isset($_POST['padre']))
+            {
+                $model->padre_id=$_POST['padre'];
+                //$model->padre->nombre;
+            }   
+            
+		
 		// Uncomment the following line if AJAX validation is needed
 		  $this->performAjaxValidation($model);
 
 		if(isset($_POST['Producto']))
 		{
 			if(isset($_POST['padre_id']))
-			{
-				/*echo "ojala";
-				Yii::app()->end();	*/	
+			{    echo $_POST['padre_id'];
+
+
 				$modelado=ProductoPadre::model()->findByAttributes(array('nombre'=>$_POST['padre_id']));	
-			//	Yii::app()->end();
+	
 				$model->padre_id=$modelado->id;
 			}
-			//echo "entro";Yii::app()->end();	
 			$model->attributes=$_POST['Producto'];
             $model->setSeo();
 			$model->fabricante=$_POST['Producto']['fabricante'];
@@ -194,9 +204,8 @@ class ProductoController extends Controller
 			$model->color=$_POST['Producto']['color'];
 			if($model->save())
 			{
-					$this->render('create',array(
-					'model'=>$model,
-		));
+					$this->redirect('../imagenes/'.$model->id);
+
 			}
 			
 		}
@@ -331,7 +340,7 @@ class ProductoController extends Controller
 			
 			
 	}*/
-	
+	 
 	/**
 	 * Imagenes
 	 */
@@ -1035,22 +1044,7 @@ class ProductoController extends Controller
             throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
             Yii::app()->end;
         }
-              
-			 
-    
-    /* 
-             *  
-			$id = $_GET['id'];
-			if(!$seo = Seo::model()->findByAttributes(array('producto_id'=>$id)))
-				$seo = new Seo;
-			 
-			$model = Producto::model()->findByPk($id);
-		}
-		else {
-			$seo = new Seo;
-			$id="";
-			$model = new Producto;*/
-			
+
 			
             
 		  
@@ -1062,9 +1056,10 @@ class ProductoController extends Controller
 			$seo->attributes = $_POST['Seo'];
 
 			
-			$seo->save();	
-			
-			Yii::app()->user->setFlash('success',"Datos guardados exitosamente.");
+			if($seo->save()){
+			     Yii::app()->user->setFlash('success',"Datos guardados exitosamente.");
+                $this->redirect('../caracteristicas/'.$model->id);
+            }
 			
 					
 		}
@@ -1108,8 +1103,11 @@ class ProductoController extends Controller
 					}
 					
 				} 
+				
+                $model->descripcion=$_POST['Producto']['descripcion'];
 				$model->caracteristicas=$var;
-				$model->save();
+				if($model->save())
+                    $this->redirect('../details'.$model->id);
 				//HACER ALGO IR ALGUN LADO
 			
 					
@@ -1590,7 +1588,15 @@ class ProductoController extends Controller
 		));
 	}
 	
-
+    public function actionActivarDesactivar()
+    {
+        $id=$_POST['id'];
+        $model = Producto::model()->findByPk($id);
+        $model->estado=1-$model->estado;
+        $model->save();
+        echo $model->estado;
+        
+    }
 
 
 }
