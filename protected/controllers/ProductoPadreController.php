@@ -39,7 +39,7 @@ class ProductoPadreController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete', 'busqueda', 'cambiarStatus', 'autocomplete'),
+				'actions'=>array('admin','delete', 'busqueda', 'cambiarStatus', 'autocomplete', 'activarDesactivar'),
 				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -270,5 +270,15 @@ class ProductoPadreController extends Controller
 	    	}
 	     	echo CJSON::encode($res);
 	    	Yii::app()->end();
+	}
+	
+	public function actionActivarDesactivar()
+	{
+		$id=$_POST['id'];
+		$model = ProductoPadre::model()->findByPk($id);
+		$model->activo=1-$model->activo;
+		$model->save();
+		echo $model->activo;
+		
 	}
 }
