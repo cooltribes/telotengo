@@ -31,12 +31,12 @@ class ProductoController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('seleccion','busqueda','create','hijos','imagenes','seo','create','caracteristicas','agregarCaracteristica','eliminarCaracteristica','agregarInventario',
+				'actions'=>array('seleccion','busqueda','create','hijos','imagenes','seo','create','agregarCaracteristica','eliminarCaracteristica','agregarInventario',
 								 'agregarInventarioAjax','eliminarInventario','multi','orden', 'clasificar', 'niveles', 'nivelPartial', 'crearProducto'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete','update','eliminar','orden','aprobar','rechazar','poraprobar','calificaciones','eliminarCalificacion','importar','inventario', 'verificarPadre', 'verificarNombre', 'details'),
+				'actions'=>array('admin','delete','update','eliminar','orden','aprobar','rechazar','poraprobar','calificaciones','eliminarCalificacion','importar','inventario', 'verificarPadre', 'verificarNombre', 'details', 'caracteristicas'),
 				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -778,7 +778,7 @@ class ProductoController extends Controller
         }//else principal
     }
 
-    public function actionCaracteristicas(){
+   /* public function actionCaracteristicas(){
 		
 		$user = Yii::app()->user->id;
 		$empresas_user = EmpresasHasUsers::model()->findAllByAttributes(array('users_id'=>$user));
@@ -820,7 +820,7 @@ class ProductoController extends Controller
 			
 			$this->redirect(array('producto/admin'));
 		}
-	}
+	}*/
 
 	public function actionAgregarInventario($producto_id){
 		$model = new Inventario();
@@ -1051,6 +1051,91 @@ class ProductoController extends Controller
 			'model'=>$model,
 			'seo'=>$seo,
 		));
+	}
+	
+	public function actionCaracteristicas()
+	{
+					
+			$id = $_GET['id'];
+			$model = Producto::model()->findByPk($id);
+			
+			if(isset($_POST['Producto']))
+			{
+				/*$seo->attributes = $_POST['Seo'];
+				$seo->producto_id = $_GET['id'];*/
+				//echo $model->caracteristica4;
+				$var="";
+				if(isset($_POST['Producto']['caracteristica1']))
+				{
+					$var=$_POST['Producto']['caracteristica1'];
+					if(isset($_POST['Producto']['caracteristica2']))
+					{
+						 $var=$var."*-*".$_POST['Producto']['caracteristica2'];
+						if(isset($_POST['Producto']['caracteristica3']))
+						{
+							 $var=$var."*-*".$_POST['Producto']['caracteristica3'];
+							if(isset($_POST['Producto']['caracteristica4']))
+							{
+								 $var=$var."*-*".$_POST['Producto']['caracteristica4'];
+								if(isset($_POST['Producto']['caracteristica5']))
+								{
+									 $var=$var."*-*".$_POST['Producto']['caracteristica5'];
+								}
+							}
+						}
+					}
+					
+				} 
+				$model->caracteristicas=$var;
+				$model->save();
+				//HACER ALGO IR ALGUN LADO
+			
+					
+			}		
+			else{
+
+			$model->scenario="caracteristicas";
+			if(!is_null($model->caracteristicas)) //imprimir las caracteristicas
+			{
+				$vector=explode("*-*", $model->caracteristicas);
+				$i=0;
+				foreach($vector as $vec)
+				{
+					if($i==0)
+					{
+						$model->caracteristica1=$vec;
+					}
+					if($i==1)
+					{
+						$model->caracteristica2=$vec;
+					}
+					if($i==2)
+					{
+						$model->caracteristica3=$vec;
+					}
+					if($i==3)
+					{
+						$model->caracteristica4=$vec;
+					}
+					if($i==4)
+					{
+						$model->caracteristica5=$vec;
+					}
+					 
+					$i++;
+				}
+			} 
+			
+					$this->render('caracteristicas',array(
+				'model'=>$model,
+			));
+		}
+		
+
+		
+		
+
+
 	}
 
 	/* inventario */

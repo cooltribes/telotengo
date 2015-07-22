@@ -79,7 +79,6 @@ $(document).ready(function() {
 		 else
 		 	activo=$("#ProductoPadre_activo_1").val();
 		
-		alert(categoria);
 		nombre=nombre.charAt(0).toUpperCase() + nombre.slice(1); // poner la primera letra en mayusculas
 		if(nombre=="" || marca=="")
 		{
