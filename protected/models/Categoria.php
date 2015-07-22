@@ -6,7 +6,7 @@
  * The followings are the available columns in table 'tbl_categoria': 
  * @property integer $id
  * @property string $nombre
- * @property string $url_amigable
+ * @property integer $id_seo
  * @property string $imagen_url
  * @property string $destacado
  * @property string $descripcion
@@ -38,7 +38,7 @@ class Categoria extends CActiveRecord
 
 	/**
 	 * @return array validation rules for model attributes.
-	 */
+	 */ 
 	public function rules()
 	{
 		// NOTE: you should only define rules for those attributes that
@@ -50,7 +50,7 @@ class Categoria extends CActiveRecord
 			array('imagen_url', 'length', 'max'=>250),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, nombre, url_amigable, id_padre, imagen_url, destacado, descripcion', 'safe', 'on'=>'search'),
+			array('id, nombre, url_amigable, id_padre, imagen_url, destacado, descripcion, id_seo', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -63,6 +63,7 @@ class Categoria extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'categoriaHasTblProductos' => array(self::HAS_MANY, 'CategoriaHasTblProducto', 'categoria_id'),
+			'seo' => array(self::BELONGS_TO, 'Seo', 'id_seo')
 		);
 	}
 
@@ -79,6 +80,7 @@ class Categoria extends CActiveRecord
 			'id_padre' => 'Id Padre',
 			'destacado' => 'Destacado',
 			'descripcion' => 'Descripción',
+			'id_seo'=> 'SEO'
 		);
 	}
 
@@ -89,7 +91,7 @@ class Categoria extends CActiveRecord
 	public function search()
 	{
 		// Warning: Please modify the following code to remove attributes that
-		// should not be searched.
+		// should not be searched. 
 
 		$criteria=new CDbCriteria;
 
@@ -100,6 +102,7 @@ class Categoria extends CActiveRecord
 		$criteria->compare('imagen_url',$this->imagen_url,true);
 		$criteria->compare('destacado',$this->destacado,true);
 		$criteria->compare('descripcion',$this->descripcion,true);
+        $criteria->compare('id_seo',$this->id_seo,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria, 
@@ -179,5 +182,23 @@ class Categoria extends CActiveRecord
             return Yii::app()->request->baseUrl."/images/categoria/".$this->id."/".str_replace('.','_thumb.',$this->imagen_url);
         }
     }
+    
+    public function setSeo(){ 
+        if(!$this->seo){
+            $seo=new Seo;
+            $seo->amigable=strtolower($this->cleanUrl($this->nombre)); 
+            $seo->save();            
+            $this->id_seo =$seo->id;
+            return $this->save(); 
+        }
+        return false;
+    }
+    public function cleanUrl($string){
+       $string = str_replace(' ', '-', $string); // Replaces all spaces with hyphens.
+       $string = preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.    
+       return preg_replace('/-+/', '-', $string);
+    }     
+    
+    
 	
 }

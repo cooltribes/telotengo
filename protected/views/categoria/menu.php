@@ -33,6 +33,9 @@
 
         <li id="3"><?php echo CHtml::link('Atributos',array('categoriaAtributo',
                                      'id'=>$model->id,)); ?></li>
+                                     
+        <li id="8"><?php echo CHtml::link('Seo',array('categoriaSeo',
+                                     'id'=>$model->id,)); ?></li>
         <!-- <li id="3"><a href="#">SEO</a></li> -->
      
        

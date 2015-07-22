@@ -8,7 +8,6 @@
  * @property string $descripcion
  * @property string $tags
  * @property string $amigable
- * @property integer $producto_id
  *
  * The followings are the available model relations:
  * @property Producto $producto
@@ -31,14 +30,12 @@ class Seo extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('producto_id', 'required'),
-			array('id, producto_id', 'numerical', 'integerOnly'=>true),
 			array('descripcion', 'length', 'max'=>350),
 			array('tags', 'length', 'max'=>250),
 			array('amigable', 'length', 'max'=>200),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, descripcion, tags, amigable, producto_id', 'safe', 'on'=>'search'),
+			array('id, descripcion, tags, amigable', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -50,7 +47,7 @@ class Seo extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'producto' => array(self::BELONGS_TO, 'Producto', 'producto_id'),
+			
 		);
 	}
 
@@ -64,8 +61,7 @@ class Seo extends CActiveRecord
 			'descripcion' => 'Descripcion',
 			'tags' => 'Tags',
 			'amigable' => 'URL Amigable',
-			'producto_id' => 'Producto',
-		);
+ 		);
 	}
 
 	/**
@@ -90,7 +86,6 @@ class Seo extends CActiveRecord
 		$criteria->compare('descripcion',$this->descripcion,true);
 		$criteria->compare('tags',$this->tags,true);
 		$criteria->compare('amigable',$this->amigable,true);
-		$criteria->compare('producto_id',$this->producto_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
