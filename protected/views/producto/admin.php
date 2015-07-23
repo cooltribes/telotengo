@@ -6,8 +6,7 @@
 		);
 	?>
 	<div class="row-fluid">
-    	<!-- COLUMNA PRINCIPAL DERECHA ON // OJO: esta de primera para mejorar el SEO sin embargo por CSS se ubica visualmente a la derecha -->
-		<h1 class="col-md-10">Administrar Productos</h1>
+		<h1 class="col-md-10">Administrar Variaciones de los Productos</h1>
         <div class="col-md-2 margin_top_medium">
                 <?php
          echo CHtml::link('Crear Producto', $this->createUrl('create'), array('class'=>'btn form-control btn-success', 'role'=>'button'));
@@ -102,13 +101,11 @@
 		$template = '{summary}
 	    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-bordered table-hover table-striped">
 	        <tr>
-	        	<th scope="col">ID</th>
+	            <th scope="col">Codigo TLT</th>
 	            <th scope="col">Nombre</th>
-	            <th scope="col">Estado</th>
-	            <th scope="col">Peso (Kg.)</th>
-	            <th scope="col">Destacado</th>
-	            <th scope="col">Marca</th>
-	            <th scope="col">Cantidad disponible</th>
+	            <th scope="col">Modelo</th>
+	            <th scope="col">Color</th>
+	            <th scope="col">Status</th>
 	            <th scope="col">Acción</th>
 	        </tr>
 	    {items}

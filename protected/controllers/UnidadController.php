@@ -36,7 +36,7 @@ class UnidadController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete', 'creacion', 'actualizar', 'actualizacion'),
+				'actions'=>array('admin','delete', 'creacion', 'actualizar', 'actualizacion', 'busqueda', 'activarDesactivar'),
 				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -261,5 +261,28 @@ class UnidadController extends Controller
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
+	}
+	
+	public function actionBusqueda()
+	{
+		$nombre=$_POST['nombre'];
+		$model = Unidad::model()->findAllBySql("
+		  SELECT * 
+		  FROM tbl_unidad p 
+		  WHERE lcase(p.nombre) = lcase('".$nombre."') OR lcase(p.nombre) = '".Funciones::stripAccents($nombre)."'");
+		if(count($model)>0) // si ya existe es error
+			echo "error";
+		else 
+			echo "bien";	
+	}
+	
+	public function actionActivarDesactivar()
+	{
+		$id=$_POST['id'];
+		$model = Unidad::model()->findByPk($id);
+		$model->activo=1-$model->activo;
+		$model->save();
+		echo $model->activo;
+		
 	}
 }

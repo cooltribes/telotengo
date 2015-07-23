@@ -102,7 +102,7 @@ $this->breadcrumbs=array(
 	        <tr>
 	            <th scope="col">Nombre</th>
 	            <th scope="col">Categoria</th>
-	            <th scope="col">Activo</th>
+	            <th scope="col">Status</th>
 	            <th scope="col">Editar</th>
 	        </tr>
 	    {items}

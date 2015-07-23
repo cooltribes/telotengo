@@ -9,8 +9,8 @@
 		<div class="col-md-6 col-md-offset-3 margin_top_small">
 		<?php echo CHtml::textField('nombre', '', array('id'=>'nombre','class'=>'form-control','maxlength'=>100, 
 			'width'=>100,'placeholder'=>'unidad a crear')); ?>
-
-	</div>
+		<span id="nombreError" class="error margin_top_small_minus hide"><br/><small>Nombre repetido</small></span><br>
+		</div>
 
 
 	<a id="agregarCampo" class="btn btn-info" href="#">Agregar Unidad</a>
@@ -35,6 +35,31 @@
 
 <script>
 $(document).ready(function() {
+	
+	$('body').on('input','#nombre', function() { 
+		var nombre=$("#nombre").val();
+		//nombre=nombre.charAt(0).toUpperCase() + nombre.slice(1);
+			$.ajax({
+	         url: "<?php echo Yii::app()->createUrl('Unidad/busqueda') ?>",
+             type: 'POST',
+	         data:{
+                    nombre:nombre
+                   },
+	        success: function (data) {
+	        	if(data=='error')
+	        	{
+	        		$("#nombreError").removeClass("hide");
+	        		$("#avanzar").attr("disabled", "disabled");
+	        	}
+	        	else
+	        	{
+	        		$("#nombreError").addClass("hide");
+	        		$("#avanzar").removeAttr("disabled");   
+	        	}
+	       	}
+	       })
+		
+	});
 
     var MaxInputs       = 100; //Número Maximo de Campos
     var contenedor       = $("#contenedor"); //ID del contenedor
@@ -77,6 +102,7 @@ $(document).ready(function() {
 		var j;
 		var otro;
 		var nombre=$("#nombre").val();
+		nombre=nombre.charAt(0).toUpperCase() + nombre.slice(1);
 		if(nombre=="")
 		{
 			alert('No pueden haber campos vacios');
