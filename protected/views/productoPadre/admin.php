@@ -21,7 +21,7 @@ $this->breadcrumbs=array(
 		        <br> 
         </div>
     </div>
-		<hr/>
+		<hr/>  
 
 				<?php if(Yii::app()->user->hasFlash('success')){?>
 		    <div class="alert in alert-block fade alert-success text_align_center">

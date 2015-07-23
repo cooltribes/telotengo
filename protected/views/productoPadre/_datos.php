@@ -57,11 +57,11 @@ echo"</tr>";
 		        	
 					window.location.reload();
 		       	}
-		       })
+		   }) 
 	}
 	
 	function submit(id){
-	    $('#form'+id).submit();
+	    $('#form'+id).submit(); 
 	}
 	
 			
