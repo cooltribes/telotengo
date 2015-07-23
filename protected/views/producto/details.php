@@ -1,5 +1,14 @@
+
+ 
+ 
+ 
  <div class="container">
  <div class="row-fluid">
+      <h1>Más detalles<small> - <?php echo $producto->nombre; ?></small></h1>
+            <!-- Nav tabs -->
+            <!-- SUBMENU ON -->
+            <?php echo $this->renderPartial('_menu', array('model'=>$producto, 'activo'=>'detalles')); ?>
+ 	<div class="well clearfix">
  	<form method="post" id="idx">
  <?php
  $i=1;
@@ -162,6 +171,7 @@
 	</div>
 	
 	</form>
+	</div>
 </div>
 </div>  
 

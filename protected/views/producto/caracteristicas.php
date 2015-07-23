@@ -14,11 +14,7 @@
 						<?php 
 						$form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
 							'id'=>'caracteristicas-form',
-							'enableAjaxValidation'=>true,
-							    'enableClientValidation'=>false,
-								    'clientOptions'=>array(
-								        'validateOnSubmit'=>true,
-								    )
+							
 						));
 						?>
 							<?php echo $form->errorSummary($model); ?>

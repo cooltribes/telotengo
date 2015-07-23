@@ -163,11 +163,11 @@ class ProductoController extends Controller
 	
 	public function actionCreate($id = null)
 	{
-		    
+     
+		 
          if(is_null($id)){
              $model=new Producto;
-             echo "NULL";
-            
+          
          }
          else{
              $model=Producto::model()->findByPk($id);
@@ -186,10 +186,7 @@ class ProductoController extends Controller
 		if(isset($_POST['Producto']))
 		{
 			if(isset($_POST['padre_id']))
-			{    echo $_POST['padre_id'];
-
-
-				$modelado=ProductoPadre::model()->findByAttributes(array('nombre'=>$_POST['padre_id']));	
+			{   $modelado=ProductoPadre::model()->findByAttributes(array('nombre'=>$_POST['padre_id']));	
 	
 				$model->padre_id=$modelado->id;
 			}
@@ -204,7 +201,7 @@ class ProductoController extends Controller
 			$model->color=$_POST['Producto']['color'];
 			if($model->save())
 			{
-					$this->redirect('../imagenes/'.$model->id);
+					 $this->redirect(Yii::app()->baseUrl.'/producto/imagenes/'.$model->id);     
 
 			}
 			
@@ -1058,7 +1055,7 @@ class ProductoController extends Controller
 			
 			if($seo->save()){
 			     Yii::app()->user->setFlash('success',"Datos guardados exitosamente.");
-                $this->redirect('../caracteristicas/'.$model->id);
+                 $this->redirect(Yii::app()->baseUrl.'/producto/caracteristicas/'.$model->id);     
             }
 			
 					
@@ -1070,10 +1067,10 @@ class ProductoController extends Controller
 		));
 	}
 	
-	public function actionCaracteristicas()
+	public function actionCaracteristicas($id=null)
 	{
 					
-			$id = $_GET['id'];
+
 			$model = Producto::model()->findByPk($id);
 			
 			if(isset($_POST['Producto']))
@@ -1107,7 +1104,7 @@ class ProductoController extends Controller
                 $model->descripcion=$_POST['Producto']['descripcion'];
 				$model->caracteristicas=$var;
 				if($model->save())
-                    $this->redirect('../details'.$model->id);
+                    $this->redirect(Yii::app()->baseUrl.'/producto/details/'.$model->id);     
 				//HACER ALGO IR ALGUN LADO
 			
 					
@@ -1154,7 +1151,7 @@ class ProductoController extends Controller
 
 		
 		
-
+ 
 
 	}
 
@@ -1574,10 +1571,10 @@ class ProductoController extends Controller
 		
 	}
 	
-	public function actionDetails()
+	public function actionDetails($id = null)
 	{
 			//$GET['id'];
-			$id=1480;
+        if(!is_null($id)){
 			$producto=Producto::model()->findByPk($id);
 			$categoria=Categoria::model()->findByPk($producto->padre->idCategoria->id);
 			$categoriaAtributo=CategoriaAtributo::model()->findAllByAttributes(array('categoria_id'=>$categoria->id, 'activo'=>1));
@@ -1586,6 +1583,8 @@ class ProductoController extends Controller
 				'categoria'=>$categoria,
 				'categoriaAtributo'=>$categoriaAtributo,		
 		));
+		}else
+            throw new CHttpException(400, 'Invalid request. Please do not repeat this request again.');
 	}
 	
     public function actionActivarDesactivar()

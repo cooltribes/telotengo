@@ -38,13 +38,24 @@
 								<?php echo $form->textField($model,'modelo',array('class'=>'form-control','maxlength'=>150)); ?>
 								<?php echo $form->error($model,'modelo'); ?>
 							</div>
-							
-							<?php 
+							<?php if($model->padre_id!="")
+							{    
+							?>
+    							<div class="form-group">
+    							    <label>Marca </label>
+    							    <?php 
+                                      echo CHtml::textField('marca', $model->padre->idMarca->nombre, array('id'=>'marca','class'=>'form-control','maxlength'=>100, 
+                                            'width'=>100,'disabled'=>'disabled')); ?> 
+                                </div>
+                            <?php 
+                            }?>
+							<div class="form-group">
+                                <?php echo $form->labelEx($model,'padre_id'); 
+						
 							if($model->padre_id=="")
 							{
-							?>
-							<div class="form-group">
-								<?php echo $form->labelEx($model,'padre_id'); 
+			
+							
 								
 								     $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
 								    'id'=>'padre_id',
