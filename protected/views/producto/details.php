@@ -1,5 +1,30 @@
 
- 
+ <?php 
+ /*$doc = array(
+    "name" => "MongoDB",
+    "type" => "database",
+    "count" => 1,
+    "info" => (object)array( "x" => 203, "y" => 102),
+    "versions" => array("0.9.7", "0.9.8", "0.9.9"),
+	"producto"=> "5",
+);
+
+ $connection = new MongoClass();
+ $document = $connection->getCollection('coleccion');*/
+  
+
+ //$coleccion->insert($doc);
+
+/*$prueba = array("producto"=>'19'); //busqueda
+$user = $document->findOne($prueba); //busqueda
+	var_dump($user);*/
+	
+	
+# $document->update(array("producto"=>"19"), array('$set'=>array("count"=>"40"))); //modificacion
+
+
+
+ ?>
  
  
  <div class="container">
@@ -73,7 +98,7 @@
 				$rango=explode(",", $unidad->rango);
 				?>
 				<input type="text" name="<?php echo $atributo->nombre?>" id="<?php echo $i;?>" class="<?php echo $tipo;?>" <?php echo $obligatorio;?> <?php echo $patron;?> <?php echo $mensaje;?>>
-				<select>
+				<select name="<?php echo $atributo->nombre;?>*-*UNIDAD">
 				<?php 
 				foreach($rango as $ra)
 				{

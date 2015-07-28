@@ -1573,6 +1573,45 @@ class ProductoController extends Controller
 	
 	public function actionDetails($id = null)
 	{
+		$data=array();	
+		if(count($_POST)>0)
+		{
+			
+			foreach($_POST as $key=>$aso)
+			{
+					if($aso!=""&& strpos($key,"*-*")=== false)
+					{
+						#echo $key." ".$aso." ";
+						$data[$key]=$aso;
+						if(isset($_POST[$key."*-*UNIDAD"]))
+						{
+							#echo $_POST[$key."*-*UNIDAD"]."</br>";
+							$data[$key."*-*UNIDAD"]=$_POST[$key."*-*UNIDAD"];
+						}
+							
+					}						
+			}
+			$data['producto']=$id;
+			$connection = new MongoClass();
+		    $document = $connection->getCollection('ejemplo');
+					
+			$prueba = array("producto"=>$id); 
+			$user = $document->findOne($prueba); // vamos a buscar si existe el registro
+			
+			if($user==NULL) // si no existe el registro, inserte uno nuevo
+			{
+				$document->insert($data); // insertar el registro
+			}
+			else // en caso de que exista el registro, substituyalo
+			{
+				$existente=$document->update(array("producto"=>$id), array('$set'=>$data));
+			}
+			//var_dump($user);
+			//var_dump($existente);
+			//var_dump($data);
+		}
+		
+
 			//$GET['id'];
         if(!is_null($id)){
 			$producto=Producto::model()->findByPk($id);
