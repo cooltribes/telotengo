@@ -1573,15 +1573,65 @@ class ProductoController extends Controller
 	
 	public function actionDetails($id = null)
 	{
+		$data=array();
+		$connection = new MongoClass();
+		$document = $connection->getCollection('ejemplo');	
+		
+		if(count($_POST)>0)
+		{
+			
+			foreach($_POST as $key=>$aso)
+			{
+					if($aso!=""&& strpos($key,"*-*")=== false)
+					{
+						#echo $key." ".$aso." ";
+						if($aso!="opcion-vacia") // si viene la opcion del select
+							$data[$key]=$aso;
+						if(isset($_POST[$key."*-*UNIDAD"]))
+						{
+							#echo $_POST[$key."*-*UNIDAD"]."</br>";
+							$data[$key."*-*UNIDAD"]=$_POST[$key."*-*UNIDAD"];
+						}
+							
+					}						
+			}
+			$data['producto']=$id;
+
+					
+			$prueba = array("producto"=>$id); 
+			$user = $document->findOne($prueba); // vamos a buscar si existe el registro
+			
+			if($user==NULL) // si no existe el registro, inserte uno nuevo
+			{
+				$document->insert($data); // insertar el registro
+			}
+			else // en caso de que exista el registro, substituyalo
+			{
+				$document->remove(array("producto"=>$id));	//quito la coleccion
+				//$existente=$document->update(array("producto"=>$id), array('$set'=>$data));
+				$document->insert($data); //inserto un nuevo registro
+			}
+			//var_dump($user);
+			//var_dump($existente);
+			//var_dump($data);
+		}
+		
+
 			//$GET['id'];
         if(!is_null($id)){
+
+        	$prueba = array("producto"=>$id); 
+			$busqueda = $document->findOne($prueba); 
+			
 			$producto=Producto::model()->findByPk($id);
 			$categoria=Categoria::model()->findByPk($producto->padre->idCategoria->id);
 			$categoriaAtributo=CategoriaAtributo::model()->findAllByAttributes(array('categoria_id'=>$categoria->id, 'activo'=>1));
+			var_dump($busqueda);
 			$this->render('details',array(
 				'producto'=>$producto,
 				'categoria'=>$categoria,
-				'categoriaAtributo'=>$categoriaAtributo,		
+				'categoriaAtributo'=>$categoriaAtributo,
+				'busqueda'=>$busqueda		
 		));
 		}else
             throw new CHttpException(400, 'Invalid request. Please do not repeat this request again.');

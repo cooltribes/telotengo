@@ -363,6 +363,57 @@ class Producto extends CActiveRecord
         }
         return false;
     }
+	
+	public function cambiarNombre($nombre)
+	{
+		return str_replace(" ","_",$nombre);
+	}
+	
+	public function buscarSelect($nombre, $nombreSelect, $variar=0)
+	{
+		$connection = new MongoClass();
+		$document = $connection->getCollection('ejemplo');	
+		$prueba = array("producto"=>$this->id); 
+		$busqueda = $document->findOne($prueba);
+		if($variar==0)	//si es select de las unidades
+			$nombreAlto=$this->cambiarNombre($nombre)."*-*UNIDAD";
+		else //si es select de valores
+			$nombreAlto=$this->cambiarNombre($nombre);
+		
+		if(isset($busqueda[$nombreAlto]))
+		{
+				
+			 if($busqueda[$nombreAlto]==$nombreSelect)
+			 {
+			 	return "selected";
+			 }
+			
+		}
+		else
+		{
+			return "";	
+		}
+		//$busqueda[cambiarNombre];
+		
+		// $this->id;
+	}
+
+	public function buscarBoolean($nombre)
+	{
+		$connection = new MongoClass();
+		$document = $connection->getCollection('ejemplo');	
+		$prueba = array("producto"=>$this->id);
+		$busqueda = $document->findOne($prueba);	
+		$nombreAlto=$this->cambiarNombre($nombre);
+		if(isset($busqueda[$nombreAlto]))
+		{
+				return "checked";	 
+		}
+		else
+		{
+			return "";	
+		} 
+	}
     
 	
 }
