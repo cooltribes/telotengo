@@ -23,7 +23,7 @@ class SiteController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','error','contact','login','logout','captcha','busqueda','tiendas','info','soporte','garantia','convenios',
+				'actions'=>array('index','error','contact','login','logout','captcha','busqueda','tiendas','info','soporte','garantia','convenios','request','request2',
 								'corporativo','licencias','ofertas','home'), 
 				'users'=>array('*'),
 			),
@@ -309,7 +309,27 @@ class SiteController extends Controller
 	}
     
     public function actionHome(){
-        $this->render('landing');
+        $this->layout='//layouts/b2b';
+        $model = new RegistrationForm;
+            $profile = new Profile;
+            $profile->regMode = true;
+        $this->render('landing',array('model'=>$model,'profile'=>$profile));
+    }
+    
+    public function actionRequest(){
+        $this->layout='//layouts/b2b';
+        $model = new RegistrationForm;
+        $profile = new Profile;
+        $profile->regMode = true;
+        $this->render('request',array('model'=>$model,'profile'=>$profile)); 
+    }
+    
+    public function actionRequest2(){
+        $this->layout='//layouts/b2b';
+        $model = new RegistrationForm;
+        $profile = new Profile;
+        $profile->regMode = true;
+        $this->render('request2',array('model'=>$model,'profile'=>$profile)); 
     }
     
 }

@@ -82,16 +82,20 @@
 			if($model->imagen_url != ""):?>
 				<div class="col-md-6 col-md-offset-3 margin_top_small">
 			<?php 	echo CHtml::image($model->getImgUrl(true),$model->nombre); ?>
+			<input type="hidden" id="previous_img" value="1"/>
 		
 	</div>
-	   <?php endif;?>
+	   <?php else:?>
+	       
+<input type="hidden" id="previous_img" value="0"/>
+<?php  endif;?>
 	
 	<div class="col-md-6 col-md-offset-3 margin_top_small"> 
-	    <label> Logotipo </label>
+	    <label> Imagen </label>
 			<?php                       
-			echo CHtml::activeFileField($model, 'imagen_url',array('name'=>'imagen'));
-			echo $form->error($model, 'imagen_url'); 
+			echo CHtml::activeFileField($model, 'imagen_url',array('name'=>'imagen'));			
 			?>
+			<span class="help-inline error" id="Categoria_imagen_url_em_" style="display: none">Debes elegir una imagen</span>
     </div>
 	
 	<div class="col-md-6 col-md-offset-3 margin_top">
@@ -99,7 +103,7 @@
 			'buttonType'=>'submit',
 			'type'=>'primary',
 			'label'=>$model->isNewRecord ? 'Crear' : 'Guardar',
-			'htmlOptions'=>array('class'=>'form-control')
+			'htmlOptions'=>array('class'=>'form-control','id'=>'guardar')
 		)); ?>
  
 		              
@@ -133,7 +137,7 @@
 		 	ultimo=$("#ultimo2").val();
 		
 		
-		if(nombre!="")
+		if(nombre!=""&&!($('#imagen').val()==''&&$('#prevousimg').val()=="0"))
 		{
 			$.ajax({ 
 	         url: "<?php echo Yii::app()->createUrl('Categoria/crearAvanzar') ?>",
@@ -164,5 +168,18 @@
 		//alert('esconder');
 		$("#descripcion").hide();		
 	});	*/
+	
+	$('#guardar').on('click', function(event) {
+	    if($('#imagen').val()==''&&$('#prevousimg').val()=="0"){
+	        event.preventDefault();
+	        $('#Categoria_imagen_url_em_').show();
+	    }else{
+	        $('#categoria-form').submit();
+	    }        
+            
+        
+        
+        
+    });
 	
 </script>
