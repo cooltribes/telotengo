@@ -52,8 +52,8 @@ $user = $document->findOne($prueba); //busqueda
 		{?>
 			
 			<div class="col-md-6 col-md-offset-3 margin_top_small">
-				<?php echo CHtml::label($atributo->nombre,'etiqueta'); ?>
-				<input type="checkbox" name="<?php echo $atributo->nombre?>" id="<?php echo $i;?>" class="<?php echo $tipo;?>"><br>				
+				<?php echo CHtml::label($atributo->nombre,'etiqueta'); 	if($obligatorio=="required") echo "*";?>
+				<input type="checkbox" <?php echo $producto->buscarBoolean($atributo->nombre);?> name="<?php echo $atributo->nombre?>" id="<?php echo $i;?>" class="<?php echo $tipo;?>"><br>				
 			</div>
 		<?php
 		}
@@ -63,8 +63,8 @@ $user = $document->findOne($prueba); //busqueda
 			{
 				?>
 				<div class="col-md-6 col-md-offset-3 margin_top_small">
-					<?php echo CHtml::label($atributo->nombre,'etiqueta'); ?>
-					<input type="date" name="<?php echo $atributo->nombre?>" id="<?php echo $i;?>" class="<?php echo $tipo;?>" <?php echo $obligatorio;?>><br>
+					<?php echo CHtml::label($atributo->nombre,'etiqueta'); if($obligatorio=="required") echo "*";?>
+					<input type="date" value="<?php echo isset($busqueda[$producto->cambiarNombre($atributo->nombre)])?  $busqueda[$producto->cambiarNombre($atributo->nombre)]:''; ?>" name="<?php echo $atributo->nombre?>" id="<?php echo $i;?>" class="<?php echo $tipo;?>" <?php echo $obligatorio;?>><br>
 				</div>
 			<?php
 			}
@@ -72,8 +72,8 @@ $user = $document->findOne($prueba); //busqueda
 			{
 				?>
 				<div class="col-md-6 col-md-offset-3 margin_top_small">
-					<?php echo CHtml::label($atributo->nombre,'etiqueta'); ?>
-					<input type="text" name="<?php echo $atributo->nombre?>" id="<?php echo $i;?>" class="<?php echo $tipo;?>" <?php echo $obligatorio;?> <?php echo $patron;?> <?php echo $mensaje;?>>
+					<?php echo CHtml::label($atributo->nombre,'etiqueta'); if($obligatorio=="required") echo "*";?>
+					<input type="text" name="<?php echo $atributo->nombre?>" value="<?php echo isset($busqueda[$producto->cambiarNombre($atributo->nombre)])?  $busqueda[$producto->cambiarNombre($atributo->nombre)]:''; ?>" id="<?php echo $i;?>" class="<?php echo $tipo;?>" <?php echo $obligatorio;?> <?php echo $patron;?> <?php echo $mensaje;?>>
 					<span id="<?php echo $i."e";?>" class="error margin_top_small_minus hide"><br/><small>Formato no válido</small></span><br>
 				</div>
 				<?php	
@@ -94,32 +94,34 @@ $user = $document->findOne($prueba); //busqueda
 
 				<div class="col-md-6 col-md-offset-3 margin_top_small">
 				<?php 
-				echo CHtml::label($atributo->nombre,'etiqueta'); 
+				echo CHtml::label($atributo->nombre,'etiqueta'); if($obligatorio=="required") echo "*";
 				$rango=explode(",", $unidad->rango);
 				?>
-				<input type="text" name="<?php echo $atributo->nombre?>" id="<?php echo $i;?>" class="<?php echo $tipo;?>" <?php echo $obligatorio;?> <?php echo $patron;?> <?php echo $mensaje;?>>
+				<input type="text" name="<?php echo $atributo->nombre?>" value="<?php echo isset($busqueda[$producto->cambiarNombre($atributo->nombre)])?  $busqueda[$producto->cambiarNombre($atributo->nombre)]:''; ?>" id="<?php echo $i;?>" class="<?php echo $tipo;?>" <?php echo $obligatorio;?> <?php echo $patron;?> <?php echo $mensaje;?>>
+				
 				<select name="<?php echo $atributo->nombre;?>*-*UNIDAD">
 				<?php 
 				foreach($rango as $ra)
 				{
 					$arreglo=explode("==", $ra);
 				?>				
-					<option value="<?php echo $arreglo[1];?>"><?php echo $arreglo[1];?></option>
+					<option <?php echo $producto->buscarSelect($atributo->nombre, $arreglo[1]);?> value="<?php echo $arreglo[1];?>"><?php echo $arreglo[1];?></option>
 				<?php
 				}
 				?>
 				</select>
+				
 				<span id="<?php echo $i."e";?>" class="error margin_top_small_minus hide"><br/><small>Formato no válido</small></span><br>
 				</div>
 				<?php
 			}
-			else 
+			else ///ESTE CASO NUNCA VA A PASAR( POR AHORA)
 			{?>
 				<div class="col-md-6 col-md-offset-3 margin_top_small" id="<?php echo "checkbox-".$i?>">
 				<?php 
-				echo CHtml::label($atributo->nombre,'etiqueta');?><br> <?php
-				$rango=explode(",", $unidad->rango);?>
-				<input type="text" name="<?php echo $atributo->nombre?>" id="<?php echo $i;?>" class="<?php echo $tipo;?>" <?php echo $obligatorio;?> <?php echo $patron;?> <?php echo $mensaje;?>>
+				echo CHtml::label($atributo->nombre,'etiqueta');if($obligatorio=="required") echo "*";?><br> <?php
+				$rango=explode(",", $unidad->rango); ?>
+				<input type="text" name="<?php echo $atributo->nombre?>" value="<?php echo isset($busqueda[$producto->cambiarNombre($atributo->nombre)])?  $busqueda[$producto->cambiarNombre($atributo->nombre)]:''; ?>" id="<?php echo $i;?>" class="<?php echo $tipo;?>" <?php echo $obligatorio;?> <?php echo $patron;?> <?php echo $mensaje;?>>
 				<?php
 				$j=1;
 				foreach($rango as $ra)
@@ -146,20 +148,47 @@ $user = $document->findOne($prueba); //busqueda
 
 				<div class="col-md-6 col-md-offset-3 margin_top_small">
 				<?php 
-				echo CHtml::label($atributo->nombre,'etiqueta'); 
+				echo CHtml::label($atributo->nombre,'etiqueta');if($obligatorio=="required") echo "*";
 				$rango=explode(",", $atributo->rango);
 				?>
-				<select class="form-control">
+				
 				<?php 
-				foreach($rango as $ra)
+				if($atributo->obligatorio==1)
 				{
-					$arreglo=explode("==", $ra);
-				?>				
-					<option value="<?php echo $arreglo[1];?>"><?php echo $arreglo[1];?></option>
+				?>
+					<select class="form-control" name="<?php echo $atributo->nombre;?>">
+					<?php 
+					foreach($rango as $ra)
+					{
+						$arreglo=explode("==", $ra);
+					?>				
+						<option <?php echo $producto->buscarSelect($atributo->nombre, $arreglo[1], '1');?> value="<?php echo $arreglo[1];?>"><?php echo $arreglo[1];?></option>
+					<?php
+					}
+					?>
+					</select>
+				<?php // no sea obligatorio
+				} 
+				else
+				{
+				?>
+					<select class="form-control" name="<?php echo $atributo->nombre;?>">
+					<option  value="opcion-vacia">Seleccione una opcion, en caso contrario deje esta opcion</option>
+					<?php 
+					foreach($rango as $ra)
+					{
+						$arreglo=explode("==", $ra);
+					?>				
+						<option <?php echo $producto->buscarSelect($atributo->nombre, $arreglo[1], '1');?> value="<?php echo $arreglo[1];?>"><?php echo $arreglo[1];?></option>
+					<?php
+					}
+					?>
+					</select>
+				
 				<?php
 				}
 				?>
-				</select>
+				
 				</div>
 				<?php
 			}
@@ -167,14 +196,14 @@ $user = $document->findOne($prueba); //busqueda
 			{?>
 				<div class="col-md-6 col-md-offset-3 margin_top_small" id="<?php echo "checkbox-".$i?>">
 				<?php 
-				echo CHtml::label($atributo->nombre,'etiqueta');?><br> <?php
+				echo CHtml::label($atributo->nombre,'etiqueta'); if($obligatorio=="required") echo "*"; ?><br> <?php
 				$rango=explode(",", $atributo->rango);
 				$j=1;
 				foreach($rango as $ra)
 				{
 					$arreglo=explode("==", $ra);
 				?>				
-					<input type="checkbox" name="<?php echo $arreglo[1];?>" id="<?php echo $i."a".$j?>" value="<?php echo $arreglo[1];?>"><?php echo $arreglo[1];?><br>
+					<input type="checkbox" name="<?php echo $atributo->nombre;?>" id="<?php echo $i."a".$j?>" value="<?php echo $arreglo[1];?>"><?php echo $arreglo[1];?><br>
 				<?php
 				$j++;
 				}

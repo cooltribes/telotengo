@@ -1573,7 +1573,10 @@ class ProductoController extends Controller
 	
 	public function actionDetails($id = null)
 	{
-		$data=array();	
+		$data=array();
+		$connection = new MongoClass();
+		$document = $connection->getCollection('ejemplo');	
+		
 		if(count($_POST)>0)
 		{
 			
@@ -1582,7 +1585,8 @@ class ProductoController extends Controller
 					if($aso!=""&& strpos($key,"*-*")=== false)
 					{
 						#echo $key." ".$aso." ";
-						$data[$key]=$aso;
+						if($aso!="opcion-vacia") // si viene la opcion del select
+							$data[$key]=$aso;
 						if(isset($_POST[$key."*-*UNIDAD"]))
 						{
 							#echo $_POST[$key."*-*UNIDAD"]."</br>";
@@ -1592,8 +1596,7 @@ class ProductoController extends Controller
 					}						
 			}
 			$data['producto']=$id;
-			$connection = new MongoClass();
-		    $document = $connection->getCollection('ejemplo');
+
 					
 			$prueba = array("producto"=>$id); 
 			$user = $document->findOne($prueba); // vamos a buscar si existe el registro
@@ -1604,7 +1607,9 @@ class ProductoController extends Controller
 			}
 			else // en caso de que exista el registro, substituyalo
 			{
-				$existente=$document->update(array("producto"=>$id), array('$set'=>$data));
+				$document->remove(array("producto"=>$id));	//quito la coleccion
+				//$existente=$document->update(array("producto"=>$id), array('$set'=>$data));
+				$document->insert($data); //inserto un nuevo registro
 			}
 			//var_dump($user);
 			//var_dump($existente);
@@ -1614,13 +1619,19 @@ class ProductoController extends Controller
 
 			//$GET['id'];
         if(!is_null($id)){
+
+        	$prueba = array("producto"=>$id); 
+			$busqueda = $document->findOne($prueba); 
+			
 			$producto=Producto::model()->findByPk($id);
 			$categoria=Categoria::model()->findByPk($producto->padre->idCategoria->id);
 			$categoriaAtributo=CategoriaAtributo::model()->findAllByAttributes(array('categoria_id'=>$categoria->id, 'activo'=>1));
+			var_dump($busqueda);
 			$this->render('details',array(
 				'producto'=>$producto,
 				'categoria'=>$categoria,
-				'categoriaAtributo'=>$categoriaAtributo,		
+				'categoriaAtributo'=>$categoriaAtributo,
+				'busqueda'=>$busqueda		
 		));
 		}else
             throw new CHttpException(400, 'Invalid request. Please do not repeat this request again.');
