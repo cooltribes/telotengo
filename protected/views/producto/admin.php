@@ -102,6 +102,7 @@
 	    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-bordered table-hover table-striped">
 	        <tr>
 	            <th scope="col">Codigo TLT</th>
+	            <th scope="col">Imagen</th>
 	            <th scope="col">Nombre</th>
 	            <th scope="col">Modelo</th>
 	            <th scope="col">Color</th>

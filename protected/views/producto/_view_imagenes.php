@@ -171,7 +171,7 @@
 	                    .'</div>'; 
 			}			
 
-	        $this->widget('zii.widgets.jui.CJuiSortable', array(
+	        $this->widget('zii.widgets.jui.CJuiSortable', array( 
 	            'items' => $lis,
 	            'options' => array(
 	                'delay' => '300',
