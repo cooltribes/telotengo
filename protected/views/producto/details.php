@@ -37,9 +37,13 @@ $user = $document->findOne($prueba); //busqueda
  	<form method="post" id="idx">
  <?php
  $i=1;
+ $hidden=array();
  foreach($categoriaAtributo as $catA)
  {
 	$atributo=Atributo::model()->findByPk($catA->atributo_id);
+	if($atributo->obligatorio&&$atributo->multiple==1&&$atributo->tipo==3)
+                    if(!in_array($atributo->nombre_mongo, $hidden))
+                        array_push($hidden,array('nombre'=>$atributo->nombre_mongo,'valor'=>isset($busqueda[$producto->cambiarNombre($atributo->nombre)])?implode(',',$busqueda[$producto->cambiarNombre($atributo->nombre)]).',':''));
 	//echo $atributo->id;
 	$tipo= $atributo->buscarTipo($atributo->tipo);
 	 $patron= $atributo->buscarPatron();
@@ -196,18 +200,32 @@ $user = $document->findOne($prueba); //busqueda
 			{?>
 				<div class="col-md-6 col-md-offset-3 margin_top_small" id="<?php echo "checkbox-".$i?>">
 				<?php 
-				echo CHtml::label($atributo->nombre,'etiqueta'); if($obligatorio=="required") echo "*"; ?><br> <?php
+				echo CHtml::label($atributo->nombre,'etiqueta'); if($obligatorio=="required") echo "*"; ?>
+				<span class="error" id="<?php echo $atributo->nombre_mongo ?>_error" style="display:none">Seleccione una o mas opciones</span><br> <?php
+				
+                    
 				$rango=explode(",", $atributo->rango);
 				$j=1;
-				foreach($rango as $ra)
+				foreach($rango as $key=>$ra)
 				{
 					$arreglo=explode("==", $ra);
 				?>				
-					<input type="checkbox" name="<?php echo $atributo->nombre;?>" id="<?php echo $i."a".$j?>" value="<?php echo $arreglo[1];?>"><?php echo $arreglo[1];?><br>
+					<input type="checkbox" onclick="reqCheck('#<?php echo $i."a".$j?>','<?php echo $atributo->nombre_mongo;?>','<?php echo $arreglo[1];?>')" class="<?php echo $atributo->nombre_mongo;?>" name="<?php echo $atributo->nombre;?>[<?php echo $key ?>]" id="<?php echo $i."a".$j?>" value="<?php echo $arreglo[1];?>"
+					<?php 
+					   if(!is_null($busqueda))
+					echo in_array($arreglo[1],$busqueda[$producto->cambiarNombre($atributo->nombre)])?"checked='checked'":"";?>
+					
+					/>
+	             
+					<?php 
+					
+					
+					echo $arreglo[1];?>
+					<br/>
 				<?php
 				$j++;
 				}
-				?>	
+                ?>	
 				</div>
 				
 			<?php
@@ -218,18 +236,76 @@ $user = $document->findOne($prueba); //busqueda
 	echo "\n";
 	$i++;
 	//if(($atributo->tipo_unidad=="" || isset($atributo->tipo_unidad)) && ($atributo->rango=="" || isset($atributo->rango))) // si no tiene rango ni tipos de unidad es porque es solo un simple campo de texto
- }?>
+ }
+
+ ?>
  	<div id="avanzar" class="col-md-6 col-md-offset-3 margin_top" >
 			
 			<button class="btn btn-danger form-control" title="Guardar" id="btnx" type="submit">Guardar</button>
 	</div>
 	
 	</form>
+<?php 
+    foreach($hidden as $hid){?>
+      <input type='hidden' class="hiddenCheck" value="<?php echo $hid['valor'] ?>" name="<?php echo $hid['nombre'] ?>_hid" id="<?php echo $hid['nombre'] ?>_hid" />
+
+<?php }  
+?>
 	</div>
 </div>
 </div>  
 
 <script>
+function reqCheck(id,name,value){
+     if($(id).is(':checked')){
+                             
+                                $('#'+name+'_hid').val(''+value+','+$('#'+name+'_hid').val()); 
+                           }                            
+                           else
+                               $('#'+name+'_hid').val($('#'+name+'_hid').val().replace(''+value+',',''));
+                           
+                           console.log( $('#'+name+'_hid').val());
+}
+
+function hiddenCheck(){
+    var result=Array();
+    result['bool']=true;
+    result['error'] ="";
+    $('.error').hide();
+    
+    $('.hiddenCheck').each(function(){
+        if($(this).val().length==0){
+            result['bool'] = false;
+            if(result['error']==""){
+               result['error'] = '#'+$(this).attr('name').replace('hid','error');
+               
+            }
+                
+        }
+            
+      
+    });
+    return result;
+    
+}
+    
+$('#btnx').click(function(e){
+    var validation=hiddenCheck();
+    if(!validation['bool']){
+        e.preventDefault();
+        console.log(validation['error']);
+        $(validation['error']).show();
+        $('html,body').animate({
+          scrollTop: $(validation['error']).offset().top-200
+        }, 500)
+    }        
+    else
+    console.log("GO");
+
+    
+});
+
+
 $(document).ready(function() {
 	
 	

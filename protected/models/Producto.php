@@ -368,7 +368,7 @@ class Producto extends CActiveRecord
 	{
 		return str_replace(" ","_",$nombre);
 	}
-	
+	 
 	public function buscarSelect($nombre, $nombreSelect, $variar=0)
 	{
 		$connection = new MongoClass();
