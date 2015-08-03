@@ -1,3 +1,5 @@
+<?php $dias = array("Domingo","Lunes","Martes","Miercoles","Jueves","Viernes","Sábado"); 
+$meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");?>
 <div class="container">
 	<div class="row-fluid">
 		<h1>Forma parte de Telotengo.com</h1>
@@ -17,7 +19,7 @@
 
             <div class="margin_top margin_bottom alert in alert-block fade alert-info text_align_center"> 
                  <?php echo $user->email; ?>, encontramos tu correo electrónico en nuestra base de datos ya que el día
-                 <?php echo date('l d',strtotime($user->create_at)); ?> de <?php echo date('F',strtotime($user->create_at)); ?> del
+                 <?php echo $dias[date('w', strtotime($user->create_at))]." "; echo date('d',strtotime($user->create_at)); ?> de <?php echo $meses[date('n',strtotime($user->create_at))-1]; ?> del
                  <?php echo date('Y',strtotime($user->create_at)); ?> hiciste una solicitud de invitación.<br/>
                  Pedimos disculpas por no haber podido atender a dicha solicitud aún y esperamos hacerlo prontamente.<br/><br/>
                  Dado que realizamos un proceso de validación robusto y manual para garantizar la veracidad de todos los integrantes,

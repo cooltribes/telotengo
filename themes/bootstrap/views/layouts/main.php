@@ -124,24 +124,10 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                     
                     <li class="button glyph-padding"><a href="<?php echo Yii::app()->baseUrl; ?>/site/logout" class="white">
                         Salir</a> </li>
-                    <li class="dropdown button glyph-padding">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <span class="white">Administración<b class="caret"></b></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/user/admin">Usuarios</a></li>
-                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/marca/admin">Marcas</a></li>
-                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/atributo/admin">Atributo</a></li>
-                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/unidad/admin">Unidad</a></li>
-                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/color/admin">Color</a></li>
-                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/categoria/admin">Categorías</a></li>
-                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/giftcard/admin">Gift Cards</a></li>
-                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/TipoPago/admin">Tipos de Pago</a> </li>
-                        </ul>
-                    </li>    
+   
                      
                     <li class="dropdown button glyph-padding">
-                        <a href="#" class="dropdown-toggle white" data-toggle="dropdown">Pedidos<b class="caret"></b></a> 
+                        <a href="#" class="dropdown-toggle white" data-toggle="dropdown">Ordenes<b class="caret"></b></a> 
                         <ul class="dropdown-menu">
                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/admin">Todos</a></li> 
                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/user/admin/reclamos">Reclamos</a></li>
@@ -158,6 +144,21 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/pregunta/admin">Preguntas</a></li>
                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/importar">Importar productos</a></li>
                         </ul>
+                          <li class="dropdown button glyph-padding">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <span class="white">Administración<b class="caret"></b></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/user/admin">Usuarios</a></li>
+                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/marca/admin">Marcas</a></li>
+                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/atributo/admin">Atributo</a></li>
+                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/unidad/admin">Unidad</a></li>
+                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/color/admin">Color</a></li>
+                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/categoria/admin">Categorías</a></li>
+                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/giftcard/admin">Gift Cards</a></li>
+                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/TipoPago/admin">Tipos de Pago</a> </li>
+                        </ul>
+                    </li> 
                     </li>
                     <li class="button glyph-padding">
                         <a href="<?php echo Yii::app()->baseUrl; ?>/ControlPanel/admin" class="white">Panel de Control</a>
@@ -286,41 +287,8 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                         </div>
                     </div> 
                 </div>
-                <div class="width:100%">
-                    <ul class="dropdown categoriesMenu" style="display: table; width:100%;">
-                      
-                            <li class="dir" id="homeButton">
-                                  <a href="<?php echo  Yii::app()->baseUrl; ?>"><span class="margin_top_xsmall glyphicon glyphicon-home glyphiconLarge"></span></a>
-                            </li>
-                        
-                 
-                        <?php
-                        $categorias = Categoria::model()->findAllByAttributes(array('id_padre'=>0));
-                        foreach ($categorias as $categoria) {
-                            ?>
-                            <li class="dir" onclick="window.location.href = '<?php echo Yii::app()->baseUrl.'/categorias'.'/'.$categoria->url_amigable; ?>';"><?php echo $categoria->nombre; ?>
-                                <?php
-                                $hijos = Categoria::model()->findAllByAttributes(array('id_padre'=>$categoria->id));
-                                if(sizeof($hijos) > 0){
-                                    ?>
-                                    <ul>
-                                        <?php
-                                        foreach ($hijos as $hijo) {
-                                            ?>
-                                            <?php echo CHtml::link('<li>'.$hijo->nombre.'</li>', Yii::app()->baseUrl.'/categorias'.'/'.$hijo->url_amigable, array()); ?>
-                                            <?php
-                                        }
-                                        ?>
-                                    </ul> 
-                                    <?php
-                                }
-                                ?>
-                            </li>
-                            <?php
-                        }
-                        ?>    </ul> 
-          
-                </div>
+                <?php $categorias = Categoria::model()->findAllByAttributes(array('id_padre'=>0));?>
+
                        <!-- <div class="col-md-2 margin_top_small">
                        
                         <?php

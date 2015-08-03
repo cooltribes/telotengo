@@ -104,8 +104,6 @@
 	            <th scope="col">Codigo TLT</th>
 	            <th scope="col">Imagen</th>
 	            <th scope="col">Nombre</th>
-	            <th scope="col">Modelo</th>
-	            <th scope="col">Color</th>
 	            <th scope="col">Status</th>
 	            <th scope="col">Acción</th>
 	        </tr>

@@ -111,6 +111,7 @@ class Atributo extends CActiveRecord
 		$criteria->compare('rango',$this->rango,true);
 		$criteria->compare('obligatorio',$this->obligatorio);
 		$criteria->compare('descripcion',$this->descripcion);
+		$criteria->order = 'nombre ASC';
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

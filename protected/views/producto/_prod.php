@@ -18,8 +18,6 @@ echo"<tr>";
 	
 	
 	echo "<td>".$data->nombre."</td>";
-	echo "<td>".$data->modelo."</td>";
-	echo "<td>".$data->colore->nombre."</td>";
 
 	if($data->estado==1)
 	{
