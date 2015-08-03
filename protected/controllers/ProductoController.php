@@ -1615,7 +1615,7 @@ class ProductoController extends Controller
 			//var_dump($existente);
 			//var_dump($data);
 		}
-		
+		 
 
 			//$GET['id'];
         if(!is_null($id)){
@@ -1626,7 +1626,7 @@ class ProductoController extends Controller
 			$producto=Producto::model()->findByPk($id);
 			$categoria=Categoria::model()->findByPk($producto->padre->idCategoria->id);
 			$categoriaAtributo=CategoriaAtributo::model()->findAllByAttributes(array('categoria_id'=>$categoria->id, 'activo'=>1));
-			var_dump($busqueda);
+			//var_dump($busqueda);
 			$this->render('details',array(
 				'producto'=>$producto,
 				'categoria'=>$categoria,

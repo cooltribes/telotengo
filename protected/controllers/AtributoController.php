@@ -75,7 +75,7 @@ class AtributoController extends Controller
 					$model->rango="";
 			}
 			$model->descripcion=$_POST['Atributo']['descripcion'];
-			$model->nombre_mongo=str_replace(" ","_",$model->nombre);
+			$model->nombre_mongo=Funciones::cleanUrlSeo($model->nombre);
 			if($model->save())
 				$this->redirect(array('admin'));
 		}
