@@ -210,6 +210,21 @@ class Producto extends CActiveRecord
 		));
 	}
 	
+	public function busquedaSeleccion()
+	{
+		// Warning: Please modify the following code to remove attributes that
+		// should not be searched.
+
+		$criteria=new CDbCriteria;
+
+		$criteria->compare('id',$this->id);
+		$criteria->compare('nombre',$this->nombre,true);
+		return new CActiveDataProvider($this, array(
+			'criteria'=>$criteria,
+			'pagination'=>array('pageSize'=>12,),
+		));
+	}
+	
 	
 	public function busqueda($todos)
 	{
