@@ -105,6 +105,15 @@
 	    </div>
 	    <?php echo $form->error($model,'web'); ?>
 	</div> 
+	
+	<div class="form-group">
+		<?php echo CHtml::label('Que te interesa hacer en TeloTengo', '',array('class'=>'col-sm-2')); ?>
+	    <div class="col-sm-10">
+	    	<?php echo $form->radioButtonList($model, 'tipoEmpresa', array('vendedor'=>'Vender', 'comprador'=>'Comprar', 'compraVenta'=>'Ambas')); ?>
+	    </div>
+	    <?php echo $form->error($model,'tipoEmpresa'); ?>
+	</div> 
+	
 
 	<div class="form-actions">
 		<?php $this->widget('bootstrap.widgets.TbButton', array(

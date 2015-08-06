@@ -72,7 +72,7 @@ class Producto extends CActiveRecord
 			array('nombre, padre_id, modelo, color_id', 'required'),
 			array('destacado', 'numerical', 'integerOnly'=>true),
 			//array('peso', 'numerical'),
-			array('nombre', 'length', 'max'=>60), 
+			array('nombre', 'length', 'max'=>200), 
 			//array('descripcion', 'length', 'max'=>1000),
 			array('modelo', 'length', 'max'=>255),
 			// The following rule is used by search().

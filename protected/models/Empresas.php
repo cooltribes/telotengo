@@ -89,6 +89,8 @@ const SECTOR_EDUCACION = 16;
 	public $prefijo="";
 	public $numero="";
 	
+	public $tipoEmpresa;
+	
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.

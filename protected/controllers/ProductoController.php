@@ -37,7 +37,13 @@ class ProductoController extends Controller
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array('admin','delete','update','eliminar','orden','aprobar','rechazar','poraprobar','calificaciones','eliminarCalificacion','importar','inventario', 'verificarPadre', 'verificarNombre', 'details', 'caracteristicas','activarDesactivar'),
-				'users'=>array('admin'),
+				#'users'=>array('admin'),
+				'roles'=>array('admin'),
+			),
+			array('allow', // SOLO VENDEDORES
+				'actions'=>array('inventario'),
+				#'users'=>array('admin'),
+				'roles'=>array('vendedor', 'seleccion'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
@@ -1615,6 +1621,9 @@ class ProductoController extends Controller
 			//var_dump($user);
 			//var_dump($existente);
 			//var_dump($data);
+			Yii::app()->user->setFlash('success', 'Se han cargado los datos con exito');
+			//$this->render('admin');
+			$this->redirect(array('admin'));
 		}
 		 
 

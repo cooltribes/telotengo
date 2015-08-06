@@ -83,6 +83,13 @@ return array(
 
 	// application components
 	'components'=>array(
+		'authManager'=>array(
+			"class"=>"CDbAuthManager",
+			"connectionID"=>"db",
+			"assignmentTable"=>"tbl_authAssignment",
+			"itemTable"=>"tbl_authItem",
+			"itemChildTable"=>"tbl_authItemChild",
+			),
 	        'bootstrap'=>array(
 	      	//'class' => 'ext.yiibooster.components.Bootstrap',
             'class'=>'bootstrap.components.Bootstrap',

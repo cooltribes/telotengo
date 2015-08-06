@@ -5,7 +5,7 @@
 			'Productos',
 		);
 	?>
-	<div class="row-fluid">
+	<div class="row-fluid clearfix">
 		<h1 class="col-md-10">Administrar Variaciones de los Productos</h1>
         <div class="col-md-2 margin_top_medium">
                 <?php
@@ -94,7 +94,7 @@
 		
 	     
 			
-	    </div>
+	
 
 	    
 		<?php
