@@ -326,10 +326,14 @@ class SiteController extends Controller
     
     public function actionRequest2(){
         $this->layout='//layouts/b2b';
-        $model = new RegistrationForm;
-        $profile = new Profile;
-        $profile->regMode = true;
-        $this->render('request2',array('model'=>$model,'profile'=>$profile)); 
+        $model = new Empresas;
+        $user=User::model()->findByPk(1);
+        $profile=$user->profile;
+      $this->render('create',array(
+            'model'=>$model,
+            'user' => $user,
+            'profile' => $user->profile,
+        ));
     }
     
 }

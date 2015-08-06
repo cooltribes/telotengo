@@ -31,32 +31,14 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
 
 </head>
-<style>
-    body{
-        margin:0px;
-    }
-    
-    .encabezado{
-        padding-top:250px;
-        text-align: center;
-    }
-    .encabezado>h1, .encabezado>h2, .encabezado>h3{
-        color:#FFF;
-        
-    }
-   h1, h2, h3, h4, h5{
-        color:#FFF;
-        
-    }
-    
-</style>
+
 
 
 <img src="<?php echo Yii::app()->theme->getBaseUrl()."/images/layout/b2b/background.jpg"?>" style="width:100%; z-index:0; height:100%"?>
 
 
 
-<div class="row-fluid" style="position: absolute; top:0; left:0; background-color: rgba(0,0,0,0.6); width:100%; height:100%;">
+<div class="row-fluid darkpanel">
     <div class="col-md-8 col-md-offset-2">
         
         <!-- BARRA SUPERIOR -->
@@ -68,7 +50,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
         </div>
         
         
-        
+         
                 
         <div class="col-md-6" style="text-align: center">
             <div class="row-fluid">
@@ -86,12 +68,12 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                 )); ?>
                 <div class="col-md-4">
                     <?php // echo CHtml::activeLabelEx($loginLayoutModel,'username'); ?>
-                            <?php echo $form->textFieldRow($loginLayoutModel,'username',array("class"=>"form-control","placeholder"=>"correoelectronico@cuenta.com")); ?>
+                            <?php echo $form->textFieldRow($loginLayoutModel,'username',array("class"=>"form-control no-radius","placeholder"=>"correoelectronico@cuenta.com")); ?>
                             <?php echo $form->error($loginLayoutModel,'username'); ?>
                 </div>
                 <div class="col-md-4">
                      <?php //echo CHtml::activeLabelEx($loginLayoutModel,'password'); ?>
-                            <?php echo $form->passwordFieldRow($loginLayoutModel,'password',array('class'=>'form-control')); ?>
+                            <?php echo $form->passwordFieldRow($loginLayoutModel,'password',array('class'=>'form-control no-radius')); ?>
                             <span class="help-block muted text_align_right padding_right">
                             <?php echo $form->error($loginLayoutModel,'password'); ?>
                 </div>
@@ -100,11 +82,11 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                         'buttonType'=>'submit',
                         'type'=>'danger',
                         'size'=>'large',
-                        'label'=>"Iniciar sesión",
-                        'htmlOptions'=>array('class'=>'btn-block'),
+                        'label'=>"Ingresa",
+                        'htmlOptions'=>array('class'=>'btn-block btn-orange'),
                     )); ?>
                     <div style="height:25px; ">
-                         <?php echo CHtml::link("Recuperar contraseña",Yii::app()->getModule('user')->recoveryUrl); ?>
+                         <?php echo CHtml::link("Recuperar contraseña",Yii::app()->getModule('user')->recoveryUrl,array("class"=>"white-link")); ?>
                     </div>
                 </div>
                  <?php $this->endWidget(); ?>
@@ -123,14 +105,3 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
     </div>
     
 </div>
-
-    
-    
-
-
-<div 
-    
-    
-    
-    
-

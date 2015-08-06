@@ -10,6 +10,7 @@
 @black: #000;
 @gray: #fbfbfb;
 @darkgray:#666;
+@b2bOrange:#ff5b0b;
 .white{color:#FFF !important; }
 .red{color:#F00;}
 
@@ -987,3 +988,116 @@ body,html{
     display: block;
   }
 }
+
+/* B2B */
+body{
+  
+}
+
+.no-radius{
+  border-radius:0px;
+  
+}
+.b2b-btn{
+  height: 34px;
+  border: solid 1px #FFF;
+  font-weight: 800;
+  .no-radius; 
+}
+
+.btn-orange{
+  background-color:@b2bOrange;
+  .b2b-btn;  
+}
+
+.btn-black{
+  background-color:#000;
+  .b2b-btn;
+}
+
+.white-link, .white-link:hover, .white-link:visited{
+  color:#FFF;
+  text-decoration: underline;
+}
+h1,h2,h3,h4,h5{
+    font-family: 'Open Sans', sans-serif;
+ }
+ 
+ body{
+        margin:0px;
+    }
+
+    .darkpanel{
+        position: absolute; 
+        top: 0; 
+        left: 0; 
+        background-color: rgba(0,0,0,0.6); 
+        width: 100%; 
+        height: 100%;
+        h1,h2,h3,h4,h5{
+          color:#FFF;
+       }
+    }
+
+
+.encabezado{
+  padding-top:180px;
+  text-align: center;
+  h1,h2,h3,h4,h5{    
+    color:#FFF;
+  }
+  h1{
+    font-size:50px;
+  }
+  
+  h2{
+    font-size:40px;
+  }
+  h3{
+    
+  }
+  .stripe{
+    height: 50px;
+    background-color: rgba(0,0,0,0.6);
+    width: 154%;
+    margin-left: -27%;
+    line-height: 50px;
+    vertical-align: middle;
+    font-size:26px;
+    font-family: 'Open Sans', sans-serif;
+    color: #FFF;
+    .margin_top_small;
+  }
+  
+}
+.orangepanel{
+    background-color: rgba(255,91,11, 0.5);
+    padding: 20px 80px; 
+    color: #FFF;
+    input, select{
+      .no-radius;
+    }
+    select{
+      padding: 4px;
+    }
+    h4{
+      font-size: 16px;
+    }
+    .pickDate .col-md-4{
+      padding-left:3px;
+      padding-right:3px;
+    }
+    .pickDate .col-md-2{
+      padding-left:0px;
+      padding-right:0px;
+    }
+    .control-label{
+      font-size:12px;
+      padding-left: 0px;
+      text-align: left;
+    }
+    label.radio{
+      display: inline-block;
+      padding-left:8%;
+    }
+  }
