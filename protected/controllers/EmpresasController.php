@@ -62,6 +62,7 @@ class EmpresasController extends Controller
 	public function actionCreate()
 	{
 		$model = new Empresas;
+		 $this->layout='//layouts/b2b';
 		$empresa_user = new EmpresasHasUsers();
 		$rol='';
 

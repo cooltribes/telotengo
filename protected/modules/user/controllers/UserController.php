@@ -632,6 +632,7 @@ class UserController extends Controller
 	Función para tomar los datos personales de una solicitud
 	*/
 	public function actionDatos(){
+	    $this->layout='//layouts/b2b';
 		$model = new RegistrationForm;
         $profile = new Profile;
         $profile->regMode = true;	

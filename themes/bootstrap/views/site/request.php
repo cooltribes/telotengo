@@ -112,3 +112,79 @@
     </div>
     
 </div>
+<script>
+
+    $(document).ready(function(){
+
+        $('#birth_day').change(function(){
+            if($('#birth_day').val()!=-1 && $('#birth_month').val()!=-1 && $('#birth_year').val()!=-1){
+                if(!validar_fecha()){
+                    $('#birth_day').val('-1');
+                    $('#birth_month').val('-1');
+                    $('#birth_year').val('-1');
+                }else{
+                    $('#Profile_fecha_nacimiento').val($('#birth_year').val()+'-'+$('#birth_month').val()+'-'+$('#birth_day').val());
+                }
+            }
+        });
+
+        $('#birth_month').change(function(){
+            if($('#birth_day').val()!=-1 && $('#birth_month').val()!=-1 && $('#birth_year').val()!=-1){
+                if(!validar_fecha()){
+                    $('#birth_day').val('-1');
+                    $('#birth_month').val('-1');
+                    $('#birth_year').val('-1');
+                }else{
+                    $('#Profile_fecha_nacimiento').val($('#birth_year').val()+'-'+$('#birth_month').val()+'-'+$('#birth_day').val());
+                }
+            }
+        });
+
+        $('#birth_year').change(function(){
+            if($('#birth_day').val()!=-1 && $('#birth_month').val()!=-1 && $('#birth_year').val()!=-1){
+                if(!validar_fecha()){
+                    $('#birth_day').val('-1');
+                    $('#birth_month').val('-1');
+                    $('#birth_year').val('-1');
+                }else{
+                    $('#Profile_fecha_nacimiento').val($('#birth_year').val()+'-'+$('#birth_month').val()+'-'+$('#birth_day').val());
+                }
+            }
+        });
+    });
+    
+    function validar_fecha(){
+        var dia = $('#birth_day').val();
+        var mes = $('#birth_month').val();
+        var anio = $('#birth_year').val();
+        var numDias = 31;
+        
+        if(mes == 4 || mes == 6 || mes == 9 || mes == 11){
+            numDias = 30;
+        }
+        
+        if(mes == 2){
+            if(comprobarSiBisisesto(anio)){
+                numDias = 29;
+            }else{
+                numDias = 28;
+            }
+        }
+        
+        if(dia > numDias){
+            //console.log('fecha invalida');
+            return false;
+        }
+        return true;
+    }
+    
+    function comprobarSiBisisesto(anio){
+        if ( ( anio % 100 != 0) && ((anio % 4 == 0) || (anio % 400 == 0))) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+</script>
