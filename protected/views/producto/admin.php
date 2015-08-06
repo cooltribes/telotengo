@@ -5,7 +5,7 @@
 			'Productos',
 		);
 	?>
-	<div class="row-fluid">
+	<div class="row-fluid clearfix">
 		<h1 class="col-md-10">Administrar Variaciones de los Productos</h1>
         <div class="col-md-2 margin_top_medium">
                 <?php
@@ -94,7 +94,7 @@
 		
 	     
 			
-	    </div>
+	
 
 	    
 		<?php
@@ -104,8 +104,6 @@
 	            <th scope="col">Codigo TLT</th>
 	            <th scope="col">Imagen</th>
 	            <th scope="col">Nombre</th>
-	            <th scope="col">Modelo</th>
-	            <th scope="col">Color</th>
 	            <th scope="col">Status</th>
 	            <th scope="col">Acción</th>
 	        </tr>

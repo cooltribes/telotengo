@@ -72,7 +72,7 @@ class Producto extends CActiveRecord
 			array('nombre, padre_id, modelo, color_id', 'required'),
 			array('destacado', 'numerical', 'integerOnly'=>true),
 			//array('peso', 'numerical'),
-			array('nombre', 'length', 'max'=>60), 
+			array('nombre', 'length', 'max'=>200), 
 			//array('descripcion', 'length', 'max'=>1000),
 			array('modelo', 'length', 'max'=>255),
 			// The following rule is used by search().
@@ -204,6 +204,21 @@ class Producto extends CActiveRecord
 		
 		$criteria->together = true;
 		
+		return new CActiveDataProvider($this, array(
+			'criteria'=>$criteria,
+			'pagination'=>array('pageSize'=>12,),
+		));
+	}
+	
+	public function busquedaSeleccion()
+	{
+		// Warning: Please modify the following code to remove attributes that
+		// should not be searched.
+
+		$criteria=new CDbCriteria;
+
+		$criteria->compare('id',$this->id);
+		$criteria->compare('nombre',$this->nombre,true);
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 			'pagination'=>array('pageSize'=>12,),

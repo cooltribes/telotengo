@@ -20,7 +20,7 @@ class LoginController extends Controller
 					$this->lastViset();
 
 					if(Yii::app()->user->isAdmin()){
-						$this->redirect(Yii::app()->baseUrl."/ControlPanel/admin");
+						$this->redirect(Yii::app()->baseUrl);
 					}else{
 						if (Yii::app()->user->returnUrl=='/index.php')
 							$this->redirect(Yii::app()->controller->module->returnUrl);

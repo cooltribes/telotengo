@@ -3,6 +3,10 @@ $this->pageTitle=Yii::app()->name . ' - '.UserModule::t("Registration");
 $this->breadcrumbs=array(
 	UserModule::t("Registration"),
 );
+
+//hay que borrar todas las variables de session
+Yii::app()->session->clear();
+Yii::app()->session->destroy();
 ?>
 
 <div class="container">

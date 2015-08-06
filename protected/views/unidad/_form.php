@@ -24,7 +24,7 @@
 
 
 	<div class="col-md-6 col-md-offset-3 margin_top">
-			<a id="avanzar" class="btn btn-danger form-control"  title="Guardar y avanzar">Guardar y avanzar</a>
+			<a id="avanzar" class="btn btn-danger form-control"  title="Guardar y avanzar">Guardar</a>
 	</div>
 
 

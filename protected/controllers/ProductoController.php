@@ -32,12 +32,18 @@ class ProductoController extends Controller
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
 				'actions'=>array('seleccion','busqueda','create','hijos','imagenes','seo','create','agregarCaracteristica','eliminarCaracteristica','agregarInventario',
-								 'agregarInventarioAjax','eliminarInventario','multi','orden', 'clasificar', 'niveles', 'nivelPartial', 'crearProducto'),
+								 'agregarInventarioAjax','eliminarInventario','multi','orden', 'clasificar', 'niveles', 'nivelPartial', 'crearProducto', 'autoComplete'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array('admin','delete','update','eliminar','orden','aprobar','rechazar','poraprobar','calificaciones','eliminarCalificacion','importar','inventario', 'verificarPadre', 'verificarNombre', 'details', 'caracteristicas','activarDesactivar'),
-				'users'=>array('admin'),
+				#'users'=>array('admin'),
+				'roles'=>array('admin'),
+			),
+			array('allow', // SOLO VENDEDORES
+				'actions'=>array('inventario'),
+				#'users'=>array('admin'),
+				'roles'=>array('vendedor', 'seleccion'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
@@ -60,11 +66,12 @@ class ProductoController extends Controller
 	public function actionSeleccion() 
 	{
 		if(isset($_POST['busqueda'])){
+			Yii::app()->session['busquedaPalabra']="";
 		    $producto = new Producto;
             $producto->unsetAttributes();     
             $producto->nombre = $_POST['busqueda'];        
-            $dataProvider = $producto->searchTwo();
-                    
+            $dataProvider = $producto->busquedaSeleccion();
+            Yii::app()->session['busquedaPalabra']=$_POST['busqueda'];      
             $this->render('seleccion',array('dataProvider'=>$dataProvider));
 		}
 		else
@@ -1614,6 +1621,9 @@ class ProductoController extends Controller
 			//var_dump($user);
 			//var_dump($existente);
 			//var_dump($data);
+			Yii::app()->user->setFlash('success', 'Se han cargado los datos con exito');
+			//$this->render('admin');
+			$this->redirect(array('admin'));
 		}
 		 
 
@@ -1646,6 +1656,20 @@ class ProductoController extends Controller
         echo $model->estado;
         
     }
+	
+	public function actionAutocomplete()
+	{
+	    	$res =array();
+	    	if (isset($_GET['term'])) 
+			{
+				$qtxt ="SELECT nombre FROM tbl_producto WHERE nombre LIKE :nombre and estado=1";
+				$command =Yii::app()->db->createCommand($qtxt);
+				$command->bindValue(":nombre", '%'.$_GET['term'].'%', PDO::PARAM_STR);
+				$res =$command->queryColumn();
+	    	}
+	     	echo CJSON::encode($res);
+	    	Yii::app()->end();
+	}
 
 
 }

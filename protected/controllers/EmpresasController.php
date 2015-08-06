@@ -63,6 +63,7 @@ class EmpresasController extends Controller
 	{
 		$model = new Empresas;
 		$empresa_user = new EmpresasHasUsers();
+		$rol='';
 
 		if(isset(Yii::app()->session["usuarionuevo"])){
 			$user = User::model()->findByAttributes(array('email'=>Yii::app()->session["usuarionuevo"]));
@@ -70,10 +71,10 @@ class EmpresasController extends Controller
 		elseif(isset(Yii::app()->session["invitadocliente"])){
 			$user = User::model()->findByPk(Yii::app()->session["invitadocliente"]);
 		}
-
+		
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
-
+		$model->tipoEmpresa="vendedor";
 		if(isset($_POST['Empresas'])){
 			$model->attributes=$_POST['Empresas'];
 			$model->telefono=$_POST['Empresas']['telefono'];
@@ -82,19 +83,24 @@ class EmpresasController extends Controller
 			$model->sector = $_POST['Empresas']['sector'];
 			$model->cargo = $_POST['Empresas']['cargo'];
 			$model->num_empleados = $_POST['Empresas']['num_empleados'];
-
+			$rol=$_POST['Empresas']['tipoEmpresa'];
 			$model->tipo = $user->type; # el mismo tipo de empresa que recibio en la invitación
+			
+			
+			
+			
 
 			if($model->save()){
 				$empresa_user->empresas_id = $model->id;
 				$empresa_user->users_id = $user->id;
 				$empresa_user->rol = $_POST['Empresas']['cargo'];
+				Yii::app()->authManager->assign($rol,$user->id);
 				$empresa_user->save();
 
 				$this->redirect(array('solicitudFinalizada'));
 			}
 		}
-
+		
 		$this->render('create',array(
 			'model'=>$model,
 			'user' => $user,

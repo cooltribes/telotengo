@@ -16,7 +16,7 @@ $this->breadcrumbs=array(
         <div class="col-md-2 margin_top_medium">
                 <?php
          echo CHtml::link('Nuevo Producto Padre', Yii::app()->baseUrl."/producto/clasificar", array('class'=>'btn form-control btn-success', 'role'=>'button'));
-         echo CHtml::link('Crear Variacion', Yii::app()->baseUrl."/producto/create", array('class'=>'btn form-control btn-warning', 'role'=>'button'));
+         echo CHtml::link('Crear Variacion', Yii::app()->baseUrl."/producto/create", array('class'=>'btn form-control btn-warning margin_top', 'role'=>'button'));
 		        ?>
 		        <br> 
         </div>
@@ -36,7 +36,7 @@ $this->breadcrumbs=array(
 
 		    <div class="row margin_top margin_bottom ">
 	         <form class="no_margin_bottom form-search row-fluid">
-                 <div class="col-md-3 col-md-offset-8 no_padding_right">
+                 <div class="col-md-3"> <!-- col-md-offset-8 no_padding_right">-->
                      <input class="form-control no_radius_right" id="query" name="query" type="text" placeholder="Escribe tu criterio de búsqueda">                   
                  </div>
                  <div class="col-md-1 no_padding_left">

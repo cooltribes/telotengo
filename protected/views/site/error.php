@@ -19,7 +19,7 @@ $this->breadcrumbs=array(
       color: #0071b9;
     }
 </style>
-<div class="row-fluid">
+<div class="row-fluid clearfix">
     <div class="col-md-offset-5 col-md-2 margin_top_minus">
         <div class="text-center">
         <div class="sadFace">:(</div>
@@ -29,7 +29,17 @@ $this->breadcrumbs=array(
     
 </div>
 <h2 class="text-center">
-    Hemos tenido un problema procesando tu solicitud
+   	<?php
+	 if($code=="403")
+	{?>
+		No esta autorizado a visualizar este contenido
+	<?php
+	}
+	else
+	{?>
+		Hemos tenido un problema procesando tu solicitud
+	<?php	
+	}?>
 </h2>
 
 <h4 class="text-center">
