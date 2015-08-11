@@ -34,9 +34,9 @@
     
     <div class="form-group row-fluid">
  
-            <?php echo $form->textField($model,'numero', array('class'=>'form-control', 'placeholder'=>'RIF', 'maxlength'=>45)); ?>
+            <?php echo $form->textField($model,'rif', array('class'=>'form-control', 'placeholder'=>'RIF', 'maxlength'=>45)); ?>
 
-            <?php echo $form->error($model,'numero'); ?>            
+            <?php echo $form->error($model,'rif'); ?>            
 
         
         
@@ -49,15 +49,24 @@
         <?php echo $form->error($model,'telefono'); ?>
     </div>
     <div class="form-group">
-
-            <?php echo $form->dropDownList($model, 'ciudad',array(), array('class'=>'form-control','empty'=>"Estado")); ?>
-        <?php echo $form->error($model,'ciudad'); ?>
+			<?php echo $form->dropDownList($model,'provincia', CHtml::listData(Provincia::model()->findAll(),'id', 'nombre'), 
+        array(
+        'class'=>'form-control',
+        'empty'=>'Seleccione Estado',
+        'ajax'=>array(
+            'type'=>'POST',
+            'url'=>CController::createUrl('Empresas/selectdos'),
+            'update'=>'#'.CHtml::activeId($model, 'ciudad'),
+        ),
+         
+        )); ?>
+         <?php echo $form->error($model,'provincia'); ?>
     </div>
     
     
     <div class="form-group">
 
-            <?php echo $form->dropDownList($model, 'ciudad', array(),array('class'=>'form-control','empty'=>"Ciudad de la oficina principal")); ?>
+            <?php echo $form->dropDownList($model,'ciudad', array(), array('class'=>'form-control', 'empty'=>'Ciudad de oficina principal')); ?>
         <?php echo $form->error($model,'ciudad'); ?>
     </div>
     

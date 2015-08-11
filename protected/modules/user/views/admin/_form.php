@@ -17,13 +17,13 @@
 		</div>
 	</div>
 
-	<div class="form-group">
+	<!--<div class="form-group">
 		<div class="col-sm-12">
 			<?php echo $form->labelEx($model,'password'); ?>
 			<?php echo $form->passwordField($model,'password',array('size'=>60,'maxlength'=>128, 'class'=>'form-control')); ?>
 			<?php echo $form->error($model,'password'); ?>
 		</div>
-	</div>
+	</div> -->
 
 	<div class="form-group">
 		<div class="col-sm-12">
@@ -41,13 +41,13 @@
 		</div>
 	</div>
 
-	<div class="form-group">
+	<!--<div class="form-group">
 		<div class="col-sm-12">
 			<?php echo $form->labelEx($model,'type'); ?>
 			<?php echo $form->dropDownList($model,'type',User::itemAlias('UserType'),array('class'=>'form-control')); ?>
 			<?php echo $form->error($model,'type'); ?>
 		</div>
-	</div>
+	</div>-->
 
 	<?php 
 		$profileFields=$profile->getFields();

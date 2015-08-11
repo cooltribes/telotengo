@@ -159,12 +159,19 @@ class AdminController extends Controller
 			$model = User::model()->findByPk($id);
 			$profile = $model->profile;
 		}
-		
+		$first_time=$model->registro_password;	//para que el llenado del password se envie una sola vez
 		
 		$this->performAjaxValidation(array($model,$profile));
 		if(isset($_POST['User']))
 		{
+			
 			$model->attributes=$_POST['User'];
+			if($model->status==1 && $first_time==0)
+			{
+				$model->newPassword($model->id);
+				$model->registro_password=1;
+				
+			}
 			$model->activkey=Yii::app()->controller->module->encrypting(microtime().$model->password);
 			$profile->attributes=$_POST['Profile'];
 			$profile->user_id=0;

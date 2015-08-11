@@ -89,7 +89,7 @@ const SECTOR_EDUCACION = 16;
 	public $prefijo="";
 	public $numero="";
 	
-	public $tipoEmpresa;
+	public $tipoEmpresa, $provincia, $ciudad;
 	
 	/**
 	 * Returns the static model of the specified AR class.
@@ -117,24 +117,24 @@ const SECTOR_EDUCACION = 16;
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('razon_social, rif, direccion, mail, ciudad, forma_legal, sector, cargo, num_empleados', 'required'),
+			array('razon_social, rif, direccion,  ciudad,  sector, cargo,  ciudad, provincia', 'required'),
 			array('estado, destacado, tipo', 'numerical', 'integerOnly'=>true),
 			array('url', 'length', 'max'=>255),
 			array('direccion, mail, web' ,'length', 'max'=>255),
 			array('razon_social', 'length', 'max'=>205),
 			array('ciudad', 'length', 'max'=>150),
 			array('rif', 'length', 'max'=>45),
-			array('rif', 'match',
+			/*array('rif', 'match',
 				'pattern' => '/^[JGVE][-][0-9]{7,10}$/', // ^[JGVE]{1}[-][0-9]{7,10}$ Vieja: ^[JGVE]{1}[-][0-9]\d{8}$
             	'message' => 'Formato no valido para el rif.',
             	'allowEmpty'=>false,
-       	 	), 
+       	 	), */
        	 	array('numero', 'match',
 				'pattern' => '/^[0-9]{7,10}$/',
             	'message' => 'Formato no valido -> introduzca solo números (Mínimo 7, Máximo 10).',
        	 	),
        	 	array('prefijo','compare','compareValue'=>'0','operator'=>'!=','allowEmpty'=>false, 'message'=>'Seleccione una opción'),
-       	 	array('numero','required','message'=>'Introduzca los numeros del RIF.'), 
+       	 	#array('numero','required','message'=>'Introduzca los numeros del RIF.'), 
 			
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
@@ -180,6 +180,8 @@ const SECTOR_EDUCACION = 16;
 			'sector' => 'Sector',
 			'num_empleados' => 'Número de empleados',
 			'cargo' => 'Cargo',
+			'provincia'=>'Estado',
+			'ciudad'=>'Ciudad',
 		);
 	}
 
@@ -212,11 +214,11 @@ const SECTOR_EDUCACION = 16;
 		));
 	}
 
-	public function beforeValidate(){
+	/*public function beforeValidate(){
 		$this->rif = $this->prefijo."-".$this->numero;
 		
 		return parent::beforeValidate();
-  	}
+  	}*/
 
 	public function beforeSafe() {
 		$this->rif = $this->prefijo."-".$this->numero;

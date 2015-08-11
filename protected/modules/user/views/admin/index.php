@@ -94,6 +94,7 @@ $this->breadcrumbs=array(
 	            <th scope="col">ID</th>
 	            <th scope="col">Email</th>
 	            <th scope="col" width="25%">Nombre y Apellido</th>
+	            <th scope="col">Rol</th>
 	            <th scope="col">Tipo de invitación</th>
 	            <th scope="col">¿Quien invitó?</th>
 	            <th scope="col">Estado</th>
