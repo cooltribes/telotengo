@@ -27,7 +27,7 @@ class EmpresasController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users
-				'actions'=>array('index','view','create','solicitudFinalizada'),
+				'actions'=>array('index','view','create','solicitudFinalizada', 'selectdos'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -79,25 +79,37 @@ class EmpresasController extends Controller
 		if(isset($_POST['Empresas'])){
 			$model->attributes=$_POST['Empresas'];
 			$model->telefono=$_POST['Empresas']['telefono'];
+			$model->direccion=$_POST['Empresas']['direccion'];
 			$model->estado = 1; # solicitado 
-			$model->forma_legal = $_POST['Empresas']['forma_legal'];
+			#$model->forma_legal = $_POST['Empresas']['forma_legal'];
 			$model->sector = $_POST['Empresas']['sector'];
 			$model->cargo = $_POST['Empresas']['cargo'];
-			$model->num_empleados = $_POST['Empresas']['num_empleados'];
+			#$model->num_empleados = $_POST['Empresas']['num_empleados'];
 			$rol=$_POST['Empresas']['tipoEmpresa'];
+			$model->rol=$rol;
 			$model->tipo = $user->type; # el mismo tipo de empresa que recibio en la invitación
 			
-			
-			
+
+			//$almacen->save();
 			
 
+
 			if($model->save()){
+				$model->refresh();
+				
 				$empresa_user->empresas_id = $model->id;
 				$empresa_user->users_id = $user->id;
 				$empresa_user->rol = $_POST['Empresas']['cargo'];
 				Yii::app()->authManager->assign($rol,$user->id);
-				$empresa_user->save();
-
+				$empresa_user->save();				
+				$almacen = new Almacen;
+				$almacen->provincia_id=$_POST['Empresas']['provincia'];
+				$almacen->ciudad_id=$_POST['Empresas']['ciudad'];
+				$almacen->ubicacion=$_POST['Empresas']['direccion'];
+				$almacen->empresas_id=$model->id;
+				$almacen->alias=$model->razon_social.' - principal';
+				$almacen->save();
+				
 				$this->redirect(array('solicitudFinalizada'));
 			}
 		}
@@ -579,4 +591,23 @@ class EmpresasController extends Controller
 			Yii::app()->end();
 		}
 	}
+	
+	    public function actionSelectdos()
+        {
+            $id_uno = $_POST['Empresas']['provincia'];
+            $lista = Ciudad::model()->findAll('provincia_id = :id_uno',array(':id_uno'=>$id_uno));
+            $lista = CHtml::listData($lista,'id','nombre');
+		
+             
+            echo CHtml::tag('option', array('value' => ''), 'Seleccione', true);
+             
+            foreach ($lista as $valor => $nombre)
+            {
+                echo CHtml::tag('option',array('value'=>$valor),CHtml::encode($nombre), true );
+                 
+            }
+			echo $id_uno;
+			Yii::app()->end();
+             
+        }
 }

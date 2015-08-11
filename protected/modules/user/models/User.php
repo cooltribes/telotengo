@@ -152,7 +152,7 @@ class User extends CActiveRecord
     {
         return CMap::mergeArray(Yii::app()->getModule('user')->defaultScope,array(
             'alias'=>'user',
-            'select' => 'user.id, user.username, user.email, user.create_at, user.lastvisit_at, user.superuser, user.status, user.type, user.avatar_url, user.facebook_id, user.activkey, user.quien_invita',
+            'select' => 'user.id, user.username, user.email, user.create_at, user.lastvisit_at, user.superuser, user.status, user.type, user.avatar_url, user.facebook_id, user.activkey, user.quien_invita, user.registro_password',
         ));
     }
 	
@@ -317,6 +317,28 @@ class User extends CActiveRecord
         $codigo = implode("", $codigo);
         
         return $codigo;
-    }   
+    }
+	
+	public function newPassword($id)
+	{
+		$user = User::model()->notsafe()->findbyPk($id);
+		echo $user->id;
+		$activation_url = 'http://' . $_SERVER['HTTP_HOST'].Yii::app()->controller->createUrl(implode(Yii::app()->controller->module->recoveryUrl),array("activkey" => $user->activkey, "email" => $user->email));
+							
+		$message = new YiiMailMessage;
+		$message->view = 'mail_template';
+							 
+							//userModel is passed to the view
+		$body=Yii::app()->controller->renderPartial('//mail/mail_chngpsswd_request', array( 'activation_url'=>$activation_url ),true);
+		$message->setSubject('Recuperación de contraseña');
+		$message->setBody(array('body'=>$body,"undercomment"=>"¿No pediste restablecer tu contraseña? Si no pediste cambiar tu contraseña,
+		es probable que otro usuario haya introducido tu nombre de usuario o dirección de correo electrónico por error al intentar restablecer su contraseña.
+		Si ese es el caso, no es necesario tomar ninguna medida y puedes ignorar este mensaje."), 'text/html');
+		$message->addTo($user->email);
+		$message->from = array(Yii::app()->params['adminEmail'] => "Sigma Tiendas");
+		Yii::app()->mail->send($message);
+
+		Yii::app()->user->setFlash('success','Las instrucciones para la recuperación de la contraseña se han enviado a tu correo electrónico');
+	}   
 
 }
