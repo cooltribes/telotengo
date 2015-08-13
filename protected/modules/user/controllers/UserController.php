@@ -679,6 +679,8 @@ class UserController extends Controller
 					}
 
 					$profile->user_id = $model->id;
+					/*if(isset($profile->fecha_nacimiento))
+						$profile->fecha_nacimiento = date("d-m-Y", strtotime($profile->fecha_nacimiento));*/
 					$profile->save();
 					
 					#enviar correo de que se ha inscrito (?) incluyendo su password generado
@@ -766,8 +768,15 @@ class UserController extends Controller
         $id=$_POST['id'];
         $model = User::model()->findByPk($id);
         $model->status=1-$model->status;
+		if($model->registro_password==0)
+		{
+			$model->registro_password=1;
+			$model->newPassword($id);
+		}
+
         $model->save();
         echo $model->status;
+		
         
     }
 

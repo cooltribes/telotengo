@@ -54,8 +54,8 @@ echo "<tr>";
 	{
 		echo "<td> <div id='".$data->id."s"."'> Desactivo </div></td>";
 	}
-	
-	echo "<td>".$data->create_at."</td>";
+	$fecha= date("d-m-Y", strtotime($data->create_at));
+	echo "<td>".$fecha."</td>";
 	if($data->superuser!=1)
 	{	
 	echo '<td>

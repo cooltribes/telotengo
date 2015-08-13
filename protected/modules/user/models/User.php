@@ -43,6 +43,8 @@ class User extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * @return CActiveRecord the static model class
 	 */
+	
+	public $fecha;
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
@@ -211,6 +213,38 @@ class User extends CActiveRecord
         ));
     }
 
+	   public function buscarDesactivo()
+    {
+        // Warning: Please modify the following code to remove attributes that
+        // should not be searched.
+
+        $criteria=new CDbCriteria;
+        
+        $criteria->compare('id',$this->id);
+        $criteria->compare('username',$this->username,true);
+        $criteria->compare('password',$this->password);
+        $criteria->compare('email',$this->email,true);
+        $criteria->compare('activkey',$this->activkey);
+        $criteria->compare('create_at',$this->create_at);
+        $criteria->compare('lastvisit_at',$this->lastvisit_at);
+        $criteria->compare('superuser',$this->superuser);
+        $criteria->compare('status',$this->status);
+        $criteria->compare('type',$this->type);
+        $criteria->compare('newsletter',$this->newsletter);
+		$criteria->compare('facebook_id',$this->facebook_id);
+		$criteria->compare('avatar_url',$this->avatar_url);
+		$criteria->compare('avatar_url',$this->avatar_url);
+		$criteria->compare ('registro_password',0, true);
+		$criteria->compare ('superuser',0, true);
+
+        return new CActiveDataProvider(get_class($this), array(
+            'criteria'=>$criteria,
+        	'pagination'=>array(
+				'pageSize'=>Yii::app()->getModule('user')->user_page_size,
+			),
+        ));
+    }
+
     public function getCreatetime() {
         return strtotime($this->create_at);
     }
@@ -338,7 +372,69 @@ class User extends CActiveRecord
 		$message->from = array(Yii::app()->params['adminEmail'] => "Sigma Tiendas");
 		Yii::app()->mail->send($message);
 
-		Yii::app()->user->setFlash('success','Las instrucciones para la recuperación de la contraseña se han enviado a tu correo electrónico');
-	}   
+		//Yii::app()->user->setFlash('success','Las instrucciones para la recuperación de la contraseña se han enviado a tu correo electrónico');
+	}
+
+  		public function buscarSexo($sexo)
+		{
+			if($sexo==2)
+				return "M";
+			else
+				return "F";	
+		} 
+		
+		public function buscarSector($sector)
+		{
+			switch ($sector) {
+				case 1:
+					echo 'Alimentos';
+					break;
+				case 2:
+					echo 'Mayor';
+					break;
+				case 3:
+					echo 'Menor';
+					break;
+				case 4:
+					echo 'Industrial';
+					break;
+				case 5:
+					echo 'Construccion';
+					break;
+				case 6:
+					echo 'Entretenimiento';
+					break;				
+				case 7:
+					echo 'Hoteleria';
+					break;				
+				case 8:
+					echo 'Informatica';
+					break;				
+				case 9:
+					echo 'Salud';
+					break;				
+				case 10:
+					echo 'Servicio';
+					break;
+				case 11:
+					echo 'Transporte';
+					break;
+				case 12:
+					echo 'Otro';
+					break;
+				case 13:
+					echo 'Agropecuaria';
+					break;
+				case 14:
+					echo 'Banca';
+					break;
+				case 15:
+					echo 'Energia';
+					break;
+				case 16:
+					echo 'Educacion';
+					break;																													
+				}
+		}
 
 }
