@@ -66,10 +66,25 @@
 					echo CHtml::activeTextArea($profile,$field->varname,array('rows'=>6, 'cols'=>50));
 				} else {
 					if($field->varname != "fecha_nacimiento")
+					{
 						echo $form->textField($profile,$field->varname,array('size'=>60,'maxlength'=>(($field->field_size)?$field->field_size:255), 'class'=>'form-control'));
+					}		
 					else
-						echo $form->textField($profile,$field->varname,array('size'=>60,'maxlength'=>(($field->field_size)?$field->field_size:255), 'class'=>'form-control','placeholder'=>'Ejemplo: 01-01-2000'));
-					
+					{
+						$model->fecha = date("d-m-Y", strtotime($model->profile->fecha_nacimiento));	
+						#echo $form->textField($profile,$field->varname,array('value'=>$fecha,'size'=>60,'maxlength'=>(($field->field_size)?$field->field_size:255), 'class'=>'form-control','placeholder'=>'Ejemplo: 01-01-2000'));
+						$this->widget('zii.widgets.jui.CJuiDatePicker',array(
+					        'model' => $model,
+					        'attribute' => 'fecha',
+					        'language' => 'es',
+					        'htmlOptions' => array('class'=>'form-control','placeholder'=>''), 
+					        // additional javascript options for the date picker plugin
+					        'options'=>array(
+					            'showAnim'=>'fold',
+					            'dateFormat'=>'dd-mm-yy',
+					        ),
+					    ));
+					}	
 				}
 				 ?>
 				<?php echo $form->error($profile,$field->varname); ?>

@@ -26,7 +26,7 @@ class AdminController extends Controller
 		return array(
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array('admin','addSaldo','delete','create','update','view','cargarSaldo','reclamos','eliminarReclamo',
-								'eliminarComentario','cargaSaldo','invitarUsuario'),
+								'eliminarComentario','cargaSaldo','invitarUsuario', 'solicitudes'),
 				'users'=>UserModule::getAdmins(),
 			),
 			array('deny',  // deny all users
@@ -155,6 +155,7 @@ class AdminController extends Controller
 	{
 		$model=new User;
 		$profile=new Profile;
+		$fecha='';
 		if($id){
 			$model = User::model()->findByPk($id);
 			$profile = $model->profile;
@@ -166,12 +167,14 @@ class AdminController extends Controller
 		{
 			
 			$model->attributes=$_POST['User'];
-			if($model->status==1 && $first_time==0)
+			/*if($model->status==1 && $first_time==0)
 			{
 				$model->newPassword($model->id);
 				$model->registro_password=1;
 				
-			}
+			}*/
+			
+			$fecha=$_POST['User']['fecha'];
 			$model->activkey=Yii::app()->controller->module->encrypting(microtime().$model->password);
 			$profile->attributes=$_POST['Profile'];
 			$profile->user_id=0;
@@ -179,6 +182,14 @@ class AdminController extends Controller
 				$model->password=Yii::app()->controller->module->encrypting($model->password);
 				if($model->save()) {
 					$profile->user_id=$model->id;
+					if($fecha!='')
+					{
+						$fecha = date("Y-m-d", strtotime($fecha));
+						echo $fecha;
+						$profile->fecha_nacimiento=$fecha;
+						
+					}
+						
 					$profile->save();
 					Yii::app()->user->setFlash('success',"Usuario guardado");
 				}
@@ -380,5 +391,40 @@ class AdminController extends Controller
 
        
     }
+
+	public function actionSolicitudes()
+	{
+		$model = new User();
+		$model->unsetAttributes();  // clear any default values
+        $bandera=false;
+		$dataProvider = $model->buscarDesactivo();
+
+		/* Para mantener la paginacion en las busquedas */
+		if(isset($_GET['ajax']) && isset($_SESSION['searchBox']) && !isset($_POST['query'])){
+			$_POST['query'] = $_SESSION['searchBox'];
+			$bandera=true;
+		}
+
+		/* Para buscar desde el campo de texto */
+		if (isset($_POST['query'])){
+			$bandera=true;
+			unset($_SESSION['searchBox']);
+			$_SESSION['searchBox'] = $_POST['query'];
+            $model->email = $_POST["query"];
+            $dataProvider = $model->search();
+        }	
+
+        if($bandera==FALSE){
+			unset($_SESSION['searchBox']);
+        }
+
+        if(isset($_GET['User']))
+            $model->attributes=$_GET['User'];
+
+        $this->render('solicitudes',array(
+            'model'=>$model,
+            'dataProvider' => $dataProvider,
+        ));
+	}
 	
 }
