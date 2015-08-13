@@ -8,7 +8,7 @@ class SiteController extends Controller
 	 */
 	
 	public function filters()
-	{
+	{ 
 		return array(
 			'accessControl', // perform access control for CRUD operations
 		);
@@ -23,7 +23,7 @@ class SiteController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','error','contact','login','logout','captcha','busqueda','tiendas','info','soporte','garantia','convenios','request','request2',
+				'actions'=>array('index','error','contact','login','logout','captcha','busqueda','inhome','tiendas','info','soporte','garantia','convenios','request','request2',
 								'corporativo','licencias','ofertas','home'), 
 				'users'=>array('*'),
 			),
@@ -314,6 +314,12 @@ class SiteController extends Controller
             $profile = new Profile;
             $profile->regMode = true;
         $this->render('landing',array('model'=>$model,'profile'=>$profile));
+    }
+    
+    public function actionInhome(){
+        $this->layout='//layouts/start';
+
+       $this->render('inhome');
     }
     
     public function actionRequest(){
