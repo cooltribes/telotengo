@@ -31,66 +31,6 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
 
 </head>
-<style>
-    .navbar.b2b{
-        /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,ffffff+27,ffffff+44,ededed+96 */
-background: #ffffff; /* Old browsers */
-background: -moz-linear-gradient(top,  #ffffff 0%, #ffffff 27%, #ffffff 44%, #ededed 96%); /* FF3.6+ */
-background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(27%,#ffffff), color-stop(44%,#ffffff), color-stop(96%,#ededed)); /* Chrome,Safari4+ */
-background: -webkit-linear-gradient(top,  #ffffff 0%,#ffffff 27%,#ffffff 44%,#ededed 96%); /* Chrome10+,Safari5.1+ */
-background: -o-linear-gradient(top,  #ffffff 0%,#ffffff 27%,#ffffff 44%,#ededed 96%); /* Opera 11.10+ */
-background: -ms-linear-gradient(top,  #ffffff 0%,#ffffff 27%,#ffffff 44%,#ededed 96%); /* IE10+ */
-background: linear-gradient(to bottom,  #ffffff 0%,#ffffff 27%,#ffffff 44%,#ededed 96%); /* W3C */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */
-
-    }
-    .navbar.b2b>div{
-  
-    }
-    
-    .no_horizontal_padding{
-        padding-left: 0px !important;
-        padding-right: 0px !important;
-    }
-    .no_horizontal_margin{
-        margin-left: 0px !important;
-        margin-right: 0px !important;
-    }
-    .no_left_padding{
-        padding-left: 0px !important;
-
-    }
-    .no_left_margin{
-        margin-left: 0px !important;
-
-    }
-    .no_right_padding{
-
-        padding-right: 0px !important;
-    }
-    .no_right_margin{
-
-        margin-right: 0px !important;
-    }
-    .separator{
-        height: 1px;
-        margin: 3px 0px;
-        background: rgba(212,212,212,1);
-background: -moz-linear-gradient(left, rgba(212,212,212,1) 0%, rgba(173,173,173,1) 5%, rgba(125,125,125,1) 51%, rgba(150,150,150,1) 95%, rgba(219,219,219,1) 100%);
-background: -webkit-gradient(left top, right top, color-stop(0%, rgba(212,212,212,1)), color-stop(5%, rgba(173,173,173,1)), color-stop(51%, rgba(125,125,125,1)), color-stop(95%, rgba(150,150,150,1)), color-stop(100%, rgba(219,219,219,1)));
-background: -webkit-linear-gradient(left, rgba(212,212,212,1) 0%, rgba(173,173,173,1) 5%, rgba(125,125,125,1) 51%, rgba(150,150,150,1) 95%, rgba(219,219,219,1) 100%);
-background: -o-linear-gradient(left, rgba(212,212,212,1) 0%, rgba(173,173,173,1) 5%, rgba(125,125,125,1) 51%, rgba(150,150,150,1) 95%, rgba(219,219,219,1) 100%);
-background: -ms-linear-gradient(left, rgba(212,212,212,1) 0%, rgba(173,173,173,1) 5%, rgba(125,125,125,1) 51%, rgba(150,150,150,1) 95%, rgba(219,219,219,1) 100%);
-background: linear-gradient(to right, rgba(212,212,212,1) 0%, rgba(173,173,173,1) 5%, rgba(125,125,125,1) 51%, rgba(150,150,150,1) 95%, rgba(219,219,219,1) 100%);
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d4d4d4', endColorstr='#dbdbdb', GradientType=1 );
-    }
-    
-</style>
-
-
-
-
-
 
 <div class="navbar row-fluid b2b clearfix">
     <div class="col-md-8 col-md-offset-2">
@@ -98,60 +38,131 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d4d4d4', end
                     <div class="col-md-2">
                         <div style="width:100%; height:30px; background:#000"></div>
                     </div>
-                    <div class="col-md-5"><div style="width:100%; height:30px; background:#000"></div></div>
-                    <div class="col-md-5"><div style="width:100%; height:30px; background:#000"></div></div> 
+                    <div class="col-md-5 no_left_padding"><div style="width:100%; height:30px; background:#000"></div></div>
+                    <div class="col-md-5 no_left_padding">
+                        <div class="text-right clientService">
+                            SERVICIO AL CLIENTE: (0800) 568.36.46 | SERVICIO@TELOTENGO.COM
+                        </div>
+                    </div> 
                     <div class="col-md-2" style="margin-top: 7px">
                         <div class="dropdown">
-                                  <button class="btn btn-default form-control text-left dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                    Dropdown
-                                    <span class="caret"></span>
-                                  </button>
-                                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                    <li><a href="#">Action</a></li>
+                                  <a class="form-control text-left dropdown-toggle no_horizontal_padding no_border" id="categoryMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    Categorias<span class="caret"></span> <span class="searchby">Buscar por:</span>                                 
+                                  </a>
+                                  <ul class="dropdown-menu arrow_box" aria-labelledby="dropdownMenu1" id="categories">
+                                    <li><a href="#">Action<span class="arrow">›</span></a></li>
                                     <li><a href="#">Another action</a></li>
+                                    <li class="separator"></li>
                                     <li><a href="#">Something else here</a></li>
                                     <li><a href="#">Separated link</a></li>
                                   </ul>
                                 </div>
                     </div>
                     <div class="col-md-10">
-                        <div class="separator"></div>
+                        <div class="separator no_horizontal_padding"></div>
                     </div>
                     
-                    <div class="col-md-6">
-                        <div class="row-fluid">
+                    <div class="col-md-6 no_horizontal_padding">
+                        <div class="row-fluid searchBar">
                             <div class="col-md-3 no_horizontal_padding">
                                 <div class="dropdown">
-                                  <button class="btn btn-default form-control dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                    Dropdown
+                                  <button class="btn btn-default form-control no_radius dropdown-toggle orange_border_left" type="button" id="categorySearch" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    Todas las categorías
                                     <span class="caret"></span>
                                   </button>
+                                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                    <li><a href="#">Action in <span class="highlighted">Your life</span></a></li>
+                                    <li><a href="#">Another action in <span class="highlighted">Another's life</span></a></li>
+                                    <li class="separator"></li>
+                                    <li><a href="#">Something else here</a></li>
+                                    <li><a href="#">Separated link</a></li>
+                                  </ul> 
+                                </div> 
+                            </div>
+                            <div class="col-md-7 no_horizontal_padding">
+                                <input class="form-control no_radius orange_border_middle" placeholder:"incluye palabras clave..."/>
+                            </div>
+                            <div class="col-md-2 no_horizontal_padding">
+                                <?php echo CHtml::submitButton('Buscar', array('class'=>'btn-orange btn btn-danger btn-large orange_border')); ?>
+                            </div>
+                        </div>
+                    </div> 
+                    <div class="col-md-4 no_horizontal_margin no_left_padding">
+                        <div class="row-fluid" id="userMenu">
+                            <div class="col-md-4 no_right_padding">
+                                <div class="dropdown">
+                                  <a class="form-control text-left dropdown-toggle no_padding no_border" id="orderButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    <div class="row-fluid">
+                                        <div class="col-md-3 no_horizontal_padding icon">
+                                             <span class="glyphicon glyphicon-inbox"></span>
+                                             <span class="counter">88</span>
+                                        </div>
+                                        <div class="col-md-9 no_horizontal_padding title">
+                                             <span class="text">Ordenes</span>
+                                       
+                                            <span class="caret no_margin_left"></span>
+                                        </div>
+                                    </div>                                
+                                  </a>
                                   <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                                     <li><a href="#">Action</a></li>
                                     <li><a href="#">Another action</a></li>
                                     <li><a href="#">Something else here</a></li>
+                                    <li class="separator"></li>
                                     <li><a href="#">Separated link</a></li>
                                   </ul>
                                 </div>
                             </div>
-                            <div class="col-md-7 no_horizontal_padding">
-                                <input class="form-control"/>
-                            </div>
-                            <div class="col-md-2 no_horizontal_padding">
-                                <?php echo CHtml::submitButton('Buscar', array('class'=>'btn-orange btn btn-danger btn-large')); ?>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 no_horizontal_margin no_left_padding">
-                        <div class="row-fluid">
                             <div class="col-md-4 no_right_padding">
-                                <div style="width:100%; height:30px; background:#000"></div>
+                                <div class="dropdown">
+                                  <a class="form-control text-left dropdown-toggle no_padding no_border" id="cartButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    <div class="row-fluid">
+                                        <div class="col-md-3 no_horizontal_padding icon">
+                                             <span class="glyphicon glyphicon-shopping-cart"></span>
+                                             <span class="counter">88</span>
+                                        </div>
+                                        <div class="col-md-9 no_horizontal_padding title">
+                                             <span class="text">Carrito</span>
+                                        
+                                            <span class="caret no_margin_left"></span>
+                                        </div>
+                                    </div>                                
+                                  </a>
+                                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                    <li><a href="#">Action</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+                                    <li class="separator"></li>
+                                    <li><a href="#">Separated link</a></li>
+                                  </ul>
+                                </div>
                             </div>
                             <div class="col-md-4 no_right_padding">
-                                <div style="width:100%; height:30px; background:#000"></div>
-                            </div>
-                            <div class="col-md-4 no_right_padding">
-                                <div style="width:100%; height:30px; background:#000"></div>
+                                <div class="dropdown">
+                                  <a class="form-control text-left dropdown-toggle no_padding no_border" id="userButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    <div class="row-fluid">
+                                        <div class="col-md-4 no_horizontal_padding image">
+                                            <div class="imgContainer">
+                                                <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/logo.png" width="100%"/>
+                                            </div>
+                                             
+                                        </div>
+                                        <div class="col-md-7 no_horizontal_padding title">
+                                             <span class="text">John Doe</span>
+                                        </div>
+                                        <div class="col-md-1 arrow no_horizontal_padding ">
+                                            <span class="caret"></span>
+                                        </div>
+                                    </div>                                
+                                  </a>
+                                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                    <li><a href="#">Action</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+                                    <li class="separator"></li>
+                                    <li><a href="#">Separated link</a></li>
+                                  </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -159,3 +170,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d4d4d4', end
                 </div> 
         </div>
 </div>
+
+
+<span class="glyphicon glyphicon-menu-right"></span>
+
+
