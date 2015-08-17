@@ -197,6 +197,11 @@ class ProductoController extends Controller
 	
 				$model->padre_id=$modelado->id;
 			}
+			$nombreCategoria=$model->padre->idCategoria->nomenclatura;
+			$cate=Categoria::model()->findByPk($model->padre->idCategoria->id_padre);
+			$nombreCategoria=$model->padre->idCategoria->nomenclatura; 
+			$model->tlt_codigo=$model->buscarPadre($cate->id).$cate->nomenclatura.$nombreCategoria.'-'.$model->id;
+
 			$model->attributes=$_POST['Producto'];
             $model->setSeo();
 			$model->fabricante=$_POST['Producto']['fabricante'];
@@ -206,6 +211,7 @@ class ProductoController extends Controller
 			$model->gtin=$_POST['Producto']['gtin'];
 			$model->isbn=$_POST['Producto']['isbn'];
 			$model->color=$_POST['Producto']['color'];
+			
 			if($model->save())
 			{
 					 $this->redirect(Yii::app()->baseUrl.'/producto/imagenes/'.$model->id);     

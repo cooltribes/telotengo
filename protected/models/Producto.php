@@ -429,6 +429,25 @@ class Producto extends CActiveRecord
 			return "";	
 		} 
 	}
+	
+	public function buscarPadre($id)
+	{
+		$cate=Categoria::model()->findByPk($id);
+		
+		$val="";
+		//echo $cate->id_padre;
+		/*echo $cate->nomenclatura;
+		Yii::app()->end();*/
+		if($cate->id_padre==0)
+		{
+			$val= $cate->nomenclatura;
+		}
+		else
+		{
+			 $val=$this->buscarPadre($cate->id_padre);
+		}
+		return $val;
+	}
     
 	
 }

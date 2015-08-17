@@ -44,13 +44,14 @@ class Categoria extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('nombre, id_padre', 'required'),
+			array('nombre, id_padre, nomenclatura', 'required'),
 			array('nombre', 'length', 'max'=>80),
+			array('nomenclatura', 'unique', 'message' =>'la nomenclatura esta siendo utilizada'),
 			array('url_amigable', 'length', 'max'=>150),
 			array('imagen_url', 'length', 'max'=>250),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, nombre, url_amigable, id_padre, imagen_url, destacado, descripcion, id_seo', 'safe', 'on'=>'search'),
+			array('id, nombre, url_amigable, id_padre, imagen_url, destacado, descripcion, id_seo, nomenclatura', 'safe', 'on'=>'search'),
 		);
 	}
 
