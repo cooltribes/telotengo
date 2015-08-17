@@ -770,8 +770,9 @@ class UserController extends Controller
         $model->status=1-$model->status;
 		if($model->registro_password==0)
 		{
+			echo $rol=$model->buscarRol($id);
 			$model->registro_password=1;
-			$model->newPassword($id);
+			$model->newPassword($id, $rol);
 		}
 
         $model->save();
