@@ -43,7 +43,7 @@ class ProductoController extends Controller
 			array('allow', // SOLO VENDEDORES
 				'actions'=>array('inventario'),
 				#'users'=>array('admin'),
-				'roles'=>array('vendedor', 'seleccion'),
+				'roles'=>array('vendedor', 'compraVenta'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
@@ -509,7 +509,7 @@ class ProductoController extends Controller
 					'inventario' => array(
 						'id' => $inventario->id,
 						'precio' => $inventario->precio,
-						'precio_tienda' => $inventario->precio_tienda,
+						'costo' => $inventario->costo,
 						'cantidad' => $inventario->cantidad,
 					),
 					'caracteristicas' => $otras_caracteristicas,
@@ -541,7 +541,7 @@ class ProductoController extends Controller
 					'inventario' => array(
 						'id' => $inventario->id,
 						'precio' => $inventario->precio,
-						'precio_tienda' => $inventario->precio_tienda,
+						'costo' => $inventario->costo,
 						'cantidad' => $inventario->cantidad,
 					),
 					'caracteristicas' => $otras_caracteristicas,
@@ -592,7 +592,7 @@ class ProductoController extends Controller
 				'inventario' => array(
 					'id' => $inventario->id,
 					'precio' => $inventario->precio,
-					'precio_tienda' => $inventario->precio_tienda,
+					'costo' => $inventario->costo,
 				),
 				'caracteristicas' => $otras_caracteristicas,
 				'not_found' => $not_found
@@ -613,7 +613,7 @@ class ProductoController extends Controller
 						'inventario' => array(
 							'id' => $inventario->id,
 							'precio' => $inventario->precio,
-							'precio_tienda' => $inventario->precio_tienda,
+							'costo' => $inventario->costo,
 						),
 						'caracteristicas' => $otras_caracteristicas
 					);
@@ -1183,24 +1183,36 @@ class ProductoController extends Controller
 			$id="";
 			$producto = new Producto;
 		}
-		
+		$empresas_id = EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id))->empresas_id;
 		if(isset($_POST['Inventario'])){
 			$inventario->attributes = $_POST['Inventario'];
 			$inventario->sku = $_POST['Inventario']['sku'];
+			$inventario->numFabricante = $_POST['Inventario']['numFabricante'];
+			$inventario->condicion = $_POST['Inventario']['condicion'];
+			$inventario->notaCondicion = $_POST['Inventario']['notaCondicion'];
+			
+			if($inventario->condicion=="nuevo")
+				$inventario->notaCondicion = "";
+			
+			$inventario->costo = $_POST['Inventario']['costo'];
+			$inventario->cantidad = $_POST['Inventario']['cantidad'];
+			$inventario->garantia = $_POST['Inventario']['garantia'];
+			$inventario->metodoEnvio = $_POST['Inventario']['metodoEnvio'];
+			
 			$inventario->producto_id = $_POST['Inventario']['producto_id'];
 			$inventario->almacen_id = $_POST['Inventario']['almacen_id'];
-			$inventario->precio_tienda = $_POST['Inventario']['precio_tienda'];
 			
-			$producto->saveAttributes(array('estado'=>1));
+			
+			//$producto->saveAttributes(array('estado'=>1));
 
-			$inventario->save();	
-			
-			Yii::app()->user->setFlash('success',"Inventario guardado exitosamente. El producto está ahora activo.");
+			if($inventario->save())	
+				Yii::app()->user->setFlash('success',"Inventario guardado exitosamente. El producto está ahora activo.");
 		}
 		
 		$this->render('inventario',array(
 			'producto'=>$producto,
 			'model'=>$inventario,
+			'empresas_id'=>$empresas_id,
 		));
 	}
 	
