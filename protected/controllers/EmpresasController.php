@@ -67,7 +67,7 @@ class EmpresasController extends Controller
 		$rol='';
 
 		if(isset(Yii::app()->session["usuarionuevo"])){
-			$user = User::model()->findByAttributes(array('email'=>Yii::app()->session["usuarionuevo"]));
+			//$user = User::model()->findByAttributes(array('email'=>Yii::app()->session["usuarionuevo"]));
 		}
 		elseif(isset(Yii::app()->session["invitadocliente"])){
 			$user = User::model()->findByPk(Yii::app()->session["invitadocliente"]);
@@ -77,6 +77,42 @@ class EmpresasController extends Controller
 		// $this->performAjaxValidation($model);
 		$model->tipoEmpresa="vendedor";
 		if(isset($_POST['Empresas'])){
+
+			
+			if(isset(Yii::app()->session['usuarionuevo'])) //evitar el bug de dejar el registro a medias
+			{
+				$modelado = new RegistrationForm;
+        		$profile = new Profile;
+				$profile->regMode = true;
+				$profile->attributes=Yii::app()->session['atributos'];
+				
+				$soucePassword = User::generarPassword();
+				$modelado->email = Yii::app()->session['usuarionuevo'];
+				$modelado->status=0;
+				$modelado->username = Yii::app()->session['usuarionuevo']; #Mismo Mail
+				$modelado->activkey = UserModule::encrypting(microtime().$soucePassword);
+				$modelado->password = UserModule::encrypting($soucePassword);
+				$modelado->verifyPassword = UserModule::encrypting($modelado->verifyPassword);
+				$modelado->quien_invita = 0; #el mismo, se modifica cuando tenga ID luego del save
+				$modelado->type = User::TYPE_USUARIO_SOLICITA;
+				$profile->user_id=0;
+				
+
+				if($modelado->validate()&&$profile->validate())
+				{
+					if($modelado->save()){
+						if(isset(Yii::app()->session['usuarionuevo'])){
+							$modelado->quien_invita = $modelado->id;
+							$modelado->save();
+						}
+	
+						$profile->user_id = $modelado->id;
+						$profile->save();	
+					}
+				}
+			}
+
+			
 			$model->attributes=$_POST['Empresas'];
 			$model->telefono=$_POST['Empresas']['telefono'];
 			$model->direccion=$_POST['Empresas']['direccion'];
@@ -87,7 +123,15 @@ class EmpresasController extends Controller
 			#$model->num_empleados = $_POST['Empresas']['num_empleados'];
 			$rol=$_POST['Empresas']['tipoEmpresa'];
 			$model->rol=$rol;
-			$model->tipo = $user->type; # el mismo tipo de empresa que recibio en la invitación
+			if(isset(Yii::app()->session['usuarionuevo'])) //evitar el bug de dejar el registro a medias
+			{
+				$model->tipo=User::TYPE_USUARIO_SOLICITA;	
+			}	
+			else
+			{
+				$model->tipo = $user->type; # el mismo tipo de empresa que recibio en la invitación	
+			}
+
 			
 
 			//$almacen->save();
@@ -96,6 +140,8 @@ class EmpresasController extends Controller
 
 			if($model->save()){
 				$model->refresh();
+				if(isset(Yii::app()->session['usuarionuevo']))
+					$user = User::model()->findByAttributes(array('email'=>Yii::app()->session["usuarionuevo"]));
 				
 				$empresa_user->empresas_id = $model->id;
 				$empresa_user->users_id = $user->id;
@@ -116,8 +162,8 @@ class EmpresasController extends Controller
 		
 		$this->render('create',array(
 			'model'=>$model,
-			'user' => $user,
-			'profile' => $user->profile,
+			//'user' => $user,
+			//'profile' => $user->profile,
 		));
 	}
 
