@@ -30,6 +30,11 @@
 	</div>
 	
 	<div class="col-md-6 col-md-offset-3 margin_top_small">
+		<?php echo $form->textFieldRow($model,'nomenclatura',array('class'=>'form-control','maxlength'=>80, 'id'=>'nomenclatura')); ?>
+
+	</div>
+	
+	<div class="col-md-6 col-md-offset-3 margin_top_small">
 		<label>Categoría Padre</label>  
 	<?php
 
@@ -129,6 +134,7 @@
 		var nombre=$("#nombre").val();
 		var padre=$("#padre").val();
 		var oculta=$("#oculta").val();
+		var nomenclatura=$("#nomenclatura").val();
 		var ultimo;
 		
 		 if($('#ultimo1').is(':checked')) 
@@ -137,13 +143,13 @@
 		 	ultimo=$("#ultimo2").val();
 		
 		
-		if(nombre!=""&&!($('#imagen').val()==''&&$('#prevousimg').val()=="0"))
+		if(nomenclatura!="" && nombre!=""&&!($('#imagen').val()==''&&$('#prevousimg').val()=="0"))
 		{
 			$.ajax({ 
 	         url: "<?php echo Yii::app()->createUrl('Categoria/crearAvanzar') ?>",
              type: 'POST',
 	         data:{
-                    nombre:nombre, padre:padre, ultimo:ultimo, oculta:oculta
+                    nombre:nombre, padre:padre, ultimo:ultimo, oculta:oculta, nomenclatura:nomenclatura
                    },
 	        success: function (data) {
 	        	

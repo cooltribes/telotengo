@@ -123,6 +123,7 @@ class CategoriaController extends Controller
 		
 		$categoria->nombre=$_POST['nombre'];
 		$categoria->ultimo=$_POST['ultimo'];
+		$categoria->nomenclatura=$_POST['nomenclatura'];
 		
 		//$this->redirect(array('admin'));
 		
@@ -161,6 +162,7 @@ class CategoriaController extends Controller
 		if(isset($_POST['Categoria'])){   ///falta la imagen
 
 			$categoria->attributes = $_POST['Categoria'];
+			$categoria->nomenclatura = $_POST['Categoria']['nomenclatura'];
             $categoria->setSeo();
 
 

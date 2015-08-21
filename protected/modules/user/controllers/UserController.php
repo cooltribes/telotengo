@@ -646,11 +646,12 @@ class UserController extends Controller
 
 		if(isset($_POST['Profile'])){
 			$profile->attributes=((isset($_POST['Profile'])?$_POST['Profile']:array()));
-
+			Yii::app()->session['atributos']=((isset($_POST['Profile'])?$_POST['Profile']:array()));
 			$soucePassword = User::generarPassword();
 			
-			if(isset(Yii::app()->session['usuarionuevo'])){
-				$model->email = Yii::app()->session['usuarionuevo'];
+			if(isset(Yii::app()->session['usuarionuevo'])){ // evitar el bug de dejar el registro incompleto
+				
+				/*$model->email = Yii::app()->session['usuarionuevo'];
 				$model->status = 0; # se debe crear desactivo
 				$model->username = Yii::app()->session['usuarionuevo']; #Mismo Mail
 				$model->activkey = UserModule::encrypting(microtime().$soucePassword);
@@ -658,7 +659,9 @@ class UserController extends Controller
 				$model->verifyPassword = UserModule::encrypting($model->verifyPassword);
 				$model->quien_invita = 0; #el mismo, se modifica cuando tenga ID luego del save
 				$model->type = User::TYPE_USUARIO_SOLICITA;
-				$profile->user_id=0;
+				$profile->user_id=0;*/
+				$this->redirect(array('/empresas/create'));
+				
 			}elseif(isset(Yii::app()->session['invitadocliente'])){
 				$model = User::model()->findByPk(Yii::app()->session['invitadocliente']);
 				$profile = $model->profile;
@@ -770,8 +773,9 @@ class UserController extends Controller
         $model->status=1-$model->status;
 		if($model->registro_password==0)
 		{
+			echo $rol=$model->buscarRol($id);
 			$model->registro_password=1;
-			$model->newPassword($id);
+			$model->newPassword($id, $rol);
 		}
 
         $model->save();

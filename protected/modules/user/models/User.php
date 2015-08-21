@@ -353,21 +353,25 @@ class User extends CActiveRecord
         return $codigo;
     }
 	
-	public function newPassword($id)
+	public function newPassword($id, $rol)
 	{
 		$user = User::model()->notsafe()->findbyPk($id);
 		echo $user->id;
-		$activation_url = 'http://' . $_SERVER['HTTP_HOST'].Yii::app()->controller->createUrl(implode(Yii::app()->controller->module->recoveryUrl),array("activkey" => $user->activkey, "email" => $user->email));
+		$activation_url = 'http://' . $_SERVER['HTTP_HOST'].Yii::app()->controller->createUrl(implode(Yii::app()->controller->module->recoveryUrl),array("activkey" => $user->activkey, "email" => $user->email, 
+		'solicitud'=>'nueva'));
 							
 		$message = new YiiMailMessage;
 		$message->view = 'mail_template';
+		Yii::app()->session['email']=$user->email;
 							 
 							//userModel is passed to the view
-		$body=Yii::app()->controller->renderPartial('//mail/mail_chngpsswd_request', array( 'activation_url'=>$activation_url ),true);
-		$message->setSubject('Recuperación de contraseña');
-		$message->setBody(array('body'=>$body,"undercomment"=>"¿No pediste restablecer tu contraseña? Si no pediste cambiar tu contraseña,
-		es probable que otro usuario haya introducido tu nombre de usuario o dirección de correo electrónico por error al intentar restablecer su contraseña.
-		Si ese es el caso, no es necesario tomar ninguna medida y puedes ignorar este mensaje."), 'text/html');
+							
+		$body=Yii::app()->controller->renderPartial($this->setMsg($rol), array( 'activation_url'=>$activation_url ),true);
+		
+		$message->setSubject($this->setSubject($rol));
+		$message->setBody(array('body'=>$body,"undercomment"=>"¿Pediste registrarte en telotengo? Si no es así, es probable que otro usuario haya utilizado tu dirección de correo electrónico por error al registrarse pero no te preocupes no es necesario que tomes alguna medida, puedes ignorar este mensaje"), 'text/html');
+		
+		
 		$message->addTo($user->email);
 		$message->from = array(Yii::app()->params['adminEmail'] => "Sigma Tiendas");
 		Yii::app()->mail->send($message);
@@ -435,6 +439,38 @@ class User extends CActiveRecord
 					echo 'Educacion';
 					break;																													
 				}
+		}
+		
+		public function buscarRol($id)
+		{
+			if(Yii::app()->authManager->checkAccess("vendedor", $id))
+				return "vendedor";
+			if(Yii::app()->authManager->checkAccess("comprador", $id))
+				return "comprador";
+			if(Yii::app()->authManager->checkAccess("compraVenta", $id))
+				return "compraVenta";
+		}
+		
+		public function setSubject($rol)
+		{
+			if($rol=="vendedor")
+				return "APROBADO COMO VENDEDOR";
+			if($rol=="comprador")
+				return "APROBADO COMO COMPRADOR";
+			if($rol=="compraVenta")
+				return "APROBADO COMO COMPRADOR Y VENDEDOR";
+
+		}
+		
+		public function setMsg($rol)
+		{
+			if($rol=="vendedor")
+				return "//mail/registroVendedor";
+			if($rol=="comprador")
+				return "//mail/registroComprador";
+			if($rol=="compraVenta")
+				return "//mail/registroAmbos";
+
 		}
 
 }

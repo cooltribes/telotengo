@@ -6,7 +6,7 @@
  * The followings are the available columns in table 'tbl_inventario':
  * @property integer $id
  * @property double $precio
- * @property double $precio_tienda
+ * @property double $costo
  * @property integer $cantidad
  * @property integer $almacen_id
  * @property integer $producto_id
@@ -26,7 +26,13 @@ ESTADOS:
 2 - Agotado (ya se vendieron todas las unidades)
 3 - Eliminado (eliminado por un administrador o la empresa)
 
+ 
+ METODO DE ENVIO:
+ 1-Acordado con el cliente
+ 2-A traves del servicio de TELOTENGO
 */
+
+
 
 class Inventario extends CActiveRecord 
 {
@@ -56,12 +62,12 @@ class Inventario extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('precio, precio_tienda, cantidad, almacen_id, producto_id, estado', 'required'),
+			array('precio,  cantidad, almacen_id, producto_id, estado, condicion,  almacen_id', 'required'),
 			array('cantidad, almacen_id, producto_id, estado', 'numerical', 'integerOnly'=>true),
-			array('precio, precio_tienda', 'numerical'),
+			array('precio, costo', 'numerical'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, precio, precio_tienda, cantidad, almacen_id, producto_id, estado, sku', 'safe', 'on'=>'search'),
+			array('id, precio, costo, cantidad, almacen_id, producto_id, estado, sku', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -94,8 +100,9 @@ class Inventario extends CActiveRecord
 			'almacen_id' => 'Almacen',
 			'producto_id' => 'Producto',
 			'estado' => 'Estado',
-			'precio_tienda' => 'Precio en tienda',
+			'costo' => 'Costo',
 			'sku' => 'SKU',
+			'numFabricante' => 'Numero de parte del fabricante',
 		);
 	}
 
@@ -112,7 +119,7 @@ class Inventario extends CActiveRecord
 
 		$criteria->compare('id',$this->id);
 		$criteria->compare('precio',$this->precio);
-		$criteria->compare('precio_tienda',$this->precio_tienda);
+		$criteria->compare('costo',$this->costo);
 		$criteria->compare('cantidad',$this->cantidad);
 		$criteria->compare('almacen_id',$this->almacen_id);
 		$criteria->compare('producto_id',$this->producto_id);

@@ -1,11 +1,18 @@
 <div class="container">
 	<?php $this->pageTitle=Yii::app()->name . ' - '.UserModule::t("Change Password");
+	
+	if($_GET['solicitud']=="nueva")
+		$mensaje="Crea tu Contraseña";
+	else
+		$mensaje="Cambiar contraseña";
+	
 	$this->breadcrumbs=array(
 		'Iniciar sesión' => array('/user/login'),
-		'Cambiar contraseña',
+		$mensaje
 	);
 	?>
-    <h1><?php echo 'Cambiar contraseña'; ?></h1>
+	
+    <h1><?php echo $mensaje; ?></h1>
     <hr class="no_margin_top"/>
 <div class="row-fluid">
 
