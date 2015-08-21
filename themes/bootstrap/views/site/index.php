@@ -228,12 +228,17 @@ $('.carousel').carousel('cycle');
                             echo "</div><div class='item row-fluid'>";
 
                         $count++; 
-                     } 
+                     }  
                 ?>
 
                   </div>
                </div>
                <!-- Carousel nav -->
+               
+                <a class="carousel-control left" href="#myCarousel2" 
+                  data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+               <a class="carousel-control right" href="#myCarousel2" 
+                  data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
             </div> 
             </section>
         </div>
