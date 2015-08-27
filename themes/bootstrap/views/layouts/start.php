@@ -32,7 +32,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
 
 </head>
 
-<div class="navbar row-fluid b2b clearfix">
+<div class="navbar row-fluid b2b clearfix no_margin_bottom" >
     <div class="col-md-8 col-md-offset-2">
                 <div class="row-fluid">
                     <div class="col-md-2">
@@ -44,10 +44,10 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                             SERVICIO AL CLIENTE: (0800) 568.36.46 | SERVICIO@TELOTENGO.COM
                         </div>
                     </div> 
-                    <div class="col-md-2" style="margin-top: 7px">
+                    <div class="col-md-2" style="margin-top: 10px">
                         <div class="dropdown">
                                   <a class="form-control text-left dropdown-toggle no_horizontal_padding no_border" id="categoryMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                    Categorias<span class="caret"></span> <span class="searchby">Buscar por:</span>                                 
+                                    <span class="mainText">Categorías</span><span class="caret"></span> <span class="searchby">Buscar por:</span>                                 
                                   </a>
                                   <ul class="dropdown-menu arrow_box" aria-labelledby="dropdownMenu1" id="categories">
                                     <li><a href="#">Action<span class="arrow">›</span></a></li>
@@ -58,7 +58,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                                   </ul>
                                 </div>
                     </div>
-                    <div class="col-md-10">
+                    <div class="col-md-10 no_padding_left">
                         <div class="separator no_horizontal_padding"></div>
                     </div>
                     
@@ -113,15 +113,15 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                                   </ul>
                                 </div>
                             </div>
-                            <div class="col-md-4 no_right_padding">
+                            <div class="col-md-3 no_horizontal_padding">
                                 <div class="dropdown">
                                   <a class="form-control text-left dropdown-toggle no_padding no_border" id="cartButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                     <div class="row-fluid">
-                                        <div class="col-md-3 no_horizontal_padding icon">
+                                        <div class="col-md-4 no_horizontal_padding icon">
                                              <span class="glyphicon glyphicon-shopping-cart"></span>
                                              <span class="counter">88</span>
                                         </div>
-                                        <div class="col-md-9 no_horizontal_padding title">
+                                        <div class="col-md-8 no_horizontal_padding title">
                                              <span class="text">Carrito</span>
                                         
                                             <span class="caret no_margin_left"></span>
@@ -137,22 +137,21 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                                   </ul>
                                 </div>
                             </div>
-                            <div class="col-md-4 no_right_padding">
+                            <div class="col-md-5 no_horizontal_padding">
                                 <div class="dropdown">
                                   <a class="form-control text-left dropdown-toggle no_padding no_border" id="userButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                     <div class="row-fluid">
-                                        <div class="col-md-4 no_horizontal_padding image">
+                                        <div class="col-md-3 no_horizontal_padding image">
                                             <div class="imgContainer">
                                                 <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/logo.png" width="100%"/>
                                             </div>
                                              
                                         </div>
-                                        <div class="col-md-7 no_horizontal_padding title">
-                                             <span class="text">John Doe</span>
+                                        <div class="col-md-9 no_horizontal_padding title">
+                                             <div class="text user">John Doe</div>
+                                             <span class="caret user"></span>
                                         </div>
-                                        <div class="col-md-1 arrow no_horizontal_padding ">
-                                            <span class="caret"></span>
-                                        </div>
+                                        
                                     </div>                                
                                   </a>
                                   <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
@@ -170,8 +169,14 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                 </div> 
         </div>
 </div>
-
-
-<span class="glyphicon glyphicon-menu-right"></span>
+<?php echo $content; ?>
+<div class="clear"></div> 
+  <div class="footer padding_bottom_small">
+      <div class="container">
+          <div class="row-fluid">
+              
+          </div>
+      </div>
+  </div>
 
 
