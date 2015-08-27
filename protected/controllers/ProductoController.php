@@ -1600,7 +1600,17 @@ class ProductoController extends Controller
 	{
 		$data=array();
 		$connection = new MongoClass();
-		$document = $connection->getCollection('ejemplo');	
+		if(Funciones::isDev())
+		{
+			$document = $connection->getCollection('ejemplo');	//DEVELOP
+		}	
+		else
+		{
+
+			$document = $connection->getCollection('stage');	//STAGE
+		} 
+			
+
 		
 		if(count($_POST)>0)
 		{
