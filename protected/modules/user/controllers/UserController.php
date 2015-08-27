@@ -25,7 +25,7 @@ class UserController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','datos','respuesta', 'setPassword'),
+				'actions'=>array('index','view','datos','respuesta', 'setPassword', 'borrar'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -632,6 +632,13 @@ class UserController extends Controller
 	Función para tomar los datos personales de una solicitud
 	*/
 	public function actionDatos(){
+		 $get="";
+		 $clienteEmpresa="";	
+		 if(isset($_GET['id']))
+		 {
+		 	$get=$_GET['id'];
+		 }
+
 	    $this->layout='//layouts/b2b';
 		$model = new RegistrationForm;
         $profile = new Profile;
@@ -649,7 +656,7 @@ class UserController extends Controller
 			Yii::app()->session['atributos']=((isset($_POST['Profile'])?$_POST['Profile']:array()));
 			$soucePassword = User::generarPassword();
 			
-			if(isset(Yii::app()->session['usuarionuevo'])){ // evitar el bug de dejar el registro incompleto
+			if($get==""){ // evitar el bug de dejar el registro incompleto y si es vacio es registro para empresas 
 				
 				/*$model->email = Yii::app()->session['usuarionuevo'];
 				$model->status = 0; # se debe crear desactivo
@@ -660,18 +667,40 @@ class UserController extends Controller
 				$model->quien_invita = 0; #el mismo, se modifica cuando tenga ID luego del save
 				$model->type = User::TYPE_USUARIO_SOLICITA;
 				$profile->user_id=0;*/
+				
+				Yii::app()->session['vacio']=1;
 				$this->redirect(array('/empresas/create'));
 				
-			}elseif(isset(Yii::app()->session['invitadocliente'])){
-				$model = User::model()->findByPk(Yii::app()->session['invitadocliente']);
+			}elseif($_GET['tipo']=="empresa"){ // invitado como empresa, falta hacer la validacion
+				$model = User::model()->findByPk($get);
 				$profile = $model->profile;
 				$profile->attributes=((isset($_POST['Profile'])?$_POST['Profile']:array()));
 				$profile->user_id =$model->id;
-			}elseif(isset(Yii::app()->session['invitadoempresa'])){ #como empresa
-				$model = User::model()->findByPk(Yii::app()->session['invitadoempresa']);
+				
+				$activation_url = Yii::app()->controller->createUrl(implode(Yii::app()->controller->module->recoveryUrl),array(
+				"activkey" => $_GET['activkey'], "email" => $_GET['email'], 
+				'solicitud'=>'nueva')); 
+				 $clienteEmpresa=1;
+				//$this->redirect(array('../'.$activation_url));
+				
+			}elseif($_GET['tipo']=="cliente"){ //invitado como cliente falta hacer la validacion
+				/*$model = User::model()->findByPk($get);
 				$profile = $model->profile;
 				$profile->attributes=((isset($_POST['Profile'])?$_POST['Profile']:array()));
-				$profile->user_id = $model->id;
+				$profile->user_id = $model->id;*/
+				 Yii::app()->session['cliente']=$get;
+				 Yii::app()->session['activation_url']=$_GET['activkey'];
+				 Yii::app()->session['email']=$_GET['email'];
+				  Yii::app()->session['quieninvita']=$_GET['u'];
+				$activation_url = Yii::app()->controller->createUrl(implode(Yii::app()->controller->module->recoveryUrl),array(
+				"activkey" => $_GET['activkey'], "email" => $_GET['email'], 
+				'solicitud'=>'nueva')); 
+				Yii::app()->session['url_act']=$activation_url;
+				$this->redirect(array('/empresas/create'));
+				/*$activation_url = Yii::app()->controller->createUrl(implode(Yii::app()->controller->module->recoveryUrl),array(
+				"activkey" => $_GET['activkey'], "email" => $_GET['email'], 
+				'solicitud'=>'nueva')); */
+				 $clienteEmpresa=1;
 			}
 
 			if($model->validate()&&$profile->validate()){
@@ -696,7 +725,12 @@ class UserController extends Controller
 					/*
 					Ya existe la empresa. Por lo que no se solicitan mas datos.
 					*/ 
-					if(isset(Yii::app()->session['invitadoempresa'])){ 
+					
+					if($clienteEmpresa!='')
+					{
+						$this->redirect($activation_url);
+					}
+					if($get!=""){ 
 						$this->redirect(array('/empresas/solicitudFinalizada'));				
 					}else{
 						#pedir nuevos datos
@@ -707,7 +741,7 @@ class UserController extends Controller
 			}
 		}
 
-	$this->render('datos',array('model'=>$model,'profile'=>$profile));
+	$this->render('datos',array('model'=>$model,'profile'=>$profile, 'get'=>$get));
 	}
 
 	public function actionSetPassword()
@@ -783,5 +817,10 @@ class UserController extends Controller
 		
         
     }
+	
+	public function actionBorrar()
+	{
+		$this->render('borrar');
+	}
 
 }

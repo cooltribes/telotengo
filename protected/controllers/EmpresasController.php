@@ -69,8 +69,8 @@ class EmpresasController extends Controller
 		if(isset(Yii::app()->session["usuarionuevo"])){
 			//$user = User::model()->findByAttributes(array('email'=>Yii::app()->session["usuarionuevo"]));
 		}
-		elseif(isset(Yii::app()->session["invitadocliente"])){
-			$user = User::model()->findByPk(Yii::app()->session["invitadocliente"]);
+		elseif(isset(Yii::app()->session['cliente'])){
+			$user = User::model()->findByPk(Yii::app()->session['cliente']);
 		}
 		
 		// Uncomment the following line if AJAX validation is needed
@@ -79,8 +79,9 @@ class EmpresasController extends Controller
 		if(isset($_POST['Empresas'])){
 
 			
-			if(isset(Yii::app()->session['usuarionuevo'])) //evitar el bug de dejar el registro a medias
+			if(isset(Yii::app()->session['vacio'])) //evitar el bug de dejar el registro a medias
 			{
+				echo Yii::app()->session['usuarionuevo'];
 				$modelado = new RegistrationForm;
         		$profile = new Profile;
 				$profile->regMode = true;
@@ -110,6 +111,40 @@ class EmpresasController extends Controller
 						$profile->save();	
 					}
 				}
+			}elseif(isset(Yii::app()->session['cliente'])) //evitar el bug de dejar el registro a medias
+			{
+	
+				$modelado = new RegistrationForm;
+        		$profile = new Profile;
+				$profile->regMode = true;
+				$profile->attributes=Yii::app()->session['atributos'];
+				
+				$soucePassword = User::generarPassword();
+				$modelado->email = $user->email;
+				$modelado->status=0;
+				$modelado->username = $user->username; #Mismo Mail
+				$modelado->activkey = UserModule::encrypting(microtime().$soucePassword);
+				$modelado->password = UserModule::encrypting($soucePassword);
+				$modelado->verifyPassword = UserModule::encrypting($modelado->verifyPassword);
+				$modelado->quien_invita = 0; #el mismo, se modifica cuando tenga ID luego del save
+				$modelado->type = User::TYPE_USUARIO_SOLICITA;
+				$profile->user_id=0;
+				
+
+				if($modelado->validate()&&$profile->validate())
+				{
+													echo $user->username."///";echo $user->email;
+				Yii::app()->end();	
+					if($modelado->save()){
+						if(isset(Yii::app()->session['cliente'])){
+							$modelado->quien_invita =Yii::app()->session['quieninvita'];
+							$modelado->save();
+						}
+	
+						$profile->user_id = $modelado->id;
+						$profile->save();	
+					}
+				}
 			}
 
 			
@@ -123,7 +158,7 @@ class EmpresasController extends Controller
 			#$model->num_empleados = $_POST['Empresas']['num_empleados'];
 			$rol=$_POST['Empresas']['tipoEmpresa'];
 			$model->rol=$rol;
-			if(isset(Yii::app()->session['usuarionuevo'])) //evitar el bug de dejar el registro a medias
+			if(isset(Yii::app()->session['vacio'])) //evitar el bug de dejar el registro a medias
 			{
 				$model->tipo=User::TYPE_USUARIO_SOLICITA;	
 			}	
@@ -155,7 +190,10 @@ class EmpresasController extends Controller
 				$almacen->empresas_id=$model->id;
 				$almacen->alias=$model->razon_social.' - principal';
 				$almacen->save();
-				
+				if(isset(Yii::app()->session['cliente']))
+				{
+					$this->redirect(Yii::app()->session['url_act']);
+				}
 				$this->redirect(array('solicitudFinalizada'));
 			}
 		}

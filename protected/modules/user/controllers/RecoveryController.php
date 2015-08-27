@@ -24,6 +24,7 @@ class RecoveryController extends Controller
 							if($form2->validate()) {
 								$find->password = Yii::app()->controller->module->encrypting($form2->password);
 								$find->activkey=Yii::app()->controller->module->encrypting(microtime().$form2->password);
+								$find->registro_password=1;
 								if ($find->status==0) {
 									$find->status = 1;
 								}
