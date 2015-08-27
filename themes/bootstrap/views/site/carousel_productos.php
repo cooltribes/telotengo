@@ -67,28 +67,28 @@ $('#<?php echo $carousel;?>').carousel({
                  <?php for($i=0; $i<4; $i++): ?>  
                   <div class="item <?php echo $i==0?"active":""; ?>">
                      <div>
-                        <a href="<?php echo Yii::app()->baseUrl."/marcas/Blackberry"; ?>">
-                            <div style="background: #AAA; width:100%; height: 150px;"></div>
+                        <a href="#">
+                            <img width="100%" src="http://placehold.it/131x150">
                         </a> 
                      </div>
                      <div class="col-md-2">
-                        <a href="<?php echo Yii::app()->baseUrl."/marcas/Lenovo"; ?>">
-                            <div style="background: #AAA; width:100%; height: 150px;"></div>
+                        <a href="#">
+                           <img width="100%" src="http://placehold.it/131x150">
                         </a> 
                      </div>
                      <div>
-                        <a href="<?php echo Yii::app()->baseUrl."/marcas/Samsung"; ?>">
-                            <div style="background: #AAA; width:100%; height: 150px;"></div>
+                        <a href="#">
+                           <img width="100%" src="http://placehold.it/131x150">
                         </a> 
                      </div>
                      <div>
-                        <a href="<?php echo Yii::app()->baseUrl."/marcas/HP"; ?>">
-                            <div style="background: #AAA; width:100%; height: 150px;"></div>
+                        <a href="#">
+                           <img width="100%" src="http://placehold.it/131x150">
                         </a> 
                      </div>
                      <div>
-                        <a href="<?php echo Yii::app()->baseUrl."/marcas/Forza"; ?>">
-                            <div style="background: #AAA; width:100%; height: 150px;"></div>
+                        <a href="#">
+                           <img width="100%" src="http://placehold.it/131x150">
                         </a> 
                      </div>
                      
