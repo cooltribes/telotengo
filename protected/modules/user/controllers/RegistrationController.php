@@ -64,7 +64,8 @@ class RegistrationController extends Controller
 						}
 						else{
 							#el usuario no esta y esta realizando una solicitud
-							Yii::app()->getSession()->add('usuarionuevo', $model->email);
+							//Yii::app()->getSession()->add('usuarionuevo', $model->email);
+							Yii::app()->session['usuarionuevo']=$model->email;
 							$this->redirect(Yii::app()->baseUrl.'/user/user/datos');
 						}	
 					}

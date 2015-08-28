@@ -2,7 +2,7 @@
 <div class="col-md-12 no_horizontal_padding volumeSale margin_top">
                                <div class="row-fluid clearfix">
                                    <div class="col-md-2 no_right_padding">
-                                          <div style="width:100%; height: 150px; background:#000"></div>                            
+                                          <img width="100%" src="http://placehold.it/108x150">                         
                                    </div>
                                    <div class="col-md-8 no_horizontal_padding info">
                                        <div class="row-fluid clearfix centralInfo" style="height:100%">
@@ -50,10 +50,10 @@
                                    
                                    <div class="col-md-2 totalPrice no_left_padding">
                                        <div class="row-fluid">
-                                           <div class="col-md-3 no_horizontal_padding leftPointer">
+                                           <div class="col-md-3 col-sm-3 no_horizontal_padding leftPointer">
                                                
                                            </div>
-                                           <div class="col-md-9 no_horizontal_padding text">
+                                           <div class="col-md-8 col-sm-8 no_horizontal_padding text">
                                                <span>
                                                    <span class="quantity">
                                                        350 Bs

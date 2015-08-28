@@ -20,7 +20,7 @@
 	<div class="form-group">
 		<div class="col-sm-12">
 			<?php echo $form->labelEx($model,'type'); ?>
-			<?php echo $form->dropDownList($model,'type',User::itemAlias('UserType'),array('class'=>'form-control','empty' => 'Seleccione una opción')); ?>
+			<?php echo $form->dropDownList($model,'type',User::itemAlias('UserType'),array('id'=>'User_type','class'=>'form-control','empty' => 'Seleccione una opción')); ?>
 			<?php echo $form->error($model,'type'); ?>
 		</div>
 	</div>
@@ -30,9 +30,10 @@
 		$list = CHtml::listData($models, 'id', 'razon_social'); 
 
 	?>
-	<h3>Solo para el caso de invitar como miembro de empresa</h3>
-
-	<div class="form-group">
+	
+	<div id="miembroEmpresa">
+		<h3>Solo para el caso de invitar como miembro de empresa</h3>
+		<div class="form-group">
 		<div class="col-sm-12">
 			<label>Empresa</label>
 			<?php echo CHtml::dropDownList('empresas','',$list,array('id'=>'empresas','class'=>'form-control','disabled'=>'disabled')); ?>
@@ -50,6 +51,9 @@
 				array('id'=>'cargo','class'=>'form-control','disabled'=>'disabled')); ?>
 		</div>
 	</div>
+		
+	</div>
+
 
 	<div class="form-group">
 	
@@ -72,13 +76,16 @@
 $('#User_type').on('change', function() {
   //alert($(this).val()); 
   if($(this).val()==2){ // empresa
+  	 $('#miembroEmpresa').show();
   	 $('#empresas').prop('disabled', false);
   	 $('#cargo').prop('disabled', false);
   }else{
+  	 $('#miembroEmpresa').hide();
   	 $('#empresas').prop('disabled', 'disabled');
   	 $('#cargo').prop('disabled', 'disabled');
   }
 
 });
+
 
 </script>

@@ -11,6 +11,12 @@ class Funciones {
         return strtr($string,'àáâãäçèéêëìíîïñòóôõöùúûüýÿÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ',
         'aaaaaceeeeiiiinooooouuuuyyAAAAACEEEEIIIINOOOOOUUUUY');
     }
+	
+	public static function isDev() // para saber cuando estemos en develop
+	{
+		return strpos(Yii::app()->baseUrl, "new") !== false;
+
+	}
     
  
     

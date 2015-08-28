@@ -247,9 +247,17 @@ class AdminController extends Controller
 						#agregar a empresa tiene usuarios
 						$nuevo = new EmpresasHasUsers;
 						$nuevo->empresas_id = $empresa_id;
+						$empre=Empresas::model()->findByPk($empresa_id);
+						Yii::app()->authManager->assign($empre->rol,$model->id);
 						$nuevo->users_id = $model->id;
 						$nuevo->rol = $cargo;
 						$nuevo->save();
+						$model->emailEmpresaInvitado($empresa_id, $cargo, $model->id, Yii::app()->user->id);
+					}
+					
+					if($model->type == 3) // invitar como cliente
+					{
+						$model->emailClienteInvitado($model->id, Yii::app()->user->id);
 					}
 
 					Yii::app()->user->setFlash('success',"Usuario invitado correctamente");

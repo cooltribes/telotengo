@@ -23,7 +23,7 @@
                                        </ul>
                                    </div>
                                    <div class="col-md-5 no_horizontal_padding">
-                                       <div style="width:100%; height: 120px; background:#000"></div>
+                                       <img  width="100%" src="http://placehold.it/90x120"/>
                                    </div>
                                </div>                       
                            </article>
@@ -43,7 +43,7 @@
                                        </ul>
                                    </div>
                                    <div class="col-md-5 no_horizontal_padding">
-                                       <div style="width:100%; height: 120px; background:#000"></div>
+                                       <img width="100%" src="http://placehold.it/90x120"/>
                                    </div>
                                </div>                       
                            </article>
@@ -63,7 +63,7 @@
                                        </ul>
                                    </div>
                                    <div class="col-md-5 no_horizontal_padding">
-                                       <div style="width:100%; height: 120px; background:#000"></div>
+                                       <img width="100%" src="http://placehold.it/90x120"/>
                                    </div>
                                </div>                       
                            </article>
@@ -83,7 +83,7 @@
                                        </ul>
                                    </div>
                                    <div class="col-md-5 no_horizontal_padding">
-                                       <div style="width:100%; height: 120px; background:#000"></div>
+                                       <img width="100%" src="http://placehold.it/90x120"/>
                                    </div>
                                </div>                       
                            </article>
@@ -103,7 +103,7 @@
                                        </ul>
                                    </div>
                                    <div class="col-md-5 no_horizontal_padding">
-                                       <div style="width:100%; height: 120px; background:#000"></div>
+                                       <img  width="100%" src="http://placehold.it/90x120"/>
                                    </div>
                                </div>                       
                            </article>
@@ -123,7 +123,7 @@
                                        </ul>
                                    </div>
                                    <div class="col-md-5 no_horizontal_padding">
-                                       <div style="width:100%; height: 120px; background:#000"></div>
+                                       <img width="100%" src="http://placehold.it/90x120"/>
                                    </div>
                                </div>                       
                            </article>
@@ -155,10 +155,10 @@
            <div class="col-md-3">
                 <div class="row-fluid">
                     <div class="col-md-12">
-                        <div style="width:100%; height: 368px; background:#000"></div>
+                        <img width="100%" src="http://placehold.it/196x432">
                     </div>
                     <div class="col-md-12 margin_top">
-                        <div style="width:100%; height: 432px; background:#000"></div>
+                        <img width="100%" src="http://placehold.it/196x462">
                     </div>           
                 </div>
            </div>
@@ -179,10 +179,10 @@
            <div class="col-md-3 margin_top">
                 <div class="row-fluid">
                     <div class="col-md-12">
-                        <div style="width:100%; height: 330px; background:#000"></div>
+                         <img width="100%" src="http://placehold.it/196x330">
                     </div>
                     <div class="col-md-12 margin_top">
-                        <div style="width:100%; height: 330px; background:#000"></div>
+                         <img width="100%" src="http://placehold.it/196x328">
                     </div>           
                 </div>
            </div>

@@ -40,7 +40,7 @@ class ProductoController extends Controller
 				#'users'=>array('admin'),
 				'roles'=>array('admin'),
 			),
-			array('allow', // SOLO VENDEDORES
+			array('allow', // COMPRADORESVENDEDORES Y VENDEDORES
 				'actions'=>array('inventario'),
 				#'users'=>array('admin'),
 				'roles'=>array('vendedor', 'compraVenta'),
@@ -1600,7 +1600,17 @@ class ProductoController extends Controller
 	{
 		$data=array();
 		$connection = new MongoClass();
-		$document = $connection->getCollection('ejemplo');	
+		if(Funciones::isDev())
+		{
+			$document = $connection->getCollection('ejemplo');	//DEVELOP
+		}	
+		else
+		{
+
+			$document = $connection->getCollection('stage');	//STAGE
+		} 
+			
+
 		
 		if(count($_POST)>0)
 		{

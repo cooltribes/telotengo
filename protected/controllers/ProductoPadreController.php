@@ -42,6 +42,11 @@ class ProductoPadreController extends Controller
 				'actions'=>array('admin','delete', 'busqueda', 'cambiarStatus', 'autocomplete', 'activarDesactivar'),
 				'users'=>array('admin'),
 			),
+			array('allow', // COMPRADORESVENDEDORES Y VENDEDORES
+				'actions'=>array('busqueda'),
+				#'users'=>array('admin'),
+				'roles'=>array('vendedor', 'compraVenta'),
+			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
 			),

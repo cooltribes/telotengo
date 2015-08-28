@@ -387,7 +387,10 @@ class Producto extends CActiveRecord
 	public function buscarSelect($nombre, $nombreSelect, $variar=0)
 	{
 		$connection = new MongoClass();
-		$document = $connection->getCollection('ejemplo');	
+		if(Funciones::isDev())
+			$document = $connection->getCollection('ejemplo');	//DEVELOP
+		else 
+			$document = $connection->getCollection('stage');	//STAGE
 		$prueba = array("producto"=>$this->id); 
 		$busqueda = $document->findOne($prueba);
 		if($variar==0)	//si es select de las unidades
@@ -416,7 +419,10 @@ class Producto extends CActiveRecord
 	public function buscarBoolean($nombre)
 	{
 		$connection = new MongoClass();
-		$document = $connection->getCollection('ejemplo');	
+		if(Funciones::isDev())
+			$document = $connection->getCollection('ejemplo');	//DEVELOP
+		else 
+			$document = $connection->getCollection('stage');	//STAGE
 		$prueba = array("producto"=>$this->id);
 		$busqueda = $document->findOne($prueba);	
 		$nombreAlto=$this->cambiarNombre($nombre);

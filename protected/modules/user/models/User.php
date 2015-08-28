@@ -204,6 +204,7 @@ class User extends CActiveRecord
         $criteria->compare('newsletter',$this->newsletter);
 		$criteria->compare('facebook_id',$this->facebook_id);
 		$criteria->compare('avatar_url',$this->avatar_url);
+		$criteria->addCondition('type <> 3');
 
         return new CActiveDataProvider(get_class($this), array(
             'criteria'=>$criteria,
@@ -236,6 +237,8 @@ class User extends CActiveRecord
 		$criteria->compare('avatar_url',$this->avatar_url);
 		$criteria->compare ('registro_password',0, true);
 		$criteria->compare ('superuser',0, true);
+		$criteria->addCondition('type <> 3');
+		//$criteria->addInCondition('type', array ('1','2', '4'));
 
         return new CActiveDataProvider(get_class($this), array(
             'criteria'=>$criteria,
@@ -377,6 +380,72 @@ class User extends CActiveRecord
 		Yii::app()->mail->send($message);
 
 		//Yii::app()->user->setFlash('success','Las instrucciones para la recuperación de la contraseña se han enviado a tu correo electrónico');
+	}
+
+
+	public function emailEmpresaInvitado($empresa_id, $cargo, $id, $quien_invita)
+	{
+		$user = User::model()->notsafe()->findbyPk($id);
+					
+		$message = new YiiMailMessage;
+		$message->view = 'mail_template';
+		
+		Yii::app()->session['email']=$user->email;
+		$quien_invita = User::model()->notsafe()->findbyPk($quien_invita);
+		Yii::app()->session['quienInvita']=$quien_invita->username;
+		
+		/*$activation_url = 'http://' . $_SERVER['HTTP_HOST'].Yii::app()->controller->createUrl(implode(Yii::app()->controller->module->recoveryUrl),array("id"=>$id,
+		"u"=>$quien_invita->username,"activkey" => $user->activkey, "email" => $user->email, 
+		'solicitud'=>'nueva'));*/
+		
+		$activation_url = 'http://' . $_SERVER['HTTP_HOST'].Yii::app()->controller->createUrl('/user/user/datos/',array("id"=>$id,
+		"u"=>$quien_invita->username,"activkey" => $user->activkey, "email" => $user->email, 
+		'solicitud'=>'nueva', 'tipo'=>'empresa'));
+		
+		Yii::app()->session['rol']=$this->buscarRol($id);
+		Yii::app()->session['cargo']=$cargo;
+		Yii::app()->session['invitadoempresa']=$id;
+		//Yii::app()->session['activacion_url']=$activation_url;
+							 
+							//userModel is passed to the view
+							
+		$body=Yii::app()->controller->renderPartial('//mail/registroEmpresaInvitado', array( 'activation_url'=>$activation_url ),true);
+		
+		$message->setSubject("INVITADO COMO MIEMBRO DE EMPRESA");
+		$message->setBody(array('body'=>$body,"undercomment"=>"¿Pediste registrarte en telotengo? Si no es así, es probable que otro usuario haya utilizado tu dirección de correo electrónico por error al registrarse pero no te preocupes no es necesario que tomes alguna medida, puedes ignorar este mensaje"), 'text/html');
+		
+		
+		$message->addTo($user->email);
+		$message->from = array(Yii::app()->params['adminEmail'] => "Sigma Tiendas");
+		Yii::app()->mail->send($message);
+
+		//Yii::app()->user->setFlash('success','Las instrucciones para la recuperación de la contraseña se han enviado a tu correo electrónico');
+	}
+
+	public function emailClienteInvitado($id, $quien_invita)
+	{
+		$user = User::model()->notsafe()->findbyPk($id);
+					
+		$message = new YiiMailMessage;
+		$message->view = 'mail_template';
+		
+		$quien_invita = User::model()->notsafe()->findbyPk($quien_invita);
+		Yii::app()->session['quienInvita']=$quien_invita->username;
+		
+		$activation_url = 'http://' . $_SERVER['HTTP_HOST'].Yii::app()->controller->createUrl('/user/user/datos/',array("id"=>$id,
+		"u"=>$quien_invita->username,"activkey" => $user->activkey, "email" => $user->email, 
+		'solicitud'=>'nueva', 'tipo'=>'cliente'));
+		
+		$body=Yii::app()->controller->renderPartial('//mail/registroClienteInvitado', array( 'activation_url'=>$activation_url ),true);
+		
+		$message->setSubject("INVITADO COMO EMPRESA");
+		$message->setBody(array('body'=>$body,"undercomment"=>"¿Te invitaron a telotengo? Si no es así, es probable que un usuario haya utilizado tu dirección de correo electrónico por error al enviar una invitación pero no te preocupes no es necesario que tomes alguna medida, puedes ignorar este mensaje."), 'text/html');
+		
+		
+		$message->addTo($user->email);
+		$message->from = array(Yii::app()->params['adminEmail'] => "Sigma Tiendas");
+		Yii::app()->mail->send($message);
+		
 	}
 
   		public function buscarSexo($sexo)
