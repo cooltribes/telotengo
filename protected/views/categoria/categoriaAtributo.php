@@ -150,7 +150,7 @@ $('.list-group a').click(function(e){
 	                   },
 		        success: function (data) {
 					
-					window.location.href = '../categoria/admin/';
+					window.location.href = '../admin/';
 		       	}
 		       })
         }

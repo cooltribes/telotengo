@@ -76,7 +76,7 @@ $(document).ready(function() {
 					}
 					else
 					{
-						window.location.href = '../admin/';
+						window.location.href = '../color/admin/';
 					}
 		       	}
 		       })
