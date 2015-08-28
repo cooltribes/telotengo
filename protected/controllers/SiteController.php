@@ -24,7 +24,7 @@ class SiteController extends Controller
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
 				'actions'=>array('index','error','contact','login','logout','captcha','busqueda','inhome','tiendas','info','soporte','garantia','convenios','request','request2',
-								'corporativo','licencias','ofertas','home'), 
+								'corporativo','licencias','ofertas','home','store','detalle'), 
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -322,6 +322,12 @@ class SiteController extends Controller
        $this->render('inhome');
     }
     
+    public function actionStore(){
+        $this->layout='//layouts/start';
+
+       $this->render('store');
+    }
+    
     public function actionRequest(){
         $this->layout='//layouts/b2b';
         $model = new RegistrationForm;
@@ -341,5 +347,9 @@ class SiteController extends Controller
             'profile' => $user->profile,
         ));
     }
-    
+    public function actionDetalle(){
+        $this->layout='//layouts/start';
+
+       $this->render('detalle');
+    }
 }

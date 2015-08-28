@@ -238,7 +238,6 @@ body{
     border:0px !important;
 }
 
-
 /* Textos */
 .text_align_left {
   text-align: left;
@@ -248,6 +247,12 @@ body{
 }
 .text_align_center {
   text-align: center;
+}
+.uppercased{
+    text-transform: uppercase;
+}
+.throughlined{
+    text-decoration: line-through;
 }
 .pointer{
   cursor:pointer; 
@@ -283,7 +288,11 @@ body{
 .btn, .alert{
   .border_radius(@radius:4px);
 }
-
+.btn-small{
+    padding:3px 10px;
+    font-size:12px;
+    
+}
 .btn-sigmablue{
   color: #ffffff ;
   background-color: #0071b9;
@@ -1142,7 +1151,7 @@ h1,h2,h3,h4,h5{
     }
   }
 
- /* NEW LAYOUT */
+ /* NEW LAYOUT B2B*/
 
 .navbar{
   border: 0px;
@@ -1437,6 +1446,8 @@ a:hover, a:focus{
     
 
 }
+
+/*    HOME B2B */
 .mainHome{
   h1{
     font-size:22px;
@@ -1556,16 +1567,171 @@ a:hover, a:focus{
   
 } 
 
-    
+/* PANEL DE FILTROS */
 
-    
-    .uppercased{
-        text-transform: uppercase;
+    .breadcrumbs{
+        font-size: 12px;
+         color:#BBB; 
+        a{
+          span{
+            color:#BBB;   
+          }
+          .current{
+              color: #555;
+          }
+        }        
+    }
+  
+    .leftPanel{
+      h1{
+          font-size:18px;
+          font-weight: 500;
+      }
+      ul{
+          font-size: 12px;
+          font-weight: 900;
+           li{
+            color: #555;
+            ul{
+              li{
+                  color: #BBB;
+              }
+            }
+        } 
+      }
     }
 
-
-
-    .throughlined{
-        text-decoration: line-through;
+    .dropdown-input{
+      input{
+          text-align: left;
+          padding-left: 5px;
+          padding-right: 15px;
+      }
+      .caret{
+          position: absolute;
+          top: 15px;
+          right: 5px;
+      }
     }
+       
+    .ui-slider-horizontal{
+        border: 0px;
+        background: #777;  
+        height: 5px;
+        width: 98%;
+        left:1%;
+        .ui-slider-range {
+            background: none;
+            border: 0px;
+        }
+        .ui-slider-handle.ui-state-default{ 
+            border: 1px solid black;
+            top: -0.4em;
+            width: 8px;
+            margin: 0px;
+            margin-left:-4px;
+            height: 15px;
+            background: black;
+            border-radius: 5px;
+        }
+        
+    }    
+    .sliderLegend{
+      .indicator{        
+            width:45%;
+            float: left;
+            border: solid 1px #888;
+            text-align: center;        
+        }
+        .spacer{
+             width:10%;
+             float: left;
+             text-align: center;
+        }
+    } 
+  
+    .plainSeparator{
+      height: 1px;
+      margin: 5px 0px;
+      background: #999;
+    }
+    
+    .muted{
+        font-size: 12px;
 
+        color: #BBB;      
+    }
+   
+    .dropdown.sorter{
+      display: inline;
+      font-size: 12px;
+    }
+    
+    .mainStore, .mainStore .btn{
+      font-size:12px;
+      
+    }
+    .mainStore{
+      background: #FFF;    
+      a{
+        span.glyphicon{
+          color: @b2bOrange;
+          font-size: 24px;        
+        }
+        span.glyphicon-th-list{
+          margin-left: 10px;
+        }
+      }
+    }
+    
+/* STORE */
+
+.itemListView{
+        border-top: 2px solid #000;
+        .description{
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+        .details span, .price span{
+            display: block;        
+        }
+        .price{
+            span{
+                color:#ff5b0b;
+            }
+        }
+        div{
+          .quantity{
+              font-size:18px;
+              font-weight:900;
+          }
+          .legend{
+              font-size:13px;
+      
+          }
+        }
+        
+         
+        
+}
+.pager{
+  a{
+    cursor: pointer;
+    span{
+            border: 1px solid #CCC;
+            padding: 3px 8px;
+            margin: 0px 5px;
+            font-weight: 900;
+            color:#555;
+    }
+    span.active{      
+      background: #CCC;
+    }
+  }
+}
+.storeControls{
+    display: inline-block;
+    padding: 6px 12px;
+    vertical-align: middle;
+    border: 1px solid transparent;
+}

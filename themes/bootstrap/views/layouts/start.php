@@ -35,16 +35,16 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
 <div class="navbar row-fluid b2b clearfix no_margin_bottom" >
     <div class="col-md-8 col-md-offset-2">
                 <div class="row-fluid">
-                    <div class="col-md-2">
-                        <div style="width:100%; height:30px; background:#000"></div>
-                    </div>
+                    <div class="col-md-2 no_padding_left">
+                         <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/logo.png" height="30px;"/>
+                    </div>     
                     <div class="col-md-5 no_left_padding"><div style="width:100%; height:30px; background:#000"></div></div>
                     <div class="col-md-5 no_left_padding">
                         <div class="text-right clientService">
                             SERVICIO AL CLIENTE: (0800) 568.36.46 | SERVICIO@TELOTENGO.COM
                         </div>
                     </div> 
-                    <div class="col-md-2" style="margin-top: 10px">
+                    <div class="col-md-2 no_padding_left" style="margin-top: 10px">
                         <div class="dropdown">
                                   <a class="form-control text-left dropdown-toggle no_horizontal_padding no_border" id="categoryMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                     <span class="mainText">Categorías</span><span class="caret"></span> <span class="searchby">Buscar por:</span>                                 
@@ -56,7 +56,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                                     <li><a href="#">Something else here</a></li>
                                     <li><a href="#">Separated link</a></li>
                                   </ul>
-                                </div>
+                            </div> 
                     </div>
                     <div class="col-md-10 no_padding_left">
                         <div class="separator no_horizontal_padding"></div>
@@ -143,7 +143,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                                     <div class="row-fluid">
                                         <div class="col-md-3 no_horizontal_padding image">
                                             <div class="imgContainer">
-                                                <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/logo.png" width="100%"/>
+                                                <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/favicon75.2.png" width="100%"/>
                                             </div>
                                              
                                         </div>
@@ -169,8 +169,10 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                 </div> 
         </div>
 </div>
+
 <?php echo $content; ?>
-<div class="clear"></div> 
+<div class="col-md-12 margin_top_large margin_bottom_large"></div>
+<!--
   <div class="footer padding_bottom_small">
       <div class="container">
           <div class="row-fluid">
@@ -179,4 +181,4 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
       </div>
   </div>
 
-
+-->
