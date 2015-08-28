@@ -40,7 +40,7 @@ class ProductoController extends Controller
 				#'users'=>array('admin'),
 				'roles'=>array('admin'),
 			),
-			array('allow', // SOLO VENDEDORES
+			array('allow', // COMPRADORESVENDEDORES Y VENDEDORES
 				'actions'=>array('inventario'),
 				#'users'=>array('admin'),
 				'roles'=>array('vendedor', 'compraVenta'),

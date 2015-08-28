@@ -84,6 +84,7 @@ class ProductoPadre extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('nombre',$this->nombre,true);
 		$criteria->compare('id_marca',$this->id_marca);
+		$criteria->order = 'nombre ASC';
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

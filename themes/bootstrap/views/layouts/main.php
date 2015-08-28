@@ -188,6 +188,9 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                         <li class="menu-item dropdown ">
                            <a href="<?php echo Yii::app()->baseUrl; ?>/orden/listado"> Tus Pedidos</a>
                         </li>
+                         <li class="menu-item dropdown ">
+                           <a href="<?php echo Yii::app()->baseUrl; ?>/producto/seleccion"> Cargar Inventario</a>
+                        </li>
                         <li class="menu-item dropdown ">
                             <a href="<?php echo Yii::app()->baseUrl; ?>/user/profile/edit">Editar Perfil</a>
                         </li>

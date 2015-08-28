@@ -22,7 +22,7 @@
 	 <!-- COLUMNA PRINCIPAL DERECHA ON // OJO: esta de primera para mejorar el SEO sin embargo por CSS se ubica visualmente a la derecha -->
 
 		<div>
-    		<h1> Editar Inventario </h1>
+    		<h1> Cargar Inventario </h1>
         	
         
             	<div class="row-fluid well bg_white">
@@ -65,7 +65,10 @@
 						)); ?>
 					   </div>	
 		
-				<?php $this->endWidget(); ?>	
+				<?php $this->endWidget(); 	
+			if(Yii::app()->authManager->checkAccess("admin", Yii::app()->user->id))
+			{?>
+				
 				
 			<h4> O Agregar un nuevo producto </h4>
 			
@@ -77,7 +80,9 @@
 			    'size'=>'normal', // null, 'large', 'small' or 'mini'
 			));  ?>
 				</div> 
-				
+				<?php
+			}
+				?>
 		
 		</div>
 

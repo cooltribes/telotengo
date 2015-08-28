@@ -155,7 +155,7 @@
            <div class="col-md-3">
                 <div class="row-fluid">
                     <div class="col-md-12">
-                        <img width="100%" src="http://placehold.it/196x368">
+                        <img width="100%" src="http://placehold.it/196x432">
                     </div>
                     <div class="col-md-12 margin_top">
                         <img width="100%" src="http://placehold.it/196x462">
@@ -182,7 +182,7 @@
                          <img width="100%" src="http://placehold.it/196x330">
                     </div>
                     <div class="col-md-12 margin_top">
-                         <img width="100%" src="http://placehold.it/196x330">
+                         <img width="100%" src="http://placehold.it/196x328">
                     </div>           
                 </div>
            </div>
