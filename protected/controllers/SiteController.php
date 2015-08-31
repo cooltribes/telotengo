@@ -24,7 +24,7 @@ class SiteController extends Controller
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
 				'actions'=>array('index','error','contact','login','logout','captcha','busqueda','inhome','tiendas','info','soporte','garantia','convenios','request','request2',
-								'corporativo','licencias','ofertas','home','store','detalle'), 
+								'corporativo','licencias','ofertas','home','store','detalle', 'inhome2'), 
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -320,6 +320,14 @@ class SiteController extends Controller
         $this->layout='//layouts/start';
 
        $this->render('inhome');
+    }
+	
+	public function actionInhome2(){
+       $this->layout='//layouts/start';
+	   $model = Categoria::model()->findAllBySql("select * from tbl_categoria where id_padre in (select id from tbl_categoria where id_padre=0)  order by destacado desc limit 6");
+       $ultimos = Producto::model()->findAllBySql("select * from tbl_producto order by id desc limit 15");
+	   $destacados = Producto::model()->findAllBySql("select * from tbl_producto order by destacado desc limit 15");
+       $this->render('inhome2', array('model'=>$model, 'ultimos'=>$ultimos, 'destacados'=>$destacados));
     }
     
     public function actionStore(){

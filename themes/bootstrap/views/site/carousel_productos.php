@@ -56,48 +56,61 @@ $('#<?php echo $carousel;?>').carousel({
 //$('.carousel').carousel('cycle');
 });  
 </script>
-
+<?php 
+if($carousel=="ultimos")
+	$modelado=$ultimos;
+else
+	$modelado=$destacados;
+?>
 
 <div id="<?php echo $carousel;?>" class="carousel slide carouselHome margin_top">
                <!-- Carousel indicators -->
           
                <!-- Carousel items -->
                <div class="carousel-inner">
-                   
-                 <?php for($i=0; $i<4; $i++): ?>  
-                  <div class="item <?php echo $i==0?"active":""; ?>">
+                    <div class="item active">
+                 <?php 
+                 $i=1; 
+                 foreach($modelado as $model) 
+                 {
+                 if(Imagenes::model()->findByAttributes(array('producto_id'=>$model->id, 'orden'=>1)))
+				 {
+				 	$imagen = Imagenes::model()->findByAttributes(array('producto_id'=>$model->id, 'orden'=>1));
+					$url=Yii::app()->baseUrl.$imagen->url;
+				 }
+				 else
+				 {
+					 $url="http://placehold.it/131x150";
+				 }?> 	
+                
+                 
+          
                      <div>
                         <a href="#">
-                            <img width="100%" src="http://placehold.it/130x130">
+
+                            <img width="100%" style="max-height:150px" src="<?php echo $url;?>">
                         </a> 
                      </div>
-                     <div >
-                        <a href="#">
-                           <img width="100%" src="http://placehold.it/130x130">
-                        </a> 
-                     </div>
-                     <div>
-                        <a href="#">
-                           <img width="100%" src="http://placehold.it/130x130">
-                        </a> 
-                     </div>
-                     <div>
-                        <a href="#">
-                           <img width="100%" src="http://placehold.it/130x130">
-                        </a> 
-                     </div>
-                     <div>
-                        <a href="#">
-                           <img width="100%" src="http://placehold.it/130x130">
-                        </a> 
-                     </div>
-                     
-                  </div>
+
                   
-                  <?php endfor; ?>
+             <?php if($i%5==0):
+                	if($i!=15): ?>
+                </div>
+                	<div class="item <?php echo $i==0?"active":""; ?>">
+               <?php 
+					else:
+               ?> 
+                </div>
+              <?php endif; ?>
+       
+             <?php endif; ?>
                   
-                  
-               </div>               
+              <?php 
+              	$i++;
+				}
+                ?> 
+                </div> 
+           
                
                <!-- Carousel nav -->
                
