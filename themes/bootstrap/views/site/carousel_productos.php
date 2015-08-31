@@ -60,7 +60,7 @@ $('#<?php echo $carousel;?>').carousel({
 
 <div id="<?php echo $carousel;?>" class="carousel slide carouselHome margin_top">
                <!-- Carousel indicators -->
-         
+          
                <!-- Carousel items -->
                <div class="carousel-inner">
                    
@@ -68,27 +68,27 @@ $('#<?php echo $carousel;?>').carousel({
                   <div class="item <?php echo $i==0?"active":""; ?>">
                      <div>
                         <a href="#">
-                            <img width="100%" src="http://placehold.it/131x150">
+                            <img width="100%" src="http://placehold.it/130x130">
                         </a> 
                      </div>
-                     <div class="col-md-2">
+                     <div >
                         <a href="#">
-                           <img width="100%" src="http://placehold.it/131x150">
-                        </a> 
-                     </div>
-                     <div>
-                        <a href="#">
-                           <img width="100%" src="http://placehold.it/131x150">
+                           <img width="100%" src="http://placehold.it/130x130">
                         </a> 
                      </div>
                      <div>
                         <a href="#">
-                           <img width="100%" src="http://placehold.it/131x150">
+                           <img width="100%" src="http://placehold.it/130x130">
                         </a> 
                      </div>
                      <div>
                         <a href="#">
-                           <img width="100%" src="http://placehold.it/131x150">
+                           <img width="100%" src="http://placehold.it/130x130">
+                        </a> 
+                     </div>
+                     <div>
+                        <a href="#">
+                           <img width="100%" src="http://placehold.it/130x130">
                         </a> 
                      </div>
                      
