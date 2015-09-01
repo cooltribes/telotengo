@@ -115,7 +115,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                     <div class="col-md-4 no_horizontal_margin no_left_padding">
                         <div class="row-fluid" id="userMenu">
                             <div class="col-md-4 no_right_padding">
-                                <div class="dropdown">
+                                <div class="dropdown drophover">
                                   <a class="form-control text-left dropdown-toggle no_padding no_border" id="orderButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                     <div class="row-fluid">
                                         <div class="col-md-3 no_horizontal_padding icon">
@@ -139,7 +139,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                                 </div>
                             </div>
                             <div class="col-md-3 no_horizontal_padding">
-                                <div class="dropdown">
+                                <div class="dropdown drophover">
                                   <a class="form-control text-left dropdown-toggle no_padding no_border" id="cartButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                     <div class="row-fluid">
                                         <div class="col-md-4 no_horizontal_padding icon">
@@ -163,7 +163,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                                 </div>
                             </div>
                             <div class="col-md-5 no_horizontal_padding">
-                                <div class="dropdown">
+                                <div class="dropdown drophover">
                                   <a class="form-control text-left dropdown-toggle no_padding no_border" id="userButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                     <div class="row-fluid">
                                         <div class="col-md-3 no_horizontal_padding image">
