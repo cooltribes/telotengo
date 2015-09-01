@@ -1,7 +1,7 @@
 <?php
 
 class CategoriaController extends Controller
-{
+{ 
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
@@ -21,7 +21,7 @@ class CategoriaController extends Controller
 	/**
 	 * Specifies the access control rules.
 	 * This method is used by the 'accessControl' filter.
-	 * @return array access control rules
+	 * @return array access control rules  
 	 */
 	public function accessRules()
 	{
@@ -35,7 +35,7 @@ class CategoriaController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete','create','update','upload','listimages', 'menu', 'categoriaRelacionada', 'catRela', 'crearAvanzar'),
+				'actions'=>array('admin','delete','create','update','upload','listimages', 'menu', 'categoriaRelacionada', 'catRela', 'crearAvanzar', 'categoriaAtributo', 'catAtrib','categoriaSeo'),
 				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -76,37 +76,34 @@ class CategoriaController extends Controller
 		}
 		else {
 			$model = new Categoria;
-		}
+		} 
 		
 		$this->render('categoriaRelacionada',array(
-			'model'=>$model));
-	}
-	
+			'model'=>$model)); 
+	} 
+	 
 	
 	public function actionCatRela() ///falta avanzar
 	{
-		#var_dump($_POST['check']);
-		
-		$cadena="";
-		$cat_id=explode(",", $_POST['check']);	
-		$idProducto = $_POST['idProd']; //mi id
-		$categoria=Categoria::model()->findByPk($idProducto);
-		$tota=count($cat_id);
-		$i=1;
+	
+		$cadena=""; 
+		$cat_id=explode(",", $_POST['check']);	 
+        $bool=true;  
 
 			foreach($cat_id as $each)
 			{
-				$cada_uno=explode("-", $each);
-				if($tota-$i==0)
-					$cadena=$cadena.$cada_uno[1];
-				else	
-					$cadena=$cadena.$cada_uno[1].",";		
-				
-				$i++;
+				$relacionada=new CategoriaRelacion;
+                $relacionada->categoria1=$_POST['categoria'];
+                $relacionada->categoria2=$each;
+                if(!$relacionada->save()){
+                    print_r($relacionada->errors);
+                    $bool=false;
+                }                
+                  
 			}
-			$categoria->categorias_relacionadas=$cadena;
-			if($categoria->save())
-		  		echo("ok");
+            
+          
+
 	}
 	
 	public function actioncrearAvanzar() //el primer guardar de la 1era pestana
@@ -126,27 +123,29 @@ class CategoriaController extends Controller
 		
 		$categoria->nombre=$_POST['nombre'];
 		$categoria->ultimo=$_POST['ultimo'];
+		$categoria->nomenclatura=$_POST['nomenclatura'];
 		
 		//$this->redirect(array('admin'));
 		
 		if($categoria->save())
 			echo $categoria->id;
-			
+			 
 	}
 	
-	public function actionCreate($id=NULL)
+	public function actionCreate($id = null)
 	{
+    	if(!is_null($id)) // si viene por get
+            {
+                $categoria = Categoria::model()->findByPk($id);
+            }
+        else{	    
 		
-		if(!isset($_POST['Categoria'])) // si es primera vez que entra
-		{
-			$categoria = new Categoria;
-		}else{
-			if($id!="") // si viene por get
-			{
-				$categoria = Categoria::model()->findByPk($id);
-			}
-			else 
-			{
+    		if(!isset($_POST['Categoria'])) // si es primera vez que entra
+    		{
+    			$categoria = new Categoria;
+    		}else{
+			
+			
 			   if($_POST['Categoria']['oculta']=="") // si nunca se ha creado y se va a crear
 				{
 					$categoria = new Categoria;
@@ -155,14 +154,17 @@ class CategoriaController extends Controller
 				{
 					$categoria = Categoria::model()->findByPk($_POST['Categoria']['oculta']); //si ya lo ha creado y sobrescribe
 				}
-			}
-
-			
-		}
+            } 
+        }
 		
+        $this->performAjaxValidation($categoria);
+        
 		if(isset($_POST['Categoria'])){   ///falta la imagen
-			
+
 			$categoria->attributes = $_POST['Categoria'];
+			$categoria->nomenclatura = $_POST['Categoria']['nomenclatura'];
+            $categoria->setSeo();
+
 
 			if($_POST['Categoria']['id_padre'] != "") // significa que depende
 				$categoria->id_padre = $_POST['Categoria']['id_padre'];
@@ -170,43 +172,42 @@ class CategoriaController extends Controller
 				$categoria->id_padre = 0;
 			
 			$categoria->ultimo=$_POST['Categoria']['ultimo'];
-			
-			/*echo($_POST['url']);
-		
 			if(!is_dir(Yii::getPathOfAlias('webroot').'/images/categoria/'))
 				{
 	   				mkdir(Yii::getPathOfAlias('webroot').'/images/categoria/',0777,true);
 	 			}
+            if(!is_dir(Yii::getPathOfAlias('webroot').'/images/categoria/'.$categoria->id))
+                {
+                    mkdir(Yii::getPathOfAlias('webroot').'/images/categoria/'.$categoria->id,0777,true);
+                } 
 			
 			$rnd = rand(0,9999);  
-			$images=CUploadedFile::getInstanceByName('url');
+			$images=CUploadedFile::getInstanceByName('imagen');
+            
 			
-			var_dump($images);
-			echo "<br>".count($images);*/
-			/*if (isset($images) && count($images) > 0) {
+           
+			if (isset($images) && count($images) > 0) {
 				$categoria->imagen_url = "{$rnd}-{$images}";
 				
-				$categoria->save();
-		        
-		        $nombre = Yii::getPathOfAlias('webroot').'/images/categoria/'.$images->name;
-		        $extension_ori = ".jpg";
+				
+				 
+				$nombre = Yii::getPathOfAlias('webroot').'/images/categoria/'.$categoria->id.'/'.$categoria->id;
 				$extension = '.'.$images->extensionName;
-		       
-		       	if ($images->saveAs($nombre)) {
-		
-		       		$categoria->imagen_url = $images->name;
+		       	if ($images->saveAs($nombre . $extension)) {
+		             
+		       		$categoria->imagen_url = $categoria->id.$extension;
 		            $categoria->save();
 									
 					Yii::app()->user->setFlash('success',"Categoria guardada exitosamente.");
 
-					$image = Yii::app()->image->load($nombre);
+					$image = Yii::app()->image->load($nombre.$extension);
 					$image->resize(150, 150);
 					$image->save(str_replace(".png","",$nombre).'_thumb'.$extension);
 					
 					if($extension == '.png'){
-						$image = Yii::app()->image->load($nombre);
+						$image = Yii::app()->image->load($nombre.$extension);
 						$image->resize(150, 150);
-						$image->save(str_replace(".png","",$nombre).'_thumb.jpg');
+						$image->save(str_replace(".png","",$nombre.$extension).'_thumb.jpg');
 					}	
 					
 				}
@@ -220,7 +221,7 @@ class CategoriaController extends Controller
 		        }else{
 		        	Yii::app()->user->setFlash('error',"Categoria no pudo ser guardada.");
 		        }
-			}// isset */
+			}// isset 
 			
 				if($categoria->save()){
 		        	Yii::app()->user->setFlash('success',"Categoria guardada exitosamente.");
@@ -256,6 +257,29 @@ class CategoriaController extends Controller
 			'model'=>$model,
 		));
 	}
+    
+     
+    public function actionCategoriaSeo($id) 
+    {
+        $model=$this->loadModel($id);
+        if(!$model->seo)
+            $model->setSeo();
+        $seo=$model->seo;
+
+        // Uncomment the following line if AJAX validation is needed
+        // $this->performAjaxValidation($model);
+
+        if(isset($_POST['Seo']))
+        {
+            $seo->attributes=$_POST['Seo'];
+            $seo->save();
+                
+        }
+
+        $this->render('categoriaSeo',array(
+            'model'=>$seo, 'categoria'=>$model
+        ));
+    }
 	
 	// imagenes de la extension html editor
 	public function actionUpload()
@@ -340,7 +364,7 @@ class CategoriaController extends Controller
 		$dataProvider=new CActiveDataProvider('Categoria');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
-		));
+		)); 
 	}
 
 	/**
@@ -501,5 +525,46 @@ class CategoriaController extends Controller
         echo json_encode($data);
     }	
 	
+	public function actionCategoriaAtributo($id = null)
+	{  if(!is_null($id)){
+    		$this->render('categoriaAtributo',array('model'=>Categoria::model()->findByPk($id)));
+    	}
+	}
 	
+	public function actionCatAtrib()
+	{ 
+		$vector=$_POST['vector'];
+		$idAct=$_POST['idAct'];
+		
+		$categoriaAtributo = CategoriaAtributo::model()->findAllByAttributes(array('categoria_id'=>$idAct)); //borrar antiguos
+		if($categoriaAtributo)
+		{
+			foreach($categoriaAtributo as $cat)
+			{
+				$cat->activo=0;
+				$cat->save();
+			}
+		}
+
+				
+		foreach($vector as $vec) //agregar nuevos
+		{
+			$categoriaAtributo = CategoriaAtributo::model()->findByAttributes(array('categoria_id'=>$idAct, 'atributo_id'=>$vec));
+			if(!$categoriaAtributo)
+			{
+				$model=new CategoriaAtributo;
+				$model->atributo_id=$vec;
+				$model->categoria_id=$idAct;
+				$model->activo=1;	
+				$model->save();
+			}
+			else
+			{
+				$categoriaAtributo->activo=1;
+				$categoriaAtributo->save();	
+			}
+		}
+
+		
+	}
 }

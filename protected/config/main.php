@@ -83,6 +83,13 @@ return array(
 
 	// application components
 	'components'=>array(
+		'authManager'=>array(
+			"class"=>"CDbAuthManager",
+			"connectionID"=>"db",
+			"assignmentTable"=>"tbl_authAssignment",
+			"itemTable"=>"tbl_authItem",
+			"itemChildTable"=>"tbl_authItemChild",
+			),
 	        'bootstrap'=>array(
 	      	//'class' => 'ext.yiibooster.components.Bootstrap',
             'class'=>'bootstrap.components.Bootstrap',
@@ -179,16 +186,18 @@ return array(
 		'log'=>array(
 			'class'=>'CLogRouter',
 			'routes'=>array(
+				
 				array(
 					'class'=>'CFileLogRoute',
 					'levels'=>'error, warning, trace',
 				),
+          
 				// uncomment the following to show log messages on web pages
-				/*
+				
 				array(
 					'class'=>'CWebLogRoute',
 				),
-				*/
+				
 				array(
                    'class' => 'CDbLogRoute',
                    'connectionID' => 'db',

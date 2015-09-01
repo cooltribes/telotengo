@@ -8,7 +8,7 @@ class SiteController extends Controller
 	 */
 	
 	public function filters()
-	{
+	{ 
 		return array(
 			'accessControl', // perform access control for CRUD operations
 		);
@@ -23,8 +23,8 @@ class SiteController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','error','contact','login','logout','captcha','busqueda','tiendas','info','soporte','garantia','convenios',
-								'corporativo','licencias','ofertas'), 
+				'actions'=>array('index','error','contact','login','logout','captcha','busqueda','inhome','tiendas','info','soporte','garantia','convenios','request','request2',
+								'corporativo','licencias','ofertas','home','store','detalle', 'inhome2'), 
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -307,5 +307,57 @@ class SiteController extends Controller
 	public function actionOfertas(){
 		$this->render('ofertas');
 	}
+    
+    public function actionHome(){
+        $this->layout='//layouts/b2b';
+        $model = new RegistrationForm;
+            $profile = new Profile;
+            $profile->regMode = true;
+        $this->render('landing',array('model'=>$model,'profile'=>$profile));
+    }
+    
+    public function actionInhome(){
+        $this->layout='//layouts/start';
 
+       $this->render('inhome');
+    }
+	
+	public function actionInhome2(){
+       $this->layout='//layouts/start';
+	   $model = Categoria::model()->findAllBySql("select * from tbl_categoria where id_padre in (select id from tbl_categoria where id_padre=0)  order by destacado desc limit 6");
+       $ultimos = Producto::model()->findAllBySql("select * from tbl_producto order by id desc limit 15");
+	   $destacados = Producto::model()->findAllBySql("select * from tbl_producto order by destacado desc limit 15");
+       $this->render('inhome2', array('model'=>$model, 'ultimos'=>$ultimos, 'destacados'=>$destacados));
+    }
+    
+    public function actionStore(){
+        $this->layout='//layouts/start';
+
+       $this->render('store');
+    }
+    
+    public function actionRequest(){
+        $this->layout='//layouts/b2b';
+        $model = new RegistrationForm;
+        $profile = new Profile;
+        $profile->regMode = true;
+        $this->render('request',array('model'=>$model,'profile'=>$profile)); 
+    }
+    
+    public function actionRequest2(){
+        $this->layout='//layouts/b2b';
+        $model = new Empresas;
+        $user=User::model()->findByPk(1);
+        $profile=$user->profile;
+      $this->render('create',array(
+            'model'=>$model,
+            'user' => $user,
+            'profile' => $user->profile,
+        ));
+    }
+    public function actionDetalle(){
+        $this->layout='//layouts/start';
+
+       $this->render('detalle');
+    }
 }

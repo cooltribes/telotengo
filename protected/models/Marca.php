@@ -93,6 +93,7 @@ class Marca extends CActiveRecord
 		$criteria->compare('destacado',$this->destacado,true);
 		$criteria->compare('descripcion',$this->descripcion,true);
 		$criteria->compare('url_imagen',$this->url_imagen,true);
+		$criteria->order = 'nombre ASC';
 		
 
 		return new CActiveDataProvider($this, array(

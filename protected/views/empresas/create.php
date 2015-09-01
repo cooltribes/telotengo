@@ -1,36 +1,24 @@
-<!-- CONTENIDO ON -->
-     <div class="container-fluid" style="padding: 0 15px;">
-
-<?php
-$this->breadcrumbs=array(
-	'Empresas'=>array('admin'),
-	'Crear',
-);
-
-?>
-<?php if(Yii::app()->user->hasFlash('success')){?>
-	    <div class="alert in alert-block fade alert-success text_align_center">
-	        <?php echo Yii::app()->user->getFlash('success'); ?>
-	    </div>
-	<?php } ?>
-	<?php if(Yii::app()->user->hasFlash('error')){?>
-	    <div class="alert in alert-block fade alert-error text_align_center">
-	        <?php echo Yii::app()->user->getFlash('error'); ?>
-	    </div>
-	<?php } ?>
-
-<div class="row">
-        <!-- COLUMNA PRINCIPAL DERECHA ON // OJO: esta de primera para mejorar el SEO sin embargo por CSS se ubica visualmente a la derecha -->
-
-        <div class="col-md-10  col-md-push-2 main-content" role="main">
-			<h1>Empresas<small> - Solicitud</small></h1>
-
-			<h3><?php echo '¡Bienvenido, '.$profile->first_name.' '.$profile->last_name.'!'; ?></h3>
-
-<h6>Ingresa a continuación los datos de tu empresa.</h6>
-
-<?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
-
-</div>
-</div>
+<div class="row-fluid">
+    <h5 class="col-md-8 col-md-offset-2 text-center">
+            <?php if(isset(Yii::app()->session['quieninvita'])) 
+            	{?>
+            		
+¡Bienvenido <?php Yii::app()->session['quieninvita'];?>Te han invitado a formar parte de Telotengo, una tienda online creada únicamente para Empresas. Donde podrás participar como vendedor, comprador o de ambas formas.
+            		
+            	<?php
+            	}else
+            	{?>
+            		No hemos encontrado ningún registro de invitación a este correo electrónico, por lo que iniciaremos un proceso de validación que nos permitirá generar una para hacertela llegar a
+            	<?php }?>
+            
+   </h5>
+    <div class="col-md-6 col-md-offset-3 margin_top orangepanel">
+        <h4 class="text-center">
+            Por favor completa los siguientes datos personales:
+        </h4>
+               <?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
+                
+    
+    </div>
+    
 </div>

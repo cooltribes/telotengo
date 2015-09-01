@@ -1,4 +1,4 @@
-<!-- CONTENIDO ON -->
+<!-- CONTENIDO ON --> 
 <div class="container">
 	<div class="row-fluid">
 	<?php
@@ -22,7 +22,7 @@
 	 <!-- COLUMNA PRINCIPAL DERECHA ON // OJO: esta de primera para mejorar el SEO sin embargo por CSS se ubica visualmente a la derecha -->
 
 		<div>
-    		<h1> Editar Inventario </h1>
+    		<h1> Cargar Inventario </h1>
         	
         
             	<div class="row-fluid well bg_white">
@@ -36,9 +36,26 @@
 				
 					
 						<div class="col-md-10 no_padding_right">
-							<?php echo CHtml::textField("busqueda",'', array('class'=>'form-control no_radius_right no_padding_right','placeholder'=>'Busca el producto que deseas modificar')); ?>
-						</div> 
-					  
+							<?php #echo CHtml::textField("busqueda",'', array('class'=>'form-control no_radius_right no_padding_right','placeholder'=>'Busca el producto que deseas modificar')); ?>
+						
+						<?php
+						$this->widget('zii.widgets.jui.CJuiAutoComplete', array(
+					    'id'=>'busqueda',
+						'name'=>'busqueda',
+					    'source'=>$this->createUrl('Producto/autocomplete'),
+						'htmlOptions'=>array(
+					          'size'=>50,
+							  'placeholder'=>'Introduzca el nombre del producto que desea buscar',
+							  'class'=>'form-control no_radius_right no_padding_right',
+					          //'maxlength'=>45,
+					        ),
+					    // additional javascript options for the autocomplete plugin
+					    'options'=>array(
+					            'showAnim'=>'fold',
+					    ),
+						));
+					  ?>
+					  </div> 
 						<div class="col-md-2 no_padding_left">
 						<?php $this->widget('bootstrap.widgets.TbButton', array(
 							'buttonType'=>'submit',
@@ -48,7 +65,10 @@
 						)); ?>
 					   </div>	
 		
-				<?php $this->endWidget(); ?>	
+				<?php $this->endWidget(); 	
+			if(Yii::app()->authManager->checkAccess("admin", Yii::app()->user->id))
+			{?>
+				
 				
 			<h4> O Agregar un nuevo producto </h4>
 			
@@ -60,7 +80,9 @@
 			    'size'=>'normal', // null, 'large', 'small' or 'mini'
 			));  ?>
 				</div> 
-				
+				<?php
+			}
+				?>
 		
 		</div>
 

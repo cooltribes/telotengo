@@ -3,10 +3,10 @@
 /**
  * This is the model class for table "tbl_categoria".
  *
- * The followings are the available columns in table 'tbl_categoria':
+ * The followings are the available columns in table 'tbl_categoria': 
  * @property integer $id
  * @property string $nombre
- * @property string $url_amigable
+ * @property integer $id_seo
  * @property string $imagen_url
  * @property string $destacado
  * @property string $descripcion
@@ -16,11 +16,12 @@
  */
 class Categoria extends CActiveRecord
 {
-	/**
+	/** 
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
 	 * @return Categoria the static model class
 	 */
+	public $oculta;
 	
 	public static function model($className=__CLASS__)
 	{
@@ -37,19 +38,20 @@ class Categoria extends CActiveRecord
 
 	/**
 	 * @return array validation rules for model attributes.
-	 */
+	 */ 
 	public function rules()
 	{
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('nombre, id_padre', 'required'),
+			array('nombre, id_padre, nomenclatura', 'required'),
 			array('nombre', 'length', 'max'=>80),
+			array('nomenclatura', 'unique', 'message' =>'la nomenclatura esta siendo utilizada'),
 			array('url_amigable', 'length', 'max'=>150),
 			array('imagen_url', 'length', 'max'=>250),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, nombre, url_amigable, id_padre, imagen_url, destacado, descripcion', 'safe', 'on'=>'search'),
+			array('id, nombre, url_amigable, id_padre, imagen_url, destacado, descripcion, id_seo, nomenclatura', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -62,6 +64,7 @@ class Categoria extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'categoriaHasTblProductos' => array(self::HAS_MANY, 'CategoriaHasTblProducto', 'categoria_id'),
+			'seo' => array(self::BELONGS_TO, 'Seo', 'id_seo')
 		);
 	}
 
@@ -78,6 +81,7 @@ class Categoria extends CActiveRecord
 			'id_padre' => 'Id Padre',
 			'destacado' => 'Destacado',
 			'descripcion' => 'Descripción',
+			'id_seo'=> 'SEO'
 		);
 	}
 
@@ -88,7 +92,7 @@ class Categoria extends CActiveRecord
 	public function search()
 	{
 		// Warning: Please modify the following code to remove attributes that
-		// should not be searched.
+		// should not be searched. 
 
 		$criteria=new CDbCriteria;
 
@@ -99,9 +103,10 @@ class Categoria extends CActiveRecord
 		$criteria->compare('imagen_url',$this->imagen_url,true);
 		$criteria->compare('destacado',$this->destacado,true);
 		$criteria->compare('descripcion',$this->descripcion,true);
+        $criteria->compare('id_seo',$this->id_seo,true);
 
 		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
+			'criteria'=>$criteria, 
 		));
 	}
 	
@@ -170,5 +175,26 @@ class Categoria extends CActiveRecord
 			return 0;
 		}
 	}
+    
+    public function getImgUrl($thumbnail = false){
+        if(!$thumbnail){
+            return Yii::app()->request->baseUrl."/images/categoria/".$this->id."/".$this->imagen_url;
+        }else{
+            return Yii::app()->request->baseUrl."/images/categoria/".$this->id."/".str_replace('.','_thumb.',$this->imagen_url);
+        }
+    }
+    
+    public function setSeo(){ 
+        if(!$this->seo){
+            $seo=new Seo;
+            $seo->amigable=Funciones::cleanUrlSeo($this->nombre); 
+            $seo->save();            
+            $this->id_seo =$seo->id;
+            return $this->save(); 
+        }
+        return false;
+    }
+
+    
 	
 }

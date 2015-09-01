@@ -2,7 +2,7 @@
 	<div class="row-fluid">
 		<!-- COLUMNA PRINCIPAL DERECHA ON // OJO: esta de primera para mejorar el SEO sin embargo por CSS se ubica visualmente a la derecha -->
 		<div>
-			<h1>Información General <small> - Nuevo producto</small></h1>
+			<h1>Información Vital<small> - Nuevo producto</small></h1>
 			<!-- Nav tabs -->
 			<!-- SUBMENU ON -->
 			<?php echo $this->renderPartial('_menu', array('model'=>$model, 'activo'=>'informacion_general')); ?>
@@ -14,74 +14,143 @@
 						<?php 
 						$form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
 							'id'=>'producto-form',
-							'enableAjaxValidation'=>false,
+							'enableAjaxValidation'=>true,
+							    'enableClientValidation'=>false,
+								    'clientOptions'=>array(
+								        'validateOnSubmit'=>true,
+								    )
 						));
 						?>
 							<?php echo $form->errorSummary($model); ?>
 							<div class="form-group">
-								<label>Nombre</label>
-								<?php echo $form->textField($model,'nombre',array('class'=>'form-control','maxlength'=>150)); ?>
+								<?php echo $form->labelEx($model,'nombre'); ?> 
+								<?php echo $form->textField($model,'nombre',array('id'=>'nombre','class'=>'form-control','maxlength'=>150)); ?>
 								<?php echo $form->error($model,'nombre'); ?>
+								
+									<span class="help-block muted text_align_left padding_right">
+		                    			<span class="help-block error" id="esconder" style="display: block;">Nombre Ya existe
+		                    			</span>
+                    				</span>	
 							</div>
+							
 							<div class="form-group">
-								<label>Modelo</label>
+								<?php echo $form->labelEx($model,'modelo'); ?> 
 								<?php echo $form->textField($model,'modelo',array('class'=>'form-control','maxlength'=>150)); ?>
-								<?php echo $form->error($model,'modelo');  ?>
+								<?php echo $form->error($model,'modelo'); ?>
 							</div>
-							
+							<?php if($model->padre_id!="")
+							{    
+							?>
+    							<div class="form-group">
+    							    <label>Marca </label>
+    							    <?php 
+                                      echo CHtml::textField('marca', $model->padre->idMarca->nombre, array('id'=>'marca','class'=>'form-control','maxlength'=>100, 
+                                            'width'=>100,'disabled'=>'disabled')); ?> 
+                                </div>
+                            <?php 
+                            }?>
 							<div class="form-group">
-								<label>Referencia</label>
-								<?php echo $form->textField($model,'codigo',array('class'=>'form-control','maxlength'=>50)); ?>
-								<?php echo $form->error($model,'codigo'); ?>
-							</div>
+                                <?php echo $form->labelEx($model,'padre_id'); 
+						
+							if($model->padre_id=="")
+							{
+			
 							
+								
+								     $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
+								    'id'=>'padre_id',
+									'name'=>'padre_id',
+								    'source'=>$this->createUrl('ProductoPadre/autocomplete'),
+									'htmlOptions'=>array(
+								          'size'=>100,
+										  'placeholder'=>'Introduzca el producto padre',
+										  'class'=>'form-control',
+								          //'maxlength'=>45,
+								        ),
+								    // additional javascript options for the autocomplete plugin
+								    'options'=>array(
+								            'showAnim'=>'fold',
+								    ),
+									));
+									?>
+									<span class="help-block muted text_align_left padding_right" >
+		                    			<span class="help-block error" id="errorUrl" style="display: block;">Nombre del Producto padre no existe
+		                    			</span>
+                    				</span>	
 							<?php
-							if(UserModule::isAdmin()){
-							?>
-								<div class="form-group">
-								<?php echo $form->radioButtonListInlineRow($model,'estado', array(1 => 'Activo', 0 => 'Inactivo',)); ?>
-								<?php echo $form->error($model,'estado'); ?>
-								</div>
-							<?php
-							}
-							?>
+							 }
+							 else 
+							 {
 
+							 	 echo CHtml::textField('nombrePadre', $model->padre->nombre, array('id'=>'nombrePadre','class'=>'form-control','maxlength'=>100, 
+										'width'=>100,'disabled'=>'disabled'));
+                                 echo CHtml::hiddenField('padre_id', $model->padre->nombre);  
+                                 
+							 }
+								?>
+								
+
+							</div>
+													
 							<div class="form-group">
-								<label>Peso estimado (Kg.)</label>
-								<?php echo $form->textField($model,'peso',array('class'=>'form-control','placeholder'=>'Peso estimado del producto a registrar')); ?>
-								<?php echo $form->error($model,'peso'); ?>
+								<label>Fabricante</label>
+								<?php echo $form->textField($model,'fabricante',array('class'=>'form-control','maxlength'=>250)); ?>
+								<?php echo $form->error($model,'fabricante');  ?>
 							</div>
 							
 							<div class="form-group">
+								<label>Año de fabricacion</label>
+								<?php echo $form->textField($model,'annoFabricacion',array('class'=>'form-control','maxlength'=>20)); ?>
+								<?php echo $form->error($model,'annoFabricacion');  ?>
+							</div>
+
+							
+							<div class="form-group">
+								<label>UPC</label>
+								<?php echo $form->textField($model,'upc',array('class'=>'form-control','maxlength'=>50)); ?>
+								<?php echo $form->error($model,'upc'); ?>
+							</div>
+							
+							
+							<div class="form-group">
+								<label>EAN</label>
+								<?php echo $form->textField($model,'ean',array('class'=>'form-control','maxlength'=>50)); ?>
+								<?php echo $form->error($model,'ean'); ?>
+							</div>
+							
+							<div class="form-group">
+								<label>GTIN</label>
+								<?php echo $form->textField($model,'gtin',array('class'=>'form-control','maxlength'=>50)); ?>
+								<?php echo $form->error($model,'gtin'); ?>
+							</div>
+							
+							<div class="form-group">
+								<label>ISBN</label>
+								<?php echo $form->textField($model,'isbn',array('class'=>'form-control','maxlength'=>50)); ?>
+								<?php echo $form->error($model,'isbn'); ?>
+							</div>
+							
+							<div class="form-group">
+								<label>Color</label>
+								<?php echo $form->textField($model,'color',array('class'=>'form-control','maxlength'=>50)); ?>
+								<?php echo $form->error($model,'color'); ?>
+							</div>
+							
+							<div class="form-group">
+								<?php echo $form->labelEx($model,'color_id'); ?> 
+								<?php echo $form->dropDownList($model,'color_id', CHtml::listData(Color::model()->findAll(array('order' => 'nombre')), 'id', 'nombre'),array('id'=>'color_id','class'=>'form-control','empty'=>'Seleccione un Color')); ?>
+								<?php echo $form->error($model,'color_id'); ?>
+							</div>
+
+							
+						<!--	<div class="form-group">
 								<label>Descripción</label>
 								<?php $this->widget('ext.yiiredactor.widgets.redactorjs.Redactor', array( 'model' => $model, 'attribute' => 'descripcion' )); ?>
 								<?php echo $form->error($model,'descripcion'); ?>
-							</div>
+						</div> -->
+  
 
-
-							<div class="form-group">
-								<label>Marcas</label>  
-								<?php              
-				                $models = Marca::model()->findAll(array('order' => 'nombre'));
-								$list = CHtml::listData($models,'id', 'nombre'); 
-								
-								echo CHtml::dropDownList('Producto[marca_id]', $model->marca_id, $list, array('empty' => 'Seleccione...', 'class' => 'form-control')); 
-								echo $form->error($model,'marca_id');
-
-				                ?>
-							</div>    
-
-							<?php
-							if(UserModule::isAdmin()){
-							?>
-								<div class="form-group">
-								<?php echo $form->radioButtonListInlineRow($model, 'destacado', array(1 => 'Si', 0 => 'No',)); ?>
-								<?php echo $form->error($model,'destacado'); ?>
-								</div>
-							<?php
-							}
-							?>
-							
+							<!--
 							<div class="form-group">     
 								<label>Seleccione las categorías del producto</label>
 								<div>
@@ -125,9 +194,10 @@
 								</div>
 
 							</div>
+							-->
 							<?php $this->widget('bootstrap.widgets.TbButton', array(
 								'buttonType'=>'submit',
-								'htmlOptions'=>array('class'=>'btn btn-primary margin_top_small col-md-3'),
+								'htmlOptions'=>array('class'=>'btn btn-primary margin_top_small form-control', 'id'=>'button_send'),
 								'label'=>$model->isNewRecord ? 'Agregar' : 'Guardar',
 							)); ?>
 
@@ -174,24 +244,72 @@
 
 	</div>
 </div>
+	<script>
+	
+$(document).ready(function() {
+	 $('#esconder').hide();
+	
+	$('#padre_id').blur(function(){ 
+		var nombre= $('#padre_id').val();
+		$.ajax({
+		         url: "<?php echo Yii::app()->createUrl('producto/verificarPadre') ?>",
+	             type: 'POST',
+		         data:{
+	                    nombre:nombre, 
+	                   },
+		        success: function (data) {
+					
+					if(data==1)
+					{
+						  $('#errorUrl').hide();
+	       				  $('#button_send').attr('disabled',false);
+					}
+					else
+					{
+						 $('#button_send').attr('disabled',true);
+	        			 $('#errorUrl').show();
+					}
+		       	}
+		       })
+	});
+	
+	
+		$('#nombre').blur(function(){ 
+		var nombre= $('#nombre').val();
+		$.ajax({
+		         url: "<?php echo Yii::app()->createUrl('producto/verificarNombre') ?>",
+	             type: 'POST',
+		         data:{
+	                    nombre:nombre, 
+	                   },
+		        success: function (data) {
+					
+					if(data==1)
+					{
+						 $('#button_send').attr('disabled',true);
+	        			 $('#esconder').show();
+					}
+					else
+					{
+						  $('#esconder').hide();
+	       				  $('#button_send').attr('disabled',false);
+						 
+					}
+		       	}
+		       })
+	});
 
-<script>
-	$('#Categoria_nombre').change(function(){
-		//alert("cambio");
-	});
 	
-	$('#cate_padre').change(function(){
-		if($(this).val() != ''){
-			var path = location.pathname.split('/');
-			$.ajax({
-			      url: "<?php echo Yii::app()->createUrl('producto/hijos'); ?>",
-			      type: "post",
-			      data: { categoria_id : $(this).val() },
-			      success: function(data){
-			           $('#cate_hijos').html(data);
-			      },
-			});
-		}
-	});
 	
-</script>
+});	
+		</script>
+	
+	
+	
+	
+	
+	
+
+	
+	
+	

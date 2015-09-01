@@ -2,33 +2,40 @@
 		<div class="row-fluid">
 
 
-<?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
+<?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array( 
 	'id'=>'categoria-form',
-	'enableAjaxValidation'=>false,
-	'enableClientValidation'=>true,
+	'enableAjaxValidation'=>true,
+	'enableClientValidation'=>false,
 	'type'=>'horizontal',
 	'clientOptions'=>array(
-		'validateOnSubmit'=>true, 
+		'validateOnSubmit'=>false,  
 	),
 	'htmlOptions' => array(
         'enctype' => 'multipart/form-data',
     ),
 )); ?>
-	
+	 
 	<?php // echo $form->errorSummary($model); ?>
-	<?php 
-	if(isset($model->nombre))
-	 	echo $form->hiddenField($model,'oculta',array('value'=>$model->id, 'id'=>'oculta')); 
-	else	
-	 	echo $form->hiddenField($model,'oculta',array('value'=>'', 'id'=>'oculta'));
-	 	?>
+	 
+    <?php 
+    if(isset($model->nombre))
+        echo $form->hiddenField($model,'oculta',array('value'=>$model->id, 'id'=>'oculta')); 
+    else    
+        echo $form->hiddenField($model,'oculta',array('value'=>'', 'id'=>'oculta'));
+        ?>
 	
 	<div class="col-md-6 col-md-offset-3 margin_top_small">
 		<?php echo $form->textFieldRow($model,'nombre',array('class'=>'form-control','maxlength'=>80, 'id'=>'nombre')); ?>
+
 	</div>
 	
 	<div class="col-md-6 col-md-offset-3 margin_top_small">
-		<label>Categoría padre </label>
+		<?php echo $form->textFieldRow($model,'nomenclatura',array('class'=>'form-control','maxlength'=>80, 'id'=>'nomenclatura')); ?>
+
+	</div>
+	
+	<div class="col-md-6 col-md-offset-3 margin_top_small">
+		<label>Categoría Padre</label>  
 	<?php
 
 
@@ -39,7 +46,7 @@
 		
 		
 		echo CHtml::activeDropDownList($model,'id_padre', Categoria::model()->combinar($cat),
-                               array('empty'=>'Si no posee Categorias, no seleccione',
+                               array('empty'=>'Seleccione de ser necesario',
                                 'class'=>'form-control', 'id'=>'padre'));
 
 		
@@ -75,35 +82,38 @@
     </div>-->
 	
 	<?php // echo $form->textFieldRow($model,'imagen_url',array('class'=>'span5','maxlength'=>250)); ?>
-	
 
 		<?php 
-			/*if($model->imagen_url != ""):?>
+			if($model->imagen_url != ""):?>
 				<div class="col-md-6 col-md-offset-3 margin_top_small">
-			<?php 	echo CHtml::image(Yii::app()->request->baseUrl.'/images/categoria/'.str_replace(".png","",$model->imagen_url).'_thumb.jpg',"image"); ?>
+			<?php 	echo CHtml::image($model->getImgUrl(true),$model->nombre); ?>
+			<input type="hidden" id="previous_img" value="1"/>
 		
 	</div>
-	   <?php endif; */?>
+	   <?php else:?>
+	       
+<input type="hidden" id="previous_img" value="0"/>
+<?php  endif;?>
 	
-	<!--<div class="col-md-6 col-md-offset-3 margin_top_small">
-	    <label> Logotipo </label>
+	<div class="col-md-6 col-md-offset-3 margin_top_small"> 
+	    <label> Imagen </label>
 			<?php                       
-			echo CHtml::activeFileField($model, 'imagen_url',array('name'=>'url'));
-			echo $form->error($model, 'imagen_url'); 
+			echo CHtml::activeFileField($model, 'imagen_url',array('name'=>'imagen'));			
 			?>
-    </div>-->
+			<span class="help-inline error" id="Categoria_imagen_url_em_" style="display: none">Debes elegir una imagen</span>
+    </div>
 	
 	<div class="col-md-6 col-md-offset-3 margin_top">
 		<?php $this->widget('bootstrap.widgets.TbButton', array(
 			'buttonType'=>'submit',
 			'type'=>'primary',
 			'label'=>$model->isNewRecord ? 'Crear' : 'Guardar',
-			'htmlOptions'=>array('class'=>'form-control')
+			'htmlOptions'=>array('class'=>'form-control','id'=>'guardar')
 		)); ?>
-
-		                <ul class="nav nav-stacked nav-tabs margin_top">
-                   			 <li><a id="avanzar" style="cursor: pointer" title="Guardar y avanzar">Guardar y avanzar</a></li>
-                		</ul>
+ 
+		              
+                   			<button id="avanzar" style="cursor: pointer" class="btn btn-block boton_link transition_all btn" title="Guardar y avanzar">Guardar y avanzar
+                	
 	</div>
 	
 	
@@ -124,6 +134,7 @@
 		var nombre=$("#nombre").val();
 		var padre=$("#padre").val();
 		var oculta=$("#oculta").val();
+		var nomenclatura=$("#nomenclatura").val();
 		var ultimo;
 		
 		 if($('#ultimo1').is(':checked')) 
@@ -132,17 +143,17 @@
 		 	ultimo=$("#ultimo2").val();
 		
 		
-		if(nombre!="")
+		if(nomenclatura!="" && nombre!=""&&!($('#imagen').val()==''&&$('#prevousimg').val()=="0"))
 		{
-			$.ajax({
+			$.ajax({ 
 	         url: "<?php echo Yii::app()->createUrl('Categoria/crearAvanzar') ?>",
              type: 'POST',
 	         data:{
-                    nombre:nombre, padre:padre, ultimo:ultimo, oculta:oculta
+                    nombre:nombre, padre:padre, ultimo:ultimo, oculta:oculta, nomenclatura:nomenclatura
                    },
 	        success: function (data) {
 	        	
-      			window.location.href = '../categoria/categoriaRelacionada/'+data+'';
+      			window.location.href = '<?php echo Yii::app()->baseUrl ?>/categoria/categoriaRelacionada/'+data;
 	       	}
 	       })
 		}
@@ -163,5 +174,18 @@
 		//alert('esconder');
 		$("#descripcion").hide();		
 	});	*/
+	
+	$('#guardar').on('click', function(event) {
+	    if($('#imagen').val()==''&&$('#prevousimg').val()=="0"){
+	        event.preventDefault();
+	        $('#Categoria_imagen_url_em_').show();
+	    }else{
+	        $('#categoria-form').submit();
+	    }        
+            
+        
+        
+        
+    });
 	
 </script>

@@ -6,6 +6,11 @@ class User extends CActiveRecord
 	const STATUS_ACTIVE=1;
 	const STATUS_BANNED=-1;
 	
+	const TYPE_ADMIN = 1;
+	const TYPE_INVITADO_EMPRESA = 2;
+	const TYPE_INVITADO_CLIENTE = 3;
+	const TYPE_USUARIO_SOLICITA = 4;
+
 	//TODO: Delete for next version (backward compatibility)
 	const STATUS_BANED=-1;
 	
@@ -29,14 +34,17 @@ class User extends CActiveRecord
 	/*
 	Tipos de usuario (type):
 	1 = admin
-	2 = persona natural
-	3 = persona jurídica
-	*/
+	2 = Usuario invitado como empresa
+	3 = Usuario invitado como cliente
+	4 = Usuario que solicita participar enviando datos
+		*/
 
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @return CActiveRecord the static model class
 	 */
+	
+	public $fecha;
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
@@ -68,17 +76,17 @@ class User extends CActiveRecord
 			array('superuser', 'in', 'range'=>array(0,1)),
             array('create_at', 'default', 'value' => date('Y-m-d H:i:s'), 'setOnEmpty' => true, 'on' => 'insert'),
             array('lastvisit_at', 'default', 'value' => '0000-00-00 00:00:00', 'setOnEmpty' => true, 'on' => 'insert'),
-			array('username, email, superuser, status', 'required'),
+			array('email, type', 'required'),
 			array('superuser, status', 'numerical', 'integerOnly'=>true),
 			array('id, username, password, email, activkey, create_at, lastvisit_at, superuser, status, type, newsletter, facebook_id, avatar_url', 'safe', 'on'=>'search'),
 		):((Yii::app()->user->id==$this->id)?array(
-			array('username, email', 'required'),
+			array('email', 'required'),
 			array('username', 'length', 'max'=>40, 'min' => 3,'message' => UserModule::t("Incorrect username (length between 3 and 40 characters).")),
 			array('email', 'email'),
 			array('username', 'unique', 'message' => UserModule::t("This user's name already exists.")),
 			//array('username', 'match', 'pattern' => '/^[A-Za-z0-9_@]+$/u','message' => UserModule::t("Incorrect symbols (A-z0-9aaa).")),
 			array('email', 'unique', 'message' => UserModule::t("This user's email address already exists.")),
-			array('id, username, password, email, activkey, create_at, lastvisit_at, superuser, status, type, newsletter, facebook_id, avatar_url, perfil_completo', 'safe', 'on'=>'search'),
+			array('id, username, password, email, activkey, create_at, lastvisit_at, superuser, status, type, newsletter, facebook_id, avatar_url, perfil_completo, quien_invita', 'safe', 'on'=>'search'),
 		):array()));
 	}
 
@@ -114,10 +122,10 @@ class User extends CActiveRecord
 			'lastvisit_at' => UserModule::t("Last visit"),
 			'superuser' => UserModule::t("Superuser"),
 			'status' => UserModule::t("Status"),
-			'type' => '¿Vas a registrar una empresa?',
+			'type' => 'Tipo de invitación',
 			'newsletter' => '¿Quieres recibir novedades por email?',
 			'avatar_url'=>'Avatar',
-			'perfil_completo' => 'Perfil Completo',
+			'quien_invita' => '¿Quien realizó la invitación?',
 		);
 	}
 	
@@ -137,7 +145,7 @@ class User extends CActiveRecord
                 'condition'=>'superuser=1',
             ),
             'notsafe'=>array(
-            	'select' => 'id, username, password, email, activkey, create_at, lastvisit_at, superuser, status, facebook_id, avatar_url, perfil_completo',
+            	'select' => 'id, username, password, email, activkey, create_at, lastvisit_at, superuser, status, facebook_id, avatar_url, quien_invita',
             ),
         );
     }
@@ -146,7 +154,7 @@ class User extends CActiveRecord
     {
         return CMap::mergeArray(Yii::app()->getModule('user')->defaultScope,array(
             'alias'=>'user',
-            'select' => 'user.id, user.username, user.email, user.create_at, user.lastvisit_at, user.superuser, user.status, user.type, user.avatar_url, user.facebook_id, user.activkey, user.perfil_completo',
+            'select' => 'user.id, user.username, user.email, user.create_at, user.lastvisit_at, user.superuser, user.status, user.type, user.avatar_url, user.facebook_id, user.activkey, user.quien_invita, user.registro_password',
         ));
     }
 	
@@ -160,6 +168,10 @@ class User extends CActiveRecord
 			'AdminStatus' => array(
 				'0' => UserModule::t('No'),
 				'1' => UserModule::t('Yes'),
+			),
+			'UserType' => array (
+				self::TYPE_INVITADO_EMPRESA => "Invitar como empresa",
+				self::TYPE_INVITADO_CLIENTE => "Invitar como cliente",
 			),
 		);
 		if (isset($code))
@@ -192,6 +204,41 @@ class User extends CActiveRecord
         $criteria->compare('newsletter',$this->newsletter);
 		$criteria->compare('facebook_id',$this->facebook_id);
 		$criteria->compare('avatar_url',$this->avatar_url);
+		$criteria->addCondition('type <> 3');
+
+        return new CActiveDataProvider(get_class($this), array(
+            'criteria'=>$criteria,
+        	'pagination'=>array(
+				'pageSize'=>Yii::app()->getModule('user')->user_page_size,
+			),
+        ));
+    }
+
+	   public function buscarDesactivo()
+    {
+        // Warning: Please modify the following code to remove attributes that
+        // should not be searched.
+
+        $criteria=new CDbCriteria;
+        
+        $criteria->compare('id',$this->id);
+        $criteria->compare('username',$this->username,true);
+        $criteria->compare('password',$this->password);
+        $criteria->compare('email',$this->email,true);
+        $criteria->compare('activkey',$this->activkey);
+        $criteria->compare('create_at',$this->create_at);
+        $criteria->compare('lastvisit_at',$this->lastvisit_at);
+        $criteria->compare('superuser',$this->superuser);
+        $criteria->compare('status',$this->status);
+        $criteria->compare('type',$this->type);
+        $criteria->compare('newsletter',$this->newsletter);
+		$criteria->compare('facebook_id',$this->facebook_id);
+		$criteria->compare('avatar_url',$this->avatar_url);
+		$criteria->compare('avatar_url',$this->avatar_url);
+		$criteria->compare ('registro_password',0, true);
+		$criteria->compare ('superuser',0, true);
+		$criteria->addCondition('type <> 3');
+		//$criteria->addInCondition('type', array ('1','2', '4'));
 
         return new CActiveDataProvider(get_class($this), array(
             'criteria'=>$criteria,
@@ -284,4 +331,215 @@ class User extends CActiveRecord
 
 		return count($productosBolsa);
 	}
+
+    static function generarPassword(){
+        $cantNum = 4;
+        $cantLet = 4;
+        
+        $l = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        
+        $LETRAS = str_split($l);
+        $NUMEROS = range(0, 9);
+
+        $codigo = array();
+        //Seleccionar cantLet letras
+        for ($i = 0; $i < $cantLet; $i++) {
+            $codigo[] = $LETRAS[array_rand($LETRAS)];
+        }
+        for ($i = 0; $i < $cantNum; $i++) {
+            $codigo[] = array_rand($NUMEROS);
+        }
+        
+        shuffle($codigo);
+        $codigo = implode("", $codigo);
+        
+        return $codigo;
+    }
+	
+	public function newPassword($id, $rol)
+	{
+		$user = User::model()->notsafe()->findbyPk($id);
+		echo $user->id;
+		$activation_url = 'http://' . $_SERVER['HTTP_HOST'].Yii::app()->controller->createUrl(implode(Yii::app()->controller->module->recoveryUrl),array("activkey" => $user->activkey, "email" => $user->email, 
+		'solicitud'=>'nueva'));
+							
+		$message = new YiiMailMessage;
+		$message->view = 'mail_template';
+		Yii::app()->session['email']=$user->email;
+							 
+							//userModel is passed to the view
+							
+		$body=Yii::app()->controller->renderPartial($this->setMsg($rol), array( 'activation_url'=>$activation_url ),true);
+		
+		$message->setSubject($this->setSubject($rol));
+		$message->setBody(array('body'=>$body,"undercomment"=>"¿Pediste registrarte en telotengo? Si no es así, es probable que otro usuario haya utilizado tu dirección de correo electrónico por error al registrarse pero no te preocupes no es necesario que tomes alguna medida, puedes ignorar este mensaje"), 'text/html');
+		
+		
+		$message->addTo($user->email);
+		$message->from = array(Yii::app()->params['adminEmail'] => "Sigma Tiendas");
+		Yii::app()->mail->send($message);
+
+		//Yii::app()->user->setFlash('success','Las instrucciones para la recuperación de la contraseña se han enviado a tu correo electrónico');
+	}
+
+
+	public function emailEmpresaInvitado($empresa_id, $cargo, $id, $quien_invita)
+	{
+		$user = User::model()->notsafe()->findbyPk($id);
+					
+		$message = new YiiMailMessage;
+		$message->view = 'mail_template';
+		
+		Yii::app()->session['email']=$user->email;
+		$quien_invita = User::model()->notsafe()->findbyPk($quien_invita);
+		Yii::app()->session['quienInvita']=$quien_invita->username;
+		
+		/*$activation_url = 'http://' . $_SERVER['HTTP_HOST'].Yii::app()->controller->createUrl(implode(Yii::app()->controller->module->recoveryUrl),array("id"=>$id,
+		"u"=>$quien_invita->username,"activkey" => $user->activkey, "email" => $user->email, 
+		'solicitud'=>'nueva'));*/
+		
+		$activation_url = 'http://' . $_SERVER['HTTP_HOST'].Yii::app()->controller->createUrl('/user/user/datos/',array("id"=>$id,
+		"u"=>$quien_invita->username,"activkey" => $user->activkey, "email" => $user->email, 
+		'solicitud'=>'nueva', 'tipo'=>'empresa'));
+		
+		Yii::app()->session['rol']=$this->buscarRol($id);
+		Yii::app()->session['cargo']=$cargo;
+		Yii::app()->session['invitadoempresa']=$id;
+		//Yii::app()->session['activacion_url']=$activation_url;
+							 
+							//userModel is passed to the view
+							
+		$body=Yii::app()->controller->renderPartial('//mail/registroEmpresaInvitado', array( 'activation_url'=>$activation_url ),true);
+		
+		$message->setSubject("INVITADO COMO MIEMBRO DE EMPRESA");
+		$message->setBody(array('body'=>$body,"undercomment"=>"¿Pediste registrarte en telotengo? Si no es así, es probable que otro usuario haya utilizado tu dirección de correo electrónico por error al registrarse pero no te preocupes no es necesario que tomes alguna medida, puedes ignorar este mensaje"), 'text/html');
+		
+		
+		$message->addTo($user->email);
+		$message->from = array(Yii::app()->params['adminEmail'] => "Sigma Tiendas");
+		Yii::app()->mail->send($message);
+
+		//Yii::app()->user->setFlash('success','Las instrucciones para la recuperación de la contraseña se han enviado a tu correo electrónico');
+	}
+
+	public function emailClienteInvitado($id, $quien_invita)
+	{
+		$user = User::model()->notsafe()->findbyPk($id);
+					
+		$message = new YiiMailMessage;
+		$message->view = 'mail_template';
+		
+		$quien_invita = User::model()->notsafe()->findbyPk($quien_invita);
+		Yii::app()->session['quienInvita']=$quien_invita->username;
+		
+		$activation_url = 'http://' . $_SERVER['HTTP_HOST'].Yii::app()->controller->createUrl('/user/user/datos/',array("id"=>$id,
+		"u"=>$quien_invita->username,"activkey" => $user->activkey, "email" => $user->email, 
+		'solicitud'=>'nueva', 'tipo'=>'cliente'));
+		
+		$body=Yii::app()->controller->renderPartial('//mail/registroClienteInvitado', array( 'activation_url'=>$activation_url ),true);
+		
+		$message->setSubject("INVITADO COMO EMPRESA");
+		$message->setBody(array('body'=>$body,"undercomment"=>"¿Te invitaron a telotengo? Si no es así, es probable que un usuario haya utilizado tu dirección de correo electrónico por error al enviar una invitación pero no te preocupes no es necesario que tomes alguna medida, puedes ignorar este mensaje."), 'text/html');
+		
+		
+		$message->addTo($user->email);
+		$message->from = array(Yii::app()->params['adminEmail'] => "Sigma Tiendas");
+		Yii::app()->mail->send($message);
+		
+	}
+
+  		public function buscarSexo($sexo)
+		{
+			if($sexo==2)
+				return "M";
+			else
+				return "F";	
+		} 
+		
+		public function buscarSector($sector)
+		{
+			switch ($sector) {
+				case 1:
+					echo 'Alimentos';
+					break;
+				case 2:
+					echo 'Mayor';
+					break;
+				case 3:
+					echo 'Menor';
+					break;
+				case 4:
+					echo 'Industrial';
+					break;
+				case 5:
+					echo 'Construccion';
+					break;
+				case 6:
+					echo 'Entretenimiento';
+					break;				
+				case 7:
+					echo 'Hoteleria';
+					break;				
+				case 8:
+					echo 'Informatica';
+					break;				
+				case 9:
+					echo 'Salud';
+					break;				
+				case 10:
+					echo 'Servicio';
+					break;
+				case 11:
+					echo 'Transporte';
+					break;
+				case 12:
+					echo 'Otro';
+					break;
+				case 13:
+					echo 'Agropecuaria';
+					break;
+				case 14:
+					echo 'Banca';
+					break;
+				case 15:
+					echo 'Energia';
+					break;
+				case 16:
+					echo 'Educacion';
+					break;																													
+				}
+		}
+		
+		public function buscarRol($id)
+		{
+			if(Yii::app()->authManager->checkAccess("vendedor", $id))
+				return "vendedor";
+			if(Yii::app()->authManager->checkAccess("comprador", $id))
+				return "comprador";
+			if(Yii::app()->authManager->checkAccess("compraVenta", $id))
+				return "compraVenta";
+		}
+		
+		public function setSubject($rol)
+		{
+			if($rol=="vendedor")
+				return "APROBADO COMO VENDEDOR";
+			if($rol=="comprador")
+				return "APROBADO COMO COMPRADOR";
+			if($rol=="compraVenta")
+				return "APROBADO COMO COMPRADOR Y VENDEDOR";
+
+		}
+		
+		public function setMsg($rol)
+		{
+			if($rol=="vendedor")
+				return "//mail/registroVendedor";
+			if($rol=="comprador")
+				return "//mail/registroComprador";
+			if($rol=="compraVenta")
+				return "//mail/registroAmbos";
+
+		}
+
 }

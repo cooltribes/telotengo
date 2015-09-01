@@ -25,7 +25,8 @@ class AdminController extends Controller
 	{
 		return array(
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','addSaldo','delete','create','update','view','cargarSaldo','reclamos','eliminarReclamo','eliminarComentario','cargaSaldo'),
+				'actions'=>array('admin','addSaldo','delete','create','update','view','cargarSaldo','reclamos','eliminarReclamo',
+								'eliminarComentario','cargaSaldo','invitarUsuario', 'solicitudes'),
 				'users'=>UserModule::getAdmins(),
 			),
 			array('deny',  // deny all users
@@ -154,16 +155,26 @@ class AdminController extends Controller
 	{
 		$model=new User;
 		$profile=new Profile;
+		$fecha='';
 		if($id){
 			$model = User::model()->findByPk($id);
 			$profile = $model->profile;
 		}
-		
+		$first_time=$model->registro_password;	//para que el llenado del password se envie una sola vez
 		
 		$this->performAjaxValidation(array($model,$profile));
 		if(isset($_POST['User']))
 		{
+			
 			$model->attributes=$_POST['User'];
+			/*if($model->status==1 && $first_time==0)
+			{
+				$model->newPassword($model->id);
+				$model->registro_password=1;
+				
+			}*/
+			
+			$fecha=$_POST['User']['fecha'];
 			$model->activkey=Yii::app()->controller->module->encrypting(microtime().$model->password);
 			$profile->attributes=$_POST['Profile'];
 			$profile->user_id=0;
@@ -171,6 +182,14 @@ class AdminController extends Controller
 				$model->password=Yii::app()->controller->module->encrypting($model->password);
 				if($model->save()) {
 					$profile->user_id=$model->id;
+					if($fecha!='')
+					{
+						$fecha = date("Y-m-d", strtotime($fecha));
+						echo $fecha;
+						$profile->fecha_nacimiento=$fecha;
+						
+					}
+						
 					$profile->save();
 					Yii::app()->user->setFlash('success',"Usuario guardado");
 				}
@@ -183,6 +202,76 @@ class AdminController extends Controller
 			'profile'=>$profile,
 		));
 	}
+
+
+	/**
+	 * Genera un invitación a un nuevo usuario
+	 */
+	public function actionInvitarUsuario()
+	{
+		$model = new User;
+		$profile = new Profile;
+
+		$this->performAjaxValidation(array($model));
+		
+		if(isset($_POST['User']))
+		{
+			$model->attributes=$_POST['User'];
+			$model->status = 1; #Activo
+			$model->username = $_POST['User']['email']; #Mismo Mail
+			$model->email = $_POST['User']['email']; #Mismo Mail
+			$model->password = User::generarPassword();
+			$model->quien_invita = Yii::app()->user->id;
+			$model->activkey=Yii::app()->controller->module->encrypting(microtime().$model->password);
+			
+			$profile->first_name = "Usuario";
+			$profile->last_name = "Invitado";
+			$profile->cedula = "10111222";
+			$profile->fecha_nacimiento = "1980-01-01";
+			$profile->user_id=0;
+			$profile->sexo = 2; # hombre
+
+			#enviar mail
+
+			if($model->validate()&&$profile->validate()) {
+				$model->password=Yii::app()->controller->module->encrypting($model->password);
+				if($model->save()) {
+					$profile->user_id=$model->id;
+					$profile->save();
+					
+					#opcion de que sea invitado por admin para ser parte de empresa
+					if($model->type == 2){
+						$cargo = $_POST['cargo'];
+						$empresa_id = $_POST['empresas'];
+						
+						#agregar a empresa tiene usuarios
+						$nuevo = new EmpresasHasUsers;
+						$nuevo->empresas_id = $empresa_id;
+						$empre=Empresas::model()->findByPk($empresa_id);
+						Yii::app()->authManager->assign($empre->rol,$model->id);
+						$nuevo->users_id = $model->id;
+						$nuevo->rol = $cargo;
+						$nuevo->save();
+						$model->emailEmpresaInvitado($empresa_id, $cargo, $model->id, Yii::app()->user->id);
+					}
+					
+					if($model->type == 3) // invitar como cliente
+					{
+						$model->emailClienteInvitado($model->id, Yii::app()->user->id);
+					}
+
+					Yii::app()->user->setFlash('success',"Usuario invitado correctamente");
+				}
+				$this->redirect(array('admin'));
+			}
+		}
+
+		$this->render('invitar',array(
+			'model'=>$model,
+			'profile'=>$profile,
+		));
+	}
+
 
 	/**
 	 * Updates a particular model.
@@ -310,5 +399,40 @@ class AdminController extends Controller
 
        
     }
+
+	public function actionSolicitudes()
+	{
+		$model = new User();
+		$model->unsetAttributes();  // clear any default values
+        $bandera=false;
+		$dataProvider = $model->buscarDesactivo();
+
+		/* Para mantener la paginacion en las busquedas */
+		if(isset($_GET['ajax']) && isset($_SESSION['searchBox']) && !isset($_POST['query'])){
+			$_POST['query'] = $_SESSION['searchBox'];
+			$bandera=true;
+		}
+
+		/* Para buscar desde el campo de texto */
+		if (isset($_POST['query'])){
+			$bandera=true;
+			unset($_SESSION['searchBox']);
+			$_SESSION['searchBox'] = $_POST['query'];
+            $model->email = $_POST["query"];
+            $dataProvider = $model->search();
+        }	
+
+        if($bandera==FALSE){
+			unset($_SESSION['searchBox']);
+        }
+
+        if(isset($_GET['User']))
+            $model->attributes=$_GET['User'];
+
+        $this->render('solicitudes',array(
+            'model'=>$model,
+            'dataProvider' => $dataProvider,
+        ));
+	}
 	
 }

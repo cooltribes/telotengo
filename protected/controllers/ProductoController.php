@@ -31,13 +31,19 @@ class ProductoController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('seleccion','busqueda','create','hijos','imagenes','seo','create','caracteristicas','agregarCaracteristica','eliminarCaracteristica','agregarInventario',
-								 'agregarInventarioAjax','eliminarInventario','multi','orden', 'clasificar', 'niveles', 'nivelPartial', 'crearProducto'),
+				'actions'=>array('seleccion','busqueda','create','hijos','imagenes','seo','create','agregarCaracteristica','eliminarCaracteristica','agregarInventario',
+								 'agregarInventarioAjax','eliminarInventario','multi','orden', 'clasificar', 'niveles', 'nivelPartial', 'crearProducto', 'autoComplete'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete','update','eliminar','orden','aprobar','rechazar','poraprobar','calificaciones','eliminarCalificacion','importar','inventario'),
-				'users'=>array('admin'),
+				'actions'=>array('admin','delete','update','eliminar','orden','aprobar','rechazar','poraprobar','calificaciones','eliminarCalificacion','importar','inventario', 'verificarPadre', 'verificarNombre', 'details', 'caracteristicas','activarDesactivar'),
+				#'users'=>array('admin'),
+				'roles'=>array('admin'),
+			),
+			array('allow', // COMPRADORESVENDEDORES Y VENDEDORES
+				'actions'=>array('inventario'),
+				#'users'=>array('admin'),
+				'roles'=>array('vendedor', 'compraVenta'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
@@ -60,11 +66,12 @@ class ProductoController extends Controller
 	public function actionSeleccion() 
 	{
 		if(isset($_POST['busqueda'])){
+			Yii::app()->session['busquedaPalabra']="";
 		    $producto = new Producto;
             $producto->unsetAttributes();     
             $producto->nombre = $_POST['busqueda'];        
-            $dataProvider = $producto->searchTwo();
-                    
+            $dataProvider = $producto->busquedaSeleccion();
+            Yii::app()->session['busquedaPalabra']=$_POST['busqueda'];      
             $this->render('seleccion',array('dataProvider'=>$dataProvider));
 		}
 		else
@@ -161,7 +168,65 @@ class ProductoController extends Controller
 		
 	}
 	
-	public function actionCreate()
+	public function actionCreate($id = null)
+	{
+     
+		 
+         if(is_null($id)){
+             $model=new Producto;
+          
+         }
+         else{
+             $model=Producto::model()->findByPk($id);
+         }
+
+         if(isset($_POST['padre']))
+            {
+                $model->padre_id=$_POST['padre'];
+                //$model->padre->nombre;
+            }   
+            
+		
+		// Uncomment the following line if AJAX validation is needed
+		  $this->performAjaxValidation($model);
+
+		if(isset($_POST['Producto']))
+		{
+			if(isset($_POST['padre_id']))
+			{   $modelado=ProductoPadre::model()->findByAttributes(array('nombre'=>$_POST['padre_id']));	
+	
+				$model->padre_id=$modelado->id;
+			}
+			$nombreCategoria=$model->padre->idCategoria->nomenclatura;
+			$cate=Categoria::model()->findByPk($model->padre->idCategoria->id_padre);
+			$nombreCategoria=$model->padre->idCategoria->nomenclatura; 
+			$model->tlt_codigo=$model->buscarPadre($cate->id).$cate->nomenclatura.$nombreCategoria.'-'.$model->id;
+
+			$model->attributes=$_POST['Producto'];
+            $model->setSeo();
+			$model->fabricante=$_POST['Producto']['fabricante'];
+			$model->annoFabricacion=$_POST['Producto']['annoFabricacion'];
+			$model->upc=$_POST['Producto']['upc'];
+			$model->ean=$_POST['Producto']['ean'];
+			$model->gtin=$_POST['Producto']['gtin'];
+			$model->isbn=$_POST['Producto']['isbn'];
+			$model->color=$_POST['Producto']['color'];
+			
+			if($model->save())
+			{
+					 $this->redirect(Yii::app()->baseUrl.'/producto/imagenes/'.$model->id);     
+
+			}
+			
+		}
+
+		$this->render('create',array(
+			'model'=>$model,
+		));
+	}
+	
+	
+	/*public function actionCreate()
 	{
 		$user = Yii::app()->user->id;
 
@@ -195,7 +260,7 @@ class ProductoController extends Controller
 					$model->estado = 0; // solicitado	
 					$model->notificado = 0; // El administrador aun no ha visto
 				}*/
-				$model->notificado = 1; // no aparece como notificacion
+				/*$model->notificado = 1; // no aparece como notificacion
 				$model->interno = "por ahora"; // mientras definimos la estructura del mismo
 				$model->users_id =  Yii::app()->user->id;
 				$model->estado = $_POST['Producto']["estado"];
@@ -284,12 +349,12 @@ class ProductoController extends Controller
 		
 			
 			
-	}
-	
+	}*/
+	 
 	/**
 	 * Imagenes
 	 */
-	public function actionImagenes()
+	public function actionImagenes($id)
 	{
 		
 		if(isset($_GET['id'])){
@@ -444,7 +509,7 @@ class ProductoController extends Controller
 					'inventario' => array(
 						'id' => $inventario->id,
 						'precio' => $inventario->precio,
-						'precio_tienda' => $inventario->precio_tienda,
+						'costo' => $inventario->costo,
 						'cantidad' => $inventario->cantidad,
 					),
 					'caracteristicas' => $otras_caracteristicas,
@@ -476,7 +541,7 @@ class ProductoController extends Controller
 					'inventario' => array(
 						'id' => $inventario->id,
 						'precio' => $inventario->precio,
-						'precio_tienda' => $inventario->precio_tienda,
+						'costo' => $inventario->costo,
 						'cantidad' => $inventario->cantidad,
 					),
 					'caracteristicas' => $otras_caracteristicas,
@@ -527,7 +592,7 @@ class ProductoController extends Controller
 				'inventario' => array(
 					'id' => $inventario->id,
 					'precio' => $inventario->precio,
-					'precio_tienda' => $inventario->precio_tienda,
+					'costo' => $inventario->costo,
 				),
 				'caracteristicas' => $otras_caracteristicas,
 				'not_found' => $not_found
@@ -548,7 +613,7 @@ class ProductoController extends Controller
 						'inventario' => array(
 							'id' => $inventario->id,
 							'precio' => $inventario->precio,
-							'precio_tienda' => $inventario->precio_tienda,
+							'costo' => $inventario->costo,
 						),
 						'caracteristicas' => $otras_caracteristicas
 					);
@@ -733,7 +798,7 @@ class ProductoController extends Controller
         }//else principal
     }
 
-    public function actionCaracteristicas(){
+   /* public function actionCaracteristicas(){
 		
 		$user = Yii::app()->user->id;
 		$empresas_user = EmpresasHasUsers::model()->findAllByAttributes(array('users_id'=>$user));
@@ -775,7 +840,7 @@ class ProductoController extends Controller
 			
 			$this->redirect(array('producto/admin'));
 		}
-	}
+	}*/
 
 	public function actionAgregarInventario($producto_id){
 		$model = new Inventario();
@@ -972,32 +1037,39 @@ class ProductoController extends Controller
     }
 		
 	
-	/**
+	/** 
 	 * seo
 	 */
-	public function actionSeo()
+	public function actionSeo($id)
 	{
+		  
 		if(isset($_GET['id'])){
+		    $model=Producto::model()->findByPk($id);
+              if(is_null($model->seo))
+                    $model->setSeo();  
+            
+		}
+		    
+        else{
+            throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
+            Yii::app()->end;
+        }
+
 			
-			$id = $_GET['id'];
-			if(!$seo = Seo::model()->findByAttributes(array('producto_id'=>$id)))
-				$seo = new Seo;
-			 
-			$model = Producto::model()->findByPk($id);
-		}
-		else {
-			$seo = new Seo;
-			$id="";
-			$model = new Producto;
-		}
+            
+		  
+		
+        $seo=$model->seo;
+
 		
 		if(isset($_POST['Seo'])){
 			$seo->attributes = $_POST['Seo'];
-			$seo->producto_id = $_GET['id'];
+
 			
-			$seo->save();	
-			
-			Yii::app()->user->setFlash('success',"Datos guardados exitosamente.");
+			if($seo->save()){
+			     Yii::app()->user->setFlash('success',"Datos guardados exitosamente.");
+                 $this->redirect(Yii::app()->baseUrl.'/producto/caracteristicas/'.$model->id);     
+            }
 			
 					
 		}
@@ -1006,6 +1078,94 @@ class ProductoController extends Controller
 			'model'=>$model,
 			'seo'=>$seo,
 		));
+	}
+	
+	public function actionCaracteristicas($id=null)
+	{
+					
+
+			$model = Producto::model()->findByPk($id);
+			
+			if(isset($_POST['Producto']))
+			{
+				/*$seo->attributes = $_POST['Seo'];
+				$seo->producto_id = $_GET['id'];*/
+				//echo $model->caracteristica4;
+				$var="";
+				if(isset($_POST['Producto']['caracteristica1']))
+				{
+					$var=$_POST['Producto']['caracteristica1'];
+					if(isset($_POST['Producto']['caracteristica2']))
+					{
+						 $var=$var."*-*".$_POST['Producto']['caracteristica2'];
+						if(isset($_POST['Producto']['caracteristica3']))
+						{
+							 $var=$var."*-*".$_POST['Producto']['caracteristica3'];
+							if(isset($_POST['Producto']['caracteristica4']))
+							{
+								 $var=$var."*-*".$_POST['Producto']['caracteristica4'];
+								if(isset($_POST['Producto']['caracteristica5']))
+								{
+									 $var=$var."*-*".$_POST['Producto']['caracteristica5'];
+								}
+							}
+						}
+					}
+					
+				} 
+				
+                $model->descripcion=$_POST['Producto']['descripcion'];
+				$model->caracteristicas=$var;
+				if($model->save())
+                    $this->redirect(Yii::app()->baseUrl.'/producto/details/'.$model->id);     
+				//HACER ALGO IR ALGUN LADO
+			
+					
+			}		
+			else{
+
+			$model->scenario="caracteristicas";
+			if(!is_null($model->caracteristicas)) //imprimir las caracteristicas
+			{
+				$vector=explode("*-*", $model->caracteristicas);
+				$i=0;
+				foreach($vector as $vec)
+				{
+					if($i==0)
+					{
+						$model->caracteristica1=$vec;
+					}
+					if($i==1)
+					{
+						$model->caracteristica2=$vec;
+					}
+					if($i==2)
+					{
+						$model->caracteristica3=$vec;
+					}
+					if($i==3)
+					{
+						$model->caracteristica4=$vec;
+					}
+					if($i==4)
+					{
+						$model->caracteristica5=$vec;
+					}
+					 
+					$i++;
+				}
+			} 
+			
+					$this->render('caracteristicas',array(
+				'model'=>$model,
+			));
+		}
+		
+
+		
+		
+ 
+
 	}
 
 	/* inventario */
@@ -1023,24 +1183,36 @@ class ProductoController extends Controller
 			$id="";
 			$producto = new Producto;
 		}
-		
+		$empresas_id = EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id))->empresas_id;
 		if(isset($_POST['Inventario'])){
 			$inventario->attributes = $_POST['Inventario'];
 			$inventario->sku = $_POST['Inventario']['sku'];
+			$inventario->numFabricante = $_POST['Inventario']['numFabricante'];
+			$inventario->condicion = $_POST['Inventario']['condicion'];
+			$inventario->notaCondicion = $_POST['Inventario']['notaCondicion'];
+			
+			if($inventario->condicion=="nuevo")
+				$inventario->notaCondicion = "";
+			
+			$inventario->costo = $_POST['Inventario']['costo'];
+			$inventario->cantidad = $_POST['Inventario']['cantidad'];
+			$inventario->garantia = $_POST['Inventario']['garantia'];
+			$inventario->metodoEnvio = $_POST['Inventario']['metodoEnvio'];
+			
 			$inventario->producto_id = $_POST['Inventario']['producto_id'];
 			$inventario->almacen_id = $_POST['Inventario']['almacen_id'];
-			$inventario->precio_tienda = $_POST['Inventario']['precio_tienda'];
 			
-			$producto->saveAttributes(array('estado'=>1));
+			
+			//$producto->saveAttributes(array('estado'=>1));
 
-			$inventario->save();	
-			
-			Yii::app()->user->setFlash('success',"Inventario guardado exitosamente. El producto está ahora activo.");
+			if($inventario->save())	
+				Yii::app()->user->setFlash('success',"Inventario guardado exitosamente. El producto está ahora activo.");
 		}
 		
 		$this->render('inventario',array(
 			'producto'=>$producto,
 			'model'=>$inventario,
+			'empresas_id'=>$empresas_id,
 		));
 	}
 	
@@ -1399,6 +1571,133 @@ class ProductoController extends Controller
 			ini_set('memory_limit', '32M');
 			$this->render('importarProductos');
 		}
+
+	public function actionVerificarPadre()
+	{
+		$nombre=$_POST['nombre'];
+		$model=ProductoPadre::model()->findByAttributes(array('nombre'=>$nombre));
+		if($model)
+			echo "1";
+		else 
+			echo "0";
+		
+		
+	}
+	
+	public function actionVerificarNombre()
+	{
+		$nombre=$_POST['nombre'];
+		$model=Producto::model()->findByAttributes(array('nombre'=>$nombre));
+		if($model)
+			echo "1";
+		else 
+			echo "0";
+		
+		
+	}
+	
+	public function actionDetails($id = null)
+	{
+		$data=array();
+		$connection = new MongoClass();
+		if(Funciones::isDev())
+		{
+			$document = $connection->getCollection('ejemplo');	//DEVELOP
+		}	
+		else
+		{
+
+			$document = $connection->getCollection('stage');	//STAGE
+		} 
+			
+
+		
+		if(count($_POST)>0)
+		{
+			
+			foreach($_POST as $key=>$aso)
+			{
+					if($aso!=""&& strpos($key,"*-*")=== false)
+					{
+						#echo $key." ".$aso." ";
+						if($aso!="opcion-vacia") // si viene la opcion del select
+							$data[$key]=$aso;
+						if(isset($_POST[$key."*-*UNIDAD"]))
+						{
+							#echo $_POST[$key."*-*UNIDAD"]."</br>";
+							$data[$key."*-*UNIDAD"]=$_POST[$key."*-*UNIDAD"];
+						}
+							
+					}						
+			}
+			$data['producto']=$id;
+
+					
+			$prueba = array("producto"=>$id); 
+			$user = $document->findOne($prueba); // vamos a buscar si existe el registro
+			
+			if($user==NULL) // si no existe el registro, inserte uno nuevo
+			{
+				$document->insert($data); // insertar el registro
+			}
+			else // en caso de que exista el registro, substituyalo
+			{
+				$document->remove(array("producto"=>$id));	//quito la coleccion
+				//$existente=$document->update(array("producto"=>$id), array('$set'=>$data));
+				$document->insert($data); //inserto un nuevo registro
+			}
+			//var_dump($user);
+			//var_dump($existente);
+			//var_dump($data);
+			Yii::app()->user->setFlash('success', 'Se han cargado los datos con exito');
+			//$this->render('admin');
+			$this->redirect(array('admin'));
+		}
+		 
+
+			//$GET['id'];
+        if(!is_null($id)){
+
+        	$prueba = array("producto"=>$id); 
+			$busqueda = $document->findOne($prueba); 
+			
+			$producto=Producto::model()->findByPk($id);
+			$categoria=Categoria::model()->findByPk($producto->padre->idCategoria->id);
+			$categoriaAtributo=CategoriaAtributo::model()->findAllByAttributes(array('categoria_id'=>$categoria->id, 'activo'=>1));
+			//var_dump($busqueda);
+			$this->render('details',array(
+				'producto'=>$producto,
+				'categoria'=>$categoria,
+				'categoriaAtributo'=>$categoriaAtributo,
+				'busqueda'=>$busqueda		
+		));
+		}else
+            throw new CHttpException(400, 'Invalid request. Please do not repeat this request again.');
+	}
+	
+    public function actionActivarDesactivar()
+    {
+        $id=$_POST['id'];
+        $model = Producto::model()->findByPk($id);
+        $model->estado=1-$model->estado;
+        $model->save();
+        echo $model->estado;
+        
+    }
+	
+	public function actionAutocomplete()
+	{
+	    	$res =array();
+	    	if (isset($_GET['term'])) 
+			{
+				$qtxt ="SELECT nombre FROM tbl_producto WHERE nombre LIKE :nombre and estado=1";
+				$command =Yii::app()->db->createCommand($qtxt);
+				$command->bindValue(":nombre", '%'.$_GET['term'].'%', PDO::PARAM_STR);
+				$res =$command->queryColumn();
+	    	}
+	     	echo CJSON::encode($res);
+	    	Yii::app()->end();
+	}
 
 
 }

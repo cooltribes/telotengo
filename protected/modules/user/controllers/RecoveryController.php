@@ -24,6 +24,7 @@ class RecoveryController extends Controller
 							if($form2->validate()) {
 								$find->password = Yii::app()->controller->module->encrypting($form2->password);
 								$find->activkey=Yii::app()->controller->module->encrypting(microtime().$form2->password);
+								$find->registro_password=1;
 								if ($find->status==0) {
 									$find->status = 1;
 								}
@@ -42,7 +43,7 @@ class RecoveryController extends Controller
 			    		$form->attributes=$_POST['UserRecoveryForm'];
 			    		if($form->validate()){
 			    			$user = User::model()->notsafe()->findbyPk($form->user_id);
-							$activation_url = 'http://' . $_SERVER['HTTP_HOST'].$this->createUrl(implode(Yii::app()->controller->module->recoveryUrl),array("activkey" => $user->activkey, "email" => $user->email));
+							$activation_url = 'http://' . $_SERVER['HTTP_HOST'].$this->createUrl(implode(Yii::app()->controller->module->recoveryUrl),array("activkey" => $user->activkey, "email" => $user->email, 'solicitud'=>'recuperar'));
 							
 							$message = new YiiMailMessage;
 							$message->view = 'mail_template';

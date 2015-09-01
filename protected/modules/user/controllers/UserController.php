@@ -25,12 +25,12 @@ class UserController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
+				'actions'=>array('index','view','datos','respuesta', 'setPassword', 'borrar'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
 				'actions'=>array('tucuenta','favoritos','quitarfav','usuariostienda','createuser','deleteuser','editrol','avatar',
-								'agregarsocial','deletesocial','privacidad','notificaciones','enviarbolsa'),
+								'agregarsocial','deletesocial','privacidad','notificaciones','enviarbolsa', 'activarDesactivar'),
 				'users'=>array('@'),
 			),
 			array('deny',  // deny all users
@@ -48,6 +48,44 @@ class UserController extends Controller
 		$this->render('view',array(
 			'model'=>$model,
 		));
+	}
+
+	/*
+	Action para el finalizar la solicitud con respuesta adecuada
+	*/
+	public function actionRespuesta(){
+		
+		$user = User::model()->findByPk(Yii::app()->session['usuario_solicitud']);
+		$empresasHasUsers = EmpresasHasUsers::model()->findByAttributes(array('users_id'=>$user->id));
+		$empresa = $empresasHasUsers->empresas; 
+
+		if(isset($_POST['Empresas']['comentario'])){
+			 if($_POST['Empresas']['comentario'] == ""){
+			 	Yii::app()->user->setFlash('error',"Tu comentario no se puede enviar vacío.");
+			 	$this->render('respuesta',array('user'=>$user,'empresa'=>$empresa));
+			 }else{
+			 	$empresa->saveAttributes(array('comentario'=>$_POST['Empresas']['comentario']));
+
+			 	#enviar mail a admin
+			 	$message = new YiiMailMessage;
+                $subject = 'El usuario '.$user->email.' agregó un comentario en su solicitud.';                                
+                $message->subject = $subject;
+                $message->view = "mail_template";
+                $body = 'El usuario '.$user->email.' agregó un comentario en su solicitud de empresas.
+                    <br/><br/>Comentario:<br/>
+                    '.$empresa->comentario.'
+                    <br/><br/>El usuario se encuentra en la espera de respuesta.';
+                $message->from = array(Yii::app()->params['adminEmail'] => "Sigma Tiendas");
+                $message->setBody(array("body"=>$body),'text/html');              
+                $message->addTo(Yii::app()->params['contacto']);
+                Yii::app()->mail->send($message);
+
+				Yii::app()->user->setFlash('success',"El comentario fue enviado correctamente. En las próximas horas tendrás respuesta.");
+			 	$this->redirect(Yii::app()->getBaseUrl(true));
+			 }
+		}else{
+			$this->render('respuesta',array('user'=>$user,'empresa'=>$empresa));
+		}
 	}
 	
 	/**
@@ -589,4 +627,200 @@ class UserController extends Controller
 		}
 		return $this->_model;
 	}
+
+	/*
+	Función para tomar los datos personales de una solicitud
+	*/
+	public function actionDatos(){
+		 $get="";
+		 $clienteEmpresa="";	
+		 if(isset($_GET['id']))
+		 {
+		 	$get=$_GET['id'];
+		 }
+
+	    $this->layout='//layouts/b2b';
+		$model = new RegistrationForm;
+        $profile = new Profile;
+        $profile->regMode = true;	
+
+        // ajax validator
+		if(isset($_POST['ajax']) && $_POST['ajax']==='registration-form')
+		{
+			echo UActiveForm::validate(array($model,$profile));
+			Yii::app()->end();
+		}
+
+		if(isset($_POST['Profile'])){
+			$profile->attributes=((isset($_POST['Profile'])?$_POST['Profile']:array()));
+			Yii::app()->session['atributos']=((isset($_POST['Profile'])?$_POST['Profile']:array()));
+			$soucePassword = User::generarPassword();
+			
+			if($get==""){ // evitar el bug de dejar el registro incompleto y si es vacio es registro para empresas 
+				
+				/*$model->email = Yii::app()->session['usuarionuevo'];
+				$model->status = 0; # se debe crear desactivo
+				$model->username = Yii::app()->session['usuarionuevo']; #Mismo Mail
+				$model->activkey = UserModule::encrypting(microtime().$soucePassword);
+				$model->password = UserModule::encrypting($soucePassword);
+				$model->verifyPassword = UserModule::encrypting($model->verifyPassword);
+				$model->quien_invita = 0; #el mismo, se modifica cuando tenga ID luego del save
+				$model->type = User::TYPE_USUARIO_SOLICITA;
+				$profile->user_id=0;*/
+				
+				Yii::app()->session['vacio']=1;
+				$this->redirect(array('/empresas/create'));
+				
+			}elseif($_GET['tipo']=="empresa"){ // invitado como empresa, falta hacer la validacion
+				$model = User::model()->findByPk($get);
+				$profile = $model->profile;
+				$profile->attributes=((isset($_POST['Profile'])?$_POST['Profile']:array()));
+				$profile->user_id =$model->id;
+				
+				$activation_url = Yii::app()->controller->createUrl(implode(Yii::app()->controller->module->recoveryUrl),array(
+				"activkey" => $_GET['activkey'], "email" => $_GET['email'], 
+				'solicitud'=>'nueva')); 
+				 $clienteEmpresa=1;
+				//$this->redirect(array('../'.$activation_url));
+				
+			}elseif($_GET['tipo']=="cliente"){ //invitado como cliente falta hacer la validacion
+				/*$model = User::model()->findByPk($get);
+				$profile = $model->profile;
+				$profile->attributes=((isset($_POST['Profile'])?$_POST['Profile']:array()));
+				$profile->user_id = $model->id;*/
+				 Yii::app()->session['cliente']=$get;
+				 Yii::app()->session['activation_url']=$_GET['activkey'];
+				 Yii::app()->session['email']=$_GET['email'];
+				  Yii::app()->session['quieninvita']=$_GET['u'];
+				$activation_url = Yii::app()->controller->createUrl(implode(Yii::app()->controller->module->recoveryUrl),array(
+				"activkey" => $_GET['activkey'], "email" => $_GET['email'], 
+				'solicitud'=>'nueva')); 
+				Yii::app()->session['url_act']=$activation_url;
+				$this->redirect(array('/empresas/create'));
+				/*$activation_url = Yii::app()->controller->createUrl(implode(Yii::app()->controller->module->recoveryUrl),array(
+				"activkey" => $_GET['activkey'], "email" => $_GET['email'], 
+				'solicitud'=>'nueva')); */
+				 $clienteEmpresa=1;
+			}
+
+			if($model->validate()&&$profile->validate()){
+				if($model->save()){
+					if(isset(Yii::app()->session['usuarionuevo'])){
+						$model->quien_invita = $model->id;
+						$model->save();
+					}
+
+					$profile->user_id = $model->id;
+					/*if(isset($profile->fecha_nacimiento))
+						$profile->fecha_nacimiento = date("d-m-Y", strtotime($profile->fecha_nacimiento));*/
+					$profile->save();
+					
+					#enviar correo de que se ha inscrito (?) incluyendo su password generado
+
+					#Log in
+					/*$identity = new UserIdentity($model->username,$soucePassword);
+					$identity->authenticate();
+					Yii::app()->user->login($identity,0);*/
+
+					/*
+					Ya existe la empresa. Por lo que no se solicitan mas datos.
+					*/ 
+					
+					if($clienteEmpresa!='')
+					{
+						$this->redirect($activation_url);
+					}
+					if($get!=""){ 
+						$this->redirect(array('/empresas/solicitudFinalizada'));				
+					}else{
+						#pedir nuevos datos
+						$this->redirect(array('/empresas/create'));
+					}					
+					
+				}
+			}
+		}
+
+	$this->render('datos',array('model'=>$model,'profile'=>$profile, 'get'=>$get));
+	}
+
+	public function actionSetPassword()
+	{
+				$email = ((isset($_GET['email']))?$_GET['email']:'');
+				$activkey = ((isset($_GET['activkey']))?$_GET['activkey']:'');
+				if ($email&&$activkey) {
+					$form2 = new UserChangePassword;
+		    		$find = User::model()->notsafe()->findByAttributes(array('email'=>$email));
+		    		if(isset($find)&&$find->activkey==$activkey) {
+			    		if(isset($_POST['UserChangePassword'])) {
+							$form2->attributes=$_POST['UserChangePassword'];
+							if($form2->validate()) {
+								$find->password = Yii::app()->controller->module->encrypting($form2->password);
+								$find->activkey=Yii::app()->controller->module->encrypting(microtime().$form2->password);
+								if ($find->status==0) {
+									$find->status = 1;
+								}
+								$find->save();
+								Yii::app()->user->setFlash('recoveryMessage',UserModule::t("New password is saved."));
+								$this->redirect(Yii::app()->controller->module->recoveryUrl);
+							}
+						} 
+						$this->render('changepassword',array('form'=>$form2));
+		    		} else {
+		    			Yii::app()->user->setFlash('recoveryMessage',UserModule::t("Incorrect recovery link."));
+						$this->redirect(Yii::app()->controller->module->recoveryUrl);
+		    		}
+		    	} else {
+			    	if(isset($_POST['UserRecoveryForm'])) {
+			    		$form->attributes=$_POST['UserRecoveryForm'];
+			    		if($form->validate()) {
+			    			$user = User::model()->notsafe()->findbyPk($form->user_id);
+							$activation_url = 'http://' . $_SERVER['HTTP_HOST'].$this->createUrl(implode(Yii::app()->controller->module->recoveryUrl),array("activkey" => $user->activkey, "email" => $user->email));
+							
+							// Enviar correo con link de recuperación de contraseña
+                                                    $message            = new YiiMailMessage;
+                                                    //Opciones de Mandrill
+                                                    $message->activarPlantillaMandrill();
+                                                    $subject = 'Recupera tu contraseña de Personaling';
+                                                    $body = Yii::t('contentForm','<h2>You have requested to change your password</h2> To receive a new password, click on the following link: <br/><br/> <a href="{url}">Click Here</a><br/><br/> If you have not been you who requested the change, please contact us via info@personaling.com',array('{url}'=>$activation_url));		
+						    $message->subject    = $subject;
+						    $message->setBody($body, 'text/html');                
+						    $message->addTo($user->email);
+						    Yii::app()->mail->send($message);
+//                                                    $message->from = array('info@personaling.com' => 'Tu Personal Shopper Online');
+//						    $message->view = "mail_template";
+//						    $params              = array('subject'=>$subject, 'body'=>$body);
+							
+							Yii::app()->user->setFlash('recoveryMessage',UserModule::t("Please check your email. An instructions was sent to your email address."));
+			    			$this->refresh();
+			    		}
+			    	}
+		    		$this->render('recovery',array('form'=>$form));
+		    	}
+		
+	}
+
+    public function actionActivarDesactivar()
+    {
+        $id=$_POST['id'];
+        $model = User::model()->findByPk($id);
+        $model->status=1-$model->status;
+		if($model->registro_password==0)
+		{
+			echo $rol=$model->buscarRol($id);
+			$model->registro_password=1;
+			$model->newPassword($id, $rol);
+		}
+
+        $model->save();
+        echo $model->status;
+		
+        
+    }
+	
+	public function actionBorrar()
+	{
+		$this->render('borrar');
+	}
+
 }

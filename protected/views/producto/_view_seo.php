@@ -28,7 +28,7 @@ $this->breadcrumbs=array(
 			<!-- Nav tabs -->
 			<?php echo $this->renderPartial('_menu', array('model'=>$model,'activo'=>'seo')); ?> 
  
-		<div class="well">
+		<div class="well clearfix">
             <div class="row-fluid">
                 <div class="col-md-6 col-md-offset-3">
 					  
@@ -69,6 +69,7 @@ $this->breadcrumbs=array(
 		</div> 
    		<?php $this->endWidget(); ?>
 	</div>
+</div>
 </div> 
 <!-- /container -->
 

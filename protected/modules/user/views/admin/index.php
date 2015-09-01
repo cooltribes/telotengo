@@ -9,10 +9,11 @@ $this->breadcrumbs=array(
 	 <h1 class="col-md-10">Administrar Usuarios</h1>
         <div class="col-md-2 margin_top_medium">
                 <?php
-         echo CHtml::link('Crear Usuario', $this->createUrl('create'), array('class'=>'btn form-control btn-success', 'role'=>'button'));
+         echo CHtml::link('Invitar usuario', $this->createUrl('invitarUsuario'), array('class'=>'btn form-control btn-success', 'role'=>'button'));
                 ?>
         </div>
-	</div>
+      </div>
+	
 	<hr class="no_margin_top"/>
 
 		<?php if(Yii::app()->user->hasFlash('success')){?>
@@ -92,7 +93,10 @@ $this->breadcrumbs=array(
 	        <tr>
 	            <th scope="col">ID</th>
 	            <th scope="col">Email</th>
-	            <th scope="col" width="40%">Nombre y Apellido</th>
+	            <th scope="col" width="25%">Nombre y Apellido</th>
+	            <th scope="col">Rol</th>
+	            <th scope="col">Tipo de invitación</th>
+	            <th scope="col">¿Quien invitó?</th>
 	            <th scope="col">Estado</th>
 	            <th scope="col">Fecha de Creación</th>
 	            <th scope="col">Acción</th>

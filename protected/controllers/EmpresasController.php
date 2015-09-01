@@ -26,12 +26,12 @@ class EmpresasController extends Controller
 	public function accessRules()
 	{
 		return array(
-			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
+			array('allow',  // allow all users
+				'actions'=>array('index','view','create','solicitudFinalizada', 'selectdos'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','listado','cancelar', 'complete', 'agregarDocumento', 'eliminarDocumento', 'agregarDato', 'eliminarDato','getAlmacenes','inventarios','ventas'),
+				'actions'=>array('update','listado','cancelar', 'complete', 'agregarDocumento', 'eliminarDocumento', 'agregarDato', 'eliminarDato','getAlmacenes','inventarios','ventas'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -59,60 +59,160 @@ class EmpresasController extends Controller
 	 * Creates a new model. 
 	 * If creation is successful, the browser will be redirected to the 'view' page.
 	 */
-	public function actionCreate($user = NULL)
+	public function actionCreate()
 	{
 		$model = new Empresas;
+		 $this->layout='//layouts/b2b';
 		$empresa_user = new EmpresasHasUsers();
-		if(!$user){
-			$user = User::model()->findByPk(Yii::app()->user->id);
-		}
+		$rol='';
 
+		if(isset(Yii::app()->session["usuarionuevo"])){
+			//$user = User::model()->findByAttributes(array('email'=>Yii::app()->session["usuarionuevo"]));
+		}
+		elseif(isset(Yii::app()->session['cliente'])){
+			$user = User::model()->findByPk(Yii::app()->session['cliente']);
+		}
+		
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
+		$model->tipoEmpresa="vendedor";
+		if(isset($_POST['Empresas'])){
 
-		if(isset($_POST['Empresas']))
-		{
-			$model->attributes=$_POST['Empresas'];
-			//$model->rif = $model->prefijo."-".$model->numero;
+			
+			if(isset(Yii::app()->session['vacio'])) //evitar el bug de dejar el registro a medias
+			{
+				echo Yii::app()->session['usuarionuevo'];
+				$modelado = new RegistrationForm;
+        		$profile = new Profile;
+				$profile->regMode = true;
+				$profile->attributes=Yii::app()->session['atributos'];
 				
-			$model->estado = 1; // solicitado 
-			if($_POST['vender'] == '1'){
-				$model->tipo = 2; // empresa vendedora 
-			}
-			if($model->save()){
-				//$empresa_user = new EmpresasHasUsers();
-				$empresa_user->empresas_id = $model->id;
-				if(isset($_POST['EmpresasHasUsers'])){
-					$empresa_user->attributes=$_POST['EmpresasHasUsers'];
-				}else{
-					$empresa_user->users_id = $user->id;
-				}
-				$empresa_user->rol = 'Administrador';
-				$empresa_user->save();
-				if($_POST['vender'] == 0){
-					Yii::app()->user->setFlash('success',"Hemos recibido correctamente los datos del registro para la empresa.");
-					$this->redirect(array('view','id'=>$model->id));
-				}else{
-					//Yii::app()->user->setFlash('success',"Empresa vendedora");
-					$this->redirect(array('complete','empresa_id'=>$model->id));
-				}
-			}
-		}
+				$soucePassword = User::generarPassword();
+				$modelado->email = Yii::app()->session['usuarionuevo'];
+				$modelado->status=0;
+				$modelado->username = Yii::app()->session['usuarionuevo']; #Mismo Mail
+				$modelado->activkey = UserModule::encrypting(microtime().$soucePassword);
+				$modelado->password = UserModule::encrypting($soucePassword);
+				$modelado->verifyPassword = UserModule::encrypting($modelado->verifyPassword);
+				$modelado->quien_invita = 0; #el mismo, se modifica cuando tenga ID luego del save
+				$modelado->type = User::TYPE_USUARIO_SOLICITA;
+				$profile->user_id=0;
+				
 
-		if($user->superuser == 1){
-			$this->render('create_admin',array(
-				'model'=>$model,
-				'user' => $user,
-				'profile' => $user->profile,
-				'empresa_user' => $empresa_user,
-			));
-		}else{
-			$this->render('create',array(
-				'model'=>$model,
-				'user' => $user,
-				'profile' => $user->profile,
-			));
+				if($modelado->validate()&&$profile->validate())
+				{
+					if($modelado->save()){
+						if(isset(Yii::app()->session['usuarionuevo'])){
+							$modelado->quien_invita = $modelado->id;
+							$modelado->save();
+						}
+	
+						$profile->user_id = $modelado->id;
+						$profile->save();	
+					}
+				}
+			}elseif(isset(Yii::app()->session['cliente'])) //evitar el bug de dejar el registro a medias
+			{
+	
+				$modelado = new RegistrationForm;
+        		$profile = new Profile;
+				$profile->regMode = true;
+				$profile->attributes=Yii::app()->session['atributos'];
+				
+				$soucePassword = User::generarPassword();
+				$modelado->email = $user->email;
+				$modelado->status=0;
+				$modelado->username = $user->username; #Mismo Mail
+				$modelado->activkey = UserModule::encrypting(microtime().$soucePassword);
+				$modelado->password = UserModule::encrypting($soucePassword);
+				$modelado->verifyPassword = UserModule::encrypting($modelado->verifyPassword);
+				$modelado->quien_invita = 0; #el mismo, se modifica cuando tenga ID luego del save
+				$modelado->type = User::TYPE_USUARIO_SOLICITA;
+				$profile->user_id=0;
+				
+
+				if($modelado->validate()&&$profile->validate())
+				{
+													echo $user->username."///";echo $user->email;
+				Yii::app()->end();	
+					if($modelado->save()){
+						if(isset(Yii::app()->session['cliente'])){
+							$modelado->quien_invita =Yii::app()->session['quieninvita'];
+							$modelado->save();
+						}
+	
+						$profile->user_id = $modelado->id;
+						$profile->save();	
+					}
+				}
+			}
+
+			
+			$model->attributes=$_POST['Empresas'];
+			$model->telefono=$_POST['Empresas']['telefono'];
+			$model->direccion=$_POST['Empresas']['direccion'];
+			$model->estado = 1; # solicitado 
+			#$model->forma_legal = $_POST['Empresas']['forma_legal'];
+			$model->sector = $_POST['Empresas']['sector'];
+			$model->cargo = $_POST['Empresas']['cargo'];
+			#$model->num_empleados = $_POST['Empresas']['num_empleados'];
+			$rol=$_POST['Empresas']['tipoEmpresa'];
+			$model->rol=$rol;
+			if(isset(Yii::app()->session['vacio'])) //evitar el bug de dejar el registro a medias
+			{
+				$model->tipo=User::TYPE_USUARIO_SOLICITA;	
+			}	
+			else
+			{
+				$model->tipo = $user->type; # el mismo tipo de empresa que recibio en la invitación	
+			}
+
+			
+
+			//$almacen->save();
+			
+
+
+			if($model->save()){
+				$model->refresh();
+				if(isset(Yii::app()->session['usuarionuevo']))
+					$user = User::model()->findByAttributes(array('email'=>Yii::app()->session["usuarionuevo"]));
+				
+				$empresa_user->empresas_id = $model->id;
+				$empresa_user->users_id = $user->id;
+				$empresa_user->rol = $_POST['Empresas']['cargo'];
+				Yii::app()->authManager->assign($rol,$user->id);
+				$empresa_user->save();				
+				$almacen = new Almacen;
+				$almacen->provincia_id=$_POST['Empresas']['provincia'];
+				$almacen->ciudad_id=$_POST['Empresas']['ciudad'];
+				$almacen->ubicacion=$_POST['Empresas']['direccion'];
+				$almacen->empresas_id=$model->id;
+				$almacen->alias=$model->razon_social.' - principal';
+				$almacen->save();
+				if(isset(Yii::app()->session['cliente']))
+				{
+					$this->redirect(Yii::app()->session['url_act']);
+				}
+				$this->redirect(array('solicitudFinalizada'));
+			}
 		}
+		
+		$this->render('create',array(
+			'model'=>$model,
+			//'user' => $user,
+			//'profile' => $user->profile,
+		));
+	}
+
+	/*
+	Action para el finalizar la solicitud
+	*/
+	public function actionSolicitudFinalizada()
+	{
+		Yii::app()->user->setFlash('success', 'Solicitud realizada con éxito. Pronto estaremos en contacto contigo.');
+
+		$this->render('solicitudFinalizada');
 	}
 
 	public function actionComplete($user = NULL, $empresa_id)
@@ -575,4 +675,23 @@ class EmpresasController extends Controller
 			Yii::app()->end();
 		}
 	}
+	
+	    public function actionSelectdos()
+        {
+            $id_uno = $_POST['Empresas']['provincia'];
+            $lista = Ciudad::model()->findAll('provincia_id = :id_uno',array(':id_uno'=>$id_uno));
+            $lista = CHtml::listData($lista,'id','nombre');
+		
+             
+            echo CHtml::tag('option', array('value' => ''), 'Seleccione', true);
+             
+            foreach ($lista as $valor => $nombre)
+            {
+                echo CHtml::tag('option',array('value'=>$valor),CHtml::encode($nombre), true );
+                 
+            }
+			echo $id_uno;
+			Yii::app()->end();
+             
+        }
 }

@@ -1,126 +1,140 @@
-<div class="well">
-	<div class="row padding_left_small">
-		<div class="col-md-6 1">
+<div class="row-fluid">
+    <div>
 
 <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
-	'id'=>'empresas-form',
-	'enableAjaxValidation'=>false,
-	'enableClientValidation'=>true,
-	'type'=>'horizontal',
-	'clientOptions'=>array(
-		'validateOnSubmit'=>true, 
-	),
+    'id'=>'empresas-form',
+    'enableAjaxValidation'=>false,
+    'enableClientValidation'=>true,
+    'type'=>'horizontal',
+    'clientOptions'=>array(
+        'validateOnSubmit'=>true, 
+    ),
 )); ?>
 
-	<?php echo $form->errorSummary($model); ?>
+    <?php echo $form->errorSummary($model); ?>
+    <div class="form-group">
+    
+            <?php echo $form->dropDownList($model,'cargo',Empresas::itemAlias('Cargo'),array('class'=>'form-control','empty'=>'Tu cargo o posición')); ?>
+            <?php echo $form->error($model,'cargo'); ?>
 
-	<?php
-	if(UserModule::isAdmin()){
-		?>
-		<div class="form-group">
-			<?php echo $form->labelEx($empresa_user,'users_id', array('class'=>'col-sm-2')); ?>
-			<div class="col-sm-10">
-		    	<?php echo $form->dropDownList($empresa_user,'users_id', CHtml::listData(User::model()->findAllByAttributes(array('superuser'=>0)), 'id', 'username')); ?>
-		    </div>	
-		    <?php echo $form->error($empresa_user,'users_id'); ?>
-		</div>
-		<?php
-	}
-	?>
+    </div>
+    <div class="form-group">
+    
 
-	<div class="form-group">
-		<?php echo $form->labelEx($model,'razon_social', array('class'=>'col-sm-2')); ?>
-	    <div class="col-sm-10">
-	    	<?php echo $form->textField($model,'razon_social', array('class'=>'form-control', 'placeholder'=>'', 'maxlength'=>205)); ?>
-	    </div>
-	    <?php echo $form->error($model,'razon_social'); ?>
-	</div>
+            <?php echo $form->dropDownList($model,'sector',Empresas::itemAlias('Sector'),array('class'=>'form-control','empty'=>'Sector o industria')); ?>
+            <?php echo $form->error($model,'sector'); ?>
 
-	<div class="form-group">
-		<?php echo $form->labelEx($model,'mail', array('class'=>'col-sm-2')); ?>
-	    <div class="col-sm-10">
-	    	<?php echo $form->textField($model,'mail', array('class'=>'form-control', 'placeholder'=>'', 'maxlength'=>85)); ?>
-	    </div>
-	    <?php echo $form->error($model,'mail'); ?>
-	</div>
-<?php /*
-	<div class="form-group">
-		<?php echo $form->labelEx($model,'rif', array('class'=>'col-sm-2')); ?>
-	    <div class="col-sm-10">
-	    	<?php echo $form->textField($model,'rif', array('class'=>'form-control', 'placeholder'=>'Solo numeros. Ejm: 12345678', 'maxlength'=>45)); ?>
-	    
-	    </div>
-	    <?php echo $form->error($model,'rif'); ?>
-	</div>
-	*/ ?>
-	
-	<div class="form-group">
-		<?php echo $form->labelEx($model,'rif', array('class'=>'col-sm-2')); ?>
-	    <div class="col-sm-10">
-	    	<?php echo $form->dropDownList($model,'prefijo', array('0'=>'Seleccione...','V'=>'V','E'=>'E','J'=>'J'),
-	    		 array('class'=>'form-control')); ?>
-	    	  <?php echo $form->error($model,'prefijo'); ?>
-	    	  
-	    	<?php echo $form->textField($model,'numero', array('class'=>'form-control', 'placeholder'=>'Solo numeros. Ejm: 12345678', 'maxlength'=>45)); ?>
-	    
-	    </div>
-	    <?php echo $form->error($model,'numero'); ?>
-	</div>
+    </div>
+    
+    <div class="form-group">
+            <?php echo $form->textField($model,'razon_social', array('class'=>'form-control', 'placeholder'=>'Nombre o Razón Social', 'maxlength'=>205)); ?>
 
+        <?php echo $form->error($model,'razon_social'); ?>
+    </div>
+    
+    <div class="form-group row-fluid">
+ 
+            <?php echo $form->textField($model,'rif', array('class'=>'form-control', 'placeholder'=>'RIF', 'maxlength'=>45)); ?>
 
-	<div class="form-group">
-		<?php echo $form->labelEx($model,'direccion', array('class'=>'col-sm-2')); ?>
-	    <div class="col-sm-10">
-	    	<?php echo $form->textArea($model,'direccion', array('class'=>'form-control', 'placeholder'=>'', 'maxlength'=>350)); ?>
-	    </div>
-	    <?php echo $form->error($model,'direccion'); ?>
-	</div>
+            <?php echo $form->error($model,'rif'); ?>            
 
-	<div class="form-group">
-		<?php echo $form->labelEx($model,'web', array('class'=>'col-sm-2')); ?>
-	    <div class="col-sm-10">
-	    	<?php echo $form->textField($model,'web', array('class'=>'form-control', 'placeholder'=>'', 'maxlength'=>55)); ?>
-	    </div>
-	    <?php echo $form->error($model,'web'); ?>
-	</div> 
+        
+        
+    </div>
+    
+    <div class="form-group">
 
-	<!-- <div class="form-group">
-		<?php //echo $form->labelEx($model,'destacado', array('class'=>'col-sm-2')); ?>
-		<div class="col-sm-10">
-			<?php //echo $form->checkBox($model, 'destacado', array()); ?>
-	    </div>
-	    <?php //echo $form->error($model,'destacado'); ?>
-	</div> -->
+            <?php echo $form->textField($model,'telefono', array('class'=>'form-control', 'placeholder'=>'Teléfono', 'maxlength'=>15)); ?>
 
-	<!-- <div class="form-group">
-		<?php //echo $form->labelEx($model,'url', array('class'=>'col-sm-2')); ?>
-	    <div class="col-sm-10">
-	    	<?php //echo $form->textField($model,'url', array('class'=>'form-control', 'placeholder'=>'', 'maxlength'=>255)); ?>
-	    </div>
-	    <?php //echo $form->error($model,'url'); ?>
-	</div> -->
+        <?php echo $form->error($model,'telefono'); ?>
+    </div>
+    <div class="form-group">
+			<?php echo $form->dropDownList($model,'provincia', CHtml::listData(Provincia::model()->findAll(),'id', 'nombre'), 
+        array(
+        'class'=>'form-control',
+        'empty'=>'Seleccione Estado',
+        'ajax'=>array(
+            'type'=>'POST',
+            'url'=>CController::createUrl('Empresas/selectdos'),
+            'update'=>'#'.CHtml::activeId($model, 'ciudad'),
+        ),
+         
+        )); ?>
+         <?php echo $form->error($model,'provincia'); ?>
+    </div>
+    
+    
+    <div class="form-group">
 
-	<div class="form-group">
-		<?php echo CHtml::label('Deseo vender en telotengo con esta empresa','vender', array('class'=>'col-sm-2')); ?>
-		<div class="col-sm-10">
-			<?php echo CHtml::checkBox('vender', false, array()); ?>
-	    </div>
-	</div>
+            <?php echo $form->dropDownList($model,'ciudad', array(), array('class'=>'form-control', 'empty'=>'Ciudad de oficina principal')); ?>
+        <?php echo $form->error($model,'ciudad'); ?>
+    </div>
+    
+    <div class="form-group">
 
-	<div class="form-actions">
-		<?php $this->widget('bootstrap.widgets.TbButton', array(
-			'buttonType'=>'submit',
-			'type'=>'primary',
-			'label'=>$model->isNewRecord ? 'Registrar' : 'Guardar',
-		)); ?>
+            <?php echo $form->textField($model,'direccion', array('class'=>'form-control', 'placeholder'=>'Dirección', 'maxlength'=>350)); ?>
+        <?php echo $form->error($model,'direccion'); ?>
+    </div>
+    
+    <div class="form-group">
 
-		<?php
-		echo CHtml::link('Cancelar', Yii::app()->baseUrl.'/empresas/admin', array('class'=>'btn btn-default'));
-		?>
-	</div>
+            <?php echo $form->textField($model,'web', array('class'=>'form-control', 'placeholder'=>'Página Web', 'maxlength'=>55)); ?>
+
+        <?php echo $form->error($model,'web'); ?>
+    </div> 
+
+<!--    <div class="form-group">
+
+            <?php echo $form->dropDownList($model,'forma_legal',Empresas::itemAlias('FormaLegal'),array('class'=>'form-control')); ?>
+            <?php echo $form->error($model,'forma_legal'); ?>
+
+    </div>-->
+
+    
+
+    
+
+<!--    <div class="form-group">
+
+            <?php echo $form->dropDownList($model,'num_empleados',Empresas::itemAlias('NumEmpleados'),array('class'=>'form-control')); ?>
+            <?php echo $form->error($model,'num_empleados'); ?>
+
+</div>-->
+
+<!--    <div class="form-group">
+
+            <?php echo $form->textField($model,'mail', array('class'=>'form-control', 'placeholder'=>'', 'maxlength'=>85)); ?>
+
+        <?php echo $form->error($model,'mail'); ?>
+    </div>-->
+    
+    
+
+    
+
+    <div class="form-group">
+        <div class="text-center">
+            ¿Qué te interesa hacer en TeloTengo?
+        </div>
+        <div class="text-center">    
+            <?php echo $form->radioButtonList($model, 'tipoEmpresa', array('vendedor'=>'Vender', 'comprador'=>'Comprar', 'compraVenta'=>'Ambas'),array('style'=>'display:inline','separator'=>'  ', 'labelOptions'=>array('style'=>'display:inline'))); ?>
+        </div>
+        <?php echo $form->error($model,'tipoEmpresa'); ?>
+    </div> 
+
+    
+
+    
+
+    <div class="margin_top text-center">
+        <?php $this->widget('bootstrap.widgets.TbButton', array(
+            'buttonType'=>'submit',
+            'type'=>'primary',
+            'label'=>"Enviar datos",
+            'htmlOptions'=>array('class'=>'btn-black btn btn-danger btn-large'),
+        )); ?>
+    </div>
 
 <?php $this->endWidget(); ?>
-
-	</div>
-	</div>
-	</div>
+    </div>
+</div>
