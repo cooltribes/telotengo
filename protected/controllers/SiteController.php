@@ -13,7 +13,7 @@ class SiteController extends Controller
 			'accessControl', // perform access control for CRUD operations
 		);
 	}
-
+ 
 	/**
 	 * Specifies the access control rules.
 	 * This method is used by the 'accessControl' filter.
@@ -24,7 +24,7 @@ class SiteController extends Controller
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
 				'actions'=>array('index','error','contact','login','logout','captcha','busqueda','inhome','tiendas','info','soporte','garantia','convenios','request','request2',
-								'corporativo','licencias','ofertas','home','store','detalle', 'inhome2'), 
+								'corporativo','licencias','ofertas','home','store','detalle', 'inhome2','category'), 
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -194,7 +194,7 @@ class SiteController extends Controller
 	public function actionLicencias(){
 		$this->render('licencias');
 	}
-    public function actionMailTest(){
+    public function actionMailTest(){ 
       $body="BODY";
         $undercomment='Para completar la compra debes realizar el deposito o transferencia electrónica en un máximo de 3 días a cualquiera de las siguientes <strong>cuentas corrientes</strong>:
                             <ul style="list-style-type:square" class="margin_top_small margin_left_small">
@@ -332,11 +332,16 @@ class SiteController extends Controller
     
     public function actionStore(){
         $this->layout='//layouts/start';
-
+ 
        $this->render('store');
     }
+    public function actionCategory(){
+        $this->layout='//layouts/start';
+
+       $this->render('category');
+    }  
     
-    public function actionRequest(){
+    public function actionRequest(){ 
         $this->layout='//layouts/b2b';
         $model = new RegistrationForm;
         $profile = new Profile;
