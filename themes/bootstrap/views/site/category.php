@@ -1,16 +1,3 @@
-<style>
-    .subcategory .braker{
-            height: 2px;
-            margin: 12px 0 0 0;
-            background: #222;
-        
-    }
-    .subcategory h1{
-        margin: 0;
-    }
-    
-
-</style>
 <div class="col-md-8 col-md-offset-2 no_horizontal_padding subcategory">
                
                
