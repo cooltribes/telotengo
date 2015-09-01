@@ -56,14 +56,8 @@ $('#<?php echo $carousel;?>').carousel({
 //$('.carousel').carousel('cycle');
 });  
 </script>
-<?php 
-if($carousel=="ultimos")
-	$modelado=$ultimos;
-else
-	$modelado=$destacados;
-?>
 
-<div id="<?php echo $carousel;?>" class="carousel slide carouselHome margin_top">
+<div id="<?php echo $carousel;?>Carousel" class="carousel slide carouselHome margin_top">
                <!-- Carousel indicators -->
           
                <!-- Carousel items -->
@@ -71,7 +65,7 @@ else
                     <div class="item active">
                  <?php 
                  $i=1; 
-                 foreach($modelado as $model) 
+                 foreach($data as $model) 
                  {
                  if(Imagenes::model()->findByAttributes(array('producto_id'=>$model->id, 'orden'=>1)))
 				 {
