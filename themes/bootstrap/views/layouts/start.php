@@ -13,7 +13,9 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
 Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_menu/css/dropdown/themes/default/default.css');
 ?>
 <?php Yii::app()->bootstrap->register(); ?>
-<?php  Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/styles.css',null); ?>
+<?php  Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/styles.css',null); 
+ $model = Categoria::model()->findAllBySql("select * from tbl_categoria where id_padre in (select id from tbl_categoria where id_padre=0)  order by nombre asc");
+?>
 <head>
         
         <meta charset="utf-8">
@@ -66,21 +68,44 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                         <div class="row-fluid searchBar">
                             <div class="col-md-3 no_horizontal_padding">
                                 <div class="dropdown">
-                                  <button class="btn btn-default form-control no_radius dropdown-toggle orange_border_left" type="button" id="categorySearch" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                    Todas las categorías
-                                    <span class="caret"></span>
-                                  </button>
-                                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                  <select class="btn btn-default form-control no_radius dropdown-toggle orange_border_left"  id="categorySearch" >
+                                	<option  selected>Todas las categorias</option>
+                                 <?php 
+                                 foreach($model as $modelado)
+								 {?>
+								  <option value="<?php echo $modelado->id?>"><?php echo $modelado->nombre;?></option>
+								 <?php	
+								 }?>      
+                                  </select>
+                                  
+                                <!--  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                                     <li><a href="#">Action in <span class="highlighted">Your life</span></a></li>
                                     <li><a href="#">Another action in <span class="highlighted">Another's life</span></a></li>
                                     <li class="separator"></li>
                                     <li><a href="#">Something else here</a></li>
                                     <li><a href="#">Separated link</a></li>
-                                  </ul> 
+                                </ul> -->
                                 </div> 
                             </div>
                             <div class="col-md-7 no_horizontal_padding">
-                                <input class="form-control no_radius orange_border_middle" placeholder:"incluye palabras clave..."/>
+                               <!-- <input class="form-control no_radius orange_border_middle" placeholder:"incluye palabras clave..."/> -->
+                               <?php
+                                    $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
+								    'id'=>'busqueda',
+									'name'=>'busqueda',
+								    'source'=>$this->createUrl('Site/autoComplete'),
+									'htmlOptions'=>array(
+								          //'size'=>22,
+										  'placeholder'=>'Incluye palabras claves...',
+										  'class'=>'form-control no_radius orange_border_middle',
+								          //'maxlength'=>45,
+								        ),
+								    // additional javascript options for the autocomplete plugin
+								    'options'=>array(
+								            'showAnim'=>'fold',
+								    ),
+									));	
+									?>
                             </div>
                             <div class="col-md-2 no_horizontal_padding">
                                 <?php echo CHtml::submitButton('Buscar', array('class'=>'btn-orange btn btn-danger btn-large orange_border')); ?>

@@ -24,7 +24,7 @@ class SiteController extends Controller
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
 				'actions'=>array('index','error','contact','login','logout','captcha','busqueda','inhome','tiendas','info','soporte','garantia','convenios','request','request2',
-								'corporativo','licencias','ofertas','home','store','detalle', 'inhome2'), 
+								'corporativo','licencias','ofertas','home','store','detalle', 'inhome2', 'autoComplete'), 
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -360,4 +360,25 @@ class SiteController extends Controller
 
        $this->render('detalle');
     }
+    public function actionAutoComplete()
+		{
+	    	$res =array();
+	    	if (isset($_GET['term']))
+			{
+				$qtxt ="SELECT  CONCAT (p.nombre, ' en ',c.nombre) FROM tbl_producto_padre p JOIN tbl_categoria c on p.id_categoria=c.id  WHERE p.nombre LIKE :nombre limit 3";
+				
+				$command =Yii::app()->db->createCommand($qtxt);
+				$command->bindValue(":nombre", '%'.$_GET['term'].'%', PDO::PARAM_STR);
+				$resP =$command->queryColumn();	
+					
+				$qtxt ="SELECT nombre FROM tbl_producto WHERE nombre LIKE :nombre limit 6";
+				$command =Yii::app()->db->createCommand($qtxt);
+				$command->bindValue(":nombre", '%'.$_GET['term'].'%', PDO::PARAM_STR);
+				$res2 =$command->queryColumn();
+	    	}
+			sort($res2);
+			$res= array_merge($resP,$res2);
+	     	echo CJSON::encode($res);
+	    	Yii::app()->end();
+		}
 }
