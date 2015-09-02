@@ -24,7 +24,7 @@ class SiteController extends Controller
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
 				'actions'=>array('index','error','contact','login','logout','captcha','busqueda','inhome','tiendas','info','soporte','garantia','convenios','request','request2',
-								'corporativo','licencias','ofertas','home','store','detalle', 'inhome2', 'autoComplete'), 
+								'corporativo','licencias','ofertas','home','store','detalle', 'inhome2', 'autoComplete', 'filtroBusqueda', 'carrito'), 
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -355,7 +355,7 @@ class SiteController extends Controller
             'profile' => $user->profile,
         ));
     }
-    public function actionDetalle(){
+    public function actionDetalle(){ 
         $this->layout='//layouts/start';
 
        $this->render('detalle');
@@ -363,7 +363,7 @@ class SiteController extends Controller
     public function actionAutoComplete()
 		{
 	    	$res =array();
-	    	if (isset($_GET['term']))
+	    	if (isset($_GET['term']) && Yii::app()->session['menu']=="")
 			{
 				$qtxt ="SELECT  CONCAT (p.nombre, ' en ',c.nombre) FROM tbl_producto_padre p JOIN tbl_categoria c on p.id_categoria=c.id  WHERE p.nombre LIKE :nombre limit 3";
 				
@@ -375,10 +375,64 @@ class SiteController extends Controller
 				$command =Yii::app()->db->createCommand($qtxt);
 				$command->bindValue(":nombre", '%'.$_GET['term'].'%', PDO::PARAM_STR);
 				$res2 =$command->queryColumn();
+				sort($res2);
+				$res= array_merge($resP,$res2);
+	     		echo CJSON::encode($res);
 	    	}
-			sort($res2);
-			$res= array_merge($resP,$res2);
-	     	echo CJSON::encode($res);
+			else
+		    {
+				$model=Categoria::model()->findByPk(Yii::app()->session['menu']);
+
+				
+				/*$qtxt ="SELECT  CONCAT (p.nombre, ' en ',c.nombre) FROM tbl_producto_padre p JOIN tbl_categoria c on p.id_categoria=c.id  
+				WHERE p.nombre LIKE :nombre  limit 3";*/
+				
+				/*$command =Yii::app()->db->createCommand($qtxt);
+				$command->bindValue(":nombre", '%'.$_GET['term'].'%', PDO::PARAM_STR);
+				$resP =$command->queryColumn();	*/	
+				$res[0]=$_GET['term']." en ".$model->nombre;
+				/*$qtxt ="SELECT nombre FROM tbl_producto WHERE nombre LIKE :nombre limit 6";
+				$command =Yii::app()->db->createCommand($qtxt);
+				$command->bindValue(":nombre", '%'.$_GET['term'].'%', PDO::PARAM_STR);
+				$res2 =$command->queryColumn();
+				sort($res2);
+				$res= array_merge($resP,$res2);*/
+				$model = Categoria::model()->findAllByAttributes(array('id_padre'=>Yii::app()->session['menu']));
+				$i=0;
+				
+				foreach($model as $modelado)
+				{
+					
+						if($modelado->ultimo==1)
+						{
+							if(ProductoPadre::model()->findAllByAttributes(array('id_categoria'=>$modelado->id, 'activo'=>1)))
+							{
+								$hijos=ProductoPadre::model()->findAllByAttributes(array('id_categoria'=>$modelado->id, 'activo'=>1)); 
+								foreach($hijos as $hijo)
+								{
+									array_push($res, $hijo->nombre);
+									$i++;
+								}
+							}	
+	 
+						}
+						
+
+				}
+	     		echo CJSON::encode($res);
+			}
+
 	    	Yii::app()->end();
 		}
+	public function actionFiltroBusqueda()
+	{
+		Yii::app()->session['menu']=$_POST['filtro'];		
+	}
+	
+	public function actionCarrito()
+	{
+		$this->layout='//layouts/start';
+
+       $this->render('carrito');
+	}
 }
