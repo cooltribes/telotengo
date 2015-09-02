@@ -40,7 +40,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
     <div class="col-md-8 col-md-offset-2">
                 <div class="row-fluid">
                     <div class="col-md-2 no_padding_left">
-                         <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/logo.png" height="30px;"/>
+                        <a href="<?php echo Yii::app()->baseUrl; ?>"><img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/logo.png" height="30px;"/></a> 
                     </div>     
                     <div class="col-md-5 no_left_padding"><div style="width:100%; height:30px; background:#000"></div></div>
                     <div class="col-md-5 no_left_padding">
@@ -227,6 +227,6 @@ $(document).ready(function() {
 		       	}
 		       })
 			
-		});	
+		});
 });	
 </script>
