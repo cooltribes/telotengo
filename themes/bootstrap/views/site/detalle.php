@@ -2,7 +2,7 @@
     
 
 </style>
-<div class="col-md-8 col-md-offset-2">
+
         <div class="breadcrumbs margin_top">
                 <a><span>Inicio</span></a>/&nbsp;
                 <a><span>Sub Categoria</span></a>/&nbsp;
@@ -10,26 +10,31 @@
                 <a><span class="current">Producto</span></a>
         </div>
         
+ 
         
         
         
-        
-        <div class="row-fluid margin_top">
+
             
             
             <div class="col-md-9 main no_left_padding">
                 <div class="row-fluid">
-                    
                 
                     <div class="col-md-4 no_left_padding">
-                       <img src="http://placehold.it/300x300" width="100%" />
+                       <img src="<?php echo Yii::app()->getBaseUrl(true).$imagenPrincipal->url;?>" width="100%" />
                        <div class="miniSlide">
                            <div class="control"><span><</span></div>
-                           <div class="item"><img src="http://placehold.it/30x30" width="100%" /></div>
-                           <div class="item"><img src="http://placehold.it/30x30" width="100%" /></div>
-                           <div class="item"><img src="http://placehold.it/30x30" width="100%" /></div>
-                           <div class="item"><img src="http://placehold.it/30x30" width="100%" /></div>
-                           <div class="item"><img src="http://placehold.it/30x30" width="100%" /></div>
+                           <?php 
+                           foreach($imagen as $image)
+						   {
+							   	if($image->orden!=1)
+								{
+							   	?>
+							   <div class="item"><img src="<?php echo Yii::app()->getBaseUrl(true).$image->url;?>" width="80" height="80" /></div>
+							   <?php
+								}	
+						   }
+						   ?>
                            <div class="control"><span>></span></div>
                        </div>
                     </div>
@@ -41,22 +46,34 @@
                     
                     <div class="col-md-8 mainDetail">
                         <h1 class="no_margin_top">
-                          PRODUCTO MARCA MODELO COD XXXXXX KK/ 00000 / 0000 000  
+                          <?php echo $model->nombre;?> 
                         </h1>
                         <div class="separator"></div>
                         <table width="100%" class="priceTable">
                             <tr>
                                 <td class="title" width="25%">Precio en tienda</td>
-                                <td width="33%" class="throughlined">350,000 Bs</td>
+                                <td width="33%" class="throughlined"><?php echo $inventario->precio;?> Bs</td>
                                 <td class="title" width="22%">Estatus</td>
-                                <td class="success" width="20%"> En Stock</td>                        
+                                <?php
+                                if($inventario->cantidad>0) 
+                                {?>
+                                	<td class="success" width="20%"> En Stock</td>  
+                                <?php	
+                                }else
+								{?>
+									<td class="error" width="20%"> Agotado</td>  
+								<?php
+								}	
+                                ?>
+                                	 
+                                                   
                             </tr>
                             
                             <tr>
                                 <td class="title">Precio al mayor</td>
-                                <td ><span class="highlighted">320,000</span> Bs por und.</td>
+                                <td ><span class="highlighted"><?php echo $inventario->precio;?></span> Bs por und.</td> <!-- NO hay precio con descuento-->
                                 <td class="title">Disponibilidad</td>
-                                <td > 2000 und.</td>                        
+                                <td > <?php echo $inventario->cantidad;?></td>                        
                             </tr>
                             
                             <tr>
@@ -82,9 +99,21 @@
                                     <span class="title">Envío:</span>
                                 </div>
                                 <div class="col-md-9">
-                                    <span class="price">Gratis</span>
-                                    <a href="#">(en la región occidente) <span class="caret"></span></a>
-                                    <span class="estimated">Fecha estimada de entrega: 3-5 días</span>
+                                	<?php 
+                                	if($inventario->metodoEnvio==1)
+									{?>
+										<span class="price">Acordado con el cliente</span>
+									<?php
+									}
+									else
+									{?>
+										<span class="price">A traves del servicio de TELOTENGO</span>
+                                    	<a href="#">(en la región occidente) <span class="caret"></span></a>
+                                    	<span class="estimated">Fecha estimada de entrega: 3-5 días</span>
+									<?php	
+									}
+                                	?>
+
                                     
                                 </div> 
                             </div>
@@ -95,9 +124,14 @@
                     <div class="col-md-8  col-md-offset-4 specs margin_top">
                         <h2>CARACTERÍSTICAS DEL PRODUCTO</h2>
                         <ul>
-                            <li><span class="glyphicon glyphicon-ok"></span>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-                            <li><span class="glyphicon glyphicon-ok"></span>Aliquam aliquet, quam eu finibus varius, nulla felis pellentesque ante, eget aliquet neque odio</li>
-                            <li><span class="glyphicon glyphicon-ok"></span> Etiam quam sem, eleifend id nulla nec, scelerisque convallis odio.</li>
+                        	<?php  
+                        	$data = explode('*-*',$model->caracteristicas);
+							foreach($data as $dato)
+							{?>
+								<li><span class="glyphicon glyphicon-ok"></span><?php echo $dato?></li>
+							<?php
+							}                      	
+                        	?>
                         </ul>
                     </div>
                     <div class="col-md-12 no_padding_left slider">
@@ -187,14 +221,14 @@
                     </ul>
                     <div id="myTabContent" class="tab-content">
                       <div role="tabpanel" class="tab-pane fade active in" id="moreDetails" aria-labelledby="home-tab">
-                        <?php $this->renderPartial('more_details'); ?>
+                        <?php $this->renderPartial('more_details', array('busqueda'=>$busqueda)); ?>
                       </div>
                       <div role="tabpanel" class="tab-pane fade" id="specifications" aria-labelledby="specifications-tab">
-                        <?php $this->renderPartial('more_details'); ?>
+                       <?php $this->renderPartial('more_details', array('busqueda'=>$busqueda)); ?>
                       </div>
                         
                       <div role="tabpanel" class="tab-pane fade" id="recommendations" aria-labelledby="recommendations-tab">
-                        <?php $this->renderPartial('more_details'); ?>
+                        <?php $this->renderPartial('more_details', array('busqueda'=>$busqueda)); ?>
                       </div>
                       
                     </div>
@@ -285,9 +319,3 @@
                               
             </div>
             
-            
-            
-            
-            
-        </div>
-</div>

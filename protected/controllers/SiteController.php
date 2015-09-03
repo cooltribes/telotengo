@@ -328,6 +328,7 @@ class SiteController extends Controller
 	   $model = Categoria::model()->findAllBySql("select * from tbl_categoria where id_padre in (select id from tbl_categoria where id_padre=0)  order by destacado desc limit 6");
        $ultimos = Producto::model()->findAllBySql("select * from tbl_producto order by id desc limit 15");
 	   $destacados = Producto::model()->findAllBySql("select * from tbl_producto order by destacado desc limit 15");
+	   Yii::app()->session['banner']=true;
        $this->render('inhome2', array('model'=>$model, 'ultimos'=>$ultimos, 'destacados'=>$destacados));
     }
     
@@ -363,8 +364,29 @@ class SiteController extends Controller
     }
     public function actionDetalle(){ 
         $this->layout='//layouts/start';
+		$connection = new MongoClass();
+		if(Funciones::isDev())
+		{
+			$document = $connection->getCollection('ejemplo');	//DEVELOP
 
-       $this->render('detalle');
+		}	
+		else
+		{
+
+			$document = $connection->getCollection('stage');	//STAGE
+		} 
+		$producto_id=1509;
+		$almacen_id=65;
+		$model=Producto::model()->findByPk($producto_id);
+		$inventario=Inventario::model()->findByAttributes(array('producto_id'=>$producto_id, 'almacen_id'=>$almacen_id));
+		$imagen=Imagenes::model()->findAllByAttributes(array('producto_id'=>$producto_id));
+		$imagenPrincipal=Imagenes::model()->findByAttributes(array('producto_id'=>$producto_id, 'orden'=>1));
+		
+		$prueba = array("producto"=>(string)$producto_id); //MEJORAR ESTO 
+		$busqueda = $document->findOne($prueba);
+		//var_dump($busqueda); 
+		
+       $this->render('detalle', array('model'=>$model, 'inventario'=>$inventario, 'imagen'=>$imagen, 'imagenPrincipal'=>$imagenPrincipal, 'busqueda'=>$busqueda));
     }
     public function actionAutoComplete()
 		{

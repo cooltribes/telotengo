@@ -21,7 +21,7 @@ $user = $document->findOne($prueba); //busqueda
 	
 	
 # $document->update(array("producto"=>"19"), array('$set'=>array("count"=>"40"))); //modificacion
-
+var_dump($busqueda);
 
  ?>
  
