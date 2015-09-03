@@ -1,6 +1,5 @@
-<img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/banner.jpg" width="100%"/>
-<div class="col-md-8 col-md-offset-2">
-        <div class="row-fluid margin_top">           
+
+         
            <div class="col-md-9 mainHome">
                <div class="row-fluid">
                    <div class="col-md-12"><h1>CATEGORIAS DESTACADAS</h1></div>
@@ -60,11 +59,11 @@
            
            <div class="col-md-3">
                 <div class="row-fluid">
-                    <div class="col-md-12">
-                        <img width="100%" src="http://placehold.it/196x432">
+                    <div>
+                        <img width="100%" src="http://placehold.it/294x318">
                     </div>
-                    <div class="col-md-12 margin_top">
-                        <img width="100%" src="http://placehold.it/196x462">
+                    <div class="margin_top">
+                        <img width="100%" src="http://placehold.it/294x513">
                     </div>           
                 </div>
            </div>
@@ -84,15 +83,13 @@
            </div>
            <div class="col-md-3 margin_top">
                 <div class="row-fluid">
-                    <div class="col-md-12">
-                         <img width="100%" src="http://placehold.it/196x330">
+                    <div>
+                         <img width="100%" src="http://placehold.it/294x346">
                     </div>
-                    <div class="col-md-12 margin_top">
-                         <img width="100%" src="http://placehold.it/196x328">
+                    <div class="margin_top">
+                         <img width="100%" src="http://placehold.it/294x346">
                     </div>           
                 </div>
            </div>
            
-            
-        </div>
-</div>
+         

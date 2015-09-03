@@ -2,7 +2,7 @@
 <div class="col-md-12 no_horizontal_padding volumeSale margin_top">
                                <div class="row-fluid clearfix">
                                    <div class="col-md-2 no_right_padding">
-                                          <img width="100%" src="http://placehold.it/108x150">                         
+                                          <img width="100%" src="http://placehold.it/135x150">                         
                                    </div>
                                    <div class="col-md-8 no_horizontal_padding info">
                                        <div class="row-fluid clearfix centralInfo" style="height:100%">
