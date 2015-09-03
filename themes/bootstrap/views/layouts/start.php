@@ -1,4 +1,6 @@
-<?php /* @var $this Controller */ ?>
+<?php /* @var $this Controller */ 
+Yii::app()->session['menu']="";
+?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
@@ -69,7 +71,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                             <div class="col-md-3 col-sm-3 col-xs-3 no_horizontal_padding">
                                 <div class="dropdown">
                                   <select class="btn btn-default form-control no_radius dropdown-toggle orange_border_left"  id="categorySearch" >
-                                	<option  selected>Todas las categorias</option>
+                                	<option value="" selected>Todas las categorias</option>
                                  <?php 
                                  foreach($model as $modelado)
 								 {?>
@@ -103,6 +105,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
 								    // additional javascript options for the autocomplete plugin
 								    'options'=>array(
 								            'showAnim'=>'fold',
+								            
 								    ),
 									));	
 									?>
@@ -219,3 +222,23 @@ if(isset(Yii::app()->session['banner'])){?>
   </div>
 
 -->
+
+<script>
+
+$(document).ready(function() {
+	$('#categorySearch').on('change', function(event) {
+			
+			var filtro=$(this).val();
+				$.ajax({
+		         url: "<?php echo Yii::app()->createUrl('Site/filtroBusqueda') ?>",
+	             type: 'POST',
+		         data:{
+	                    filtro:filtro,
+	                   },
+		        success: function (data) {
+		       	}
+		       })
+			
+		});
+});	
+</script>

@@ -24,9 +24,7 @@ class SiteController extends Controller
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
 				'actions'=>array('index','error','contact','login','logout','captcha','busqueda','inhome','tiendas','info','soporte','garantia','convenios','request','request2',
-
-								'corporativo','licencias','ofertas','home','store','detalle', 'inhome2','category', 'autoComplete'), 
-
+								'corporativo','licencias','ofertas','home','store','detalle', 'inhome2', 'autoComplete', 'filtroBusqueda', 'carrito', 'category'), 
 
 				'users'=>array('*'),
 			),
@@ -330,6 +328,7 @@ class SiteController extends Controller
 	   $model = Categoria::model()->findAllBySql("select * from tbl_categoria where id_padre in (select id from tbl_categoria where id_padre=0)  order by destacado desc limit 6");
        $ultimos = Producto::model()->findAllBySql("select * from tbl_producto order by id desc limit 15");
 	   $destacados = Producto::model()->findAllBySql("select * from tbl_producto order by destacado desc limit 15");
+	   Yii::app()->session['banner']=true;
        $this->render('inhome2', array('model'=>$model, 'ultimos'=>$ultimos, 'destacados'=>$destacados));
     }
     
@@ -363,15 +362,36 @@ class SiteController extends Controller
             'profile' => $user->profile,
         ));
     }
-    public function actionDetalle(){
+    public function actionDetalle(){ 
         $this->layout='//layouts/start';
+		$connection = new MongoClass();
+		if(Funciones::isDev())
+		{
+			$document = $connection->getCollection('ejemplo');	//DEVELOP
 
-       $this->render('detalle');
+		}	
+		else
+		{
+
+			$document = $connection->getCollection('stage');	//STAGE
+		} 
+		$producto_id=1509;
+		$almacen_id=65;
+		$model=Producto::model()->findByPk($producto_id);
+		$inventario=Inventario::model()->findByAttributes(array('producto_id'=>$producto_id, 'almacen_id'=>$almacen_id));
+		$imagen=Imagenes::model()->findAllByAttributes(array('producto_id'=>$producto_id));
+		$imagenPrincipal=Imagenes::model()->findByAttributes(array('producto_id'=>$producto_id, 'orden'=>1));
+		
+		$prueba = array("producto"=>(string)$producto_id); //MEJORAR ESTO 
+		$busqueda = $document->findOne($prueba);
+		//var_dump($busqueda); 
+		
+       $this->render('detalle', array('model'=>$model, 'inventario'=>$inventario, 'imagen'=>$imagen, 'imagenPrincipal'=>$imagenPrincipal, 'busqueda'=>$busqueda));
     }
     public function actionAutoComplete()
 		{
 	    	$res =array();
-	    	if (isset($_GET['term']))
+	    	if (isset($_GET['term']) && Yii::app()->session['menu']=="")
 			{
 				$qtxt ="SELECT  CONCAT (p.nombre, ' en ',c.nombre) FROM tbl_producto_padre p JOIN tbl_categoria c on p.id_categoria=c.id  WHERE p.nombre LIKE :nombre limit 3";
 				
@@ -383,10 +403,64 @@ class SiteController extends Controller
 				$command =Yii::app()->db->createCommand($qtxt);
 				$command->bindValue(":nombre", '%'.$_GET['term'].'%', PDO::PARAM_STR);
 				$res2 =$command->queryColumn();
+				sort($res2);
+				$res= array_merge($resP,$res2);
+	     		echo CJSON::encode($res);
 	    	}
-			sort($res2);
-			$res= array_merge($resP,$res2);
-	     	echo CJSON::encode($res);
+			else
+		    {
+				$model=Categoria::model()->findByPk(Yii::app()->session['menu']);
+
+				
+				/*$qtxt ="SELECT  CONCAT (p.nombre, ' en ',c.nombre) FROM tbl_producto_padre p JOIN tbl_categoria c on p.id_categoria=c.id  
+				WHERE p.nombre LIKE :nombre  limit 3";*/
+				
+				/*$command =Yii::app()->db->createCommand($qtxt);
+				$command->bindValue(":nombre", '%'.$_GET['term'].'%', PDO::PARAM_STR);
+				$resP =$command->queryColumn();	*/	
+				$res[0]=$_GET['term']." en ".$model->nombre;
+				/*$qtxt ="SELECT nombre FROM tbl_producto WHERE nombre LIKE :nombre limit 6";
+				$command =Yii::app()->db->createCommand($qtxt);
+				$command->bindValue(":nombre", '%'.$_GET['term'].'%', PDO::PARAM_STR);
+				$res2 =$command->queryColumn();
+				sort($res2);
+				$res= array_merge($resP,$res2);*/
+				$model = Categoria::model()->findAllByAttributes(array('id_padre'=>Yii::app()->session['menu']));
+				$i=0;
+				
+				foreach($model as $modelado)
+				{
+					
+						if($modelado->ultimo==1)
+						{
+							if(ProductoPadre::model()->findAllByAttributes(array('id_categoria'=>$modelado->id, 'activo'=>1)))
+							{
+								$hijos=ProductoPadre::model()->findAllByAttributes(array('id_categoria'=>$modelado->id, 'activo'=>1)); 
+								foreach($hijos as $hijo)
+								{
+									array_push($res, $hijo->nombre);
+									$i++;
+								}
+							}	
+	 
+						}
+						
+
+				}
+	     		echo CJSON::encode($res);
+			}
+
 	    	Yii::app()->end();
 		}
+	public function actionFiltroBusqueda()
+	{
+		Yii::app()->session['menu']=$_POST['filtro'];		
+	}
+	
+	public function actionCarrito()
+	{
+		$this->layout='//layouts/start';
+
+       $this->render('carrito');
+	}
 }
