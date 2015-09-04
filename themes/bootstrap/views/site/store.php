@@ -1,5 +1,4 @@
-<div class="col-md-8 col-md-offset-2 no_horizontal_padding">
-        <div class="row-fluid margin_top_small">
+
            <div class="col-md-2 leftPanel">                 
                <?php $this->renderPartial('filters'); ?>
            </div>           
@@ -44,5 +43,3 @@
                    </div>
                </div>
            </div>
-        </div>
-</div>    

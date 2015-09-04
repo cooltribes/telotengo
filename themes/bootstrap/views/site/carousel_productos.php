@@ -56,6 +56,7 @@ $('#<?php echo $carousel;?>').carousel({
 //$('.carousel').carousel('cycle');
 });  
 </script>
+<?php if(!is_null($data)): ?>
 
 <div id="<?php echo $carousel;?>Carousel" class="carousel slide carouselHome margin_top">
                <!-- Carousel indicators -->
@@ -74,7 +75,7 @@ $('#<?php echo $carousel;?>').carousel({
 				 }
 				 else
 				 {
-					 $url="http://placehold.it/131x150";
+					 $url="http://placehold.it/135x150";
 				 }?> 	
                 
                  
@@ -108,9 +109,10 @@ $('#<?php echo $carousel;?>').carousel({
                
                <!-- Carousel nav -->
                
-                <a class="carousel-control left" href="#<?php echo $carousel;?>" 
+                <a class="carousel-control left" href="#<?php echo $carousel;?>Carousel" 
                   data-slide="prev"><span class="arrow">‹</span></a>
-               <a class="carousel-control right" href="#<?php echo $carousel;?>" 
+               <a class="carousel-control right" href="#<?php echo $carousel;?>Carousel" 
                   data-slide="next"><span class="arrow">›</span></a>
 
             </div>
+ <?php endif; ?>

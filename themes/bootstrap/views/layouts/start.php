@@ -1,4 +1,6 @@
-<?php /* @var $this Controller */ ?>
+<?php /* @var $this Controller */ 
+Yii::app()->session['menu']="";
+?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
@@ -13,7 +15,9 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
 Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_menu/css/dropdown/themes/default/default.css');
 ?>
 <?php Yii::app()->bootstrap->register(); ?>
-<?php  Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/styles.css',null); ?>
+<?php  Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/styles.css',null); 
+ $model = Categoria::model()->findAllBySql("select * from tbl_categoria where id_padre in (select id from tbl_categoria where id_padre=0)  order by nombre asc");
+?>
 <head>
         
         <meta charset="utf-8">
@@ -33,18 +37,18 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
 </head>
 
 <div class="navbar row-fluid b2b clearfix no_margin_bottom" >
-    <div class="col-md-8 col-md-offset-2">
+    <div class="col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 col-xs-8 col-xs-offset-2" id="headerContainer">
                 <div class="row-fluid">
-                    <div class="col-md-2 no_padding_left">
-                         <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/logo.png" height="30px;"/>
+                    <div class="col-md-2 col-sm-2 col-xs-5 no_padding_left">
+                        <a href="<?php echo Yii::app()->baseUrl; ?>"><img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/logo.png" width="100%"/></a> 
                     </div>     
-                    <div class="col-md-5 no_left_padding"><div style="width:100%; height:30px; background:#000"></div></div>
-                    <div class="col-md-5 no_left_padding">
-                        <div class="text-right clientService">
+                    <div class="col-md-5 col-sm-5 col-xs-6  no_horizontal_padding" id="headLinks"><div style="width:100%; height:35px; background:#000"></div></div>
+                    <div class="col-md-5 col-sm-5  col-xs-6 no_horizontal_padding">
+                        <div class="text-right clientService" title="(0800) 568.36.46 - SERVICIO@TELOTENGO.COM">
                             SERVICIO AL CLIENTE: (0800) 568.36.46 | SERVICIO@TELOTENGO.COM
                         </div>
                     </div> 
-                    <div class="col-md-2 no_padding_left" style="margin-top: 10px">
+                    <div class="col-md-2 col-sm-2 col-xs-2 no_padding_left" style="margin-top: 10px" id="categorySearch">
                         <div class="dropdown">
                                   <a class="form-control text-left dropdown-toggle no_horizontal_padding no_border" id="categoryMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                     <span class="mainText">Categorías</span><span class="caret"></span> <span class="searchby">Buscar por:</span>                                 
@@ -58,46 +62,70 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                                   </ul>
                             </div> 
                     </div>
-                    <div class="col-md-10 no_padding_left">
+                    <div class="col-md-10 col-sm-10 col-xs-12 no_horizontal_padding">
                         <div class="separator no_horizontal_padding"></div>
                     </div>
                     
-                    <div class="col-md-6 no_horizontal_padding">
+                    <div class="col-md-6 col-sm-6 col-xs-6 no_horizontal_padding" id="searchSet">
                         <div class="row-fluid searchBar">
-                            <div class="col-md-3 no_horizontal_padding">
+                            <div class="col-md-3 col-sm-3 col-xs-3 no_horizontal_padding">
                                 <div class="dropdown">
-                                  <button class="btn btn-default form-control no_radius dropdown-toggle orange_border_left" type="button" id="categorySearch" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                    Todas las categorías
-                                    <span class="caret"></span>
-                                  </button>
-                                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                  <select class="btn btn-default form-control no_radius dropdown-toggle orange_border_left"  id="categorySearch" >
+                                	<option value="" selected>Todas las categorias</option>
+                                 <?php 
+                                 foreach($model as $modelado)
+								 {?>
+								  <option value="<?php echo $modelado->id?>"><?php echo $modelado->nombre;?></option>
+								 <?php	
+								 }?>      
+                                  </select>
+                                  
+                                <!--  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                                     <li><a href="#">Action in <span class="highlighted">Your life</span></a></li>
                                     <li><a href="#">Another action in <span class="highlighted">Another's life</span></a></li>
                                     <li class="separator"></li>
                                     <li><a href="#">Something else here</a></li>
                                     <li><a href="#">Separated link</a></li>
-                                  </ul> 
+                                </ul> -->
                                 </div> 
+                            </div> 
+                            <div class="col-md-7 col-sm-7 col-xs-7 no_horizontal_padding">
+                               <!-- <input class="form-control no_radius orange_border_middle" placeholder:"incluye palabras clave..."/> -->
+                               <?php
+                                    $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
+								    'id'=>'busqueda',
+									'name'=>'busqueda',
+								    'source'=>$this->createUrl('Site/autoComplete'),
+									'htmlOptions'=>array(
+								          //'size'=>22,
+										  'placeholder'=>'Incluye palabras claves...',
+										  'class'=>'form-control no_radius orange_border_middle',
+								          //'maxlength'=>45,
+								        ),
+								    // additional javascript options for the autocomplete plugin
+								    'options'=>array(
+								            'showAnim'=>'fold',
+								            
+								    ),
+									));	
+									?>
                             </div>
-                            <div class="col-md-7 no_horizontal_padding">
-                                <input class="form-control no_radius orange_border_middle" placeholder:"incluye palabras clave..."/>
-                            </div>
-                            <div class="col-md-2 no_horizontal_padding">
+                            <div class="col-md-2 col-sm-2 col-xs-2 no_horizontal_padding">
                                 <?php echo CHtml::submitButton('Buscar', array('class'=>'btn-orange btn btn-danger btn-large orange_border')); ?>
                             </div>
                         </div>
                     </div> 
-                    <div class="col-md-4 no_horizontal_margin no_left_padding">
+                    <div class="col-md-4 col-sm-4 col-xs-12 no_horizontal_margin no_horizontal_padding">
                         <div class="row-fluid" id="userMenu">
-                            <div class="col-md-4 no_right_padding">
+                            <div class="col-md-4 col-sm-4 col-xs-4 no_right_padding">
                                 <div class="dropdown drophover">
-                                  <a class="form-control text-left dropdown-toggle no_padding no_border" id="orderButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                  <a class="form-control text-left dropdown-toggle no_padding no_border " id="orderButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                     <div class="row-fluid">
-                                        <div class="col-md-3 no_horizontal_padding icon">
+                                        <div class="col-md-3 col-md-3 col-xs-3 no_horizontal_padding icon">
                                              <span class="glyphicon glyphicon-inbox"></span>
                                              <span class="counter">88</span>
                                         </div>
-                                        <div class="col-md-9 no_horizontal_padding title">
+                                        <div class="col-md-9 col-sm-9 col-xs-9 no_horizontal_padding title">
                                              <span class="text">Ordenes</span>
                                        
                                             <span class="caret no_margin_left"></span>
@@ -113,15 +141,15 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                                   </ul>
                                 </div>
                             </div>
-                            <div class="col-md-3 no_horizontal_padding">
+                            <div class="col-md-3 col-sm-3 col-xs-3 no_horizontal_padding">
                                 <div class="dropdown drophover">
                                   <a class="form-control text-left dropdown-toggle no_padding no_border" id="cartButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                     <div class="row-fluid">
-                                        <div class="col-md-4 no_horizontal_padding icon">
+                                        <div class="col-md-4 col-sm-4 col-xs-4 no_horizontal_padding icon">
                                              <span class="glyphicon glyphicon-shopping-cart"></span>
                                              <span class="counter">88</span>
                                         </div>
-                                        <div class="col-md-8 no_horizontal_padding title">
+                                        <div class="col-md-8 col-sm-8 col-xs-8 no_horizontal_padding title">
                                              <span class="text">Carrito</span>
                                         
                                             <span class="caret no_margin_left"></span>
@@ -137,17 +165,17 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                                   </ul>
                                 </div>
                             </div>
-                            <div class="col-md-5 no_horizontal_padding">
+                            <div class="col-md-5 col-sm-5 col-xs-5 no_horizontal_padding">
                                 <div class="dropdown drophover">
                                   <a class="form-control text-left dropdown-toggle no_padding no_border" id="userButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                     <div class="row-fluid">
-                                        <div class="col-md-3 no_horizontal_padding image">
+                                        <div class="col-md-3 col-sm-3 col-xs-3 no_horizontal_padding image">
                                             <div class="imgContainer">
                                                 <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/favicon75.2.png" width="100%"/>
                                             </div>
                                              
                                         </div>
-                                        <div class="col-md-9 no_horizontal_padding title">
+                                        <div class="col-md-9 col-sm-9 col-xs-9 no_horizontal_padding title">
                                              <div class="text user">John Doe</div>
                                              <span class="caret user"></span>
                                         </div>
@@ -169,8 +197,20 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                 </div> 
         </div>
 </div>
+<?php
+if(isset(Yii::app()->session['banner'])){?>
+    <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/banner.jpg" width="100%"/>
+<?php 
+    unset(Yii::app()->session['banner']);
+    }
+?>
 
+<div class="col-md-8 col-md-offset-2 no_horizontal_padding" id="pageContainer">
+        <div class="row-fluid margin_top">   
+ 
 <?php echo $content; ?>
+    </div>
+</div>
 <div class="col-md-12 margin_top_large margin_bottom_large"></div>
 <!--
   <div class="footer padding_bottom_small">
@@ -182,3 +222,23 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
   </div>
 
 -->
+
+<script>
+
+$(document).ready(function() {
+	$('#categorySearch').on('change', function(event) {
+			
+			var filtro=$(this).val();
+				$.ajax({
+		         url: "<?php echo Yii::app()->createUrl('Site/filtroBusqueda') ?>",
+	             type: 'POST',
+		         data:{
+	                    filtro:filtro,
+	                   },
+		        success: function (data) {
+		       	}
+		       })
+			
+		});
+});	
+</script>
