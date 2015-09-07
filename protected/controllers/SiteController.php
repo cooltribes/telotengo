@@ -335,7 +335,7 @@ class SiteController extends Controller
     public function actionStore(){
         $this->layout='//layouts/start';
  
-       $this->render('store');
+       $this->render('store',array('list'=>false));
     }
     public function actionCategory(){
         $this->layout='//layouts/start';

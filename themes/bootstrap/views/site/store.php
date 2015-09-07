@@ -34,7 +34,11 @@
                            </div>
                            <div class="col-md-12 plainSeparator margin_bottom"></div>
                            <div class="col-md-12 no_horizontal_padding">
-                               <?php  $this->renderPartial('list_view'); ?>
+                               <?php  
+                               if($list)
+                                $this->renderPartial('list_view');
+                               else
+                                   $this->renderPartial('grid_view'); ?>
                                
                            </div>
                            
