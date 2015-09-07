@@ -56,8 +56,8 @@
     
 }
 .orderAll .btn{
-    padding-left: 30px;
-    padding-right: 30px;
+    padding-left: 10%;
+    padding-right: 10%;
     font-weight: bolder;
 }
 
@@ -97,7 +97,7 @@
                 <input class="btn-green btn btn-danger btn-large margin_top_small" type="submit" name="yt0" value="Procesar todas las órdenes">
             </div>
             <div class="text-center mutedLink">
-                <a href="#">Ver políticas de envíos y devoluciones</a>
+                <a class="muted" href="#">Ver políticas de envíos y devoluciones</a>
             </div>
             
         </div>
