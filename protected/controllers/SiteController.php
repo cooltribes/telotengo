@@ -24,7 +24,7 @@ class SiteController extends Controller
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
 				'actions'=>array('index','error','contact','login','logout','captcha','busqueda','inhome','tiendas','info','soporte','garantia','convenios','request','request2',
-								'corporativo','licencias','ofertas','home','store','detalle', 'inhome2', 'autoComplete', 'filtroBusqueda', 'carrito', 'category'), 
+								'corporativo','licencias','ofertas','home','store','detalle', 'inhome2', 'autoComplete', 'filtroBusqueda', 'carrito', 'category', 'formuPregunta'), 
 
 				'users'=>array('*'),
 			),
@@ -334,8 +334,8 @@ class SiteController extends Controller
     
     public function actionStore(){
         $this->layout='//layouts/start';
- 
-       $this->render('store');
+ 		
+       $this->render('store', array('list'=>false));
     }
     public function actionCategory(){
         $this->layout='//layouts/start';
@@ -377,6 +377,7 @@ class SiteController extends Controller
 		} 
 		$producto_id=1509;
 		$almacen_id=65;
+		$almacen=Almacen::model()->findByPk($almacen_id);
 		$model=Producto::model()->findByPk($producto_id);
 		$inventario=Inventario::model()->findByAttributes(array('producto_id'=>$producto_id, 'almacen_id'=>$almacen_id));
 		$imagen=Imagenes::model()->findAllByAttributes(array('producto_id'=>$producto_id));
@@ -384,9 +385,11 @@ class SiteController extends Controller
 		
 		$prueba = array("producto"=>(string)$producto_id); //MEJORAR ESTO 
 		$busqueda = $document->findOne($prueba);
+		//echo $almacen->empresas->razon_social;
+		 $empresa_id=$almacen->empresas->id;
 		//var_dump($busqueda); 
 		
-       $this->render('detalle', array('model'=>$model, 'inventario'=>$inventario, 'imagen'=>$imagen, 'imagenPrincipal'=>$imagenPrincipal, 'busqueda'=>$busqueda));
+       $this->render('detalle', array('model'=>$model, 'inventario'=>$inventario, 'imagen'=>$imagen, 'imagenPrincipal'=>$imagenPrincipal, 'busqueda'=>$busqueda, 'empresa_id'=>$empresa_id));
     }
     public function actionAutoComplete()
 		{
@@ -462,5 +465,23 @@ class SiteController extends Controller
 		$this->layout='//layouts/start';
 
        $this->render('carrito');
+	}
+
+	public function actionFormuPregunta()
+	{
+		$texto=$_POST['texto'];
+		$tipo=$_POST['tipo'];
+		$producto_id=$_POST['producto_id'];
+		$empresa_id=$_POST['empresa_id'];
+		 $model = new Pregunta;
+		 $model->pregunta=$texto;
+		 $model->fecha=date('Y-m-d h:i:s');
+		 $model->producto_id=$producto_id;
+		 $model->empresa_id=$empresa_id;
+		 $model->users_id=132;
+		 $model->publica=$tipo;
+		 $model->save();
+		Yii::app()->end();
+		
 	}
 }
