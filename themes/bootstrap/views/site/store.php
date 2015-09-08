@@ -4,7 +4,7 @@
            </div>           
            <div class="col-md-10">
                <div class="row-fluid">
-                   <div class="col-md-12 mainStore margin_top_minus">
+                   <div class="col-md-12 mainStore margin_top_minus no_horizontal_padding ">
                        <div class="row-fluid">
                            <div class="col-md-4 no_horizontal_padding">
                                <div class="margin_top_small">

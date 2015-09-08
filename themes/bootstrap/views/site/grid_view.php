@@ -1,7 +1,8 @@
-<div class="row-fluid">
-<?php for($i=0; $i<1; $i++): ?>
-
-        <a class="itemGridView col-md-4 clearfix" href="#">
+<div class="row-fluid clearfix">
+<?php for($i=0; $i<9; $i++): ?>
+    <div class="col-md-4">
+        <article class="itemGridView">
+        <a href="#">
             <div class="img text-center">
                 <img src="http://placehold.it/200x200" width="90%"/>
             </div>
@@ -33,7 +34,8 @@
                 </div>
             </div>
         </a>
-               
+        </article>
+     </div>          
 <?php endfor; ?>       
 </div>          
 
