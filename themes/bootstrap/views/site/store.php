@@ -1,11 +1,10 @@
-<div class="col-md-8 col-md-offset-2 no_horizontal_padding">
-        <div class="row-fluid margin_top_small">
+
            <div class="col-md-2 leftPanel">                 
                <?php $this->renderPartial('filters'); ?>
            </div>           
            <div class="col-md-10">
                <div class="row-fluid">
-                   <div class="col-md-12 mainStore margin_top_minus">
+                   <div class="col-md-12 mainStore margin_top_minus no_horizontal_padding ">
                        <div class="row-fluid">
                            <div class="col-md-4 no_horizontal_padding">
                                <div class="margin_top_small">
@@ -35,7 +34,11 @@
                            </div>
                            <div class="col-md-12 plainSeparator margin_bottom"></div>
                            <div class="col-md-12 no_horizontal_padding">
-                               <?php  $this->renderPartial('list_view'); ?>
+                               <?php  
+                               if($list)
+                                $this->renderPartial('list_view');
+                               else
+                                   $this->renderPartial('grid_view'); ?>
                                
                            </div>
                            
@@ -44,5 +47,3 @@
                    </div>
                </div>
            </div>
-        </div>
-</div>    

@@ -1337,7 +1337,7 @@ a:hover, a:focus{
 
 .clientService{
     width:100%; 
-    height:30px; 
+    height:35px; 
     font-size:14px; 
     font-weight: 900; 
     vertical-align:bottom; 
@@ -1713,6 +1713,124 @@ a:hover, a:focus{
          
         
 }
+.itemGridView{
+    border: solid 1px #AAA;
+    padding-top: 5px;
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 30px;
+    a{
+      text-decoration: none;
+      color: #555;
+    }
+  
+
+    .name{
+        height:38px;
+        font-size: 14px;
+        color: #222;
+        font-weight: bolder;
+        text-transform: uppercase;
+        overflow: hidden;
+        padding: 0px 10px;
+    }
+    .img{
+        padding:30px 10px;
+        
+    }
+    .info{
+        width:100%;
+        padding: 0px 10px;
+        margin-top: 5px;
+        .inventory, .price{
+            width:50%;
+            float: left;            
+            span{
+              display:block
+            }
+            ul{
+              list-style:none;
+              padding-left: 0px;
+              
+            }
+        }
+        .inventory{
+          span{
+            color: #555;
+          }
+        }
+        
+        .logos{
+          width:50%;
+          float: left;
+          display: none;
+          padding-top: 6px;
+          img{
+            padding: 0px 2%;
+            width:20%;
+            float: left;          
+          }
+        }       
+        
+    }
+
+      .price, .priceHover{
+          color: @b2bOrange;
+          font-weight: bolder;
+          .legend{
+              font-size: 12px;
+          }
+          .quantity{
+              font-size: 18px;
+          }
+        }
+       .priceHover{
+         display:none;
+         padding-right: 10px;
+         
+       }
+   
+}
+.itemGridView:hover{
+  text-decoration: none;  
+  .orange_border;
+  .name{
+    width:65%;
+    transition: width 1s linear;
+    float: left;
+    padding:0px 0px 0px 10px;
+   
+  }
+  .priceHover{
+    display: block;
+    text-decoration: none;
+    transition:display 1s linear;
+    span{
+      text-decoration: none;
+    }
+  }
+  .info{
+    border-top: solid 1px @b2bOrange;
+    padding-top: 5px;
+    .price{
+      display:none;
+      transition:display 1s linear;
+    }
+    .inventory{
+      ul{
+        list-style: inherit;
+        padding-left: 18px;
+        font-size:12px;
+        margin-bottom: 3px;
+      }
+    }
+    .logos{
+      display: block;
+      transition:display 1s linear;
+    } 
+  }
+}
+
 .pager{
   a{
     cursor: pointer;
@@ -2036,3 +2154,61 @@ h1{
         margin: 0;
     }
     
+
+
+@media (min-width: 1554px) and (max-width: 1674px){
+  #headerContainer, #pageContainer{
+    width: 72%;
+    margin-left: 14%;
+  }
+  
+}
+@media (min-width: 1436px) and (max-width: 1553px){
+  #headerContainer, #pageContainer{
+    width: 78%;
+    margin-left: 11%;
+  }
+}
+ @media (min-width: 1300px) and (max-width: 1435px){
+  #headerContainer, #pageContainer{
+    width: 88%;
+    margin-left: 6%;
+  }
+  
+}
+ @media  (min-width: 1192px) and (max-width: 1299px){
+  #headerContainer, #pageContainer{
+    width: 94%;
+    margin-left: 3%;
+  }
+  
+}
+ @media  (max-width: 1191px){
+  #headerContainer, #pageContainer{
+    width: 100%;
+    margin-left: 0;
+  }
+  
+}
+ @media  (max-width: 768px){
+  #searchSet, #categorySearch, #headLinks{
+    display:none;
+  }
+  
+}
+ @media  (max-width: 391px){
+   #userMenu .title, #userMenu .name{
+     display: none;
+   }
+   
+   .orderContainer .detail table td{
+     img{
+       display:none;
+     }
+   }
+ }
+ 
+h1.dark{
+  font-weight: 900;
+  font-size: 20px;
+}
