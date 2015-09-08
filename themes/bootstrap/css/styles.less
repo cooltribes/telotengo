@@ -2040,8 +2040,9 @@ h1{
     .detailTable{
         border: solid 1px #AAA;
         font-size: 12px;
+        background-color: #FFF;
         .title{
-            background-color: #CCC;
+            background-color: #e9e9e9;
             text-align: right;
             font-weight: bolder;
             padding-right: 10px;
@@ -2211,4 +2212,43 @@ h1{
 h1.dark{
   font-weight: 900;
   font-size: 20px;
+}
+
+/* MODALS ¨*/
+
+#shippingModal .modal-content{
+        top: 150px;
+    }
+.fade.in{
+    background-color: rgba(220,220,220,0.7);
+}
+.modal-content{
+    border-radius: 0px;
+    box-shadow: none;
+    border: 1px solid #222;
+    font-size: 12px;
+    h4, .sendTo{
+        padding-left: 35px;
+    }
+    table th{
+        background-color: #e9e9e9;
+    }
+     table td, table th{
+       padding: 8px 5px;
+    }
+    .sendTo{
+       padding-top:15px;
+       a{
+            padding: 3px 40px;
+            border: solid 2px #222;
+            font-weight: bold;
+            color: #222;
+            margin-left: 15px;
+        }
+        
+    }
+}
+
+.modal-header, .modal-footer{
+    border-color: transparent;
 }

@@ -1,7 +1,3 @@
-<style>
-    
-
-</style>
 
         <div class="breadcrumbs margin_top">
                 <a><span>Inicio</span></a>/&nbsp;
@@ -100,7 +96,7 @@
                                 </div>
                                 <div class="col-md-9">
                                 	<?php 
-                                	if($inventario->metodoEnvio==1)
+                                	if($inventario->metodoEnvio!=1)
 									{?>
 										<span class="price">Acordado con el cliente</span>
 									<?php
@@ -108,7 +104,7 @@
 									else
 									{?>
 										<span class="price">A traves del servicio de TELOTENGO</span>
-                                    	<a href="#">(en la región occidente) <span class="caret"></span></a>
+                                    	<a href="#"  data-toggle="modal" data-target="#shippingModal">(en la región occidente) <span class="caret"></span></a>
                                     	<span class="estimated">Fecha estimada de entrega: 3-5 días</span>
 									<?php	
 									}
@@ -240,4 +236,7 @@
            <?php $this->renderPartial('preguntas_respuestas', array('model'=>$model, 'empresa_id'=>$empresa_id)); ?>
            
 
+<div class="modal fade" id="shippingModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <?php $this->renderPartial('shipping_modal'); ?>
+</div>
             
