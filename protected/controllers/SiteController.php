@@ -375,8 +375,8 @@ class SiteController extends Controller
 
 			$document = $connection->getCollection('stage');	//STAGE
 		} 
-		$producto_id=1509;
-		$almacen_id=65;
+		$producto_id=1509; // se lo pusimos a pata
+		$almacen_id=65; // se lo pusimos a pata
 		$almacen=Almacen::model()->findByPk($almacen_id);
 		$model=Producto::model()->findByPk($producto_id);
 		$inventario=Inventario::model()->findByAttributes(array('producto_id'=>$producto_id, 'almacen_id'=>$almacen_id));
@@ -386,10 +386,14 @@ class SiteController extends Controller
 		$prueba = array("producto"=>(string)$producto_id); //MEJORAR ESTO 
 		$busqueda = $document->findOne($prueba);
 		//echo $almacen->empresas->razon_social;
-		 $empresa_id=$almacen->empresas->id;
+		 $empresa=$almacen->empresas;
+		 //$empresa_id=$almacen->empresas->id;
+		// $empresa_nombre=$almacen->empresas->nombre;
 		//var_dump($busqueda); 
-		
-       $this->render('detalle', array('model'=>$model, 'inventario'=>$inventario, 'imagen'=>$imagen, 'imagenPrincipal'=>$imagenPrincipal, 'busqueda'=>$busqueda, 'empresa_id'=>$empresa_id));
+		$otros = Inventario::model()->findAllBySql("select * from tbl_inventario where producto_id=".$producto_id." and almacen_id!=".$almacen_id."");
+	
+       $this->render('detalle', array('model'=>$model, 'inventario'=>$inventario, 'imagen'=>$imagen, 'imagenPrincipal'=>$imagenPrincipal, 'busqueda'=>$busqueda, 'empresa'=>$empresa, 'almacen'=>$almacen, 
+       'otros'=>$otros));
     }
     public function actionAutoComplete()
 		{

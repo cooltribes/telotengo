@@ -71,6 +71,7 @@
                             
                             <tr>
                                 <td class="title">Precio al mayor</td>
+                                
                                 <td ><span class="highlighted"><?php echo $inventario->precio;?></span> Bs por und.</td> <!-- NO hay precio con descuento-->
                                 <td class="title">Disponibilidad</td>
                                 <td > <?php echo $inventario->cantidad;?></td>                        
@@ -148,15 +149,28 @@
                     <table width="100%">
                         <tr>
                             <td width="50%" class="name">Cantidad:</td>
-                            <td width="50%"><input type="number" class="quantity" /></td>
+                            <td width="50%"><input id="cantidad"type="number" value="1" class="quantity" /></td>
                         </tr>
                         <tr>
                             <td class="name">Precio:</td>
-                            <td class="highlighted">150,000 Bs</td>
+                            <input type="hidden" id="precioUnitario" value="<?php echo  $inventario->precio;?>">
+                            <input type="hidden" id="maximo" value="<?php echo  $inventario->cantidad;?>">
+                            <td class="highlighted" id="unitario"><?php echo $inventario->precio?></td>
                         </tr>
                         <tr>
                             <td class="name">Envio:</td>
-                            <td class="option emphasis">Gratis</td>
+                             <?php 
+                                	if($inventario->metodoEnvio==1)
+									{?>
+										<td class="option emphasis">Acordado con el cliente</td>
+									<?php
+									}
+									else
+									{?>
+										<td class="option emphasis">A traves del servicio de TELOTENGO</td>
+									<?php	
+									}
+                                	?>
                         </tr>
                         <tr>
                             <td class="call" colspan="2">
@@ -167,47 +181,42 @@
                     <div class="plainSeparator"></div>
                     <div class="sellerInfo">
                         <span class="title">Vendido y enviado por:</span>
-                        <span class="name">Sigma System C.A.</span>
-                        <span class="location">San Cristóbal (Táchira)</span>
-                        <span>610 Transacciones</span>
-                        <span>98% Feedbacks positivos</span>
+                        <span class="name"><?php echo $empresa->razon_social;?></span>
+                        <span class="location"><?php echo $almacen->ciudad->nombre;?></span>
+                        <!--<span>610 Transacciones</span>
+                        <span>98% Feedbacks positivos</span> -->
                     </div>
                 </div>
-                <div class="moreOptions margin_top">
+                <?php 
+                if(isset($otros))
+                {?>
+                  <div class="moreOptions margin_top">
+                   
                     <div class="item">
-                       <span class="title">Mas opciones de compra</span>                    
-                        <div class="sellerInfo">
-                            <span class="name">Compumall</span>
-                            <span class="location">San Cristóbal (Táchira)</span>
-                            <span><b>320.100 Bs.</b> + 1600 Bs. de Envío</span>
+                       <span class="title">Mas opciones de compra</span>    
+                       <?php foreach($otros as $data)
+                       {?>
+                       	  <div class="sellerInfo">
+                            <span class="name"><?php echo $data->almacen->empresas->razon_social;?></span>
+                            <span class="location"><?php echo $data->almacen->ciudad->nombre; ?></span>
+                            <span><b><?php echo $data->precio;?> Bs.F</b> <?php if($inventario->metodoEnvio==1) echo "Acordado con el cliente"; else echo "A traves del servicio de TELOTENGO"; ?></span>
                             <button class="btn btn-small btn-unfilled"> ORDENAR</button>
                         </div>
-                        
+                         <div class="plainSeparator"></div> 
+                       <?php
+                       }
+                       ?>                
+   
                     </div>
-                    <div class="plainSeparator"></div>
-                    <div class="item">              
-                        <div class="sellerInfo">
-                            <span class="name">Compumall</span>
-                            <span class="location">San Cristóbal (Táchira)</span>
-                            <span><b>320.100 Bs.</b> + 1600 Bs. de Envío</span>
-                            <button class="btn btn-small btn-unfilled"> ORDENAR</button>
-                        </div>
-                        
-                    </div>
-                    <div class="plainSeparator"></div>
-                    <div class="item">           
-                        <div class="sellerInfo">
-                            <span class="name">Compumall</span>
-                            <span class="location">San Cristóbal (Táchira)</span>
-                            <span><b>320.100 Bs.</b> + 1600 Bs. de Envío</span>
-                            <button class="btn btn-small btn-unfilled"> ORDENAR</button>
-                        </div>
-                        
-                    </div>
-
                     
-                     
-                </div>               
+                   
+                
+                </div> 
+                <?php	
+                }
+                ?>
+    
+                           
             </div>
             <div class="col-md-12 no_horizontal_padding margin_top">
                 <div class="moreDetails">
@@ -237,7 +246,44 @@
                               
             </div>
             
-           <?php $this->renderPartial('preguntas_respuestas', array('model'=>$model, 'empresa_id'=>$empresa_id)); ?>
+           <?php $this->renderPartial('preguntas_respuestas', array('model'=>$model, 'empresa_id'=>$empresa->id)); ?>
            
+           
+           
+           <script>
+           	$(document).ready(function() {
+           
+	           	$('#cantidad').change(function() {
+	           	var cantidad=$('#cantidad').val();
+	           	cantidad=parseInt(cantidad);
+	           	var maximo=$('#maximo').val();
+	           	maximo=parseInt(maximo);
+	           	var unitario=$('#precioUnitario').val();
+	           	if(cantidad<=0)
+	           	{
+	           		$('#cantidad').val('1');
+	           		$('#unitario').html(unitario);
+	           		//alert('epaa');
+	           	}
+	           	else
+	           	{
+	           		if(cantidad>=maximo)
+	           		{
+	           			alert("El maximo de unidades es "+maximo);
+	           			$('#cantidad').val(maximo);
+	           			$('#unitario').html(maximo*unitario);
+	           			
+	           		}
+	           		else
+	           		{
+	           			$('#unitario').html(cantidad*unitario);
+	           		}
 
+	           	}
+	           	
+	           	});
+           	
+           	});
+           	
+           </script>
             
