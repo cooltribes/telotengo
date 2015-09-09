@@ -17,6 +17,39 @@ class Funciones {
 		return strpos(Yii::app()->baseUrl, "new") !== false;
 
 	}
+
+    public static function fillRow($busqueda){
+    ?>    
+        <td class="title"><?php echo key($busqueda); ?></td>
+            <td>
+            <?php
+            if(is_array(current($busqueda)))
+            {
+                foreach(current($busqueda) as $item)
+                {
+                    echo $item."<br/>";
+                }
+            } else{
+                 echo current($busqueda);
+            }
+            if(next($busqueda)===false)
+                return false;
+            else{
+                    if(strpos(key($busqueda),'*-*')){
+                        echo current($busqueda).' ';
+                        next($busqueda);
+                    }                                                                  
+                    
+            } 
+            
+            ?>
+            
+            
+            
+            </td>
+    <?php 
+        return $busqueda;
+    }  
     
  
     

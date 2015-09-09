@@ -48,7 +48,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                             SERVICIO AL CLIENTE: (0800) 568.36.46 | SERVICIO@TELOTENGO.COM
                         </div>
                     </div> 
-                    <div class="col-md-2 col-sm-2 col-xs-2 no_padding_left" style="margin-top: 10px" id="categorySearch">
+                    <div class="col-md-2 col-sm-2 col-xs-2 no_padding_left" id="categoryMenu">
                         <div class="dropdown">
                                   <a class="form-control text-left dropdown-toggle no_horizontal_padding no_border" id="categoryMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                     <span class="mainText">Categorías</span><span class="caret"></span> <span class="searchby">Buscar por:</span>                                 
