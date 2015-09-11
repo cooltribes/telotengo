@@ -47,7 +47,7 @@ class TiendaController extends Controller
 		));
 	}
 	
-	public function actionIndex()
+	public function actionIndexOLD()
 	{	
 		
 		$producto = new Producto;
@@ -163,30 +163,14 @@ class TiendaController extends Controller
 	}	
 	 
 
-	// Uncomment the following methods and override them if needed
-	/*
-	public function filters()
-	{
-		// return the filter configuration for this controller, e.g.:
-		return array(
-			'inlineFilterName',
-			array(
-				'class'=>'path.to.FilterClass',
-				'propertyName'=>'propertyValue',
-			),
-		);
-	}
+	public function actionIndex(){
+        $this->layout='//layouts/start'; 
+        $filter['categoria']=isset($_GET['categoria'])?$_GET['categoria']:'';
+        $filter['marcas']=isset($_GET['marcas'])?$_GET['marcas']:'';
+        $filter['precio']=isset($_GET['precio'])?$_GET['precio']:'';
+        $filter['caracteristica']=isset($_GET['caracteristica'])?$_GET['caracteristica']:'';
 
-	public function actions()
-	{
-		// return external action classes, e.g.:
-		return array(
-			'action1'=>'path.to.ActionClass',
-			'action2'=>array(
-				'class'=>'path.to.AnotherActionClass',
-				'propertyName'=>'propertyValue',
-			),
-		);
-	}
-	*/
+
+       $this->render('store', array('categorias'=>Categoria::model()->categoriasEnExistencia,'list'=>false,'filter'=>$filter));
+    }
 }
