@@ -64,7 +64,8 @@ class Categoria extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'categoriaHasTblProductos' => array(self::HAS_MANY, 'CategoriaHasTblProducto', 'categoria_id'),
-			'seo' => array(self::BELONGS_TO, 'Seo', 'id_seo')
+			'seo' => array(self::BELONGS_TO, 'Seo', 'id_seo'),
+            'padre' => array(self::BELONGS_TO, 'Categoria', 'id_padre')
 		);
 	}
 
@@ -194,7 +195,82 @@ class Categoria extends CActiveRecord
         }
         return false;
     }
+    
+    public function getCategoriasEnExistencia(){
+        $sql="select distinct(pad.id_categoria) from tbl_producto_padre pad where pad.id IN (
+        select distinct(p.padre_id) from tbl_producto p where p.id IN (
+        select distinct(i.producto_id) from tbl_inventario i where i.cantidad >0))";
+        $categorias=Yii::app()->db->createCommand($sql)->queryColumn();
+        $array=array();
+        
+        foreach($categorias as $key=>$item){
+            $padre=$this->getCategoriaOrigen($item);
+            if(!isset($array[$padre])) 
+                $array[$padre]=array();
+           array_push($array[$padre],$this->getPrimerSubcategoria($item));
+            $array[$padre]=array_unique($array[$padre]);
+        }
+        $return=array();
+        foreach($array as $padre=>$hijos){            
+            $a['objeto']=$this->findByPk($padre);
+            $a['hijos']=array();
+            foreach ($hijos as $hijo){
+                array_push($a['hijos'],$this->findByPk($hijo));
+            }
+            array_push($return,$a);
+        }
+        return $return; 
+    }
+    public function getCategoriaOrigen($id){
+        $categoria=Categoria::model()->findByPk($id);
+        if(!is_null($categoria)){
+            if($categoria->id_padre!=0) 
+                $ret=$categoria->getCategoriaOrigen($categoria->id_padre);
+            else
+                return $categoria->id; 
+        }    
+        else {
+            $ret=NULL;
+        }
+        return $ret;
+    }
+    public function getPrimerSubcategoria($id){
+        if(is_null($id))
+            $categoria=$this;
+         else   
+            $categoria=Categoria::model()->findByPk($id);
+        if(!is_null($categoria)){
+            if($categoria->padre->id_padre!=0)
+                $ret=$categoria->getPrimerSubcategoria($categoria->id_padre);
+            else
+                return $categoria->id; 
+        }    
+        else {
+            $ret=NULL;
+        }       
+        return $ret;
+    }
 
+     public function getDosPrimeras($id = null){
+         if(is_null($id))
+            $categoria=$this;
+         else   
+            $categoria=Categoria::model()->findByPk($id);
+        if(!is_null($categoria)){
+            if($categoria->padre->id_padre!=0)
+                $ret=$categoria->getDosPrimeras($categoria->id_padre);
+            else
+                return array('padre'=>$categoria->id_padre, 'sub'=>$categoria->id); 
+        }    
+        else {
+            $ret=NULL;
+        }       
+        return $ret;
+    }
+    
+    public function getMyParent($id){
+        return $this->padre;
+    }
     
 	
 }

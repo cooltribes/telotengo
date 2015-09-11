@@ -1065,6 +1065,7 @@ body{
 
 .white-link, .white-link:hover, .white-link:visited{
   color:#FFF;
+  font-size:12px;
   text-decoration: underline;
 }
 h1,h2,h3,h4,h5{
@@ -1151,6 +1152,13 @@ h1,h2,h3,h4,h5{
   }
 
  /* NEW LAYOUT B2B*/
+
+#login-form{
+  .errorMessage, span.error{
+    text-align: left;
+    color: #FFF;
+  }
+}
 
 .navbar{
   border: 0px;
@@ -1589,11 +1597,11 @@ a:hover, a:focus{
       ul{
           font-size: 12px;
           font-weight: 900;
-           li{
-            color: #555;
+           li{a{color: #555;}
+            
             ul{
               li{
-                  color: #BBB;
+                  a{color: #BBB;}
               }
             }
         } 

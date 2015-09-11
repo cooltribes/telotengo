@@ -67,7 +67,7 @@ class SiteController extends Controller
 	 * This is the default 'index' action that is invoked
 	 * when an action is not explicitly requested by users.
 	 */
-	public function actionIndex()
+	public function actionOldIndex()
 	{
 		// renders the view file 'protected/views/site/index.php'
 		// using the default layout 'protected/views/layouts/main.php'
@@ -309,7 +309,7 @@ class SiteController extends Controller
 		$this->render('ofertas');
 	}
     
-    public function actionHome(){
+    public function actionIndex(){
         $this->layout='//layouts/b2b';
         $model = new RegistrationForm;
             $profile = new Profile;
