@@ -375,8 +375,8 @@ class SiteController extends Controller
 
 			$document = $connection->getCollection('stage');	//STAGE
 		} 
-		$producto_id=1509; // se lo pusimos a pata
-		$almacen_id=65; // se lo pusimos a pata
+		$producto_id=1493; //TODO se lo pusimos a pata
+		$almacen_id=65; //TODO se lo pusimos a pata
 		$almacen=Almacen::model()->findByPk($almacen_id);
 		$model=Producto::model()->findByPk($producto_id);
 		$inventario=Inventario::model()->findByAttributes(array('producto_id'=>$producto_id, 'almacen_id'=>$almacen_id));
@@ -468,7 +468,10 @@ class SiteController extends Controller
 	{
 		$this->layout='//layouts/start';
 
-       $this->render('carrito');
+       $model=Bolsa::model()->findByPk(Yii::app()->session['bolsa']);
+       //unset(Yii::app()->session['bolsa']);
+	   $bolsaInventario=BolsaHasInventario::model()->findAllByAttributes(array('bolsa_id'=>$model->id), array('order'=>'almacen_id asc'));
+       $this->render('carrito', array('model'=>$model, 'bolsaInventario'=>$bolsaInventario));
 	}
 
 	public function actionFormuPregunta()
@@ -488,4 +491,4 @@ class SiteController extends Controller
 		Yii::app()->end();
 		
 	}
-}
+} 

@@ -151,6 +151,7 @@
                             <td class="name">Precio:</td>
                             <input type="hidden" id="precioUnitario" value="<?php echo  $inventario->precio;?>">
                             <input type="hidden" id="maximo" value="<?php echo  $inventario->cantidad;?>">
+                            <input type="hidden" id="inventario_id" value="<?php echo  $inventario->id;?>">
                             <td class="highlighted" id="unitario"><?php echo $inventario->precio?></td>
                         </tr>
                         <tr>
@@ -170,7 +171,7 @@
                         </tr>
                         <tr>
                             <td class="call" colspan="2">
-                                <?php echo CHtml::submitButton('ORDENAR', array('class'=>'btn-orange margin_bottom_small btn btn-danger btn-large orange_border form-control')); ?>
+                                <?php echo CHtml::submitButton('ORDENAR', array('id'=>'ordenar','class'=>'btn-orange margin_bottom_small btn btn-danger btn-large orange_border form-control')); ?>
                             </td>
                         </tr>
                     </table>
@@ -277,6 +278,29 @@
 
 	           	}
 	           	
+	           	});
+	           	
+	           	$('#ordenar').click(function() {
+	           		var inventario=$('#inventario_id').val();
+	           		var cantidad=$('#cantidad').val();
+	           		cantidad=parseInt(cantidad);
+	           		var unitario=$('#precioUnitario').val();
+	           		var maximo=$('#maximo').val();
+	           		maximo=parseInt(maximo);
+	           		
+	           		$.ajax({
+			         url: "<?php echo Yii::app()->createUrl('Bolsa/agregarCarrito') ?>",
+		             type: 'POST',
+			         data:{
+		                    cantidad:cantidad, unitario:unitario, inventario:inventario, maximo:maximo
+		                   },
+			        success: function (data) {
+			        	
+						window.location.href = '../carrito/';
+			       	}
+			       })
+	           		
+	           		
 	           	});
            	
            	});
