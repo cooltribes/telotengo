@@ -40,7 +40,7 @@
 												}
 											}
 		                                    ?>           
-		                                    <div class="links"><a href="#">Responder</a>|<a href="#">Reportar</a></div>                                   
+		                                   <!--< <div class="links"><!--<a href="#">Responder</a>| <a href="#">Reportar</a></div> -->                                  
 		                                </div>
 		                                
 		                            </div>
