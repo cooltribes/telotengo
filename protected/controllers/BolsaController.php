@@ -28,7 +28,7 @@ class BolsaController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('agregarCarrito'), ///TODO quitar de aqui y colocarlo en usuarios logueados
+				'actions'=>array('agregarCarrito', 'actualizarInventario'), ///TODO quitar de aqui y colocarlo en usuarios logueados
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -1192,5 +1192,27 @@ class BolsaController extends Controller
 		));*/
 		
 		//Yii::app()->end();
+	}
+
+	public function actionActualizarInventario()
+	{
+		$cantidad=$_POST['cantidad'];
+		$opcion=$_POST['opcion'];
+		$id=$_POST['id'];
+		
+		$bolsa=BolsaHasInventario::model()->findByPk($id);
+		if($opcion==1)
+		{
+			$bolsa->cantidad=$cantidad;
+			$bolsa->save();
+		}
+		if($opcion==2)
+		{
+			$bolsa->delete();
+		}
+		
+		
+		Yii::app()->end();
+		
 	}
 }

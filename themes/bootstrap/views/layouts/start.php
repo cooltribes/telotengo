@@ -147,7 +147,11 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                                     <div class="row-fluid">
                                         <div class="col-md-4 col-sm-4 col-xs-4 no_horizontal_padding icon">
                                              <span class="glyphicon glyphicon-shopping-cart"></span>
-                                             <span class="counter">88</span>
+                                             <?php 
+                                             $empresas_id=89; //TODO hacer dinamico
+                                             $bolsa=Bolsa::model()->findByAttributes(array('empresas_id'=>$empresas_id));
+                                             ?>
+                                             <span class="counter"><?php echo BolsaHasInventario::model()->countByAttributes(array('bolsa_id'=>$bolsa->id));?></span>
                                         </div>
                                         <div class="col-md-8 col-sm-8 col-xs-8 no_horizontal_padding title">
                                              <span class="text">Carrito</span>

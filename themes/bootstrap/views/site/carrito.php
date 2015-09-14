@@ -80,7 +80,7 @@
 }
 </style>
 <div class="col-md-12">
-    <h1 class="dark no_margin">ORDENES DE COMPRA</h1>
+    <h1 class="dark no_margin">INTENCION DE COMPRA</h1>
 </div>
 <div class="col-md-12 no_horizontal_padding cart">
     <div class="row-fluid">
@@ -89,10 +89,10 @@
         </div>        
         <div class="col-md-3">
             <div class="orderAll margin_top_small">
-                Subtotal: Bs. 1,330.000 <br/>
-                IVA: Bs. 200.000 <br/>
+                Subtotal: Bs. <?php echo Yii::app()->session['suma'];?><br/>
+                IVA: Bs. <?php echo $iva=Yii::app()->session['suma']*0.12;?> <br/>
                 <span class="total">
-                    Total: Bs. 1,530.000
+                    Total: Bs. <?php echo Yii::app()->session['suma']+$iva;  unset(Yii::app()->session['suma']);?>
                 </span>
                 <input class="btn-green btn btn-danger btn-large margin_top_small" type="submit" name="yt0" value="Procesar todas las órdenes">
             </div>

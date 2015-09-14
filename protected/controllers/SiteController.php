@@ -375,7 +375,7 @@ class SiteController extends Controller
 
 			$document = $connection->getCollection('stage');	//STAGE
 		} 
-		$producto_id=1493; //TODO se lo pusimos a pata
+		$producto_id=1509; //TODO se lo pusimos a pata
 		$almacen_id=65; //TODO se lo pusimos a pata
 		$almacen=Almacen::model()->findByPk($almacen_id);
 		$model=Producto::model()->findByPk($producto_id);
@@ -467,8 +467,9 @@ class SiteController extends Controller
 	public function actionCarrito()
 	{
 		$this->layout='//layouts/start';
-
-       $model=Bolsa::model()->findByPk(Yii::app()->session['bolsa']);
+		$empresas_id= 89; // TODO hacer dinamico esta parte
+		
+       $model=Bolsa::model()->findByAttributes(array('empresas_id'=>$empresas_id));
        //unset(Yii::app()->session['bolsa']);
 	   $bolsaInventario=BolsaHasInventario::model()->findAllByAttributes(array('bolsa_id'=>$model->id), array('order'=>'almacen_id asc'));
        $this->render('carrito', array('model'=>$model, 'bolsaInventario'=>$bolsaInventario));
@@ -485,10 +486,10 @@ class SiteController extends Controller
 		 $model->fecha=date('Y-m-d h:i:s');
 		 $model->producto_id=$producto_id;
 		 $model->empresa_id=$empresa_id;
-		 $model->users_id=132;
+		 $model->users_id=132; //TODO hacerlo dinamico
 		 $model->publica=$tipo;
 		 $model->save();
 		Yii::app()->end();
 		
-	}
+	} 
 } 
