@@ -54,7 +54,7 @@ class UserController extends Controller
 	Action para el finalizar la solicitud con respuesta adecuada
 	*/
 	public function actionRespuesta(){
-		
+		$this->layout='//layouts/start';
 		$user = User::model()->findByPk(Yii::app()->session['usuario_solicitud']);
 		$empresasHasUsers = EmpresasHasUsers::model()->findByAttributes(array('users_id'=>$user->id));
 		$empresa = $empresasHasUsers->empresas; 

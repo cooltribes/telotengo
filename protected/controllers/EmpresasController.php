@@ -210,6 +210,7 @@ class EmpresasController extends Controller
 	*/
 	public function actionSolicitudFinalizada()
 	{
+		 $this->layout='//layouts/b2b';
 		Yii::app()->user->setFlash('success', 'Solicitud realizada con éxito. Pronto estaremos en contacto contigo.');
 
 		$this->render('solicitudFinalizada');
