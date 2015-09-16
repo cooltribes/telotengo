@@ -74,19 +74,18 @@
                        
                        
                    </li>
-                   <li><input <?php echo in_array(1,explode('-',$filter['marcas']))?"checked":""; ?> type="checkbox" id="marca1" onclick="reqCheck('#marca1',1,'brands')"/> Marca 1</li>
-                   <li><input <?php echo in_array(2,explode('-',$filter['marcas']))?"checked":""; ?> type="checkbox" id="marca2" onclick="reqCheck('#marca2',2,'brands')"/> M2</li>
-                   <li><input <?php echo in_array(3,explode('-',$filter['marcas']))?"checked":""; ?> type="checkbox" id="marca3" onclick="reqCheck('#marca3',3,'brands')"/> Marca numero 3</li>
-                   <li><input <?php echo in_array(4,explode('-',$filter['marcas']))?"checked":""; ?> type="checkbox" id="marca4" onclick="reqCheck('#marca4',4,'brands')"/> Marca 4</li>
-                   <li><input <?php echo in_array(5,explode('-',$filter['marcas']))?"checked":""; ?> type="checkbox" id="marca5" onclick="reqCheck('#marca5',5,'brands')"/> Marca 5</li>
-                   <li><input <?php echo in_array(6,explode('-',$filter['marcas']))?"checked":""; ?> type="checkbox" id="marca6" onclick="reqCheck('#marca6',6,'brands')"/> Marca 6</li>
-                   <li><input <?php echo in_array(7,explode('-',$filter['marcas']))?"checked":""; ?> type="checkbox" id="marca7" onclick="reqCheck('#marca7',7,'brands')"/> M7</li>
-                    <li><input <?php echo in_array(8,explode('-',$filter['marcas']))?"checked":""; ?> type="checkbox" id="marca8" onclick="reqCheck('#marca8',8,'brands')"/> La Marca 8</li>
-                   <li><input <?php echo in_array(9,explode('-',$filter['marcas']))?"checked":""; ?> type="checkbox" id="marca9" onclick="reqCheck('#marca9',9,'brands')"/> Marca9</li>
-                   <li><input <?php echo in_array(10,explode('-',$filter['marcas']))?"checked":""; ?> type="checkbox" id="marca10" onclick="reqCheck('#marca10',10,'brands')"/> Marca 10</li>
-                   <li>
-                       <input <?php echo in_array(11,explode('-',$filter['marcas']))?"checked":""; ?> type="checkbox" id="marca11" onclick="reqCheck('#marca11',11,'brands')"/> M11</li>
                    
+                   <?php 
+                   $i=0;
+				   $model=Marca::model()->findAllByAttributes(array('destacado'=>1), array('limit'=>11)); //TODO en una proxima entrega hacerlo como rakuten
+                   foreach($model as $modelado)
+				   {?>
+				   	 <li><input <?php echo in_array($modelado->id,explode('-',$filter['marcas']))?"checked":""; ?> 
+				   	 	type="checkbox" id="marca<?php echo $modelado->id; ?>" onclick="reqCheck('#marca<?php echo $modelado->id;?>',<?php echo $modelado->id;?>,'brands')"/> <?php echo $modelado->nombre;?></li>
+				   <?php
+				   $i++;
+				   }
+                   ?>
                    
                </ul>
                 <?php
@@ -114,7 +113,8 @@
                     </div>
                  </div>
               <div class="separator"></div>
-               
+            <?php //TODO esto va para otra entrega.
+               /*
                <h1>CARACTERISTICA</h1>
                <input type="hidden" id="caracteristicaFilter" value="<?php echo $filter['caracteristica']?>"> 
                 <ul>
@@ -125,3 +125,5 @@
                    <li><a href="#" onclick="go('#caracteriscaFilter','<?php echo "value"; ?>');">Consumibles</a></li> 
                    <li><a href="#" onclick="go('#caracteriscaFilter','<?php echo "value"; ?>');">Discos Duros</a></li>
                </ul>
+		*/
+		

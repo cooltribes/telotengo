@@ -362,7 +362,7 @@ class SiteController extends Controller
             'profile' => $user->profile,
         ));
     }
-    public function actionDetalle(){ 
+    public function actionDetalle(){
         $this->layout='//layouts/start';
 		$connection = new MongoClass();
 		if(Funciones::isDev())
@@ -375,8 +375,8 @@ class SiteController extends Controller
 
 			$document = $connection->getCollection('stage');	//STAGE
 		} 
-		$producto_id=1509; //TODO se lo pusimos a pata
-		$almacen_id=65; //TODO se lo pusimos a pata
+		$producto_id=$_GET['producto_id'];
+		$almacen_id=$_GET['almacen_id'];
 		$almacen=Almacen::model()->findByPk($almacen_id);
 		$model=Producto::model()->findByPk($producto_id);
 		$inventario=Inventario::model()->findByAttributes(array('producto_id'=>$producto_id, 'almacen_id'=>$almacen_id));
@@ -391,7 +391,6 @@ class SiteController extends Controller
 		// $empresa_nombre=$almacen->empresas->nombre;
 		//var_dump($busqueda); 
 		$otros = Inventario::model()->findAllBySql("select * from tbl_inventario where producto_id=".$producto_id." and almacen_id!=".$almacen_id."");
-	
        $this->render('detalle', array('model'=>$model, 'inventario'=>$inventario, 'imagen'=>$imagen, 'imagenPrincipal'=>$imagenPrincipal, 'busqueda'=>$busqueda, 'empresa'=>$empresa, 'almacen'=>$almacen, 
        'otros'=>$otros));
     }

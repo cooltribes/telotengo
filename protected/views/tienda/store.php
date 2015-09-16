@@ -1,4 +1,12 @@
-           <div class="col-md-2 leftPanel">                 
+           <div class="col-md-2 leftPanel">  
+           	<?php
+           	if(isset( $filter['producto']))
+           	{
+           	?>
+           	 <input type="hidden" id="producto" value="<?php echo  $filter['producto'];?>">  
+           	 <?php 
+           	 }
+           	 ?>             
                <?php $this->renderPartial('filters',array('categorias'=>$categorias,'filter'=>$filter)); ?>
            </div>           
            <div class="col-md-10">
@@ -35,9 +43,10 @@
                            <div class="col-md-12 no_horizontal_padding">
                                <?php  
                                if($list)
-                                $this->renderPartial('list_view');
+                                $this->renderPartial('list_view', array('model'=>$model, 'model2'=>$model2));
                                else
-                                   $this->renderPartial('grid_view'); ?>
+							   	$this->renderPartial('grid_view', array('model'=>$model, 'model2'=>$model2));
+                                   ?>
                                
                            </div>
                            
@@ -55,13 +64,14 @@
     }
      function filtrar(){
         var params="?";
+        if($("#producto").length > 0){params=params+"producto="+$('#producto').val()+"&"};
         if($('#categoriasFilter').val()!=''){params=params+"categoria="+$('#categoriasFilter').val()+"&";}
             
         if($('#marcasFilter').val()!=''){params=params+"marcas="+$('#marcasFilter').val()+"&";}
             
         if($('#precioFilter').val()!=''){params=params+"precio="+$('#precioFilter').val()+"&";}
             
-        if($('#caracteristicaFilter').val()!=''){params=params+"caracteristica="+$('#caracteristica').val()+"&";}           
+       // if($('#caracteristicaFilter').val()!=''){params=params+"caracteristica="+$('#caracteristica').val()+"&";}   //TODO para otra entrega        
 
         var url = window.location.href.split("?");
         

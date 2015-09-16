@@ -42,7 +42,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                     <div class="col-md-2 col-sm-2 col-xs-5 no_padding_left">
                         <a href="<?php echo Yii::app()->baseUrl; ?>"><img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/logo.png" width="100%"/></a> 
                     </div>     
-                    <div class="col-md-5 col-sm-5 col-xs-6  no_horizontal_padding" id="headLinks"><div style="width:100%; height:35px; background:#000"></div></div>
+                    <div class="col-md-5 col-sm-5 col-xs-6  no_horizontal_padding" id="headLinks"></div>
                     <div class="col-md-5 col-sm-5  col-xs-6 no_horizontal_padding">
                         <div class="text-right clientService" title="(0800) 568.36.46 - SERVICIO@TELOTENGO.COM">
                             SERVICIO AL CLIENTE: (0800) 568.36.46 | SERVICIO@TELOTENGO.COM
@@ -111,7 +111,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
 									?>
                             </div>
                             <div class="col-md-2 col-sm-2 col-xs-2 no_horizontal_padding">
-                                <?php echo CHtml::submitButton('Buscar', array('class'=>'btn-orange btn btn-danger btn-large orange_border')); ?>
+                                <?php echo CHtml::submitButton('Buscar', array('id'=>'botonBusqueda','class'=>'btn-orange btn btn-danger btn-large orange_border')); ?>
                             </div>
                         </div>
                     </div> 
@@ -242,6 +242,18 @@ $(document).ready(function() {
 		        success: function (data) {
 		       	}
 		       })
+			
+		});
+		
+		
+		$('#botonBusqueda').on('click', function(event) {
+			
+			var busqueda=$('#busqueda').val();
+			if(busqueda=="")
+				return false;
+			window.location.href = '../tienda/index?producto='+busqueda;
+			//window.location.href = '../tienda/index/'+busqueda;
+				
 			
 		});
 });	
