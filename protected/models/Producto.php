@@ -454,6 +454,22 @@ class Producto extends CActiveRecord
 		}
 		return $val;
 	}
+	
+	public function busquedaInventarioAlmacen($empresas_id)
+	{
+		$almace=Almacen::model()->findAllByAttributes(array('empresas_id'=>$empresas_id));
+		foreach($almace as $almacen)
+		{
+			$inventario = Inventario::model()->findByAttributes(array('producto_id'=>$this->id, 'almacen_id'=>$almacen->id));
+			if(isset($inventario))
+			{
+				//echo $inventario->id;
+				return $inventario->almacen_id;
+			}
+		}
+		return "";	
+		//Yii::app()->end();
+	}
     
 	
 }

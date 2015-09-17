@@ -6,7 +6,7 @@
                 <a><span class="current">Producto</span></a>
         </div>
         
- 
+
         
         
         
@@ -215,6 +215,7 @@
     
                            
             </div>
+            
             <div class="col-md-12 no_horizontal_padding margin_top">
                 <div class="moreDetails">
                     

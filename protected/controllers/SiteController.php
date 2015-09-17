@@ -375,6 +375,10 @@ class SiteController extends Controller
 
 			$document = $connection->getCollection('stage');	//STAGE
 		} 
+		if(!isset($_GET['producto_id']) || !isset($_GET['almacen_id'])) //si no viene nada por get, fue que coloco el URL a mano
+		{
+			$this->redirect(array('site/inhome2'));
+		}
 		$producto_id=$_GET['producto_id'];
 		$almacen_id=$_GET['almacen_id'];
 		$almacen=Almacen::model()->findByPk($almacen_id);
