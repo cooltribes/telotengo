@@ -470,6 +470,8 @@ class Producto extends CActiveRecord
 		return "";	
 		//Yii::app()->end();
 	}
+	
+
     
 	
 }

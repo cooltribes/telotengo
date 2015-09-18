@@ -271,6 +271,16 @@ class Categoria extends CActiveRecord
     public function getMyParent($id){
         return $this->padre;
     }
+	
+	public function buscarCategoria($nombre)
+	{
+		$model=Categoria::model()->findByAttributes(array('nombre'=>$nombre));
+		if(isset($model))
+			return $model->nombre;	
+		else 
+			return "";
+		
+	}
     
 	
 }
