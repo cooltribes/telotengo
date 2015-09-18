@@ -147,11 +147,22 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                                     <div class="row-fluid">
                                         <div class="col-md-4 col-sm-4 col-xs-4 no_horizontal_padding icon">
                                              <span class="glyphicon glyphicon-shopping-cart"></span>
-                                             <?php 
-                                             $empresas_id=89; //TODO hacer dinamico
-                                             $bolsa=Bolsa::model()->findByAttributes(array('empresas_id'=>$empresas_id));
+                                             <?php
+											 $empresas = EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id));
+
                                              ?>
-                                             <span class="counter"><?php echo BolsaHasInventario::model()->countByAttributes(array('bolsa_id'=>$bolsa->id));?></span>
+                                             <span class="counter"><?php 
+
+                                             if(Bolsa::model()->findByAttributes(array('empresas_id'=>$empresas->empresas_id)))
+                                             {
+                                             	 $bolsa=Bolsa::model()->findByAttributes(array('empresas_id'=>$empresas->empresas_id));	
+                                             	 echo BolsaHasInventario::model()->countByAttributes(array('bolsa_id'=>$bolsa->id));
+											 }
+											 else
+											 {
+											 	echo "0";
+											 }
+											 	?></span>
                                         </div>
                                         <div class="col-md-8 col-sm-8 col-xs-8 no_horizontal_padding title">
                                              <span class="text">Carrito</span>
@@ -180,7 +191,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                                              
                                         </div>
                                         <div class="col-md-9 col-sm-9 col-xs-9 no_horizontal_padding title">
-                                             <div class="text user">John Doe</div>
+                                             <div class="text user"><?php echo $empresas->empresas->razon_social;?></div>
                                              <span class="caret user"></span>
                                         </div>
                                         

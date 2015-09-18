@@ -470,12 +470,10 @@ class SiteController extends Controller
 	public function actionCarrito()
 	{
 		$this->layout='//layouts/start';
-		$empresas_id= 89; // TODO hacer dinamico esta parte
-		
-       $model=Bolsa::model()->findByAttributes(array('empresas_id'=>$empresas_id));
-       //unset(Yii::app()->session['bolsa']);
-	   $bolsaInventario=BolsaHasInventario::model()->findAllByAttributes(array('bolsa_id'=>$model->id), array('order'=>'almacen_id asc'));
-       $this->render('carrito', array('model'=>$model, 'bolsaInventario'=>$bolsaInventario));
+		$empresas = EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id));		
+        $model=Bolsa::model()->findByAttributes(array('empresas_id'=>$empresas->empresas_id));
+	    $bolsaInventario=BolsaHasInventario::model()->findAllByAttributes(array('bolsa_id'=>$model->id), array('order'=>'almacen_id asc'));
+        $this->render('carrito', array('model'=>$model, 'bolsaInventario'=>$bolsaInventario));
 	}
 
 	public function actionFormuPregunta()

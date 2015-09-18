@@ -40,7 +40,7 @@ foreach($bolsaInventario as $carrito)
                         
                         <tbody>
                             <?php 
-                            $bolsita=BolsaHasInventario::model()->findAllByAttributes(array('almacen_id'=>$carrito->almacen_id));
+                            $bolsita=BolsaHasInventario::model()->findAllByAttributes(array('almacen_id'=>$carrito->almacen_id, 'bolsa_id'=>$model->id));
                             foreach($bolsita as $bolsa) 
                             {
                             	$imagenPrincipal=Imagenes::model()->findByAttributes(array('producto_id'=>$bolsa->inventario->producto->id, 'orden'=>1));

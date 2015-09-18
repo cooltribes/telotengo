@@ -1143,7 +1143,8 @@ class BolsaController extends Controller
 		$cantidad=$_POST['cantidad'];
 		$inventario=$_POST['inventario'];
 		$maximo=$_POST['maximo'];
-		$empresas_id= 89; // TODO hacer dinamico esta parte
+		$empresas = EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id));
+		$empresas_id= $empresas->empresas_id;
 		$inventarios=Inventario::model()->findByPk($inventario);
 		if(Bolsa::model()->findByAttributes(array('empresas_id'=>$empresas_id)))
 		{
@@ -1154,10 +1155,8 @@ class BolsaController extends Controller
 			$bolsa=new Bolsa;
 			$bolsa->empresas_id=$empresas_id;
 			$bolsa->save();
-			$bolsa=Bolsa::model()->findByAttributes(array('empresas_id'=>$empresas_id));
-			
+
 		}
-		//echo $bolsa->id;
 		if(BolsaHasInventario::model()->findByAttributes(array('bolsa_id'=>$bolsa->id, 'inventario_id'=>$inventario)))
 		{
 			$bolsaInventario = BolsaHasInventario::model()->findByAttributes(array('bolsa_id'=>$bolsa->id, 'inventario_id'=>$inventario));
