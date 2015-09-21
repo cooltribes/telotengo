@@ -1,7 +1,3 @@
-<style>
-    
-
-</style>
 
         <div class="breadcrumbs margin_top">
                 <a><span>Inicio</span></a>/&nbsp;
@@ -10,7 +6,7 @@
                 <a><span class="current">Producto</span></a>
         </div>
         
- 
+
         
         
         
@@ -71,6 +67,7 @@
                             
                             <tr>
                                 <td class="title">Precio al mayor</td>
+                                
                                 <td ><span class="highlighted"><?php echo $inventario->precio;?></span> Bs por und.</td> <!-- NO hay precio con descuento-->
                                 <td class="title">Disponibilidad</td>
                                 <td > <?php echo $inventario->cantidad;?></td>                        
@@ -100,7 +97,7 @@
                                 </div>
                                 <div class="col-md-9">
                                 	<?php 
-                                	if($inventario->metodoEnvio==1)
+                                	if($inventario->metodoEnvio!=1)
 									{?>
 										<span class="price">Acordado con el cliente</span>
 									<?php
@@ -108,7 +105,7 @@
 									else
 									{?>
 										<span class="price">A traves del servicio de TELOTENGO</span>
-                                    	<a href="#">(en la región occidente) <span class="caret"></span></a>
+                                    	<a href="#"  data-toggle="modal" data-target="#shippingModal">(en la región occidente) <span class="caret"></span></a>
                                     	<span class="estimated">Fecha estimada de entrega: 3-5 días</span>
 									<?php	
 									}
@@ -148,67 +145,77 @@
                     <table width="100%">
                         <tr>
                             <td width="50%" class="name">Cantidad:</td>
-                            <td width="50%"><input type="number" class="quantity" /></td>
+                            <td width="50%"><input id="cantidad"type="number" value="1" class="quantity" /></td>
                         </tr>
                         <tr>
                             <td class="name">Precio:</td>
-                            <td class="highlighted">150,000 Bs</td>
+                            <input type="hidden" id="precioUnitario" value="<?php echo  $inventario->precio;?>">
+                            <input type="hidden" id="maximo" value="<?php echo  $inventario->cantidad;?>">
+                            <input type="hidden" id="inventario_id" value="<?php echo  $inventario->id;?>">
+                            <td class="highlighted" id="unitario"><?php echo $inventario->precio?></td>
                         </tr>
                         <tr>
                             <td class="name">Envio:</td>
-                            <td class="option emphasis">Gratis</td>
+                             <?php 
+                                	if($inventario->metodoEnvio==1)
+									{?>
+										<td class="option emphasis">Acordado con el cliente</td>
+									<?php
+									}
+									else
+									{?>
+										<td class="option emphasis">A traves del servicio de TELOTENGO</td>
+									<?php	
+									}
+                                	?>
                         </tr>
                         <tr>
                             <td class="call" colspan="2">
-                                <?php echo CHtml::submitButton('ORDENAR', array('class'=>'btn-orange margin_bottom_small btn btn-danger btn-large orange_border form-control')); ?>
+                                <?php echo CHtml::submitButton('ORDENAR', array('id'=>'ordenar','class'=>'btn-orange margin_bottom_small btn btn-danger btn-large orange_border form-control')); ?>
                             </td>
                         </tr>
                     </table>
                     <div class="plainSeparator"></div>
                     <div class="sellerInfo">
                         <span class="title">Vendido y enviado por:</span>
-                        <span class="name">Sigma System C.A.</span>
-                        <span class="location">San Cristóbal (Táchira)</span>
-                        <span>610 Transacciones</span>
-                        <span>98% Feedbacks positivos</span>
+                        <span class="name"><?php echo $empresa->razon_social;?></span>
+                        <span class="location"><?php echo $almacen->ciudad->nombre;?></span>
+                        <!--<span>610 Transacciones</span>
+                        <span>98% Feedbacks positivos</span> -->
                     </div>
                 </div>
-                <div class="moreOptions margin_top">
+                <?php 
+                if(isset($otros))
+                {?>
+                  <div class="moreOptions margin_top">
+                   
                     <div class="item">
-                       <span class="title">Mas opciones de compra</span>                    
-                        <div class="sellerInfo">
-                            <span class="name">Compumall</span>
-                            <span class="location">San Cristóbal (Táchira)</span>
-                            <span><b>320.100 Bs.</b> + 1600 Bs. de Envío</span>
+                       <span class="title">Mas opciones de compra</span>    
+                       <?php foreach($otros as $data)
+                       {?>
+                       	  <div class="sellerInfo">
+                            <span class="name"><?php echo $data->almacen->empresas->razon_social;?></span>
+                            <span class="location"><?php echo $data->almacen->ciudad->nombre; ?></span>
+                            <span><b><?php echo $data->precio;?> Bs.F</b> <?php if($inventario->metodoEnvio==1) echo "Acordado con el cliente"; else echo "A traves del servicio de TELOTENGO"; ?></span>
                             <button class="btn btn-small btn-unfilled"> ORDENAR</button>
                         </div>
-                        
+                         <div class="plainSeparator"></div> 
+                       <?php
+                       }
+                       ?>                
+   
                     </div>
-                    <div class="plainSeparator"></div>
-                    <div class="item">              
-                        <div class="sellerInfo">
-                            <span class="name">Compumall</span>
-                            <span class="location">San Cristóbal (Táchira)</span>
-                            <span><b>320.100 Bs.</b> + 1600 Bs. de Envío</span>
-                            <button class="btn btn-small btn-unfilled"> ORDENAR</button>
-                        </div>
-                        
-                    </div>
-                    <div class="plainSeparator"></div>
-                    <div class="item">           
-                        <div class="sellerInfo">
-                            <span class="name">Compumall</span>
-                            <span class="location">San Cristóbal (Táchira)</span>
-                            <span><b>320.100 Bs.</b> + 1600 Bs. de Envío</span>
-                            <button class="btn btn-small btn-unfilled"> ORDENAR</button>
-                        </div>
-                        
-                    </div>
-
                     
-                     
-                </div>               
+                   
+                
+                </div> 
+                <?php	
+                }
+                ?>
+    
+                           
             </div>
+            
             <div class="col-md-12 no_horizontal_padding margin_top">
                 <div class="moreDetails">
                     
@@ -237,85 +244,72 @@
                               
             </div>
             
+           <?php $this->renderPartial('preguntas_respuestas', array('model'=>$model, 'empresa_id'=>$empresa->id)); ?>
            
-            <div class="col-md-12 no_horizontal_padding margin_top">
-                <h2>PREGUNTAS Y RESPUESTAS</h2>
-                <div class="moreDetails">
-                    <div class="row-fluid clearfix questions">
-                        <div class="col-md-9">
-                            <b>HAZ UNA PREGUNTA</b>
-                            <textarea rows="2" maxlength="500" placeholder="Escribe tu pregunta (Max 500 caracteres)"></textarea>
-                            <input class="btn-orange btn btn-danger btn-small  orange_border margin_right_small" type="submit" name="yt1" value="Preguntar Publicamente">
-                            <input class="btn-gray btn btn-danger btn-small" type="submit" name="yt1" value="Preguntar en Privado">
-                            <div class="row-fluid clearfix margin_top question">
-                                <div class="col-md-2 text-center userInfo">
-                                    <img src="http://placehold.it/50x50"/>
-                                  
-                                    <span class="userName ellipsis"><b>Compumall CA</b></span>
-                                    <span class="date">27/11/2014</span>
-                               </div>
-                                <div class="col-md-10 content">
-                                    <span><b>¿Donec id aliquet nisl. Curabitur quis sodales turpis. Vivamus id tortor nibh?</b></span>
-                                  
-                                    <div class="links"><a href="#">Responder</a>|<a href="#">Reportar</a></div>                                   
-                                </div>
-                                
-                            </div>
-                            
-                             <div class="row-fluid clearfix margin_top question">
-                                <div class="col-md-2 text-center userInfo">
-                                    <img src="http://placehold.it/50x50"/>
-                                  
-                                    <span class="userName ellipsis"><b>Compumall CA</b></span>
-                                    <span class="date">27/11/2014</span>
-                               </div>
-                                <div class="col-md-10 content">
-                                    <span><b>¿Donec id aliquet nisl. Curabitur quis sodales turpis. Vivamus id tortor nibh?</b></span>
-                                    <span>Nulla porta nisi et eros fermentum luctus. Donec id aliquet nisl. Curabitur quis sodales turpis. Vivamus id tortor nibh. Nulla facilisi. Praesent nibh lorem, sollicitudin malesuada viverra eu, venenatis ac purus.</span> 
-                                    <div class="links"><a href="#">Responder</a>|<a href="#">Reportar</a></div>                                   
-                                </div>
-                                
-                            </div>
-                            
-                            <div class="row-fluid clearfix margin_top question">
-                                <div class="col-md-2 text-center userInfo">
-                                    <img src="http://placehold.it/50x50"/>
-                                  
-                                    <span class="userName ellipsis"><b>Compumall CA</b></span>
-                                    <span class="date">27/11/2014</span>
-                               </div>
-                                <div class="col-md-10 content">
-                                    <span><b>¿Donec id aliquet nisl. Curabitur quis sodales turpis. Vivamus id tortor nibh?</b></span>
-                                    <span>Nulla porta nisi et eros fermentum luctus. Donec id aliquet nisl. Curabitur quis sodales turpis. Vivamus id tortor nibh. Nulla facilisi. Praesent nibh lorem, sollicitudin malesuada viverra eu, venenatis ac purus.</span> 
-                                    <div class="links"><a href="#">Responder</a>|<a href="#">Reportar</a></div>                                   
-                                </div>
-                                
-                            </div>
-                           
-                                                        
-                        </div>
-                        <div class="col-md-3">
-                          <b>MEJORES RESPUESTAS</b>
-                          <section class="margin_top">
-                              <article class="best margin_bottom_large">
-                                  <span><b>¿Donec id aliquet nisl. Curabitur quis sodales turpis. Vivamus id tortor nibh?</b></span>
-                                  <span class="margin_top_small">Nulla porta nisi et eros fermentum luctus. Donec id aliquet nisl. Curabitur quis sodales turpis. Vivamus id tortor nibh. Nulla facilisi. Praesent nibh lorem, sollicitudin malesuada viverra eu, venenatis ac purus.</span>
-                                  
-                              </article>
-                              
-                              <article class="best margin_bottom_large">
-                                  <span><b>¿Donec id aliquet nisl. Curabitur quis sodales turpis. Vivamus id tortor nibh?</b></span>
-                                  <span class="margin_top_small">Nulla porta nisi et eros fermentum luctus. Donec id aliquet nisl. Curabitur quis sodales turpis. Vivamus id tortor nibh. Nulla facilisi. Praesent nibh lorem, sollicitudin malesuada viverra eu, venenatis ac purus.</span>
-                                  
-                              </article>
-                              
-                          </section>
-                          
-                          
-                            
-                        </div>
-                    </div>                                  
-                </div>  
-                              
-            </div>
+           
+           
+           <script>
+           	$(document).ready(function() {
+           
+	           	$('#cantidad').change(function() {
+	           	var cantidad=$('#cantidad').val();
+	           	cantidad=parseInt(cantidad);
+	           	var maximo=$('#maximo').val();
+	           	maximo=parseInt(maximo);
+	           	var unitario=$('#precioUnitario').val();
+	           	if(cantidad<=0)
+	           	{
+	           		$('#cantidad').val('1');
+	           		$('#unitario').html(unitario);
+	           		//alert('epaa');
+	           	}
+	           	else
+	           	{
+	           		if(cantidad>=maximo)
+	           		{
+	           			alert("El maximo de unidades es "+maximo);
+	           			$('#cantidad').val(maximo);
+	           			$('#unitario').html(maximo*unitario);
+	           			
+	           		}
+	           		else
+	           		{
+	           			$('#unitario').html(cantidad*unitario);
+	           		}
+
+	           	}
+	           	
+	           	});
+	           	
+	           	$('#ordenar').click(function() {
+	           		var inventario=$('#inventario_id').val();
+	           		var cantidad=$('#cantidad').val();
+	           		cantidad=parseInt(cantidad);
+	           		var unitario=$('#precioUnitario').val();
+	           		var maximo=$('#maximo').val();
+	           		maximo=parseInt(maximo);
+	           		
+	           		$.ajax({
+			         url: "<?php echo Yii::app()->createUrl('Bolsa/agregarCarrito') ?>",
+		             type: 'POST',
+			         data:{
+		                    cantidad:cantidad, unitario:unitario, inventario:inventario, maximo:maximo
+		                   },
+			        success: function (data) {
+			        	
+						window.location.href = '../carrito/';
+			       	}
+			       })
+	           		
+	           		
+	           	});
+           	
+           	});
+           	
+           </script>
+
+<div class="modal fade" id="shippingModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <?php $this->renderPartial('shipping_modal'); ?>
+</div>
+
             

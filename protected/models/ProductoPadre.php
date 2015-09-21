@@ -101,4 +101,14 @@ class ProductoPadre extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+	
+	public function buscarProducto($nombre)
+	{
+		$model=ProductoPadre::model()->findByAttributes(array('nombre'=>$nombre));
+		if(isset($model))
+			return $model->id;	
+		else 
+			return "";
+		
+	}
 }

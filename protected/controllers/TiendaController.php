@@ -12,7 +12,7 @@ class TiendaController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','filtrar','storefront'),
+				'actions'=>array('index','filtrar','storefront'), //TODO acomodar esto cuando se tengan los usuarios
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -47,7 +47,7 @@ class TiendaController extends Controller
 		));
 	}
 	
-	public function actionIndex()
+	public function actionIndexOLD()
 	{	
 		
 		$producto = new Producto;
@@ -163,30 +163,140 @@ class TiendaController extends Controller
 	}	
 	 
 
-	// Uncomment the following methods and override them if needed
-	/*
-	public function filters()
-	{
-		// return the filter configuration for this controller, e.g.:
-		return array(
-			'inlineFilterName',
-			array(
-				'class'=>'path.to.FilterClass',
-				'propertyName'=>'propertyValue',
-			),
-		);
-	}
+	public function actionIndex(){
+        $this->layout='//layouts/start'; 
+		$sql="";
+		$sub="";
+		$otraForma="";
+		$opcion2="";
+		$filtroCategoria="";
+		if(isset($_GET['producto']))
+		{
+			$filter['producto']=$_GET['producto'];
+			$productoPartido=explode(" ", $_GET['producto']);
+			$num=count($productoPartido);
+			if(isset($productoPartido[$num-1]) && isset($productoPartido[$num-2])  && isset($productoPartido[$num-3]))
+			{
+				$variable="";
+				for($i=0;$i<=$num-3;$i++)
+				{
+					if($i!=$num-3)	
+						$variable=$variable.$productoPartido[$i]." ";
+					else	
+					   $variable=$variable.$productoPartido[$i];
+				}
+				if(Categoria::model()->buscarCategoria($productoPartido[$num-1])!="" && $productoPartido[$num-2]=="en" && ProductoPadre::model()->buscarProducto($variable)!="")
+				{
+					$padre_id=ProductoPadre::model()->buscarProducto($variable);
+					$otraForma=1; // bandera
+					$sql="select * from tbl_producto where padre_id=".$padre_id.""; //TODO mejorar esto, forma menos optima
+				}	
+			}
+			if($otraForma!=1) // bandera activa
+			{
+					$sql="select * from tbl_producto where nombre LIKE '%".$filter['producto']."%'"; //TODO mejorar esto, forma menos optima
+			}
+				
+				
 
-	public function actions()
-	{
-		// return external action classes, e.g.:
-		return array(
-			'action1'=>'path.to.ActionClass',
-			'action2'=>array(
-				'class'=>'path.to.AnotherActionClass',
-				'propertyName'=>'propertyValue',
-			),
-		);
-	}
-	*/
+
+			if($filter['producto']!="") //filtros
+			{
+				$filter['producto'];
+			}
+		}
+        $filter['categoria']=isset($_GET['categoria'])?$_GET['categoria']:'';
+        $filter['marcas']=isset($_GET['marcas'])?$_GET['marcas']:'';
+        $filter['precio']=isset($_GET['precio'])?$_GET['precio']:'';
+        //$filter['caracteristica']=isset($_GET['caracteristica'])?$_GET['caracteristica']:''; TODO para otra entrega
+		
+
+			
+		if($filter['categoria']!="")//filtros
+		{
+			// $filtroCategoria=$filter['categoria'];
+			// $filtroCategoria=Categoria::model()->findByAttributes(array('nombre'=>$filtroCategoria));
+			// echo $filtroCategoria;
+		}
+		
+		if($filter['marcas']!="")//filtros
+		{
+			$filtroMarca=explode("-", $filter['marcas']);
+			$contador=count($filtroMarca)-1;
+			$sql=$sql." and padre_id in (select id from tbl_producto_padre where id_marca in (";
+			$opcion2=" and padre_id in (select id from tbl_producto_padre where id_marca in (";
+			$i=0;	
+			foreach($filtroMarca as $marca)
+			{
+				$sql=$sql.$marca;
+				$opcion2=$opcion2.$marca;
+				if($contador!=$i)
+				{
+					$sql=$sql.",";
+					$opcion2=$opcion2.",";
+				}
+			$i++;
+			}
+			$sql=$sql."))";
+			$opcion2=$opcion2."))";
+		}
+		if($filter['precio']!="")//filtros
+		{
+			$filtroPrecio=explode("-", $filter['precio']);	
+			$filtroPrecio[0];
+			$filtroPrecio[1];
+			if($otraForma!=1) // si es busqueda por variacion
+			{
+				if($opcion2!="")
+					$sub="select * from tbl_inventario where producto_id in (select id from tbl_producto where nombre LIKE '%".$filter['producto']."%' ".$opcion2.") and precio between ".$filtroPrecio[0]." and ".$filtroPrecio[1]."";
+				else
+					$sub="select * from tbl_inventario where producto_id in (select id from tbl_producto where nombre LIKE '%".$filter['producto']."%') and precio between ".$filtroPrecio[0]." and ".$filtroPrecio[1]."";
+			}
+			else // si es busqueda por producto padre
+			{
+				if($opcion2!="")
+					$sub="select * from tbl_inventario where producto_id in (select id from tbl_producto where padre_id='".$padre_id."' ".$opcion2.") and precio between ".$filtroPrecio[0]." and ".$filtroPrecio[1]."";
+				else
+					$sub="select * from tbl_inventario where producto_id in (select id from tbl_producto where padre_id='".$padre_id."') and precio between ".$filtroPrecio[0]." and ".$filtroPrecio[1]."";
+			}
+			
+			//echo $sub;
+		}
+		
+		//TODO caracteristica para proxima entrega
+	/*	if($filter['caracteristica']!="")//filtros
+		{
+			echo $filter['caracteristica'];
+		}*/
+
+		if($sql!="")
+		{
+			//echo $sql;
+			$model="";
+			//echo $sql;
+			$model=Yii::app()->db->createCommand($sql)->queryAll();
+		}
+			
+		else
+		{
+			$model="";
+		}
+		
+		
+		
+		if($sub!="") //TODO mejorar esto substiuyo la consulta ya que las relaciones estaban mal hechas
+		{
+			//echo $sql;
+			$model2="";
+			//echo $sub;
+			$model2=Yii::app()->db->createCommand($sub)->queryAll();
+		}
+			
+		else
+		{
+			$model2="";
+		}
+       $this->render('store', array('categorias'=>Categoria::model()->categoriasEnExistencia,'list'=>false,'filter'=>$filter, 'model'=>$model, 'model2'=>$model2));
+    }
+	
 }

@@ -12,6 +12,7 @@
 }
 .orderContainer .detail table{
     font-size: 12px;
+    color: #222;
 }
 .orderContainer .detail table tbody td.name{
     font-weight: 900;
@@ -21,68 +22,85 @@
     color: #888;
     font-weight: 900;
 }
+.orderContainer .summary span{
+    font-size:20px;
+    font-weight: bolder;
+}
 .orderContainer .detail table tbody td.number input{
     width:80%;
 }
+.orderContainer .detail table tbody td.number.highlighted{
+    color: #ec1f24;
+}
 .orderContainer .detail table tbody td.number, .orderContainer .detail table tbody td.img{
     text-align:center; 
+    font-weight: bolder;
 }
 
-.orderContainer .summary{
+.orderContainer .summary{ 
     border: solid 1px #666;
 } 
 
+.orderAll{
+    background: #DDD;
+    text-align: center;
+    padding: 35px 0px 30px 0px;
+    font-size: 12px;
+    font-weight: 900;
+}
+.orderAll .total{
+    font-size: 20px;
+    font-weight: bolder;
+    display: inline-block;
+    margin-top: 1.5em;
+    
+}
+.orderAll .btn{
+    padding-left: 10%;
+    padding-right: 10%;
+    font-weight: bolder;
+}
+
+.btn-green{
+    background: #00A000;
+    border-radius: 0px;
+    border-color: transparent;
+}
+
+.btn-green:hover, .btn-green:focus{
+    background: #00AA00;
+    border-color: transparent;
+
+.mutedLink>a, .mutedLink>a:hover, .mutedLink>a:focus{
+    color: #CCC;
+    font-size: 11px;
+    text-decoration: none;
+}
+
+}
 </style>
 <div class="col-md-12">
-    <h1 class="dark no_margin">ORDENES DE COMPRA</h1>
+    <h1 class="dark no_margin">INTENCION DE COMPRA</h1>
 </div>
 <div class="col-md-12 no_horizontal_padding cart">
     <div class="row-fluid">
         <div class="col-md-9">
-            <div class="orderContainer margin_top_small margin_bottom_small">
-                <div class="title clearfix">
-                   <div class="row-fluid">
-                       <div class="col-md-6 no_horizontal_padding">ORDEN #123456</div>
-                       <div class="col-md-6 no_horizontal_padding text-right">Vendido por: Sigmatiendas C. A.</div>
-                   </div>
-                </div>
-                <div class="detail">
-                    <table width="100%">
-                        <col width="10%">
-                        <col width="42%">
-                        <col width="12%">
-                        <col width="12%">
-                        <col width="12%">
-                        <col width="12%">
-                        <thead>
-                            <tr>
-                                <th colspan="2">Producto</th>
-                                <th class="text-center">Cantidad</th>
-                                <th class="text-center">Precio Unt.</th>
-                                <th class="text-center">Sub Total</th>
-                                <th class="text-center"></th>
-                                
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="img"><img src="http://placehold.it/80x80"/></td>
-                                <td class="name">MOUSE MICROSOFT OPTICAL</td>
-                                <td class="number"><input type="number"></td>
-                                <td class="number">500 Bs</td>
-                                <td class="number">50,000 Bs</td>
-                                <td class="link"><a href="#">Eliminar</a></td>
-                                
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="summary">
-                    RESUMEN
-                </div>
-            </div>
+            <?php $this->renderPartial('orders',array('orders'=>NULL,'model'=>$model, 'bolsaInventario'=>$bolsaInventario)); ?>
         </div>        
-        <div class="col-md-3"></div>
+        <div class="col-md-3">
+            <div class="orderAll margin_top_small">
+                Subtotal: Bs. <?php echo Yii::app()->session['suma'];?><br/>
+                IVA: Bs. <?php echo $iva=Yii::app()->session['suma']*0.12;?> <br/>
+                <span class="total">
+                    Total: Bs. <?php echo Yii::app()->session['suma']+$iva;  unset(Yii::app()->session['suma']);?>
+                </span>
+                <input class="btn-green btn btn-danger btn-large margin_top_small" type="submit" name="yt0" value="Procesar todas las órdenes">
+            </div>
+            <div class="text-center mutedLink">
+                <a class="muted" href="#">Ver políticas de envíos y devoluciones</a>
+            </div>
+            
+        </div>
         
     </div>
 </div>

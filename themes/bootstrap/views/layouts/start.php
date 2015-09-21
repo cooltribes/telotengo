@@ -42,13 +42,13 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                     <div class="col-md-2 col-sm-2 col-xs-5 no_padding_left">
                         <a href="<?php echo Yii::app()->baseUrl; ?>"><img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/logo.png" width="100%"/></a> 
                     </div>     
-                    <div class="col-md-5 col-sm-5 col-xs-6  no_horizontal_padding" id="headLinks"><div style="width:100%; height:35px; background:#000"></div></div>
+                    <div class="col-md-5 col-sm-5 col-xs-6  no_horizontal_padding" id="headLinks"></div>
                     <div class="col-md-5 col-sm-5  col-xs-6 no_horizontal_padding">
                         <div class="text-right clientService" title="(0800) 568.36.46 - SERVICIO@TELOTENGO.COM">
                             SERVICIO AL CLIENTE: (0800) 568.36.46 | SERVICIO@TELOTENGO.COM
                         </div>
                     </div> 
-                    <div class="col-md-2 col-sm-2 col-xs-2 no_padding_left" style="margin-top: 10px" id="categorySearch">
+                    <div class="col-md-2 col-sm-2 col-xs-2 no_padding_left" id="categoryMenu">
                         <div class="dropdown">
                                   <a class="form-control text-left dropdown-toggle no_horizontal_padding no_border" id="categoryMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                     <span class="mainText">Categorías</span><span class="caret"></span> <span class="searchby">Buscar por:</span>                                 
@@ -111,7 +111,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
 									?>
                             </div>
                             <div class="col-md-2 col-sm-2 col-xs-2 no_horizontal_padding">
-                                <?php echo CHtml::submitButton('Buscar', array('class'=>'btn-orange btn btn-danger btn-large orange_border')); ?>
+                                <?php echo CHtml::submitButton('Buscar', array('id'=>'botonBusqueda','class'=>'btn-orange btn btn-danger btn-large orange_border')); ?>
                             </div>
                         </div>
                     </div> 
@@ -147,7 +147,22 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                                     <div class="row-fluid">
                                         <div class="col-md-4 col-sm-4 col-xs-4 no_horizontal_padding icon">
                                              <span class="glyphicon glyphicon-shopping-cart"></span>
-                                             <span class="counter">88</span>
+                                             <?php
+											 $empresas = EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id));
+
+                                             ?>
+                                             <span class="counter"><?php 
+
+                                             if(Bolsa::model()->findByAttributes(array('empresas_id'=>$empresas->empresas_id)))
+                                             {
+                                             	 $bolsa=Bolsa::model()->findByAttributes(array('empresas_id'=>$empresas->empresas_id));	
+                                             	 echo BolsaHasInventario::model()->countByAttributes(array('bolsa_id'=>$bolsa->id));
+											 }
+											 else
+											 {
+											 	echo "0";
+											 }
+											 	?></span>
                                         </div>
                                         <div class="col-md-8 col-sm-8 col-xs-8 no_horizontal_padding title">
                                              <span class="text">Carrito</span>
@@ -176,7 +191,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                                              
                                         </div>
                                         <div class="col-md-9 col-sm-9 col-xs-9 no_horizontal_padding title">
-                                             <div class="text user">John Doe</div>
+                                             <div class="text user"><?php echo $empresas->empresas->razon_social;?></div>
                                              <span class="caret user"></span>
                                         </div>
                                         
@@ -238,6 +253,18 @@ $(document).ready(function() {
 		        success: function (data) {
 		       	}
 		       })
+			
+		});
+		
+		
+		$('#botonBusqueda').on('click', function(event) {
+			
+			var busqueda=$('#busqueda').val();
+			if(busqueda=="")
+				return false;
+			window.location.href = '../tienda/index?producto='+busqueda;
+			//window.location.href = '../tienda/index/'+busqueda;
+				
 			
 		});
 });	

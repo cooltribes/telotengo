@@ -1,10 +1,5 @@
-<div class="col-md-8 col-md-offset-2 no_horizontal_padding subcategory">
-               
-               
-         
-        
-        <div class="row-fluid"> 
-        <div class="col-md-12 margin_top_small">
+
+        <div class="col-md-12 margin_top_small subcategory">
             <div class="breadcrumbs">
                 <a><span>Inicio</span></a>/&nbsp;
                 <a><span class="current">Sub Categoria</span></a>
@@ -63,4 +58,3 @@
             
             
         </div>
-</div>

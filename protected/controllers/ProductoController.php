@@ -1172,19 +1172,50 @@ class ProductoController extends Controller
 	public function actionInventario()
 	{
 		if(isset($_GET['id'])){
+			unset(Yii::app()->session['almacen_id']); 
 			$id = $_GET['id'];
-			if(!$inventario = Inventario::model()->findByAttributes(array('producto_id'=>$id)))
-				$inventario = new Inventario;
-
 			$producto = Producto::model()->findByPk($id);
+			$empresas_id = EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id))->empresas_id;
+			$almacen_id=$producto->busquedaInventarioAlmacen($empresas_id);
+			if($almacen_id=="")
+			{
+				$inventario = new Inventario;
+			}
+			else 
+			{
+				Yii::app()->session['almacen_id']=$almacen_id;	
+				$inventario = Inventario::model()->findByAttributes(array('producto_id'=>$id, 'almacen_id'=>$almacen_id));
+			}
+
 		}
 		else {
 			$inventario = new Inventario;
 			$id="";
 			$producto = new Producto;
 		}
-		$empresas_id = EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id))->empresas_id;
+
 		if(isset($_POST['Inventario'])){
+			$inventario->almacen_id = $_POST['Inventario']['almacen_id'];
+			$inventario->producto_id = $_POST['Inventario']['producto_id'];
+			
+			if(isset(Yii::app()->session['almacen_id']))
+			{
+				/*echo $inventario->almacen_id."///";
+				echo Yii::app()->session['almacen_id'];
+				Yii::app()->end();*/
+				
+				if($inventario->almacen_id!=Yii::app()->session['almacen_id']) // si elegio guardar la informacion en otro almacen
+				{	
+					if(Inventario::model()->findByAttributes(array('producto_id'=>$_POST['Inventario']['producto_id'], 'almacen_id'=>$_POST['Inventario']['almacen_id']))) // si existe el registro
+						$inventario=Inventario::model()->findByAttributes(array('producto_id'=>$_POST['Inventario']['producto_id'], 'almacen_id'=>$_POST['Inventario']['almacen_id']));
+					else 
+						$inventario = new Inventario;
+					
+					$inventario->almacen_id = $_POST['Inventario']['almacen_id'];
+					$inventario->producto_id = $_POST['Inventario']['producto_id'];
+				}
+			}
+			
 			$inventario->attributes = $_POST['Inventario'];
 			$inventario->sku = $_POST['Inventario']['sku'];
 			$inventario->numFabricante = $_POST['Inventario']['numFabricante'];
@@ -1199,9 +1230,8 @@ class ProductoController extends Controller
 			$inventario->garantia = $_POST['Inventario']['garantia'];
 			$inventario->metodoEnvio = $_POST['Inventario']['metodoEnvio'];
 			
-			$inventario->producto_id = $_POST['Inventario']['producto_id'];
-			$inventario->almacen_id = $_POST['Inventario']['almacen_id'];
-			
+
+
 			
 			//$producto->saveAttributes(array('estado'=>1));
 

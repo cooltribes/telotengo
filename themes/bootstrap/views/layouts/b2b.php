@@ -26,7 +26,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="language" content="en" />
 
-        <title>Sigma Tiendas</title>
+        <title>Telotengo</title>
 
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
 
@@ -34,18 +34,20 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
 
 
 
-<img src="<?php echo Yii::app()->theme->getBaseUrl()."/images/layout/b2b/background.jpg"?>" style="width:100%; z-index:0; height:100%"?>
+<img src="<?php echo Yii::app()->theme->getBaseUrl()."/images/layout/b2b/background.jpg"?>" style="width:100%; z-index:0; height:100%; position:fixed;"?>
 
 
 
-<div class="row-fluid darkpanel">
+<div class="row-fluid darkpanel" style="position: fixed">
     <div class="col-md-8 col-md-offset-2">
         
         <!-- BARRA SUPERIOR -->
     <div class="row-fluid padding_top_small clearfix"> 
         <div class="col-md-6" style="text-align: center">
 
-                    <div style="background-color: #FFF; width:300px; height:50px; "></div>
+                    <div style="width:300px; height:50px;">
+                        <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/whitelogo.png" width="100%"/>
+                    </div>
              
         </div>
         
