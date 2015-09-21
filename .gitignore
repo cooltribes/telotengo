@@ -10,3 +10,7 @@
 _svn
 svn-commit*.tmp
 protected/config/main.php
+assets/*
+images/*
+protected/runtime/*
+
