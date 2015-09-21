@@ -1065,6 +1065,7 @@ body{
 
 .white-link, .white-link:hover, .white-link:visited{
   color:#FFF;
+  font-size:12px;
   text-decoration: underline;
 }
 h1,h2,h3,h4,h5{
@@ -1151,6 +1152,13 @@ h1,h2,h3,h4,h5{
   }
 
  /* NEW LAYOUT B2B*/
+
+#login-form{
+  .errorMessage, span.error{
+    text-align: left;
+    color: #FFF;
+  }
+}
 
 .navbar{
   border: 0px;
@@ -1589,11 +1597,11 @@ a:hover, a:focus{
       ul{
           font-size: 12px;
           font-weight: 900;
-           li{
-            color: #555;
+           li{a{color: #555;}
+            
             ul{
               li{
-                  color: #BBB;
+                  a{color: #BBB;}
               }
             }
         } 
@@ -1713,6 +1721,124 @@ a:hover, a:focus{
          
         
 }
+.itemGridView{
+    border: solid 1px #AAA;
+    padding-top: 5px;
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 30px;
+    a{
+      text-decoration: none;
+      color: #555;
+    }
+  
+
+    .name{
+        height:38px;
+        font-size: 14px;
+        color: #222;
+        font-weight: bolder;
+        text-transform: uppercase;
+        overflow: hidden;
+        padding: 0px 10px;
+    }
+    .img{
+        padding:30px 10px;
+        
+    }
+    .info{
+        width:100%;
+        padding: 0px 10px;
+        margin-top: 5px;
+        .inventory, .price{
+            width:50%;
+            float: left;            
+            span{
+              display:block
+            }
+            ul{
+              list-style:none;
+              padding-left: 0px;
+              
+            }
+        }
+        .inventory{
+          span{
+            color: #555;
+          }
+        }
+        
+        .logos{
+          width:50%;
+          float: left;
+          display: none;
+          padding-top: 6px;
+          img{
+            padding: 0px 2%;
+            width:20%;
+            float: left;          
+          }
+        }       
+        
+    }
+
+      .price, .priceHover{
+          color: @b2bOrange;
+          font-weight: bolder;
+          .legend{
+              font-size: 12px;
+          }
+          .quantity{
+              font-size: 18px;
+          }
+        }
+       .priceHover{
+         display:none;
+         padding-right: 10px;
+         
+       }
+   
+}
+.itemGridView:hover{
+  text-decoration: none;  
+  .orange_border;
+  .name{
+    width:65%;
+    transition: width 1s linear;
+    float: left;
+    padding:0px 0px 0px 10px;
+   
+  }
+  .priceHover{
+    display: block;
+    text-decoration: none;
+    transition:display 1s linear;
+    span{
+      text-decoration: none;
+    }
+  }
+  .info{
+    border-top: solid 1px @b2bOrange;
+    padding-top: 5px;
+    .price{
+      display:none;
+      transition:display 1s linear;
+    }
+    .inventory{
+      ul{
+        list-style: inherit;
+        padding-left: 18px;
+        font-size:12px;
+        margin-bottom: 3px;
+      }
+    }
+    .logos{
+      display: block;
+      transition:display 1s linear;
+    } 
+  }
+}
+
 .pager{
   a{
     cursor: pointer;
@@ -1922,8 +2048,9 @@ h1{
     .detailTable{
         border: solid 1px #AAA;
         font-size: 12px;
+        background-color: #FFF;
         .title{
-            background-color: #CCC;
+            background-color: #e9e9e9;
             text-align: right;
             font-weight: bolder;
             padding-right: 10px;
@@ -2082,9 +2209,54 @@ h1{
    #userMenu .title, #userMenu .name{
      display: none;
    }
+   
+   .orderContainer .detail table td{
+     img{
+       display:none;
+     }
+   }
  }
  
 h1.dark{
   font-weight: 900;
   font-size: 20px;
+}
+
+/* MODALS ¨*/
+
+#shippingModal .modal-content{
+        top: 150px;
+    }
+.fade.in{
+    background-color: rgba(220,220,220,0.7);
+}
+.modal-content{
+    border-radius: 0px;
+    box-shadow: none;
+    border: 1px solid #222;
+    font-size: 12px;
+    h4, .sendTo{
+        padding-left: 35px;
+    }
+    table th{
+        background-color: #e9e9e9;
+    }
+     table td, table th{
+       padding: 8px 5px;
+    }
+    .sendTo{
+       padding-top:15px;
+       a{
+            padding: 3px 40px;
+            border: solid 2px #222;
+            font-weight: bold;
+            color: #222;
+            margin-left: 15px;
+        }
+        
+    }
+}
+
+.modal-header, .modal-footer{
+    border-color: transparent;
 }

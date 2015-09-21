@@ -24,7 +24,7 @@ class SiteController extends Controller
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
 				'actions'=>array('index','error','contact','login','logout','captcha','busqueda','inhome','tiendas','info','soporte','garantia','convenios','request','request2',
-								'corporativo','licencias','ofertas','home','store','detalle', 'inhome2', 'autoComplete', 'filtroBusqueda', 'carrito', 'category'), 
+								'corporativo','licencias','ofertas','home','store','detalle', 'inhome2', 'autoComplete', 'filtroBusqueda', 'carrito', 'category', 'formuPregunta'), 
 
 				'users'=>array('*'),
 			),
@@ -67,7 +67,7 @@ class SiteController extends Controller
 	 * This is the default 'index' action that is invoked
 	 * when an action is not explicitly requested by users.
 	 */
-	public function actionIndex()
+	public function actionOldIndex()
 	{
 		// renders the view file 'protected/views/site/index.php'
 		// using the default layout 'protected/views/layouts/main.php'
@@ -309,7 +309,7 @@ class SiteController extends Controller
 		$this->render('ofertas');
 	}
     
-    public function actionHome(){
+    public function actionIndex(){
         $this->layout='//layouts/b2b';
         $model = new RegistrationForm;
             $profile = new Profile;
@@ -334,8 +334,8 @@ class SiteController extends Controller
     
     public function actionStore(){
         $this->layout='//layouts/start';
- 
-       $this->render('store');
+
+       $this->render('store', array('list'=>false));
     }
     public function actionCategory(){
         $this->layout='//layouts/start';
@@ -362,7 +362,7 @@ class SiteController extends Controller
             'profile' => $user->profile,
         ));
     }
-    public function actionDetalle(){ 
+    public function actionDetalle(){
         $this->layout='//layouts/start';
 		$connection = new MongoClass();
 		if(Funciones::isDev())
@@ -375,8 +375,13 @@ class SiteController extends Controller
 
 			$document = $connection->getCollection('stage');	//STAGE
 		} 
-		$producto_id=1509;
-		$almacen_id=65;
+		if(!isset($_GET['producto_id']) || !isset($_GET['almacen_id'])) //si no viene nada por get, fue que coloco el URL a mano
+		{
+			$this->redirect(array('site/inhome2'));
+		}
+		$producto_id=$_GET['producto_id'];
+		$almacen_id=$_GET['almacen_id'];
+		$almacen=Almacen::model()->findByPk($almacen_id);
 		$model=Producto::model()->findByPk($producto_id);
 		$inventario=Inventario::model()->findByAttributes(array('producto_id'=>$producto_id, 'almacen_id'=>$almacen_id));
 		$imagen=Imagenes::model()->findAllByAttributes(array('producto_id'=>$producto_id));
@@ -384,9 +389,14 @@ class SiteController extends Controller
 		
 		$prueba = array("producto"=>(string)$producto_id); //MEJORAR ESTO 
 		$busqueda = $document->findOne($prueba);
+		//echo $almacen->empresas->razon_social;
+		 $empresa=$almacen->empresas;
+		 //$empresa_id=$almacen->empresas->id;
+		// $empresa_nombre=$almacen->empresas->nombre;
 		//var_dump($busqueda); 
-		
-       $this->render('detalle', array('model'=>$model, 'inventario'=>$inventario, 'imagen'=>$imagen, 'imagenPrincipal'=>$imagenPrincipal, 'busqueda'=>$busqueda));
+		$otros = Inventario::model()->findAllBySql("select * from tbl_inventario where producto_id=".$producto_id." and almacen_id!=".$almacen_id."");
+       $this->render('detalle', array('model'=>$model, 'inventario'=>$inventario, 'imagen'=>$imagen, 'imagenPrincipal'=>$imagenPrincipal, 'busqueda'=>$busqueda, 'empresa'=>$empresa, 'almacen'=>$almacen, 
+       'otros'=>$otros));
     }
     public function actionAutoComplete()
 		{
@@ -460,7 +470,27 @@ class SiteController extends Controller
 	public function actionCarrito()
 	{
 		$this->layout='//layouts/start';
-
-       $this->render('carrito');
+		$empresas = EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id));		
+        $model=Bolsa::model()->findByAttributes(array('empresas_id'=>$empresas->empresas_id));
+	    $bolsaInventario=BolsaHasInventario::model()->findAllByAttributes(array('bolsa_id'=>$model->id), array('order'=>'almacen_id asc'));
+        $this->render('carrito', array('model'=>$model, 'bolsaInventario'=>$bolsaInventario));
 	}
-}
+
+	public function actionFormuPregunta()
+	{
+		$texto=$_POST['texto'];
+		$tipo=$_POST['tipo'];
+		$producto_id=$_POST['producto_id'];
+		$empresa_id=$_POST['empresa_id'];
+		 $model = new Pregunta;
+		 $model->pregunta=$texto;
+		 $model->fecha=date('Y-m-d h:i:s');
+		 $model->producto_id=$producto_id;
+		 $model->empresa_id=$empresa_id;
+		 $model->users_id=132; //TODO hacerlo dinamico
+		 $model->publica=$tipo;
+		 $model->save();
+		Yii::app()->end();
+		
+	} 
+} 
