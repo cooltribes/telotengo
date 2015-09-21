@@ -24,6 +24,57 @@ class RegistrationController extends Controller
             $profile = new Profile;
             $profile->regMode = true;
              $this->layout='//layouts/b2b';
+			 
+			 //colocar el formulario de login dentro de index
+			 		if (Yii::app()->user->isGuest) {
+			$modelado=new UserLogin;
+			// collect user input data
+			if(isset($_POST['UserLogin']))
+			{
+				$modelado->attributes=$_POST['UserLogin'];
+				// validate user input and redirect to previous page if valid
+				if($modelado->validate()) {
+					$this->lastViset();
+
+					if(Yii::app()->user->isAdmin()){
+						$this->redirect(Yii::app()->baseUrl);
+					}else{
+						
+						 $rol=User::model()->buscarRol(Yii::app()->user->id);
+						 $this->redirect(array('site/inhome2'));
+						/*if($rol=="vendedor")
+						{
+							$this->redirect(Yii::app()->user->returnUrl);
+						}
+						else 
+						{
+							$this->redirect(array('site/inhome2'));	
+						}*/
+						
+						/*if (Yii::app()->user->returnUrl=='/index.php')
+						{
+							$this->redirect(Yii::app()->controller->module->returnUrl);
+						}	
+						else
+						{
+							$this->redirect(Yii::app()->user->returnUrl);
+						}*/
+							
+					}
+				}
+				
+			}
+			// display the login form
+			//$this->render('/user/login',array('model'=>$modelado));
+		} /*else
+			$this->redirect(Yii::app()->controller->module->returnUrl);*/
+			 
+			 
+			 
+			 
+			 
+			 
+			 
             
 			// ajax validator
 			if(isset($_POST['ajax']) && $_POST['ajax']==='registration-form')
@@ -70,8 +121,16 @@ class RegistrationController extends Controller
 						}	
 					}
 				}
-			    $this->render('/user/registration',array('model'=>$model,'profile'=>$profile));
+			    $this->render('/user/registration',array('model'=>$model,'profile'=>$profile, 'modelado'=>$modelado));
 		    }
+	}
+
+
+	public function lastViset() 
+	{ //TODO misma funcion en el login
+		$lastVisit = User::model()->notsafe()->findByPk(Yii::app()->user->id);
+		$lastVisit->lastvisit = time();
+		$lastVisit->save();
 	}
 	
 }
