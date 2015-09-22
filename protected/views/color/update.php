@@ -4,8 +4,7 @@
 /* @var $model Color */
 
 $this->breadcrumbs=array(
-	'Colores'=>array('index'),
-	$model->id=>array('view','id'=>$model->id),
+	'Colores'=>array('admin'),
 	'Actualizar',
 );
 

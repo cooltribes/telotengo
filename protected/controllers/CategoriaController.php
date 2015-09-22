@@ -216,6 +216,8 @@ class CategoriaController extends Controller
 				}
 		        
 			}else{
+				echo "sin imagenes";
+				Yii::app()->end();
 		    	if($categoria->save()){
 		        	Yii::app()->user->setFlash('success',"Categoria guardada exitosamente.");
 		        }else{
