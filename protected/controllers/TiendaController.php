@@ -175,11 +175,13 @@ class TiendaController extends Controller
 			$filter['producto']=$_GET['producto'];
 			$productoPartido=explode(" ", $_GET['producto']);
 			$num=count($productoPartido);
-			if(isset($productoPartido[$num-1]) && isset($productoPartido[$num-2])  && isset($productoPartido[$num-3]))
+
+			if(isset($productoPartido[$num-1]) && isset($productoPartido[$num-2])  && isset($productoPartido[$num-3])) // funcion puede dar error
 			{
+												
 				$variable="";
 				for($i=0;$i<=$num-3;$i++)
-				{
+				{	
 					if($i!=$num-3)	
 						$variable=$variable.$productoPartido[$i]." ";
 					else	
@@ -296,6 +298,7 @@ class TiendaController extends Controller
 		{
 			$model2="";
 		}
+		echo $sql;	
        $this->render('store', array('categorias'=>Categoria::model()->categoriasEnExistencia,'list'=>false,'filter'=>$filter, 'model'=>$model, 'model2'=>$model2));
     }
 	

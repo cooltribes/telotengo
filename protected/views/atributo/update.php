@@ -5,8 +5,8 @@
 
 
 $this->breadcrumbs=array(
-	'Atributos'=>array('index'),
-	'Update',
+	'Atributos'=>array('admin'),
+	'Actualizar',
 );
 
 

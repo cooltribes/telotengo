@@ -4,8 +4,7 @@
 /* @var $model Unidad */
 
 $this->breadcrumbs=array(
-	'Unidads'=>array('index'),
-	$model->id=>array('view','id'=>$model->id),
+	'Unidades'=>array('admin'),
 	'Actualizar',
 );
 

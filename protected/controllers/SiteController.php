@@ -310,11 +310,13 @@ class SiteController extends Controller
 	}
     
     public function actionIndex(){
-        $this->layout='//layouts/b2b';
+      /*  $this->layout='//layouts/b2b';
         $model = new RegistrationForm;
             $profile = new Profile;
             $profile->regMode = true;
-        $this->render('landing',array('model'=>$model,'profile'=>$profile));
+        $this->render('landing',array('model'=>$model,'profile'=>$profile));*/
+        
+        $this->redirect(array('user/registration'));
     }
     
     public function actionInhome(){
