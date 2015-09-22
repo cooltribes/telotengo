@@ -35,7 +35,7 @@ class CategoriaController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete','create','update','upload','listimages', 'menu', 'categoriaRelacionada', 'catRela', 'crearAvanzar', 'categoriaAtributo', 'catAtrib','categoriaSeo'),
+				'actions'=>array('admin','delete','create','update','upload','listimages', 'menu', 'categoriaRelacionada', 'catRela', 'crearAvanzar', 'categoriaAtributo', 'catAtrib','categoriaSeo', 'activarDesactivar'),
 				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -568,5 +568,14 @@ class CategoriaController extends Controller
 		}
 
 		
+	}
+	
+	public function actionActivarDesactivar()
+	{
+		$id=$_POST['id'];
+        $model = Categoria::model()->findByPk($id);
+        $model->destacado=1-$model->destacado;
+        $model->save();
+        echo $model->destacado;
 	}
 }

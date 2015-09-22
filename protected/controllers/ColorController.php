@@ -36,7 +36,7 @@ class ColorController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
+				'actions'=>array('admin','delete', 'borrar'),
 				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -124,11 +124,14 @@ class ColorController extends Controller
 	 */
 	public function actionDelete($id)
 	{
-		$this->loadModel($id)->delete();
+		/*$this->loadModel($id)->delete();
 
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-		if(!isset($_GET['ajax']))
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+		Yii::app()->user->setFlash('success',"Color eliminada correctamente.");
+		
+		$this->redirect(array('admin'));*/
+		echo "asdfsjkdfghkjsdfg";
+		Yii::app()->end();
 	}
 
 	/**
@@ -249,5 +252,15 @@ class ColorController extends Controller
 		
 		
 	
+	}
+	
+	public function actionBorrar($id)
+	{
+	
+		$this->loadModel($id)->delete();
+		
+		Yii::app()->user->setFlash('success',"Color eliminado correctamente.");
+		
+		$this->redirect(array('admin'));
 	}
 }
