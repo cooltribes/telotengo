@@ -5,8 +5,8 @@
 
 
 $this->breadcrumbs=array(
-	'Colores'=>array('index'),
-	'Create',
+	'Colores'=>array('admin'),
+	'Crear',
 );
 
 

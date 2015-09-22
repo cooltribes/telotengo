@@ -152,16 +152,18 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
 
                                              ?>
                                              <span class="counter"><?php 
-
-                                             if(Bolsa::model()->findByAttributes(array('empresas_id'=>$empresas->empresas_id)))
-                                             {
-                                             	 $bolsa=Bolsa::model()->findByAttributes(array('empresas_id'=>$empresas->empresas_id));	
-                                             	 echo BolsaHasInventario::model()->countByAttributes(array('bolsa_id'=>$bolsa->id));
-											 }
-											 else
-											 {
-											 	echo "0";
-											 }
+											if(isset($empresas))
+											{
+	                                             if(Bolsa::model()->findByAttributes(array('empresas_id'=>$empresas->empresas_id)))
+	                                             {
+	                                             	 $bolsa=Bolsa::model()->findByAttributes(array('empresas_id'=>$empresas->empresas_id));	
+	                                             	 echo BolsaHasInventario::model()->countByAttributes(array('bolsa_id'=>$bolsa->id));
+												 }
+												 else
+												 {
+												 	echo "0";
+												 }
+											}
 											 	?></span>
                                         </div>
                                         <div class="col-md-8 col-sm-8 col-xs-8 no_horizontal_padding title">
@@ -191,18 +193,17 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                                              
                                         </div>
                                         <div class="col-md-9 col-sm-9 col-xs-9 no_horizontal_padding title">
-                                             <div class="text user"><?php echo $empresas->empresas->razon_social;?></div>
+                                             <div class="text user"><?php if(isset($empresas))echo $empresas->empresas->razon_social;?></div>
                                              <span class="caret user"></span>
                                         </div>
                                         
                                     </div>                                
                                   </a>
                                   <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                    <li><a href="#">Action</a></li>
-                                    <li><a href="#">Another action</a></li>
-                                    <li><a href="#">Something else here</a></li>
+                                    <li><a href="<?php echo Yii::app()->baseUrl.'/user/profile';?>">Mi perfil</a></li>
+
                                     <li class="separator"></li>
-                                    <li><a href="#">Separated link</a></li>
+                                    <li><a href="<?php echo Yii::app()->baseUrl; ?>/site/logout";>Cerrar sesión</a></li>
                                   </ul>
                                 </div>
                             </div>

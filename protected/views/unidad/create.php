@@ -5,8 +5,8 @@
 
 
 $this->breadcrumbs=array(
-	'Unidads'=>array('index'),
-	'Create',
+	'Unidades'=>array('admin'),
+	'Crear',
 );
 
 
