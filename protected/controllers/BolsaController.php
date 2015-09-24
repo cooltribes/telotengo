@@ -28,13 +28,13 @@ class BolsaController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('agregarCarrito', 'actualizarInventario'), ///TODO quitar de aqui y colocarlo en usuarios logueados
+				'actions'=>array('agregarCarrito', 'actualizarInventario', 'carritoIndividual'), ///TODO quitar de aqui y colocarlo en usuarios logueados
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
 				'actions'=>array('create','update','agregar','eliminar','authenticate','confirm','cities','addAddress','placeOrder',
 								'sendValidationEmail','actualizar','agregarAjax','calcularEnvio',
-								'authGC','pagoGC','confirmarGC','crearGC','sendsummary','comprarGC','pedidoGC','registrarpagoGC','view'),
+								'authGC','pagoGC','confirmarGC','crearGC','sendsummary','comprarGC','pedidoGC','registrarpagoGC','view'),///TODO quitar carritoIndividual
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -1213,5 +1213,52 @@ class BolsaController extends Controller
 		
 		Yii::app()->end();
 		
+	}
+	
+	public function actionCarritoIndividual()
+	{
+		$cantidad=1;	
+		$inventario=$_POST['id'];	
+		$empresas = EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id));
+		$empresas_id= $empresas->empresas_id;
+		$inventarios=Inventario::model()->findByPk($inventario);
+		$maximo=$inventarios->cantidad;
+		if(Bolsa::model()->findByAttributes(array('empresas_id'=>$empresas_id)))
+		{
+			$bolsa=Bolsa::model()->findByAttributes(array('empresas_id'=>$empresas_id));
+		}
+		else
+		{
+			$bolsa=new Bolsa;
+			$bolsa->empresas_id=$empresas_id;
+			$bolsa->save();
+		}
+		
+		if(BolsaHasInventario::model()->findByAttributes(array('bolsa_id'=>$bolsa->id, 'inventario_id'=>$inventario)))
+		{
+			$bolsaInventario = BolsaHasInventario::model()->findByAttributes(array('bolsa_id'=>$bolsa->id, 'inventario_id'=>$inventario));
+			$actual=$bolsaInventario->cantidad;
+			$actual+=$cantidad;
+			if($actual>=$maximo)
+			{
+				$bolsaInventario->cantidad=$maximo;
+			}
+			else 
+			{
+				$bolsaInventario->cantidad+=$cantidad;
+			}
+		}
+		else
+		{
+			$bolsaInventario= new BolsaHasInventario;
+			$bolsaInventario->bolsa_id=$bolsa->id;
+			$bolsaInventario->inventario_id=$inventario;
+			$bolsaInventario->cantidad+=$cantidad;
+
+		}
+		$bolsaInventario->almacen_id=$inventarios->almacen_id;		
+		$bolsaInventario->save();
+		
+		echo Yii::app()->session['bolsa']=$bolsa->id;
 	}
 }

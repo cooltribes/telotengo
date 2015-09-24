@@ -78,6 +78,10 @@
 }
 
 }
+
+	.button_click { color: black; font-weight:bolder;}
+	
+
 </style>
 <div class="col-md-12">
     <h1 class="dark no_margin">INTENCION DE COMPRA</h1>

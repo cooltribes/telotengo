@@ -86,7 +86,7 @@ Yii::app()->session['suma']=$total;
 			var res = oid.split("c"); //por el comienzo de  la palabra cantidad
 			vari=res[0];
 			//var vari = oid.substring(0, 1);
-			
+			$('#'+vari).addClass("button_click");
 			var cantidad=$('#'+oid).val(); // la cantidad
 			var maximo=$('#maximo'+vari).val();
 			maximo=parseInt(maximo);
