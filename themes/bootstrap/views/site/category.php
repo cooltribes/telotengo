@@ -6,7 +6,7 @@
             </div>
             <div class="row-fluid title">
                 <div class="col-md-4 no_horizontal_padding"><div class="braker"></div></div>
-                <div class="col-md-4 no_horizontal_padding text-center"><h1>COMPUTACION E IMPRESION</h1></div>
+                <div class="col-md-4 no_horizontal_padding text-center"><h1><?php echo $model->nombre;?></h1></div>
                 <div class="col-md-4 no_horizontal_padding"><div class="braker"></div></div>                
             </div>
             <a href="#">
@@ -16,25 +16,17 @@
         </div>
         <div class="col-md-12 no_horizontal_padding">
             <div class="row-fluid">
-                 
-                    <div class="col-md-4 margin_top">
+                 <?php
+                 foreach($hijos as $hijo)
+				 {?>
+				 	 <div class="col-md-4 margin_top">
                         <a href="#"><img src="http://placehold.it/380x270" width="100%"></a>
                     </div>
-                    <div class="col-md-4 margin_top">
-                        <a href="#"><img src="http://placehold.it/380x270" width="100%"></a>
-                    </div>
-                    <div class="col-md-4 margin_top">
-                        <a href="#"><img src="http://placehold.it/380x270" width="100%"></a>
-                    </div>
-                    <div class="col-md-4 margin_top">
-                        <a href="#"><img src="http://placehold.it/380x270" width="100%"></a>
-                    </div>
-                    <div class="col-md-4 margin_top">
-                        <a href="#"><img src="http://placehold.it/380x270" width="100%"></a>
-                    </div>
-                    <div class="col-md-4 margin_top">
-                        <a href="#"><img src="http://placehold.it/380x270" width="100%"></a>
-                    </div>
+				 <?php
+				 }
+                 ?>
+
+                    
                     
                     
             </div>

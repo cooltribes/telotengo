@@ -340,9 +340,11 @@ class SiteController extends Controller
        $this->render('store', array('list'=>false));
     }
     public function actionCategory(){
+    	$model=Categoria::model()->findByPk($_GET['categoria']);
+		$hijos=Categoria::model()->findAllByAttributes(array('id_padre'=>$model->id), array('limit'=>6));
         $this->layout='//layouts/start';
 
-       $this->render('category');
+       $this->render('category', array('model'=>$model, 'hijos'=>$hijos));
     }  
     
     public function actionRequest(){ 

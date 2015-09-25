@@ -301,7 +301,7 @@
 		                   },
 			        success: function (data) {
 			        	
-						window.location.href = '../carrito/';
+						window.location.href = '<?php echo Yii::app()->createUrl('site/carrito') ?>';
 			       	}
 			       })
 	           		
@@ -318,7 +318,7 @@
 		                   },
 			        success: function (data) {
 			        	
-						window.location.href = '../carrito/';
+						window.location.href = '<?php echo Yii::app()->createUrl('site/carrito') ?>';
 			       	}
 			       })
 	           	});

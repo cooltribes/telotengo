@@ -41,7 +41,8 @@ class RegistrationController extends Controller
 					}else{
 						
 						 $rol=User::model()->buscarRol(Yii::app()->user->id);
-						 $this->redirect(array('site/inhome2'));
+						 $ruta= Yii::app()->createUrl('site/inhome2');
+						 $this->redirect($ruta);
 						/*if($rol=="vendedor")
 						{
 							$this->redirect(Yii::app()->user->returnUrl);

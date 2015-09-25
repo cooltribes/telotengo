@@ -14,20 +14,25 @@
                        		<article class="col-md-4">
                                <div class="row-fluid">
                                    <div class="col-md-12 no_horizontal_padding">
-                                       <h3><?php echo $modelado->nombre;?></h3>
+                                       
+                                       <h3><a href='<?php echo Yii::app()->createUrl('site/category', array('categoria'=>$modelado->id))?>'><?php echo $modelado->nombre?></a></h3>
                                    </div>
                                    <div class="col-md-7 no_horizontal_padding">
                                        <ul class="categoriaHome">
                                        	<?php foreach ($interno as $inter)
 										{?>
-											<li><?php echo $inter->nombre;?></li>
+											<li><a href='<?php echo Yii::app()->createUrl('site/category', array('categoria'=>$inter->id))?>'><?php echo $inter->nombre?></a></li>
 										<?php	
 										} ?>
                                        </ul>
                                    </div>
                                    <div class="col-md-5 no_horizontal_padding">
+                                   	<a href="<?php echo Yii::app()->createUrl('site/category', array('categoria'=>$modelado->id))?>">
+                                   		
+                                   	
                                        <?php 	
-                                        echo CHtml::image($modelado->getImgUrl(true),$modelado->nombre, array('width'=>'100%')); ?>  
+                                        echo CHtml::image($modelado->getImgUrl(true),$modelado->nombre, array('width'=>'100%')); ?>
+                                     </a>    
                                    </div>
                                </div>                       
                            </article>
