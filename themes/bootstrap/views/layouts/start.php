@@ -17,6 +17,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
 <?php Yii::app()->bootstrap->register(); ?>
 <?php  Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/styles.css',null); 
  $model = Categoria::model()->findAllBySql("select * from tbl_categoria where id_padre in (select id from tbl_categoria where id_padre=0)  order by nombre asc");
+#$model=Categoria::model()->findAllByAttributes(array('id_padre'=>0), array('order'=>' id asc'));
 ?>
 <head>
         
@@ -40,7 +41,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
     <div class="col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 col-xs-8 col-xs-offset-2" id="headerContainer">
                 <div class="row-fluid">
                     <div class="col-md-2 col-sm-2 col-xs-5 no_padding_left">
-                        <a href="<?php echo Yii::app()->baseUrl; ?>"><img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/logo.png" width="100%"/></a> 
+                        <a href="<?php echo Yii::app()->baseUrl."/site/inhome2"; ?>"><img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/logo.png" width="100%"/></a> 
                     </div>     
                     <div class="col-md-5 col-sm-5 col-xs-6  no_horizontal_padding" id="headLinks"></div>
                     <div class="col-md-5 col-sm-5  col-xs-6 no_horizontal_padding">
@@ -54,11 +55,15 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                                     <span class="mainText">Categorías</span><span class="caret"></span> <span class="searchby">Buscar por:</span>                                 
                                   </a>
                                   <ul class="dropdown-menu arrow_box" aria-labelledby="dropdownMenu1" id="categories">
-                                    <li><a href="#">Action<span class="arrow">›</span></a></li>
-                                    <li><a href="#">Another action</a></li>
-                                    <li class="separator"></li>
-                                    <li><a href="#">Something else here</a></li>
-                                    <li><a href="#">Separated link</a></li>
+                                  	<?php foreach($model as $modelado)
+                                  	{?>
+                                  		<li><a href="<?php echo Yii::app()->createUrl('site/category', array('categoria'=>$modelado->id));?>"><?php echo $modelado->nombre;?><span class="arrow"></span></a></li>
+                                  	<?php	
+                                  	}?>
+                                    
+                                  <!--  <li class="separator"></li>
+                                    <li><a href="#">Something else here</a></li> -->
+                                    
                                   </ul>
                             </div> 
                     </div>
@@ -167,7 +172,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
 											 	?></span>
                                         </div>
                                         <div class="col-md-8 col-sm-8 col-xs-8 no_horizontal_padding title">
-                                             <span class="text">Carrito</span>
+                                             <span class="text" >Carrito</span>
                                         
                                             <span class="caret no_margin_left"></span>
                                         </div>
@@ -188,7 +193,30 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                                     <div class="row-fluid">
                                         <div class="col-md-3 col-sm-3 col-xs-3 no_horizontal_padding image">
                                             <div class="imgContainer">
-                                                <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/favicon75.2.png" width="100%"/>
+                                            	<?php $usuario=User::model()->findByPk(Yii::app()->user->id); 
+												$link=Yii::app()->getBaseUrl(true).'/images/user/'.$usuario->id."_thumb.png";
+                                            	$file_headers = @get_headers($link);
+												if($file_headers[0] == 'HTTP/1.1 200 OK')
+												{?>
+												   <img src="<?php echo Yii::app()->baseUrl.'/images/user/'.$usuario->id."_thumb.png"?>" height="26px" width="26px"/>
+												<?php
+												}
+												else
+												{
+													$link=Yii::app()->getBaseUrl(true).'/images/user/'.$usuario->id."_thumb.jpg";
+                                            		$file_headers = @get_headers($link);
+													if($file_headers[0] == 'HTTP/1.1 200 OK')
+													{?>
+														<img src="<?php echo Yii::app()->baseUrl.'/images/user/'.$usuario->id."_thumb.jpg"?>" height="26px" width="26px"/>
+													<?php
+													}
+													else 
+													{?>
+														<img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/favicon75.2.png" width="100%"/>
+													<?php
+													}
+												}	
+                                            	?>
                                             </div>
                                              
                                         </div>

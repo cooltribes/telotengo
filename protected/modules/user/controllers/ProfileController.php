@@ -52,7 +52,36 @@ class ProfileController extends Controller
 		}else{
 			$model = User::model()->findByPk(Yii::app()->user->id);
 		}
-
+		if(isset($_POST['imagen']))
+		{
+			if(!is_dir(Yii::getPathOfAlias('webroot').'/images/user/'))
+			{
+	   			mkdir(Yii::getPathOfAlias('webroot').'/images/user/',0777,true);
+	 		}	
+			$rnd = rand(0,9999);  	
+			$images=CUploadedFile::getInstanceByName('imagen');
+			if (isset($images) && count($images) > 0) {
+				$model->avatar_url = "{$rnd}-{$images}";
+				$model->save();
+				$nombre = Yii::getPathOfAlias('webroot').'/images/user/'.$model->id;
+			    $extension_ori = ".jpg";
+				$extension = '.'.$images->extensionName;
+				if ($images->saveAs($nombre . $extension)) {
+			
+			       		$model->avatar_url = '/images/user/'.$model->id .$extension;
+			            $model->save();
+										
+						Yii::app()->user->setFlash('success',"Avatar modificado exitosamente.");
+	
+						$image = Yii::app()->image->load($nombre.$extension);
+						$image->resize(270, 270);
+						$image->save($nombre.'_thumb'.$extension);					
+					}
+			/*	echo "s;kdfklsdf";
+				Yii::app()->end();*/
+			}
+		}
+		
 	    $this->render('profile',array(
 	    	'model'=>$model,
 			'profile'=>$model->profile,
