@@ -193,29 +193,33 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                                     <div class="row-fluid">
                                         <div class="col-md-3 col-sm-3 col-xs-3 no_horizontal_padding image">
                                             <div class="imgContainer">
-                                            	<?php $usuario=User::model()->findByPk(Yii::app()->user->id); 
-												$link=Yii::app()->getBaseUrl(true).'/images/user/'.$usuario->id."_thumb.png";
-                                            	$file_headers = @get_headers($link);
-												if($file_headers[0] == 'HTTP/1.1 200 OK')
-												{?>
-												   <img src="<?php echo Yii::app()->baseUrl.'/images/user/'.$usuario->id."_thumb.png"?>" height="26px" width="26px"/>
-												<?php
-												}
-												else
+                                            	<?php $usuario=User::model()->findByPk(Yii::app()->user->id);
+												if(isset($usuario))
 												{
-													$link=Yii::app()->getBaseUrl(true).'/images/user/'.$usuario->id."_thumb.jpg";
-                                            		$file_headers = @get_headers($link);
+													$link=Yii::app()->getBaseUrl(true).'/images/user/'.$usuario->id."_thumb.png";
+	                                            	$file_headers = @get_headers($link);
 													if($file_headers[0] == 'HTTP/1.1 200 OK')
 													{?>
-														<img src="<?php echo Yii::app()->baseUrl.'/images/user/'.$usuario->id."_thumb.jpg"?>" height="26px" width="26px"/>
+													   <img src="<?php echo Yii::app()->baseUrl.'/images/user/'.$usuario->id."_thumb.png"?>" height="26px" width="26px"/>
 													<?php
 													}
-													else 
-													{?>
-														<img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/favicon75.2.png" width="100%"/>
-													<?php
+													else
+													{
+														$link=Yii::app()->getBaseUrl(true).'/images/user/'.$usuario->id."_thumb.jpg";
+	                                            		$file_headers = @get_headers($link);
+														if($file_headers[0] == 'HTTP/1.1 200 OK')
+														{?>
+															<img src="<?php echo Yii::app()->baseUrl.'/images/user/'.$usuario->id."_thumb.jpg"?>" height="26px" width="26px"/>
+														<?php
+														}
+														else 
+														{?>
+															<img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/favicon75.2.png" width="100%"/>
+														<?php
+														}
 													}
-												}	
+												} 
+	
                                             	?>
                                             </div>
                                              

@@ -32,7 +32,7 @@ class OrdenController extends Controller
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
 				'actions'=>array('create','update','view','cancelar','listado','detalleusuario','ventas','detalle','calificarVendedor','reclamo','responderReclamo'
-					,'devolucion','procesarDevolucion'),
+					,'devolucion','procesarDevolucion', 'procesarTodo', 'procesarSimple'), //TODO lista de control de accesos con los roles nuevos... procesarTodo, procesarSimple
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -867,6 +867,16 @@ class OrdenController extends Controller
         // Tabla OFF
   		$html=$html.'</div></div>';
 		echo $html;
+	}
+
+	public function actionProcesarTodo()
+	{
+		
+	}
+	
+	public function actionProcesarSimple()
+	{
+		
 	}
 
 }
