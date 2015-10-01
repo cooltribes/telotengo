@@ -36,7 +36,7 @@ class ProductoController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete','update','eliminar','orden','aprobar','rechazar','poraprobar','calificaciones','eliminarCalificacion','importar','inventario', 'verificarPadre', 'verificarNombre', 'details', 'caracteristicas','activarDesactivar'),
+				'actions'=>array('admin','delete','update','eliminar','orden','aprobar','rechazar','poraprobar','calificaciones','eliminarCalificacion','importar','inventario', 'verificarPadre', 'verificarNombre', 'details', 'caracteristicas','activarDesactivar', 'activarDesactivarDestacado'),
 				#'users'=>array('admin'),
 				'roles'=>array('admin'),
 			),
@@ -1727,6 +1727,15 @@ class ProductoController extends Controller
 	    	}
 	     	echo CJSON::encode($res);
 	    	Yii::app()->end();
+	}
+	
+	public function actionActivarDesactivarDestacado()
+	{
+		$id=$_POST['id'];
+        $model = Producto::model()->findByPk($id);
+        $model->destacado=1-$model->destacado;
+        $model->save();
+        echo $model->destacado;
 	}
 
 

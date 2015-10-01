@@ -78,6 +78,10 @@
 }
 
 }
+
+	.button_click { color: black; font-weight:bolder;}
+	
+
 </style>
 <div class="col-md-12">
     <h1 class="dark no_margin">INTENCION DE COMPRA</h1>
@@ -94,7 +98,7 @@
                 <span class="total">
                     Total: Bs. <?php echo Yii::app()->session['suma']+$iva;  unset(Yii::app()->session['suma']);?>
                 </span>
-                <input class="btn-green btn btn-danger btn-large margin_top_small" type="submit" name="yt0" value="Procesar todas las órdenes">
+                <input class="btn-green btn btn-danger btn-large margin_top_small" type="submit" id="procesarTodo" name="yt0" value="Procesar todas las órdenes">
             </div>
             <div class="text-center mutedLink">
                 <a class="muted" href="#">Ver políticas de envíos y devoluciones</a>
@@ -104,6 +108,26 @@
         
     </div>
 </div>
+
+
+<script>
+	$(document).ready(function() {
+		$('#procesarTodo').click(function() {
+			var bolsa_id= '<?php echo $model->id?>';
+						$.ajax({
+			         url: "<?php echo Yii::app()->createUrl('Orden/procesarTodo') ?>",
+		             type: 'POST',
+			         data:{
+		                    bolsa_id:bolsa_id
+		                   },
+			        success: function (data) {
+			        	
+					//	location.reload();
+			       	}
+			    })
+		});
+	});	
+</script>
 
 
 

@@ -26,7 +26,12 @@ echo"<tr>";
 	else 
 	{
 		echo "<td> <div id='".$data->id."s"."'> Desactivo </div></td>";
-	}	 
+	}
+	
+	if($data->destacado == 1)
+		echo "<td id='pal".$data->id."'> Destacado </td>";
+	else
+		echo "<td id='pal".$data->id."'> No Destacado </td>";	 
 
 
 	echo '<td>
@@ -40,7 +45,16 @@ echo"<tr>";
 			if($data->estado==1){?>
 				<li><a class="pointer" id=<?php echo $data->id;?> tabindex="-1" onclick="desactivarActivar(<?php echo $data->id;?>)"><i class="glyphicon glyphicon-remove"></i> Desactivar </a></li><?php }
 			else{?><li><a class="pointer" id=<?php echo $data->id;?>  tabindex="-1" onclick="desactivarActivar(<?php echo $data->id;?>)"><i class="glyphicon glyphicon-ok"></i> Activar </a></li><?php } 
-			
+			if($data->destacado==1)
+			{?>
+				<li><a class="pointer" id="des<?php echo $data->id;?>"  tabindex="-1" onclick="desactivarActivarDestacado(<?php echo $data->id;?>)"><i  class="glyphicon glyphicon-ok"></i> Quitar Destacado </a></li>
+			<?php	
+			}
+			else 
+			{?>
+				<li><a class="pointer" id="des<?php echo $data->id;?>"  tabindex="-1" onclick="desactivarActivarDestacado(<?php echo $data->id;?>)"><i  class="glyphicon glyphicon-ok"></i>  Destacar </a></li>
+			<?php	
+			}
 		echo '	
 		</ul>
 	    </div></td>	
@@ -73,6 +87,34 @@ echo "</tr>";
 					$('#'+id+'s').html('Activo')
 				}
 	       	}
+	       })
+		
+	}
+	
+	function desactivarActivarDestacado(id)
+	{
+			
+			$.ajax({
+	         url: "<?php echo Yii::app()->createUrl('producto/activarDesactivarDestacado') ?>",
+             type: 'POST',
+	         data:{
+                    id:id,
+                   },
+	        success: function (data) {
+	        	
+	        	if(data==0)
+	        	{
+	        		$('#des'+id).html('<i class="glyphicon glyphicon-ok"></i> Destacar');
+	        		$('#pal'+id).html('No Destacado');
+	        	}
+	        	else
+	        	{
+	        		$('#des'+id).html('<i class="glyphicon glyphicon-ok"></i> Quitar Destacado');
+	        		$('#pal'+id).html('Destacado');
+	        	}
+	       	}
+	       	
+	       	
 	       })
 		
 	}

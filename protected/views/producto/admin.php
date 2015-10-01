@@ -105,6 +105,7 @@
 	            <th scope="col">Imagen</th>
 	            <th scope="col">Nombre</th>
 	            <th scope="col">Status</th>
+	            <th scope="col">Destacado</th>
 	            <th scope="col">Acción</th>
 	        </tr>
 	    {items}

@@ -34,7 +34,7 @@
     
     <div class="form-group row-fluid">
  
-            <?php echo $form->textField($model,'rif', array('class'=>'form-control', 'placeholder'=>'RIF', 'maxlength'=>45)); ?>
+            <?php echo $form->textField($model,'rif', array('id'=>'rif','class'=>'form-control', 'placeholder'=>'RIF(Letra seguida del número sin espacios ni guiones)', 'maxlength'=>45)); ?>
 
             <?php echo $form->error($model,'rif'); ?>            
 
@@ -138,3 +138,38 @@
 <?php $this->endWidget(); ?>
     </div>
 </div>
+
+
+<script>
+
+$(document).ready(function() {
+	var completo="";
+	var soloLetra='';
+	$('#rif').on('input', function(event) {
+		var palabra=$(this).val();
+		var letras = " jevgJEVG"; //JVEG rifs posibles
+		var numeros = " 1234567890"; //JVEG rifs posibles
+		var primeraLetra=palabra.charAt(0);
+		if(letras.indexOf(primeraLetra)==-1)
+		{
+			alert('Iniciales de Rifs son J, V, E, G');
+			soloLetra=primeraLetra;
+			$(this).val('');
+		}
+		//$(this).val().charAt(0).toUpperCase();
+		 if(palabra.substring(1))
+		 {
+		 	var largo= palabra.length;
+		 	var separar=palabra[largo-1];
+		 	//alert(separar);
+			if(numeros.indexOf(separar)==-1)
+			{
+				alert('Solo se permiten numeros');
+				$(this).val(completo);
+			}	
+		 }
+	completo=$(this).val();
+	});
+	
+});	
+</script>

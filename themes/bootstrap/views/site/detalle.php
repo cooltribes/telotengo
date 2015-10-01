@@ -124,9 +124,13 @@
                         	<?php  
                         	$data = explode('*-*',$model->caracteristicas);
 							foreach($data as $dato)
-							{?>
+							{
+								if($dato!="")
+								{
+								?>
 								<li><span class="glyphicon glyphicon-ok"></span><?php echo $dato?></li>
 							<?php
+								}
 							}                      	
                         	?>
                         </ul>
@@ -185,10 +189,10 @@
                     </div>
                 </div>
                 <?php 
-                if(isset($otros))
-                {?>
+                if(!empty($otros))
+                {
+                	?>
                   <div class="moreOptions margin_top">
-                   
                     <div class="item">
                        <span class="title">Mas opciones de compra</span>    
                        <?php foreach($otros as $data)
@@ -197,7 +201,7 @@
                             <span class="name"><?php echo $data->almacen->empresas->razon_social;?></span>
                             <span class="location"><?php echo $data->almacen->ciudad->nombre; ?></span>
                             <span><b><?php echo $data->precio;?> Bs.F</b> <?php if($inventario->metodoEnvio==1) echo "Acordado con el cliente"; else echo "A traves del servicio de TELOTENGO"; ?></span>
-                            <button class="btn btn-small btn-unfilled"> ORDENAR</button>
+                            <button class="btn btn-small btn-unfilled ordenarIndividual" id="<?php echo $data->id;?>"> ORDENAR</button>
                         </div>
                          <div class="plainSeparator"></div> 
                        <?php
@@ -297,11 +301,26 @@
 		                   },
 			        success: function (data) {
 			        	
-						window.location.href = '../carrito/';
+						window.location.href = '<?php echo Yii::app()->createUrl('site/carrito') ?>';
 			       	}
 			       })
 	           		
 	           		
+	           	});
+	           	
+	           	$('.ordenarIndividual').click(function() {
+	           		var id=$(this).attr('id');
+	           		$.ajax({
+			         url: "<?php echo Yii::app()->createUrl('Bolsa/carritoIndividual') ?>",
+		             type: 'POST',
+			         data:{
+		                    id:id
+		                   },
+			        success: function (data) {
+			        	
+						window.location.href = '<?php echo Yii::app()->createUrl('site/carrito') ?>';
+			       	}
+			       })
 	           	});
            	
            	});

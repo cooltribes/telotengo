@@ -28,6 +28,37 @@ $this->breadcrumbs=array(
                 	?>
 				</figure>
 				
+		<?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array( 
+	'id'=>'profile-form',
+	'enableAjaxValidation'=>true,
+	'enableClientValidation'=>false,
+	'type'=>'horizontal',
+	'clientOptions'=>array(
+		'validateOnSubmit'=>false,  
+	),
+	'htmlOptions' => array(
+        'enctype' => 'multipart/form-data',
+    ),
+)); ?>		
+	<div class="col-md-6 col-md-offset-3 margin_top_small"> 
+	    <label> Imagen </label>
+			<?php                       
+			echo CHtml::activeFileField($model, 'avatar_url',array('name'=>'imagen'));			
+			?>
+			<span class="help-inline error" id="Categoria_imagen_url_em_" style="display: none">Debes elegir una imagen</span>
+    </div>
+    
+    	<div class="col-md-6 col-md-offset-3 margin_top">
+		<?php $this->widget('bootstrap.widgets.TbButton', array(
+			'buttonType'=>'submit',
+			'type'=>'primary',
+			'label'=>'Subir Imagen',
+			'htmlOptions'=>array('class'=>'form-control','id'=>'guardar')
+		)); ?>            		
+                	
+	</div>
+    <?php $this->endWidget(); ?>
+				
 				<span class="text-muted">Miembro desde: <?php echo date('d/m/Y',strtotime($model->create_at)); ?></span>	
 				
 				<p class="muted">Perfil completado en: <strong><?php echo $model->profile->getPercentage(); ?>%</strong></p>
