@@ -353,5 +353,14 @@ class Inventario extends CActiveRecord
 
 		return Yii::app()->db->createCommand($sql)->queryScalar();
 	}
+	
+	public function buscarAlmacen($id)
+	{
+		$model=Inventario::model()->findByAttributes(array('producto_id'=>$id)); //el primero que consiga
+		return $model->almacen_id;
+		
+		
+
+	}
 
 }

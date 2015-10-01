@@ -79,16 +79,25 @@ $('#<?php echo $carousel;?>').carousel({
 				 }?> 	
                 
                  
-          
+          <?php 
+          if($i<=15)
+		  {
+          $variable=Inventario::model()->buscarAlmacen($model->id);
+?>
                      <div>
-                        <a href="#">
+                     	<a href="<?php echo Yii::app()->getBaseUrl(true)."/site/detalle/?producto_id=".$model->id."&almacen_id=".$variable;?>">  <?php //TODO mejorar ?>
+                       <!-- <a href="<?php echo Yii::app()->createUrl("site/detalle",array("producto_id"=>$model->id));?>"> -->
 
                             <img width="100%" style="max-height:150px" src="<?php echo $url;?>">
                         </a> 
                      </div>
 
                   
-             <?php if($i%5==0):
+             <?php		
+		  }
+            
+			 
+              if($i%5==0):
                 	if($i!=15): ?>
                 </div>
                 	<div class="item <?php echo $i==0?"active":""; ?>">
