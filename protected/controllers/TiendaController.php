@@ -170,6 +170,8 @@ class TiendaController extends Controller
 		$otraForma="";
 		$opcion2="";
 		$filtroCategoria="";
+		$sqlCategoria2="";
+		$sqlCategoria="";
 		if(isset($_GET['producto']))
 		{
 			$filter['producto']=$_GET['producto'];
@@ -199,7 +201,7 @@ class TiendaController extends Controller
 					$sql="select * from tbl_producto where nombre LIKE '%".$filter['producto']."%'"; //TODO mejorar esto, forma menos optima
 			}
 				
-				
+
 
 
 			if($filter['producto']!="") //filtros
@@ -211,22 +213,41 @@ class TiendaController extends Controller
         $filter['marcas']=isset($_GET['marcas'])?$_GET['marcas']:'';
         $filter['precio']=isset($_GET['precio'])?$_GET['precio']:'';
         //$filter['caracteristica']=isset($_GET['caracteristica'])?$_GET['caracteristica']:''; TODO para otra entrega
-		
-
-			
+        
 		if($filter['categoria']!="")//filtros
 		{
 			// $filtroCategoria=$filter['categoria'];
 			// $filtroCategoria=Categoria::model()->findByAttributes(array('nombre'=>$filtroCategoria));
 			// echo $filtroCategoria;
-		}
+
+			$filtroCategoria=$filter['categoria'];
+			$filtroCategoria=Categoria::model()->findByAttributes(array('url_amigable'=>$filtroCategoria));
+			$vector=ARRAY();
+			//$vector=Categoria::model()->buscarPadres($filtroCategoria->id, $vector); //TODO MEJORAR ESTO
+			//echo $word=Categoria::model()->incluir($vector);
+			$vector=Categoria::model()->buscarHijos($filtroCategoria->id, $vector); //TODO MEJORAR ESTO
+		    $word=Categoria::model()->incluir($vector);
+			$sqlCategoria="and padre_id in (select id from tbl_producto_padre where id_categoria in(".$word."))";
+			$sqlCategoria2="where id_categoria in(".$word.")";
+			//var_dump($vector);
+		}	
+
 		
 		if($filter['marcas']!="")//filtros
 		{
 			$filtroMarca=explode("-", $filter['marcas']);
 			$contador=count($filtroMarca)-1;
-			$sql=$sql." and padre_id in (select id from tbl_producto_padre where id_marca in (";
-			$opcion2=" and padre_id in (select id from tbl_producto_padre where id_marca in (";
+			if($sqlCategoria2!="") // si hay filtro de categoria
+			{
+				$sql=$sql." and padre_id in (select id from tbl_producto_padre ".$sqlCategoria2." and id_marca in (";
+				$opcion2=" and padre_id in (select id from tbl_producto_padre ".$sqlCategoria2."  and id_marca in (";
+			}
+			else 
+			{
+				$sql=$sql." and padre_id in (select id from tbl_producto_padre where id_marca in (";
+				$opcion2=" and padre_id in (select id from tbl_producto_padre where id_marca in (";
+			}
+
 			$i=0;	
 			foreach($filtroMarca as $marca)
 			{
@@ -241,14 +262,27 @@ class TiendaController extends Controller
 			}
 			$sql=$sql."))";
 			$opcion2=$opcion2."))";
+			
+
+			
+			
 		}
+		
+		
 		if($filter['precio']!="")//filtros
 		{
 			$filtroPrecio=explode("-", $filter['precio']);	
 			$filtroPrecio[0];
 			$filtroPrecio[1];
-			if($otraForma!=1) // si es busqueda por variacion
+			if($opcion2=="")
 			{
+				if($sqlCategoria!="")
+				{
+					$opcion2=$sqlCategoria;
+				}
+			}
+			if($otraForma!=1) // si es busqueda por variacion
+			{	
 				if($opcion2!="")
 					$sub="select * from tbl_inventario where producto_id in (select id from tbl_producto where nombre LIKE '%".$filter['producto']."%' ".$opcion2.") and precio between ".$filtroPrecio[0]." and ".$filtroPrecio[1]."";
 				else
@@ -270,6 +304,8 @@ class TiendaController extends Controller
 		{
 			echo $filter['caracteristica'];
 		}*/
+				
+
 
 		if($sql!="")
 		{
@@ -298,7 +334,8 @@ class TiendaController extends Controller
 		{
 			$model2="";
 		}
-		//echo $sql;	
+	//	echo $sql;
+		echo $sub;	
        $this->render('store', array('categorias'=>Categoria::model()->categoriasEnExistencia,'list'=>false,'filter'=>$filter, 'model'=>$model, 'model2'=>$model2));
     }
 	

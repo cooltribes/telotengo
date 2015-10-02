@@ -281,6 +281,77 @@ class Categoria extends CActiveRecord
 			return "";
 		
 	}
+	
+	public function buscarPadres($id, &$vector=Array())
+	{
+		$model=Categoria::model()->findByPk($id);
+		if($model->id_padre==0)
+		{
+			array_push($vector, '0');
+			
+		}
+		else
+		{
+			array_push($vector, $model->id);
+			$this->buscarPadres($model->id_padre, $vector);
+		}	
+		return $vector;
+	}
+	
+	public function buscarHijos($id, &$vector=Array())
+	{
+		if(Categoria::model()->findAllByAttributes(array('id_padre'=>$id)))
+		{
+			$model=Categoria::model()->findAllByAttributes(array('id_padre'=>$id));
+			foreach($model as $modelado)
+			{
+				if($modelado->ultimo==1)
+				{
+					array_push($vector, $modelado->id);
+				}
+				else 
+				{
+					$this->buscarHijos($modelado->id, $vector);
+				}
+			}
+		}
+		return $vector;		
+		
+		
+	}
+	
+	public function incluir(&$vector)
+	{
+		$word="";
+		$num=count($vector);
+		$i=1;
+		if($num==1)
+		{
+			$word=$vector[0];
+		}
+		else 
+		{
+			foreach($vector as $vec)
+			{
+				if($i==1)
+				{
+					$word=$vec.",";
+				}
+				else 
+				{
+					if($i>=$num)	
+						$word=$word.$vec;
+					else 
+						$word=$word.$vec.",";
+				}	
+	
+				
+				$i++;
+			}
+		}		
+
+		return $word;
+	}
     
 	
 }

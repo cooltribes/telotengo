@@ -93,24 +93,24 @@ class RegistrationController extends Controller
 					if(isset($model->email)){
 						#Revisar si esta invitado en la base de datos
 						$usuario = User::model()->findByAttributes(array('email'=>$model->email));
-
+						Yii::app()->session['email']=$model->email;
 						if(isset($usuario)){ #el usuario existe en la base de datos, tiene invitacion
 							#revisar que tipo de invitacion tiene
 							switch ($usuario->type){
 								case User::TYPE_INVITADO_EMPRESA:
 									# Flujo de cuando se invita a formar parte de una empresa
 									Yii::app()->getSession()->add('invitadoempresa',$usuario->id);
-									$this->redirect(Yii::app()->baseUrl.'/user/user/datos');
+									$this->redirect(Yii::app()->baseUrl.'/user/user/datos', array('email'=>$model->email));
 									break;
 								case User::TYPE_INVITADO_CLIENTE:
 									#el usuario está invitado como cliente
 									Yii::app()->getSession()->add('invitadocliente',$usuario->id);
-									$this->redirect(Yii::app()->baseUrl.'/user/user/datos');
+									$this->redirect(Yii::app()->baseUrl.'/user/user/datos', array('email'=>$model->email));
 									break;
 								case User::TYPE_USUARIO_SOLICITA:
 									#Usuario ya solicitó pero no recibió respuesta.
 									Yii::app()->getSession()->add('usuario_solicitud',$usuario->id);
-									$this->redirect(Yii::app()->baseUrl.'/user/user/respuesta');
+									$this->redirect(Yii::app()->baseUrl.'/user/user/respuesta', array('email'=>$model->email));
 									break;
 							}
 						}
