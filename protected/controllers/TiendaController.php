@@ -340,7 +340,7 @@ class TiendaController extends Controller
 		{
 			$model2="";
 		}
-		echo $sql;
+		//echo $sql;
 		//echo $sub;	
        $this->render('store', array('categorias'=>Categoria::model()->categoriasEnExistencia,'list'=>false,'filter'=>$filter, 'model'=>$model, 'model2'=>$model2));
     }
