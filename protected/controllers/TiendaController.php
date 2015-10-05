@@ -172,6 +172,8 @@ class TiendaController extends Controller
 		$filtroCategoria="";
 		$sqlCategoria2="";
 		$sqlCategoria="";
+		$filtroMarca="";
+		$filtroPrecio="";
 		if(isset($_GET['producto']))
 		{
 			$filter['producto']=$_GET['producto'];
@@ -298,7 +300,11 @@ class TiendaController extends Controller
 			
 			//echo $sub;
 		}
-		
+		if($filtroMarca=="" && $filtroPrecio=="" && $filtroCategoria!="") // si solo hay filtro de categoria
+		{
+			 $sql=$sql.$sqlCategoria;
+
+		}
 		//TODO caracteristica para proxima entrega
 	/*	if($filter['caracteristica']!="")//filtros
 		{
@@ -334,8 +340,8 @@ class TiendaController extends Controller
 		{
 			$model2="";
 		}
-	//	echo $sql;
-		echo $sub;	
+		echo $sql;
+		//echo $sub;	
        $this->render('store', array('categorias'=>Categoria::model()->categoriasEnExistencia,'list'=>false,'filter'=>$filter, 'model'=>$model, 'model2'=>$model2));
     }
 	
