@@ -42,9 +42,19 @@
         
     </div>
     
-    <div class="form-group">
+        <div class="form-group row-fluid">
+ 
+            <?php echo $form->textField($model,'zip', array('id'=>'zip','class'=>'form-control', 'placeholder'=>'Introduzca Codigo Postal (numeros enteros)', 'maxlength'=>50)); ?>
 
-            <?php echo $form->textField($model,'telefono', array('class'=>'form-control', 'placeholder'=>'Teléfono (código seguido del número sin espacios ni guiones)', 'maxlength'=>11)); ?>
+            <?php echo $form->error($model,'zip'); ?>            
+
+        
+        
+    </div>
+    
+    <div class="form-group">
+            <?php echo $form->textField($model,'telefono', array('id'=>'telefono', 'class'=>'form-control', 'placeholder'=>'Teléfono (código seguido del número sin espacios ni guiones)', 'maxlength'=>11)); ?>
+
 
         <?php echo $form->error($model,'telefono'); ?>
     </div>
@@ -145,6 +155,8 @@
 $(document).ready(function() {
 	var completo="";
 	var soloLetra='';
+	var zipCompleto="";
+	var telefonoCompleto="";
 	$('#rif').on('input', function(event) {
 		var palabra=$(this).val();
 		var letras = " jevgJEVG"; //JVEG rifs posibles
@@ -169,6 +181,38 @@ $(document).ready(function() {
 			}	
 		 }
 	completo=$(this).val();
+	});
+	
+	
+	$('#zip').on('input', function(event) {
+		var zip=$.isNumeric($("#zip").val());
+		if(zip==false)
+		{
+			alert ("introduzca numeros enteros");
+			$("#zip").val(zipCompleto);
+			return false;
+			
+		}
+		else
+		{
+			zipCompleto=$("#zip").val();
+		}
+	});
+	
+	
+	$('#telefono').on('input', function(event) {
+		var telefono=$.isNumeric($("#telefono").val());
+		if(telefono==false)
+		{
+			alert ("introduzca numeros enteros");
+			$("#telefono").val(telefonoCompleto);
+			return false;
+			
+		}
+		else
+		{
+			telefonoCompleto=$("#telefono").val();
+		}
 	});
 	
 });	

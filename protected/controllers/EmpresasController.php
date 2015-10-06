@@ -155,6 +155,7 @@ class EmpresasController extends Controller
 			#$model->forma_legal = $_POST['Empresas']['forma_legal'];
 			$model->sector = $_POST['Empresas']['sector'];
 			$model->cargo = $_POST['Empresas']['cargo'];
+			$model->zip = $_POST['Empresas']['zip'];
 			#$model->num_empleados = $_POST['Empresas']['num_empleados'];
 			$rol=$_POST['Empresas']['tipoEmpresa'];
 			$model->rol=$rol;

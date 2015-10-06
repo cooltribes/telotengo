@@ -33,6 +33,7 @@
                <h1>MARCAS</h1>
                <input type="hidden" id="marcasFilter" value="<?php echo $filter['marcas']?>">
                <ul>
+               	<?php /*
                    <li class="dropdown dropdown-input">
                        
                        <?php
@@ -73,7 +74,7 @@
                        
                        
                        
-                   </li>
+                   </li> */?>
                    
                    <?php 
                    $i=0;
