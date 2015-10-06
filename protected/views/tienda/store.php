@@ -36,15 +36,17 @@
                                   </ul>  
                                 </div>
                                 <div class="storeControls no_padding_right">
-                                    <a href="#"><span class="glyphicon glyphicon-th-large"></span></a>
-                                <a href="#"><span class="glyphicon glyphicon-th-list"></span></a>
+                                	 <input type="hidden" id="display" value="<?php echo $list?>"> 
+                                	 
+                                    <a href="#" onclick="go('#display',0);"><span class="glyphicon glyphicon-th-large"></span></a>
+                               	    <a href="#" onclick="go('#display',1);"><span class="glyphicon glyphicon-th-list"></span></a>
                                 </div>
                                 </div>
                            </div>
                            <div class="col-md-12 plainSeparator margin_bottom"></div>
                            <div class="col-md-12 no_horizontal_padding">
                                <?php  
-                               if($list)
+                               if($list==1)
                                 $this->renderPartial('list_view', array('model'=>$model, 'model2'=>$model2));
                                else
 							   	$this->renderPartial('grid_view', array('model'=>$model, 'model2'=>$model2));
@@ -74,6 +76,8 @@
         if($('#precioFilter').val()!=''){params=params+"precio="+$('#precioFilter').val()+"&";}
         
         if($('#orderBy').val()!=''){params=params+"order="+$('#orderBy').val()+"&";}
+        
+        if($('#display').val()!=''){params=params+"display="+$('#display').val()+"&";}
             
        // if($('#caracteristicaFilter').val()!=''){params=params+"caracteristica="+$('#caracteristica').val()+"&";}   //TODO para otra entrega        
 

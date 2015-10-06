@@ -217,7 +217,18 @@ class TiendaController extends Controller
 		}
         $filter['categoria']=isset($_GET['categoria'])?$_GET['categoria']:'';
         $filter['marcas']=isset($_GET['marcas'])?$_GET['marcas']:'';
-        $filter['precio']=isset($_GET['precio'])?$_GET['precio']:'';
+        
+		if(isset($_GET['precio'])){
+			$filter['precio']=$_GET['precio'];
+			$filtroPrecio=explode("-", $filter['precio']);
+			$filter['precioMayor']=$filtroPrecio[0];
+			$filter['precioMenor']=$filtroPrecio[1];
+		}else{
+			$filter['precio']='';
+			$filter['precioMayor']=0;
+			$filter['precioMenor']=200000;
+		}
+		
 		$order=isset($_GET['order'])?$_GET['order']:'';
         //$filter['caracteristica']=isset($_GET['caracteristica'])?$_GET['caracteristica']:''; TODO para otra entrega
         
@@ -278,9 +289,7 @@ class TiendaController extends Controller
 		
 		if($filter['precio']!="")//filtros
 		{
-			$filtroPrecio=explode("-", $filter['precio']);	
-			$filtroPrecio[0];
-			$filtroPrecio[1];
+			
 			if($opcion2=="")
 			{
 				if($sqlCategoria!="")
@@ -395,18 +404,25 @@ class TiendaController extends Controller
 			$model2="";
 			//echo $sub;
 			$model2=Yii::app()->db->createCommand($sub)->queryAll();
-		}
-			
+		}	
 		else
 		{
 			$model2="";
 		}
 		
-
+		
+		if(isset( $_GET['display']))
+		{
+			$list= $_GET['display'];
+		}
+		else 
+		{
+			$list=0;
+		}
 		//echo $sql;
 		
 		//echo $sub;	
-       $this->render('store', array('categorias'=>Categoria::model()->categoriasEnExistencia,'list'=>false,'filter'=>$filter, 'model'=>$model, 'model2'=>$model2, 'order'=>$order));
+       $this->render('store', array('categorias'=>Categoria::model()->categoriasEnExistencia,'list'=>$list,'filter'=>$filter, 'model'=>$model, 'model2'=>$model2, 'order'=>$order));
     }
 	
 }
