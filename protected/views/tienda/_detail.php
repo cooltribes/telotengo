@@ -51,16 +51,16 @@
                             
             </div>
             <div class="priceHover text-right clearfix">
-            	<span class="legend">Desde</span>
+            	<span class="legend" style="display:block">Desde</span>
             	<?php
             	if($way==0)
 				{?>
-                    <span class="quantity"><?php echo $inventario->precio;?> BS</span>
+                    <span class="quantity"><?php echo $inventario->precio<10000?$inventario->precio:$inventario->precio;?><small> Bs</small></span>
 				<?php
 				}
 				else 
 				{?>
-                    <span class="quantity"><?php echo $modelado['precio'];?> BS</span>
+                    <span class="quantity"><?php echo $modelado['precio']<10000?$modelado['precio']:$modelado['precio'];?><small> Bs</small></span>
 				<?php
 				}
 				?>
@@ -89,12 +89,12 @@
                                 	<?php
             	if($way==0)
 				{?>
-                    <span class="quantity"><?php echo $inventario->precio;?> BS</span>
+                    <span class="quantity"><?php echo $inventario->precio;?> Bs</span>
 				<?php
 				}
 				else 
 				{?>
-                    <span class="quantity"><?php echo $modelado['precio'];?> BS</span>
+                    <span class="quantity"><?php echo $modelado['precio'];?> Bs</span>
 				<?php
 				}
 				?>

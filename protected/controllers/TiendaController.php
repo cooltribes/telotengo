@@ -213,7 +213,12 @@ class TiendaController extends Controller
 		}
         $filter['categoria']=isset($_GET['categoria'])?$_GET['categoria']:'';
         $filter['marcas']=isset($_GET['marcas'])?$_GET['marcas']:'';
-        $filter['precio']=isset($_GET['precio'])?$_GET['precio']:'';
+        if(isset($_GET['precio'])){
+            $filter['precio']=$_GET['precio'];
+            
+            $filter['precio'][0]=$_GET['precio'];
+            $filter['precio'][1]=$_GET['precio'];
+        }
         //$filter['caracteristica']=isset($_GET['caracteristica'])?$_GET['caracteristica']:''; TODO para otra entrega
         
 		if($filter['categoria']!="")//filtros
@@ -273,7 +278,7 @@ class TiendaController extends Controller
 		
 		if($filter['precio']!="")//filtros
 		{
-			$filtroPrecio=explode("-", $filter['precio']);	
+			
 			$filtroPrecio[0];
 			$filtroPrecio[1];
 			if($opcion2=="")

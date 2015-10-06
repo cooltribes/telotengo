@@ -119,6 +119,7 @@ const SECTOR_EDUCACION = 16;
 		return array(
 			array('razon_social, rif, direccion,  ciudad,  sector, cargo,  ciudad, provincia', 'required'),
 			array('estado, destacado, tipo', 'numerical', 'integerOnly'=>true),
+			array('telefono', 'numerical', 'integerOnly'=>true, 'message'=>'Debe escribir el código seguido por el número sin espacios ni guiones'),
 			array('url', 'length', 'max'=>255),
 			array('direccion, mail, web' ,'length', 'max'=>255),
 			array('razon_social', 'length', 'max'=>205),

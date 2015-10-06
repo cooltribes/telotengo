@@ -34,7 +34,7 @@
     
     <div class="form-group row-fluid">
  
-            <?php echo $form->textField($model,'rif', array('id'=>'rif','class'=>'form-control', 'placeholder'=>'RIF(Letra seguida del número sin espacios ni guiones)', 'maxlength'=>45)); ?>
+            <?php echo $form->textField($model,'rif', array('id'=>'rif','class'=>'form-control', 'placeholder'=>'RIF (Letra seguida del número sin espacios ni guiones)', 'maxlength'=>45)); ?>
 
             <?php echo $form->error($model,'rif'); ?>            
 
@@ -44,7 +44,7 @@
     
     <div class="form-group">
 
-            <?php echo $form->textField($model,'telefono', array('class'=>'form-control', 'placeholder'=>'Teléfono', 'maxlength'=>15)); ?>
+            <?php echo $form->textField($model,'telefono', array('class'=>'form-control', 'placeholder'=>'Teléfono (código seguido del número sin espacios ni guiones)', 'maxlength'=>11)); ?>
 
         <?php echo $form->error($model,'telefono'); ?>
     </div>
