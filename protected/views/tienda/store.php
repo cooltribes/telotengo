@@ -1,4 +1,4 @@
-           <div class="col-md-2 leftPanel">  
+        <div class="col-md-2 leftPanel">  
            	<?php
            	if(isset( $filter['producto']))
            	{
@@ -8,41 +8,46 @@
            	 }
            	 ?>             
                <?php $this->renderPartial('filters',array('categorias'=>$categorias,'filter'=>$filter)); ?>
-           </div>           
+           </div>   
+                    
            <div class="col-md-10">
                <div class="row-fluid">
                    <div class="col-md-12 mainStore margin_top_minus no_horizontal_padding ">
                        <div class="row-fluid">
                            <div class="col-md-4 no_horizontal_padding">
                                <div class="margin_top_small">
-                                   <span class="muted">Mostrando 1 - 16 de 256 resultados</span>
+                                   <span class="muted">Mostrando 1 - 16 de 256 resultados ?></span>
                                </div>
                            </div>
                            <div class="col-md-4 col-md-offset-4 no_horizontal_padding">
                                <div style="float:right">
                                Ordenar por: 
+                               <input type="hidden" id="orderBy" value="<?php echo $order?>">
                                <div class="dropdown sorter">
                                   <button class="btn btn-default no_radius dropdown-toggle" type="button" id="categorySearch" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                        Nombre
+                                        Seleccione
                                     <span class="caret"></span>
                                   </button>
                                   <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                    <li><a href="#">Nombre </a></li>
-                                    <li><a href="#">Some Sort </a></li>
-                                    <li><a href="#">Another Sort</a></li>
+                                <!--    <li><a href="#" onclick="go('#orderBy','nombre-asc');">Nombre </a></li> -->
+                                    <li><a href="#" onclick="go('#orderBy','mayorPrecio-asc');">Mayor Precio </a></li>
+                                    <li><a href="#" onclick="go('#orderBy','menorPrecio-desc');">Menor Precio </a></li>
+
                                      
                                   </ul>  
                                 </div>
                                 <div class="storeControls no_padding_right">
-                                    <a href="#"><span class="glyphicon glyphicon-th-large"></span></a>
-                                <a href="#"><span class="glyphicon glyphicon-th-list"></span></a>
+                                	 <input type="hidden" id="display" value="<?php echo $list?>"> 
+                                	 
+                                    <a href="#" onclick="go('#display',0);"><span class="glyphicon glyphicon-th-large"></span></a>
+                               	    <a href="#" onclick="go('#display',1);"><span class="glyphicon glyphicon-th-list"></span></a>
                                 </div>
                                 </div>
                            </div>
                            <div class="col-md-12 plainSeparator margin_bottom"></div>
                            <div class="col-md-12 no_horizontal_padding">
                                <?php  
-                               if($list)
+                               if($list==1)
                                 $this->renderPartial('list_view', array('model'=>$model, 'model2'=>$model2));
                                else
 							   	$this->renderPartial('grid_view', array('model'=>$model, 'model2'=>$model2));
@@ -70,10 +75,16 @@
         if($('#marcasFilter').val()!=''){params=params+"marcas="+$('#marcasFilter').val()+"&";}
             
         if($('#precioFilter').val()!=''){params=params+"precio="+$('#precioFilter').val()+"&";}
+        
+        if($('#orderBy').val()!=''){params=params+"order="+$('#orderBy').val()+"&";}
+        
+        if($('#display').val()!=''){params=params+"display="+$('#display').val()+"&";}
             
        // if($('#caracteristicaFilter').val()!=''){params=params+"caracteristica="+$('#caracteristica').val()+"&";}   //TODO para otra entrega        
-
+      
         var url = window.location.href.split("?");
+        if(url[0].indexOf('index')==-1)
+            url[0]=url[0]+"index";
         
         window.location.href=url[0]+removeLast(params,'&'); 
     }
@@ -99,8 +110,9 @@
       range: true,
       min: 0, 
       max: 200000,
+      values: [<?php echo $filter['precioMayor'] ?> , <?php echo $filter['precioMenor']?> ],
 
-      values: [ 10000 , 190000 ],
+      
       slide: function( event, ui ) {
         $( "#from" ).html(ui.values[ 0 ]);
         $( "#to" ).html(ui.values[ 1 ]); 
