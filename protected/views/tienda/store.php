@@ -21,15 +21,17 @@
                            <div class="col-md-4 col-md-offset-4 no_horizontal_padding">
                                <div style="float:right">
                                Ordenar por: 
+                               <input type="hidden" id="orderBy" value="<?php echo $order?>">
                                <div class="dropdown sorter">
                                   <button class="btn btn-default no_radius dropdown-toggle" type="button" id="categorySearch" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                        Nombre
+                                        Seleccione
                                     <span class="caret"></span>
                                   </button>
                                   <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                    <li><a href="#">Nombre </a></li>
-                                    <li><a href="#">Some Sort </a></li>
-                                    <li><a href="#">Another Sort</a></li>
+                                <!--    <li><a href="#" onclick="go('#orderBy','nombre-asc');">Nombre </a></li> -->
+                                    <li><a href="#" onclick="go('#orderBy','mayorPrecio-asc');">Mayor Precio </a></li>
+                                    <li><a href="#" onclick="go('#orderBy','menorPrecio-desc');">Menor Precio </a></li>
+
                                      
                                   </ul>  
                                 </div>
@@ -70,6 +72,8 @@
         if($('#marcasFilter').val()!=''){params=params+"marcas="+$('#marcasFilter').val()+"&";}
             
         if($('#precioFilter').val()!=''){params=params+"precio="+$('#precioFilter').val()+"&";}
+        
+        if($('#orderBy').val()!=''){params=params+"order="+$('#orderBy').val()+"&";}
             
        // if($('#caracteristicaFilter').val()!=''){params=params+"caracteristica="+$('#caracteristica').val()+"&";}   //TODO para otra entrega        
 

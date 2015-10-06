@@ -211,9 +211,14 @@ class TiendaController extends Controller
 				$filter['producto'];
 			}
 		}
+		else 
+		{
+			$sql="select * from tbl_producto where nombre <>''"; //TODO mejorar esto, forma menos optima
+		}
         $filter['categoria']=isset($_GET['categoria'])?$_GET['categoria']:'';
         $filter['marcas']=isset($_GET['marcas'])?$_GET['marcas']:'';
         $filter['precio']=isset($_GET['precio'])?$_GET['precio']:'';
+		$order=isset($_GET['order'])?$_GET['order']:'';
         //$filter['caracteristica']=isset($_GET['caracteristica'])?$_GET['caracteristica']:''; TODO para otra entrega
         
 		if($filter['categoria']!="")//filtros
@@ -310,7 +315,64 @@ class TiendaController extends Controller
 		{
 			echo $filter['caracteristica'];
 		}*/
-				
+		//echo $sql;echo $sub;
+		if($order!="")
+		{ 
+			if($sql!="" && $sub=="")
+			{ 
+				if($order=="nombre-asc")
+				{
+					$sql=$sql." order by nombre";
+				}
+				else
+				{
+					  $sqlOrder=explode("select *", $sql);
+					  $final=") ";
+					  $sql="";
+					  $sub="select * from tbl_inventario where producto_id in (select id ".$sqlOrder[1].$final;	
+						if($order=="mayorPrecio-asc")
+						{
+							$sub=$sub."order by precio desc";
+						}
+						else 
+						{
+							if($order=="mayorPrecio-asc")
+							{
+								$sub=$sub."order by precio asc";
+							}
+						}	
+
+				}	
+			}
+			else 
+			{ 
+				if($sql!="" && $sub!="")
+				{ 
+					if($order=="nombre-asc")
+					{
+							
+						$sqlOrder=explode("%'", $sub);	
+						//echo $sqlOrder[0];	
+						//$sql=$sql." order by nombre";
+					}
+					else 
+					{
+						if($order=="mayorPrecio-asc")
+						{
+							$sub=$sub." order by precio desc";
+						}
+						else 
+						{
+							if($order=="mayorPrecio-asc")
+							{
+								$sub=$sub." order by precio asc";
+							}
+						}
+					}
+					
+				}
+			}	
+		}		
 
 
 		if($sql!="")
@@ -319,8 +381,7 @@ class TiendaController extends Controller
 			$model="";
 			//echo $sql;
 			$model=Yii::app()->db->createCommand($sql)->queryAll();
-		}
-			
+		}			
 		else
 		{
 			$model="";
@@ -340,9 +401,12 @@ class TiendaController extends Controller
 		{
 			$model2="";
 		}
+		
+
 		//echo $sql;
+		
 		//echo $sub;	
-       $this->render('store', array('categorias'=>Categoria::model()->categoriasEnExistencia,'list'=>false,'filter'=>$filter, 'model'=>$model, 'model2'=>$model2));
+       $this->render('store', array('categorias'=>Categoria::model()->categoriasEnExistencia,'list'=>false,'filter'=>$filter, 'model'=>$model, 'model2'=>$model2, 'order'=>$order));
     }
 	
 }

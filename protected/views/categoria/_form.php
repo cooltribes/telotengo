@@ -86,7 +86,7 @@
 		<?php 
 			if($model->imagen_url != ""):?>
 				<div class="col-md-6 col-md-offset-3 margin_top_small">
-			<?php 	echo CHtml::image($model->getImgUrl(true),$model->nombre); ?>
+			<?php 	echo CHtml::image($model->getImgUrl(true),$model->nombre."?" . time()); ?>
 			<input type="hidden" id="previous_img" value="1"/>
 		
 	</div>
