@@ -364,9 +364,14 @@ class SiteController extends Controller
 		 //$empresa_id=$almacen->empresas->id;
 		// $empresa_nombre=$almacen->empresas->nombre;
 		//var_dump($busqueda); 
+		if(Inventario::model()->findAllByAttributes(array('producto_id'=>$producto_id), array('condition'=>'almacen_id<>'.$almacen_id)))
+			$similares=Inventario::model()->findAllByAttributes(array('producto_id'=>$producto_id), array('condition'=>'almacen_id<>'.$almacen_id)); // buscar otros
+		else
+			$similares=NULL;
+		//var_dump($data); 
 		$otros = Inventario::model()->findAllBySql("select * from tbl_inventario where producto_id=".$producto_id." and almacen_id!=".$almacen_id."");
-       $this->render('detalle', array('model'=>$model, 'inventario'=>$inventario, 'imagen'=>$imagen, 'imagenPrincipal'=>$imagenPrincipal, 'busqueda'=>$busqueda, 'empresa'=>$empresa, 'almacen'=>$almacen, 
-       'otros'=>$otros));
+        $this->render('detalle', array('model'=>$model, 'inventario'=>$inventario, 'imagen'=>$imagen, 'imagenPrincipal'=>$imagenPrincipal, 'busqueda'=>$busqueda, 'empresa'=>$empresa, 'almacen'=>$almacen, 
+       'otros'=>$otros, 'similares'=>$similares));
     }
     public function actionAutoComplete()
 		{
