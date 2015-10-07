@@ -539,7 +539,7 @@ class User extends CActiveRecord
 				return "//mail/registroComprador";
 			if($rol=="compraVenta")
 				return "//mail/registroAmbos";
-
 		}
-
+        
+        
 }
