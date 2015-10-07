@@ -46,7 +46,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
         <div class="col-md-6" style="text-align: center">
 
                     <div style="width:300px; height:50px;">
-                        <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/whitelogo.png" width="100%"/>
+                        <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/whitelogo.png" width="65%"/>
                     </div>
              
         </div>
