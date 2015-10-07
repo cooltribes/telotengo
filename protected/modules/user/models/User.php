@@ -98,6 +98,7 @@ class User extends CActiveRecord
         $relations = Yii::app()->getModule('user')->relations;
         if (!isset($relations['profile']))
             $relations['profile'] = array(self::HAS_ONE, 'Profile', 'user_id');
+            
         return $relations;
 	}
 
@@ -540,6 +541,11 @@ class User extends CActiveRecord
 			if($rol=="compraVenta")
 				return "//mail/registroAmbos";
 		}
+        
+        public function getEmpresa(){
+            $ehu=EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id));
+            return Empresa::model()->findByPk($ehu->empresas_id);
+        }
         
         
 }
