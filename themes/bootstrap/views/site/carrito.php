@@ -113,12 +113,14 @@
 <script>
 	$(document).ready(function() {
 		$('#procesarTodo').click(function() {
-			var bolsa_id= '<?php echo $model->id?>';
+			var bolsa_id= '<?php echo $model->id;?>';
+			var empresas_id='<?php echo $model->empresas_id;?>';
+			
 						$.ajax({
 			         url: "<?php echo Yii::app()->createUrl('Orden/procesarTodo') ?>",
 		             type: 'POST',
 			         data:{
-		                    bolsa_id:bolsa_id
+		                    bolsa_id:bolsa_id, empresas_id:empresas_id,
 		                   },
 			        success: function (data) {
 			        	

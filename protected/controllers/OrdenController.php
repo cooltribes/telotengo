@@ -871,7 +871,40 @@ class OrdenController extends Controller
 
 	public function actionProcesarTodo()
 	{
-		
+		$bolsa_id=$_POST['bolsa_id'];
+		$empresas_id=$_POST['empresas_id'];
+		$bolsaInventario=BolsaHasInventario::model()->findAllByAttributes(array('bolsa_id'=>$bolsa_id), array('order'=>'almacen_id asc')); // todos los que contengan esta bolsa
+		$almacenTransitorio="";
+		foreach ($bolsaInventario as $bolsaRecorrido)
+		{
+			if($almacenTransitorio!=$bolsaRecorrido->almacen_id)
+			{
+				$orden=new Orden;
+				$orden->empresa_id=$empresas_id;
+				$orden->almacen_id=$bolsaRecorrido->almacen_id;
+				$orden->users_id=Yii::app()->user->id;
+				$orden->fecha=date("Y-m-d H:i:s");
+				$orden->estado=0; //TODO orden nueva, por lo tanto esta en este estado pendiente
+				//$orden->envio; // el metodo de envio debe definirse
+				// la parte del tipo de pago esta predeterminada como 7 a conveniencia
+				// tracking y direccion de envio pueden ir vacios
+				// no sabemos si colocar la cantidad y el iva
+				$orden->save();
+				$orden->refresh();
+			}
+			
+			$ordenInventario= new OrdenHasInventario;
+			$ordenInventario->cantidad=$bolsaRecorrido->cantidad;
+			$ordenInventario->inventario_id=$bolsaRecorrido->inventario_id;
+			$ordenInventario->almacen_id=$bolsaRecorrido->almacen_id;
+			$ordenInventario->orden_id=$orden->id;
+			$ordenInventario->save();
+			
+
+			$almacenTransitorio=$bolsaRecorrido->almacen_id;
+		}
+
+		BolsaHasInventario::model()->deleteAllByAttributes(array('bolsa_id'=>$bolsa_id)); // los borra todos		
 	}
 	
 	public function actionProcesarSimple()

@@ -83,9 +83,10 @@ class Orden extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('envio, iva, total, fecha, estado, users_id, tipo_pago_id, tipo_guia', 'required'),
-			array('estado, users_id, tipo_pago_id, tipo_guia', 'numerical', 'integerOnly'=>true),
-			array('descuento, envio, iva, total', 'numerical'),
+			//array('envio, iva, total, fecha, estado, users_id, tipo_pago_id, tipo_guia', 'required'),
+			array('empresa_id, almacen_id, users_id, fecha, estado,  tipo_pago_id', 'required'),
+			array('estado, users_id, tipo_pago_id', 'numerical', 'integerOnly'=>true),
+			//array('descuento, envio, iva, total', 'numerical'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, descuento, envio, iva, total, fecha, estado, users_id, tipo_pago_id, tipo_guia, tracking, balance, direccionEnvio_id', 'safe', 'on'=>'search'),

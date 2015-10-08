@@ -137,7 +137,7 @@
                     </div>
                     <div class="col-md-12 no_padding_left slider">
                         <h1>PRODUCTOS SIMILIARES</h1>
-                           <?php //$this->renderPartial('carousel_productos',array('data'=>$similares,'carousel'=>'proveedor')); ?>  
+                           <?php $this->renderPartial('carousel_productos',array('data'=>$similares,'carousel'=>'proveedor', 'similares'=>1)); ?>  
                      
                     </div>
              
