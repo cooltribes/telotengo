@@ -123,12 +123,13 @@ Yii::app()->session['suma']=$total;
 			var almacen_id=res[0];
 			var res2 = oid.split("n");
 			var bolsa_id=res2[1];
-			alert(oid);
+			var empresas_id='<?php echo $model->empresas_id;?>';
+			//alert(empresas_id);
 			$.ajax({
-			         url: "<?php echo Yii::app()->createUrl('Orden/procesarSimplre') ?>",
+			         url: "<?php echo Yii::app()->createUrl('Orden/procesarSimple') ?>",
 		             type: 'POST',
 			         data:{
-		                    almacen_id:almacen_id, bolsa_id:bolsa_id
+		                    almacen_id:almacen_id, bolsa_id:bolsa_id, empresas_id:empresas_id
 		                   },
 			        success: function (data) {
 			        	
