@@ -38,7 +38,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
 </head>
 
 <div class="navbar row-fluid b2b clearfix no_margin_bottom" >
-    <div class="col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 col-xs-8 col-xs-offset-2" id="headerContainer">
+    <div class="col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 col-xs-8 col-xs-offset-2 no_horizontal_padding" id="headerContainer">
                 <div class="row-fluid">
                     <div class="col-md-2 col-sm-2 col-xs-5 no_padding_left">
                         <a href="<?php echo Yii::app()->baseUrl."/site/inhome2"; ?>"><img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/logo.png" width="100%"/></a> 

@@ -24,10 +24,10 @@ class OrdenController extends Controller
 	 * @return array access control rules
 	 */
 	public function accessRules()
-	{
+	{ 
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index'),
+				'actions'=>array('index','detalle'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -937,5 +937,9 @@ class OrdenController extends Controller
 		}
 		BolsaHasInventario::model()->deleteAllByAttributes(array('bolsa_id'=>$bolsa_id, 'almacen_id'=>$almacen_id)); // los borra todos	
 	}
-
+    
+    public function actionDetalle(){
+        $this->layout='//layouts/start';
+        $this->render("detalle");  
+    }
 }
