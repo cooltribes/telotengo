@@ -48,14 +48,14 @@
     <div class="col-md-12 margin_top">
                 <h1>ULTIMOS PUBLICADOS</h1>
                                            
-                <?php $this->renderPartial('carousel_productos',array('data'=>$ultimos,'carousel'=>'ultimos')); ?>         
+                <?php $this->renderPartial('carousel_productos',array('data'=>$ultimos,'carousel'=>'ultimos','similares'=>0)); ?>         
                     
     </div>
     
     <div class="col-md-12 margin_top">
                 <h1>DESTACADOS</h1>
                                            
-                <?php $this->renderPartial('carousel_productos',array('data'=>$destacados,'carousel'=>'destacados')); ?>         
+                <?php $this->renderPartial('carousel_productos',array('data'=>$destacados,'carousel'=>'destacados','similares'=>0)); ?>         
                     
     </div>               
                                     

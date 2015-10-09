@@ -179,11 +179,27 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                                     </div>                                
                                   </a>
                                   <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                    <li><a href="#">Action</a></li>
-                                    <li><a href="#">Another action</a></li>
-                                    <li><a href="#">Something else here</a></li>
-                                    <li class="separator"></li>
-                                    <li><a href="#">Separated link</a></li>
+                                    
+                                   
+                                        <?php 
+                                        $usuario=User::model()->findByPk(Yii::app()->user->id);
+                                        if($usuario):
+                                         $myempresa = $usuario->empresa;
+                                         if(!is_null($myempresa->bolsa->getLastItems(3) ))
+                                         foreach($myempresa->bolsa->getLastItems(3) as $item): ?>
+                                            <li>
+                                                <a href="<?php echo Yii::app()->getBaseUrl(true)."/site/carrito"?>" class="ellipsis" style="width:100%" href="#">
+                                                    <img src="<?php echo $item->getImagenPrincipal(true);?>" width="30" height="30"/> 
+                                                    <?php echo $item->nombre ?>
+                                                </a>                                            
+                                            </li>
+                    
+                                       <?php endforeach; ?>
+                                     
+                                       <li class="separator"></li>
+                                        <li><a class="text-center" href="<?php echo Yii::app()->getBaseUrl(true)."/site/carrito"?>">Ver carrito</a></li>
+                                    <?php  endif;?>
+
                                   </ul>
                                 </div>
                             </div>
@@ -193,7 +209,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                                     <div class="row-fluid">
                                         <div class="col-md-3 col-sm-3 col-xs-3 no_horizontal_padding image">
                                             <div class="imgContainer">
-                                            	<?php $usuario=User::model()->findByPk(Yii::app()->user->id);
+                                            	<?php 
 												if(isset($usuario))
 												{
 													$link=Yii::app()->getBaseUrl(true).'/images/user/'.$usuario->id."_thumb.png";
