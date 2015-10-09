@@ -83,12 +83,10 @@
 $(document).ready(function() {
 	$('#publico').click(function() {
 		if(($('#textArea').val()=="")
-			return false;
 			formulario($('#textArea').val(), 1, $('#produco').val(), $('#empresa_id').val());
 	  });
 	  	$('#privado').click(function() {
 			if(($('#textArea').val()=="")
-				return false;
 			//formulario($('#textArea').val(), 0, $('#produco').val(), $('#empresa_id').val());
 	  });
 	  

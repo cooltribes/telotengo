@@ -470,6 +470,14 @@ class Producto extends CActiveRecord
 		return "";	
 		//Yii::app()->end();
 	}
+    
+    public function getImagenPrincipal($url=false){
+        $imagenPrincipal=Imagenes::model()->findByAttributes(array('producto_id'=>$this->id, 'orden'=>1));
+        if($url)
+            return Yii::app()->getBaseUrl(true).$imagenPrincipal->url;
+        else
+            return $imagenPrincipal;
+    }
 	
 
     
