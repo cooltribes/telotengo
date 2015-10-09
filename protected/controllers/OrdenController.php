@@ -190,7 +190,7 @@ class OrdenController extends Controller
 	/**
 	 * Manages all models.
 	 */
-	public function actionAdmin()
+	public function actionAdminOLD()
 	{
 		$model = new Orden();
 		$model->unsetAttributes();  // clear any default values
@@ -216,6 +216,38 @@ class OrdenController extends Controller
 			unset($_SESSION['searchPedido']);
         }
  
+		$this->render('admin',array(
+			'model'=>$model,
+			'dataProvider'=>$dataProvider,
+		));
+	}
+	
+	public function actionAdmin()
+	{
+		$model = new Orden();
+		$model->unsetAttributes();  // clear any default values
+		$bandera=false;
+		$dataProvider = $model->search();
+		
+				/* Para mantener la paginacion en las busquedas */
+		if(isset($_GET['ajax']) && isset($_SESSION['searchPedido']) && !isset($_POST['query'])){
+			$_POST['query'] = $_SESSION['searchPedido'];
+			$bandera=true;
+		}
+
+		/* Para buscar desde el campo de texto */
+		if (isset($_POST['query'])){
+			$bandera=true;
+			unset($_SESSION['searchPedido']);
+			$_SESSION['searchPedido'] = $_POST['query'];
+            $model->id = $_POST['query'];
+            $dataProvider = $model->search();
+        }	
+
+        if($bandera==FALSE){
+			unset($_SESSION['searchPedido']);
+        }
+			
 		$this->render('admin',array(
 			'model'=>$model,
 			'dataProvider'=>$dataProvider,
@@ -875,10 +907,13 @@ class OrdenController extends Controller
 		$empresas_id=$_POST['empresas_id'];
 		$bolsaInventario=BolsaHasInventario::model()->findAllByAttributes(array('bolsa_id'=>$bolsa_id), array('order'=>'almacen_id asc')); // todos los que contengan esta bolsa
 		$almacenTransitorio="";
+		$monto=0;
 		foreach ($bolsaInventario as $bolsaRecorrido)
 		{
 			if($almacenTransitorio!=$bolsaRecorrido->almacen_id)
 			{
+				$monto=0;
+				$monto=$monto+$bolsaRecorrido->inventario->precio*$bolsaRecorrido->cantidad;	
 				$orden=new Orden;
 				$orden->empresa_id=$empresas_id;
 				$orden->almacen_id=$bolsaRecorrido->almacen_id;
@@ -889,9 +924,21 @@ class OrdenController extends Controller
 				// la parte del tipo de pago esta predeterminada como 7 a conveniencia
 				// tracking y direccion de envio pueden ir vacios
 				// no sabemos si colocar la cantidad y el iva
+				$orden->monto=$monto;
 				$orden->save();
 				$orden->refresh();
+			
 			}
+			else
+			{
+				if($almacenTransitorio!="")
+				{
+					$monto=$monto+$bolsaRecorrido->inventario->precio*$bolsaRecorrido->cantidad;	
+					$orden->monto=$monto;
+					$orden->save();
+				}
+			}	
+
 			
 			$ordenInventario= new OrdenHasInventario;
 			$ordenInventario->cantidad=$bolsaRecorrido->cantidad;
@@ -903,7 +950,8 @@ class OrdenController extends Controller
 
 			$almacenTransitorio=$bolsaRecorrido->almacen_id;
 		}
-
+		
+		
 		BolsaHasInventario::model()->deleteAllByAttributes(array('bolsa_id'=>$bolsa_id)); // los borra todos		
 	}
 	
@@ -912,6 +960,7 @@ class OrdenController extends Controller
 		$bolsa_id=$_POST['bolsa_id'];
 		$empresas_id=$_POST['empresas_id'];
 		$almacen_id=$_POST['almacen_id'];
+		$monto=0;
 		$bolsaInventario=BolsaHasInventario::model()->findAllByAttributes(array('bolsa_id'=>$bolsa_id, 'almacen_id'=>$almacen_id)); // todos los que contengan esta bolsa
 				$orden=new Orden;
 				$orden->empresa_id=$empresas_id;
@@ -933,8 +982,13 @@ class OrdenController extends Controller
 			$ordenInventario->inventario_id=$bolsaRecorrido->inventario_id;
 			$ordenInventario->almacen_id=$bolsaRecorrido->almacen_id;
 			$ordenInventario->orden_id=$orden->id;
+			$monto=$monto+$bolsaRecorrido->inventario->precio*$bolsaRecorrido->cantidad;
 			$ordenInventario->save();
 		}
+		
+		$orden->monto=$monto;
+		$orden->save();
+		
 		BolsaHasInventario::model()->deleteAllByAttributes(array('bolsa_id'=>$bolsa_id, 'almacen_id'=>$almacen_id)); // los borra todos	
 	}
 

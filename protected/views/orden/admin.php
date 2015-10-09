@@ -8,7 +8,7 @@ $this->breadcrumbs=array(
 
 <div class="container">
 	<div class="row-fluid">
-    <h1 class="col-md-10">Administrar Pedidos</h1>
+    <h1 class="col-md-10">Administrar Ordenes</h1>
         <div class="col-md-2 margin_top_medium">
                
         </div></div>
@@ -144,13 +144,13 @@ $this->breadcrumbs=array(
 	$template = '{summary}
 	    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-bordered table-hover table-striped">
 	        <tr>
-	            <th scope="col">Pedido #</th>
-	            <th scope="col">Fecha</th>
-	            <th scope="col">Total Bs.</th>
-	            <th scope="col">Usuario</th>
-	            <th scope="col">Vendedor</th>
+	            <th scope="col">N de la orden #</th>
+	            <th scope="col">Fecha de emision</th>
+	            <th scope="col">Empresa Vendedora</th>
+	            <th scope="col">Usuario Vendedor</th>
+	            <th scope="col">Monto</th>
 	            <th scope="col">Estado</th>
-	            <th scope="col">Acción</th>
+	            <th scope="col">Acciones</th>
 	        </tr>
 	    {items}
 	    </table>

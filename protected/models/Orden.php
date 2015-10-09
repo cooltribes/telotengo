@@ -102,6 +102,7 @@ class Orden extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'detalleOrdens' => array(self::HAS_MANY, 'DetalleOrden', 'orden_id'),
+			'empresa'=> array(self::BELONGS_TO, 'Empresas', 'empresa_id'),
 			'tipoPago' => array(self::BELONGS_TO, 'TipoPago', 'tipo_pago_id'),
 			'users' => array(self::BELONGS_TO, 'User', 'users_id'),
 			'direccionEnvio' => array(self::BELONGS_TO, 'DireccionEnvio','direccionEnvio_id'),
@@ -154,7 +155,7 @@ class Orden extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('descuento',$this->descuento);
+		//$criteria->compare('descuento',$this->descuento);
 		$criteria->compare('envio',$this->envio);
 		$criteria->compare('iva',$this->iva);
 		$criteria->compare('total',$this->total);
@@ -162,9 +163,9 @@ class Orden extends CActiveRecord
 		$criteria->compare('estado',$this->estado);
 		$criteria->compare('users_id',$this->users_id);
 		$criteria->compare('tipo_pago_id',$this->tipo_pago_id);
-		$criteria->compare('tipo_guia',$this->tipo_guia);
-		$criteria->compare('tracking',$this->tracking);
-		$criteria->compare('balance',$this->balance);
+		//$criteria->compare('tipo_guia',$this->tipo_guia);
+		//$criteria->compare('tracking',$this->tracking);
+		//$criteria->compare('balance',$this->balance);
 		$criteria->compare('direccionEnvio_id',$this->direccionEnvio_id);
 		$criteria->order = "id DESC";
 
@@ -354,6 +355,17 @@ class Orden extends CActiveRecord
 		else{
 			return 0;
 		}
+	}
+	
+	public function estados($estado)
+	{
+		if($estado==0)
+			return "Pendiente";
+		if($estado==1)
+			return "Pagada";
+		if($estado==2)
+			return "Cancelada";
+		
 	}
 
 }
