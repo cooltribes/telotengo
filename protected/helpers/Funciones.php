@@ -19,6 +19,9 @@ class Funciones {
 	}
 
     public static function fillRow($busqueda){
+    if(!is_array($busqueda))
+        return "";
+    
     ?>    
         <td class="title"><?php echo key($busqueda); ?></td>
             <td>

@@ -5,7 +5,7 @@
 /* @var $model ProductoPadre */
 
 $this->breadcrumbs=array(
-	'Producto Padre'=>array('index'),
+	'Producto Padre'=>array('admin'),
 	'Create',
 );
 

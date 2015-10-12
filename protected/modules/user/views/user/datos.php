@@ -8,7 +8,7 @@
     		}
     		else
     		{
-    			echo "No hemos encontrado ningún registro de invitación a este correo electrónico, por lo que iniciaremos un proceso de validación que nos permitirá generar una para hacertela llegar a";
+    			echo "No hemos encontrado ningún registro de invitación a este correo electrónico, por lo que iniciaremos un proceso de validación que nos permitirá generar una para hacertela llegar a ".Yii::app()->session['email'];
     		}?>
             
    </h5>

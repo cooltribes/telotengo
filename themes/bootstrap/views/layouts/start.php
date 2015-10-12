@@ -16,8 +16,8 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
 ?>
 <?php Yii::app()->bootstrap->register(); ?>
 <?php  Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/styles.css',null); 
- $model = Categoria::model()->findAllBySql("select * from tbl_categoria where id_padre in (select id from tbl_categoria where id_padre=0)  order by nombre asc");
-#$model=Categoria::model()->findAllByAttributes(array('id_padre'=>0), array('order'=>' id asc'));
+// $model = Categoria::model()->findAllBySql("select * from tbl_categoria where id_padre in (select id from tbl_categoria where id_padre=0)  order by nombre asc");
+ $model=Categoria::model()->findAllByAttributes(array('id_padre'=>0), array('order'=>' id asc'));
 ?>
 <head>
         
@@ -50,7 +50,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                         </div>
                     </div> 
                     <div class="col-md-2 col-sm-2 col-xs-2 no_padding_left" id="categoryMenu">
-                        <div class="dropdown">
+                        <div class="dropdown drophover">
                                   <a class="form-control text-left dropdown-toggle no_horizontal_padding no_border" id="categoryMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                     <span class="mainText">Categorías</span><span class="caret"></span> <span class="searchby">Buscar por:</span>                                 
                                   </a>
