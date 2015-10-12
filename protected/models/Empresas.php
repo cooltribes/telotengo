@@ -155,6 +155,7 @@ const SECTOR_EDUCACION = 16;
 			'calificacionEmpresas' => array(self::HAS_MANY, 'CalificacionEmpresa', 'empresas_id'),
 			'documentoses' => array(self::HAS_MANY, 'Documentos', 'empresas_id'),
 			'empresasHasTblUsers' => array(self::HAS_MANY, 'EmpresasHasTblUsers', 'empresas_id'),
+			'bolsa' => array(self::HAS_ONE, 'Bolsa', 'empresas_id'),
 		);
 	}
 

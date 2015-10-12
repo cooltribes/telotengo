@@ -129,7 +129,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                     <li class="dropdown button glyph-padding">
                         <a href="#" class="dropdown-toggle white" data-toggle="dropdown">Ordenes<b class="caret"></b></a> 
                         <ul class="dropdown-menu">
-                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/admin">Todos</a></li> 
+                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/orden/admin">Todos</a></li> 
                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/user/admin/reclamos">Reclamos</a></li>
                         </ul>
                     </li>       

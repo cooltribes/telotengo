@@ -171,7 +171,7 @@ class EmpresasController extends Controller
 			
 
 			//$almacen->save();
-			
+			 
 
 
 			if($model->save()){

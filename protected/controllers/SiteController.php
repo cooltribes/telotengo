@@ -24,7 +24,8 @@ class SiteController extends Controller
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
 				'actions'=>array('index','error','contact','login','logout','captcha','busqueda','inhome','tiendas','info','soporte','garantia','convenios','request','request2',
-								'corporativo','licencias','ofertas','home','store','detalle', 'inhome2', 'autoComplete', 'filtroBusqueda', 'carrito', 'category', 'formuPregunta'), 
+								'corporativo','licencias','ofertas','home','store','detalle', 'inhome2', 'autoComplete', 'filtroBusqueda', 'carrito', 'category', 'formuPregunta',
+								'detalleOrden'), 
 
 				'users'=>array('*'),
 			),
@@ -197,50 +198,16 @@ class SiteController extends Controller
 	}
     public function actionMailTest(){ 
       $body="BODY";
-        $undercomment='Para completar la compra debes realizar el deposito o transferencia electrónica en un máximo de 3 días a cualquiera de las siguientes <strong>cuentas corrientes</strong>:
-                            <ul style="list-style-type:square" class="margin_top_small margin_left_small">
-                                <li><strong>Banesco</strong> - 0134 0261 2026 1101 8222</li>
-                                <li><strong>Venezuela</strong> - 0102 0129 2500 0008 9665</li>
-                                <li><strong>Mercantil</strong> - 0105 0735 9417 3503 3014</li>
-                                <li><strong>Banfoandes</strong> - 0007 0147 5600 0000 3292</li>
-                                <li><strong>Sofitasa</strong> - 0137 0020 6200 0900 7231</li>
-                                <li><strong>100% Banco</strong> - 0156 0015 2804 0019 1722</li>
-                                <li><strong>BFC C.A</strong> - 0151 0135 1530 0004 2301</li>
-                                <li><strong>Banco Activo</strong> - 0171 0018 1660 0037 0854</li>
-                                <li><strong>Bancaribe</strong> - 0114 0430 8443 0005 2865</li>
-                                <li><strong>Provincial</strong> - 0108 0098 6001 0005 7276</li>
-                                <li><strong>Venezolano de Crédito </strong>- 0104 0033 3903 3008 3417.</li>
-                                <li><strong>Corpbanca/BOD</strong>- 0121 0312 3700 1338 1504</li>
-                                <li><strong>Banco Exterior</strong> - 0115 0114 1410 02398498</li>
-                            </ul>
+      $message = new YiiMailMessage;
+                               
+                           
+                                $message->from = array('wmontilla@upsidcorp.ch' => "Sigma Tiendas");
+           
+                                $message->setBody($body, 'text/html');                
+                                $message->addTo('cruiz@upsidecorp.ch');
 
-                            <h4 class="margin_top_small">Datos para la transferencia:</h4>
-                            <ul style="list-style-type:square" class="margin_top_small margin_left_small">
-                                <li><strong>Beneficiario/Razón Social</strong>: Sigmasys C.A.</li>
-                                <li><strong>Correo electrónico:</strong> info@sigmatiendas.com</li>
-                                <li><strong>RIF</strong>: J-29468637-0</li>
-                                <li><strong>Dirección</strong>: Avenida libertador  C.C Las Lomas local 30,  San Cristóbal,  Edo. Táchira.
-                                <li><strong>Teléfono</strong>:  02763442626</li>
-                            </li>
-                            </ul><br/> Al depositar ingresa en tu cuenta => tus pedidos y registra tus datos.';
-
-        $model=Orden::model()->findByPk(59);
-        $message = new YiiMailMessage;
-                               // $subject = 'Gracias por registrarte en Sigma Tiendas';   
-                               $subject = 'Tu compra en Sigma Tiendas';                                
-                                $message->subject = $subject;
-                                $message->view = "mail_template";
-                                /*$body = '<h2>¡Bienvenido a Sigma Tiendas!</h2>
-                                    Recibes este correo electrónico porque te has registrado en Sigmatiendas.com. 
-                                    Por favor valida tu cuenta haciendo clic en el enlace que aparece a continuación:
-                                    <br/><br/><a href="#">Clic aquí</a>';*/
-                            $body=$this->renderPartial('/mail/mail_order_detail', array( 'model'=>Orden::model()->findByPk(59)),true);
-                                $message->from = array(Yii::app()->params['adminEmail'] => "Sigma Tiendas");
-                                $params=array('model'=>$model,'body'=>$body,'undercomment'=>$undercomment);
-                                $message->setBody($params, 'text/html');                
-                                $message->addTo('dduque@upsidecorp.ch');
-
-                                Yii::app()->mail->send($message);        
+                                if(!Yii::app()->mail->send($message))  
+                                echo "NADA VIEGGA";      
 
     }
 
@@ -398,9 +365,14 @@ class SiteController extends Controller
 		 //$empresa_id=$almacen->empresas->id;
 		// $empresa_nombre=$almacen->empresas->nombre;
 		//var_dump($busqueda); 
+		if(Inventario::model()->findAllByAttributes(array('producto_id'=>$producto_id), array('condition'=>'almacen_id<>'.$almacen_id)))
+			$similares=Inventario::model()->findAllByAttributes(array('producto_id'=>$producto_id), array('condition'=>'almacen_id<>'.$almacen_id)); // buscar otros
+		else
+			$similares=NULL;
+		//var_dump($data); 
 		$otros = Inventario::model()->findAllBySql("select * from tbl_inventario where producto_id=".$producto_id." and almacen_id!=".$almacen_id."");
-       $this->render('detalle', array('model'=>$model, 'inventario'=>$inventario, 'imagen'=>$imagen, 'imagenPrincipal'=>$imagenPrincipal, 'busqueda'=>$busqueda, 'empresa'=>$empresa, 'almacen'=>$almacen, 
-       'otros'=>$otros));
+        $this->render('detalle', array('model'=>$model, 'inventario'=>$inventario, 'imagen'=>$imagen, 'imagenPrincipal'=>$imagenPrincipal, 'busqueda'=>$busqueda, 'empresa'=>$empresa, 'almacen'=>$almacen, 
+       'otros'=>$otros, 'similares'=>$similares));
     }
     public function actionAutoComplete()
 		{
@@ -497,4 +469,8 @@ class SiteController extends Controller
 		Yii::app()->end();
 		
 	} 
+    public function actionDetalleOrden(){
+        $this->layout='//layouts/start';
+        $this->render("detalleOrden");  
+    }
 } 

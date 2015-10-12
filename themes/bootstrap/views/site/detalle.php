@@ -8,7 +8,7 @@
         
 
         
-        
+       
         
 
             
@@ -136,8 +136,8 @@
                         </ul>
                     </div>
                     <div class="col-md-12 no_padding_left slider">
-                        <h1>OTROS PRODUCTOS DE ESTE PROVEEDOR</h1>
-                           <?php $this->renderPartial('carousel_productos',array('data'=>NULL,'carousel'=>'proveedor')); ?>  
+                        <h1>PRODUCTOS SIMILIARES</h1>
+                           <?php $this->renderPartial('carousel_productos',array('data'=>$similares,'carousel'=>'proveedor', 'similares'=>1)); ?>  
                      
                     </div>
              

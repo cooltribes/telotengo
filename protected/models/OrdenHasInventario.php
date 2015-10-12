@@ -42,9 +42,9 @@ class OrdenHasInventario extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('cantidad, precio, inventario_id, orden_id', 'required'),
-			array('cantidad, inventario_id, orden_id', 'numerical', 'integerOnly'=>true),
-			array('precio', 'numerical'),
+			array('inventario_id, orden_id', 'required'),
+			array('inventario_id, orden_id', 'numerical', 'integerOnly'=>true),
+			//array('precio', 'numerical'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, cantidad, precio, inventario_id, orden_id', 'safe', 'on'=>'search'),

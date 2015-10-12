@@ -112,7 +112,16 @@ class Bolsa extends CActiveRecord
 				return true;
 			}
 		}
-		return false;
+		return false; 
 	}*/
-
+    
+    public function getLastItems($limit = 3)
+    {   if(count(Yii::app()->db->createCommand("select inventario_id from tbl_bolsa_has_tbl_inventario where bolsa_id =".$this->id." order by id desc")->queryColumn())>0)
+        {   $sql="select producto_id from tbl_inventario where id IN (select inventario_id from tbl_bolsa_has_tbl_inventario where bolsa_id =".$this->id." order by id desc) limit 0,".$limit;
+             $productos=Yii::app()->db->createCommand($sql)->queryColumn();
+             if(count($productos>0))
+                return Producto::model()->findAllByAttributes(array(),array('condition'=>'id IN ('.implode(',',$productos).')'));
+        }
+         return NULL;
+    }
 }
