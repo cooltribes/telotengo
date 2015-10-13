@@ -6,16 +6,19 @@
 	 
 	<td><?php echo $data->id; ?></td>
 	<td><?php echo $data->fecha; ?></td>
-	<td><?php echo $data->total; ?></td> 
-	<td><?php echo $usuario->profile->first_name." ".$usuario->profile->last_name; ?></td>
-	<td><?php //echo $empresa->razon_social; ?></td>
-	<?php echo $data->getStatus($data->estado); ?>
+	<td><?php echo $data->empresa->razon_social; ?></td> 
+	<td><?php echo "el que aprobo la orden"; ?></td> 
+	<td><?php echo $data->monto; ?></td> 
+	<td><?php echo $data->estados($data->estado); ?></td> 
+	<td><a href="<?php echo Yii::app()->createUrl('orden');?>">Ver detalles </a></td>
+	
+	
 	
 	<?php		
 
 	// <li><a tabindex="-1" href="'.Yii::app()->createUrl('/orden/verproductos',array('id'=>$data->id)).'" ><i class="glyphicon glyphicon-th-list"></i> Ver Artículos </a></li>
 
-	echo '<td>
+	/*echo '<td>
 
 	<div class="dropdown">
 	<a class="dropdown-toggle btn" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="admin_pedidos_detalles.php"> 
@@ -31,7 +34,7 @@
         </div>
         
     </td>
-    ';
+    ';*/
 	?>
 
 </tr>

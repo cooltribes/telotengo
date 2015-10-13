@@ -11,7 +11,7 @@
         </div>        
         <div class="col-md-3">
             <div class="orderAll margin_top_small">
-                Subtotal: Bs. <?php echo Yii::app()->session['suma'];?><br/>
+                Subtotal: Bs. <?php echo $sub=Yii::app()->session['suma'];?><br/>
                 IVA: Bs. <?php echo $iva=Yii::app()->session['suma']*0.12;?> <br/>
                 <span class="total">
                     Total: Bs. <?php echo Yii::app()->session['suma']+$iva;  unset(Yii::app()->session['suma']);?>
@@ -33,12 +33,14 @@
 		$('#procesarTodo').click(function() {
 			var bolsa_id= '<?php echo $model->id;?>';
 			var empresas_id='<?php echo $model->empresas_id;?>';
+			var monto= <?php echo $sub;?>;
+			var iva= <?php echo $iva?>;
 			
 						$.ajax({
 			         url: "<?php echo Yii::app()->createUrl('Orden/procesarTodo') ?>",
 		             type: 'POST',
 			         data:{
-		                    bolsa_id:bolsa_id, empresas_id:empresas_id,
+		                    bolsa_id:bolsa_id, empresas_id:empresas_id, monto:monto, iva:iva
 		                   },
 			        success: function (data) {
 			        	
