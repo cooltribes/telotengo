@@ -90,7 +90,7 @@
                             
                         </table>
                         
-                        <div class="shippingInfo margin_top">
+                     <?php  /* <div class="shippingInfo margin_top">
                             <div class="row-fluid">
                                 <div class="col-md-3 text-right">
                                     <span class="title">Envío:</span>
@@ -114,8 +114,8 @@
                                     
                                 </div> 
                             </div>
-                        </div>
-                        
+                        </div>*/
+                        ?>
                         
                     </div>
                     <div class="col-md-8  col-md-offset-4 specs margin_top">
