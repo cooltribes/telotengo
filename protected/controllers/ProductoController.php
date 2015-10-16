@@ -41,7 +41,7 @@ class ProductoController extends Controller
 				'roles'=>array('admin'),
 			),
 			array('allow', // COMPRADORESVENDEDORES Y VENDEDORES
-				'actions'=>array('inventario'),
+				'actions'=>array('inventario', 'cargarInbound'),
 				#'users'=>array('admin'),
 				'roles'=>array('vendedor', 'compraVenta'),
 			),
@@ -209,7 +209,7 @@ class ProductoController extends Controller
 			$model->upc=$_POST['Producto']['upc'];
 			$model->ean=$_POST['Producto']['ean'];
 			$model->gtin=$_POST['Producto']['gtin'];
-			$model->isbn=$_POST['Producto']['isbn'];
+			$model->nparte=$_POST['Producto']['nparte'];
 			$model->color=$_POST['Producto']['color'];
 			
 			if($model->save())
@@ -1218,7 +1218,7 @@ class ProductoController extends Controller
 			
 			$inventario->attributes = $_POST['Inventario'];
 			$inventario->sku = $_POST['Inventario']['sku'];
-			$inventario->numFabricante = $_POST['Inventario']['numFabricante'];
+			//$inventario->numFabricante = $_POST['Inventario']['numFabricante'];
 			$inventario->condicion = $_POST['Inventario']['condicion'];
 			$inventario->notaCondicion = $_POST['Inventario']['notaCondicion'];
 			
@@ -1737,6 +1737,592 @@ class ProductoController extends Controller
         $model->save();
         echo $model->destacado;
 	}
+	
+	public function actionCargarInbound()
+	{
+		    $nuevos = 0;
+            $actualizados = 0;
+            $uploadedFileName = "";
+            $error = false;    	
+
+			
+			            /*Segundo paso - Validar el archivo*/
+            if(isset($_POST["validar"]))
+            {
+               
+                $archivo = CUploadedFile::getInstancesByName('archivoValidacion');
+                
+                //Guardarlo en el servidor para luego abrirlo y revisar
+                if (isset($archivo) && count($archivo) > 0) {
+                    foreach ($archivo as $arc => $xls) {
+                        $nombre = Yii::getPathOfAlias('webroot') . '/docs/xlsMasterData/' . "Temporal";
+                        $extension = '.' . $xls->extensionName;                     
+                        $uploadedFileName = $xls->name;
+                        if (!$xls->saveAs($nombre . $extension)){
+                            Yii::app()->user->updateSession();
+                            Yii::app()->user->setFlash('error', UserModule::t("Error al cargar el archivo."));                            
+                        }
+                    }
+                }else{
+                    Yii::app()->user->updateSession();
+                    Yii::app()->user->setFlash('error', UserModule::t("Debes seleccionar un archivo."));                            
+                    $error = true;
+                }              
+
+                //Si no hubo errores
+                if(!$error && is_array($resValidacion = $this->validarInbound($nombre . $extension))){
+
+                    Yii::app()->user->updateSession();
+                    Yii::app()->user->setFlash('success', "<h4>".Yii::app()->session['actualizaciones']."
+                            Éxito! El archivo no tiene errores,
+                            puedes continuar con el siguiente paso.</h4><br>
+                                
+                            Nombre del archivo: <b>$uploadedFileName</b>.<br>
+                            Productos que contiene: <b>{$resValidacion['nProds']}</b>.");                    
+                }
+				 //Tercer paso - Subir el Archivo
+              }
+
+
+			$this->render('cargarInbound', array(                
+                'fileName' => $uploadedFileName,
+                'nuevos' => $nuevos,
+                'actualizados' => $actualizados,               
+            ));
+           
+	}
+
+
+	        protected function validarInbound($archivo){
+            
+            //Validar las columnas normales primero
+            $response = $this->validarArchivo($archivo, 1);
+            $errores = "";
+            if(is_array($response)){
+                //si son validas todas
+                
+            }else{
+                //si hubo errores, capturarlos.
+                $errores = Yii::app()->user->getFlash("error");
+            }
+            
+            //VALIDAR LAS COLUMNAS RESTANTES
+            $sheetArray = Yii::app()->yexcel->readActiveSheet($archivo);
+            
+            $erroresColumnasVacias = "";
+            $erroresTienda = "";
+            $erroresSku = "";
+
+            
+            $falla = "";
+            $linea = 0;
+            
+            foreach ($sheetArray as $row) {
+                
+                $linea++;
+                
+                if(!isset($row['A']) || $row['A'] == ""){
+                    continue;
+                }
+                
+                if ($linea == 1) { // revisar los nombres / encabezados de las columnas
+
+                    if ($falla != "") { // algo falló O:
+                        Yii::app()->user->updateSession();
+                        Yii::app()->user->setFlash('error', UserModule::t("La columna <b>" .
+                                        $falla . "</b> no se encuentra en el lugar que debe ir o está mal escrita."));                                   
+
+                        return false;
+                    }
+                }
+
+                if($linea > 1){  
+                      
+                    //Revisar celdas vacias
+                    if(!isset($row['A']) || $row['A'] == ""){                            
+                            $erroresColumnasVacias.= "<li> Columna: <b>" . "A" .
+                                    "</b>, en la línea <b>" . $linea."</b></li>";                                
+                    }
+
+
+                    //Referencias existentes                        
+                    if (isset($row['B']) && $row['B'] != "") 
+                    {                        
+                        
+                       
+                        
+
+                    }                        
+                    //SKU existentes                        
+                    if (isset($row['A']) && $row['A'] != "") 
+                    {                        
+                        
+
+                    }                        
+                        
+                }                                        
+                
+                
+            }
+            
+            //si hubo celdas vacias
+            if($erroresColumnasVacias != ""){
+                $erroresColumnasVacias = "Las siguientes Columnas están vacías:<br><ul>
+                                 {$erroresColumnasVacias}
+                                 </ul><br>";
+            }            
+            if($erroresTienda != ""){
+                $erroresTienda = "Las siguientes Tiendas no existen en la plataforma o están mal escritas:<br><ul>
+                                 {$erroresTienda}
+                                 </ul><br>";
+            }
+            if($erroresSku != ""){
+                $erroresSku = "Los siguientes Productos ya existen en la plataforma
+                    como Catálogo Personaling:<br><ul>
+                                 {$erroresSku}
+                                 </ul><br>";
+            }
+            
+            $errores .= $erroresColumnasVacias . $erroresTienda . $erroresSku;
+           
+            if($errores != ""){
+                
+                Yii::app()->user->updateSession();
+                Yii::app()->user->setFlash('error', $errores);
+
+                return false;                
+            }             
+            
+            //No hubo errores.
+            return $response; 
+            
+            
+        }
+
+
+
+
+		        /**
+         * 
+         * @param type $archivo Archivo que se valida
+         * @param type $tipoProductos 1: si el archivo es de productos externos
+         *                            0: si el archivo contiene productos personaling
+         * @return boolean Si el archivo es valido o no
+         */
+        protected function validarArchivo($archivo, $tipoProductos = 0){
+            
+            $sheet_array = Yii::app()->yexcel->readActiveSheet($archivo);
+
+            $skuRepetidos = array();
+			$combinacionesRepetidas= array();
+            $falla = "";
+            $erroresMarcas = "";
+            $erroresCategorias = "";
+            $erroresCatRepetidas = "";
+            $erroresCatVacias = "";
+            $erroresTallas = "";
+            $erroresColores = "";
+            $erroresPeso = "";
+            $erroresCosto = "";
+            $erroresPrecio = "";
+            $erroresColumnasVacias = "";
+            $erroresSku = "";
+			$erroresSkuTodaAplicacion = "";
+            $erroresSkuRepetidos= "";
+			$erroresTallaColorRepetidos="";
+			$referenciasActualizadas="";
+			$skuActualizados="";
+			$referenciasNuevas="";
+			$skuNuevos="";
+			
+			$erroresTipoCodigo="";
+			$erroresCodigo="";
+			$erroresCondicion="";
+			$erroresCantidadVender="";
+			
+            $linea = 1;
+            $lineaProducto = 0;
+			$entro=0; $entro2=0;
+			$contadorReferenciasActualizadas=0;
+			$contadorSkuActualizados=0;
+			$contadorReferenciasNuevas=0;  
+			$contadorSkuNuevos=0;          
+            
+            //Revisar cada fila de la hoja de excel.
+            foreach ($sheet_array as $row) {
+
+                if ($row['A'] != "") 
+                {
+                	//var_dump(memory_get_usage());	
+                    if ($linea == 1) 
+                    { // revisar los nombres / encabezados de las columnas
+                       
+						if(isset($row['A']))
+						{
+							if($row['A'] != "SKU" )
+								$falla = "SKU";
+						}
+						else
+						{
+							$falla = "SKU";
+						}
+						if(isset($row['B']))
+						{
+							if($row['B'] != "Condicion" )
+								$falla = "Condicion";
+						}
+						else
+						{
+							$falla = "Condicion";
+						}
+						if(isset($row['C']))
+						{
+							if($row['C'] != "Costo" )
+								$falla = "Costo";
+						}
+						else
+						{
+							$falla = "Costo";
+						}
+						if(isset($row['D']))
+						{
+							if($row['D'] != "Precio" )
+								$falla = "Precio";
+						}
+						else
+						{
+							$falla = "Precio";
+						}
+						if(isset($row['E']))
+						{
+							if($row['E'] != "Cantidad a vender" )
+								$falla = "Cantidad a vender";
+						}
+						else
+						{
+							$falla = "Cantidad a vender";
+						}
+                        if(isset($row['F']))
+						{
+							if($row['F'] != "Garantia" )
+								$falla = "Garantia";
+						}
+						else
+						{
+							$falla = "Garantia";
+						}
+						if(isset($row['G']))
+						{
+							if($row['G'] != "Almacen" )
+								$falla = "Almacen";
+						}
+						else
+						{
+							$falla = "Almacen";
+						}
+						if(isset($row['H']))
+							{
+								if($row['H'] != "Tipo de Codigo" )
+									$falla = "Tipo de Codigo";
+							}
+							else
+							{
+								$falla = "Tipo de Codigo";
+							}
+							if(isset($row['I']))
+							{
+								if($row['I'] != "Codigo" )
+									$falla = "Codigo";
+							}
+							else
+							{
+								$falla = "Codigo";
+							}
+					 
+               
+
+                        if ($falla != "") { // algo falló O:
+                       
+                            Yii::app()->user->updateSession();
+                            Yii::app()->user->setFlash('error', UserModule::t("La columna <b>" .
+                                            $falla . "</b> no se encuentra en el lugar que debe ir o está mal escrita.<br><br>"));                                   
+
+                            return false;
+                        }
+                    }
+
+                    /*si pasa las columnas entonces revisar
+                    Marcas, categorias, tallas y colores.. y todo lo demas.*/                          
+                    if($linea > 1){
+                        	
+                        $categoriasRepetidas = array();
+                        $cantCategorias = 0;           
+
+                        /*Columnas Vacias*/
+                        foreach ($row as $col => $valor){
+                            if(!($col=="C" || $col=="F" || $col=="H" || $col=="I")) /// no revise esas columnas
+							{
+								if(!isset($valor) || $valor == ""){
+                                $erroresColumnasVacias.= "<li> Columna: <b>" . $col .
+                                        "</b>, en la línea <b>" . $linea."</b></li>";
+                           		 }
+							}
+
+                            
+                            if($col == "P"){
+                                break;
+                            }
+                        }
+						
+						 $sku_revisar=$row['A'];
+						 $empresa_id=EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id))->empresas_id;
+						 $sku_revisar;
+						 $sql="select * from tbl_inventario where sku= '".$sku_revisar."' and almacen_id in (select id from tbl_almacen where empresas_id=".$empresa_id.")";
+						 $inventario=Yii::app()->db->createCommand($sql)->queryAll();
+						 count($inventario);
+						 
+						if(count($inventario)==0) // si el sku propio no existe
+						{
+							if($row['H']=="")
+							{
+								 $erroresTipoCodigo.= "<li> Tipo de Codigo - <b> Vacio </b>, en la línea <b>" . $linea."</b></li>";
+							}
+							else   
+							{
+								if(!($row['H']=="TLT" || $row['H']=="UPC" || $row['H']=="EAN" || $row['H']=="GTIN" || $row['H']=="NPF")) // si no es ninguna de estas opciones
+								{
+									$erroresTipoCodigo.= "<li> Tipo de Codigo - <b> No corresponde a las opciones establecidas </b>, en la línea <b>" . $linea."</b></li>";
+								}
+
+							}
+							if($row['I']=="")
+							{
+								$erroresCodigo.= "<li> Codigo - <b> Vacio </b>, en la línea <b>" . $linea."</b></li>";	
+							}
+							
+									
+						}
+		       
+                        if($skuRepetidos!="")
+						{
+							$entro=0;	
+							foreach($skuRepetidos as $skuLocal)
+							{
+								if($skuLocal==$row['A'] && $entro==0)
+								{
+									$erroresSkuRepetidos .= "<li> <b>" . $row['A'] . "</b>, en la línea <b>" . $linea."</b></li>";
+									$entro=1;
+								}
+							}
+						}
+						array_push($skuRepetidos, $row['A']);
+						
+						
+						if(!($row['B']=="Nuevo" || $row['B']=="Usado" || $row['B']=="Refabricado")) // si no es ninguna de estas opciones
+						{
+							$erroresCondicion.= "<li> Condicion - <b> No corresponde a las opciones establecidas </b>, en la línea <b>" . $linea."</b></li>";
+						}
+						
+						if($row['C']!="")// si coloca costo
+						{
+								
+							if(explode(",", $row['C']))
+							{
+								$partir=explode(",", $row['C']);
+								if(isset($partir[1]))
+									$row['C']=$partir[0].".".$partir[1];
+								if(!(is_numeric($row['C'])))
+								{
+									$erroresCosto .= "<li> Costo - <b>".$row['C']."</b>, en la línea <b>" . $linea."</b></li>";
+								} 
+							}
+							else 
+							{
+								if(!(is_numeric($row['C']))) 
+								{
+									$erroresCosto .= "<li> Costo - <b>".$row['C']."</b>, en la línea <b>" . $linea."</b></li>";
+								}
+							}
+
+						}
+						
+							if(explode(",", $row['D'])) // Validacion de Precios
+							{
+								$partir=explode(",", $row['D']);
+								if(isset($partir[1]))
+									$row['D']=$partir[0].".".$partir[1];
+								if(!(is_numeric($row['D'])))
+								{
+									$erroresPrecio .= "<li> Precio - <b>".$row['D']."</b>, en la línea <b>" . $linea."</b></li>";
+								} 
+							}
+							else 
+							{
+								if(!(is_numeric($row['D']))) 
+								{
+									$erroresPrecio .= "<li> Precio - <b>".$row['D']."</b>, en la línea <b>" . $linea."</b></li>";
+								}
+							}
+							
+							if(!(is_numeric($row['E']))) 
+							{
+								$erroresCantidadVender .= "<li> Precio - <b>".$row['E']."</b>, en la línea <b>" . $linea."</b></li>";
+							}
+							
+							
+                        $lineaProducto++;
+                    }
+                    
+                }
+
+                $linea++;
+            }
+            
+
+            //Si hubo errores en marcas, cat, tallas, colores
+            if($erroresColumnasVacias != ""){
+                $erroresColumnasVacias = "Las siguientes Columnas están vacías:<br><ul>
+                                 {$erroresColumnasVacias}
+                                 </ul><br>";
+            }
+            if($erroresCategorias != ""){
+                $erroresCategorias = "Las siguientes Categorías no existen en la plataforma o están mal escritas:<br><ul>
+                                 {$erroresCategorias}
+                                 </ul><br>";
+            }
+            if($erroresCatRepetidas != ""){
+                $erroresCatRepetidas = "Las siguientes Categorías están repetidas para el mismo producto:<br><ul>
+                                 {$erroresCatRepetidas}
+                                 </ul><br>";
+            }
+            if($erroresCatVacias != ""){
+                $erroresCatVacias = "Los siguientes productos deben tener al menos dos (2) categorías asociadas:<br><ul>
+                                 {$erroresCatVacias}
+                                 </ul><br>";
+            }
+            if($erroresMarcas != ""){
+                $erroresMarcas = "Las siguientes Marcas no existen en la plataforma o están mal escritas:<br><ul>
+                                 {$erroresMarcas}
+                                 </ul><br>";
+            }
+            if($erroresTallas != ""){
+                $erroresTallas = "Las siguientes Tallas no existen en la plataforma o están mal escritas:<br><ul>
+                                 {$erroresTallas}
+                                 </ul><br>";
+            }
+            if($erroresColores != ""){
+                $erroresColores = "Los siguientes Colores no existen en la plataforma o están mal escritos:<br><ul>
+                                 {$erroresColores}
+                                 </ul><br>";
+            }
+            
+            //Errores numericos
+            if($erroresPeso != ""){
+                $erroresPeso = "Los siguientes Pesos están mal escritos, recuerde usar coma (,):<br><ul>
+                                 {$erroresPeso}
+                                 </ul><br>";
+            }
+            if($erroresCosto != ""){
+                $erroresCosto = "Los siguientes Costos están mal escritos, recuerde usar coma (,):<br><ul>
+                                 {$erroresCosto}
+                                 </ul><br>";
+            }
+            if($erroresPrecio != ""){
+                $erroresPrecio = "Los siguientes Precios están mal escritos, recuerde usar coma (,):<br><ul>
+                                 {$erroresPrecio}
+                                 </ul><br>";
+            }
+            
+            if($erroresSku != ""){
+                $erroresSku = "Los siguientes Productos ya existen en la plataforma como Catálogo Externo:<br><ul>
+                                 {$erroresSku}
+                                 </ul><br>";
+            }
+            if($erroresSkuRepetidos != ""){
+                $erroresSkuRepetidos = "Los siguientes SKU estan repetidos:<br><ul>
+                                 {$erroresSkuRepetidos}
+                                 </ul><br>";
+            }
+            if($erroresSkuTodaAplicacion != ""){
+               					 $erroresSkuTodaAplicacion = "Los siguientes SKU no corresponden a las Referencias:<br><ul>
+                                 {$erroresSkuTodaAplicacion}
+                                  </ul><br>";
+            }
+             if($erroresTallaColorRepetidos != ""){
+               					 $erroresTallaColorRepetidos = "Las Siguientes Combinaciones de Referencia Talla y Color ya estan repetidas :<br><ul>
+                                 {$erroresTallaColorRepetidos}
+                                  </ul><br>";
+            }
+             if($erroresTipoCodigo != ""){
+               					 $erroresTipoCodigo = "Hay errores en el campo Tipo de Codigo :<br><ul>
+                                 {$erroresTipoCodigo}
+                                  </ul><br>";
+            }
+            if($erroresCodigo != ""){
+               					 $erroresCodigo = "Hay errores en el campo Codigo :<br><ul>
+                                 {$erroresCodigo}
+                                  </ul><br>";
+            }
+			if($erroresCondicion != ""){
+               					 $erroresCondicion = "Hay errores en el campo Condicion :<br><ul>
+                                 {$erroresCondicion}
+                                  </ul><br>";
+            }
+            
+			if($erroresCantidadVender != ""){
+                $erroresCantidadVender = "La Cantidad a vender debe ser un numero entero:<br><ul>
+                                 {$erroresCantidadVender}
+                                 </ul><br>";
+            }
+            
+            
+            /////////////////////////////////los siguientes mensajes no son errores////////////////////////////////////////////////////
+            if($referenciasActualizadas != ""){
+               					 $referenciasActualizadas = "Seran actualizadas ".$contadorReferenciasActualizadas." Referencias :<br><ul>
+                                 {$referenciasActualizadas}
+                                  </ul><br>";
+            }
+            
+            if($referenciasNuevas != ""){
+               					 $referenciasNuevas = "Seran creadas ".$contadorReferenciasNuevas." Referencias :<br><ul>
+                                 {$referenciasNuevas}
+                                  </ul><br>";
+            }
+            if($skuActualizados!= ""){
+               					 $skuActualizados = "Seran actualizados ".$contadorSkuActualizados." Sku :<br><ul>
+                                 {$skuActualizados}
+                                  </ul><br>";
+            }
+			if($skuNuevos!= ""){
+               					 $skuNuevos = "Seran creados ".$contadorSkuNuevos." Sku :<br><ul>
+                                 {$skuNuevos}
+                                  </ul><br>";
+            }
+			
+			Yii::app()->session['actualizaciones']=$referenciasActualizadas.$referenciasNuevas.$skuActualizados.$skuNuevos; 
+			
+			//////////////////////////////////////////////////////hasta aqui////////////////////////////////////////////////////////////
+                
+            $errores = $erroresTallas .$erroresColores . $erroresMarcas .
+                    $erroresCatRepetidas. $erroresCategorias . $erroresCatVacias.
+                    $erroresPrecio . $erroresCosto . $erroresPeso .
+                    $erroresColumnasVacias . $erroresSku . $erroresSkuRepetidos. $erroresSkuTodaAplicacion. $erroresTallaColorRepetidos. 
+					$erroresTipoCodigo. $erroresCodigo.$erroresCondicion. $erroresCantidadVender;
+            
+            if($errores != ""){
+                
+                Yii::app()->user->updateSession();
+                Yii::app()->user->setFlash('error', $errores);
+
+                return false;                
+            }
+            
+            return array(
+                "valid"=>true,
+                "nProds"=>$lineaProducto,
+                "nLineas"=>$linea-2,
+                );            
+        }
 
 
 }
