@@ -225,8 +225,8 @@ class TiendaController extends Controller
 			$filter['precioMenor']=$filtroPrecio[1];
 		}else{
 			$filter['precio']='';
-			$filter['precioMayor']=0;
-			$filter['precioMenor']=200000;
+			$filter['precioMenor']=0;
+			$filter['precioMayor']=200000;
 		}
 		
 		$order=isset($_GET['order'])?$_GET['order']:'';
@@ -251,7 +251,7 @@ class TiendaController extends Controller
 		}	
 
 		
-		if($filter['marcas']!="")//filtros
+		if(isset($filter['marcas']))//filtros
 		{
 			$filtroMarca=explode("-", $filter['marcas']);
 			$contador=count($filtroMarca)-1;
@@ -284,6 +284,8 @@ class TiendaController extends Controller
 
 			
 			
+		}else{
+		    $filter['marcas']="";
 		}
 		
 		

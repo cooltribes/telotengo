@@ -60,7 +60,7 @@ $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto"
                        
                     </div>
                     <div class="text-center margin_top_small ">
-                         <a class="white-link" style="font-size: 14px;" href="<?php echo Yii::app()->getBaseUrl(true); ?>"><b>Ir al inicio</b>Ir al inicio</a> 
+                         <a class="white-link" style="font-size: 14px;" href="<?php echo Yii::app()->getBaseUrl(true); ?>"><b>Ir al inicio</b></a> 
                     </div>
                     
                     <?php $this->endWidget(); ?>

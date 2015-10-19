@@ -103,6 +103,7 @@ class Orden extends CActiveRecord
 		return array(
 			'detalleOrdens' => array(self::HAS_MANY, 'DetalleOrden', 'orden_id'),
 			'empresa'=> array(self::BELONGS_TO, 'Empresas', 'empresa_id'),
+			'almacen'=> array(self::BELONGS_TO, 'Almacen', 'almacen_id'),
 			'tipoPago' => array(self::BELONGS_TO, 'TipoPago', 'tipo_pago_id'),
 			'users' => array(self::BELONGS_TO, 'User', 'users_id'),
 			'direccionEnvio' => array(self::BELONGS_TO, 'DireccionEnvio','direccionEnvio_id'),
