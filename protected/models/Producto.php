@@ -29,7 +29,7 @@
  * @property integer $notificado
  * @property integer $codigo
  * @property integer $interno
- * @property integer $isbn
+ * @property integer $nparte
  * 
  * The followings are the available model relations:
  * @property CalificacionProducto[] $calificacionProductos
@@ -77,7 +77,7 @@ class Producto extends CActiveRecord
 			array('modelo', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, nombre, descripcion, destacado, modelo, estado, users_id, notificado, codigo, interno, isbn', 'safe', 'on'=>'search'),
+			array('id, nombre, descripcion, destacado, modelo, estado, users_id, notificado, codigo, interno, nparte', 'safe', 'on'=>'search'),
 			/////////////////////////////////LO DE ARRIBA HAY QUE CORREGIRLO////////////////////////////////////
 		);
 	} 
@@ -121,7 +121,7 @@ class Producto extends CActiveRecord
 			'notificado' => 'Notificado',
 			'codigo' => 'Código',
 			'interno' => 'Código interno',
-			'isbn' => 'ISBN',
+			'nparte' => 'Numero de parte del Fabricante',
 			'padre_id' => 'Producto Padre',
 			'color_id' => 'Color Padre',
 		);
@@ -148,7 +148,7 @@ class Producto extends CActiveRecord
 		$criteria->compare('notificado',$this->notificado); 
 		$criteria->compare('codigo',$this->codigo); 
 		$criteria->compare('interno',$this->interno); 
-		$criteria->compare('isbn',$this->isbn);
+		$criteria->compare('nparte',$this->nparte);
 		$criteria->join ='JOIN tbl_imagenes ON tbl_imagenes.producto_id = t.id AND tbl_imagenes.orden=1';
 	//	$criteria->join .='JOIN tbl_inventario ON tbl_inventario.producto_id = t.id AND tbl_inventario.cantidad > 0';
 		$criteria->with = array('inventarios');
@@ -198,7 +198,7 @@ class Producto extends CActiveRecord
 		$criteria->compare('destacado',$this->destacado);
 		$criteria->compare('modelo',$this->modelo);
 		$criteria->compare('estado',$this->estado);
-		$criteria->compare('isbn',$this->isbn);
+		$criteria->compare('nparte',$this->nparte);
 
 		$criteria->join ='JOIN tbl_imagenes ON tbl_imagenes.producto_id = t.id AND tbl_imagenes.orden=1';
 		
@@ -282,7 +282,7 @@ class Producto extends CActiveRecord
 		$criteria->compare('modelo',$this->modelo);
 		$criteria->compare('estado',$this->estado);
 
-		$criteria->compare('isbn',$this->isbn);
+		$criteria->compare('nparte',$this->nparte);
 		$criteria->order='nombre';
 
 		
@@ -350,7 +350,7 @@ class Producto extends CActiveRecord
 	/*
 	Funcion para conseguir el URL Amigable del producto en caso de tenerlo. 
 	*/
-	public function getUrl(){
+/*	public function getUrl(){
 		$seo = Seo::model()->findByAttributes(array('producto_id'=>$this->id));
 		if(isset($seo)){
 			if($seo->amigable != ""){
@@ -361,7 +361,7 @@ class Producto extends CActiveRecord
 		}else{
 			return Yii::app()->baseUrl."/producto/detalle/".$this->id;
 		}
-	}
+	}*/
 
 	/* Funcion para conseguir los ultimos 3 productos*/
 	public function getLast(){

@@ -140,9 +140,9 @@ $this->breadcrumbs=array(
 								<div class="col-sm-6 col-md-3">
 									<div class="thumbnails margin_left_small">
 									<?php $producto = Producto::model()->findByPk($row['id']); ?>
-										<a href="<?php echo $producto->getUrl(); ?>"><?php echo $im; ?></a>	
+										<a href="<?php //echo $producto->getUrl(); ?>"><?php echo $im; ?></a>	
 										<div class="caption margin_left_small">
-											<h5><a href="<?php echo $producto->getUrl(); ?>"><?php echo $row['nombre']; ?></a></h5>
+											<h5><a href="<?php //echo $producto->getUrl(); ?>"><?php echo $row['nombre']; ?></a></h5>
 										</div>
 									</div>
 								</div>

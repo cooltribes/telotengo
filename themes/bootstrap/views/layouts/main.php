@@ -158,6 +158,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/categoria/admin">Categorías</a></li>
                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/giftcard/admin">Gift Cards</a></li>
                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/TipoPago/admin">Tipos de Pago</a> </li>
+                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/Almacen/admin">Almacenes</a> </li>
                         </ul>
                     </li> 
                     </li>
@@ -170,6 +171,8 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                 }
                 else if(!Yii::app()->user->isGuest)
                 {
+                	if(EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id)))	
+                		$empresas = EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id));
                  // usuario normal
                     ?>
                     
@@ -202,6 +205,9 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                                 </li>
                                 <li class="menu-item ">
                                     <a href="<?php echo Yii::app()->baseUrl; ?>/direccionFacturacion/listado">De Facturación</a>
+                                </li>
+                                <li class="menu-item ">
+                                    <a href="<?php  echo Yii::app()->createUrl('almacen/listado', array('id_empresa'=>$empresas->empresas_id)) ?>">Almacenes</a>
                                 </li>
                                <!-- <li class="menu-item dropdown dropdown-submenu">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Level 2</a>

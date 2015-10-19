@@ -1,11 +1,11 @@
 <?php
 $this->breadcrumbs=array(
-	'Listado de sucursales',
+	'Listado de almacenes',
 );
 
 ?>
 <div class="container">
-<h1>Listado de sucursales para: <?php echo $empresa->razon_social; ?></h1>
+<h1>Listado de almacenes para: <?php echo $empresa->razon_social; ?></h1>
 	
 	<hr/>
 
@@ -21,14 +21,7 @@ $this->breadcrumbs=array(
 	<?php } ?>
 
     <div class="row margin_top margin_bottom ">
-        <div class="span4">
-            <form class="no_margin_bottom form-search">
-            <div class="input-prepend"> <span class="add-on"><i class="icon-search"></i></span>
-            		<input class="span3" id="query" name="query" type="text" placeholder="Buscar">
-                	<a href="#" class="btn" id="btn_search_event">Buscar</a>
-           		</form>
-           	</div>         
-        </div>
+
         
         <div class="pull-right">
         <?php
@@ -43,10 +36,11 @@ $this->breadcrumbs=array(
 $template = '{summary}
     <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-bordered table-hover table-striped">
         <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Ubicación</th>
-            <th scope="col">Alias</th>
-			<th scope="col">Acción</th>
+	            <th scope="col">Nombre</th>
+	            <th scope="col">Ubicacion</th>
+	            <th scope="col">Alias</th>
+	            <th scope="col">Empresa</th>
+	            <th scope="col">Acciones</th>
         </tr>
     {items}
     </table>

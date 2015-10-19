@@ -51,6 +51,14 @@
 		<?php echo $form->error($model,'alias'); ?>
 	</div>
 	
+	<div class="form-group">
+		<?php echo $form->labelEx($model,'nombre', array('class'=>'col-sm-2')); ?>
+		<div class="col-sm-10">
+			<?php echo $form->textField($model,'nombre',array('class'=>'form-control')); ?>
+		</div>
+		<?php echo $form->error($model,'nombre'); ?>
+	</div>
+	
 	<div class="form-actions">
 		<?php $this->widget('bootstrap.widgets.TbButton', array(
 			'buttonType'=>'submit',

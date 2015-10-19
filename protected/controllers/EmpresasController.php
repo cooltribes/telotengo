@@ -190,6 +190,7 @@ class EmpresasController extends Controller
 				$almacen->ubicacion=$_POST['Empresas']['direccion'];
 				$almacen->empresas_id=$model->id;
 				$almacen->alias=$model->razon_social.' - principal';
+				$almacen->nombre=$model->razon_social.' - principal';
 				$almacen->save();
 				if(isset(Yii::app()->session['cliente']))
 				{

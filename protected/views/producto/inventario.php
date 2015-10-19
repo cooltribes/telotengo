@@ -44,14 +44,14 @@ $this->breadcrumbs=array(
 								<?php echo $form->error($model,'sku'); ?>
 							</div>
 							
-							<div class="form-group col-md-6 col-md-offset-3"> 
+							<?php /*<div class="form-group col-md-6 col-md-offset-3"> 
 								<label>Numero de parte del fabricante</label>
 								<?php echo $form->textField($model,'numFabricante',array('class'=>'form-control','maxlength'=>150)); ?>
 								<?php echo $form->error($model,'numFabricante');  ?>
-							</div>
+							</div> */?>
 							
 							<div class="form-group col-md-6 col-md-offset-3"> 
-								<label>Condicion</label>
+								<label>Condicion *</label>
 								 <?php echo $form->dropDownList($model,'condicion',array('nuevo'=>'Nuevo', 'usado'=>'Usado', 'reformado'=>'Reformado'),array('id'=>'condicion','class'=>'form-control','empty'=>'Seleccione condicion')); ?>
 								<?php echo $form->error($model,'condicion');  ?>
 							</div>
@@ -69,14 +69,14 @@ $this->breadcrumbs=array(
 							</div>
 							
 							<div class="form-group col-md-6 col-md-offset-3"> 
-								<label>Precio</label>
+								<label>Precio *</label>
 								<?php echo $form->textField($model,'precio',array('class'=>'form-control','maxlength'=>150, 'placeholder'=>'Precio de costo')); ?>
 								<?php echo $form->error($model,'precio');  ?>
 							</div>
 													
 							
 							<div class="form-group col-md-6 col-md-offset-3">
-								<label>Cantidad a Vender</label>
+								<label>Cantidad a Vender *</label>
 								<?php echo $form->textField($model,'cantidad',array('class'=>'form-control','maxlength'=>50)); ?>
 								<?php echo $form->error($model,'cantidad'); ?>
 							</div> 
@@ -87,11 +87,11 @@ $this->breadcrumbs=array(
 								<?php echo $form->error($model,'garantia'); ?>
 							</div> 
 							
-							<div class="form-group col-md-6 col-md-offset-3">
+						<?php /*	<div class="form-group col-md-6 col-md-offset-3">
 								<label>Metodo de envio</label>
 								 <?php echo $form->dropDownList($model,'metodoEnvio',array('1'=>'Acordado con el cliente', '2'=>'A traves del servicio de TELOTENGO'),array('id'=>'metodo','class'=>'form-control','empty'=>'Seleccione metodo de envio')); ?>
 								<?php echo $form->error($model,'metodoEnvio'); ?>
-							</div> 
+							</div> */ ?>
 							
 							<div class="form-group col-md-6 col-md-offset-3">
 								<?php
