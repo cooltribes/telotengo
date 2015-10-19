@@ -1,9 +1,10 @@
 <?php
 
 echo"<tr>";
-   	echo "<td>".$data->id."</td>";
-	echo "<td>".$data->ubicacion."</td>";
-   	echo "<td>".$data->alias."</td>";
+	echo "<td>".$data->nombre."</td>";
+   	echo "<td>".$data->ubicacion."</td>";
+	echo "<td>".$data->alias."</td>";
+	echo "<td>".$data->empresas->razon_social."</td>";
 	
 	?>
 	<td>
