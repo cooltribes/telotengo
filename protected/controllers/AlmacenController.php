@@ -72,10 +72,12 @@ class AlmacenController extends Controller
 		if(isset($_POST['Almacen']))
 		{
 			$model->attributes=$_POST['Almacen'];
+			 $model->nombre=$_POST['Almacen']['nombre'];
 			if($model->save()){
-				Yii::app()->user->setFlash('success',"Sucursal agregada con éxito");
+				Yii::app()->user->setFlash('success',"Almacen agregado con éxito");
 			}else{
-				Yii::app()->user->setFlash('error',"Error al guardar la sucursal");
+				Yii::app()->end();
+				Yii::app()->user->setFlash('error',"Error al guardar el Almacen");
 			}
 			$this->redirect(array('listado','id_empresa'=>$empresa->id));
 		}
@@ -95,7 +97,6 @@ class AlmacenController extends Controller
 		$model->unsetAttributes();  // clear any default values
 		$model->empresas_id = $id_empresa;
 		$empresa = Empresas::model()->findByPk($id_empresa);
-
 		$this->render('listado',array(
 			'model'=>$model,
 			'empresa'=>$empresa,
@@ -117,12 +118,16 @@ class AlmacenController extends Controller
 		if(isset($_POST['Almacen']))
 		{
 			$model->attributes=$_POST['Almacen'];
+			$model->nombre=$_POST['Almacen']['nombre'];
 			if($model->save()){
-				Yii::app()->user->setFlash('success',"Sucursal modificada con éxito");
+				Yii::app()->user->setFlash('success',"Almacen modificado con éxito");
 			}else{
-				Yii::app()->user->setFlash('error',"Error al modificar la sucursal");
+				Yii::app()->user->setFlash('error',"Error al modificar el Almacen");
 			}
-			$this->redirect(array('listado','id_empresa'=>$model->empresas_id));
+			if(!Yii::app()->authManager->checkAccess("admin", Yii::app()->user->id))
+				$this->redirect(array('listado','id_empresa'=>$model->empresas_id));
+			else
+				$this->redirect(array('admin'));
 		}
 
 		$this->render('update',array(
@@ -162,13 +167,37 @@ class AlmacenController extends Controller
 	 */
 	public function actionAdmin()
 	{
-		$model=new Almacen('search');
-		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['Almacen']))
-			$model->attributes=$_GET['Almacen'];
+		$almacen = new Almacen; 
+		$almacen->unsetAttributes();
+		$bandera=false;
+		$dataProvider = $almacen->search();
 
-		$this->render('admin',array(
-			'model'=>$model,
+		/* Para mantener la paginacion en las busquedas */
+		if(isset($_GET['ajax']) && isset($_SESSION['searchAlmacen']) && !isset($_POST['query'])){
+			$_POST['query'] = $_SESSION['searchAlmacen'];
+			$bandera=true;
+		}
+
+		/* Para buscar desde el campo de texto */
+		if (isset($_POST['query'])){
+			$bandera=true;
+			unset($_SESSION['searchAlmacen']);
+			$_SESSION['searchAlmacen'] = $_POST['query'];
+            $almacen->nombre = $_POST['query'];
+            $dataProvider = $almacen->search();
+        }	
+
+        if($bandera==FALSE){
+			unset($_SESSION['searchAlmacen']);
+        }
+/*
+		if (isset($_POST['query'])){
+			$almacen->nombre = $_POST['query'];
+		}*/
+		
+		$this->render('admin',
+			array('model'=>$almacen,
+			'dataProvider'=>$dataProvider,
 		));
 	}
 

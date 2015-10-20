@@ -27,7 +27,7 @@ class CategoriaController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','store','substore'),
+				'actions'=>array('index','view','store','substore','storefrontConf','formConfImage'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -361,13 +361,24 @@ class CategoriaController extends Controller
 	/**
 	 * Lists all models.
 	 */
-	public function actionIndex()
+	public function actionIndexOLD()
 	{
 		$dataProvider=new CActiveDataProvider('Categoria');
-		$this->render('index',array(
+		$this->render('indexOLD',array(
 			'dataProvider'=>$dataProvider,
 		)); 
 	}
+    
+    public function actionIndex($url)
+    {
+        $categoria=Categoria::model()->findByAttributes(array('url_amigable'=>$url));
+        $this->layout='//layouts/start';
+        if($categoria)
+            $this->render('category',array('model'=>$categoria)); 
+        else
+            throw new CHttpException(404,'Categoría no encontrada');
+            
+    }
 
 	/**
 	 * Manages all models.
@@ -578,4 +589,87 @@ class CategoriaController extends Controller
         $model->save();
         echo $model->destacado;
 	}
+    
+    public function actionStorefrontConf($id, $_=null, $index=null){ 
+
+      $this->render('storefrontConf',array('model'=>Categoria::model()->findByPk($id),'imConf'=>new ConfImage, 'indexModal'=>$index));
+    }
+    
+    public function actionFormConfImage() 
+        { 
+                                
+        
+            if(isset($_POST['ConfImage']))
+            {   $model=new ConfImage; 
+                $model->attributes=$_POST['ConfImage'];
+                $previa=ConfImage::model()->findByAttributes(array('name'=>$_POST['ConfImage']['name'],'index'=>$_POST['ConfImage']['index']));
+                    
+                    $rnd = rand(0,9999);  
+                    
+                    $images=CUploadedFile::getInstanceByName('ConfImage[path]');
+        
+                    if (isset($images) && count($images) > 0) {
+                     
+                     
+                        $model->path = "{$rnd}-{$images}";
+                      
+                        $dir = Yii::getPathOfAlias('webroot').'/images/categoria/storefront';
+                        $nombre = $dir.'/'.$model->name.$model->index; 
+                        $url=Yii::app()->getBaseUrl(true).'/images/categoria/storefront/'.$model->name.$model->index;  
+ 
+                        if(!is_dir($dir))
+                        {
+                            mkdir($dir,0777,true);
+                        }
+                        $imgAttr=getimagesize(CUploadedFile::getInstanceByName('ConfImage[path]')->getTempName());
+
+                        
+                       if(($model->index==1&&($imgAttr[0]=1200||$imgAttr[1]!=450))||($model->index!=1&&($imgAttr[0]!=380||$imgAttr[1]!=270)))
+                        {
+                            $this->redirect(array('categoria/storefrontConf', 'id'=>$model->categoria_id,'index'=>$model->index));
+                        }       
+                        $extension_ori = ".jpg";
+                        $extension = '.'.$images->extensionName;
+                        if(is_file($nombre.$extension)&&!is_null($previa)){
+                            rename($nombre.$extension,$nombre."OLD".$previa->id.$extension);
+                        }                       
+                        $images->saveAs($nombre . $extension);  
+                        $model->path=$url. $extension;
+                        if($model->save()){
+                            if(!is_null($previa))    
+                                $previa->delete();
+                            $this->redirect(array('categoria/storefrontConf', 'id'=>$model->categoria_id, '_'=>rand(0, 100)));
+                        }else{
+                            print_r($model->errors);
+                            break; 
+                        }
+                   
+                
+                    }
+                    else{
+                      echo "NANE";
+                        break;
+                    }
+                    
+                
+                
+            }else{
+                $response=array();
+                $model=ConfImage::model()->findByAttributes(array('name'=>$_POST['name'],'index'=>$_POST['index']));
+                $response['confirm']=true;
+                if(is_null($model)){
+                    $model=new ConfImage;
+                    $response['confirm']=false;                    
+                }
+                //print_r($response['confirm']);                
+                $response['form']= $this->renderPartial('confImagesform', array(
+                    'model'=>$model,'name'=>$_POST['name'],'index'=>$_POST['index'],'group'=>$_POST['group'],'type'=>$_POST['type'], 'categoria_id'=>$_POST['categoria_id'], 'dimError'=> $_POST['skip'] ),true)
+                ;                
+                 echo CJSON::encode($response); 
+            }
+            
+        }
+    
+   
+    
 }

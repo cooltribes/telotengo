@@ -65,7 +65,8 @@ class Categoria extends CActiveRecord
 		return array(
 			'categoriaHasTblProductos' => array(self::HAS_MANY, 'CategoriaHasTblProducto', 'categoria_id'),
 			'seo' => array(self::BELONGS_TO, 'Seo', 'id_seo'),
-            'padre' => array(self::BELONGS_TO, 'Categoria', 'id_padre')
+            'padre' => array(self::BELONGS_TO, 'Categoria', 'id_padre'),
+            'hijos' => array(self::HAS_MANY, 'Categoria', 'id_padre'),
 		);
 	}
 

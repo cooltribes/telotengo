@@ -125,9 +125,9 @@
 							</div>
 							
 							<div class="form-group">
-								<label>ISBN</label>
-								<?php echo $form->textField($model,'isbn',array('class'=>'form-control','maxlength'=>50)); ?>
-								<?php echo $form->error($model,'isbn'); ?>
+								<label>Numero de parte del Fabricante</label>
+								<?php echo $form->textField($model,'nparte',array('class'=>'form-control','maxlength'=>50)); ?>
+								<?php echo $form->error($model,'nparte'); ?>
 							</div>
 							
 							<div class="form-group">

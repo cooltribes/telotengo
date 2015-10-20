@@ -16,7 +16,7 @@
                        <div class="row-fluid">
                            <div class="col-md-4 no_horizontal_padding">
                                <div class="margin_top_small">
-                                   <span class="muted">Mostrando 1 - 16 de 256 resultados ?></span>
+                                   <span class="muted">Mostrando 1 - 16 de 256 resultados</span>
                                </div>
                            </div>
                            <div class="col-md-4 col-md-offset-4 no_horizontal_padding">
@@ -83,9 +83,13 @@
        // if($('#caracteristicaFilter').val()!=''){params=params+"caracteristica="+$('#caracteristica').val()+"&";}   //TODO para otra entrega        
       
         var url = window.location.href.split("?");
-        if(url[0].indexOf('index')==-1)
-            url[0]=url[0]+"index";
-        
+        if(url[0].indexOf('index')==-1){
+            if(url[0].substring(url[0].length - 1,url[0].length)!='/'){
+                url[0]=url[0]+"/";
+            }
+            url[0]=url[0]+"index";        
+        }
+            
         window.location.href=url[0]+removeLast(params,'&'); 
     }
     function go(id,value){
@@ -110,7 +114,7 @@
       range: true,
       min: 0, 
       max: 200000,
-      values: [<?php echo $filter['precioMayor'] ?> , <?php echo $filter['precioMenor']?> ],
+      values: [<?php echo $filter['precioMenor'] ?> , <?php echo $filter['precioMayor']?> ],
 
       
       slide: function( event, ui ) {

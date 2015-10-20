@@ -13,7 +13,7 @@
 
             
             
-            <div class="col-md-9 main no_left_padding">
+            <div class="col-md-9 main no_horizontal_padding">
                 <div class="row-fluid">
                 
                     <div class="col-md-4 no_left_padding">
@@ -90,7 +90,7 @@
                             
                         </table>
                         
-                        <div class="shippingInfo margin_top">
+                     <?php  /* <div class="shippingInfo margin_top">
                             <div class="row-fluid">
                                 <div class="col-md-3 text-right">
                                     <span class="title">Envío:</span>
@@ -114,8 +114,8 @@
                                     
                                 </div> 
                             </div>
-                        </div>
-                        
+                        </div>*/
+                        ?>
                         
                     </div>
                     <div class="col-md-8  col-md-offset-4 specs margin_top">
@@ -144,9 +144,10 @@
              
              </div>
             </div>
-            <div class="col-md-3 no_right_padding ">
+             </div>
+            <div class="col-md-3 no_horizontal_padding ">
                 <div class="orderBox">
-                    <table width="100%">
+                    <table width="80%" style="width:80%; max-width: 80%;">
                         <tr>
                             <td width="50%" class="name">Cantidad:</td>
                             <td width="50%"><input id="cantidad"type="number" value="1" class="quantity" /></td>

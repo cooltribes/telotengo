@@ -197,7 +197,7 @@ class SiteController extends Controller
 		$this->render('licencias');
 	}
     public function actionMailTest(){ 
-      $body="BODY";
+    /*  $body="BODY";
       $message = new YiiMailMessage;
                                
                            
@@ -207,8 +207,11 @@ class SiteController extends Controller
                                 $message->addTo('cruiz@upsidecorp.ch');
 
                                 if(!Yii::app()->mail->send($message))  
-                                echo "NADA VIEGGA";      
-
+                                echo "NADA VIEGGA";      */
+       Yii::import('application.extensions.image.Image');
+        $image = new Image(Yii::getPathOfAlias('webroot').'/images/categoria/storefront/categoria5.jpg');
+        $image->crop(350, 250);
+        $image->render();
     }
 
 		/**
@@ -306,8 +309,8 @@ class SiteController extends Controller
 
        $this->render('store', array('list'=>false));
     }
-    public function actionCategory(){
-    	$model=Categoria::model()->findByPk($_GET['categoria']);
+    public function actionCategory($id){
+    	$model=Categoria::model()->findByPk($id);
 		$hijos=Categoria::model()->findAllByAttributes(array('id_padre'=>$model->id), array('limit'=>6));
         $this->layout='//layouts/start';
 
@@ -469,8 +472,5 @@ class SiteController extends Controller
 		Yii::app()->end();
 		
 	} 
-    public function actionDetalleOrden(){
-        $this->layout='//layouts/start';
-        $this->render("detalleOrden");  
-    }
+
 } 
