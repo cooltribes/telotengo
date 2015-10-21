@@ -164,7 +164,7 @@ class TiendaController extends Controller
 	 
 
 	public function actionIndex(){
-        $this->layout='//layouts/start'; 
+        //$this->layout='//layouts/start'; 
 		$sql="";
 		$sub="";
 		$otraForma="";
@@ -232,61 +232,65 @@ class TiendaController extends Controller
 		$order=isset($_GET['order'])?$_GET['order']:'';
         //$filter['caracteristica']=isset($_GET['caracteristica'])?$_GET['caracteristica']:''; TODO para otra entrega
         
-		if($filter['categoria']!="")//filtros
-		{
-			// $filtroCategoria=$filter['categoria'];
-			// $filtroCategoria=Categoria::model()->findByAttributes(array('nombre'=>$filtroCategoria));
-			// echo $filtroCategoria;
-
-			$filtroCategoria=$filter['categoria'];
-			$filtroCategoria=Categoria::model()->findByAttributes(array('url_amigable'=>$filtroCategoria));
-			$vector=ARRAY();
-			//$vector=Categoria::model()->buscarPadres($filtroCategoria->id, $vector); //TODO MEJORAR ESTO
-			//echo $word=Categoria::model()->incluir($vector);
-			$vector=Categoria::model()->buscarHijos($filtroCategoria->id, $vector); //TODO MEJORAR ESTO
-		    $word=Categoria::model()->incluir($vector);
-			$sqlCategoria="and padre_id in (select id from tbl_producto_padre where id_categoria in(".$word."))";
-			$sqlCategoria2="where id_categoria in(".$word.")";
-			//var_dump($vector);
-		}	
+		if(isset($filter['categoria'])){
+    		if($filter['categoria']!="")//filtros
+    		{
+    			// $filtroCategoria=$filter['categoria'];
+    			// $filtroCategoria=Categoria::model()->findByAttributes(array('nombre'=>$filtroCategoria));
+    			// echo $filtroCategoria;
+    
+    			$filtroCategoria=$filter['categoria'];
+    			$filtroCategoria=Categoria::model()->findByAttributes(array('url_amigable'=>$filtroCategoria));
+    			$vector=ARRAY();
+    			//$vector=Categoria::model()->buscarPadres($filtroCategoria->id, $vector); //TODO MEJORAR ESTO
+    			//echo $word=Categoria::model()->incluir($vector);
+    			$vector=Categoria::model()->buscarHijos($filtroCategoria->id, $vector); //TODO MEJORAR ESTO
+    		    $word=Categoria::model()->incluir($vector);
+    			$sqlCategoria="and padre_id in (select id from tbl_producto_padre where id_categoria in(".$word."))";
+    			$sqlCategoria2="where id_categoria in(".$word.")";
+    			//var_dump($vector);
+    		}
+        }	
 
 		
-		if(isset($filter['marcas']))//filtros
-		{
-			$filtroMarca=explode("-", $filter['marcas']);
-			$contador=count($filtroMarca)-1;
-			if($sqlCategoria2!="") // si hay filtro de categoria
-			{
-				$sql=$sql." and padre_id in (select id from tbl_producto_padre ".$sqlCategoria2." and id_marca in (";
-				$opcion2=" and padre_id in (select id from tbl_producto_padre ".$sqlCategoria2."  and id_marca in (";
-			}
-			else 
-			{
-				$sql=$sql." and padre_id in (select id from tbl_producto_padre where id_marca in (";
-				$opcion2=" and padre_id in (select id from tbl_producto_padre where id_marca in (";
-			}
-
-			$i=0;	
-			foreach($filtroMarca as $marca)
-			{
-				$sql=$sql.$marca;
-				$opcion2=$opcion2.$marca;
-				if($contador!=$i)
-				{
-					$sql=$sql.",";
-					$opcion2=$opcion2.",";
-				}
-			$i++;
-			}
-			$sql=$sql."))";
-			$opcion2=$opcion2."))";
-			
-
-			
-			
-		}else{
-		    $filter['marcas']="";
-		}
+		if(isset($filter['marcas'])){//filtros
+    		if($filter['marcas']!="")
+    		{
+    			$filtroMarca=explode("-", $filter['marcas']);
+    			$contador=count($filtroMarca)-1;
+    			if($sqlCategoria2!="") // si hay filtro de categoria
+    			{
+    				$sql=$sql." and padre_id in (select id from tbl_producto_padre ".$sqlCategoria2." and id_marca in (";
+    				$opcion2=" and padre_id in (select id from tbl_producto_padre ".$sqlCategoria2."  and id_marca in (";
+    			}
+    			else 
+    			{
+    				$sql=$sql." and padre_id in (select id from tbl_producto_padre where id_marca in (";
+    				$opcion2=" and padre_id in (select id from tbl_producto_padre where id_marca in (";
+    			}
+    
+    			$i=0;	
+    			foreach($filtroMarca as $marca)
+    			{
+    				$sql=$sql.$marca;
+    				$opcion2=$opcion2.$marca;
+    				if($contador!=$i)
+    				{
+    					$sql=$sql.",";
+    					$opcion2=$opcion2.",";
+    				}
+    			$i++;
+    			}
+    			$sql=$sql."))";
+    			$opcion2=$opcion2."))";
+    			
+    
+    			
+    			
+    		}
+        }else{
+    		    $filter['marcas']="";
+    		}
 		
 		
 		if($filter['precio']!="")//filtros

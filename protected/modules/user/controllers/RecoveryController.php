@@ -8,7 +8,7 @@ class RecoveryController extends Controller
 	 * Recovery password
 	 */
 	public function actionRecovery () {
-	    $this->layout='//layouts/b2b';
+	    //$this->layout='//layouts/b2b';
 		$form = new UserRecoveryForm;
 		if (Yii::app()->user->id) {
 		    	$this->redirect(Yii::app()->controller->module->returnUrl);

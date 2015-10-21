@@ -372,7 +372,7 @@ class CategoriaController extends Controller
     public function actionIndex($url)
     {
         $categoria=Categoria::model()->findByAttributes(array('url_amigable'=>$url));
-        $this->layout='//layouts/start';
+        //$this->layout='//layouts/start';
         if($categoria)
             $this->render('category',array('model'=>$categoria)); 
         else

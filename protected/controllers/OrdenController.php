@@ -306,7 +306,7 @@ class OrdenController extends Controller
 	 */
 	public function actionDetalle($id)
 	{
-	    $this->layout='//layouts/start';
+	   // $this->layout='//layouts/start';
         $this->render("detalle");  
         
         
@@ -997,8 +997,5 @@ class OrdenController extends Controller
 		BolsaHasInventario::model()->deleteAllByAttributes(array('bolsa_id'=>$bolsa_id, 'almacen_id'=>$almacen_id)); // los borra todos	
 	}
     
-    public function actionDetalle(){
-        $this->layout='//layouts/start';
-        $this->render("detalle");  
-    }
+   
 }
