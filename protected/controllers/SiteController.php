@@ -197,7 +197,7 @@ class SiteController extends Controller
 		$this->render('licencias');
 	}
     public function actionMailTest(){ 
-      $body="BODY";
+    /*  $body="BODY";
       $message = new YiiMailMessage;
                                
                            
@@ -207,8 +207,10 @@ class SiteController extends Controller
                                 $message->addTo('cruiz@upsidecorp.ch');
 
                                 if(!Yii::app()->mail->send($message))  
-                                echo "NADA VIEGGA";      
+                                echo "NADA VIEGGA";      */
 
+        $this->render('licencias');
+      
     }
 
 		/**
@@ -287,13 +289,13 @@ class SiteController extends Controller
     }
     
     public function actionInhome(){
-        $this->layout='//layouts/start';
+       // $this->layout='//layouts/start';
 
        $this->render('inhome');
     }
 	
 	public function actionInhome2(){
-       $this->layout='//layouts/start';
+       //$this->layout='//layouts/start';
 	   $model = Categoria::model()->findAllBySql("select * from tbl_categoria where id_padre in (select id from tbl_categoria where id_padre=0)  order by destacado desc limit 6");
        $ultimos = Producto::model()->findAllBySql("select * from tbl_producto where id in (select producto_id from tbl_inventario) order by id desc limit 15");
 	   $destacados = Producto::model()->findAllBySql("select * from tbl_producto where id in (select producto_id from tbl_inventario) order by destacado desc limit 15");
@@ -302,20 +304,20 @@ class SiteController extends Controller
     }
     
     public function actionStore(){
-        $this->layout='//layouts/start';
+        //$this->layout='//layouts/start';
 
        $this->render('store', array('list'=>false));
     }
     public function actionCategory($id){
     	$model=Categoria::model()->findByPk($id);
 		$hijos=Categoria::model()->findAllByAttributes(array('id_padre'=>$model->id), array('limit'=>6));
-        $this->layout='//layouts/start';
+        //$this->layout='//layouts/start';
 
        $this->render('category', array('model'=>$model, 'hijos'=>$hijos));
     }  
     
     public function actionRequest(){ 
-        $this->layout='//layouts/b2b';
+        //$this->layout='//layouts/b2b';
         $model = new RegistrationForm;
         $profile = new Profile;
         $profile->regMode = true;
@@ -323,7 +325,7 @@ class SiteController extends Controller
     }
     
     public function actionRequest2(){
-        $this->layout='//layouts/b2b';
+        //$this->layout='//layouts/b2b';
         $model = new Empresas;
         $user=User::model()->findByPk(1);
         $profile=$user->profile;
@@ -334,7 +336,7 @@ class SiteController extends Controller
         ));
     }
     public function actionDetalle(){
-        $this->layout='//layouts/start';
+        //$this->layout='//layouts/start';
 		$connection = new MongoClass();
 		if(Funciones::isDev())
 		{
@@ -445,7 +447,7 @@ class SiteController extends Controller
 	
 	public function actionCarrito()
 	{
-		$this->layout='//layouts/start';
+		//$this->layout='//layouts/start';
 		$empresas = EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id));		
         $model=Bolsa::model()->findByAttributes(array('empresas_id'=>$empresas->empresas_id));
 	    $bolsaInventario=BolsaHasInventario::model()->findAllByAttributes(array('bolsa_id'=>$model->id), array('order'=>'almacen_id asc'));
@@ -469,8 +471,5 @@ class SiteController extends Controller
 		Yii::app()->end();
 		
 	} 
-    public function actionDetalleOrden(){
-        $this->layout='//layouts/start';
-        $this->render("detalleOrden");  
-    }
+
 } 

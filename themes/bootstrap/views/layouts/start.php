@@ -1,21 +1,5 @@
-<?php /* @var $this Controller */ 
-Yii::app()->session['menu']="";
-?>
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
-<link rel="icon" href="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/favicon75.png" type="image/x-icon">
-<link rel="shortcut icon" href="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/favicon.ico" type="image/x-icon">
-<?php  //Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/styles.css',null); ?>
-
 
 <?php
-Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_menu/css/helper.css');
-Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_menu/css/dropdown/dropdown.vertical.css');
-Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_menu/css/dropdown/themes/default/default.css');
-?>
-<?php Yii::app()->bootstrap->register(); ?>
-<?php  Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/styles.css',null); 
 // $model = Categoria::model()->findAllBySql("select * from tbl_categoria where id_padre in (select id from tbl_categoria where id_padre=0)  order by nombre asc");
  $model=Categoria::model()->findAllByAttributes(array('id_padre'=>0), array('order'=>' id asc'));
 ?>
@@ -116,7 +100,9 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
 									?>
                             </div>
                             <div class="col-md-2 col-sm-2 col-xs-2 no_horizontal_padding">
-                                <?php echo CHtml::submitButton('Buscar', array('id'=>'botonBusqueda','class'=>'btn-orange btn btn-danger btn-large orange_border')); ?>
+                                <?php 
+                                $usuario=User::model()->findByPk(Yii::app()->user->id);
+                                echo CHtml::submitButton('Buscar', array('id'=>'botonBusqueda','class'=>'btn-orange btn btn-danger btn-large orange_border')); ?>
                             </div>
                         </div>
                     </div> 
@@ -128,7 +114,17 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                                     <div class="row-fluid">
                                         <div class="col-md-3 col-md-3 col-xs-3 no_horizontal_padding icon">
                                              <span class="glyphicon glyphicon-inbox"></span>
-                                             <span class="counter">88</span>
+                                             <span class="counter">
+                                                 <?php 
+                                                 if($usuario){
+                                                 
+                                                 $orders=Orden::model()->findAllByAttributes(array('empresa_id'=>$usuario->empresa->id,'estado'=>0));
+                                                 echo count($orders);
+                                                 } else {
+                                                     $orders=array();
+                                                 }
+                                                 ?> 
+                                             </span>
                                         </div>
                                         <div class="col-md-9 col-sm-9 col-xs-9 no_horizontal_padding title">
                                              <span class="text">Ordenes</span>
@@ -138,11 +134,16 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                                     </div>                                
                                   </a>
                                   <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                    <li><a href="#">Action</a></li>
-                                    <li><a href="#">Another action</a></li>
-                                    <li><a href="#">Something else here</a></li>
+                                      <?php foreach($orders as $key=>$order): ?>
+                                       <li><a href="<?php Yii::app()->getBaseUrl(true);?>/orden/detalle"><span><?php echo $order->id;?></span> <b><?php echo $order->almacen->empresas->razon_social; ?></b> (<?php echo count($order->ordenHasInventarios); ?>)</a></li>
+                                      
+                                      <?php  
+                                        if($key==2)
+                                            break;
+                                      endforeach; ?> 
+                                   
                                     <li class="separator"></li>
-                                    <li><a href="#">Separated link</a></li>
+                                    <li><a href="#">Ver todas las ordenes</a></li>
                                   </ul>
                                 </div>
                             </div>
@@ -182,7 +183,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
                                     
                                    
                                         <?php 
-                                        $usuario=User::model()->findByPk(Yii::app()->user->id);
+                                        
                                         if($usuario):
                                          $myempresa = $usuario->empresa;
                                          if(!is_null($myempresa->bolsa->getLastItems(3) ))

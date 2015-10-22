@@ -824,16 +824,19 @@ ul.dropdown a:link, ul.dropdown a:visited{
   max-height: 440px;
   overflow-y:auto;
 }
-#changeAvatar{
+#changeAvatar, #toLoad{
   width:50%;
   margin:auto;
   background:#FFF;
   height:auto;
-  max-height: 550px;
+  max-height: 500px;
   overflow-y:auto;
 }
+ #toLoad{
+   width: 560px;
+ }
 #wishlistName{
-  width:40%;
+  width:560px;
   margin:auto;
   background:#FFF;
   height:auto;
@@ -841,6 +844,7 @@ ul.dropdown a:link, ul.dropdown a:visited{
   overflow-y:auto;
   
 }
+
 #saldoCarga{
   width:40%;
   margin:auto;
@@ -1144,7 +1148,7 @@ h1,h2,h3,h4,h5{
     }
     .pickDate .col-md-2{
       padding-left:0px;
-      padding-right:0px;
+      padding-right:0px; 
     }
     .control-label{
       font-size:12px;
@@ -1155,8 +1159,9 @@ h1,h2,h3,h4,h5{
       display: inline-block;
       padding-left:8%;
     }
-    .help-inline.error{
+    .help-inline.error, .errorMessage, span.error{
       color: #FFF;
+      font-size:12px;
     }
   }
 
@@ -2375,4 +2380,53 @@ h1.dark{
 
 
   .button_click { color: black; font-weight:bolder;}
+  
+  /* LAYOUT ADMIN */
+ 
+ #adminNav{
+      font-size:16px;
+      padding: 10px 0px;
+      background: #000;
+      .navbar-nav{
+        a, a:hover{
+          color:white;
+        }
+        .dropdown{
+          a:hover, li a:hover, li a, a, a:hover{
+            color: white;            
+            .caret{
+              border-bottom-color: #FFF;
+              border-top-color: #FFF;
+            } 
+          }
+          a:hover, li a:hover{
+            text-decoration: underline;
+          }
+          
+          .dropdown-menu{
+            li{
+              a:hover, a:focus{
+                background: #000;
+                color: #FFF;
+                text-decoration: none;
+              }
+            }
+          }
+          
+        }
+        .dropdown.open{
+            a{
+              color: #333;
+              background: transparent;
+            }
+            a:hover, a:focus{
+              color: white;
+              background: transparent;
+            }
+          }
+        
+      }        
+}
+
+
   

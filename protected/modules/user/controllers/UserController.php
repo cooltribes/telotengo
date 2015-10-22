@@ -54,7 +54,7 @@ class UserController extends Controller
 	Action para el finalizar la solicitud con respuesta adecuada
 	*/
 	public function actionRespuesta(){
-		$this->layout='//layouts/b2b';
+		//$this->layout='//layouts/b2b';
 		$user = User::model()->findByPk(Yii::app()->session['usuario_solicitud']);
 		$empresasHasUsers = EmpresasHasUsers::model()->findByAttributes(array('users_id'=>$user->id));
 		$empresa = $empresasHasUsers->empresas; 
@@ -639,7 +639,7 @@ class UserController extends Controller
 		 	$get=$_GET['id'];
 		 }
 
-	    $this->layout='//layouts/b2b';
+	    //$this->layout='//layouts/b2b';
 		$model = new RegistrationForm;
         $profile = new Profile;
         $profile->regMode = true;	

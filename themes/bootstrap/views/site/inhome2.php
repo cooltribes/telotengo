@@ -65,10 +65,10 @@
            <div class="col-md-3">
                 <div class="row-fluid">
                     <div>
-                       <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/imagenDerachaUp.png" width="100%"/>
+                       <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/right1.png" width="100%"/>
                     </div>
                     <div class="margin_top">
-                        <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/imagenDerachaDown.png" width="100%"/>
+                        <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/right2.png" width="100%"/>
                     </div>           
                 </div>
            </div>

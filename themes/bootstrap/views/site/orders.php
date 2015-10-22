@@ -16,7 +16,7 @@ foreach($bolsaInventario as $carrito)
                 <div class="title clearfix">
                    <div class="row-fluid">
                       <div class="col-md-6 no_horizontal_padding"></div>
-                       <div class="col-md-6 no_horizontal_padding text-right"><?php echo $carrito->inventario->almacen->empresas->razon_social;?></div>
+                       <div class="col-md-6 no_horizontal_padding text-right"><?php echo $carrito->almacen->empresas->razon_social;?></div>
                    </div>
                 </div>
                 <div class="detail">

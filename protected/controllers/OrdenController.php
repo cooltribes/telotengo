@@ -17,7 +17,6 @@ class OrdenController extends Controller
 			'accessControl', // perform access control for CRUD operations
 		);
 	}
-
 	/**
 	 * Specifies the access control rules.
 	 * This method is used by the 'accessControl' filter.
@@ -31,7 +30,7 @@ class OrdenController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','view','cancelar','listado','detalleusuario','ventas','detalle','calificarVendedor','reclamo','responderReclamo'
+				'actions'=>array('create','update','view','cancelar','listado','detalleusuario','ventas','calificarVendedor','reclamo','responderReclamo'
 					,'devolucion','procesarDevolucion', 'procesarTodo', 'procesarSimple'), //TODO lista de control de accesos con los roles nuevos... procesarTodo, procesarSimple
 				'users'=>array('@'),
 			),
@@ -307,6 +306,12 @@ class OrdenController extends Controller
 	 */
 	public function actionDetalle($id)
 	{
+	   // $this->layout='//layouts/start';
+        $this->render("detalle");  
+        
+        
+        
+        /*
 		$model = $this->loadModel($id);
 		
 		$pagos = new DetalleOrden;
@@ -334,7 +339,7 @@ class OrdenController extends Controller
 		}else{
 			throw new Exception("No estás autorizado para ver esta página", 403);
 			
-		}
+		}*/
 	}
 	
 	/**
@@ -992,8 +997,5 @@ class OrdenController extends Controller
 		BolsaHasInventario::model()->deleteAllByAttributes(array('bolsa_id'=>$bolsa_id, 'almacen_id'=>$almacen_id)); // los borra todos	
 	}
     
-    public function actionDetalle(){
-        $this->layout='//layouts/start';
-        $this->render("detalle");  
-    }
+   
 }

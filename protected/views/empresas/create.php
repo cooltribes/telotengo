@@ -14,7 +14,7 @@
    </h5>
     <div class="col-md-6 col-md-offset-3 margin_top orangepanel">
         <h4 class="text-center">
-            Por favor completa los siguientes datos personales:
+            Ahora permítenos conocer acerca de tu empresa
         </h4>
                <?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
                 
