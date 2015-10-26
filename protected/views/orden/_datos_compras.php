@@ -8,9 +8,6 @@
 	<td><?php echo date('d/m/Y',strtotime($data->fecha)); ?></td>
 	<td><?php echo $data->empresa->razon_social; ?></td> 
 	<td><?php echo "el que aprobo la orden"; ?></td> 
-	<td><?php echo $data->empresa->razon_social; ?></td> 
-    <td><?php echo "el que compró"; ?></td> 
-	
 	<td class="text-right padding_right"><?php echo $data->monto; ?></td> 
 	<td><?php echo $data->estados($data->estado); ?></td> 
 	<td><a href="<?php echo Yii::app()->createUrl('orden');?>">Ver detalles </a></td>

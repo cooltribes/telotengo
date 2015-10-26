@@ -31,7 +31,7 @@ class OrdenController extends Controller
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
 				'actions'=>array('create','update','view','cancelar','listado','detalleusuario','ventas','calificarVendedor','reclamo','responderReclamo'
-					,'devolucion','procesarDevolucion', 'procesarTodo', 'procesarSimple'), //TODO lista de control de accesos con los roles nuevos... procesarTodo, procesarSimple
+					,'devolucion','procesarDevolucion', 'procesarTodo', 'procesarSimple','misCompras','misVentas'), //TODO lista de control de accesos con los roles nuevos... procesarTodo, procesarSimple
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -252,6 +252,68 @@ class OrdenController extends Controller
 			'dataProvider'=>$dataProvider,
 		));
 	}
+    public function actionMisCompras()
+    {
+        $model = new Orden();
+        $model->unsetAttributes();  // clear any default values
+        $bandera=false;
+        $dataProvider = $model->search();
+        
+                /* Para mantener la paginacion en las busquedas */
+        if(isset($_GET['ajax']) && isset($_SESSION['searchPedido']) && !isset($_POST['query'])){
+            $_POST['query'] = $_SESSION['searchPedido'];
+            $bandera=true;
+        }
+
+        /* Para buscar desde el campo de texto */
+        if (isset($_POST['query'])){
+            $bandera=true;
+            unset($_SESSION['searchPedido']);
+            $_SESSION['searchPedido'] = $_POST['query'];
+            $model->id = $_POST['query'];
+            $dataProvider = $model->search();
+        }   
+
+        if($bandera==FALSE){
+            unset($_SESSION['searchPedido']);
+        }
+            
+        $this->render('mis_compras',array(
+            'model'=>$model,
+            'dataProvider'=>$dataProvider,
+        ));
+    }
+    public function actionMisVentas()
+    {
+        $model = new Orden();
+        $model->unsetAttributes();  // clear any default values
+        $bandera=false;
+        $dataProvider = $model->search();
+        
+                /* Para mantener la paginacion en las busquedas */
+        if(isset($_GET['ajax']) && isset($_SESSION['searchPedido']) && !isset($_POST['query'])){
+            $_POST['query'] = $_SESSION['searchPedido'];
+            $bandera=true;
+        }
+
+        /* Para buscar desde el campo de texto */
+        if (isset($_POST['query'])){
+            $bandera=true;
+            unset($_SESSION['searchPedido']);
+            $_SESSION['searchPedido'] = $_POST['query'];
+            $model->id = $_POST['query'];
+            $dataProvider = $model->search();
+        }   
+
+        if($bandera==FALSE){
+            unset($_SESSION['searchPedido']);
+        }
+            
+        $this->render('mis_ventas',array(
+            'model'=>$model,
+            'dataProvider'=>$dataProvider,
+        ));
+    }
 
 	/**
 	 * Historial de órdenes para empresa vendedora

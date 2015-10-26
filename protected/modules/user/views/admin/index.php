@@ -4,19 +4,92 @@ $this->breadcrumbs=array(
 );
 ?>
 
-<div class="container">
-	<div class="row-fluid">
-	 <h1 class="col-md-10">Administrar Usuarios</h1>
-        <div class="col-md-2 margin_top_medium">
-                <?php
-         echo CHtml::link('Invitar usuario', $this->createUrl('invitarUsuario'), array('class'=>'btn form-control btn-success', 'role'=>'button'));
-                ?>
-        </div>
-      </div>
-	
-	<hr class="no_margin_top"/>
+<style>
+    .table-striped > thead > tr > th{
+        border-left: solid 1px white;
+        border-top: solid 1px white;
+        border-right: 0px;
+        border-bottom: 0px;
+        color: white;
+        background: black;
+        vertical-align: top;
+    }
 
-		<?php if(Yii::app()->user->hasFlash('success')){?>
+</style>
+
+<div class="container">
+	<h1>Administrar Usuarios</h1>
+	Nueva búsqueda avanzada<hr class="no_margin_top"/>
+	
+	<div class="row-fluid clearfix ">
+	    <div class="col-md-8 no_horizontal_padding">
+	       <div class="row-fluid">
+	           <div class="col-md-5 no_padding_left">
+	               <select class="form-control">
+	                   <option>-- Seleccione --</option>
+	               </select>
+	           </div>
+	           <div class="col-md-3">
+                   <select class="form-control">
+                       <option>-- Operador --</option>
+                   </select>
+               </div>
+               <div class="col-md-3 no_padding_right">
+                   <input class="form-control no_radius"/>
+               </div>
+               <div class="col-md-1 no_padding_left">
+                   <a class="btn btn-black" style="color:white; border:solid 1px black">Buscar</a>
+               </div>
+	       </div>
+	    </div>
+	    
+	    <div class="col-md-4 no_padding_right">
+	        <div class="row-fluid">
+	            <div class="col-md-8 text-center">
+	                <a class="btn btn-gray">Buscar y Guardar</a>
+	            </div>
+	            <div class="col-md-4 text-rightno_padding_right">
+                    <a class="btn btn-gray">Borrar Filtro</a>
+                </div>
+	        </div>
+	    </div>
+	   </div> 
+	   <div class="row-fluid clearfix margin_top margin_bottom">
+	    <div class="col-md-4 no_padding_left">
+                <form class="no_margin_bottom form-search row-fluid formularionuevo clearfix">
+                    <div class="col-md-2 no_horizontal_padding">
+                        <a href="#" class="btn form-control btn-gray no_radius_right" id="btn_search_event">
+                            <span class="glyphicon glyphicon-search margin_left_minus"></span>
+                       </a>
+                    </div>
+                    <div class="col-md-10 no_padding_left">
+                        <input class="form-control margin_left_minus" id="query" name="query" type="text" placeholder="Buscar">                    
+                    </div>
+                    
+                </form>
+        </div>
+         <div class="col-md-8 no_horizontal_padding">
+           <div class="row-fluid">
+               <div class="col-md-4">
+                     <select class="form-control">
+                       <option>-- Búsquedas avanzadas --</option>
+                   </select>
+               </div>
+               <div class="col-md-3 col-md-offset-1">
+                     <a class="btn btn-gray margin_left_minus">Crear búsqueda avanzada</a>
+               </div>
+          
+               <div class="col-md-3 col-md-offset-1 no_padding_right">
+                     <?php
+         echo CHtml::link('Invitar usuario', $this->createUrl('invitarUsuario'), array('class'=>'btn form-control btn-orange orange_border white', 'role'=>'button'));
+                ?>
+               </div>
+           </div>
+        </div>
+        
+	    </div>
+	    
+	   <?php if(Yii::app()->user->hasFlash('success')){?>
 		    <div class="alert in alert-block fade alert-success text_align_center">
 		        <?php echo Yii::app()->user->getFlash('success'); ?>
 		    </div>
@@ -27,14 +100,7 @@ $this->breadcrumbs=array(
 		    </div>
 		<?php } ?>
      
-	   	<form class="no_margin_bottom form-search row-fluid formularionuevo">
-			<div class="col-md-3 col-md-offset-8 no_padding_right">
-				<input class="form-control no_radius_right" id="query" name="query" type="text" placeholder="Buscar">	                 
-			</div>
-			<div class="col-md-1 no_padding_left">
-				<a href="#" class="btn form-control btn-sigmablue no_radius_left" id="btn_search_event">Buscar</a>
-			</div>
-		</form>
+	   
 
 
 		<?php
@@ -89,18 +155,25 @@ $this->breadcrumbs=array(
 	           
 	    <?php
 		$template = '{summary}
-	    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-bordered table-hover table-striped">
+	    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-hover table-striped">
+	        <thead>
 	        <tr>
-	            <th scope="col">ID</th>
-	            <th scope="col">Email</th>
-	            <th scope="col" width="25%">Nombre y Apellido</th>
-	            <th scope="col">Rol</th>
-	            <th scope="col">Tipo de invitación</th>
-	            <th scope="col">¿Quien invitó?</th>
-	            <th scope="col">Estado</th>
-	            <th scope="col">Fecha de Creación</th>
-	            <th scope="col">Acción</th>
+	           <th rowspan="2"><input type="checkbox" rowspan="2"/></th>
+	            <th colspan="3" rowspan="2">Usuario</th>
+	            <th scope="col" rowspan="2">Empresa</th>
+	            <th rowspan="2">Cargo</th>
+                <th colspan="2">Ingresos al Portal</th>
+                 
+	            <th rowspan="2">Estado</th>
+
+	            <th rowspan="2" scope="col"></th>
 	        </tr>
+	        
+	        <tr>
+	           <th>#</th>
+                <th>Fecha</th>
+	        </tr>
+	      </thead>
 	    {items}
 	    </table>
 	    {pager} 
@@ -178,5 +251,35 @@ $this->breadcrumbs=array(
             alert("Formato de cantidad no válido");
          }     
 }
+
+
+
+    function desactivarActivar(id)
+    {
+            
+            $.ajax({
+             url: "<?php echo Yii::app()->createUrl('user/user/activarDesactivar') ?>",
+             type: 'POST',
+             data:{
+                    id:id,
+                   },
+            success: function (data) {
+                if(data==0)//lo contrario
+                {
+                    $('#'+id).html('<i class="glyphicon glyphicon-ok"></i> Activar');
+                    $('#'+id+'s').html('Desactivo')
+                }
+                else
+                {
+                    $('#'+id).html('<i class="glyphicon glyphicon-remove"></i> Desactivar');
+                    $('#'+id+'s').html('Activo')
+                }
+            }
+           })
+        
+    }
+
+
+
     
 </script>

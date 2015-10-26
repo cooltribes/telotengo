@@ -38,7 +38,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
         else: 
             if(!Yii::app()->user->isGuest): 
                  if(Yii::app()->authManager->checkAccess("vendedor", Yii::app()->user->id)||Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id)):
-                    include 'seller.php';
+                    include 'start.php';
                  else:
                      include 'start.php';
                  endif;

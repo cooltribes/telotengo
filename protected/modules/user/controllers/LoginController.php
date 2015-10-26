@@ -31,7 +31,7 @@ class LoginController extends Controller
 				
 			}
 			// display the login form
-			$this->redirect(Yii::app()->baseUrl());
+			$this->redirect(Yii::app()->baseUrl);
 		} else
 			$this->redirect(Yii::app()->controller->module->returnUrl);
 	}
