@@ -118,7 +118,7 @@
                                                  <?php 
                                                  if($usuario){
                                                  
-                                                 $orders=Orden::model()->findAllByAttributes(array('empresa_id'=>$usuario->empresa->id,'estado'=>0));
+                                                 $orders=Orden::model()->findAllByAttributes(array('empresa_id'=>$usuario->empresa->id,'estado'=>0), array('order'=>'id desc'));
                                                  echo count($orders);
                                                  } else {
                                                      $orders=array();
@@ -134,8 +134,8 @@
                                     </div>                                
                                   </a>
                                   <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                      <?php foreach($orders as $key=>$order): ?>
-                                       <li><a href="<?php Yii::app()->getBaseUrl(true);?>/orden/detalle"><span><?php echo $order->id;?></span> <b><?php echo $order->almacen->empresas->razon_social; ?></b> (<?php echo count($order->ordenHasInventarios); ?>)</a></li>
+                                      <?php foreach($orders as $key=>$order): ?> 
+                                       <li><a href="<?php echo Yii::app()->createUrl('orden/detalle', array('id'=>$order->id))?>"><span><?php echo $order->id;?></span> <b><?php echo $order->almacen->empresas->razon_social; ?></b> (<?php echo count($order->ordenHasInventarios); ?>)</a></li>
                                       
                                       <?php  
                                         if($key==2)

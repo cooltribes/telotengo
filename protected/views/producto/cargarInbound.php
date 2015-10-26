@@ -44,7 +44,6 @@ $this->widget('bootstrap.widgets.TbAlert', array(
                     'htmlOptions' => array('enctype' => 'multipart/form-data'),
                 ));
                 
-            echo Yii::getPathOfAlias('webroot');
             ?>
             <fieldset>
             	<legend>1.- Descargar archivo Excel para importación: </legend>

@@ -1744,12 +1744,14 @@ class ProductoController extends Controller
             $actualizados = 0;
             $uploadedFileName = "";
             $error = false;    	
-
+			ini_set('memory_limit', '-1');
+			ini_set('max_execution_time', 300);
 			
+			/*			echo "wolfre";
+			Yii::app()->end();*/
 			            /*Segundo paso - Validar el archivo*/
             if(isset($_POST["validar"]))
             {
-               
                 $archivo = CUploadedFile::getInstancesByName('archivoValidacion');
                 
                 //Guardarlo en el servidor para luego abrirlo y revisar
@@ -1768,7 +1770,7 @@ class ProductoController extends Controller
                     Yii::app()->user->setFlash('error', UserModule::t("Debes seleccionar un archivo."));                            
                     $error = true;
                 }              
-
+				echo $extension;
                 //Si no hubo errores
                 if(!$error && is_array($resValidacion = $this->validarInbound($nombre . $extension))){
 
@@ -1781,9 +1783,180 @@ class ProductoController extends Controller
                             Productos que contiene: <b>{$resValidacion['nProds']}</b>.");                    
                 }
 				 //Tercer paso - Subir el Archivo
+              }elseif(isset($_POST["cargar"]))
+              {
+				$archivo = CUploadedFile::getInstancesByName('archivoCarga');
+                           
+                    if (isset($archivo) && count($archivo) > 0) {
+                        $nombreTemporal = "Archivo";
+                        $rutaArchivo = Yii::getPathOfAlias('webroot').'/docs/xlsMasterData/';
+                        foreach ($archivo as $arc => $xls) {
+
+                            $nombre = $rutaArchivo.$nombreTemporal;
+                            $extension = '.' . $xls->extensionName;
+                            
+                            if ($xls->saveAs($nombre . $extension)) {
+                                
+                            } else {
+                                Yii::app()->user->updateSession();
+                                Yii::app()->user->setFlash('error', UserModule::t("Error al cargar el archivo."));
+                                $this->render('importar_productos', array(
+                                    'tabla' => $tabla,
+                                    'total' => $total,
+                                    'actualizar' => $actualizar,
+                                    'totalInbound' => $totalInbound,
+                                    'actualizadosInbound' => $actualizadosInbound,
+                                ));
+                                Yii::app()->end();
+                                
+                            }
+                        }
+                    }
+                    
+                    // ==============================================================================
+
+                    // Validar (de nuevo)
+                    if( !is_array($resValidacion = $this->validarArchivo($nombre . $extension)) ){
+                        // Archivo con errores, eliminar del servidor
+                        unlink($nombre . $extension);
+							$this->render('cargarInbound', array(                
+			                'fileName' => $uploadedFileName,
+			                'nuevos' => $nuevos,
+			                'actualizados' => $actualizados,               
+			            ));
+
+						Yii::app()->end();
+                    }
+
+				 $sheetArray = Yii::app()->yexcel->readActiveSheet($nombre . $extension);
+				    
+				    $fila = 1;
+                    $totalCantidades = 0;
+					
+					// variable para los ids de ptc
+					$combinaciones = array();
+                    foreach ($sheetArray as $row){ 
+                        if($fila > 1){
+                        	
+						                     		
+                     	$sku=$row['A'];
+						$condicion=$row['B'];
+						$cantidad=$row['E'];
+						$garantia=$row['F'];
+						$almacen=$row['G'];
+					    $tipoCodigo=$row['H'];
+						$codigo=$row['I']; 
+						$almacenCopy="";
+						$producto="";
+						$empresa=EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id));
+						
+						if(explode(",", $row['C']))
+						{
+							$partir=explode(",", $row['C']);
+							if(isset($partir[1]))
+								$row['C']=$partir[0].".".$partir[1];
+						}
+						$costo=$row['C'];
+						
+						if(explode(",", $row['D']))
+						{
+							$partir=explode(",", $row['D']);
+							if(isset($partir[1]))
+								$row['D']=$partir[0].".".$partir[1];
+						}
+						$precio=$row['D'];
+						
+						if($sku!="")
+						{
+							
+							$almacenes=Almacen::model()->findByAttributes(array('alias'=>$almacen));	
+							if($tipoCodigo!="" && $codigo!="") // cuando no existe y lo va a relacionar con un sku
+							{
+								if($row['H']=="TLT")
+									if(Producto::model()->findByAttributes(array('tlt_codigo'=>$row['I'])))
+										$producto=Producto::model()->findByAttributes(array('tlt_codigo'=>$row['I']))->id;	
+											
+									if($row['H']=="UPC")
+										if(Producto::model()->findByAttributes(array('upc'=>$row['I'])))	
+											$producto=Producto::model()->findByAttributes(array('upc'=>$row['I']))->id;	
+										
+									if($row['H']=="EAN")	
+										if(Producto::model()->findByAttributes(array('ean'=>$row['I'])))
+											$producto=Producto::model()->findByAttributes(array('ean'=>$row['I']))->id;	
+										
+									if($row['H']=="GTIN")	
+										if(Producto::model()->findByAttributes(array('gtin'=>$row['I'])))
+											$producto=Producto::model()->findByAttributes(array('gtin'=>$row['I']))->id;	
+										
+									if($row['H']=="NPF")
+										if(Producto::model()->findByAttributes(array('nparte'=>$row['I'])))
+											$producto=Producto::model()->findByAttributes(array('nparte'=>$row['I']))->id;	
+									
+								$inventario= new Inventario;
+								$inventario->sku=$sku;
+								$inventario->condicion=$condicion;
+								$inventario->costo=$costo;
+								$inventario->cantidad=$cantidad;
+								echo $inventario->precio=$precio;
+								$inventario->garantia=$garantia;
+								$inventario->almacen_id=$almacenes->id;
+								$inventario->producto_id=$producto;
+								
+								if(!$inventario->save())
+								print_r($inventario->errors);
+							}
+							else //la forma normal
+							{
+								// si esta sustituyendo uno creado	
+								if($inventario=Inventario::model()->findByAttributes(array('sku'=>$sku, 'almacen_id'=>$almacenes->id)))
+								{
+									$inventario=Inventario::model()->findByAttributes(array('sku'=>$sku, 'almacen_id'=>$almacenes->id));
+									$inventario->condicion=$condicion;
+									$inventario->costo=$costo;
+									$inventario->cantidad=$cantidad;
+									$inventario->precio=$precio;
+									$inventario->garantia=$garantia;
+								
+								}
+								else 
+								{
+									// si tiene en otro almacen el producto previamente, pero quiere crearlo en uno distinto
+									$inven=Inventario::model()->findAllByAttributes(array('sku'=>$sku));
+									foreach($inven as $invent)
+									{
+										if($invent->almacen->empresas_id==$empresa->empresas_id)
+										{
+
+											$producto=$invent->producto_id;
+											
+										}
+									}	
+									echo $empresa->empresas_id; 
+									$inventario= new Inventario;
+									$inventario->sku=$sku;
+									$inventario->condicion=$condicion;
+									$inventario->costo=$costo;
+									$inventario->cantidad=$cantidad;
+									$inventario->precio=$precio;
+									$inventario->garantia=$garantia;
+									$inventario->almacen_id=$almacenes->id;
+									$inventario->producto_id=$producto;
+									
+								}
+									$inventario->save();
+
+
+								
+							}
+						}
+
+                        }
+                        $fila++;                        
+                    } // foreach
+				 
               }
-
-
+              
+				
 			$this->render('cargarInbound', array(                
                 'fileName' => $uploadedFileName,
                 'nuevos' => $nuevos,
@@ -1939,6 +2112,8 @@ class ProductoController extends Controller
 			$erroresCodigo="";
 			$erroresCondicion="";
 			$erroresCantidadVender="";
+			$erroresAlmacen="";
+			$erroresSkuLocal="";
 			
             $linea = 1;
             $lineaProducto = 0;
@@ -2083,22 +2258,72 @@ class ProductoController extends Controller
 						 
 						if(count($inventario)==0) // si el sku propio no existe
 						{
+							$errorLocal=0;
 							if($row['H']=="")
 							{
 								 $erroresTipoCodigo.= "<li> Tipo de Codigo - <b> Vacio </b>, en la línea <b>" . $linea."</b></li>";
+								 if($errorLocal==0)
+								 {
+								 	$erroresSkuLocal.= "<li> Sku  - <b> no existe debe crear codigo y tipo de codigo existentes </b>, en la línea <b>" . $linea."</b></li>";
+									$errorLocal++;
+								 }
+								 	
 							}
 							else   
 							{
 								if(!($row['H']=="TLT" || $row['H']=="UPC" || $row['H']=="EAN" || $row['H']=="GTIN" || $row['H']=="NPF")) // si no es ninguna de estas opciones
 								{
 									$erroresTipoCodigo.= "<li> Tipo de Codigo - <b> No corresponde a las opciones establecidas </b>, en la línea <b>" . $linea."</b></li>";
+									if($errorLocal==0)
+									 {
+								 		$erroresSkuLocal.= "<li> Sku  - <b> no existe debe crear codigo y tipo de codigo existentes </b>, en la línea <b>" . $linea."</b></li>";
+										$errorLocal++;
+								 	}
 								}
 
 							}
 							if($row['I']=="")
 							{
-								$erroresCodigo.= "<li> Codigo - <b> Vacio </b>, en la línea <b>" . $linea."</b></li>";	
+								$erroresCodigo.= "<li> Codigo - <b> Vacio </b>, en la línea <b>" . $linea."</b></li>";
+								if($errorLocal==0)
+								 {
+								 	$erroresSkuLocal.= "<li> Sku  - <b> no existe debe crear codigo y tipo de codigo existentes </b>, en la línea <b>" . $linea."</b></li>";
+									$errorLocal++;
+								 }	
 							}
+							else 
+							{
+								if($errorLocal==0)
+								{
+									$entro=0; // necesita entrar para no mostrar error
+									
+									if($row['H']=="TLT")
+										if(Producto::model()->findByAttributes(array('tlt_codigo'=>$row['I'])))
+											$entro=1;
+											
+									if($row['H']=="UPC")
+										if(Producto::model()->findByAttributes(array('upc'=>$row['I'])))	
+											$entro=1;
+										
+									if($row['H']=="EAN")	
+										if(Producto::model()->findByAttributes(array('ean'=>$row['I'])))
+											$entro=1;
+										
+									if($row['H']=="GTIN")	
+										if(Producto::model()->findByAttributes(array('gtin'=>$row['I'])))
+											$entro=1;
+										
+									if($row['H']=="NPF")
+										if(Producto::model()->findByAttributes(array('nparte'=>$row['I'])))
+											$entro=1;	
+								
+									if($entro==0)
+										$erroresCodigo.= "<li> ".$row['I']. "- <b> no corresponde a ".$row['H']."</b>, en la línea <b>" . $linea."</b></li>";
+								}	
+
+							}
+							
+							
 							
 									
 						}
@@ -2108,14 +2333,15 @@ class ProductoController extends Controller
 							$entro=0;	
 							foreach($skuRepetidos as $skuLocal)
 							{
-								if($skuLocal==$row['A'] && $entro==0)
+								$dividir=explode("/", $skuLocal);
+								if(($dividir[0]==$row['A'] && $dividir[1]==$row['G']) && $entro==0)
 								{
 									$erroresSkuRepetidos .= "<li> <b>" . $row['A'] . "</b>, en la línea <b>" . $linea."</b></li>";
 									$entro=1;
 								}
 							}
 						}
-						array_push($skuRepetidos, $row['A']);
+						array_push($skuRepetidos, $row['A']."/".$row['G']);
 						
 						
 						if(!($row['B']=="Nuevo" || $row['B']=="Usado" || $row['B']=="Refabricado")) // si no es ninguna de estas opciones
@@ -2167,6 +2393,16 @@ class ProductoController extends Controller
 							if(!(is_numeric($row['E']))) 
 							{
 								$erroresCantidadVender .= "<li> Precio - <b>".$row['E']."</b>, en la línea <b>" . $linea."</b></li>";
+							}
+							
+							///validar almacen
+							
+							if($row['G']!="")
+							{
+								if(!Almacen::model()->findByAttributes(array('alias'=>$row['G'], 'empresas_id'=>$empresa_id)))
+								{
+									$erroresAlmacen.="<li> Almacen- <b>".$row['G']."</b>, en la línea <b>" . $linea."</b></li>";
+								}
 							}
 							
 							
@@ -2239,7 +2475,7 @@ class ProductoController extends Controller
                                  </ul><br>";
             }
             if($erroresSkuRepetidos != ""){
-                $erroresSkuRepetidos = "Los siguientes SKU estan repetidos:<br><ul>
+                $erroresSkuRepetidos = "Los siguientes SKU Y Almacenes estan repetidos:<br><ul>
                                  {$erroresSkuRepetidos}
                                  </ul><br>";
             }
@@ -2274,7 +2510,20 @@ class ProductoController extends Controller
                                  {$erroresCantidadVender}
                                  </ul><br>";
             }
-            
+            if($erroresAlmacen != ""){
+                $erroresAlmacen = "Los Siguientes Almacenes no existen o estan mal escritos:<br><ul>
+                                 {$erroresAlmacen}
+                                 </ul><br>";
+            }
+			
+			 if($erroresSkuLocal != ""){
+                $erroresSkuLocal = "Los siguientes sku no existen y se debe indicar un codigo y un Tipo de codigo:<br><ul>
+                                 {$erroresSkuLocal}
+                                 </ul><br>";
+            }
+			
+			
+			
             
             /////////////////////////////////los siguientes mensajes no son errores////////////////////////////////////////////////////
             if($referenciasActualizadas != ""){
@@ -2307,7 +2556,7 @@ class ProductoController extends Controller
                     $erroresCatRepetidas. $erroresCategorias . $erroresCatVacias.
                     $erroresPrecio . $erroresCosto . $erroresPeso .
                     $erroresColumnasVacias . $erroresSku . $erroresSkuRepetidos. $erroresSkuTodaAplicacion. $erroresTallaColorRepetidos. 
-					$erroresTipoCodigo. $erroresCodigo.$erroresCondicion. $erroresCantidadVender;
+					$erroresTipoCodigo. $erroresCodigo.$erroresCondicion. $erroresCantidadVender.$erroresAlmacen.$erroresSkuLocal;
             
             if($errores != ""){
                 

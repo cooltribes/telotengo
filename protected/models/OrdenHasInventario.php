@@ -61,6 +61,7 @@ class OrdenHasInventario extends CActiveRecord
 		return array(
 			'inventario' => array(self::BELONGS_TO, 'Inventario', 'inventario_id'),
 			'orden' => array(self::BELONGS_TO, 'Orden', 'orden_id'),
+			'almacen' => array(self::BELONGS_TO, 'Almacen', 'almacen_id'),
 		);
 	}
 
