@@ -206,4 +206,8 @@ class ProfileController extends Controller
 		}
 		return $this->_model;
 	}
+    
+    public function actionIndex(){
+        $this->render('index',array('model'=>User::model()->findByPk(Yii::app()->user->id)));
+    }
 }

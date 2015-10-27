@@ -31,7 +31,9 @@ class OrdenController extends Controller
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
 				'actions'=>array('create','update','view','cancelar','listado','detalleusuario','ventas','calificarVendedor','reclamo','responderReclamo'
-					,'devolucion','procesarDevolucion', 'procesarTodo', 'procesarSimple'), //TODO lista de control de accesos con los roles nuevos... procesarTodo, procesarSimple
+
+					,'devolucion','procesarDevolucion', 'procesarTodo', 'procesarSimple', 'detalleVendedor', 'cambiarEstado','misCompras','misVentas'), //TODO lista de control de accesos con los roles nuevos... procesarTodo, procesarSimple
+
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -252,6 +254,68 @@ class OrdenController extends Controller
 			'dataProvider'=>$dataProvider,
 		));
 	}
+    public function actionMisCompras()
+    {
+        $model = new Orden();
+        $model->unsetAttributes();  // clear any default values
+        $bandera=false;
+        $dataProvider = $model->search();
+        
+                /* Para mantener la paginacion en las busquedas */
+        if(isset($_GET['ajax']) && isset($_SESSION['searchPedido']) && !isset($_POST['query'])){
+            $_POST['query'] = $_SESSION['searchPedido'];
+            $bandera=true;
+        }
+
+        /* Para buscar desde el campo de texto */
+        if (isset($_POST['query'])){
+            $bandera=true;
+            unset($_SESSION['searchPedido']);
+            $_SESSION['searchPedido'] = $_POST['query'];
+            $model->id = $_POST['query'];
+            $dataProvider = $model->search();
+        }   
+
+        if($bandera==FALSE){
+            unset($_SESSION['searchPedido']);
+        }
+            
+        $this->render('mis_compras',array(
+            'model'=>$model,
+            'dataProvider'=>$dataProvider,
+        ));
+    }
+    public function actionMisVentas()
+    {
+        $model = new Orden();
+        $model->unsetAttributes();  // clear any default values
+        $bandera=false;
+        $dataProvider = $model->search();
+        
+                /* Para mantener la paginacion en las busquedas */
+        if(isset($_GET['ajax']) && isset($_SESSION['searchPedido']) && !isset($_POST['query'])){
+            $_POST['query'] = $_SESSION['searchPedido'];
+            $bandera=true;
+        }
+
+        /* Para buscar desde el campo de texto */
+        if (isset($_POST['query'])){
+            $bandera=true;
+            unset($_SESSION['searchPedido']);
+            $_SESSION['searchPedido'] = $_POST['query'];
+            $model->id = $_POST['query'];
+            $dataProvider = $model->search();
+        }   
+
+        if($bandera==FALSE){
+            unset($_SESSION['searchPedido']);
+        }
+            
+        $this->render('mis_ventas',array(
+            'model'=>$model,
+            'dataProvider'=>$dataProvider,
+        ));
+    }
 
 	/**
 	 * Historial de órdenes para empresa vendedora
@@ -306,9 +370,18 @@ class OrdenController extends Controller
 	 */
 	public function actionDetalle($id)
 	{
-	    $this->layout='//layouts/start';
-        $this->render("detalle");  
-        
+	   // $this->layout='//layouts/start';
+	   
+	   $model=Orden::model()->findByPk($id);
+	   $empresas_id=EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id))->empresas_id; // id del que esta intentado entrar
+	   
+	   $productoOrden=OrdenHasInventario::model()->findAllByAttributes(array('orden_id'=>$model->id));
+	   $ordenEstado=OrdenEstado::model()->findAllByAttributes(array('orden_id'=>$model->id), array ('order'=>'orden_id desc'));
+	   if($model->empresa_id==$empresas_id)
+       		$this->render("detalle", array('model'=>$model, 'productoOrden'=>$productoOrden, 'ordenEstado'=>$ordenEstado));  
+	   else
+		  throw new CHttpException(403,'No esta autorizado a visualizar este contenido');
+	   
         
         
         /*
@@ -341,6 +414,23 @@ class OrdenController extends Controller
 			
 		}*/
 	}
+
+	public function actionDetalleVendedor($id)
+	{
+		 $model=Orden::model()->findByPk($id);	
+		 $empresas_id=EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id))->empresas_id; // id del que esta intentado entrar	
+		$productoOrden=OrdenHasInventario::model()->findAllByAttributes(array('orden_id'=>$model->id));
+		$ordenEstado=OrdenEstado::model()->findAllByAttributes(array('orden_id'=>$model->id), array ('order'=>'orden_id desc'));
+		if(Orden::model()->findBySql("select * from tbl_orden where id=".$id." and almacen_id in (select id from tbl_almacen where empresas_id=".$empresas_id.")")) // la empresa que vendio
+		{
+			$this->render("detalleVendedor", array('model'=>$model, 'productoOrden'=>$productoOrden, 'ordenEstado'=>$ordenEstado));  
+		}
+		else 
+		{
+			throw new CHttpException(403,'No esta autorizado a visualizar este contenido');
+		}
+	}
+
 	
 	/**
 	 * Detalle del modelo
@@ -932,6 +1022,15 @@ class OrdenController extends Controller
 				$orden->monto=$monto;
 				$orden->save();
 				$orden->refresh();
+				
+				$ordenEstado=new OrdenEstado;
+				$ordenEstado->estado=0;
+				$ordenEstado->empresa_id=$empresas_id;
+				$ordenEstado->user_id=Yii::app()->user->id;
+				$ordenEstado->fecha=date("Y-m-d H:i:s");
+				$ordenEstado->orden_id=$orden->id;
+
+
 			
 			}
 			else
@@ -980,6 +1079,13 @@ class OrdenController extends Controller
 				$orden->save();
 				$orden->refresh();
 				
+				$ordenEstado=new OrdenEstado;
+				$ordenEstado->estado=0;
+				$ordenEstado->empresa_id=$empresas_id;
+				$ordenEstado->user_id=Yii::app()->user->id;
+				$ordenEstado->fecha=date("Y-m-d H:i:s");
+				$ordenEstado->orden_id=$orden->id;
+				
 		foreach ($bolsaInventario as $bolsaRecorrido)
 		{
 			$ordenInventario= new OrdenHasInventario;
@@ -996,9 +1102,31 @@ class OrdenController extends Controller
 		
 		BolsaHasInventario::model()->deleteAllByAttributes(array('bolsa_id'=>$bolsa_id, 'almacen_id'=>$almacen_id)); // los borra todos	
 	}
+
+	public function actionCambiarEstado()
+	{
+		unset(Yii::app()->session['nombre']);
+		$id=$_POST['id'];
+		$estado=$_POST['estado'];
+		$model=Orden::model()->findByPk($id);
+		$model->estado=$estado;
+		$model->save();
+		
+		$model->refresh();
+		
+				$ordenEstado=new OrdenEstado;
+				$ordenEstado->estado=$estado;
+				$ordenEstado->empresa_id= $empresas_id=EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id))->empresas_id;
+				$ordenEstado->user_id=Yii::app()->user->id;
+				$ordenEstado->fecha=date("Y-m-d H:i:s");
+				$ordenEstado->orden_id=$model->id;
+				$ordenEstado->save();
+				
+				Yii::app()->session['nombre']=User::model()->FindByPk(Yii::app()->user->id)->profile->first_name." ".User::model()->FindByPk(Yii::app()->user->id)->profile->last_name;
+		/////TODO SACAR EL CORREO ELECTRONICO PARA LOS RESPECTIVOS USUARIOS
+		echo $estado;
+		
+	}
     
-    public function actionDetalle(){
-        $this->layout='//layouts/start';
-        $this->render("detalle");  
-    }
+   
 }

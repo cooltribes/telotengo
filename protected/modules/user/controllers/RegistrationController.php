@@ -23,7 +23,7 @@ class RegistrationController extends Controller
             $model = new RegistrationForm;
             $profile = new Profile;
             $profile->regMode = true;
-             $this->layout='//layouts/b2b';
+             //$this->layout='//layouts/b2b';
 			 
 			 //colocar el formulario de login dentro de index
 			 		if (Yii::app()->user->isGuest) {

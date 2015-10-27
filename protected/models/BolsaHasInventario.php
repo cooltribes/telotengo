@@ -59,6 +59,7 @@ class BolsaHasInventario extends CActiveRecord
 		return array(
 			'bolsa' => array(self::BELONGS_TO, 'Bolsa', 'bolsa_id'),
 			'inventario' => array(self::BELONGS_TO, 'Inventario', 'inventario_id'),
+			'almacen' => array(self::BELONGS_TO, 'Almacen', 'almacen_id'),
 		);
 	}
 

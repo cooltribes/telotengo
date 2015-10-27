@@ -65,7 +65,7 @@
                                             <?php                                                  
                                                     echo CHtml::activeHiddenField($profile,$field->varname,array('value'=>""));
                                                     echo '<span class="help-inline"></span>';
-                                                    echo $form->error($profile,$field->varname,array('style'=>'margin-top: 8px;'));
+                                                    echo $form->error($profile,$field->varname,array('style'=>'margin-top: -13px; margin-left: 153px; margin-bottom: 8px;'));
                                                 }else{
                                                     $this->widget('zii.widgets.jui.CJuiDatePicker',array(
                                                         'name'=>$field->varname,

@@ -25,20 +25,12 @@ include("class.zoom.json.services.php");
 
 
 /*
- * Definicion de los estados de la orden por transferencia
- * 1 - En espera de pago
- * 2 - En espera de confirmación
- * 3 - Pago Confirmado
- * 4 - Enviado
- * 5 - Cancelado
- * 6 - Pago Rechazado
- * 7 - Pago insuficiente
- * 8 - Recibido
- * 9 - Devuelto
- * 10 - Parcialmente devuelto
- * 11 - Finalizada
- * 12 - Finalizada - Devuelta
- * 13 - Finalizada - Parcialmente devuelta
+ * Definicion de los estados de la orden
+
+	0	Pendiente
+	1	Aprobada
+	2	Rechazada
+
  * 
  * -------------- 
  * Tipo de Guia
@@ -363,9 +355,9 @@ class Orden extends CActiveRecord
 		if($estado==0)
 			return "Pendiente";
 		if($estado==1)
-			return "Pagada";
+			return "Aprobada";
 		if($estado==2)
-			return "Cancelada";
+			return "Rechazada";
 		
 	}
 

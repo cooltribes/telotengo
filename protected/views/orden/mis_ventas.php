@@ -243,10 +243,8 @@ $this->breadcrumbs=array(
             <tr>
 	            <th scope="col">N°</th>
 	            <th scope="col">Fecha de emisión</th>
-	            <th scope="col">Empresa Vendedora</th>
-	            <th scope="col">Usuario Vendedor</th>
 	            <th scope="col">Empresa Compradora</th>
-                <th scope="col">Usuario Comprador</th>
+	            <th scope="col">Usuario Comprador</th>
 	            <th scope="col">Monto</th>
 	            <th scope="col">Estado</th>
 	            <th scope="col">Acciones</th>
@@ -260,7 +258,7 @@ $this->breadcrumbs=array(
 			$this->widget('zii.widgets.CListView', array(
 		    'id'=>'list-auth-ordenes',
 		    'dataProvider'=>$dataProvider,
-		    'itemView'=>'_datos',
+		    'itemView'=>'_datos_ventas',
 		    'template'=>$template,
 		    'summaryCssClass'=>'pull-left',
 		    'enableSorting'=>'true',

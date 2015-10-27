@@ -7,6 +7,8 @@
         font-weight: bolder;
         margin: 0;
     }
+    #estado.rechazado {color: #ec1f24}
+    #estado.aceptado {color: #00AA00}
     #orderDetail div h3{        
         margin: 0;
         font-size: 16px;
@@ -15,8 +17,6 @@
         font-size:24px;
         font-weight: bold;
     }
-    #estado.rechazado {color: #ec1f24}
-    #estado.aceptado {color: #00AA00}
     .orderInfo .estadoOrden span.success{
         color: #08CB53;
     }
@@ -58,7 +58,7 @@
     <div class="col-md-7 orderInfo no_horizontal_padding">
         
         <h3 class="margin_top_small">Estado actual: </h3>
-                <?php
+        <?php
         if($model->estado==0)
 		{?>
 					<p class="estadoOrden"><span id="estado"><?php echo $model->estados($model->estado);?></span></p>
@@ -75,6 +75,14 @@
 		<?php	
 		}
 		?>
+		
+       	<?php
+       	if($model->estado==0)
+		{
+         	echo CHtml::submitButton('Aceptar', array('id'=>'aceptar','name'=>$model->id,'class'=>'btn-orange btn btn-danger btn-large orange_border margin_left')); 
+         	echo CHtml::submitButton('Cancelar', array('id'=>'cancelar','name'=>$model->id,'class'=>'btn-orange btn btn-danger btn-large orange_border margin_left')); 
+        }
+        ?>
         <div class="margin_top sellerInfo">
             <p>
                 <span class="name">Información del Vendedor</span>
@@ -111,7 +119,7 @@
     </div>
     <div class="col-md-5 orderActions no_horizontal_padding">
         <h3>Acciones pendientes</h3>
-        <table width="100%" class="table-striped">
+        <table width="100%" class="table-striped" id="tabla">
             <col width="30%">
             <col width="40%">
             <col width="30%">
@@ -126,7 +134,7 @@
             	<?php foreach($ordenEstado as $local): ?>
                 <tr>
                     <td><?php echo $local->orden->estados($local->estado);?></td>
-                    <td><?php echo $local->orden->users->profile->first_name." ". $local->orden->users->profile->last_name;;?></td>
+                    <td><?php echo $local->orden->users->profile->first_name." ". $local->orden->users->profile->last_name;?></td>
                     <td><?php $date = date_create($local->fecha);echo date_format($date, 'd/m/Y H:i:s');;?></td>
                 </tr>
                 
@@ -204,4 +212,55 @@
     
     
 </div>
+<script>
+		$(document).ready(function() {
+			$('#aceptar').click(function() {
+				var id=$(this).attr("name");
+				var estado=1;
+				cambio(id, estado);
 
+			});
+			
+			$('#cancelar').click(function() {
+				var id=$(this).attr("name");
+				var estado=2;
+				cambio(id, estado);
+
+			});
+			
+			function cambio(id, estado)
+			{
+					$.ajax({
+			         url: "<?php echo Yii::app()->createUrl('Orden/cambiarEstado') ?>",
+		             type: 'POST',
+			         data:{
+		                    id:id, estado:estado
+		                   },
+			        success: function (data) {
+			        	
+			        	$('#aceptar').hide();
+			        	$('#cancelar').hide();
+			        	var user="<?php echo Yii::app()->session['nombre'];?>";     	 
+			        	var fecha="<?php $date = date_create(date("Y-m-d H:i:s"));echo date_format($date, 'd/m/Y H:i:s');?>" ; 
+			        	if(data==1)
+			        	{
+			        		$('#estado').addClass('aceptado');
+			        		$('#estado').html('Aceptada');
+			        		var variable="Aprobada";
+
+			        			
+			        	}else
+			        	{
+				        	$('#estado').addClass('rechazado');
+				        	$('#estado').html('Rechazada');
+				        	var variable="Rechazada";
+			        	}
+						$('#tabla').append('<tr> <td> '+variable+' </td> <td>'+user+' </td> <td>'+fecha+' </td> </tr>');
+
+			       	}
+			    })
+			}
+		
+		});
+
+</script>
