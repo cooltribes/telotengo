@@ -16,7 +16,7 @@
 echo "<tr>";
     echo '<td><input type="checkbox"/></td>';   
     echo '<td><img width:"60px" src="http://placehold.it/60x60"/></td>';   
-    echo "<td><b>".$data->profile->first_name.' '.$data->profile->last_name."</b></td>"; 
+    echo "<td><b>".$data->profile->first_name.' '.$data->profile->last_name."</b><br/><b>ID:</b>".$data->id."</td>"; 
     echo "<td>".$data->email."<br/><b>Telf:</b>".$data->profile->telefono."</td>";
     
     if($data->superuser==1)

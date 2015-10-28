@@ -206,7 +206,7 @@ class User extends CActiveRecord
         $criteria->compare('newsletter',$this->newsletter);
 		$criteria->compare('facebook_id',$this->facebook_id);
 		$criteria->compare('avatar_url',$this->avatar_url);
-		$criteria->addCondition('type <> 3');
+		#$criteria->addCondition('type <> 3');
 
         return new CActiveDataProvider(get_class($this), array(
             'criteria'=>$criteria,
@@ -549,6 +549,18 @@ class User extends CActiveRecord
         }
         public function getBolsa(){
             return $this->empresa->bolsa;
+        }
+        public function getCargo($empresa = false){
+            $ehu=EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id));
+            if($ehu){
+                if($empresa)
+                    return $ehu->rol." en ".$this->getEmpresa()->razon_social;
+                else
+                    return $ehu->rol;
+            }
+                
+            else
+                return "N/D";
         }
         
         

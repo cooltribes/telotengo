@@ -259,7 +259,7 @@ class OrdenController extends Controller
         $model = new Orden();
         $model->unsetAttributes();  // clear any default values
         $bandera=false;
-        $dataProvider = $model->search();
+        $dataProvider = $model->searchCompra();
         
                 /* Para mantener la paginacion en las busquedas */
         if(isset($_GET['ajax']) && isset($_SESSION['searchPedido']) && !isset($_POST['query'])){
@@ -273,7 +273,7 @@ class OrdenController extends Controller
             unset($_SESSION['searchPedido']);
             $_SESSION['searchPedido'] = $_POST['query'];
             $model->id = $_POST['query'];
-            $dataProvider = $model->search();
+            $dataProvider = $model->searchCompra();
         }   
 
         if($bandera==FALSE){
@@ -290,7 +290,8 @@ class OrdenController extends Controller
         $model = new Orden();
         $model->unsetAttributes();  // clear any default values
         $bandera=false;
-        $dataProvider = $model->search();
+		$empresas_id=EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id))->empresas_id; // id del que esta intentado entrar
+        $dataProvider = $model->searchVentas($empresas_id);
         
                 /* Para mantener la paginacion en las busquedas */
         if(isset($_GET['ajax']) && isset($_SESSION['searchPedido']) && !isset($_POST['query'])){
@@ -304,16 +305,31 @@ class OrdenController extends Controller
             unset($_SESSION['searchPedido']);
             $_SESSION['searchPedido'] = $_POST['query'];
             $model->id = $_POST['query'];
-            $dataProvider = $model->search();
+            $dataProvider = $model->searchVentas($empresas_id);
         }   
 
         if($bandera==FALSE){
             unset($_SESSION['searchPedido']);
         }
-            
+		$sql = "select count(*) as contador from tbl_orden where almacen_id in (select id from tbl_almacen where empresas_id=".$empresas_id.")";
+		$contador = Yii::app()->db->createCommand($sql)->queryRow();
+		
+		$sql = "select count(*) as contador  from tbl_orden where  estado=0 and almacen_id in (select id from tbl_almacen where empresas_id=".$empresas_id.")";
+		$pendiente = Yii::app()->db->createCommand($sql)->queryRow();
+		
+		$sql = "select count(*) as contador  from tbl_orden where  estado=2 and almacen_id in (select id from tbl_almacen where empresas_id=".$empresas_id.")";
+		$rechazado = Yii::app()->db->createCommand($sql)->queryRow();
+				
+		$sql = "select count(*) as contador  from tbl_orden where  estado=1 and almacen_id in (select id from tbl_almacen where empresas_id=".$empresas_id.")";
+		$aprobado = Yii::app()->db->createCommand($sql)->queryRow();
+		
         $this->render('mis_ventas',array(
             'model'=>$model,
             'dataProvider'=>$dataProvider,
+            'contador'=>$contador['contador'],
+            'pendiente'=>$pendiente['contador'],
+            'rechazado'=>$rechazado['contador'],
+            'aprobado'=>$aprobado['contador'],
         ));
     }
 
@@ -372,11 +388,18 @@ class OrdenController extends Controller
 	{
 	   // $this->layout='//layouts/start';
 	   
-	   $model=Orden::model()->findByPk($id);
-	   $empresas_id=EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id))->empresas_id; // id del que esta intentado entrar
-	   
+	   $model=Orden::model()->findByPk($id);	   
 	   $productoOrden=OrdenHasInventario::model()->findAllByAttributes(array('orden_id'=>$model->id));
 	   $ordenEstado=OrdenEstado::model()->findAllByAttributes(array('orden_id'=>$model->id), array ('order'=>'orden_id desc'));
+	   
+		if(Yii::app()->authManager->checkAccess("admin", Yii::app()->user->id)) // si es Administrador
+		{
+			$this->render("detalle", array('model'=>$model, 'productoOrden'=>$productoOrden, 'ordenEstado'=>$ordenEstado)); 
+			Yii::app()->end();
+		}
+		
+	   $empresas_id=EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id))->empresas_id; // id del que esta intentado entrar
+
 	   if($model->empresa_id==$empresas_id)
        		$this->render("detalle", array('model'=>$model, 'productoOrden'=>$productoOrden, 'ordenEstado'=>$ordenEstado));  
 	   else
@@ -1029,6 +1052,7 @@ class OrdenController extends Controller
 				$ordenEstado->user_id=Yii::app()->user->id;
 				$ordenEstado->fecha=date("Y-m-d H:i:s");
 				$ordenEstado->orden_id=$orden->id;
+				$ordenEstado->save();
 
 
 			
@@ -1085,6 +1109,7 @@ class OrdenController extends Controller
 				$ordenEstado->user_id=Yii::app()->user->id;
 				$ordenEstado->fecha=date("Y-m-d H:i:s");
 				$ordenEstado->orden_id=$orden->id;
+				$ordenEstado->save();
 				
 		foreach ($bolsaInventario as $bolsaRecorrido)
 		{
@@ -1099,13 +1124,14 @@ class OrdenController extends Controller
 		
 		$orden->monto=$monto;
 		$orden->save();
+		$orden->refresh();
 		
 		BolsaHasInventario::model()->deleteAllByAttributes(array('bolsa_id'=>$bolsa_id, 'almacen_id'=>$almacen_id)); // los borra todos	
+		echo $orden->id;
 	}
 
 	public function actionCambiarEstado()
 	{
-		unset(Yii::app()->session['nombre']);
 		$id=$_POST['id'];
 		$estado=$_POST['estado'];
 		$model=Orden::model()->findByPk($id);
@@ -1122,7 +1148,7 @@ class OrdenController extends Controller
 				$ordenEstado->orden_id=$model->id;
 				$ordenEstado->save();
 				
-				Yii::app()->session['nombre']=User::model()->FindByPk(Yii::app()->user->id)->profile->first_name." ".User::model()->FindByPk(Yii::app()->user->id)->profile->last_name;
+				
 		/////TODO SACAR EL CORREO ELECTRONICO PARA LOS RESPECTIVOS USUARIOS
 		echo $estado;
 		

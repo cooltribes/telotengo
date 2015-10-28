@@ -233,14 +233,17 @@
                     </ul>
                     <div id="myTabContent" class="tab-content">
                       <div role="tabpanel" class="tab-pane fade active in" id="moreDetails" aria-labelledby="home-tab">
-                        <?php $this->renderPartial('more_details', array('busqueda'=>$busqueda)); ?>
+                         
+                        <?php if(!is_null($busqueda))$this->renderPartial('more_details', array('busqueda'=>$busqueda));else echo "<div class='text-center margin_top'>No hay información disponible</div>" ?>
                       </div>
                       <div role="tabpanel" class="tab-pane fade" id="specifications" aria-labelledby="specifications-tab">
-                       <?php $this->renderPartial('more_details', array('busqueda'=>$busqueda)); ?>
+                      <?php if(!is_null($busqueda))$this->renderPartial('more_details', array('busqueda'=>$busqueda));else echo "<div class='text-center margin_top'>No hay información disponible</div>" ?>
+                     
                       </div>
                         
                       <div role="tabpanel" class="tab-pane fade" id="recommendations" aria-labelledby="recommendations-tab">
-                        <?php $this->renderPartial('more_details', array('busqueda'=>$busqueda)); ?>
+                       <?php if(!is_null($busqueda))$this->renderPartial('more_details', array('busqueda'=>$busqueda));else echo "<div class='text-center margin_top'>No hay información disponible</div>" ?>
+                     
                       </div>
                       
                     </div>

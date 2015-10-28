@@ -1,22 +1,64 @@
 
-<table width="100%" class="detailTable margin_top">
+<table width="100%" class="detailTable margin_top table-bordered">
                             <col width="15%">
                             <col width="35%"> 
                             <col width="15%">
                             <col width="35%">    
-          <? unset($busqueda["_id"],$busqueda["producto"]);
+         <? unset($busqueda["_id"],$busqueda["producto"]);
           while(true): ?>
      
-                    <tr>
-                        <?php                            
-                            $busqueda=Funciones::fillRow($busqueda);
-                            if($busqueda===false)
-                                break;                         
-                            $busqueda=Funciones::fillRow($busqueda);
-                            if($busqueda===false)
-                                break;
-                                
-                        ?>  
-                        </tr>                   
+    <tr>
+        <?php if(!is_array($busqueda)) break;?>    
+        <td class="title"><?php echo key($busqueda); ?></td>
+        <td>
+            <?php
+            if(is_array(current($busqueda)))
+            {
+                foreach(current($busqueda) as $item)
+                {
+                    echo $item."<br/>";
+                }
+            } else{
+                 echo current($busqueda);
+            }
+            if(next($busqueda)===false)
+                break;
+            else{
+                    if(strpos(key($busqueda),'*-*')){
+                        echo current($busqueda).' ';
+                        next($busqueda);
+                    }                                                                  
+                    
+            } ?>
+        </td>
+                        
+                        
+        <?php if(current($busqueda)===false) break;?>    
+        <td class="title"><?php echo key($busqueda); ?></td>
+        <td>
+            <?php
+            if(is_array(current($busqueda)))
+            {
+                foreach(current($busqueda) as $item)
+                {
+                    echo $item."<br/>";
+                }
+            } else{
+                 echo current($busqueda);
+            }
+            if(next($busqueda)===false)
+                break;
+            else{
+                    if(strpos(key($busqueda),'*-*')){
+                        echo current($busqueda).' ';
+                        next($busqueda);
+                    }                                                                  
+                    
+            } ?>
+        </td>
+                        
+        <?php if(current($busqueda)===false) break; ?>        
+            
+    </tr>                   
           <?php endwhile;  ?>
 </table>
