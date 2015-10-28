@@ -44,7 +44,8 @@
 		                   },
 			        success: function (data) {
 			        	
-						location.reload();
+						var path= "<?php echo Yii::app()->createUrl('Orden/misCompras') ?>";
+						window.location.href = path;
 			       	}
 			    })
 		});

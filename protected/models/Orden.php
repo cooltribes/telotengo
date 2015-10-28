@@ -161,6 +161,66 @@ class Orden extends CActiveRecord
 		//$criteria->compare('balance',$this->balance);
 		$criteria->compare('direccionEnvio_id',$this->direccionEnvio_id);
 		$criteria->order = "id DESC";
+		
+
+		return new CActiveDataProvider($this, array(
+			'criteria'=>$criteria,
+		));
+	}
+	
+	public function searchCompra()
+	{
+		// @todo Please modify the following code to remove attributes that should not be searched.
+
+		$criteria=new CDbCriteria;
+
+		$criteria->compare('id',$this->id);
+		//$criteria->compare('descuento',$this->descuento);
+		$criteria->compare('envio',$this->envio);
+		$criteria->compare('iva',$this->iva);
+		$criteria->compare('total',$this->total);
+		$criteria->compare('fecha',$this->fecha,true);
+		$criteria->compare('estado',$this->estado);
+		$criteria->compare('users_id',$this->users_id);
+		$criteria->compare('tipo_pago_id',$this->tipo_pago_id);
+		//$criteria->compare('tipo_guia',$this->tipo_guia);
+		//$criteria->compare('tracking',$this->tracking);
+		//$criteria->compare('balance',$this->balance);
+		$criteria->compare('direccionEnvio_id',$this->direccionEnvio_id);
+		$criteria->condition = 'users_id=:users_id';
+		$criteria->params=(array(':users_id'=>Yii::app()->user->id));
+		$criteria->order = "id DESC";
+		
+
+		return new CActiveDataProvider($this, array(
+			'criteria'=>$criteria,
+		));
+	}
+
+	public function searchVentas($empresas_id)
+	{
+		// @todo Please modify the following code to remove attributes that should not be searched.
+
+		$criteria=new CDbCriteria;
+
+		$criteria->compare('id',$this->id);
+		//$criteria->compare('descuento',$this->descuento);
+		$criteria->compare('envio',$this->envio);
+		$criteria->compare('iva',$this->iva);
+		$criteria->compare('total',$this->total);
+		$criteria->compare('fecha',$this->fecha,true);
+		$criteria->compare('estado',$this->estado);
+		$criteria->compare('users_id',$this->users_id);
+		$criteria->compare('tipo_pago_id',$this->tipo_pago_id);
+		//$criteria->compare('tipo_guia',$this->tipo_guia);
+		//$criteria->compare('tracking',$this->tracking);
+		//$criteria->compare('balance',$this->balance);
+		$criteria->compare('direccionEnvio_id',$this->direccionEnvio_id);
+		//$criteria->condition = 'users_id=:users_id';
+		//$criteria->params=(array(':users_id'=>Yii::app()->user->id));
+		$criteria->condition= 'almacen_id in (select id from tbl_almacen where empresas_id='.$empresas_id.')';
+		$criteria->order = "id DESC";
+		
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

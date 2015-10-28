@@ -133,7 +133,8 @@ Yii::app()->session['suma']=$total;
 		                   },
 			        success: function (data) {
 			        	
-						location.reload();
+						var path="<?php echo Yii::app()->createUrl('Orden/detalle') ?>";
+						window.location.href = path+'/'+data;
 			       	}
 			    })
 			

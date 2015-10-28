@@ -206,7 +206,7 @@ class User extends CActiveRecord
         $criteria->compare('newsletter',$this->newsletter);
 		$criteria->compare('facebook_id',$this->facebook_id);
 		$criteria->compare('avatar_url',$this->avatar_url);
-		$criteria->addCondition('type <> 3');
+		#$criteria->addCondition('type <> 3');
 
         return new CActiveDataProvider(get_class($this), array(
             'criteria'=>$criteria,
