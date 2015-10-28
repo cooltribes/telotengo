@@ -1,5 +1,5 @@
 
-<?php
+<?php 
 // $model = Categoria::model()->findAllBySql("select * from tbl_categoria where id_padre in (select id from tbl_categoria where id_padre=0)  order by nombre asc");
  $model=Categoria::model()->findAllByAttributes(array('id_padre'=>0), array('order'=>' id asc'));
 ?>
@@ -312,7 +312,9 @@ $(document).ready(function() {
 			var busqueda=$('#busqueda').val();
 			if(busqueda=="")
 				return false;
-			window.location.href = '../tienda/index?producto='+busqueda;
+			var path='<?php echo Yii::app()->createUrl('tienda/index');?>';
+			window.location.href = path+'?producto='+busqueda;
+			//window.location.href = '../tienda/index?producto='+busqueda;
 			//window.location.href = '../tienda/index/'+busqueda;
 				
 			
