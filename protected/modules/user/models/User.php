@@ -550,6 +550,18 @@ class User extends CActiveRecord
         public function getBolsa(){
             return $this->empresa->bolsa;
         }
+        public function getCargo($empresa = false){
+            $ehu=EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id));
+            if($ehu){
+                if($empresa)
+                    return $ehu->rol." en ".$this->getEmpresa()->razon_social;
+                else
+                    return $ehu->rol;
+            }
+                
+            else
+                return "N/D";
+        }
         
         
 }

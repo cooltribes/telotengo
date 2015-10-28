@@ -176,7 +176,10 @@ class TiendaController extends Controller
 		$filtroPrecio="";
 		if(isset($_GET['producto']))
 		{
-			$filter['producto']=$_GET['producto'];
+	
+                $filter['producto']=$_GET['producto'];
+          
+                 
 			$productoPartido=explode(" ", $_GET['producto']);
 			$num=count($productoPartido);
 
@@ -212,7 +215,7 @@ class TiendaController extends Controller
 			}
 		}
 		else 
-		{
+		{   $filter['producto']="";
 			$sql="select * from tbl_producto where nombre <>''"; //TODO mejorar esto, forma menos optima
 		}
         $filter['categoria']=isset($_GET['categoria'])?$_GET['categoria']:'';
@@ -221,8 +224,8 @@ class TiendaController extends Controller
 		if(isset($_GET['precio'])){
 			$filter['precio']=$_GET['precio'];
 			$filtroPrecio=explode("-", $filter['precio']);
-			$filter['precioMayor']=$filtroPrecio[0];
-			$filter['precioMenor']=$filtroPrecio[1];
+			$filter['precioMenor']=$filtroPrecio[0];
+			$filter['precioMayor']=$filtroPrecio[1];
 		}else{
 			$filter['precio']='';
 			$filter['precioMenor']=0;

@@ -2062,7 +2062,7 @@ h1{
     }
 
     .detailTable{
-        border: solid 1px #AAA;
+ 
         font-size: 12px;
         background-color: #FFF;
         .title{
@@ -2074,7 +2074,7 @@ h1{
         td{
             padding: 5px;
             table-layout: fixed;
-            border: solid 1px #AAA;
+            
         }
 
        
@@ -2428,5 +2428,95 @@ h1.dark{
       }        
 }
 
+/* ADMIN ORDER */
 
+  .table-striped{
+    tbody{
+      tr{
+        td{
+          background-color: #eee !important;
+          padding: 8px 0px 8px 8px;
+        }
+      }
+      tr:nth-child(odd){
+        td{
+            background-color: #f9f9f9 !important;
+        }
+      }      
+    }    
+  }
+
+  table th{
+      padding: 5px 0px 5px 8px;
+  }
+  table{
+    thead{
+      tr{
+        th{
+            background-color: #000;
+            color:#FFF;
+            padding-top: 12px;
+            padding-bottom: 12px;
+        } 
+      }
+    }
+    tbody{
+      tr{
+        td{
+          padding-top: 12px;
+          padding-bottom: 12px;
+          a{
+            color:#333;
+            font-weight: 800;
+          }
+          a:hover{
+              color:#333;
+              text-decoration: underline;
+          } 
+        }
+      }
+    }
+  }
+   
+  h1.orderTitle{
+     font-weight: bold;
+     color: #222;
+     text-transform: uppercase;
+     font-size:18px;
+  }
+  
+  
+  .stats{
+    .stat{
+      .value{
+          color: orange;
+          font-size: 22px;
+          display: block;
+      }
+      .legend{
+          color: #888;
+          font-size: 12px;
+          display: block;
+          font-weight: 500;
+      }
+    }
+  }     
+
+  .btn-darkgray{
+      background-color: #d8d8d8;
+      height: 34px;
+      border: solid 1px #d8d8d8;
+      font-weight: 800;
+      border-radius: 0;
+      color: white;
+  }
+  .btn-darkgray:hover {
+      background-color: #D0D0D0;
+      border: solid 1px #D0D0D0;
+      color: white;
+  }   
+  
+  h3{
+    font-size: 18px;
+  }
   
