@@ -143,7 +143,7 @@
                                       endforeach; ?> 
                                    
                                     <li class="separator"></li>
-                                    <li><a href="#">Ver todas las ordenes</a></li>
+                                    <li><a href="<?php echo Yii::app()->createUrl('orden/misCompras');?>">Ver todas las ordenes</a></li>
                                   </ul>
                                 </div>
                             </div>

@@ -6,14 +6,35 @@
 	 
 	<td><?php echo $data->id; ?></td>
 	<td><?php echo date('d/m/Y',strtotime($data->fecha)); ?></td>
+	<td><?php echo Empresas::model()->findByPk($data->almacen->empresas_id)->razon_social;?></td> 
+	<td> 
+	<?php 
+		 if(OrdenEstado::model()->findByAttributes(array('estado'=>1, 'orden_id'=>$data->id))) // si aprobo
+		  {
+		  	$usuario_id=OrdenEstado::model()->findByAttributes(array('estado'=>1, 'orden_id'=>$data->id))->user_id;
+			echo User::model()->FindByPk($usuario_id)->profile->first_name." ".User::model()->FindByPk($usuario_id)->profile->last_name;
+		  }
+		 else 
+		 {
+			if(OrdenEstado::model()->findByAttributes(array('estado'=>2, 'orden_id'=>$data->id))) // si rechazo
+		  	{
+		  		$usuario_id=OrdenEstado::model()->findByAttributes(array('estado'=>2, 'orden_id'=>$data->id))->user_id;
+				echo User::model()->FindByPk($usuario_id)->profile->first_name." ".User::model()->FindByPk($usuario_id)->profile->last_name;
+		  	}
+			else 
+			{
+				echo "-";
+			} 
+		 } 
+
+		?>
+	</td> 
 	<td><?php echo $data->empresa->razon_social; ?></td> 
-	<td><?php echo "el que aprobo la orden"; ?></td> 
-	<td><?php echo $data->empresa->razon_social; ?></td> 
-    <td><?php echo "el que compró"; ?></td> 
+    <td><?php echo User::model()->FindByPk($data->users_id)->profile->first_name." ".User::model()->FindByPk($data->users_id)->profile->last_name; ?></td> 
 	
 	<td class="text-right padding_right"><?php echo $data->monto; ?></td> 
 	<td><?php echo $data->estados($data->estado); ?></td> 
-	<td><a href="<?php echo Yii::app()->createUrl('orden');?>">Ver detalles </a></td>
+	<td><a href="<?php echo Yii::app()->createUrl('orden/detalle', array('id'=>$data->id));?>">Ver detalles </a></td>
 	
 	
 	

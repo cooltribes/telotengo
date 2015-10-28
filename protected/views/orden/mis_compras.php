@@ -5,66 +5,10 @@ $this->breadcrumbs=array(
 	'Administrar',
 );
 ?>
-<style>
-    .table-striped > tbody > tr > td{
-        background-color: #eee !important;
-    }
-    .table-striped > tbody > tr:nth-child(odd) > td{
-        background-color: #f9f9f9 !important;
-    }
-    table td, .orderActions table th{
-        padding: 5px 0px 5px 8px;
-    }
-    table > thead > tr > th{
-        background-color: #000;
-        color:#FFF;
-    } 
-    table > tbody > tr > td >a{
-        color:#333;
-        font-weight: 800;
-    }
-    .table > tbody > tr > td, .table > thead > th > td{
-        padding-top: 12px;
-        padding-bottom: 12px;
-    }
-    table > tbody > tr > td >a:hover{
-        color:#333;
-        text-decoration: underline;
-    } 
-    h1{
-       font-weight: bold;
-       color: #222;
-       text-transform: uppercase;
-       font-size:18px;
-    }
-    .stats .stat .value{
-        color: orange;
-        font-size: 22px;
-        display: block;
-    }
-    .stats .stat .legend{
-        color: #888;
-        font-size: 12px;
-        display: block;
-        font-weight: 500;
-    }
-    .btn-darkgray{
-        background-color: #d8d8d8;
-        height: 34px;
-        border: solid 1px #d8d8d8;
-        font-weight: 800;
-        border-radius: 0;
-        color: white;
-    }
-    .btn-darkgray:hover {
-        background-color: #D0D0D0;
-        border: solid 1px #D0D0D0;
-        color: white;
-    }   
-</style>
 
 
-    <h1>Administrar Pedidos</h1>
+
+    <h1 class="orderTitle">Mis Compras</h1>
 
     
     <hr class="no_margin_top"/>
@@ -83,21 +27,22 @@ $this->breadcrumbs=array(
 		    
 		 <div class="row-fluid clearfix stats">
 		     <div class="col-md-1 stat">
-		         <span class="value">8888</span>
+		         <span class="value"><?php echo Orden::model()->countByAttributes(array('users_id'=>Yii::app()->user->id));?></span>
 		         <span class="legend">Totales</span>
 		     </div>
 		     <div class="col-md-1 stat">
-                 <span class="value">8888</span>
-                 <span class="legend">En espera de pago</span>
+                 <span class="value"><?php echo Orden::model()->countByAttributes(array('estado'=>0, 'users_id'=>Yii::app()->user->id))?></span>
+                 <span class="legend">Pendiente</span>
              </div>
 		     <div class="col-md-1 stat">
-                 <span class="value">8888</span>
-                 <span class="legend">Cancelados</span>
+                 <span class="value"><?php echo Orden::model()->countByAttributes(array('estado'=>2, 'users_id'=>Yii::app()->user->id))?></span>
+                 <span class="legend">Rechazados</span>
              </div>
              <div class="col-md-1 stat">
-                 <span class="value">8888</span>
-                 <span class="legend">Esperando Confirmación</span>
+                 <span class="value"><?php echo Orden::model()->countByAttributes(array('estado'=>1, 'users_id'=>Yii::app()->user->id))?></span>
+                 <span class="legend">Aprobados</span>
              </div>
+           <!--  
              <div class="col-md-1 stat">
                  <span class="value">8888</span>
                  <span class="legend">Pago confirmado</span>
@@ -118,6 +63,7 @@ $this->breadcrumbs=array(
                  <span class="value">8888</span>
                  <span class="legend">Devueltos</span>
              </div>
+            -->
 		 </div>   
 		 <hr/>    
 		    <div class="margin_top margin_bottom_small">Filtrar</div>
