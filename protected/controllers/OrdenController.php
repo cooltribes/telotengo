@@ -1132,7 +1132,6 @@ class OrdenController extends Controller
 
 	public function actionCambiarEstado()
 	{
-		unset(Yii::app()->session['nombre']);
 		$id=$_POST['id'];
 		$estado=$_POST['estado'];
 		$model=Orden::model()->findByPk($id);
@@ -1149,7 +1148,7 @@ class OrdenController extends Controller
 				$ordenEstado->orden_id=$model->id;
 				$ordenEstado->save();
 				
-				Yii::app()->session['nombre']=User::model()->FindByPk(Yii::app()->user->id)->profile->first_name." ".User::model()->FindByPk(Yii::app()->user->id)->profile->last_name;
+				
 		/////TODO SACAR EL CORREO ELECTRONICO PARA LOS RESPECTIVOS USUARIOS
 		echo $estado;
 		

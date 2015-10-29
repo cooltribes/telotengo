@@ -811,8 +811,12 @@ class UserController extends Controller
 			$model->registro_password=1;
 			$model->newPassword($id, $rol);
 		}
-
         $model->save();
+		$model->refresh();
+		$empresas_id=EmpresasHasUsers::model()->findByAttributes(array('users_id'=>$model->id))->empresas_id;
+		$bolsa= new Bolsa;
+		$bolsa->empresas_id=$empresas_id;
+		$bolsa->save();
         echo $model->status;
 		
         

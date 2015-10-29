@@ -134,7 +134,7 @@
             	<?php foreach($ordenEstado as $local): ?>
                 <tr>
                     <td><?php echo $local->orden->estados($local->estado);?></td>
-                    <td><?php echo $local->orden->users->profile->first_name." ". $local->orden->users->profile->last_name;?></td>
+                    <td><?php echo $local->user->profile->first_name." ". $local->user->profile->last_name;?></td>
                     <td><?php $date = date_create($local->fecha);echo date_format($date, 'd/m/Y H:i:s');;?></td>
                 </tr>
                 
@@ -240,7 +240,7 @@
 			        	
 			        	$('#aceptar').hide();
 			        	$('#cancelar').hide();
-			        	var user="<?php echo Yii::app()->session['nombre'];?>";     	 
+			        	var user="<?php echo User::model()->FindByPk(Yii::app()->user->id)->profile->first_name." ".User::model()->FindByPk(Yii::app()->user->id)->profile->last_name;?>";     	 
 			        	var fecha="<?php $date = date_create(date("Y-m-d H:i:s"));echo date_format($date, 'd/m/Y H:i:s');?>" ; 
 			        	if(data==1)
 			        	{

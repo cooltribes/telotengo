@@ -126,7 +126,7 @@
             	<?php foreach($ordenEstado as $local): ?>
                 <tr>
                     <td><?php echo $local->orden->estados($local->estado);?></td>
-                    <td><?php echo $local->orden->users->profile->first_name." ". $local->orden->users->profile->last_name;;?></td>
+                    <td><?php echo $local->user->profile->first_name." ". $local->user->profile->last_name;?></td>
                     <td><?php $date = date_create($local->fecha);echo date_format($date, 'd/m/Y H:i:s');;?></td>
                 </tr>
                 

@@ -1228,7 +1228,7 @@ class ProductoController extends Controller
 			$inventario->costo = $_POST['Inventario']['costo'];
 			$inventario->cantidad = $_POST['Inventario']['cantidad'];
 			$inventario->garantia = $_POST['Inventario']['garantia'];
-			$inventario->metodoEnvio = $_POST['Inventario']['metodoEnvio'];
+			//$inventario->metodoEnvio = $_POST['Inventario']['metodoEnvio'];
 			
 
 
