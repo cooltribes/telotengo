@@ -226,7 +226,7 @@ return array(
 	// using Yii::app()->params['paramName']
 	'params'=>array(
 		// this is used in contact page
-		'adminEmail'=>'info@sigmatiendas.com', 
+		'adminEmail'=>'info@telotengo.com', 
 		//'contacto'=>'contacto@telotengo.com',
 		'contacto'=>'dduque@upsidecorp.ch',
 		'uploadPath'=>dirname(__FILE__).'/../../documentos/',

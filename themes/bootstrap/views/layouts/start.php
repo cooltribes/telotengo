@@ -319,5 +319,18 @@ $(document).ready(function() {
 				
 			
 		});
+		
+		$('#busqueda').on('focus', function(event) {
+			$(document).keypress(function(e) {
+	   		 if(e.which == 13) 
+	   		 {
+	        	var busqueda=$('#busqueda').val();
+				if(busqueda=="")
+					return false;
+				var path='<?php echo Yii::app()->createUrl('tienda/index');?>';
+				window.location.href = path+'?producto='+busqueda;
+	   		  }
+			});
+		});
 });	
 </script>
