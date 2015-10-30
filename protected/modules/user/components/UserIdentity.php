@@ -42,6 +42,10 @@ class UserIdentity extends CUserIdentity
 			$this->_id=$user->id;
 			$this->username=$user->username;
 			$this->errorCode=self::ERROR_NONE;
+			/// aqui va la funcion 
+			$user->ingresos+=1;
+			$user->lastvisit_at=date("Y-m-d H:i:s");
+			$user->save();
 		}
 		return !$this->errorCode;
 	}
