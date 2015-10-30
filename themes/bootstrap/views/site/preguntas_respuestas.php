@@ -3,7 +3,7 @@
                 <h2>PREGUNTAS Y RESPUESTAS</h2>
                 <div class="moreDetails">
                     <div class="row-fluid clearfix questions">
-                        <div class="col-md-9">
+                        <div class="col-md-12">
                         	
                             <b>HAZ UNA PREGUNTA</b>
                             <textarea id='textArea'rows="2" maxlength="500" placeholder="Escribe tu pregunta (Max 500 caracteres)"></textarea>
@@ -53,6 +53,7 @@
                            
                                                         
                         </div>
+                        <!--
                         <div class="col-md-3">
                           <b>MEJORES RESPUESTAS</b>
                           <section class="margin_top">
@@ -72,7 +73,7 @@
                           
                           
                             
-                        </div>
+                        </div> -->
                     </div>                                  
                 </div>  
                               
