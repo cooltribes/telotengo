@@ -63,9 +63,9 @@ echo "<tr>";
                 break;
         }
     echo "</td>";*/
-    echo "<td>N/D</td>"; 
+    echo "<td>".$data->ingresos."</td>"; 
    
-    $fecha= date("d-m-Y", strtotime($data->create_at));
+    $fecha= date("d-m-Y", strtotime($data->lastvisit_at));
     echo "<td>".$fecha."</td>"; 
     if($data->status==1)
     {
