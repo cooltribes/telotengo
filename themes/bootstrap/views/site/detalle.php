@@ -135,11 +135,11 @@
                         	?>
                         </ul>
                     </div>
-                    <div class="col-md-12 no_padding_left slider">
+                 <!--   <div class="col-md-12 no_padding_left slider">
                         <h1>PRODUCTOS SIMILIARES</h1>
                            <?php $this->renderPartial('carousel_productos',array('data'=>$similares,'carousel'=>'proveedor', 'similares'=>1)); ?>  
                      
-                    </div>
+                    </div>-->
              
              
              </div>
@@ -228,7 +228,7 @@
                     <ul id="myTabs" class="nav nav-tabs" role="tablist">
                       <li role="presentation" class="active"><a href="#moreDetails" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true">DETALLES DEL PRODUCTO</a></li>
                       <li role="presentation" class=""><a href="#specifications" role="tab" id="specifications-tab" data-toggle="tab" aria-controls="specifications" aria-expanded="false">CARACTERÍSTICAS GENERALES</a></li>
-                      <li role="presentation" class=""><a href="#recommendations" role="tab" id="recommendations-tab" data-toggle="tab" aria-controls="recommendations" aria-expanded="false">RECOMENDACIONES DEL PRODUCTO</a></li>
+                   <!--   <li role="presentation" class=""><a href="#recommendations" role="tab" id="recommendations-tab" data-toggle="tab" aria-controls="recommendations" aria-expanded="false">RECOMENDACIONES DEL PRODUCTO</a></li>--></-->
                       
                     </ul>
                     <div id="myTabContent" class="tab-content">
@@ -236,15 +236,15 @@
                          
                         <?php if(!is_null($busqueda))$this->renderPartial('more_details', array('busqueda'=>$busqueda));else echo "<div class='text-center margin_top'>No hay información disponible</div>" ?>
                       </div>
-                      <div role="tabpanel" class="tab-pane fade" id="specifications" aria-labelledby="specifications-tab">
-                      <?php if(!is_null($busqueda))$this->renderPartial('more_details', array('busqueda'=>$busqueda));else echo "<div class='text-center margin_top'>No hay información disponible</div>" ?>
+                      <div role="tabpanel" class="tab-pane padding_top padding_bottom" id="specifications" aria-labelledby="specifications-tab">
+                         <?php echo $model->descripcion; ?>
                      
                       </div>
                         
-                      <div role="tabpanel" class="tab-pane fade" id="recommendations" aria-labelledby="recommendations-tab">
-                       <?php if(!is_null($busqueda))$this->renderPartial('more_details', array('busqueda'=>$busqueda));else echo "<div class='text-center margin_top'>No hay información disponible</div>" ?>
+             <!--         <div role="tabpanel" class="tab-pane fade" id="recommendations" aria-labelledby="recommendations-tab">
+                  
                      
-                      </div>
+              </div>-->
                       
                     </div>
                 

@@ -1,10 +1,3 @@
-<style>
-    .cards div .card{
-        border: solid 1px #CCC;
-        padding: 10px;
-                
-    }
-</style>
 <div class="col-md-3 profile-leftBar">
     <?php $this->renderPartial('left_bar',array('model'=>$model)); ?>
 </div>
@@ -39,14 +32,34 @@
     </div>
    <div class="row-fluid clearfix cards margin_top">
        <div class="col-md-6 no_padding_left">
-          <div class="card">
-              OPTIMISTA
-          </div>
+          <div class="card row-fluid clearfix">
+             <span class="title col-md-7">Info Empresa</span>
+             <span class="col-md-5 text-right">
+                 <a class="showInfo"  onclick="showInfo('#info1')" id="info1-show">Mostrar Información</a> 
+             </span>
+             <p class="hide col-md-12" id="info1">
+                 Linea 1<br/>
+                 Linea 2<br/>
+                 Linea 3<br/>
+                 Linea 4<br/>
+                 
+             </p>
+          </div> 
        </div>
-       <div class="col-md-6">
-           <div class="card no_padding_right">
-              OPTIMISTA
-          </div>
+       <div class="col-md-6 no_padding_left">
+          <div class="card row-fluid clearfix">
+             <span class="title col-md-7">Almacenes</span>
+             <span class="col-md-5 text-right">
+                 <a class="showInfo" onclick="showInfo('#info2')" id="info2-show">Mostrar Información</a>
+             </span>
+             <p class="hide col-md-12" id="info2">
+                 Linea 1<br/>
+                 Linea 2<br/>
+                 Linea 3<br/>
+                 Linea 4<br/>
+             </p>
+             
+          </div> 
        </div>
    </div>
     <h3>Ultimas Acciones</h3>
@@ -87,3 +100,17 @@
     </table>
     
 </div>
+<script>
+    
+    function showInfo(id){
+        if($(id).hasClass('hide')){
+            $(id).removeClass('hide');
+            $(id+'-show').html('Ocultar Información');           
+        }            
+        else{
+            $(id).addClass('hide');
+            $(id+'-show').html('Mostrar Información');
+        }
+            
+    }
+</script>
