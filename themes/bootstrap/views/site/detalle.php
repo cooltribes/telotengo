@@ -1,4 +1,8 @@
-
+<?php
+$baseUrl = Yii::app()->baseUrl;
+$cs = Yii::app()->getClientScript();
+$cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
+?>
         <div class="breadcrumbs margin_top">
                 <a><span>Inicio</span></a>/&nbsp;
                 <a><span>Sub Categoria</span></a>/&nbsp;
@@ -8,7 +12,16 @@
         
 
         
-       
+     <script>
+$(document).ready(function () {
+$('#miniSlide').carousel({
+   interval: 200000
+});
+
+
+
+});  
+</script>  
         
 
             
@@ -17,23 +30,34 @@
                 <div class="row-fluid">
                 
                     <div class="col-md-4 no_left_padding">
-                       <img src="<?php echo Yii::app()->getBaseUrl(true).$imagenPrincipal->url;?>" width="100%" />
-                       <div class="miniSlide">
-                           <div class="control"><span><</span></div>
+                        <div class='imagen_principal' style="overflow:hidden; max-height: 300px;"> 
+                           <img src="<?php echo Yii::app()->getBaseUrl(true).$imagenPrincipal->url;?>" width="100%" id="mainImage" />
+                         </div>
+                         
+                         
+                         
+                         
+                       <div id="miniSlide" class="carousel slide miniSlide">
+                       <?php if(count($imagen)>5): ?>    <div class="control"><span><</span></div> <?php endif; ?>
                            <?php 
-                           foreach($imagen as $image)
-						   {
-							   	if($image->orden!=1)
-								{
-							   	?>
-							   <div class="item"><img src="<?php echo Yii::app()->getBaseUrl(true).$image->url;?>" width="80" height="80" /></div>
-							   <?php
-								}	
-						   }
+                           foreach($imagen as $image): ?>
+					  
+							   
+							 <div class="item minislideImg"><img src="<?php echo str_replace('.jpg', '_x90.jpg', Yii::app()->getBaseUrl(true).$image->url);?>" width="100%" /></div>
+							 	
+					   <?php endforeach;
 						   ?>
-                           <div class="control"><span>></span></div>
+						   
+						   
+						   
+						   
+						   
+						   
+                            <?php if(count($imagen)>5): ?>    <div class="control"><span><</span></div> <?php endif; ?>
                        </div>
                     </div>
+                    
+                    
                     
                     
                     
@@ -252,7 +276,7 @@
                               
             </div>
             
-           <?php $this->renderPartial('preguntas_respuestas', array('model'=>$model, 'empresa_id'=>$empresa->id)); ?>
+           <?php //$this->renderPartial('preguntas_respuestas', array('model'=>$model, 'empresa_id'=>$empresa->id)); ?>
            
            
            
@@ -330,6 +354,82 @@
            	});
            	
            </script>
+
+
+<!-- Imagenes y ZOOM -->           
+   <script>
+       
+
+$(document).ready(function(){
+
+        var source = $('#mainImage').attr("src");
+        var imgZ = source.replace(".jpg","_orig.jpg");
+        
+        $('.imagen_principal').zoom({url: imgZ});
+        
+            $(".imagen_principal").hover(function(){ 
+                var source = $('#mainImage').attr("src");
+                var imgZ = source.replace(".jpg","_orig.");
+                
+                if(imgZ.indexOf(".png")> -1){ // consiguio png
+                    zoom = imgZ.replace(".png",".jpg");
+                    $('.imagen_principal').zoom({url: zoom});
+                }else{
+                    $('.imagen_principal').zoom({url: imgZ});
+                }           
+                
+            });
+        
+    });
+    
+    
+    $(".minislideImg>img").click(function(){
+        var image = $('#mainImage');
+        var thumbnail = $(this).attr("src");
+          
+        console.log(image);
+        console.log(thumbnail);
+        
+        var cambio = thumbnail.replace("_x90.jpg",".jpg");
+
+        // primero cargo la imagen del zoom y aseguro que al momento de hacer el cambio de imagen principal esté listo el zoom
+        var source = cambio;
+        var imgZ = source.replace(".jpg","_orig.jpg");
+        
+        // $('.imagen_principal').zoom({url: imgZ});
+        
+        if(imgZ.indexOf(".png")> -1){ // consiguio png
+            zoom = imgZ.replace(".png",".jpg");
+            $('.imagen_principal').zoom({url: zoom});
+        }else{
+            $('.imagen_principal').zoom({url: imgZ});
+        }        
+          
+        // cambio de la principal   
+        $("#mainImage").fadeOut("slow",function(){
+            $("#mainImage").attr("src", cambio);
+        });
+
+        $("#mainImage").fadeIn("slow",function(){});
+
+    });
+       
+     function replaceSize(url,size){
+         if(url.indexOf(".png")==-1&&url.indexOf(".jpg")==-1)
+            return '';
+         if(url.indexOf(".png")> -1)
+            return url.replace(".png","_"+size+".png");
+          else
+            return url.replace(".jpg","_"+size+".jpg");
+          
+         
+     }  
+       
+       
+   </script>
+           
+           
+           
 
 <div class="modal fade" id="shippingModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <?php $this->renderPartial('shipping_modal'); ?>
