@@ -15,7 +15,7 @@
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
 
 </head>
-
+ 
 
 
 <img src="<?php echo Yii::app()->theme->getBaseUrl()."/images/layout/b2b/background.jpg"?>" style="width:100%; z-index:0; height:100%; position:fixed;"?>
@@ -56,6 +56,7 @@
                     'id'=>'login-form',
                     'htmlOptions'=>array('class'=>''),
                     'type'=>'inline',
+                    'action'=>'registration',
                     'enableClientValidation'=>false,
                     'enableAjaxValidation'=>true,
                     'clientOptions'=>array(
