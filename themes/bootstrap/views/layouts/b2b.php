@@ -19,7 +19,16 @@
 
 
 <img src="<?php echo Yii::app()->theme->getBaseUrl()."/images/layout/b2b/background.jpg"?>" style="width:100%; z-index:0; height:100%; position:fixed;"?>
-
+<style>
+    .loginError{
+        margin-top:-16px;
+    }
+    .loginError .help-block.error{
+        margin-top: 2px;
+        margin-bottom: 2px;
+        text-align: center !important;
+    }
+</style>
 
 
 <div class="row-fluid darkpanel" style="position: fixed">
@@ -47,21 +56,24 @@
                     'id'=>'login-form',
                     'htmlOptions'=>array('class'=>''),
                     'type'=>'inline',
-                    'enableClientValidation'=>true,
+                    'enableClientValidation'=>false,
+                    'enableAjaxValidation'=>true,
                     'clientOptions'=>array(
                         'validateOnSubmit'=>true,
                     ),
                 )); ?>
+                <input type="text" style="display:none"/>
+                 <input type="password" style="display:none"/>
                 <div class="col-md-4">
                     <?php // echo CHtml::activeLabelEx($loginLayoutModel,'username'); ?>
                             <?php echo $form->textFieldRow($loginLayoutModel,'username',array("class"=>"form-control no-radius","placeholder"=>"correoelectronico@cuenta.com")); ?>
-                            <?php echo $form->error($loginLayoutModel,'username'); ?>
+                            
                 </div>
                 <div class="col-md-4">
                      <?php //echo CHtml::activeLabelEx($loginLayoutModel,'password'); ?>
                             <?php echo $form->passwordFieldRow($loginLayoutModel,'password',array('class'=>'form-control no-radius')); ?>
                             <span class="help-block muted text_align_right padding_right">
-                            <?php echo $form->error($loginLayoutModel,'password'); ?>
+                            
                 </div>
                 <div class="col-md-4">
                     <?php $this->widget('bootstrap.widgets.TbButton', array(
@@ -75,6 +87,11 @@
                          <?php echo CHtml::link("Recuperar contraseña",Yii::app()->getModule('user')->recoveryUrl,array("class"=>"white-link")); ?>
                     </div>
                 </div>
+                <div class="col-md-8 text-center loginError">
+                    <?php echo $form->error($loginLayoutModel,'username'); ?>
+                    <?php echo $form->error($loginLayoutModel,'password'); ?>
+                    
+                </div>
                  <?php $this->endWidget(); ?>
                 
             </div>
@@ -82,7 +99,7 @@
     </div>
     <!-- BARRA SUPERIOR OFF -->
     <?php echo $content; ?>
-    
+
         
         
         

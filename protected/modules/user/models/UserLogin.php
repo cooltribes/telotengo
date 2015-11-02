@@ -72,7 +72,7 @@ class UserLogin extends CFormModel
 					$this->addError("status",UserModule::t("Su cuenta ha sido bloqueada"));
 					break;
 				case UserIdentity::ERROR_PASSWORD_INVALID:
-					$this->addError("password",UserModule::t("Contraseña incorrecta"));
+					$this->addError("password",UserModule::t("Usuario o Contraseña incorrecta"));
 					break;
 			}
 		}else{

@@ -46,7 +46,7 @@
              </p>
           </div> 
        </div>
-       <div class="col-md-6 no_padding_left">
+       <div class="col-md-6 no_padding_right">
           <div class="card row-fluid clearfix">
              <span class="title col-md-7">Almacenes</span>
              <span class="col-md-5 text-right">
