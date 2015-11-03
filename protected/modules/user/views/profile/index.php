@@ -4,44 +4,33 @@
 <div class="col-md-9 profile-center">
     <h1>Panel de Control</h1>
     <h3>Ordenes</h3>
-    <div class="row-fluid clearfix stats">
-        <div class="col-md-1 stat no_left_padding">
-            <span class="value">000</span>
-            <span class="legend">Valor contado</span>            
-        </div>
-        <div class="col-md-1 stat no_left_padding">
-            <span class="value">000</span>
-            <span class="legend">Valor contado</span>            
-        </div>
-        <div class="col-md-1 stat no_left_padding">
-            <span class="value">000</span>
-            <span class="legend">Valor contado</span>            
-        </div>
-        <div class="col-md-1 stat no_left_padding">
-            <span class="value">000</span>
-            <span class="legend">Valor contado</span>            
-        </div>
-        <div class="col-md-1 stat no_left_padding">
-            <span class="value">000</span>
-            <span class="legend">Valor contado</span>            
-        </div>
-        <div class="col-md-1 stat no_left_padding">
-            <span class="value">000</span>
-            <span class="legend">Valor contado</span>            
-        </div>
-    </div>
+    
+    <?php $this->renderPartial('status', array(
+    	    'model'=>$model,
+			'totaPendienteCompra'=>$totaPendienteCompra,
+			'totaRechazadasCompra'=>$totaRechazadasCompra,
+			'totaAprobadaCompra'=>$totaAprobadaCompra,
+			'totaPendienteVendidas'=>$totaPendienteVendidas,
+			'totaRechazadasVendidas'=>$totaRechazadasVendidas,
+			'totaAprobadaVendidas'=>$totaAprobadaVendidas,
+			'producComprados'=>$producComprados,
+			'producInventario'=>$producInventario,
+	
+	));?>
+
    <div class="row-fluid clearfix cards margin_top">
        <div class="col-md-6 no_padding_left">
           <div class="card row-fluid clearfix">
-             <span class="title col-md-7">Info Empresa</span>
+             <span class="title col-md-7"> <?php echo $empresa->razon_social;?></span>
+              <span class="col-md-7"><?php echo $empresa->rif;?></span>
              <span class="col-md-5 text-right">
                  <a class="showInfo"  onclick="showInfo('#info1')" id="info1-show">Mostrar Información</a> 
              </span>
              <p class="hide col-md-12" id="info1">
-                 Linea 1<br/>
-                 Linea 2<br/>
-                 Linea 3<br/>
-                 Linea 4<br/>
+             	 <?php echo $empresa->telefono;?><br/>
+                 <?php echo $empresa->direccion;?><br/>
+                 <?php echo $empresa->web;?><br/>
+
                  
              </p>
           </div> 
@@ -49,14 +38,17 @@
        <div class="col-md-6 no_padding_right">
           <div class="card row-fluid clearfix">
              <span class="title col-md-7">Almacenes</span>
+             <span class="col-md-7"><?php echo count($almacen);?></span>
              <span class="col-md-5 text-right">
                  <a class="showInfo" onclick="showInfo('#info2')" id="info2-show">Mostrar Información</a>
              </span>
              <p class="hide col-md-12" id="info2">
-                 Linea 1<br/>
-                 Linea 2<br/>
-                 Linea 3<br/>
-                 Linea 4<br/>
+             	<?php 
+             	foreach($almacen as $almacenes)
+             	{
+             		echo $almacenes->alias."<br/>"; //TODO DEFINIR SI ES EL ALIAS O EL NOMBRE
+             	}
+                ?>
              </p>
              
           </div> 

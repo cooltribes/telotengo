@@ -10,9 +10,11 @@
              ?>
         </div>
         <div class="change">
-            <a>Cambiar foto</a>
+            <a onclick="$('#changeAvatar').modal()">Cambiar foto</a>
         </div>
     </div>
+    
+
 
     <div class="row-fluid info clearfix">
             <div class="col-md-9 no_padding_left name">
@@ -113,4 +115,8 @@
                 </span> 
         </div>
        
+    </div>
+    
+    <div id="changeAvatar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none; min-height: 600px;">
+        <?php echo $this->renderPartial('avatar', array( 'model'=>$model ),true); ?>
     </div>
