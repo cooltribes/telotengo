@@ -29,6 +29,11 @@ class RegistrationController extends Controller
 			 		if (Yii::app()->user->isGuest) {
 			$modelado=new UserLogin;
 			// collect user input data
+			if(isset($_POST['ajax']) && $_POST['ajax']==='login-form')
+            {
+                echo UActiveForm::validate(array($modelado));
+                Yii::app()->end();
+            }
 			if(isset($_POST['UserLogin']))
 			{
 				$modelado->attributes=$_POST['UserLogin'];
@@ -62,6 +67,8 @@ class RegistrationController extends Controller
 						}*/
 							
 					}
+				}else{
+				    $this->redirect(array('../','error'=>$model->errors));
 				}
 				
 			}

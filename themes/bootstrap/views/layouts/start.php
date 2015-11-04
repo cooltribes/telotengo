@@ -249,7 +249,7 @@
                                     </div>                                
                                   </a>
                                   <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                    <li><a href="<?php echo Yii::app()->baseUrl.'/user/profile';?>">Mi perfil</a></li>
+                                    <li><a href="<?php echo Yii::app()->baseUrl.'/user/profile/index';?>">Mi perfil</a></li>
 
                                     <li class="separator"></li>
                                     <li><a href="<?php echo Yii::app()->baseUrl; ?>/site/logout";>Cerrar sesión</a></li>

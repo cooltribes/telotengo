@@ -19,109 +19,7 @@ $this->widget('bootstrap.widgets.TbAlert', array(
 ?>	
 <!-- FLASH OFF --> 
 
-<div class="row margin_top">
-    <div class="span12">
-        <?php
-        if ($nuevos > 0 || $actualizados > 0) {
-            echo "<h3>Datos del archivo cargado:</h3>";            
-            echo "<h4>Nombre: <b>" . $fileName . "</b></h4>";
-            echo "<h4>Total de productos que contiene: <b>" . ($nuevos + $actualizados) . "</b></h4>";
-            echo "<h4>Productos (Combinación con SKU) nuevos: <b>" . $nuevos . "</b></h4>";
-            echo "<h4>Productos (Combinación con SKU) actualizados: <b>" . $actualizados . "</b></h4><br><hr><br>";
-            
-        }
-        ?>        
-        <div class="page-header">
-            <h1>Importar Productos</h1>
-        </div>        
-        <div class="bg_color3 margin_bottom_small padding_small box_1">
-            <?php
-            $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
-                    //'action' => CController::createUrl('importar'),
-                    'id' => 'form-validar',
-                    'enableAjaxValidation' => false,
-                    'type' => 'horizontal',
-                    'htmlOptions' => array('enctype' => 'multipart/form-data'),
-                ));
-                
-            ?>
-            <fieldset>
-            	<legend>1.- Descargar archivo Excel para importación: </legend>
-                <div class="well span5">
-                    <div class="row-fluid">
-                        
-                        <div class="span5">
-                           	<a href="../site/plantillaExternos" class="btn btn-info" <i class="icon-download-alt icon-white"></i> Descargar Plantilla</a>
-                            
-                        </div>
-                    </div>                    
-                        
-                </div>
-                <legend>2.- Realizar la validación previa del archivo:</legend>
-                
-                <div class="well span5">
-                    
-                    <?php
-                    $this->widget('CMultiFileUpload', array(
-                        'name' => 'archivoValidacion',
-                        'accept' => 'xls|xlsx', // useful for verifying files
-                        'duplicate' => 'El archivo está duplicado.', // useful, i think
-                        'denied' => 'Tipo de archivo inválido.', // useful, i think
-                    ));
-                    ?>
-                    
-                    <div class="margin_top_small">	              		    
-                        <?php
-                        $this->widget('bootstrap.widgets.TbButton', array(
-                            'buttonType' => 'submit',
-                            'type' => 'danger',
-                            'label' => 'Validar',
-                            'icon' => 'ok white',
-                            'htmlOptions' => array(
-                                'name' => 'validar'
-                            ),
-                        ));
-                        ?>
-                    </div>
-                    
-                </div>
-                
-                <legend>3.- Subir archivo previamente validado: </legend>
-                <div class="well span5">
-                   
-                    <?php
-                    $this->widget('CMultiFileUpload', array(
-                        'name' => 'archivoCarga',
-                        'accept' => 'xls|xlsx', // useful for verifying files
-                        'duplicate' => 'El archivo está duplicado.', // useful, i think
-                        'denied' => 'Tipo de archivo inválido.', // useful, i think
-                    ));
-                    ?>
 
-                    <div class="margin_top_small">	              		    
-                        <?php
-                        $this->widget('bootstrap.widgets.TbButton', array(
-                            'buttonType' => 'submit',
-                            'type' => 'warning',
-                            'icon' => 'upload white',
-                            'label' => 'Cargar Archivo',
-                            'loadingText'=>'Cargando ...',
-                            'htmlOptions' => array(
-                                'name' => 'cargar',
-                                'id'=>'buttonCargaMD',
-                            ),
-                        ));
-                        ?>
-                    </div>
-                </div>
-
-            </fieldset>
-            
-            <?php $this->endWidget(); ?>
-
-        </div>	
-    </div>
-</div>
 <script type="text/javascript">
 
 $('#buttonCargaMD').click(function(e) {
@@ -138,3 +36,157 @@ $('#buttonCargaMD').click(function(e) {
 });
 
 </script>
+
+
+
+<div class="col-md-12 no_horizontal_padding margin_top">
+        <h1>Variaciones</h1>
+        <div class="moreDetails">
+            
+                               
+            <ul id="myTabs" class="nav nav-tabs" role="tablist">
+              <li role="presentation" class="active"><a href="#fileLoad" id="fileLoad-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true">CARGA INDIVIDUAL DE </a></li>
+              <li role="presentation" class=""><a href="#specifications" role="tab" id="specifications-tab" data-toggle="tab" aria-controls="specifications" aria-expanded="false">CARACTERÍSTICAS GENERALES</a></li>
+              <li role="presentation" class=""><a href="#plantilla" role="tab" id="plantilla-tab" data-toggle="tab" aria-controls="plantilla" aria-expanded="false">RECOMENDACIONES DEL PRODUCTO</a></li>
+              
+            </ul>
+            
+     <?php
+            $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+                    //'action' => CController::createUrl('importar'),
+                    'id' => 'form-validar',
+                    'enableAjaxValidation' => false,
+                    'type' => 'horizontal',
+                    'htmlOptions' => array('enctype' => 'multipart/form-data'),
+                ));
+                
+            ?>
+            <div id="myTabContent" class="tab-content">
+                <div role="tabpanel" class="tab-pane active in row-fluid clearfix" id="fileLoad" aria-labelledby="home-tab">
+                    <h4 class=" margin_top">1.- Realizar la validación previa del archivo:</h4>
+                    <hr class="dark no_margin_top"/>
+                    <div class="col-md-8 well no_radius">
+                        <div class="row-fluid">
+                            <?php
+                            $this->widget('CMultiFileUpload', array(
+                                'name' => 'archivoValidacion',
+                                'accept' => 'xls|xlsx', // useful for verifying files
+                                'duplicate' => 'El archivo está duplicado.', // useful, i think
+                                'denied' => 'Tipo de archivo inválido.', // useful, i think
+                                'htmlOptions'=>array('class'=>'col-md-10')
+                            ));
+                            ?>
+                            
+                                             
+                                <?php
+                                $this->widget('bootstrap.widgets.TbButton', array(
+                                    'buttonType' => 'submit',
+   
+                                    'label' => 'Validar',
+                                    'icon' => 'ok white',
+                                    'htmlOptions' => array(
+                                        'name' => 'validar',
+                                        'class'=>'col-md-2 btn-darkgray'
+                                    ),
+                                ));
+                                ?>
+                        </div>
+                        
+                        
+                            
+                        
+                            
+                    </div>
+                    
+                   <div class="col-md-4" style="display:block; height:120px"></div>
+                    
+                    
+                    
+                    <h4 class="margin_top">2.- Subir archivo previamente validado:</h4>
+                    <hr class="dark no_margin_top"/>
+                    <div class="col-md-8 well no_radius">
+                         <div class="row-fluid">  
+                            <?php
+                            $this->widget('CMultiFileUpload', array(
+                                'name' => 'archivoCarga',
+                                'accept' => 'xls|xlsx', // useful for verifying files
+                                'duplicate' => 'El archivo está duplicado.', // useful, i think
+                                'denied' => 'Tipo de archivo inválido.', // useful, i think
+                                'htmlOptions'=>array('class'=>'col-md-9')
+                            ));
+                            ?>
+        
+                                         
+                                <?php
+                                $this->widget('bootstrap.widgets.TbButton', array(
+                                    'buttonType' => 'submit',
+     
+      
+                                    'label' => 'Cargar Masterdata',
+                                    'loadingText'=>'Cargando ...',
+                                    'htmlOptions' => array(
+                                        'name' => 'cargar',
+                                        'id'=>'buttonCargaMD',
+                                        'class'=>'col-md-3 btn-orange orange_border white'
+                                    ),
+                                ));
+                                ?>
+                            </div>
+                      </div>
+                      
+                </div>
+          
+                  <div role="tabpanel" class="tab-pane padding_top padding_bottom row-fluid clearfix" id="specifications" aria-labelledby="specifications-tab">
+                     <h4 class=" margin_top">Introduzca el nombre del producto que desea buscar</h4>
+                    <hr class="dark no_margin_top"/>
+                    <div class="col-md-10 well no_radius">
+                        <div class="row-fluid">
+                            <div class="col-md-11">
+                                <input class="form-control no_radius"/>
+                            </div>
+                            <a class="col-md-1 btn btn-darkgray" href="#">
+                                Buscar
+                            </a>
+                        </div>
+                    </div>
+                 
+                  </div>
+                
+                <div role="tabpanel" class="tab-pane row-fluid clearfix" id="plantilla" aria-labelledby="plantilla-tab">
+                    <h4 class=" margin_top">Descargar archivo Excel para generar el Masterdata</h4>
+                    <hr class="dark no_margin_top"/>
+                    <div class="col-md-6 well no_radius">
+                        <div class="row-fluid">
+                            <div class="col-md-6">
+                                <select class="form-control">
+                                    <option>Seleccionar Categoría</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 text-center">
+                                 <a href="../site/plantillaExternos" class="btn btn-darkgray"> <span class="glyphicon glyphicon-download-alt"></span> Descargar Archivo</a>
+                            </div>
+                        </div>
+                    </div> 
+                     <p> <?php
+                        if ($nuevos > 0 || $actualizados > 0) {
+                            echo "<h3>Datos del archivo cargado:</h3>";            
+                            echo "<h4>Nombre: <b>" . $fileName . "</b></h4>";
+                            echo "<h4>Total de productos que contiene: <b>" . ($nuevos + $actualizados) . "</b></h4>";
+                            echo "<h4>Productos (Combinación con SKU) nuevos: <b>" . $nuevos . "</b></h4>";
+                            echo "<h4>Productos (Combinación con SKU) actualizados: <b>" . $actualizados . "</b></h4><br><hr><br>";
+                            
+                        }
+                        ?></p>      
+                                    
+                </div>
+             
+            </div>
+ <?php $this->endWidget(); ?>
+        
+        </div>  
+                      
+    </div>
+
+
+
+
