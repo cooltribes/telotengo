@@ -19,9 +19,48 @@ $this->breadcrumbs=array(
 
 <div class="container">
 	<h1>Administrar Usuarios</h1>
-	Nueva búsqueda avanzada<hr class="no_margin_top"/>
+	<div class="row-fluid clearfix margin_top margin_bottom">
+        <div class="col-md-4 no_padding_left">
+                <form class="no_margin_bottom form-search row-fluid formularionuevo clearfix">
+                    <div class="col-md-2 no_horizontal_padding">
+                        <a href="#" class="btn form-control btn-gray no_radius_right" id="btn_search_event">
+                            <span class="glyphicon glyphicon-search margin_left_minus"></span>
+                       </a>
+                    </div>
+                    <div class="col-md-10 no_padding_left">
+                        <input class="form-control margin_left_minus" id="query" name="query" type="text" placeholder="Buscar">                    
+                    </div>
+                    
+                </form>
+        </div>
+         <div class="col-md-8 no_horizontal_padding">
+           <div class="row-fluid">
+               <div class="col-md-4">
+                     <select class="form-control">
+                       <option>-- Búsquedas avanzadas --</option>
+                   </select>
+               </div>
+               <div class="col-md-3 col-md-offset-1">
+                     <a class="btn btn-gray margin_left_minus" onclick="show('#nuevaBusqueda')">Crear búsqueda avanzada</a>
+               </div>
+          
+               <div class="col-md-3 col-md-offset-1 no_padding_right">
+                     <?php
+         echo CHtml::link('Invitar usuario', $this->createUrl('invitarUsuario'), array('class'=>'btn form-control btn-orange orange_border white', 'role'=>'button'));
+                ?>
+               </div>
+           </div>
+        </div>
+        
+        </div>
 	
-	<div class="row-fluid clearfix ">
+	
+	
+	<div class="row-fluid clearfix margin_bottom hide" id="nuevaBusqueda">
+	    <div class="col-md-12 no_horizontal_padding">
+	       <h4 class="no_margin_bottom margin_top_small">Nueva búsqueda avanzada</h4>
+	       <hr class="no_margin_top"/>
+	    </div>
 	    <div class="col-md-8 no_horizontal_padding">
 	       <div class="row-fluid">
 	           <div class="col-md-5 no_padding_left">
@@ -54,40 +93,7 @@ $this->breadcrumbs=array(
 	        </div>
 	    </div>
 	   </div> 
-	   <div class="row-fluid clearfix margin_top margin_bottom">
-	    <div class="col-md-4 no_padding_left">
-                <form class="no_margin_bottom form-search row-fluid formularionuevo clearfix">
-                    <div class="col-md-2 no_horizontal_padding">
-                        <a href="#" class="btn form-control btn-gray no_radius_right" id="btn_search_event">
-                            <span class="glyphicon glyphicon-search margin_left_minus"></span>
-                       </a>
-                    </div>
-                    <div class="col-md-10 no_padding_left">
-                        <input class="form-control margin_left_minus" id="query" name="query" type="text" placeholder="Buscar">                    
-                    </div>
-                    
-                </form>
-        </div>
-         <div class="col-md-8 no_horizontal_padding">
-           <div class="row-fluid">
-               <div class="col-md-4">
-                     <select class="form-control">
-                       <option>-- Búsquedas avanzadas --</option>
-                   </select>
-               </div>
-               <div class="col-md-3 col-md-offset-1">
-                     <a class="btn btn-gray margin_left_minus">Crear búsqueda avanzada</a>
-               </div>
-          
-               <div class="col-md-3 col-md-offset-1 no_padding_right">
-                     <?php
-         echo CHtml::link('Invitar usuario', $this->createUrl('invitarUsuario'), array('class'=>'btn form-control btn-orange orange_border white', 'role'=>'button'));
-                ?>
-               </div>
-           </div>
-        </div>
-        
-	    </div>
+	   
 	    
 	   <?php if(Yii::app()->user->hasFlash('success')){?>
 		    <div class="alert in alert-block fade alert-success text_align_center">
@@ -116,7 +122,7 @@ $this->breadcrumbs=array(
 					'list-auth-categorias',
 					{
 					type: 'POST',	
-					url: '" . CController::createUrl('admin/admin') . "',
+					url: '" . CController::createUrl('admin') . "',
 					data: ajaxRequest}
 					)
 					},
@@ -280,6 +286,11 @@ $this->breadcrumbs=array(
     }
 
 
-
+    function show(id){
+        if($(id).hasClass('hide'))
+            $(id).removeClass('hide');
+        else
+            $(id).addClass('hide');
+    }
     
 </script>

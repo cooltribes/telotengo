@@ -21,13 +21,17 @@ echo "<tr>";
     
     if($data->superuser==1)
     {
-        echo "<td colspan='2'>Admin</td>";
+        echo "<td colspan='2'>Administrador del Sistema</td>";
     }
     else 
     {
         $modelado=EmpresasHasUsers::model()->findByAttributes(array('users_id'=>$data->id));
+        if($modelado):
          echo "<td>".$modelado->empresas->razon_social."</td>";
          echo "<td>".$modelado->empresas->rol."</td>";
+        else:
+          echo "<td>N/D</td><td>N/D</td>";  
+        endif;
        
     }
     
