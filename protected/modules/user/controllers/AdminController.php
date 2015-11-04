@@ -49,13 +49,16 @@ class AdminController extends Controller
 			$_POST['query'] = $_SESSION['searchBox'];
 			$bandera=true;
 		}
-
+        
+        
 		/* Para buscar desde el campo de texto */
 		if (isset($_POST['query'])){
+		  
 			$bandera=true;
 			unset($_SESSION['searchBox']);
 			$_SESSION['searchBox'] = $_POST['query'];
             $model->email = $_POST["query"];
+            $model->username = $_POST["query"];
             $dataProvider = $model->search();
         }	
 
