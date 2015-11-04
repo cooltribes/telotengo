@@ -19,109 +19,7 @@ $this->widget('bootstrap.widgets.TbAlert', array(
 ?>	
 <!-- FLASH OFF --> 
 
-<div class="row margin_top">
-    <div class="col-md-12">
-        <?php
-        if ($nuevos > 0 || $actualizados > 0) {
-            echo "<h3>Datos del archivo cargado:</h3>";            
-            echo "<h4>Nombre: <b>" . $fileName . "</b></h4>";
-            echo "<h4>Total de productos que contiene: <b>" . ($nuevos + $actualizados) . "</b></h4>";
-            echo "<h4>Productos (Combinación con SKU) nuevos: <b>" . $nuevos . "</b></h4>";
-            echo "<h4>Productos (Combinación con SKU) actualizados: <b>" . $actualizados . "</b></h4><br><hr><br>";
-            
-        }
-        ?>        
 
-            <h1>Variaciones</h1>
-      
-        <div class="bg_color3 margin_bottom_small padding_small box_1">
-            <?php
-            $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
-                    //'action' => CController::createUrl('importar'),
-                    'id' => 'form-validar',
-                    'enableAjaxValidation' => false,
-                    'type' => 'horizontal',
-                    'htmlOptions' => array('enctype' => 'multipart/form-data'),
-                ));
-                
-            ?>
-            <fieldset>
-            	<legend>1.- Descargar archivo Excel para importación: </legend>
-                <div class="well span5">
-                    <div class="row-fluid">
-                        
-                        <div class="span5">
-                           	<a href="../site/plantillaExternos" class="btn btn-info" <i class="icon-download-alt icon-white"></i> Descargar Plantilla</a>
-                            
-                        </div>
-                    </div>                    
-                        
-                </div>
-                <legend>2.- Realizar la validación previa del archivo:</legend>
-                
-                <div class="well span5">
-                    
-                    <?php
-                    $this->widget('CMultiFileUpload', array(
-                        'name' => 'archivoValidacion',
-                        'accept' => 'xls|xlsx', // useful for verifying files
-                        'duplicate' => 'El archivo está duplicado.', // useful, i think
-                        'denied' => 'Tipo de archivo inválido.', // useful, i think
-                    ));
-                    ?>
-                    
-                    <div class="margin_top_small">	              		    
-                        <?php
-                        $this->widget('bootstrap.widgets.TbButton', array(
-                            'buttonType' => 'submit',
-                            'type' => 'danger',
-                            'label' => 'Validar',
-                            'icon' => 'ok white',
-                            'htmlOptions' => array(
-                                'name' => 'validar'
-                            ),
-                        ));
-                        ?>
-                    </div>
-                    
-                </div>
-                
-                <legend>3.- Subir archivo previamente validado: </legend>
-                <div class="well span5">
-                   
-                    <?php
-                    $this->widget('CMultiFileUpload', array(
-                        'name' => 'archivoCarga',
-                        'accept' => 'xls|xlsx', // useful for verifying files
-                        'duplicate' => 'El archivo está duplicado.', // useful, i think
-                        'denied' => 'Tipo de archivo inválido.', // useful, i think
-                    ));
-                    ?>
-
-                    <div class="margin_top_small">	              		    
-                        <?php
-                        $this->widget('bootstrap.widgets.TbButton', array(
-                            'buttonType' => 'submit',
-                            'type' => 'warning',
-                            'icon' => 'upload white',
-                            'label' => 'Cargar Archivo',
-                            'loadingText'=>'Cargando ...',
-                            'htmlOptions' => array(
-                                'name' => 'cargar',
-                                'id'=>'buttonCargaMD',
-                            ),
-                        ));
-                        ?>
-                    </div>
-                </div>
-
-            </fieldset>
-            
-            <?php $this->endWidget(); ?>
-
-        </div>	
-    </div>
-</div>
 <script type="text/javascript">
 
 $('#buttonCargaMD').click(function(e) {
@@ -141,16 +39,8 @@ $('#buttonCargaMD').click(function(e) {
 
 
 
-
-
-
-
-
-
-
-
-
 <div class="col-md-12 no_horizontal_padding margin_top">
+        <h1>Variaciones</h1>
         <div class="moreDetails">
             
                                
