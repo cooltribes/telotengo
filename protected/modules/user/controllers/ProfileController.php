@@ -208,6 +208,95 @@ class ProfileController extends Controller
 	}
     
     public function actionIndex(){
-        $this->render('index',array('model'=>User::model()->findByPk(Yii::app()->user->id)));
+    	$model=User::model()->findByPk(Yii::app()->user->id);
+    	if(isset($_POST['imagen']))
+		{
+			if(!is_dir(Yii::getPathOfAlias('webroot').'/images/user/'))
+			{
+	   			mkdir(Yii::getPathOfAlias('webroot').'/images/user/',0777,true);
+	 		}	
+			$rnd = rand(0,9999);  	
+			$images=CUploadedFile::getInstanceByName('imagen');
+			if (isset($images) && count($images) > 0) {
+				$model->avatar_url = "{$rnd}-{$images}";
+				$model->save();
+				$nombre = Yii::getPathOfAlias('webroot').'/images/user/'.$model->id;
+			    $extension_ori = ".jpg";
+				$extension = '.'.$images->extensionName;
+				if ($images->saveAs($nombre . $extension)) {
+			
+			       		$model->avatar_url = '/images/user/'.$model->id .$extension;
+			            $model->save();
+										
+						Yii::app()->user->setFlash('success',"Avatar modificado exitosamente.");
+	
+						$image = Yii::app()->image->load($nombre.$extension);
+						$image->resize(270, 270);
+						$image->save($nombre.'_thumb'.$extension);					
+					}
+			/*	echo "s;kdfklsdf";
+				Yii::app()->end();*/
+			}
+		}
+		$totaAprobadaCompra="";
+		$totaPendienteCompra="";
+		$totaRechazadasCompra="";
+		$totaPendienteVendidas="";
+		$totaRechazadasVendidas="";
+		$totaAprobadaVendidas="";
+		$producComprados=0;
+		$producInventario=0;
+		
+		$empresas_id=EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id))->empresas_id; // id del que esta intentado entrar
+		
+		$empresa=Empresas::model()->findByPk($empresas_id);
+		$almacen=Almacen::model()->findAllByAttributes(array('empresas_id'=>$empresas_id));
+		if(Yii::app()->authManager->checkAccess("comprador", Yii::app()->user->id) || Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id))
+		{
+			// ORDENES APROBADAS, PENDIENTES O RECHAZADAS POR EL COMPRADOR o COMPRAVENTA	
+			$totaPendienteCompra=Orden::model()->countByAttributes(array('empresa_id'=>$empresas_id, 'estado'=>0)); //pendiente
+			$totaRechazadasCompra=Orden::model()->countByAttributes(array('empresa_id'=>$empresas_id, 'estado'=>2)); //Rechazadas
+			$totaAprobadaCompra=Orden::model()->countByAttributes(array('empresa_id'=>$empresas_id, 'estado'=>1)); //Aprobadas
+			$sql="select sum(cantidad) as sumatoria from tbl_orden_has_inventario where orden_id in (select id from tbl_orden where empresa_id='".$empresas_id."' and estado=1)";
+			$variable = Yii::app()->db->createCommand($sql)->queryRow();
+			$producComprados=$variable['sumatoria'];
+			
+		}
+		if(Yii::app()->authManager->checkAccess("vendedor", Yii::app()->user->id) || Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id))
+		{
+			// ORDENES APROBADAS, PENDIENTES O RECHAZADAS POR EL VENDEDOR o COMPRAVENTA
+			
+			$sql = "select count(*) as contador  from tbl_orden where  estado=0 and almacen_id in (select id from tbl_almacen where empresas_id=".$empresas_id.")";
+			$pendiente = Yii::app()->db->createCommand($sql)->queryRow();
+			$totaPendienteVendidas=$pendiente['contador'];
+			
+			$sql = "select count(*) as contador  from tbl_orden where  estado=2 and almacen_id in (select id from tbl_almacen where empresas_id=".$empresas_id.")";
+			$rechazado = Yii::app()->db->createCommand($sql)->queryRow();
+			$totaRechazadasVendidas=$rechazado['contador'];
+					
+			$sql = "select count(*) as contador  from tbl_orden where  estado=1 and almacen_id in (select id from tbl_almacen where empresas_id=".$empresas_id.")";
+			$aprobado = Yii::app()->db->createCommand($sql)->queryRow();
+			$totaAprobadaVendidas=$aprobado['contador'];	
+			
+			$sql="select sum(cantidad) as sumatoria from tbl_inventario where almacen_id in(select id from tbl_almacen where empresas_id='".$empresas_id."')";
+			$variable = Yii::app()->db->createCommand($sql)->queryRow();
+			$producInventario=$variable['sumatoria'];
+			
+		}
+
+        $this->render('index',array(
+	        'model'=>$model,
+			'totaPendienteCompra'=>$totaPendienteCompra,
+			'totaRechazadasCompra'=>$totaRechazadasCompra,
+			'totaAprobadaCompra'=>$totaAprobadaCompra,
+			'totaPendienteVendidas'=>$totaPendienteVendidas,
+			'totaRechazadasVendidas'=>$totaRechazadasVendidas,
+			'totaAprobadaVendidas'=>$totaAprobadaVendidas,
+			'producComprados'=>$producComprados,
+			'producInventario'=>$producInventario,
+			'empresa'=>$empresa,
+			'almacen'=>$almacen,
+		
+		));
     }
 }

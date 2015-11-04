@@ -219,6 +219,7 @@ class TiendaController extends Controller
 			$sql="select * from tbl_producto where nombre <>''"; //TODO mejorar esto, forma menos optima
 		}
         $filter['categoria']=isset($_GET['categoria'])?$_GET['categoria']:'';
+        $filter['marcas']=isset($_GET['marcas'])?$_GET['marcas']:'';
 
         
 		if(isset($_GET['precio'])){
