@@ -41,7 +41,7 @@ class ProductoController extends Controller
 				'roles'=>array('admin'),
 			),
 			array('allow', // COMPRADORESVENDEDORES Y VENDEDORES
-				'actions'=>array('inventario', 'cargarInbound'),
+				'actions'=>array('inventario', 'cargarInbound', 'productoInventario'),
 				#'users'=>array('admin'),
 				'roles'=>array('vendedor', 'compraVenta'),
 			),
@@ -1396,6 +1396,41 @@ class ProductoController extends Controller
 			$model->attributes=$_GET['Producto'];
 
 		$this->render('admin',array(
+			'model'=>$model,
+			'dataProvider' => $dataProvider,
+		));
+	}
+	
+	public function actionProductoInventario()
+	{	
+		$model = new Producto;
+		$model->unsetAttributes();  // clear any default values
+		$bandera=false;
+		$dataProvider = $model->busquedaInventario();
+
+		/* Para mantener la paginacion en las busquedas */
+		if(isset($_GET['ajax']) && isset($_SESSION['searchBox']) && !isset($_POST['query'])){
+			$_POST['query'] = $_SESSION['searchBox'];
+			$bandera=true;
+		}
+
+		/* Para buscar desde el campo de texto */
+		if (isset($_POST['query'])){
+			$bandera=true;
+			unset($_SESSION['searchBox']);
+			$_SESSION['searchBox'] = $_POST['query'];
+            $model->nombre = $_POST['query'];
+            $dataProvider = $model->busquedaInventario($_POST['query']);
+        }	
+
+        if($bandera==FALSE){
+			unset($_SESSION['searchBox']);
+        }
+
+		if(isset($_GET['Producto']))
+			$model->attributes=$_GET['Producto'];
+
+		$this->render('productoInventario',array(
 			'model'=>$model,
 			'dataProvider' => $dataProvider,
 		));
