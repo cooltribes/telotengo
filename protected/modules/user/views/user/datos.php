@@ -48,7 +48,7 @@
                                                
                                          <?php       //echo $form->dropDownList($profile,$field->varname,Profile::range($field->range));
                                             } elseif ($field->field_type=="TEXT") {
-                                                echo$form->textArea($profile,$field->varname,array('rows'=>6, 'cols'=>50,));
+                                                echo $form->textArea($profile,$field->varname,array('rows'=>6, 'cols'=>50,));
                                             } elseif ($field->field_type=="DATE") {
                                                 if($field->varname == 'fecha_nacimiento'){ ?>
                                                    <div class="row-fluid pickDate margin_bottom_small clearfix">
@@ -87,8 +87,8 @@
                                                 }
                                             } else {
                                                 if($field->varname == "telefono"){
-                                                #    echo $form->textField($profile,$field->varname,array('class'=>'form-control', 'placeholder'=> $field->title." (opcional)", 'size'=>60,'maxlength'=>(($field->field_size)?$field->field_size:255)));
-                                                 #   echo $form->error($profile,$field->varname);
+                                                   echo $form->textField($profile,$field->varname,array('class'=>'form-control margin_top_small', 'placeholder'=> $field->title, 'size'=>60,'maxlength'=>(($field->field_size)?$field->field_size:255)));
+                                                   echo $form->error($profile,$field->varname);
                                                 }
                                                 else{
                                                     echo $form->textField($profile,$field->varname,array('class'=>'form-control margin_top_small', 'placeholder'=> $field->title, 'size'=>60,'maxlength'=>(($field->field_size)?$field->field_size:255)));
