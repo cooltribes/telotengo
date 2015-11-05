@@ -170,7 +170,8 @@ class ProductoController extends Controller
 	
 	public function actionCreate($id = null)
 	{
-     
+     	
+		$contador = Yii::app()->db->createCommand('SELECT id FROM tbl_producto order by id desc limit 1')->queryScalar()+1;	
 		 
          if(is_null($id)){
              $model=new Producto;
@@ -200,7 +201,7 @@ class ProductoController extends Controller
 			$nombreCategoria=$model->padre->idCategoria->nomenclatura;
 			$cate=Categoria::model()->findByPk($model->padre->idCategoria->id_padre);
 			$nombreCategoria=$model->padre->idCategoria->nomenclatura; 
-			$model->tlt_codigo=$model->buscarPadre($cate->id).$cate->nomenclatura.$nombreCategoria.'-'.$model->id;
+			$model->tlt_codigo=$model->buscarPadre($cate->id).$cate->nomenclatura.$nombreCategoria.'-'.$contador;
 
 			$model->attributes=$_POST['Producto'];
             $model->setSeo();
@@ -1367,7 +1368,8 @@ class ProductoController extends Controller
 	 * Manages all models.
 	 */
 	public function actionAdmin()
-	{	
+	{
+		
 		$model = new Producto;
 		$model->unsetAttributes();  // clear any default values
 		$bandera=false;

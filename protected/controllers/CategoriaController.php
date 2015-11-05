@@ -101,7 +101,7 @@ class CategoriaController extends Controller
                 }                
                   
 			}
-            
+            Yii::app()->user->setFlash('success','Categorias relacionadas actualizadas');
           
 
 	}
