@@ -88,11 +88,11 @@ $('#miniSlide').carousel({
                                 	 
                                                    
                             </tr>
-                            
+                           <!-- 
                             <tr>
                                 <td class="title">Precio al mayor</td>
                                 
-                                <td ><span class="highlighted"><?php echo $inventario->precio;?></span> Bs por und.</td> <!-- NO hay precio con descuento-->
+                                <td ><span class="highlighted"><?php echo $inventario->precio;?></span> Bs por und.</td>  NO hay precio con descuento
                                 <td class="title">Disponibilidad</td>
                                 <td > <?php echo $inventario->cantidad;?></td>                        
                             </tr>
@@ -111,7 +111,7 @@ $('#miniSlide').carousel({
                                 <td >50 und. / 5 cajas</td>                        
                             </tr>
                             
-                            
+                        -->
                         </table>
                         
                      <?php  /* <div class="shippingInfo margin_top">

@@ -3,6 +3,11 @@
     var related = new Array();
     
 </script>
+<?php if(Yii::app()->user->hasFlash('success')){?>
+	    <div class="alert in alert-block fade alert-success text_align_center margin_top_large">
+	        <?php echo Yii::app()->user->getFlash('success'); ?>
+	    </div>
+	<?php } ?>
 <?php 
 
  $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array( 
@@ -155,13 +160,44 @@ $this->widget('bootstrap.widgets.TbAlert', array(
 			'success'=>"function(data){
 				
 				
-					//window.location.reload();
+					window.location.reload();
 				
 			}",
 			),
 			)); ?>
 			
-			<button id="avanzar" style="cursor: pointer" class="btn btn-block boton_link transition_all btn" title="Guardar y avanzar">Guardar y avanzar
+			          <?php $ruta= Yii::app()->createUrl("Categoria/categoriaAtributo");
+			          $this->widget('bootstrap.widgets.TbButton', array(
+			'buttonType'=>'ajaxButton',
+			'label'=>'Guardar y Avanzar',
+			'url'=>array('categoria/catRela'), // ReCatProd Relacion Categorias a producto
+			'htmlOptions'=>array('id'=>'avanzar','class'=>'btn btn-block boton_link transition_all btn'),
+			'ajaxOptions'=>array(
+			'type' => 'POST',
+			'beforeSend' => "function( request )
+			{
+				 var checkValues = $(':checkbox:checked').map(function() {
+			        return this.id;
+			    }).get().join();
+
+			    $('#accion').attr('value', 'normal');
+			    var accion = $('#accion').attr('value');
+			    
+			   // alert(checkValues); 
+				var categoria = $('#categoria').attr('value'); 
+			
+			this.data += '&categoria='+categoria+'&check='+related+'&accion='+accion;
+			}",
+			
+			'data'=>array('a'=>'5'),
+			'success'=>"function(data){
+				
+					window.location.href = '".$ruta."/".$model->id."';
+				
+			}",
+			),
+			)); ?>
+			
      
         </div>
       </div>

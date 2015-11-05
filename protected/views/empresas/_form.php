@@ -42,16 +42,7 @@
         
     </div>
     
-        <div class="form-group row-fluid">
- 
-            <?php echo $form->textField($model,'zip', array('id'=>'zip','class'=>'form-control', 'placeholder'=>'Introduzca Codigo Postal (numeros enteros)', 'maxlength'=>50)); ?>
-
-            <?php echo $form->error($model,'zip'); ?>            
-
         
-        
-    </div>
-    
     <div class="form-group">
             <?php echo $form->textField($model,'telefono', array('id'=>'telefono', 'class'=>'form-control', 'placeholder'=>'Teléfono (código seguido del número sin espacios ni guiones)', 'maxlength'=>11)); ?>
 
@@ -79,6 +70,17 @@
             <?php echo $form->dropDownList($model,'ciudad', array(), array('class'=>'form-control', 'empty'=>'Ciudad de oficina principal')); ?>
         <?php echo $form->error($model,'ciudad'); ?>
     </div>
+    
+    <div class="form-group row-fluid">
+ 
+            <?php echo $form->textField($model,'zip', array('id'=>'zip','class'=>'form-control', 'placeholder'=>'Código Postal (numeros enteros)', 'maxlength'=>50)); ?>
+
+            <?php echo $form->error($model,'zip'); ?>            
+
+        
+        
+    </div>
+    
     
     <div class="form-group">
 
