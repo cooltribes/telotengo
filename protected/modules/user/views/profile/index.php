@@ -1,7 +1,8 @@
 <div class="col-md-3 profile-leftBar">
     <?php $this->renderPartial('left_bar',array('model'=>$model)); ?>
 </div>
-<div class="col-md-9 profile-center">
+<?php if(!Yii::app()->user->isAdmin()): ?>
+    <div class="col-md-9 profile-center">
     <h1>Panel de Control</h1>
     <h3>Ordenes</h3>
     
@@ -90,7 +91,7 @@
         </tbody>
         
     </table>
-    
+    <?php endif; ?>
 </div>
 <script>
     

@@ -117,6 +117,6 @@
        
     </div>
     
-    <div id="changeAvatar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none; min-height: 600px;">
+    <div id="changeAvatar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none; min-height: 550px;">
         <?php echo $this->renderPartial('avatar', array( 'model'=>$model ),true); ?>
     </div>
