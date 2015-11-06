@@ -60,7 +60,7 @@
 				}
 				else 
 				{?>
-                    <span class="quantity"><?php echo $modelado['precio']<10000?$modelado['precio']:$modelado['precio'];?><small> Bs</small></span>
+                    <span class="quantity"><?php echo $modelado['menor']<10000?$modelado['menor']:$modelado['menor'];?><small> Bs</small></span>
 				<?php
 				}
 				?>
@@ -94,7 +94,7 @@
 				}
 				else 
 				{?>
-                    <span class="quantity"><?php echo $modelado['precio'];?> Bs</span>
+                    <span class="quantity"><?php echo $modelado['menor'];?> Bs</span>
 				<?php
 				}
 				?>
