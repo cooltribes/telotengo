@@ -25,12 +25,12 @@ class SiteController extends Controller
 			array('allow',  // allow all users to perform 'index' and 'view' actions
 				'actions'=>array('index','error','contact','login','logout','captcha','busqueda','inhome','tiendas','info','soporte','garantia','convenios','request','request2',
 								'corporativo','licencias','ofertas','home','store','detalle', 'inhome2', 'autoComplete', 'filtroBusqueda', 'carrito', 'category', 'formuPregunta',
-								'detalleOrden'), 
+								'detalleOrden','mailtest'), 
 
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('mensajes','buscarmensaje','mailtest'), 
+				'actions'=>array('mensajes','buscarmensaje'), 
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -197,19 +197,18 @@ class SiteController extends Controller
 		$this->render('licencias');
 	}
     public function actionMailTest(){ 
-    /*  $body="BODY";
-      $message = new YiiMailMessage;
-                               
-                           
-                                $message->from = array('wmontilla@upsidcorp.ch' => "Sigma Tiendas");
-           
-                                $message->setBody($body, 'text/html');                
-                                $message->addTo('cruiz@upsidecorp.ch');
-
-                                if(!Yii::app()->mail->send($message))  
-                                echo "NADA VIEGGA";      */
-
-        $this->render('licencias');
+   $message = new YiiMailMessage;
+                //Opciones de Mandrill
+                $message->activarPlantillaMandrill();
+                
+                $subject = 'Tu Pago en Personaling';
+                $message->subject    = $subject;
+                $body ='Mail de Pruebas sin info importante';                
+                $message->setBody($body, 'text/html');                
+                $message->addTo('wmontilla@upsidecorp.ch');
+                $message->addTo('rpalma@upsidecorp.ch');
+                
+                Yii::app()->mail->send($message);
       
     }
 

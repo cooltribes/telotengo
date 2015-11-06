@@ -297,5 +297,23 @@ const SECTOR_EDUCACION = 16;
 		else
 			return isset($_items[$type]) ? $_items[$type] : false;
 	}
-
+    
+    public function getContadoresVentas($empresas_id = null){
+        if(is_null($empresas_id)){
+            $empresas_id=$this->id; 
+        }    
+        $sql = "select count(*) as contador from tbl_orden where almacen_id in (select id from tbl_almacen where empresas_id=".$empresas_id.")";
+        $contador = Yii::app()->db->createCommand($sql)->queryRow();
+        
+        $sql = "select count(*) as contador  from tbl_orden where  estado=0 and almacen_id in (select id from tbl_almacen where empresas_id=".$empresas_id.")";
+        $pendiente = Yii::app()->db->createCommand($sql)->queryRow();
+        
+        $sql = "select count(*) as contador  from tbl_orden where  estado=2 and almacen_id in (select id from tbl_almacen where empresas_id=".$empresas_id.")";
+        $rechazado = Yii::app()->db->createCommand($sql)->queryRow();
+                
+        $sql = "select count(*) as contador  from tbl_orden where  estado=1 and almacen_id in (select id from tbl_almacen where empresas_id=".$empresas_id.")";
+        $aprobado = Yii::app()->db->createCommand($sql)->queryRow();
+        
+        return array('total'=>$contador['contador'],'pendiente'=>$pendiente['contador'],'rechazado'=>$rechazado['contador'],'aprobado'=>$aprobado['contador']);
+    }
 }

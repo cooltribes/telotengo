@@ -290,8 +290,8 @@ class OrdenController extends Controller
         $model = new Orden();
         $model->unsetAttributes();  // clear any default values
         $bandera=false;
-		$empresas_id=EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id))->empresas_id; // id del que esta intentado entrar
-        $dataProvider = $model->searchVentas($empresas_id);
+		$empresa=Empresas::model()->findByPk((EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id))->empresas_id)); // id del que esta intentado entrar
+        $dataProvider = $model->searchVentas($empresa->id);
         
                 /* Para mantener la paginacion en las busquedas */
         if(isset($_GET['ajax']) && isset($_SESSION['searchPedido']) && !isset($_POST['query'])){
@@ -305,31 +305,21 @@ class OrdenController extends Controller
             unset($_SESSION['searchPedido']);
             $_SESSION['searchPedido'] = $_POST['query'];
             $model->id = $_POST['query'];
-            $dataProvider = $model->searchVentas($empresas_id);
+            $dataProvider = $model->searchVentas($empresa->id);
         }   
 
         if($bandera==FALSE){
             unset($_SESSION['searchPedido']);
         }
-		$sql = "select count(*) as contador from tbl_orden where almacen_id in (select id from tbl_almacen where empresas_id=".$empresas_id.")";
-		$contador = Yii::app()->db->createCommand($sql)->queryRow();
 		
-		$sql = "select count(*) as contador  from tbl_orden where  estado=0 and almacen_id in (select id from tbl_almacen where empresas_id=".$empresas_id.")";
-		$pendiente = Yii::app()->db->createCommand($sql)->queryRow();
-		
-		$sql = "select count(*) as contador  from tbl_orden where  estado=2 and almacen_id in (select id from tbl_almacen where empresas_id=".$empresas_id.")";
-		$rechazado = Yii::app()->db->createCommand($sql)->queryRow();
-				
-		$sql = "select count(*) as contador  from tbl_orden where  estado=1 and almacen_id in (select id from tbl_almacen where empresas_id=".$empresas_id.")";
-		$aprobado = Yii::app()->db->createCommand($sql)->queryRow();
 		
         $this->render('mis_ventas',array(
             'model'=>$model,
             'dataProvider'=>$dataProvider,
-            'contador'=>$contador['contador'],
-            'pendiente'=>$pendiente['contador'],
-            'rechazado'=>$rechazado['contador'],
-            'aprobado'=>$aprobado['contador'],
+            'contador'=>$empresa->contadoresVentas['total'],
+            'pendiente'=>$empresa->contadoresVentas['pendiente'],
+            'rechazado'=>$empresa->contadoresVentas['rechazado'],
+            'aprobado'=>$empresa->contadoresVentas['aprobado'],
         ));
     }
 

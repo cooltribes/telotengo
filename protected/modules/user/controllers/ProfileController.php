@@ -246,7 +246,7 @@ class ProfileController extends Controller
 		$totaAprobadaVendidas="";
 		$producComprados=0;
 		$producInventario=0;
-		
+		if(!Yii::app()->user->isAdmin()){
 		$empresas_id=EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id))->empresas_id; // id del que esta intentado entrar
 		
 		$empresa=Empresas::model()->findByPk($empresas_id);
@@ -298,5 +298,10 @@ class ProfileController extends Controller
 			'almacen'=>$almacen,
 		
 		));
+		
+		}
+         else{
+                $this->render('index',array('model'=>$model));
+            }
     }
 }
