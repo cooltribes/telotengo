@@ -13,4 +13,5 @@ protected/config/main.php
 assets/*
 images/*
 protected/runtime/*
+sftp-config.json
 

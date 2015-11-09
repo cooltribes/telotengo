@@ -54,7 +54,7 @@
                 </span>
                 
                 <span class="col-md-3 text-center no_horizontal_padding edit">
-                    <a>Editar</a>
+                  <!--  <a>Editar</a> -->
                 </span> 
             </div>
              <!-- -->

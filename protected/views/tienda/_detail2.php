@@ -74,7 +74,7 @@
 				}
 				else 
 				{?>
-                    <span class="quantity"><?php echo $modelado['precio'];?> BS</span>
+                    <span class="quantity"><?php echo $modelado['menor'];?> BS</span>
 				<?php
 				}
 				?>

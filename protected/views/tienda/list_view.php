@@ -17,7 +17,7 @@ if($model2!="") //TODO ver esto
 	}
 	else 
 	{
-		$inventario=Inventario::model()->findByAttributes(array('producto_id'=>$modelado['id']));
+		$inventario=Inventario::model()->findByAttributes(array('producto_id'=>$modelado['id'], 'precio'=>$modelado['menor']));
 		$contador=Inventario::model()->countByAttributes(array('producto_id'=>$modelado['id']));
 		
 		if(isset($inventario))
