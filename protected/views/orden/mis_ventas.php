@@ -4,7 +4,16 @@
 $this->breadcrumbs=array(
 	'Administrar',
 );
+
+if(Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id)):
 ?>
+                    <ul id="myTabs" class="nav nav-tabs margin_bottom" role="tablist">
+                      <li role="presentation"><a href="misCompras" >COMPRAS</a></li>
+                      <li role="presentation" class="active"><a href="#">VENTAS</a></li>
+                    </ul>  
+<?php endif; ?>
+
+
 
      <h1 class="orderTitle">Mis Ventas</h1>
 

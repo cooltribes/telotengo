@@ -15,13 +15,13 @@
                                <div class="row-fluid">
                                    <div class="col-md-12 no_horizontal_padding">
                                        
-                                       <h3><a href='<?php echo Yii::app()->createUrl('site/category', array('categoria'=>$modelado->id))?>'><?php echo $modelado->nombre?></a></h3>
+                                       <h3><a href='<?php echo Yii::app()->createUrl('categoria/index', array('url'=>$modelado->url_amigable))?>'><?php echo $modelado->nombre?></a></h3>
                                    </div>
                                    <div class="col-md-7 no_horizontal_padding">
                                        <ul class="categoriaHome">
                                        	<?php foreach ($interno as $inter)
 										{?>
-											<li><a href='<?php echo Yii::app()->createUrl('site/category', array('categoria'=>$inter->id))?>'><?php echo $inter->nombre?></a></li>
+											<li><a href='<?php echo Yii::app()->createUrl('categoria/index', array('url'=>$modelado->url_amigable))?>'><?php echo $inter->nombre?></a></li>
 										<?php	
 										} ?>
                                        </ul>

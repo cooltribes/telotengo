@@ -56,7 +56,7 @@
                     'id'=>'login-form',
                     'htmlOptions'=>array('class'=>''),
                     'type'=>'inline',
-                    'action'=>'registration',
+                    'action'=>Yii::app()->getBaseUrl(true).'/user/registration',
                     'enableClientValidation'=>false,
                     'enableAjaxValidation'=>true,
                     'clientOptions'=>array(

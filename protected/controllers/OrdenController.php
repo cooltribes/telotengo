@@ -32,7 +32,7 @@ class OrdenController extends Controller
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
 				'actions'=>array('create','update','view','cancelar','listado','detalleusuario','ventas','calificarVendedor','reclamo','responderReclamo'
 
-					,'devolucion','procesarDevolucion', 'procesarTodo', 'procesarSimple', 'detalleVendedor', 'cambiarEstado','misCompras','misVentas'), //TODO lista de control de accesos con los roles nuevos... procesarTodo, procesarSimple
+					,'devolucion','procesarDevolucion', 'procesarTodo', 'procesarSimple', 'detalleVendedor', 'cambiarEstado','misCompras','misVentas','misPedidos'), //TODO lista de control de accesos con los roles nuevos... procesarTodo, procesarSimple
 
 				'users'=>array('@'),
 			),
@@ -322,6 +322,9 @@ class OrdenController extends Controller
             'aprobado'=>$empresa->contadoresVentas['aprobado'],
         ));
     }
+
+    
+  
 
 	/**
 	 * Historial de órdenes para empresa vendedora
