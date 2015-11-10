@@ -136,7 +136,7 @@ class ConfImage extends CActiveRecord
                 $img=$this->findByAttributes(array('name'=>$name,'index'=>$index, 'categoria_id'=>$categoria_id));
                 if($img){              
                     
-                    return CHtml::image($img->path, $img->alt,array('title'=>$img->title,'width'=>$width,'height'=>$height));
+                    return CHtml::image($img->path, $img->alt,array('width'=>$width,'height'=>$height));
                 }
                 
             } 

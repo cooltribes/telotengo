@@ -40,7 +40,7 @@ $('#buttonCargaMD').click(function(e) {
 
 
 <div class="col-md-12 no_horizontal_padding margin_top">
-        <h1>Variaciones</h1>
+        <h1>Carga de Inventario</h1>
         <div class="moreDetails">
             
                                
