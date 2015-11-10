@@ -354,5 +354,8 @@ class Categoria extends CActiveRecord
 		return $word;
 	}
     
+    public function getStorefrontImgs($from = 1, $to = 6){
+        return ConfImage::model()->findAll(array('condition'=>'t.index >='.$from.' AND t.index<='.$to.' AND categoria_id='.$this->id));
+    }
 	
 }

@@ -27,7 +27,7 @@ class CategoriaController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','store','substore','storefrontConf','formConfImage'),
+				'actions'=>array('index','view','store','substore'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -35,7 +35,7 @@ class CategoriaController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete','create','update','upload','listimages', 'menu', 'categoriaRelacionada', 'catRela', 'crearAvanzar', 'categoriaAtributo', 'catAtrib','categoriaSeo', 'activarDesactivar'),
+				'actions'=>array('admin','delete','create','update','upload','listimages', 'menu', 'categoriaRelacionada', 'catRela', 'crearAvanzar', 'categoriaAtributo', 'catAtrib','categoriaSeo', 'activarDesactivar','storefrontConf','formConfImage'),
 				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -373,8 +373,9 @@ class CategoriaController extends Controller
     {
         $categoria=Categoria::model()->findByAttributes(array('url_amigable'=>$url));
         //$this->layout='//layouts/start';
+
         if($categoria)
-            $this->render('category',array('model'=>$categoria)); 
+            $this->render('category',array('model'=>$categoria,'imagenes'=>$categoria->getStorefrontImgs(2,7),'mainImg'=>$categoria->getStorefrontImgs(1,1))); 
         else
             throw new CHttpException(404,'Categoría no encontrada');
             
@@ -613,9 +614,9 @@ class CategoriaController extends Controller
                      
                         $model->path = "{$rnd}-{$images}";
                       
-                        $dir = Yii::getPathOfAlias('webroot').'/images/categoria/storefront';
+                        $dir = Yii::getPathOfAlias('webroot').'/images/categoria/storefront/'.$model->categoria_id;
                         $nombre = $dir.'/'.$model->name.$model->index; 
-                        $url=Yii::app()->getBaseUrl(true).'/images/categoria/storefront/'.$model->name.$model->index;  
+                        $url=Yii::app()->getBaseUrl(true).'/images/categoria/storefront/'.$model->categoria_id.'/'.$model->name.$model->index;  
  
                         if(!is_dir($dir))
                         {
@@ -624,7 +625,7 @@ class CategoriaController extends Controller
                         $imgAttr=getimagesize(CUploadedFile::getInstanceByName('ConfImage[path]')->getTempName());
 
                         
-                       if(($model->index==1&&($imgAttr[0]=1200||$imgAttr[1]!=450))||($model->index!=1&&($imgAttr[0]!=380||$imgAttr[1]!=270)))
+                       if(($model->index==1&&($imgAttr[0]!=1200||$imgAttr[1]!=450))||($model->index!=1&&($imgAttr[0]!=380||$imgAttr[1]!=270)))
                         {
                             $this->redirect(array('categoria/storefrontConf', 'id'=>$model->categoria_id,'index'=>$model->index));
                         }       
@@ -635,6 +636,9 @@ class CategoriaController extends Controller
                         }                       
                         $images->saveAs($nombre . $extension);  
                         $model->path=$url. $extension;
+                        $old=ConfImage::model()->findByAttributes(array('path'=>$url. $extension));
+                        if($old)
+                            $old->delete();
                         if($model->save()){
                             if(!is_null($previa))    
                                 $previa->delete();
@@ -663,7 +667,7 @@ class CategoriaController extends Controller
                 }
                 //print_r($response['confirm']);                
                 $response['form']= $this->renderPartial('confImagesform', array(
-                    'model'=>$model,'name'=>$_POST['name'],'index'=>$_POST['index'],'group'=>$_POST['group'],'type'=>$_POST['type'], 'categoria_id'=>$_POST['categoria_id'], 'dimError'=> $_POST['skip'] ),true)
+                    'model'=>$model,'name'=>$_POST['name'],'index'=>$_POST['index'],'group'=>$_POST['group'],'type'=>$_POST['type'], 'categoria_id'=>$_POST['categoria_id'], 'dimError'=> $_POST['confirm'] ),true)
                 ;                
                  echo CJSON::encode($response); 
             }

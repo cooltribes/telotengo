@@ -359,6 +359,8 @@ class SiteController extends Controller
 		$imagen=Imagenes::model()->findAllByAttributes(array('producto_id'=>$producto_id));
 		$imagenPrincipal=Imagenes::model()->findByAttributes(array('producto_id'=>$producto_id, 'orden'=>1));
 		
+		$empresaPropia=Empresas::model()->findByPk((EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id))->empresas_id)); // id del que esta intentado entrar
+		
 		$prueba = array("producto"=>(string)$producto_id); //MEJORAR ESTO 
 		$busqueda = $document->findOne($prueba);
 		//echo $almacen->empresas->razon_social;
@@ -371,7 +373,7 @@ class SiteController extends Controller
 		else
 			$similares=NULL;
 		//var_dump($data); 
-		$otros = Inventario::model()->findAllBySql("select * from tbl_inventario where producto_id=".$producto_id." and almacen_id!=".$almacen_id."");
+		$otros = Inventario::model()->findAllBySql("select * from tbl_inventario where producto_id=".$producto_id." and almacen_id!=".$almacen_id." and almacen_id not in(select id from tbl_almacen where empresas_id=".$empresaPropia->id.")");
         $this->render('detalle', array('model'=>$model, 'inventario'=>$inventario, 'imagen'=>$imagen, 'imagenPrincipal'=>$imagenPrincipal, 'busqueda'=>$busqueda, 'empresa'=>$empresa, 'almacen'=>$almacen, 
        'otros'=>$otros, 'similares'=>$similares));
     }

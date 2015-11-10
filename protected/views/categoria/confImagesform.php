@@ -22,7 +22,7 @@
 ?>
 
     <div class="row-fluid margin_bottom">
-       <h3 class="text-center">Carga una imagen</h3>
+       <h3 class="text-center">Imagen #<?php echo $index ?></h3>
        <div class="col-md-12 text_align_center">
            <p class="note"><small>Los campos con <span class="required">*</span> son requeridos.</small></p>
             <?php echo $form->errorSummary($model); ?>

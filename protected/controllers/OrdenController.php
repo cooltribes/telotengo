@@ -32,7 +32,7 @@ class OrdenController extends Controller
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
 				'actions'=>array('create','update','view','cancelar','listado','detalleusuario','ventas','calificarVendedor','reclamo','responderReclamo'
 
-					,'devolucion','procesarDevolucion', 'procesarTodo', 'procesarSimple', 'detalleVendedor', 'cambiarEstado','misCompras','misVentas'), //TODO lista de control de accesos con los roles nuevos... procesarTodo, procesarSimple
+					,'devolucion','procesarDevolucion', 'procesarTodo', 'procesarSimple', 'detalleVendedor', 'cambiarEstado','misCompras','misVentas','misPedidos'), //TODO lista de control de accesos con los roles nuevos... procesarTodo, procesarSimple
 
 				'users'=>array('@'),
 			),
@@ -322,6 +322,9 @@ class OrdenController extends Controller
             'aprobado'=>$empresa->contadoresVentas['aprobado'],
         ));
     }
+
+    
+  
 
 	/**
 	 * Historial de órdenes para empresa vendedora
@@ -1138,8 +1141,18 @@ class OrdenController extends Controller
 				$ordenEstado->orden_id=$model->id;
 				$ordenEstado->save();
 				
+				$ordenEstado->refresh();
 				
 		/////TODO SACAR EL CORREO ELECTRONICO PARA LOS RESPECTIVOS USUARIOS
+		/* $message= new YiiMailMessage;
+         //Opciones de Mandrill
+       //  $message->activarPlantillaMandrill();
+         $subject = 'Han realizado una compra en TELOTENGO';
+         $body = "deberia ir un texto aqui";		
+		 $message->subject    = $subject;
+		 $message->setBody($body, 'text/html');                
+		 $message->addTo($user->email);
+		 Yii::app()->mail->send($message);*/
 		echo $estado;
 		
 	}

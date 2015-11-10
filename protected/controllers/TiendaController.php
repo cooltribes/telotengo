@@ -361,18 +361,21 @@ class TiendaController extends Controller
 				{
 						if($order=="mayorPrecio-asc")
 						{
-							$sql=$sql." order by menor desc";
-							$sub=$sub." order by menor desc";
+							if($sql!="")	
+								$sql=$sql." order by menor desc";
+							if($sub!="")
+								$sub=$sub." order by menor desc";
 						}
 						else 
 						{
-							$sql=$sql." order by menor asc";
-							$sub=$sub." order by menor asc";
+							if($sql!="")		
+								$sql=$sql." order by menor asc";
+							if($sub!="")
+								$sub=$sub." order by menor asc";
 						}
 				}	
 		}		
-
-
+		
 		if($sql!="")
 		{
 			//echo $sql;

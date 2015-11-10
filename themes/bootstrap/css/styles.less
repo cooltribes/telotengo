@@ -2202,7 +2202,20 @@ h1{
         margin: 0;
     }
     
-
+.subcategory:hover{
+    cursor: pointer;
+    div{
+      span{
+        opacity: 0.4;
+      }
+    }
+}
+.subcat:hover{
+    cursor: pointer;
+      span{
+        opacity: 0.4;
+      }    
+}
 
 @media (min-width: 1554px) and (max-width: 1674px){
   #headerContainer, #pageContainer{
@@ -2648,8 +2661,27 @@ h1.dark{
         font-size: 18px;
     } 
 }
-
-    
+.imgNumber{
+    position: absolute;
+    top: 31%;
+    left: 44%;
+    font-weight: bold;
+    display: block;
+    font-size: 57px;
+    text-align: center;
+    color: white;
+    border: solid 8px white;
+    border-radius: 50%;
+    padding: 0px 24px;
+    background-color: @b2bOrange;
+    opacity: 0.7;
+}
+.imgNumber.small{
+  font-size: 40px;
+  padding: 0px 20px;
+  top: 20%;
+  left: 32%;
+}    
     
     
    
