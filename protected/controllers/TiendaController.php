@@ -198,12 +198,14 @@ class TiendaController extends Controller
 				{
 					$padre_id=ProductoPadre::model()->buscarProducto($variable);
 					$otraForma=1; // bandera
-					$sql="select * from tbl_producto where padre_id=".$padre_id.""; //TODO mejorar esto, forma menos optima
+					$sql="select p.id, p.nombre, min(i.precio) as menor,  p.padre_id, p.modelo, p.annoFabricacion, p.upc, p.ean, p.gtin, p.nparte, p.tlt_codigo, p.color, p.color_id, p.descripcion, p.destacado, p.estado, p.caracteristicas, p.id_seo
+					 from tbl_producto p join tbl_inventario i on p.id=i.producto_id where p.padre_id=".$padre_id.""; //TODO mejorar esto, forma menos optima
 				}	
 			}
 			if($otraForma!=1) // bandera activa
 			{
-					$sql="select * from tbl_producto where nombre LIKE '%".$filter['producto']."%'"; //TODO mejorar esto, forma menos optima
+					$sql="select p.id, p.nombre,  min(i.precio) as menor, p.padre_id, p.modelo, p.annoFabricacion, p.upc, p.ean, p.gtin, p.nparte, p.tlt_codigo, p.color, p.color_id, p.descripcion, p.destacado, p.estado, p.caracteristicas, p.id_seo
+					 from tbl_producto p join tbl_inventario i on p.id=i.producto_id where p.nombre LIKE '%".$filter['producto']."%'"; //TODO mejorar esto, forma menos optima
 			}
 				
 
@@ -216,7 +218,7 @@ class TiendaController extends Controller
 		}
 		else 
 		{   $filter['producto']="";
-			$sql="select * from tbl_producto where nombre <>''"; //TODO mejorar esto, forma menos optima
+			$sql="select p.id, p.nombre, min(i.precio) as menor,  p.padre_id, p.modelo, p.annoFabricacion, p.upc, p.ean, p.gtin, p.nparte, p.tlt_codigo, p.color, p.color_id, p.descripcion, p.destacado, p.estado, p.caracteristicas, p.id_seo from tbl_producto p where p.nombre <>''"; //TODO mejorar esto, forma menos optima 
 		}
         $filter['categoria']=isset($_GET['categoria'])?$_GET['categoria']:'';
         $filter['marcas']=isset($_GET['marcas'])?$_GET['marcas']:'';
@@ -250,8 +252,8 @@ class TiendaController extends Controller
     			//echo $word=Categoria::model()->incluir($vector);
     			$vector=Categoria::model()->buscarHijos($filtroCategoria->id, $vector); //TODO MEJORAR ESTO
     		    $word=Categoria::model()->incluir($vector);
-    			$sqlCategoria="and padre_id in (select id from tbl_producto_padre where id_categoria in(".$word."))";
-    			$sqlCategoria2="where id_categoria in(".$word.")";
+    			$sqlCategoria="and p.padre_id in (select pa.id from tbl_producto_padre pa where pa.id_categoria in(".$word."))";
+    			$sqlCategoria2="where pa.id_categoria in(".$word.")";
     			//var_dump($vector);
     		}
         }	
@@ -264,13 +266,13 @@ class TiendaController extends Controller
     			$contador=count($filtroMarca)-1;
     			if($sqlCategoria2!="") // si hay filtro de categoria
     			{
-    				$sql=$sql." and padre_id in (select id from tbl_producto_padre ".$sqlCategoria2." and id_marca in (";
-    				$opcion2=" and padre_id in (select id from tbl_producto_padre ".$sqlCategoria2."  and id_marca in (";
+    				$sql=$sql." and p.padre_id in (select pa.id from tbl_producto_padre pa ".$sqlCategoria2." and pa.id_marca in (";
+    				$opcion2=" and p.padre_id in (select pa.id from tbl_producto_padre pa ".$sqlCategoria2."  and pa.id_marca in (";
     			}
     			else 
     			{
-    				$sql=$sql." and padre_id in (select id from tbl_producto_padre where id_marca in (";
-    				$opcion2=" and padre_id in (select id from tbl_producto_padre where id_marca in (";
+    				$sql=$sql." and p.padre_id in (select pa.id from tbl_producto_padre pa where pa.id_marca in (";
+    				$opcion2=" and p.padre_id in (select pa.id from tbl_producto_padre pa where pa.id_marca in (";
     			}
     
     			$i=0;	
@@ -310,16 +312,16 @@ class TiendaController extends Controller
 			if($otraForma!=1) // si es busqueda por variacion
 			{	
 				if($opcion2!="")
-					$sub="select * from tbl_inventario where producto_id in (select id from tbl_producto where nombre LIKE '%".$filter['producto']."%' ".$opcion2.") and precio between ".$filtroPrecio[0]." and ".$filtroPrecio[1]."";
+					$sub="select i.id, min(i.precio) as menor, i.costo, i.cantidad, i.almacen_id, i.notaCondicion, i.garantia, i.producto_id, i.estado, i.condicion, i.sku, i.numFabricante, i.metodoEnvio from tbl_inventario i where i.producto_id in (select p.id from tbl_producto p where p.nombre LIKE '%".$filter['producto']."%' ".$opcion2.") and i.precio between ".$filtroPrecio[0]." and ".$filtroPrecio[1]."";
 				else
-					$sub="select * from tbl_inventario where producto_id in (select id from tbl_producto where nombre LIKE '%".$filter['producto']."%') and precio between ".$filtroPrecio[0]." and ".$filtroPrecio[1]."";
+					$sub="select i.id, min(i.precio) as menor, i.costo, i.cantidad, i.almacen_id, i.notaCondicion, i.garantia, i.producto_id, i.estado, i.condicion, i.sku, i.numFabricante, i.metodoEnvio from tbl_inventario i where i.producto_id in (select p.id from tbl_producto p where p.nombre LIKE '%".$filter['producto']."%') and i.precio between ".$filtroPrecio[0]." and ".$filtroPrecio[1]."";
 			}
 			else // si es busqueda por producto padre
 			{
 				if($opcion2!="")
-					$sub="select * from tbl_inventario where producto_id in (select id from tbl_producto where padre_id='".$padre_id."' ".$opcion2.") and precio between ".$filtroPrecio[0]." and ".$filtroPrecio[1]."";
+					$sub="select i.id, min(i.precio) as menor, i.costo, i.cantidad, i.almacen_id, i.notaCondicion, i.garantia, i.producto_id, i.estado, i.condicion, i.sku, i.numFabricante, i.metodoEnvio from tbl_inventario i where i.producto_id in (select p.id from tbl_producto p where p.padre_id='".$padre_id."' ".$opcion2.") and i.precio between ".$filtroPrecio[0]." and ".$filtroPrecio[1]."";
 				else
-					$sub="select * from tbl_inventario where producto_id in (select id from tbl_producto where padre_id='".$padre_id."') and precio between ".$filtroPrecio[0]." and ".$filtroPrecio[1]."";
+					$sub="select i.id, min(i.precio) as menor, i.costo, i.cantidad, i.almacen_id, i.notaCondicion, i.garantia, i.producto_id, i.estado, i.condicion, i.sku, i.numFabricante, i.metodoEnvio from tbl_inventario i where i.producto_id in (select p.id from tbl_producto p where p.padre_id='".$padre_id."') and i.precio between ".$filtroPrecio[0]." and ".$filtroPrecio[1]."";
 			}
 			
 			//echo $sub;
@@ -335,65 +337,45 @@ class TiendaController extends Controller
 			echo $filter['caracteristica'];
 		}*/
 		//echo $sql;echo $sub;
+		
+		
+		
+		if($sql!="") /// GROUP BY
+		{
+			$or=" group by p.id";
+			$sql=$sql.$or;	
+		}
+		if($sub!="")
+		{
+			$or=" group by i.producto_id";
+			$sub=$sub.$or;	
+		}
+		
 		if($order!="")
 		{ 
-			if($sql!="" && $sub=="")
-			{ 
 				if($order=="nombre-asc")
 				{
-					$sql=$sql." order by nombre";
+					$sql=$sql." order by p.nombre";
 				}
 				else
 				{
-					  $sqlOrder=explode("select *", $sql);
-					  $final=") ";
-					  $sql="";
-					  $sub="select * from tbl_inventario where producto_id in (select id ".$sqlOrder[1].$final;	
 						if($order=="mayorPrecio-asc")
 						{
-							$sub=$sub."order by precio desc";
+							if($sql!="")	
+								$sql=$sql." order by menor desc";
+							if($sub!="")
+								$sub=$sub." order by menor desc";
 						}
 						else 
 						{
-							if($order=="mayorPrecio-asc")
-							{
-								$sub=$sub."order by precio asc";
-							}
-						}	
-
+							if($sql!="")		
+								$sql=$sql." order by menor asc";
+							if($sub!="")
+								$sub=$sub." order by menor asc";
+						}
 				}	
-			}
-			else 
-			{ 
-				if($sql!="" && $sub!="")
-				{ 
-					if($order=="nombre-asc")
-					{
-							
-						$sqlOrder=explode("%'", $sub);	
-						//echo $sqlOrder[0];	
-						//$sql=$sql." order by nombre";
-					}
-					else 
-					{
-						if($order=="mayorPrecio-asc")
-						{
-							$sub=$sub." order by precio desc";
-						}
-						else 
-						{
-							if($order=="mayorPrecio-asc")
-							{
-								$sub=$sub." order by precio asc";
-							}
-						}
-					}
-					
-				}
-			}	
 		}		
-
-
+		
 		if($sql!="")
 		{
 			//echo $sql;
@@ -430,8 +412,8 @@ class TiendaController extends Controller
 			$list=0;
 		}
 		//echo $sql;
+		//echo $sub;
 		
-		//echo $sub;	
        $this->render('store', array('categorias'=>Categoria::model()->categoriasEnExistencia,'list'=>$list,'filter'=>$filter, 'model'=>$model, 'model2'=>$model2, 'order'=>$order));
     }
 	

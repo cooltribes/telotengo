@@ -2,9 +2,17 @@
         <article class="itemGridView">
         	<?php
         	if($way==0)
-			{?>
-				<a href="<?php echo Yii::app()->createUrl("site/detalle",array("producto_id"=>$modelado['id'], 'almacen_id'=>$inventario->almacen_id));?>">
+			{
+				if($quitar==0):
+				?>
+					<a href="<?php echo Yii::app()->createUrl("site/detalle",array("producto_id"=>$modelado['id'], 'almacen_id'=>$inventario->almacen_id));?>">
 			<?php
+				endif;
+				if($quitar==1):
+				?>
+					<a href="<?php echo Yii::app()->createUrl("site/detalle",array("producto_id"=>$modelado['id'], 'almacen_id'=>$inventario['almacen_id']));?>">
+				<?php
+				endif;	
 			}
 			else 
 			{?>
@@ -54,14 +62,30 @@
             	<span class="legend" style="display:block">Desde</span>
             	<?php
             	if($way==0)
-				{?>
+				{
+					if($quitar==0):
+					?>
                     <span class="quantity"><?php echo $inventario->precio<10000?$inventario->precio:$inventario->precio;?><small> Bs</small></span>
 				<?php
+					endif;
+					if($quitar==1):
+					?>
+                    <span class="quantity"><?php echo $inventario['menor']<10000?$inventario['menor']:$inventario['menor']?><small> Bs</small></span>
+				<?php
+					endif;
 				}
 				else 
-				{?>
-                    <span class="quantity"><?php echo $modelado['precio']<10000?$modelado['precio']:$modelado['precio'];?><small> Bs</small></span>
+				{
+					if($quitar==0):
+					?>
+                    <span class="quantity"><?php echo $modelado['menor']<10000?$modelado['menor']:$modelado['menor'];?><small> Bs</small></span>
 				<?php
+					endif;
+					if($quitar==1):
+					?>
+                    <span class="quantity"><?php echo $modelado['menoro']<10000?$modelado['menoro']:$modelado['menoro'];?><small> Bs</small></span>
+				<?php
+					endif;
 				}
 				?>
             </div>
@@ -70,9 +94,17 @@
                    <ul> 
                    	<?php
                    		if($way==0)
-                   		{?>
-                   			<li>Unidades: <?php echo $inventario->cantidad;?></li>
+                   		{
+                   			if($quitar==0):
+                   			?>
+                   				<li>Unidades: <?php echo $inventario->cantidad;?></li>
                    		<?php
+							endif;
+							if($quitar==1):
+                   			?>
+                   				<li>Unidades: <?php echo $inventario['cantidad'];?></li>
+                   		<?php
+							endif;
 						}
 						else 
 						{?>
@@ -88,14 +120,30 @@
                     <span class="legend">desde</span>
                                 	<?php
             	if($way==0)
-				{?>
-                    <span class="quantity"><?php echo $inventario->precio;?> Bs</span>
+				{
+					if($quitar==0):
+					?>
+                  	  <span class="quantity"><?php echo $inventario->precio;?> Bs</span>
 				<?php
+					endif;
+					if($quitar==1):
+					?>
+                  	  <span class="quantity"><?php echo $inventario['menor'];?> Bs</span>
+				<?php
+					endif;
 				}
 				else 
-				{?>
-                    <span class="quantity"><?php echo $modelado['precio'];?> Bs</span>
+				{
+					if($quitar==0):
+					?>
+                    <span class="quantity"><?php echo $modelado['menor'];?> Bs</span>
 				<?php
+					endif;
+					if($quitar==1):
+					?>
+                    <span class="quantity"><?php echo $modelado['menoro'];?> Bs</span>
+				<?php
+					endif;
 				}
 				?>
                 </div>

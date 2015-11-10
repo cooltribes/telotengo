@@ -28,9 +28,18 @@
 
                 <?php 
                 if($way==0)
-                {?>
-                	<a href="<?php echo Yii::app()->createUrl("site/detalle",array("producto_id"=>$modelado['id'], 'almacen_id'=>$inventario->almacen_id));?>">
-         		<?php echo $modelado['nombre'];?>
+                {
+                	if($quitar==0):
+                	?>
+                		<a href="<?php echo Yii::app()->createUrl("site/detalle",array("producto_id"=>$modelado['id'], 'almacen_id'=>$inventario->almacen_id));?>">
+         				<?php echo $modelado['nombre'];
+					endif;
+					if($quitar==1):
+                	?>
+                		<a href="<?php echo Yii::app()->createUrl("site/detalle",array("producto_id"=>$modelado['id'], 'almacen_id'=>$inventario['almacen_id']));?>">
+         				<?php echo $modelado['nombre'];
+					endif;
+         			?>
          	 		</a>	
                 <?php	
                 }
@@ -51,9 +60,14 @@
                 <span class="legend">
                 	<?php
                 	    if($way==0)
-                   		{?>
-                   			 <?php echo $inventario->cantidad;?>
-                   		<?php
+                   		{
+                   			if($quitar==0):
+								 echo $inventario->cantidad;
+							endif; 
+							if($quitar==1):
+								 echo $inventario['cantidad'];
+							endif;
+							
 						}
 						else 
 						{?>
@@ -68,14 +82,30 @@
                <span class="legend">Desde</span>
                            	<?php
             	if($way==0)
-				{?>
-                    <span class="quantity"><?php echo $inventario->precio;?> BS</span>
+				{
+					if($quitar==0):
+					?>
+                    <span class="quantity"><?php echo $inventario->menor;?> BS</span>
 				<?php
+					endif;
+					if($quitar==1):
+					?>
+                    <span class="quantity"><?php echo $inventario['menoro'];?> BS</span>
+				<?php
+					endif;
 				}
 				else 
-				{?>
-                    <span class="quantity"><?php echo $modelado['precio'];?> BS</span>
+				{
+					if($quitar==0):
+					?>
+                    <span class="quantity"><?php echo $modelado['menor'];?> BS</span>
 				<?php
+					endif;
+					if($quitar==1):
+					?>
+                    <span class="quantity"><?php echo $modelado['menoro'];?> BS</span>
+				<?php
+					endif;
 				}
 				?>
          </div>
