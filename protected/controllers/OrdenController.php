@@ -1138,8 +1138,18 @@ class OrdenController extends Controller
 				$ordenEstado->orden_id=$model->id;
 				$ordenEstado->save();
 				
+				$ordenEstado->refresh();
 				
 		/////TODO SACAR EL CORREO ELECTRONICO PARA LOS RESPECTIVOS USUARIOS
+		/* $message= new YiiMailMessage;
+         //Opciones de Mandrill
+       //  $message->activarPlantillaMandrill();
+         $subject = 'Han realizado una compra en TELOTENGO';
+         $body = "deberia ir un texto aqui";		
+		 $message->subject    = $subject;
+		 $message->setBody($body, 'text/html');                
+		 $message->addTo($user->email);
+		 Yii::app()->mail->send($message);*/
 		echo $estado;
 		
 	}

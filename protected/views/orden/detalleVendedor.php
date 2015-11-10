@@ -85,7 +85,7 @@
         ?>
         <div class="margin_top sellerInfo">
             <p>
-                <span class="name">Información del Vendedor</span>
+                <span class="name">Información del Comprador</span>
             </p>
             <p>
                 <span class="name">N° de Orden:</span>
@@ -96,12 +96,12 @@
                 <span class="value"><?php $date = date_create($model->fecha);echo date_format($date, 'd/m/Y H:i:s');?></span>
             </p>
             <p>
-                <span class="name">Proveedor:</span>
-                <span class="value"><?php echo $model->almacen->empresas->razon_social;?></span>
+                <span class="name">Empresa:</span>
+                <span class="value"><?php echo $model->empresa->razon_social;?></span>
             </p>
             <p>
                 <span class="name">RIF:</span>
-                <span class="value"><?php echo $model->almacen->empresas->rif;?></span>
+                <span class="value"><?php echo $model->empresa->rif;?></span>
             </p>
            <!-- <p>
                 <span class="name">Dirección de Envío:</span>
@@ -109,12 +109,12 @@
            </p> -->
             <p>
                 <span class="name">Teléfono:</span>
-                <span class="value"><?php echo $model->almacen->empresas->telefono;?></span>
+                <span class="value"><?php echo $model->empresa->telefono;?></span>
             </p>
-            <p>
+           <!-- <p>
                 <span class="name">Correo Electrónico:</span>
                 <span class="value">falta definir cual correo</span>
-            </p>
+           </p> -->
         </div>
     </div>
     <div class="col-md-5 orderActions no_horizontal_padding">
