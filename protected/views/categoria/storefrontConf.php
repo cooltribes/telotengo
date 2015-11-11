@@ -1,5 +1,5 @@
 
-<div class="col-md-6 col-md-offset-3" >
+<div class="col-md-6 col-md-offset-3 margin_bottom_large" >
     <div class="row-fluid">
         <div class="col-md-12 margin_top_small subcategory">          
             <div class="row-fluid title clearfix margin_bottom_small">

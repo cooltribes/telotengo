@@ -217,7 +217,7 @@
 	                                            	$file_headers = @get_headers($link);
 													if($file_headers[0] == 'HTTP/1.1 200 OK')
 													{?>
-													   <img src="<?php echo Yii::app()->baseUrl.'/images/user/'.$usuario->id."_thumb.png"?>" height="26px" width="26px"/>
+													   <img src="<?php echo Yii::app()->baseUrl.'/images/user/'.$usuario->id."_thumb.png"?>" height="26px" width="26px" id="layout-avatar"/>
 													<?php
 													}
 													else
@@ -226,18 +226,35 @@
 	                                            		$file_headers = @get_headers($link);
 														if($file_headers[0] == 'HTTP/1.1 200 OK')
 														{?>
-															<img src="<?php echo Yii::app()->baseUrl.'/images/user/'.$usuario->id."_thumb.jpg"?>" height="26px" width="26px"/>
+															<img src="<?php echo Yii::app()->baseUrl.'/images/user/'.$usuario->id."_thumb.jpg"?>" height="26px" width="26px" id="layout-avatar"/>
 														<?php
 														}
 														else 
 														{?>
-															<img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/favicon75.2.png" width="100%"/>
+															<img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/favicon75.2.png" width="100%" id="layout-avatar"/>
 														<?php
 														}
 													}
 												} 
+
 	
                                             	?>
+                     <!------------------ EPA                        	
+                                            	<?php 
+                                                if(isset($usuario))
+                                                {
+                                                     ?>   
+                                                    <img src="<?php echo Yii::app()->baseUrl;
+                                                                if(strpos($usuario->avatar_url, ".png")==-1)
+                                                                    echo str_replace(".jpg", "_thumb.jpg", $usuario->avatar_url);
+                                                                else
+                                                                    echo str_replace(".png", "_thumb.jpg", $usuario->avatar_url); ?>" height="26px" width="26px"/>    
+                                                    
+                                            <?php   } 
+    
+                                                ?>
+                                            	-->
+                                            	
                                             </div>
                                              
                                         </div>

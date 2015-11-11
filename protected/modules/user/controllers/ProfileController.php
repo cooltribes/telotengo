@@ -209,8 +209,48 @@ class ProfileController extends Controller
     
     public function actionIndex(){
     	$model=User::model()->findByPk(Yii::app()->user->id);
+        $avatar=false;
     	if(isset($_POST['imagen']))
-		{
+		{     /*
+		        $images=CUploadedFile::getInstanceByName('imagen');
+                if (isset($images) && count($images) > 0) {
+                    foreach ($images as $image => $pic) {
+                        $nombre = Yii::getPathOfAlias('webroot').'/images/'.Yii::app()->language.'/avatar/'. $id .'/'. $image;
+                        $extension = '.'.$pic->extensionName;
+                        $model->avatar_url = $id .'/'. $image .$extension;
+                        if (!$model->save())    
+                            Yii::trace('username:'.$model->username.' Crear Avatar Error:'.print_r($model->getErrors(),true), 'registro');
+                
+                                if ($pic->saveAs($nombre ."_orig". $extension)) {
+                                    //echo $nombre;
+                                    $image = Yii::app()->image->load($nombre ."_orig". $extension);
+                                    $avatar_x = isset($_POST['avatar_x'])?$_POST['avatar_x']:0;
+                                    $avatar_x = $avatar_x*(-1);
+                                    $avatar_y = isset($_POST['avatar_y'])?$_POST['avatar_y']:0;
+                                    $avatar_y = $avatar_y*(-1);
+                                    
+                                    $proporcion = $image->__get('width')<$image->__get('height')?Image::WIDTH:Image::HEIGHT;
+                                    $image->resize(270,270,$proporcion)->crop(270, 270,$avatar_y,$avatar_x);
+                                    $image->save($nombre . $extension);
+                                    
+                                    $proporcion = $image->__get('width')<$image->__get('height')?Image::WIDTH:Image::HEIGHT;
+                                    $image->resize(30,30,$proporcion)->crop(30, 30,$avatar_y,$avatar_x);
+                                    $image->save($nombre . "_x30". $extension);
+                                    
+                                    $proporcion = $image->__get('width')<$image->__get('height')?Image::WIDTH:Image::HEIGHT;
+                                    $image->resize(60,60,$proporcion)->crop(60, 60,$avatar_y,$avatar_x);
+                                    $image->save($nombre . "_x60". $extension);
+                                    
+                                    Yii::app()->user->updateSession();
+                                    Yii::app()->user->setFlash('success',UserModule::t("La imágen ha sido cargada exitosamente.")); 
+
+                                    // reload page with no cache to show the new avatar
+                                    header("Refresh: 0; URL=".$this->createUrl('avatar'));
+                                }
+                    }
+                 }  
+            */
+            
 			if(!is_dir(Yii::getPathOfAlias('webroot').'/images/user/'))
 			{
 	   			mkdir(Yii::getPathOfAlias('webroot').'/images/user/',0777,true);
@@ -232,9 +272,10 @@ class ProfileController extends Controller
 	
 						$image = Yii::app()->image->load($nombre.$extension);
 						$image->resize(270, 270);
-						$image->save($nombre.'_thumb'.$extension);					
+						$image->save($nombre.'_thumb'.$extension);
+                        $avatar=true;					
 					}
-			/*	echo "s;kdfklsdf";
+				/*echo "s;kdfklsdf";
 				Yii::app()->end();*/
 			}
 		}
@@ -296,12 +337,13 @@ class ProfileController extends Controller
 			'producInventario'=>$producInventario,
 			'empresa'=>$empresa,
 			'almacen'=>$almacen,
+			'avatar'=>$avatar
 		
 		));
 		
 		}
          else{
-                $this->render('index',array('model'=>$model));
+                $this->render('index',array('model'=>$model , 'avatar'=>$avatar));
             }
     }
 }

@@ -1,6 +1,17 @@
 <div class="col-md-3 profile-leftBar">
     <?php $this->renderPartial('left_bar',array('model'=>$model)); ?>
 </div>
+<?php if($avatar===true):
+    echo "<script>$('#layout-avatar').attr('src','".Yii::app()->getBaseUrl(true);
+     if(strpos($model->avatar_url, ".png")==-1)
+        echo str_replace(".jpg", "_thumb.jpg", $model->avatar_url);
+    else
+        echo str_replace(".png", "_thumb.png", $model->avatar_url); 
+
+     
+     echo "');</script>";
+     endif;  
+?>
 <?php if(!Yii::app()->user->isAdmin()): ?>
     <div class="col-md-9 profile-center">
     <h1>Panel de Control</h1>
