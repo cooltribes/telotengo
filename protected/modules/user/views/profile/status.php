@@ -78,14 +78,14 @@
       
         <?php if(Yii::app()->authManager->checkAccess("comprador", Yii::app()->user->id) || Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id)):?>
       	<div class="col-md-1 stat no_left_padding">
-            <span class="value"><?php echo $producComprados;?></span>
+            <span class="value"><?php if($producComprados=="")echo "0"; else echo $producComprados;?></span>
             <span class="legend">Productos Comprados</span>            
         </div>
       <?php endif;?>
       
        <?php if(Yii::app()->authManager->checkAccess("vendedor", Yii::app()->user->id) || Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id)):?>
       	<div class="col-md-1 stat">
-            <span class="value"><?php echo $producInventario;?></span>
+            <span class="value"><?php if($producInventario=="")echo "0"; else echo $producInventario;?></span>
             <span class="legend">Productos en Inventario</span>            
         </div>
       <?php endif;?>     
