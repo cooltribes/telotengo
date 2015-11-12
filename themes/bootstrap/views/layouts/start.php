@@ -210,34 +210,25 @@
                                     <div class="row-fluid">
                                         <div class="col-md-3 col-sm-3 col-xs-3 no_horizontal_padding image">
                                             <div class="imgContainer">
+                                     	
                                             	<?php 
-												if(isset($usuario))
-												{
-													$link=Yii::app()->getBaseUrl(true).'/images/user/'.$usuario->id."_thumb.png";
-	                                            	$file_headers = @get_headers($link);
-													if($file_headers[0] == 'HTTP/1.1 200 OK')
-													{?>
-													   <img src="<?php echo Yii::app()->baseUrl.'/images/user/'.$usuario->id."_thumb.png"?>" height="26px" width="26px"/>
-													<?php
-													}
-													else
-													{
-														$link=Yii::app()->getBaseUrl(true).'/images/user/'.$usuario->id."_thumb.jpg";
-	                                            		$file_headers = @get_headers($link);
-														if($file_headers[0] == 'HTTP/1.1 200 OK')
-														{?>
-															<img src="<?php echo Yii::app()->baseUrl.'/images/user/'.$usuario->id."_thumb.jpg"?>" height="26px" width="26px"/>
-														<?php
-														}
-														else 
-														{?>
-															<img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/favicon75.2.png" width="100%"/>
-														<?php
-														}
-													}
-												} 
-	
-                                            	?>
+                                                if(isset($usuario))
+                                                {   if(!is_null($usuario->avatar_url)):
+                                                     ?>   
+                                                    <img src="<?php echo Yii::app()->baseUrl;
+                                                                if(strpos($usuario->avatar_url, ".png")==-1)
+                                                                    echo str_replace(".jpg", "_thumb.jpg", $usuario->avatar_url);
+                                                                else
+                                                                    echo str_replace(".png", "_thumb.png", $usuario->avatar_url); ?>" height="26px" width="26px"/>    
+                                                    
+                                                    <?php  else: ?>
+                                                        <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/favicon75.2.png" width="100%" id="layout-avatar"/>       
+                                                    <?php endif;                                                 
+                                                } 
+    
+                                                ?>
+                                          
+                                            	
                                             </div>
                                              
                                         </div>
