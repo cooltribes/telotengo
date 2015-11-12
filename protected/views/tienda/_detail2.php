@@ -85,12 +85,12 @@
 				{
 					if($quitar==0):
 					?>
-                    <span class="quantity"><?php echo $inventario->menor;?> BS</span>
+                    <span class="quantity"><?php echo $inventario->precio;?> BS</span>
 				<?php
 					endif;
 					if($quitar==1):
 					?>
-                    <span class="quantity"><?php echo $inventario['menoro'];?> BS</span>
+                    <span class="quantity"><?php echo $inventario['menor'];?> BS</span>
 				<?php
 					endif;
 				}

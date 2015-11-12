@@ -111,10 +111,10 @@
                 <span class="name">Teléfono:</span>
                 <span class="value"><?php echo $model->empresa->telefono;?></span>
             </p>
-           <!-- <p>
+           <p>
                 <span class="name">Correo Electrónico:</span>
-                <span class="value">falta definir cual correo</span>
-           </p> -->
+                <span class="value"><?php echo $model->users->email;?></span>
+           </p>
         </div>
     </div>
     <div class="col-md-5 orderActions no_horizontal_padding">

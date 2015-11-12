@@ -218,7 +218,7 @@ class TiendaController extends Controller
 		}
 		else 
 		{   $filter['producto']="";
-			$sql="select p.id, p.nombre, min(i.precio) as menor,  p.padre_id, p.modelo, p.annoFabricacion, p.upc, p.ean, p.gtin, p.nparte, p.tlt_codigo, p.color, p.color_id, p.descripcion, p.destacado, p.estado, p.caracteristicas, p.id_seo from tbl_producto p where p.nombre <>''"; //TODO mejorar esto, forma menos optima 
+			$sql="select p.id, p.nombre, min(i.precio) as menor,  p.padre_id, p.modelo, p.annoFabricacion, p.upc, p.ean, p.gtin, p.nparte, p.tlt_codigo, p.color, p.color_id, p.descripcion, p.destacado, p.estado, p.caracteristicas, p.id_seo from tbl_producto p join tbl_inventario i on p.id=i.producto_id where p.nombre <>''"; //TODO mejorar esto, forma menos optima 
 		}
         $filter['categoria']=isset($_GET['categoria'])?$_GET['categoria']:'';
         $filter['marcas']=isset($_GET['marcas'])?$_GET['marcas']:'';
