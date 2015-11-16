@@ -374,7 +374,7 @@ class SiteController extends Controller
 			$similares=NULL;
 		//var_dump($data); 
 		$otros = Inventario::model()->findAllBySql("select * from tbl_inventario where producto_id=".$producto_id." and almacen_id!=".$almacen_id." and almacen_id not in(select id from tbl_almacen where empresas_id=".$empresaPropia->id.")");
-        $this->render('detalle', array('model'=>$model, 'inventario'=>$inventario, 'imagen'=>$imagen, 'imagenPrincipal'=>$imagenPrincipal, 'busqueda'=>$busqueda, 'empresa'=>$empresa, 'almacen'=>$almacen, 
+        $this->render('detalle2', array('model'=>$model, 'inventario'=>$inventario, 'imagen'=>$imagen, 'imagenPrincipal'=>$imagenPrincipal, 'busqueda'=>$busqueda, 'empresa'=>$empresa, 'almacen'=>$almacen, 
        'otros'=>$otros, 'similares'=>$similares));
     }
     public function actionAutoComplete()
@@ -382,7 +382,7 @@ class SiteController extends Controller
 	    	$res =array();
 	    	if (isset($_GET['term']) && Yii::app()->session['menu']=="")
 			{
-				$qtxt ="SELECT  CONCAT (p.nombre, ' en ',c.nombre) FROM tbl_producto_padre p JOIN tbl_categoria c on p.id_categoria=c.id  WHERE p.nombre LIKE :nombre limit 3";
+				$qtxt ="SELECT  CONCAT (p.nombre, ' (',c.nombre,')') FROM tbl_producto_padre p JOIN tbl_categoria c on p.id_categoria=c.id  WHERE p.nombre LIKE :nombre limit 3";
 				
 				$command =Yii::app()->db->createCommand($qtxt);
 				$command->bindValue(":nombre", '%'.$_GET['term'].'%', PDO::PARAM_STR);
@@ -407,7 +407,7 @@ class SiteController extends Controller
 				/*$command =Yii::app()->db->createCommand($qtxt);
 				$command->bindValue(":nombre", '%'.$_GET['term'].'%', PDO::PARAM_STR);
 				$resP =$command->queryColumn();	*/	
-				$res[0]=$_GET['term']." en ".$model->nombre;
+				$res[0]=$_GET['term']." (".$model->nombre.")";
 				/*$qtxt ="SELECT nombre FROM tbl_producto WHERE nombre LIKE :nombre limit 6";
 				$command =Yii::app()->db->createCommand($qtxt);
 				$command->bindValue(":nombre", '%'.$_GET['term'].'%', PDO::PARAM_STR);
@@ -438,12 +438,12 @@ class SiteController extends Controller
 				}
 	     		echo CJSON::encode($res);
 			}
-
+			
 	    	Yii::app()->end();
 		}
 	public function actionFiltroBusqueda()
 	{
-		Yii::app()->session['menu']=$_POST['filtro'];		
+		echo Yii::app()->session['menu']=$_POST['filtro'];		
 	}
 	
 	public function actionCarrito()
