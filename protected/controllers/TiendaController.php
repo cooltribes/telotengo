@@ -211,7 +211,6 @@ class TiendaController extends Controller
 						else
 						{
 							$var=trim($produc);
-							echo $cadena;
 							if(ProductoPadre::model()->findByAttributes(array('nombre'=>$var))) // si esta bien, entre; del resto es invento del usuario
 							{
 								$padre=ProductoPadre::model()->findByAttributes(array('nombre'=>$var));
