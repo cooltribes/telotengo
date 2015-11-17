@@ -32,7 +32,7 @@
             } ?>
         </td>
                         
-                        
+        <?php if(!isset($solo_una)): ?>               
         <?php if(current($busqueda)===false) break;?>    
         <td class="title"><?php echo key($busqueda); ?></td>
         <td>
@@ -56,6 +56,7 @@
                     
             } ?>
         </td>
+        <?php endif; ?>
                         
         <?php if(current($busqueda)===false) break; ?>        
             

@@ -40,14 +40,14 @@ $('#buttonCargaMD').click(function(e) {
 
 
 <div class="col-md-12 no_horizontal_padding margin_top">
-        <h1>Carga de Inventario</h1>
-        <div class="moreDetails">
+        <h1 class="margin_bottom">Carga de Inventario</h1>
+        <div>
             
                                
             <ul id="myTabs" class="nav nav-tabs" role="tablist">
               <li role="presentation" class="active"><a href="#fileLoad" id="fileLoad-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true">CARGA MASIVA </a></li>
               <li role="presentation" class=""><a href="#specifications" role="tab" id="specifications-tab" data-toggle="tab" aria-controls="specifications" aria-expanded="false">CARGA INDIVIDUAL</a></li>
-              <li role="presentation" class=""><a href="#plantilla" role="tab" id="plantilla-tab" data-toggle="tab" aria-controls="plantilla" aria-expanded="false">DESCARGA DE PLANTILLA</a></li>
+           <!--   <li role="presentation" class=""><a href="#plantilla" role="tab" id="plantilla-tab" data-toggle="tab" aria-controls="plantilla" aria-expanded="false">DESCARGA DE PLANTILLA</a></li>-->
               
             </ul>
             
@@ -63,8 +63,16 @@ $('#buttonCargaMD').click(function(e) {
             ?>
             <div id="myTabContent" class="tab-content">
                 <div role="tabpanel" class="tab-pane active in row-fluid clearfix" id="fileLoad" aria-labelledby="home-tab">
-                    <h4 class=" margin_top">1.- Realizar la validación previa del archivo:</h4>
-                    <hr class="dark no_margin_top"/>
+                    <div class="col-md-6">
+                        <h4 class=" margin_top no_margin_bottom">1.- Realizar la validación previa del archivo:</h4>
+                    </div>
+                    <div class="col-md-6 margin_top_small ">
+                         <a href="../site/plantillaExternos" class="btn btn-darkgray"> <span class="glyphicon glyphicon-download-alt"></span> Descargar Archivo</a>
+                    </div>
+                    <div class="col-md-12 no_horizontal_padding margin_top_minus">
+                        <hr class="dark"/>
+                    </div>
+                    
                     <div class="col-md-8 well no_radius">
                         <div class="row-fluid">
                             <?php
@@ -152,33 +160,25 @@ $('#buttonCargaMD').click(function(e) {
                  
                   </div>
                 
-                <div role="tabpanel" class="tab-pane row-fluid clearfix" id="plantilla" aria-labelledby="plantilla-tab">
+          <!--      <div role="tabpanel" class="tab-pane row-fluid clearfix" id="plantilla" aria-labelledby="plantilla-tab">
                     <h4 class=" margin_top">Descargar archivo Excel para generar el Inbound</h4>
                     <hr class="dark no_margin_top"/>
                     <div class="col-md-6 well no_radius">
                         <div class="row-fluid">
                             <div class="col-md-6">
-                             <!--   <select class="form-control">
+                              <select class="form-control">
                                     <option>Seleccionar Categoría</option>
-                                </select>-->
+                                </select>
                             </div>
                             <div class="col-md-6 text-center">
                                  <a href="../site/plantillaExternos" class="btn btn-darkgray"> <span class="glyphicon glyphicon-download-alt"></span> Descargar Archivo</a>
                             </div>
                         </div>
                     </div> 
-                     <p> <?php
-                        if ($nuevos > 0 || $actualizados > 0) {
-                            echo "<h3>Datos del archivo cargado:</h3>";            
-                            echo "<h4>Nombre: <b>" . $fileName . "</b></h4>";
-                            echo "<h4>Total de productos que contiene: <b>" . ($nuevos + $actualizados) . "</b></h4>";
-                            echo "<h4>Productos (Combinación con SKU) nuevos: <b>" . $nuevos . "</b></h4>";
-                            echo "<h4>Productos (Combinación con SKU) actualizados: <b>" . $actualizados . "</b></h4><br><hr><br>";
-                            
-                        }
-                        ?></p>      
+                          
                                     
-                </div>
+                </div>-->
+                
              
             </div>
  <?php $this->endWidget(); ?>

@@ -1,5 +1,6 @@
 
 <?php 
+echo CHtml::hiddenField('name' , '', array('id' => 'oculto')); 
 // $model = Categoria::model()->findAllBySql("select * from tbl_categoria where id_padre in (select id from tbl_categoria where id_padre=0)  order by nombre asc");
  $model=Categoria::model()->findAllByAttributes(array('id_padre'=>0), array('order'=>' id asc'));
 ?>
@@ -93,7 +94,8 @@
 								        ),
 								    // additional javascript options for the autocomplete plugin
 								    'options'=>array(
-								            'showAnim'=>'fold',
+								            'showAnim'=>'fold'
+								             
 								            
 								    ),
 									));	
@@ -119,9 +121,11 @@
                                                  if($usuario){
                                                  
                                                  $orders=Orden::model()->findAllByAttributes(array('empresa_id'=>$usuario->empresa->id,'estado'=>0), array('order'=>'id desc'));
-                                                 echo count($orders);
+                                                 $purchases=Orden::model()->findAllByAttributes(array('users_id'=>$usuario->id,'estado'=>0), array('order'=>'id desc'));
+                                                 echo count($orders)+count($purchases);
                                                  } else {
                                                      $orders=array();
+                                                     $purchases=array();
                                                  }
                                                  ?> 
                                              </span>
@@ -134,6 +138,9 @@
                                     </div>                                
                                   </a>
                                   <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                   <?php   if(Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id)):?>
+                                     <li class="padding_left_xsmall"><small><u>COMPRAS</u></small></li>   
+                                   <?php endif; ?>
                                       <?php foreach($orders as $key=>$order): ?> 
                                        <li><a href="<?php echo Yii::app()->createUrl('orden/detalle', array('id'=>$order->id))?>"><span><?php echo $order->id;?></span> <b><?php echo $order->almacen->empresas->razon_social; ?></b> (<?php echo count($order->ordenHasInventarios); ?>)</a></li>
                                       
@@ -141,8 +148,21 @@
                                         if($key==2)
                                             break;
                                       endforeach; ?> 
-                                   
+                                      
                                     <li class="separator"></li>
+                                    
+                                    <?php 
+                                      if(Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id)):?>
+                                          <li class="padding_left_xsmall"><small><u>VENTAS</u></small></li>       
+                              <?php      foreach($purchases as $key=>$order): ?> 
+                                       <li><a href="<?php echo Yii::app()->createUrl('orden/detalle', array('id'=>$order->id))?>"><span><?php echo $order->id;?></span> <b><?php echo $order->almacen->empresas->razon_social; ?></b> (<?php echo count($order->ordenHasInventarios); ?>)</a></li>
+                                      
+                                      <?php  
+                                        if($key==2)
+                                            break;
+                                      endforeach; ?> 
+                                    <li class="separator"></li>
+                                    <?php endif; ?>
                                     <li><a href="<?php echo Yii::app()->createUrl('orden/misCompras');?>">Ver todas las ordenes</a></li>
                                   </ul>
                                 </div>
@@ -210,34 +230,25 @@
                                     <div class="row-fluid">
                                         <div class="col-md-3 col-sm-3 col-xs-3 no_horizontal_padding image">
                                             <div class="imgContainer">
+                                     	
                                             	<?php 
-												if(isset($usuario))
-												{
-													$link=Yii::app()->getBaseUrl(true).'/images/user/'.$usuario->id."_thumb.png";
-	                                            	$file_headers = @get_headers($link);
-													if($file_headers[0] == 'HTTP/1.1 200 OK')
-													{?>
-													   <img src="<?php echo Yii::app()->baseUrl.'/images/user/'.$usuario->id."_thumb.png"?>" height="26px" width="26px"/>
-													<?php
-													}
-													else
-													{
-														$link=Yii::app()->getBaseUrl(true).'/images/user/'.$usuario->id."_thumb.jpg";
-	                                            		$file_headers = @get_headers($link);
-														if($file_headers[0] == 'HTTP/1.1 200 OK')
-														{?>
-															<img src="<?php echo Yii::app()->baseUrl.'/images/user/'.$usuario->id."_thumb.jpg"?>" height="26px" width="26px"/>
-														<?php
-														}
-														else 
-														{?>
-															<img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/favicon75.2.png" width="100%"/>
-														<?php
-														}
-													}
-												} 
-	
-                                            	?>
+                                                if(isset($usuario))
+                                                {   if(!is_null($usuario->avatar_url)):
+                                                     ?>   
+                                                    <img src="<?php echo Yii::app()->baseUrl;
+                                                                if(strpos($usuario->avatar_url, ".png")==-1)
+                                                                    echo str_replace(".jpg", "_thumb.jpg", $usuario->avatar_url);
+                                                                else
+                                                                    echo str_replace(".png", "_thumb.png", $usuario->avatar_url); ?>" height="26px" width="26px"/>    
+                                                    
+                                                    <?php  else: ?>
+                                                        <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/favicon75.2.png" width="100%" id="layout-avatar"/>       
+                                                    <?php endif;                                                 
+                                                } 
+    
+                                                ?>
+                                          
+                                            	
                                             </div>
                                              
                                         </div>
@@ -291,6 +302,23 @@ if(isset(Yii::app()->session['banner'])){?>
 <script>
 
 $(document).ready(function() {
+	var filtroBusqueda="";
+	$('#busqueda').on('change', function(event) { //// REVISAR EVENTOS JQ
+		var filtro=$('#categorySearch').val()
+				$.ajax({
+		         url: "<?php echo Yii::app()->createUrl('Site/filtroBusqueda') ?>",
+	             type: 'POST',
+		         data:{
+	                    filtro:filtro,
+	                   },
+		        success: function (data) {
+		        	filtroBusqueda=data;
+		        	$('#oculto').val(data);
+		        	
+		       	}
+		       })
+	});
+	
 	$('#categorySearch').on('change', function(event) {
 			
 			var filtro=$(this).val();
@@ -301,6 +329,8 @@ $(document).ready(function() {
 	                    filtro:filtro,
 	                   },
 		        success: function (data) {
+		        	filtroBusqueda=data;
+		        	$('#oculto').val(data);
 		       	}
 		       })
 			
@@ -313,11 +343,46 @@ $(document).ready(function() {
 			if(busqueda=="")
 				return false;
 			var path='<?php echo Yii::app()->createUrl('tienda/index');?>';
-			window.location.href = path+'?producto='+busqueda;
+			'<?php unset(Yii::app()->session['menu']);?>'
+				if(filtroBusqueda!="")
+				{
+					$.ajax({
+			         url: "<?php echo Yii::app()->createUrl('tienda/buscarCategoria') ?>",
+		             type: 'POST',
+			         data:{
+		                    filtroBusqueda:filtroBusqueda,
+		                   },
+			        success: function (data) {
+			        	window.location.href = path+'?producto='+busqueda+'&categoria='+data;
+			        	
+			       	}
+			       })
+					
+				}
+				else
+				{
+					window.location.href = path+'?producto='+busqueda;
+				}
 			//window.location.href = '../tienda/index?producto='+busqueda;
 			//window.location.href = '../tienda/index/'+busqueda;
 				
 			
+		});
+		
+		$('#busqueda').on('click', function(event) {
+			var filtro=$('#categorySearch').val()
+				$.ajax({
+		         url: "<?php echo Yii::app()->createUrl('Site/filtroBusqueda') ?>",
+	             type: 'POST',
+		         data:{
+	                    filtro:filtro,
+	                   },
+		        success: function (data) {
+		        	filtroBusqueda=data;
+		        	$('#oculto').val(data);
+		        	
+		       	}
+		       })
 		});
 		
 		$('#busqueda').on('focus', function(event) {
@@ -328,7 +393,26 @@ $(document).ready(function() {
 				if(busqueda=="")
 					return false;
 				var path='<?php echo Yii::app()->createUrl('tienda/index');?>';
-				window.location.href = path+'?producto='+busqueda;
+				if(filtroBusqueda!="")
+				{
+					$.ajax({
+			         url: "<?php echo Yii::app()->createUrl('tienda/buscarCategoria') ?>",
+		             type: 'POST',
+			         data:{
+		                    filtroBusqueda:filtroBusqueda,
+		                   },
+			        success: function (data) {
+			        	window.location.href = path+'?producto='+busqueda+'&categoria='+data;
+			        	
+			       	}
+			       })
+					
+				}
+				else
+				{
+					window.location.href = path+'?producto='+busqueda;
+				}
+				
 	   		  }
 			});
 		});

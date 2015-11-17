@@ -65,7 +65,7 @@
 				{
 					if($quitar==0):
 					?>
-                    <span class="quantity"><?php echo $inventario->precio<10000?$inventario->precio:$inventario->precio;?><small> Bs</small></span>
+                    <span class="quantity"><?php echo strlen($inventario->precio)>7?"<small>".$inventario->precio."</small>":$inventario->precio; ?><small> Bs</small></span>
 				<?php
 					endif;
 					if($quitar==1):
