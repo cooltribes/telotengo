@@ -8,13 +8,12 @@ foreach($bolsaInventario as $carrito)
 	{
 		$suma=0;	
 		$diferente=$carrito->almacen_id;	
-	
-	
+		?>
 
-?>	
 <div class="orderContainer margin_top_small margin_bottom">
                 <div class="title clearfix">
                    <div class="row-fluid">
+                      <a href="#" class="close"><span class="glyphicon glyphicon-remove"></span></a>
                       <div class="col-md-6 no_horizontal_padding"></div>
                        <div class="col-md-6 no_horizontal_padding text-right"><?php echo $carrito->almacen->empresas->razon_social;?></div>
                    </div>

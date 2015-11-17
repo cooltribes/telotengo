@@ -12,13 +12,7 @@ $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
         
 
         
-     <script>
-$(document).ready(function () {
-$('#miniSlide').carousel({
-   interval: 200000
-});});
 
-</script>  
         
 
             
@@ -30,7 +24,8 @@ $('#miniSlide').carousel({
                         <div class='imagen_principal' style="overflow:hidden; max-height: 300px;"> 
                            <img src="<?php echo Yii::app()->getBaseUrl(true).$imagenPrincipal->url;?>" width="100%" id="mainImage" />
                         </div>
-               <div class="secondary_images">
+                        
+                         <div class="secondary_images">
                            <div id="myCarousel" class="carousel slide carouselSecs" data-ride="carousel">
                             <div class="control"><?php if(count($imagen)>5): ?> <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev"><span><</span><span class="sr-only">Previous</span> </a><?php endif; ?></div>
                               <!-- Wrapper for slides -->
@@ -73,111 +68,91 @@ $('#miniSlide').carousel({
                     
                     
                     <div class="col-md-8 mainDetail">
-                        <h1 class="no_margin_top">
+                        
+                        <h1 class="no_margin_top" style="height: auto">
                           <?php echo $model->nombre;?> 
                         </h1>
                         <div class="separator"></div>
                         <table width="100%" class="priceTable">
+                            <col width="50%">
+                            <col width="50%">
                             <tr>
-                                <td class="title" width="25%">Precio en tienda</td>
-                                <td width="33%" class="throughlined"><?php echo $inventario->precio;?> Bs</td>
+                                <td class="title">Precio en tienda</td>
+                                <td class="throughlined"><?php echo $inventario->precio;?> Bs</td>
+                            </tr>
+                            <tr>  
+                                
                                 <td class="title" width="22%">Estatus</td>
                                 <?php
                                 if($inventario->cantidad>0) 
                                 {?>
-                                	<td class="success" width="20%"> En Stock</td>  
+                                	<td class="success"> En Stock</td>  
                                 <?php	
                                 }else
 								{?>
-									<td class="error" width="20%"> Agotado</td>  
+									<td class="error"> Agotado</td>  
 								<?php
 								}	
                                 ?>
                                 	 
                                                    
                             </tr>
-                           <!-- 
-                            <tr>
-                                <td class="title">Precio al mayor</td>
-                                
-                                <td ><span class="highlighted"><?php echo $inventario->precio;?></span> Bs por und.</td>  NO hay precio con descuento
-                                <td class="title">Disponibilidad</td>
-                                <td > <?php echo $inventario->cantidad;?></td>                        
-                            </tr>
-                            
-                            <tr>
-                                <td  class="title">Días de Crédito</td>
-                                <td  >7</td>
-                                <td  class="title" >Empaque</td>
-                                <td  >10 und. / 1 caja</td>                        
-                            </tr>
-                            
-                            <tr>
-                                <td class="title">Descuento Adicional</td>
-                                <td >5% desde 100 und.</td>
-                                <td class="title">Orden mínima</td>
-                                <td >50 und. / 5 cajas</td>                        
-                            </tr>
-                            
-                        -->
-                        </table>
-                        
-                     <?php  /* <div class="shippingInfo margin_top">
-                            <div class="row-fluid">
-                                <div class="col-md-3 text-right">
-                                    <span class="title">Envío:</span>
-                                </div>
-                                <div class="col-md-9">
-                                	<?php 
-                                	if($inventario->metodoEnvio!=1)
-									{?>
-										<span class="price">Acordado con el cliente</span>
-									<?php
-									}
-									else
-									{?>
-										<span class="price">A traves del servicio de TELOTENGO</span>
-                                    	<a href="#"  data-toggle="modal" data-target="#shippingModal">(en la región occidente) <span class="caret"></span></a>
-                                    	<span class="estimated">Fecha estimada de entrega: 3-5 días</span>
-									<?php	
-									}
-                                	?>
 
-                                    
-                                </div> 
-                            </div>
-                        </div>*/
-                        ?>
+                        </table>
+                        <div class="specs margin_top">
+                            <h2>CARACTERÍSTICAS DEL PRODUCTO</h2>
+                            <ul>
+                                <?php  
+                                $data = explode('*-*',$model->caracteristicas);
+                                foreach($data as $dato)
+                                {
+                                    if($dato!="")
+                                    {
+                                    ?>
+                                    <li><span class="glyphicon glyphicon-ok"></span><?php echo $dato?></li>
+                                <?php
+                                    }
+                                }                       
+                                ?>
+                            </ul>
+                        </div> 
                         
                     </div>
-                    <div class="col-md-8  col-md-offset-4 specs margin_top">
-                        <h2>CARACTERÍSTICAS DEL PRODUCTO</h2>
-                        <ul>
-                        	<?php  
-                        	$data = explode('*-*',$model->caracteristicas);
-							foreach($data as $dato)
-							{
-								if($dato!="")
-								{
-								?>
-								<li><span class="glyphicon glyphicon-ok"></span><?php echo $dato?></li>
-							<?php
-								}
-							}                      	
-                        	?>
-                        </ul>
-                    </div>
-                 <!--   <div class="col-md-12 no_padding_left slider">
-                        <h1>PRODUCTOS SIMILIARES</h1>
-                           <?php //$this->renderPartial('carousel_productos',array('data'=>$similares,'carousel'=>'proveedor', 'similares'=>1)); ?>  
-                     
-                    </div>-->
-             
+                        
+                    
+                    
+                    
+                    <div class="col-md-12 no_padding_left margin_top">
+                         <div class="moreDetails">                                       
+                            <ul id="myTabs" class="nav nav-tabs" role="tablist">
+                              <li role="presentation" class="active"><a href="#moreDetails" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true">DETALLES DEL PRODUCTO</a></li>
+                              <li role="presentation" class=""><a href="#specifications" role="tab" id="specifications-tab" data-toggle="tab" aria-controls="specifications" aria-expanded="false">CARACTERÍSTICAS GENERALES</a></li>
+                           <!--   <li role="presentation" class=""><a href="#recommendations" role="tab" id="recommendations-tab" data-toggle="tab" aria-controls="recommendations" aria-expanded="false">RECOMENDACIONES DEL PRODUCTO</a></li>--></-->
+                              
+                            </ul>
+                            <div id="myTabContent" class="tab-content">
+                              <div role="tabpanel" class="tab-pane fade active in" id="moreDetails" aria-labelledby="home-tab">
+                                 
+                                <?php if(!is_null($busqueda))$this->renderPartial('more_details', array('busqueda'=>$busqueda,'solo_una'=>true));else echo "<div class='text-center margin_top'>No hay información disponible</div>" ?>
+                              </div>
+                              <div role="tabpanel" class="tab-pane padding_top padding_bottom" id="specifications" aria-labelledby="specifications-tab">
+                                 <?php echo $model->descripcion; ?>
+                             
+                              </div>
+                              
+                            </div>
+                        </div>
+                    </div>  
+                    
+                       
+                    
+                </div>
+                    
+
              
              </div>
-            </div>
-             </div>
-            <div class="col-md-3 no_horizontal_padding ">
+        
+            <div class="col-md-3 no_padding_right ">
                 <div class="orderBox">
                     <table width="80%" style="width:80%; max-width: 80%;">
                         <tr>
@@ -253,36 +228,7 @@ $('#miniSlide').carousel({
                            
             </div>
             
-            <div class="col-md-12 no_horizontal_padding margin_top">
-                <div class="moreDetails">
-                    
-                                       
-                    <ul id="myTabs" class="nav nav-tabs" role="tablist">
-                      <li role="presentation" class="active"><a href="#moreDetails" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true">DETALLES DEL PRODUCTO</a></li>
-                      <li role="presentation" class=""><a href="#specifications" role="tab" id="specifications-tab" data-toggle="tab" aria-controls="specifications" aria-expanded="false">CARACTERÍSTICAS GENERALES</a></li>
-                   <!--   <li role="presentation" class=""><a href="#recommendations" role="tab" id="recommendations-tab" data-toggle="tab" aria-controls="recommendations" aria-expanded="false">RECOMENDACIONES DEL PRODUCTO</a></li>--></-->
-                      
-                    </ul>
-                    <div id="myTabContent" class="tab-content">
-                      <div role="tabpanel" class="tab-pane fade active in" id="moreDetails" aria-labelledby="home-tab">
-                         
-                        <?php if(!is_null($busqueda))$this->renderPartial('more_details', array('busqueda'=>$busqueda));else echo "<div class='text-center margin_top'>No hay información disponible</div>" ?>
-                      </div>
-                      <div role="tabpanel" class="tab-pane padding_top padding_bottom" id="specifications" aria-labelledby="specifications-tab">
-                         <?php echo $model->descripcion; ?>
-                     
-                      </div>
-                        
-             <!--         <div role="tabpanel" class="tab-pane fade" id="recommendations" aria-labelledby="recommendations-tab">
-                  
-                     
-              </div>-->
-                      
-                    </div>
-                
-                </div>  
-                              
-            </div>
+   
             
            <?php //$this->renderPartial('preguntas_respuestas', array('model'=>$model, 'empresa_id'=>$empresa->id)); ?>
            
@@ -443,5 +389,15 @@ $(document).ready(function(){
 <div class="modal fade" id="shippingModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <?php $this->renderPartial('shipping_modal'); ?>
 </div>
+  <!-- Wrapper for slides -->
+  
+    
 
-            
+  
+<script>
+$(".item.miniSlide").first().addClass("active");
+$(document).ready(function () {
+$('#myCarousel').carousel({
+   interval: 200000
+});});
+</script>  

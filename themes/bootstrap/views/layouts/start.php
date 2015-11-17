@@ -119,9 +119,11 @@
                                                  if($usuario){
                                                  
                                                  $orders=Orden::model()->findAllByAttributes(array('empresa_id'=>$usuario->empresa->id,'estado'=>0), array('order'=>'id desc'));
-                                                 echo count($orders);
+                                                 $purchases=Orden::model()->findAllByAttributes(array('users_id'=>$usuario->id,'estado'=>0), array('order'=>'id desc'));
+                                                 echo count($orders)+count($purchases);
                                                  } else {
                                                      $orders=array();
+                                                     $purchases=array();
                                                  }
                                                  ?> 
                                              </span>
@@ -134,6 +136,9 @@
                                     </div>                                
                                   </a>
                                   <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                   <?php   if(Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id)):?>
+                                     <li class="padding_left_xsmall"><small><u>COMPRAS</u></small></li>   
+                                   <?php endif; ?>
                                       <?php foreach($orders as $key=>$order): ?> 
                                        <li><a href="<?php echo Yii::app()->createUrl('orden/detalle', array('id'=>$order->id))?>"><span><?php echo $order->id;?></span> <b><?php echo $order->almacen->empresas->razon_social; ?></b> (<?php echo count($order->ordenHasInventarios); ?>)</a></li>
                                       
@@ -141,8 +146,21 @@
                                         if($key==2)
                                             break;
                                       endforeach; ?> 
-                                   
+                                      
                                     <li class="separator"></li>
+                                    
+                                    <?php 
+                                      if(Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id)):?>
+                                          <li class="padding_left_xsmall"><small><u>VENTAS</u></small></li>       
+                              <?php      foreach($purchases as $key=>$order): ?> 
+                                       <li><a href="<?php echo Yii::app()->createUrl('orden/detalle', array('id'=>$order->id))?>"><span><?php echo $order->id;?></span> <b><?php echo $order->almacen->empresas->razon_social; ?></b> (<?php echo count($order->ordenHasInventarios); ?>)</a></li>
+                                      
+                                      <?php  
+                                        if($key==2)
+                                            break;
+                                      endforeach; ?> 
+                                    <li class="separator"></li>
+                                    <?php endif; ?>
                                     <li><a href="<?php echo Yii::app()->createUrl('orden/misCompras');?>">Ver todas las ordenes</a></li>
                                   </ul>
                                 </div>

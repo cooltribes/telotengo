@@ -207,7 +207,7 @@ class ProfileController extends Controller
 		return $this->_model;
 	}
     
-    public function actionIndex(){
+    public function actionIndex($_= null){
     	$model=User::model()->findByPk(Yii::app()->user->id);
         $avatar=false;
     	if(isset($_POST['imagen']))
@@ -273,10 +273,11 @@ class ProfileController extends Controller
 						$image = Yii::app()->image->load($nombre.$extension);
 						$image->resize(270, 270);
 						$image->save($nombre.'_thumb'.$extension);
-                        $avatar=true;					
+                        $avatar=true;				
 					}
 				/*echo "s;kdfklsdf";
 				Yii::app()->end();*/
+				header("Refresh: 0; URL=".$this->createUrl('index'));
 			}
 		}
 		$totaAprobadaCompra="";
@@ -337,7 +338,8 @@ class ProfileController extends Controller
 			'producInventario'=>$producInventario,
 			'empresa'=>$empresa,
 			'almacen'=>$almacen,
-			'avatar'=>$avatar
+			'avatar'=>$avatar,
+			
 		
 		));
 		
