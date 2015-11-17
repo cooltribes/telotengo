@@ -12,7 +12,7 @@ class TiendaController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','filtrar','storefront'), //TODO acomodar esto cuando se tengan los usuarios
+				'actions'=>array('index','filtrar','storefront', 'buscarCategoria'), //TODO acomodar esto cuando se tengan los usuarios
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -174,19 +174,61 @@ class TiendaController extends Controller
 		$sqlCategoria="";
 		$filtroMarca="";
 		$filtroPrecio="";
+		$padre="";
 		if(isset($_GET['producto']))
 		{
 	
-                $filter['producto']=$_GET['producto'];
-          
-                 
-			$productoPartido=explode(" ", $_GET['producto']);
+            $filter['producto']=$_GET['producto'];
+			$productoPartido=explode("(", $_GET['producto']);		
 			$num=count($productoPartido);
+			$i=1;
+			$produc="";
+			$cadena="";
+			
+			foreach($productoPartido as $prod) /// sirve con todos, probar con el s6 
+			{
+				if($i==1)	
+				{
+					$produc=$prod;
+				}
+				else
+				{
+					$cadena=str_replace(")", "", $prod);	
+					if(!Categoria::model()->findByAttributes(array('nombre'=>$cadena))) // sirve con dos parentesis
+					{
+						 $prod="(".$prod;
+						echo $produc=$produc.$prod;
+					}
+					else 
+					{
+						$cate=Categoria::model()->findByAttributes(array('nombre'=>$cadena));
+						if(isset($_GET['categoria']))
+						{
+							if($_GET['categoria']!="") // si el filtro no es vacio
+								if($_GET['categoria']==$cate->url_amigable)
+									$filter['producto']=trim($produc);
+						}
+						else
+						{
+							$var=trim($produc);
+							if(ProductoPadre::model()->findByAttributes(array('nombre'=>$var))) // si esta bien, entre; del resto es invento del usuario
+							{
+								$padre=ProductoPadre::model()->findByAttributes(array('nombre'=>$var));
+								$otraForma=1;
+							}
+						}	
+					}
+				}	
+				$i++;
+			}
+			//echo $filter['producto'];
+			//echo $produc;
 
-			if(isset($productoPartido[$num-1]) && isset($productoPartido[$num-2])  && isset($productoPartido[$num-3])) // funcion puede dar error
+			/*if(isset($productoPartido[$num-1]) && isset($productoPartido[$num-2])  && isset($productoPartido[$num-3])) // funcion puede dar error
 			{
 												
 				$variable="";
+
 				for($i=0;$i<=$num-3;$i++)
 				{	
 					if($i!=$num-3)	
@@ -194,18 +236,33 @@ class TiendaController extends Controller
 					else	
 					   $variable=$variable.$productoPartido[$i];
 				}
-				if(Categoria::model()->buscarCategoria($productoPartido[$num-1])!="" && $productoPartido[$num-2]=="en" && ProductoPadre::model()->buscarProducto($variable)!="")
+				
+				if($_GET['categoria']=="")
+				{
+					$otraForma=1;
+				}
+				else 
+				{
+					$otraForma=0;
+				}
+				if(Categoria::model()->buscarCategoria($productoPartido[$num-1])!="" && $productoPartido[$num-2]=="en" && ProductoPadre::model()->buscarProducto($variable)!="" && $otraForma==1)
 				{
 					$padre_id=ProductoPadre::model()->buscarProducto($variable);
 					$otraForma=1; // bandera
 					$sql="select p.id, p.nombre, min(i.precio) as menor,  p.padre_id, p.modelo, p.annoFabricacion, p.upc, p.ean, p.gtin, p.nparte, p.tlt_codigo, p.color, p.color_id, p.descripcion, p.destacado, p.estado, p.caracteristicas, p.id_seo
 					 from tbl_producto p join tbl_inventario i on p.id=i.producto_id where p.padre_id=".$padre_id.""; //TODO mejorar esto, forma menos optima
 				}	
-			}
+			}*/
 			if($otraForma!=1) // bandera activa
 			{
+				//echo "basta de";
 					$sql="select p.id, p.nombre,  min(i.precio) as menor, p.padre_id, p.modelo, p.annoFabricacion, p.upc, p.ean, p.gtin, p.nparte, p.tlt_codigo, p.color, p.color_id, p.descripcion, p.destacado, p.estado, p.caracteristicas, p.id_seo
-					 from tbl_producto p join tbl_inventario i on p.id=i.producto_id where p.nombre LIKE '%".$filter['producto']."%'"; //TODO mejorar esto, forma menos optima
+					 from tbl_producto p join tbl_inventario i on p.id=i.producto_id where p.nombre LIKE '%".$filter['producto']."%' "; //TODO mejorar esto, forma menos optima
+			}
+			else 
+			{
+				$sql="select p.id, p.nombre,  min(i.precio) as menor, p.padre_id, p.modelo, p.annoFabricacion, p.upc, p.ean, p.gtin, p.nparte, p.tlt_codigo, p.color, p.color_id, p.descripcion, p.destacado, p.estado, p.caracteristicas, p.id_seo
+					 from tbl_producto p join tbl_inventario i on p.id=i.producto_id where p.padre_id='".$padre->id."' "; 
 			}
 				
 
@@ -218,7 +275,7 @@ class TiendaController extends Controller
 		}
 		else 
 		{   $filter['producto']="";
-			$sql="select p.id, p.nombre, min(i.precio) as menor,  p.padre_id, p.modelo, p.annoFabricacion, p.upc, p.ean, p.gtin, p.nparte, p.tlt_codigo, p.color, p.color_id, p.descripcion, p.destacado, p.estado, p.caracteristicas, p.id_seo from tbl_producto p where p.nombre <>''"; //TODO mejorar esto, forma menos optima 
+			$sql="select p.id, p.nombre, min(i.precio) as menor,  p.padre_id, p.modelo, p.annoFabricacion, p.upc, p.ean, p.gtin, p.nparte, p.tlt_codigo, p.color, p.color_id, p.descripcion, p.destacado, p.estado, p.caracteristicas, p.id_seo from tbl_producto p join tbl_inventario i on p.id=i.producto_id where p.nombre <>''"; //TODO mejorar esto, forma menos optima 
 		}
         $filter['categoria']=isset($_GET['categoria'])?$_GET['categoria']:'';
         $filter['marcas']=isset($_GET['marcas'])?$_GET['marcas']:'';
@@ -252,6 +309,8 @@ class TiendaController extends Controller
     			//echo $word=Categoria::model()->incluir($vector);
     			$vector=Categoria::model()->buscarHijos($filtroCategoria->id, $vector); //TODO MEJORAR ESTO
     		    $word=Categoria::model()->incluir($vector);
+				if($word=="")
+					$word=0; ///////////// si no existe ningun producto con esa categoria
     			$sqlCategoria="and p.padre_id in (select pa.id from tbl_producto_padre pa where pa.id_categoria in(".$word."))";
     			$sqlCategoria2="where pa.id_categoria in(".$word.")";
     			//var_dump($vector);
@@ -375,13 +434,13 @@ class TiendaController extends Controller
 						}
 				}	
 		}		
-		
 		if($sql!="")
 		{
 			//echo $sql;
 			$model="";
-			//echo $sql;
+			#echo "<br>";
 			$model=Yii::app()->db->createCommand($sql)->queryAll();
+			#var_dump($model);
 		}			
 		else
 		{
@@ -411,10 +470,16 @@ class TiendaController extends Controller
 		{
 			$list=0;
 		}
-		//echo $sql;
+		echo $sql;
 		//echo $sub;
 		
        $this->render('store', array('categorias'=>Categoria::model()->categoriasEnExistencia,'list'=>$list,'filter'=>$filter, 'model'=>$model, 'model2'=>$model2, 'order'=>$order));
     }
+
+	public function actionBuscarCategoria()
+	{
+		$id=$_POST['filtroBusqueda'];
+		echo Categoria::model()->findByPk($id)->url_amigable;
+	}
 	
 }

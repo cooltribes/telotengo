@@ -1,5 +1,6 @@
 
 <?php 
+echo CHtml::hiddenField('name' , '', array('id' => 'oculto')); 
 // $model = Categoria::model()->findAllBySql("select * from tbl_categoria where id_padre in (select id from tbl_categoria where id_padre=0)  order by nombre asc");
  $model=Categoria::model()->findAllByAttributes(array('id_padre'=>0), array('order'=>' id asc'));
 ?>
@@ -93,7 +94,8 @@
 								        ),
 								    // additional javascript options for the autocomplete plugin
 								    'options'=>array(
-								            'showAnim'=>'fold',
+								            'showAnim'=>'fold'
+								             
 								            
 								    ),
 									));	
@@ -300,6 +302,23 @@ if(isset(Yii::app()->session['banner'])){?>
 <script>
 
 $(document).ready(function() {
+	var filtroBusqueda="";
+	$('#busqueda').on('change', function(event) { //// REVISAR EVENTOS JQ
+		var filtro=$('#categorySearch').val()
+				$.ajax({
+		         url: "<?php echo Yii::app()->createUrl('Site/filtroBusqueda') ?>",
+	             type: 'POST',
+		         data:{
+	                    filtro:filtro,
+	                   },
+		        success: function (data) {
+		        	filtroBusqueda=data;
+		        	$('#oculto').val(data);
+		        	
+		       	}
+		       })
+	});
+	
 	$('#categorySearch').on('change', function(event) {
 			
 			var filtro=$(this).val();
@@ -310,6 +329,8 @@ $(document).ready(function() {
 	                    filtro:filtro,
 	                   },
 		        success: function (data) {
+		        	filtroBusqueda=data;
+		        	$('#oculto').val(data);
 		       	}
 		       })
 			
@@ -322,11 +343,46 @@ $(document).ready(function() {
 			if(busqueda=="")
 				return false;
 			var path='<?php echo Yii::app()->createUrl('tienda/index');?>';
-			window.location.href = path+'?producto='+busqueda;
+			'<?php unset(Yii::app()->session['menu']);?>'
+				if(filtroBusqueda!="")
+				{
+					$.ajax({
+			         url: "<?php echo Yii::app()->createUrl('tienda/buscarCategoria') ?>",
+		             type: 'POST',
+			         data:{
+		                    filtroBusqueda:filtroBusqueda,
+		                   },
+			        success: function (data) {
+			        	window.location.href = path+'?producto='+busqueda+'&categoria='+data;
+			        	
+			       	}
+			       })
+					
+				}
+				else
+				{
+					window.location.href = path+'?producto='+busqueda;
+				}
 			//window.location.href = '../tienda/index?producto='+busqueda;
 			//window.location.href = '../tienda/index/'+busqueda;
 				
 			
+		});
+		
+		$('#busqueda').on('click', function(event) {
+			var filtro=$('#categorySearch').val()
+				$.ajax({
+		         url: "<?php echo Yii::app()->createUrl('Site/filtroBusqueda') ?>",
+	             type: 'POST',
+		         data:{
+	                    filtro:filtro,
+	                   },
+		        success: function (data) {
+		        	filtroBusqueda=data;
+		        	$('#oculto').val(data);
+		        	
+		       	}
+		       })
 		});
 		
 		$('#busqueda').on('focus', function(event) {
@@ -337,7 +393,26 @@ $(document).ready(function() {
 				if(busqueda=="")
 					return false;
 				var path='<?php echo Yii::app()->createUrl('tienda/index');?>';
-				window.location.href = path+'?producto='+busqueda;
+				if(filtroBusqueda!="")
+				{
+					$.ajax({
+			         url: "<?php echo Yii::app()->createUrl('tienda/buscarCategoria') ?>",
+		             type: 'POST',
+			         data:{
+		                    filtroBusqueda:filtroBusqueda,
+		                   },
+			        success: function (data) {
+			        	window.location.href = path+'?producto='+busqueda+'&categoria='+data;
+			        	
+			       	}
+			       })
+					
+				}
+				else
+				{
+					window.location.href = path+'?producto='+busqueda;
+				}
+				
 	   		  }
 			});
 		});
