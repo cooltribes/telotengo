@@ -197,12 +197,13 @@ class TiendaController extends Controller
 					if(!Categoria::model()->findByAttributes(array('nombre'=>$cadena))) // sirve con dos parentesis
 					{
 						 $prod="(".$prod;
-						echo $produc=$produc.$prod;
+						 $produc=$produc.$prod;
 					}
 					else 
 					{
 						$cate=Categoria::model()->findByAttributes(array('nombre'=>$cadena));
-						if(isset($_GET['categoria']))
+						$var=trim($produc);
+						if(isset($_GET['categoria']) && !ProductoPadre::model()->findByAttributes(array('nombre'=>$var)))
 						{
 							if($_GET['categoria']!="") // si el filtro no es vacio
 								if($_GET['categoria']==$cate->url_amigable)
@@ -214,6 +215,7 @@ class TiendaController extends Controller
 							if(ProductoPadre::model()->findByAttributes(array('nombre'=>$var))) // si esta bien, entre; del resto es invento del usuario
 							{
 								$padre=ProductoPadre::model()->findByAttributes(array('nombre'=>$var));
+								$padre_id=ProductoPadre::model()->buscarProducto($var);
 								$otraForma=1;
 							}
 						}	
@@ -470,7 +472,7 @@ class TiendaController extends Controller
 		{
 			$list=0;
 		}
-		echo $sql;
+		//echo $sql;
 		//echo $sub;
 		
        $this->render('store', array('categorias'=>Categoria::model()->categoriasEnExistencia,'list'=>$list,'filter'=>$filter, 'model'=>$model, 'model2'=>$model2, 'order'=>$order));

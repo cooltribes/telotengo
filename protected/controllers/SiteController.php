@@ -379,16 +379,19 @@ class SiteController extends Controller
     }
     public function actionAutoComplete()
 		{
+	    	$empresas_id=EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id))->empresas_id; // id del que esta intentado entrar	
 	    	$res =array();
 	    	if (isset($_GET['term']) && Yii::app()->session['menu']=="")
 			{
-				$qtxt ="SELECT  CONCAT (p.nombre, ' (',c.nombre,')') FROM tbl_producto_padre p JOIN tbl_categoria c on p.id_categoria=c.id  WHERE p.nombre LIKE :nombre limit 3";
-				
+				#$qtxt ="SELECT  distinct(CONCAT (p.nombre, ' (',c.nombre,')')) FROM tbl_producto_padre p JOIN tbl_categoria c on p.id_categoria=c.id JOIN tbl_producto  po on p.id=po.padre_id JOIN tbl_inventario i on i.producto_id=po.id    WHERE p.nombre LIKE :nombre and i.cantidad>0 limit 3";
+				$qtxt ="SELECT  distinct(CONCAT (p.nombre, ' (',c.nombre,')')) FROM tbl_producto_padre p JOIN tbl_categoria c on p.id_categoria=c.id JOIN tbl_producto  po on p.id=po.padre_id JOIN tbl_inventario i on i.producto_id=po.id JOIN tbl_almacen a on i.almacen_id=a.id JOIN tbl_empresas em on a.empresas_id=em.id   WHERE p.nombre LIKE :nombre and i.cantidad>0
+				 and em.id<>'".$empresas_id."'  limit 3";
 				$command =Yii::app()->db->createCommand($qtxt);
 				$command->bindValue(":nombre", '%'.$_GET['term'].'%', PDO::PARAM_STR);
 				$resP =$command->queryColumn();	
 					
-				$qtxt ="SELECT nombre FROM tbl_producto WHERE nombre LIKE :nombre limit 6";
+				#$qtxt ="select distinct(p.nombre) from tbl_producto p join tbl_inventario t on t.producto_id=p.id where p.nombre like :nombre and t.cantidad>0 limit 6";
+				$qtxt ="select distinct(p.nombre) from tbl_producto p join tbl_inventario i on i.producto_id=p.id JOIN tbl_almacen a on i.almacen_id=a.id JOIN tbl_empresas em on a.empresas_id=em.id  where p.nombre like :nombre and i.cantidad>0 and em.id!='".$empresas_id."'  limit 6"; //and em.id<>'".$empresas_id."'
 				$command =Yii::app()->db->createCommand($qtxt);
 				$command->bindValue(":nombre", '%'.$_GET['term'].'%', PDO::PARAM_STR);
 				$res2 =$command->queryColumn();
