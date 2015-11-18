@@ -276,11 +276,12 @@ $(document).ready(function() {
 	
 		$('#nombre').blur(function(){ 
 		var nombre= $('#nombre').val();
+		var id= <?php echo $model->id;?>;
 		$.ajax({
 		         url: "<?php echo Yii::app()->createUrl('producto/verificarNombre') ?>",
 	             type: 'POST',
 		         data:{
-	                    nombre:nombre, 
+	                    nombre:nombre, id:id,
 	                   },
 		        success: function (data) {
 					

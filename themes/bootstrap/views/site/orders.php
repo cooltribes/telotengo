@@ -1,3 +1,22 @@
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h3 class="modal-title align_center">Eliminar Intencion de Compra</h3>
+        </div>
+        <div align="center">
+	        <div class="modal-body">
+	         <button type="button" id='accept' onclick="" class="btn-orange btn btn-danger btn-large orange_border margin_left">Si</button>
+	          <button type="button" class="btn-orange btn btn-danger btn-large orange_border margin_left" data-dismiss="modal">No</button>
+	        </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
 <?php 
 $diferente=0;
 $primera=0;
@@ -10,13 +29,18 @@ foreach($bolsaInventario as $carrito)
 		$diferente=$carrito->almacen_id;	
 		?>
 
+
+
+
+  
+
 <div class="orderContainer margin_top_small margin_bottom">
-                <div class="title clearfix">
-                   <div class="row-fluid">
-                      <a href="#" class="close"><span class="glyphicon glyphicon-remove"></span></a>
+                <div class="title clearfix row-fluid" style="position: relative">
+    
+                      <a href="#" class="close" onclick='modalConfirm(<?php echo $carrito->almacen_id;?>,<?php echo $carrito->bolsa_id;?>)'><span class="glyphicon glyphicon-remove"></span></a>
                       <div class="col-md-6 no_horizontal_padding"></div>
                        <div class="col-md-6 no_horizontal_padding text-right"><?php echo $carrito->almacen->empresas->razon_social;?></div>
-                   </div>
+
                 </div>
                 <div class="detail">
                     <table width="100%">
@@ -138,7 +162,7 @@ Yii::app()->session['suma']=$total;
 			    })
 			
 		});
-	
+		
 	});
 	
 		
@@ -164,5 +188,25 @@ Yii::app()->session['suma']=$total;
 			       	}
 			    })
 			
+		}
+		function modalConfirm(almacen_id, bolsa_id)
+		{
+			$('#accept').attr('onclick',"eliminarOrdenes("+almacen_id+","+bolsa_id+") ");
+			$('#myModal').modal();
+			
+		}
+		function eliminarOrdenes(almacen_id, bolsa_id)
+		{
+				$.ajax({
+			         url: "<?php echo Yii::app()->createUrl('Bolsa/eliminarOrdenes') ?>",
+		             type: 'POST',
+			         data:{
+		                    almacen_id:almacen_id, bolsa_id:bolsa_id
+		                   },
+			        success: function (data) {
+			        	
+						location.reload();
+			       	}
+			    })
 		}
 </script>
