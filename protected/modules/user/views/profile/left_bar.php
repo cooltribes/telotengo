@@ -9,9 +9,11 @@
                         }
              ?>
         </div>
-        <div class="change">
-            <a onclick="$('#changeAvatar').modal()">Cambiar foto</a>
-        </div>
+        <?php if(Yii::app()->user->id==$identificador): // si es igual edite, del resto no?>
+        	<div class="change"> 
+                	<a onclick="$('#changeAvatar').modal()">Cambiar foto</a>
+       		 </div>
+        <?php endif;?>
     </div>
     
 
@@ -21,7 +23,9 @@
                 <?php echo $model->profile->first_name." ".$model->profile->last_name; ?>
             </div>
             <div class="col-md-3 text-center no_horizontal_padding edit edit-name">
-                <a>Editar</a>
+            	<?php if(Yii::app()->user->id==$identificador): // si es igual edite, del resto no?>
+                	<a>Editar</a>
+                <?php endif;?>
             </div>
      </div> 
      <div class="info clearfix"> 
@@ -32,11 +36,13 @@
             </span>
             
             <span class="col-md-8 no_horizontal_padding value">
-                <?php echo $model->getCargo(true); ?>
+                <?php echo $model->getPuesto($identificador); ?>
             </span>
             
             <span class="col-md-3 text-center no_horizontal_padding edit">
-                <a>Editar</a>
+                 <?php if(Yii::app()->user->id==$identificador): // si es igual edite, del resto no?>
+                	<a>Editar</a>
+                <?php endif;?>
             </span>
              
          </div>     
@@ -68,7 +74,9 @@
                 </span>
                 
                 <span class="col-md-3 text-center no_horizontal_padding edit">
-                    <a>Editar</a>
+                 <?php if(Yii::app()->user->id==$identificador): // si es igual edite, del resto no?>
+                	<a>Editar</a>
+                <?php endif;?>
                 </span> 
             </div>
              <!-- -->
@@ -82,7 +90,9 @@
                 </span>
                 
                 <span class="col-md-3 text-center no_horizontal_padding edit">
-                    <a>Editar</a>
+                <?php if(Yii::app()->user->id==$identificador): // si es igual edite, del resto no?>
+                	<a>Editar</a>
+                <?php endif;?>
                 </span> 
             </div>
             <div class="separator"></div>
@@ -97,7 +107,9 @@
                 </span>
                 
                 <span class="col-md-3 text-center no_horizontal_padding edit">
-                    <a>Editar</a>
+                 <?php if(Yii::app()->user->id==$identificador): // si es igual edite, del resto no?>
+                	<a>Editar</a>
+                <?php endif;?>
                 </span>   
              </div>   
              <!-- -->
@@ -111,7 +123,9 @@
                 </span>
                 
                 <span class="col-md-3 text-center no_horizontal_padding edit">
-                    <a>Editar</a>
+                 <?php if(Yii::app()->user->id==$identificador): // si es igual edite, del resto no?>
+                	<a>Editar</a>
+                <?php endif;?>
                 </span> 
         </div>
        

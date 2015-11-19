@@ -14,8 +14,15 @@
 
 <?php
 echo "<tr>";
-    echo '<td><input type="checkbox"/></td>';   
-    echo '<td><img width:"60px" src="http://placehold.it/60x60"/></td>';   
+    echo '<td><input type="checkbox"/></td>';
+	echo "<td>";
+	 if($data->avatar_url){
+         echo CHtml::image(str_replace(".", "_thumb.", Yii::app()->baseUrl.$data->avatar_url),"Avatar",array('width'=>'60 px','style'=>'border-radius: 0px;'));
+      }else{
+         echo '<img src="http://placehold.it/60x60" class="img-responsive" alt="Responsive image">';
+     }
+	 echo "</td>";   
+    #echo '<td><img width:"60px" src="http://placehold.it/60x60"/></td>';   
     echo "<td><b>".$data->profile->first_name.' '.$data->profile->last_name."</b><br/><b>ID:</b>".$data->id."</td>"; 
     echo "<td>".$data->email."<br/><b>Telf:</b>".$data->profile->telefono."</td>";
     
@@ -90,7 +97,7 @@ echo "<tr>";
     </a> 
 
         <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-            <li><a tabindex="-1" href="'.Yii::app()->createUrl('/user/profile/profile',array('id'=>$data->id)).'">Ver Usuario </a></li>
+            <li><a tabindex="-1" href="'.Yii::app()->createUrl('/user/profile/index',array('ide'=>$data->id)).'">Ver Usuario </a></li>
             <li><a tabindex="-1" href="'.Yii::app()->createUrl('/user/admin/create',array('id'=>$data->id)).'">Editar </a></li>';
             /*if($data->status==1){?>
                 <li><a class="pointer" id=<?php echo $data->id;?> tabindex="-1" onclick="desactivarActivar(<?php echo $data->id;?>)"><i class="glyphicon glyphicon-remove"></i> Desactivar </a></li><?php }
