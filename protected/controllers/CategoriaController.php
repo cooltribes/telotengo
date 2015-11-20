@@ -587,6 +587,8 @@ class CategoriaController extends Controller
 		$id=$_POST['id'];
         $model = Categoria::model()->findByPk($id);
         $model->destacado=1-$model->destacado;
+        if($model->destacado==1)
+            $model->fecha_destacado=date("Y-m-d h:i:s");
         $model->save();
         echo $model->destacado;
 	}

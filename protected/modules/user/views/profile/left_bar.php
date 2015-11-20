@@ -13,7 +13,7 @@
             <a onclick="$('#changeAvatar').modal()">Cambiar foto</a>
         </div>
     </div>
-    
+     
 
 
     <div class="row-fluid info clearfix">
@@ -21,7 +21,7 @@
                 <?php echo $model->profile->first_name." ".$model->profile->last_name; ?>
             </div>
             <div class="col-md-3 text-center no_horizontal_padding edit edit-name">
-                <a>Editar</a>
+                <a onclick="editField(1)">Editar</a>
             </div>
      </div> 
      <div class="info clearfix"> 
@@ -36,7 +36,7 @@
             </span>
             
             <span class="col-md-3 text-center no_horizontal_padding edit">
-                <a>Editar</a>
+                <a onclick="editField(2)">Editar</a>
             </span>
              
          </div>     
@@ -68,7 +68,7 @@
                 </span>
                 
                 <span class="col-md-3 text-center no_horizontal_padding edit">
-                    <a>Editar</a>
+                    <a onclick="editField(4)">Editar</a>
                 </span> 
             </div>
              <!-- -->
@@ -120,3 +120,33 @@
     <div id="changeAvatar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none; min-height: 550px;">
         <?php echo $this->renderPartial('avatar', array( 'model'=>$model ),true); ?>
     </div>
+    <div id="changeField" class="modal fade miniModal " tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;" >
+        
+    </div>
+    
+    <script>
+      function  editField(field){
+            
+        $.ajax({
+            type: "post", 
+            url: "editField", // action 
+            dataType: 'json',
+            data: { 'field':field}, 
+            success: function (data) {
+                
+                if(data.status=='ok')
+                {
+                    $('#changeField').html(data.content);
+                    $('#changeField').modal();
+ 
+                }else{
+                    alert(data.status);
+                }
+                
+            
+            }//success
+           });   
+        }
+        
+    </script>
+   

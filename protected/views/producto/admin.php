@@ -100,7 +100,7 @@
 		<?php
 		$template = '{summary}
 	    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-bordered table-hover table-striped">
-	        <tr>
+	     <thead>   <tr>
 	            <th scope="col">Codigo TLT</th>
 	            <th scope="col">Imagen</th>
 	            <th scope="col">Nombre</th>
@@ -108,6 +108,7 @@
 	            <th scope="col">Destacado</th>
 	            <th scope="col">Acción</th>
 	        </tr>
+	      </thead>
 	    {items}
 	    </table>
 	    {pager} 

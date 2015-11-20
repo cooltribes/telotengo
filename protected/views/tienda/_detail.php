@@ -65,12 +65,12 @@
 				{
 					if($quitar==0):
 					?>
-                    <span class="quantity"><?php echo strlen($inventario->precio)>7?"<small>".$inventario->precio."</small>":$inventario->precio; ?><small> Bs</small></span>
+                    <span class="quantity"><?php echo strlen($inventario->formatPrecio)>7?"<small>".$inventario->formatPrecio."</small>":$inventario->formatPrecio; ?><small> </small></span>
 				<?php
 					endif;
 					if($quitar==1):
 					?>
-                    <span class="quantity"><?php echo $inventario['menor']<10000?$inventario['menor']:$inventario['menor']?><small> Bs</small></span>
+                    <span class="quantity"><?php echo $inventario['menor']<10000?$inventario['menor']:$inventario['menor']?><small> </small></span>
 				<?php
 					endif;
 				}
@@ -78,12 +78,12 @@
 				{
 					if($quitar==0):
 					?>
-                    <span class="quantity"><?php echo $modelado['menor']<10000?$modelado['menor']:$modelado['menor'];?><small> Bs</small></span>
+                    <span class="quantity"><?php echo $modelado['menor']<10000?$modelado['menor']:$modelado['menor'];?><small> </small></span>
 				<?php
 					endif;
 					if($quitar==1):
 					?>
-                    <span class="quantity"><?php echo $modelado['menoro']<10000?$modelado['menoro']:$modelado['menoro'];?><small> Bs</small></span>
+                    <span class="quantity"><?php echo $modelado['menoro']<10000?$modelado['menoro']:$modelado['menoro'];?><small> </small></span>
 				<?php
 					endif;
 				}
@@ -123,12 +123,12 @@
 				{
 					if($quitar==0):
 					?>
-                  	  <span class="quantity"><?php echo $inventario->precio;?> Bs</span>
+                  	  <span class="quantity"><?php echo $inventario->formatPrecio;?> </span>
 				<?php
 					endif;
 					if($quitar==1):
 					?>
-                  	  <span class="quantity"><?php echo $inventario['menor'];?> Bs</span>
+                  	  <span class="quantity"><?php echo $inventario['menor'];?> </span>
 				<?php
 					endif;
 				}
@@ -136,12 +136,12 @@
 				{
 					if($quitar==0):
 					?>
-                    <span class="quantity"><?php echo $modelado['menor'];?> Bs</span>
+                    <span class="quantity"><?php echo $modelado['menor'];?> </span>
 				<?php
 					endif;
 					if($quitar==1):
 					?>
-                    <span class="quantity"><?php echo $modelado['menoro'];?> Bs</span>
+                    <span class="quantity"><?php echo $modelado['menoro'];?> </span>
 				<?php
 					endif;
 				}

@@ -11,7 +11,7 @@
                        	{
                        		$interno = Categoria::model()->findAllBySql("select * from tbl_categoria where id_padre =".$modelado->id." order by destacado desc limit 6");
                        		?>
-                       		<article class="col-md-4">
+                       		<article class="col-md-4" style="max-height:150px; min-height:150px; overflow-y:hidden">
                                <div class="row-fluid">
                                    <div class="col-md-12 no_horizontal_padding">
                                        

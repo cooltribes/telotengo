@@ -24,7 +24,7 @@
         
         <div class="col-md-2 stat no_left_padding">
             <span class="value"><?php 
-            if(Yii::app()->authManager->checkAccess("vendedor", Yii::app()->user->id))
+            if(Yii::app()->authManager->checkAccess("vendedor", Yii::app()->user->id)) 
 				echo $totaRechazadasVendidas;
 			else 
 				echo $totaRechazadasCompra;	
