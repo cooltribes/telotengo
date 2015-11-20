@@ -1654,11 +1654,21 @@ class ProductoController extends Controller
 	public function actionVerificarNombre()
 	{
 		$nombre=$_POST['nombre'];
+		$id=$_POST['id'];
 		$model=Producto::model()->findByAttributes(array('nombre'=>$nombre));
 		if($model)
-			echo "1";
-		else 
-			echo "0";
+		{
+			if($model->id==$id)
+				echo "0";
+			else 
+				echo "1";
+						
+		}
+		else
+		{
+			echo "0";	
+		}	
+
 		
 		
 	}

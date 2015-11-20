@@ -1,9 +1,9 @@
 <div class="row-fluid clearfix stats">
-   <?php if(Yii::app()->authManager->checkAccess("vendedor", Yii::app()->user->id) || Yii::app()->authManager->checkAccess("comprador", Yii::app()->user->id)):?>
+   <?php if(Yii::app()->authManager->checkAccess("vendedor", $identificador) || Yii::app()->authManager->checkAccess("comprador", $identificador)):?>
 
         <div class="col-md-2 stat no_left_padding">
             <span class="value"><?php 
-            if(Yii::app()->authManager->checkAccess("vendedor", Yii::app()->user->id))
+            if(Yii::app()->authManager->checkAccess("vendedor", $identificador))
 				echo $totaAprobadaVendidas+$totaRechazadasVendidas+$totaPendienteVendidas;
 			else 
 				echo $totaAprobadaCompra+$totaRechazadasCompra+$totaPendienteCompra;	
@@ -13,7 +13,7 @@
         
         <div class="col-md-2 stat no_left_padding">
             <span class="value"><?php 
-            if(Yii::app()->authManager->checkAccess("vendedor", Yii::app()->user->id))
+            if(Yii::app()->authManager->checkAccess("vendedor", $identificador))
 				echo $totaAprobadaVendidas;
 			else 
 				echo $totaAprobadaCompra;	
@@ -24,7 +24,7 @@
         
         <div class="col-md-2 stat no_left_padding">
             <span class="value"><?php 
-            if(Yii::app()->authManager->checkAccess("vendedor", Yii::app()->user->id))
+            if(Yii::app()->authManager->checkAccess("vendedor", $identificador))
 				echo $totaRechazadasVendidas;
 			else 
 				echo $totaRechazadasCompra;	
@@ -34,7 +34,7 @@
         
          <div class="col-md-2 stat no_left_padding">
             <span class="value"><?php 
-            if(Yii::app()->authManager->checkAccess("vendedor", Yii::app()->user->id))
+            if(Yii::app()->authManager->checkAccess("vendedor", $identificador))
 				echo $totaPendienteVendidas;
 			else 
 				echo $totaPendienteCompra;	
@@ -43,7 +43,7 @@
         </div>
       <?php endif;?> 
 
-      <?php if(Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id)): ?>
+      <?php if(Yii::app()->authManager->checkAccess("compraVenta", $identificador)): ?>
         <div class="col-md-8 no_right_padding">
         	  <div class="row-fluid clearfix stats"> 
 		         <div class="col-md-2 stat no_left_padding">
@@ -76,14 +76,14 @@
       <?php endif;?> 
       
       
-        <?php if(Yii::app()->authManager->checkAccess("comprador", Yii::app()->user->id) || Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id)):?>
+        <?php if(Yii::app()->authManager->checkAccess("comprador", $identificador) || Yii::app()->authManager->checkAccess("compraVenta", $identificador)):?>
       	<div class="col-md-1 stat no_left_padding">
             <span class="value"><?php if($producComprados=="")echo "0"; else echo $producComprados;?></span>
             <span class="legend">Productos Comprados</span>            
         </div>
       <?php endif;?>
       
-       <?php if(Yii::app()->authManager->checkAccess("vendedor", Yii::app()->user->id) || Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id)):?>
+       <?php if(Yii::app()->authManager->checkAccess("vendedor", $identificador) || Yii::app()->authManager->checkAccess("compraVenta", $identificador)):?>
       	<div class="col-md-1 stat">
             <span class="value"><?php if($producInventario=="")echo "0"; else echo $producInventario;?></span>
             <span class="legend">Productos en Inventario</span>            

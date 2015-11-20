@@ -85,7 +85,7 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
                                     $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
 								    'id'=>'busqueda',
 									'name'=>'busqueda',
-								    'source'=>$this->createUrl('Site/autoComplete'),
+									'source'=>Yii::app()->createUrl('Site/autoComplete'),
 									'htmlOptions'=>array(
 								          //'size'=>22,
 										  'placeholder'=>'Incluye palabras claves...',
@@ -261,9 +261,15 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
                                   </a>
                                   <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                                     <li><a href="<?php echo Yii::app()->baseUrl.'/user/profile/index';?>">Mi perfil</a></li>
-
+								
                                     <li class="separator"></li>
-                                    <li><a href="<?php echo Yii::app()->baseUrl; ?>/site/logout";>Cerrar sesión</a></li>
+                                    <?php
+                                    if(Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id) || Yii::app()->authManager->checkAccess("vendedor", Yii::app()->user->id)): ?>
+                                	 		 <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/seleccion";>Cargar Inventario</a></li>
+                                	 		 <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/cargarInbound";>Cargar Inventario Masivo</a></li>
+                                	  		 <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/productoInventario";>Ver Inventario</a></li>
+                                	<?php endif;?> 
+									<li><a href="<?php echo Yii::app()->baseUrl; ?>/site/logout";>Cerrar sesión</a></li>
                                   </ul>
                                 </div>
                             </div>

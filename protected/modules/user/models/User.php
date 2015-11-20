@@ -564,6 +564,22 @@ class User extends CActiveRecord
             else
                 return "N/D";
         }
+		
+		public function getPuesto($identificador)
+		{
+			$ehu=EmpresasHasUsers::model()->findByAttributes(array('users_id'=>$identificador));
+            if($ehu){
+                    return $ehu->rol." en ".$this->getEmpresa2($identificador)->razon_social;
+            }
+                
+            else
+                return "N/D";
+		}
+		
+		   public function getEmpresa2($identificador){
+            $ehu=EmpresasHasUsers::model()->findByAttributes(array('users_id'=>$identificador));
+            return Empresas::model()->findByPk($ehu->empresas_id);
+        }
         
         
 }
