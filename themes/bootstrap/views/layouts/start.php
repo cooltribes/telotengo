@@ -85,7 +85,7 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
                                     $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
 								    'id'=>'busqueda',
 									'name'=>'busqueda',
-								    'source'=>$this->createUrl('Site/autoComplete'),
+									'source'=>Yii::app()->createUrl('Site/autoComplete'),
 									'htmlOptions'=>array(
 								          //'size'=>22,
 										  'placeholder'=>'Incluye palabras claves...',
