@@ -24,7 +24,9 @@
         
         <div class="col-md-2 stat no_left_padding">
             <span class="value"><?php 
+
             if(Yii::app()->authManager->checkAccess("vendedor", $identificador))
+
 				echo $totaRechazadasVendidas;
 			else 
 				echo $totaRechazadasCompra;	

@@ -9,7 +9,7 @@
         echo str_replace(".png", "_thumb.png", $model->avatar_url); 
 
      
-     echo "');</script>";
+     echo "');</script>"; 
      endif;  
 ?>
 <?php if($entro==0): ?>

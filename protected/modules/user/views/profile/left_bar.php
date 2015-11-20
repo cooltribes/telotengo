@@ -15,7 +15,7 @@
        		 </div>
         <?php endif;?>
     </div>
-    
+     
 
 
     <div class="row-fluid info clearfix">
@@ -23,9 +23,11 @@
                 <?php echo $model->profile->first_name." ".$model->profile->last_name; ?>
             </div>
             <div class="col-md-3 text-center no_horizontal_padding edit edit-name">
+
             	<?php if(Yii::app()->user->id==$identificador): // si es igual edite, del resto no?>
-                	<a>Editar</a>
+                	<a onclick="editField(1)">Editar</a>
                 <?php endif;?>
+
             </div>
      </div> 
      <div class="info clearfix"> 
@@ -40,9 +42,13 @@
             </span>
             
             <span class="col-md-3 text-center no_horizontal_padding edit">
+
+                <a onclick="editField(2)">Editar</a>
+
                  <?php if(Yii::app()->user->id==$identificador): // si es igual edite, del resto no?>
-                	<a>Editar</a>
+                	<a onclick="editField(2)">Editar</a>
                 <?php endif;?>
+
             </span>
              
          </div>     
@@ -74,9 +80,10 @@
                 </span>
                 
                 <span class="col-md-3 text-center no_horizontal_padding edit">
-                 <?php if(Yii::app()->user->id==$identificador): // si es igual edite, del resto no?>
-                	<a>Editar</a>
+      <?php if(Yii::app()->user->id==$identificador): // si es igual edite, del resto no?>
+                	<a onclick="editField(4)">Editar</a>
                 <?php endif;?>
+
                 </span> 
             </div>
              <!-- -->
@@ -134,3 +141,33 @@
     <div id="changeAvatar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none; min-height: 550px;">
         <?php echo $this->renderPartial('avatar', array( 'model'=>$model ),true); ?>
     </div>
+    <div id="changeField" class="modal fade miniModal " tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;" >
+        
+    </div>
+    
+    <script>
+      function  editField(field){
+            
+        $.ajax({
+            type: "post", 
+            url: "editField", // action 
+            dataType: 'json',
+            data: { 'field':field}, 
+            success: function (data) {
+                
+                if(data.status=='ok')
+                {
+                    $('#changeField').html(data.content);
+                    $('#changeField').modal();
+ 
+                }else{
+                    alert(data.status);
+                }
+                
+            
+            }//success
+           });   
+        }
+        
+    </script>
+   

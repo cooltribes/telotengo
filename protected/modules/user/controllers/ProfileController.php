@@ -15,11 +15,11 @@ class ProfileController extends Controller
 	 */
 	public function filters()
 	{
-		return CMap::mergeArray(parent::filters(),array(
+		return CMap::mergeArray(parent::filters(),array( 
 			'accessControl', // perform access control for CRUD operations
 		));
 	}
-	/**
+	/** 
 	 * Specifies the access control rules.
 	 * This method is used by the 'accessControl' filter.
 	 * @return array access control rules
@@ -32,7 +32,7 @@ class ProfileController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('edit','changepassword'),
+				'actions'=>array('edit','changepassword','editField'),
 				'users'=>array('@'),
 			),
 			array('deny',  // deny all users
@@ -375,4 +375,41 @@ class ProfileController extends Controller
                 $this->render('index',array('model'=>$model , 'avatar'=>$avatar, 'entro'=>$entro, 'identificador'=>$identificador,));
             }
     }
+
+public function actionEditField(){
+     if(isset($_POST['editMode'])){
+       $save=false;
+       $error="";    
+        $profile=Profile::model()->findByPk(Yii::app()->user->id);    
+        if(isset ($_POST['first_name']))
+            $profile->first_name=$_POST['first_name'];  
+        if(isset ($_POST['last_name']))
+            $profile->last_name=$_POST['last_name'];
+        if(isset ($_POST['telefono']))
+            $profile->telefono=$_POST['telefono'];
+        $save=$profile->save();
+        if(!$save)
+            $error=$profile->errors;
+        if(isset ($_POST['rol'])){
+            $ehu=EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id));
+            $ehu->rol=$_POST['rol'];
+            $save=$ehu->save();
+            $error=$ehu->errors;
+        }if($save){
+            $data['status']="ok";
+            echo json_encode($data);
+        }else{
+            $data['status']="error";
+            $data['error']=$error;
+            echo json_encode($data);
+        }
+    } else{
+        $data=array();
+        $data['status']="ok";
+        $data['content']=$this->renderPartial('editField',array( 'field'=>$_POST['field'], 'profile'=>Profile::model()->findByPk(Yii::app()->user->id),'rol'=>EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id))),true);   
+        echo json_encode($data);
+    }
+       
+    
+}
 }

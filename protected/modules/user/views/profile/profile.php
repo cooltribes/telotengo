@@ -57,7 +57,7 @@ $this->breadcrumbs=array(
 		)); ?>            		
                 	
 	</div>
-    <?php $this->endWidget(); ?>
+    <?php $this->endWidget(); ?> 
 				
 				<span class="text-muted">Miembro desde: <?php echo date('d/m/Y',strtotime($model->create_at)); ?></span>	
 				
