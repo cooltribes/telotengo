@@ -8,11 +8,11 @@ echo"<tr>";
 	{
 		 $peque=Yii::app(true)->baseUrl.'/images/producto/'.$data->id.'/'.$imagen->id."_thumb.jpg"; //OJO
 		 $ruta=Yii::app(true)->baseUrl.$imagen->url;
-		 echo "<td><a href='".$ruta."' target='_blank' > <img height='142' width='142' src='".$peque."' title='Haz Click encima para ver Imagen con detalle'/></a></td>";
+		 echo "<td><a href='".$ruta."' target='_blank' > <img height='60' width='60' src='".$peque."' title='Haz Click encima para ver Imagen con detalle'/></a></td>";
 	}
 	else 
 	{
-		echo '<td><img src="http://placehold.it/100" align="Nombre del producto"/> </td>';
+		echo '<td><img src="http://placehold.it/60" align="Nombre del producto"/> </td>';
 	}
 		
 	

@@ -359,8 +359,10 @@ class Inventario extends CActiveRecord
 		$model=Inventario::model()->findByAttributes(array('producto_id'=>$id)); //el primero que consiga
 		return $model->almacen_id;
 		
-		
-
 	}
+    
+    public function getFormatPrecio(){
+        return Yii::app()->numberFormatter->format('¤', round($this->precio), 'Bs');
+    }
 
 }
