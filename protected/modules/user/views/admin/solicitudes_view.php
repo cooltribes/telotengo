@@ -50,13 +50,13 @@
         <h5 class="no_margin_bottom">  <strong>Empresa</strong>:<?php echo $modelado->empresas->razon_social; ?></h5>
         <small><strong>Rif</strong>: <?php echo $modelado->empresas->rif; ?><br/>
         	<strong>Direccion</strong>: <?php echo $modelado->empresas->direccion; ?><br/>
-        	<strong>Ciudad</strong>: <?php echo $modelado->empresas->ciudad; ?><br/>
+        	<strong>Ciudad</strong>: <?php echo Ciudad::model()->findByPk($modelado->empresas->ciudad)->nombre; ?><br/>
 		</small>
       </td>
       
       	<td>
         <h5 class="no_margin_bottom">  <strong>Sector</strong>:<?php echo $data->buscarSector( $modelado->empresas->sector); ?></h5>
-        <small><strong>Tipo</strong>: <?php echo $modelado->empresas->tipo; ?><br/>
+        <!--<small><strong>Tipo</strong>: <?php echo $modelado->empresas->tipo; ?><br/> -->
         	<strong>Cargo</strong>: <?php echo $modelado->empresas->cargo; ?><br/>
 		</small>
       </td>

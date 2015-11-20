@@ -336,6 +336,7 @@ class SiteController extends Controller
     }
     public function actionDetalle(){
         //$this->layout='//layouts/start';
+        $otros="";
 		$connection = new MongoClass();
 		if(Funciones::isDev())
 		{
@@ -359,7 +360,8 @@ class SiteController extends Controller
 		$imagen=Imagenes::model()->findAllByAttributes(array('producto_id'=>$producto_id));
 		$imagenPrincipal=Imagenes::model()->findByAttributes(array('producto_id'=>$producto_id, 'orden'=>1));
 		
-		$empresaPropia=Empresas::model()->findByPk((EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id))->empresas_id)); // id del que esta intentado entrar
+		if(!Yii::app()->user->isAdmin())
+			$empresaPropia=Empresas::model()->findByPk((EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id))->empresas_id)); // id del que esta intentado entrar
 		
 		$prueba = array("producto"=>(string)$producto_id); //MEJORAR ESTO 
 		$busqueda = $document->findOne($prueba);
@@ -372,23 +374,29 @@ class SiteController extends Controller
 			$similares=Inventario::model()->findAllByAttributes(array('producto_id'=>$producto_id), array('condition'=>'almacen_id<>'.$almacen_id)); // buscar otros
 		else
 			$similares=NULL;
-		//var_dump($data); 
-		$otros = Inventario::model()->findAllBySql("select * from tbl_inventario where producto_id=".$producto_id." and almacen_id!=".$almacen_id." and almacen_id not in(select id from tbl_almacen where empresas_id=".$empresaPropia->id.")");
-        $this->render('detalle2', array('model'=>$model, 'inventario'=>$inventario, 'imagen'=>$imagen, 'imagenPrincipal'=>$imagenPrincipal, 'busqueda'=>$busqueda, 'empresa'=>$empresa, 'almacen'=>$almacen, 
+		//var_dump($data);
+		if(!Yii::app()->user->isAdmin()) // si no es admin
+			$otros = Inventario::model()->findAllBySql("select * from tbl_inventario where producto_id=".$producto_id." and almacen_id!=".$almacen_id." and almacen_id not in(select id from tbl_almacen where empresas_id=".$empresaPropia->id.")");
+		else // si es admin
+	    	$otros = Inventario::model()->findAllBySql("select * from tbl_inventario where producto_id=".$producto_id." and almacen_id!=".$almacen_id." and almacen_id not in(select id from tbl_almacen where empresas_id=".$empresa->id.")");
+	    $this->render('detalle2', array('model'=>$model, 'inventario'=>$inventario, 'imagen'=>$imagen, 'imagenPrincipal'=>$imagenPrincipal, 'busqueda'=>$busqueda, 'empresa'=>$empresa, 'almacen'=>$almacen, 
        'otros'=>$otros, 'similares'=>$similares));
     }
     public function actionAutoComplete()
 		{
+	    	$empresas_id=EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id))->empresas_id; // id del que esta intentado entrar	
 	    	$res =array();
 	    	if (isset($_GET['term']) && Yii::app()->session['menu']=="")
 			{
-				$qtxt ="SELECT  CONCAT (p.nombre, ' (',c.nombre,')') FROM tbl_producto_padre p JOIN tbl_categoria c on p.id_categoria=c.id  WHERE p.nombre LIKE :nombre limit 3";
-				
+				#$qtxt ="SELECT  distinct(CONCAT (p.nombre, ' (',c.nombre,')')) FROM tbl_producto_padre p JOIN tbl_categoria c on p.id_categoria=c.id JOIN tbl_producto  po on p.id=po.padre_id JOIN tbl_inventario i on i.producto_id=po.id    WHERE p.nombre LIKE :nombre and i.cantidad>0 limit 3";
+				$qtxt ="SELECT  distinct(CONCAT (p.nombre, ' (',c.nombre,')')) FROM tbl_producto_padre p JOIN tbl_categoria c on p.id_categoria=c.id JOIN tbl_producto  po on p.id=po.padre_id JOIN tbl_inventario i on i.producto_id=po.id JOIN tbl_almacen a on i.almacen_id=a.id JOIN tbl_empresas em on a.empresas_id=em.id   WHERE p.nombre LIKE :nombre and i.cantidad>0
+				 and em.id<>'".$empresas_id."'  limit 3";
 				$command =Yii::app()->db->createCommand($qtxt);
 				$command->bindValue(":nombre", '%'.$_GET['term'].'%', PDO::PARAM_STR);
 				$resP =$command->queryColumn();	
 					
-				$qtxt ="SELECT nombre FROM tbl_producto WHERE nombre LIKE :nombre limit 6";
+				#$qtxt ="select distinct(p.nombre) from tbl_producto p join tbl_inventario t on t.producto_id=p.id where p.nombre like :nombre and t.cantidad>0 limit 6";
+				$qtxt ="select distinct(p.nombre) from tbl_producto p join tbl_inventario i on i.producto_id=p.id JOIN tbl_almacen a on i.almacen_id=a.id JOIN tbl_empresas em on a.empresas_id=em.id  where p.nombre like :nombre and i.cantidad>0 and em.id!='".$empresas_id."'  limit 6"; //and em.id<>'".$empresas_id."'
 				$command =Yii::app()->db->createCommand($qtxt);
 				$command->bindValue(":nombre", '%'.$_GET['term'].'%', PDO::PARAM_STR);
 				$res2 =$command->queryColumn();

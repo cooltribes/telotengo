@@ -207,9 +207,32 @@ class ProfileController extends Controller
 		return $this->_model;
 	}
     
-    public function actionIndex($_= null){
-    	$model=User::model()->findByPk(Yii::app()->user->id);
-        $avatar=false;
+    public function actionIndex($_= null, $ide=NULL){
+    	$entro=0;
+    	if($ide==NULL)
+		{
+			$identificador=	Yii::app()->user->id;
+			$model=User::model()->findByPk(Yii::app()->user->id);
+			if(Yii::app()->user->isAdmin()) // si es el admin el que esta entrando
+				$entro=1;
+		}	
+		else
+		{
+			if(Yii::app()->user->isAdmin())	// si es el admin si puede ver el perfil de otros usuarios, del resto vea solamente el de el
+			{
+				$model=User::model()->findByPk($ide);
+				$identificador=	$ide;
+			}
+					
+			else
+			{
+				$model=User::model()->findByPk(Yii::app()->user->id);
+				$identificador=	Yii::app()->user->id;
+			}
+				
+				
+		}	
+	    $avatar=false;
     	if(isset($_POST['imagen']))
 		{     /*
 		        $images=CUploadedFile::getInstanceByName('imagen');
@@ -288,64 +311,68 @@ class ProfileController extends Controller
 		$totaAprobadaVendidas="";
 		$producComprados=0;
 		$producInventario=0;
-		if(!Yii::app()->user->isAdmin()){
-		$empresas_id=EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id))->empresas_id; // id del que esta intentado entrar
-		
-		$empresa=Empresas::model()->findByPk($empresas_id);
-		$almacen=Almacen::model()->findAllByAttributes(array('empresas_id'=>$empresas_id));
-		if(Yii::app()->authManager->checkAccess("comprador", Yii::app()->user->id) || Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id))
+		if($entro==0)
 		{
-			// ORDENES APROBADAS, PENDIENTES O RECHAZADAS POR EL COMPRADOR o COMPRAVENTA	
-			$totaPendienteCompra=Orden::model()->countByAttributes(array('empresa_id'=>$empresas_id, 'estado'=>0)); //pendiente
-			$totaRechazadasCompra=Orden::model()->countByAttributes(array('empresa_id'=>$empresas_id, 'estado'=>2)); //Rechazadas
-			$totaAprobadaCompra=Orden::model()->countByAttributes(array('empresa_id'=>$empresas_id, 'estado'=>1)); //Aprobadas
-			$sql="select sum(cantidad) as sumatoria from tbl_orden_has_inventario where orden_id in (select id from tbl_orden where empresa_id='".$empresas_id."' and estado=1)";
-			$variable = Yii::app()->db->createCommand($sql)->queryRow();
-			$producComprados=$variable['sumatoria'];
+				
+			$empresas_id=EmpresasHasUsers::model()->findByAttributes(array('users_id'=>$identificador))->empresas_id; // id del que esta intentado entrar
 			
-		}
-		if(Yii::app()->authManager->checkAccess("vendedor", Yii::app()->user->id) || Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id))
-		{
-			// ORDENES APROBADAS, PENDIENTES O RECHAZADAS POR EL VENDEDOR o COMPRAVENTA
+			$empresa=Empresas::model()->findByPk($empresas_id);
+			$almacen=Almacen::model()->findAllByAttributes(array('empresas_id'=>$empresas_id));
+			if(Yii::app()->authManager->checkAccess("comprador", $identificador) || Yii::app()->authManager->checkAccess("compraVenta", $identificador))
+			{
+				// ORDENES APROBADAS, PENDIENTES O RECHAZADAS POR EL COMPRADOR o COMPRAVENTA	
+				$totaPendienteCompra=Orden::model()->countByAttributes(array('empresa_id'=>$empresas_id, 'estado'=>0)); //pendiente
+				$totaRechazadasCompra=Orden::model()->countByAttributes(array('empresa_id'=>$empresas_id, 'estado'=>2)); //Rechazadas
+				$totaAprobadaCompra=Orden::model()->countByAttributes(array('empresa_id'=>$empresas_id, 'estado'=>1)); //Aprobadas
+				$sql="select sum(cantidad) as sumatoria from tbl_orden_has_inventario where orden_id in (select id from tbl_orden where empresa_id='".$empresas_id."' and estado=1)";
+				$variable = Yii::app()->db->createCommand($sql)->queryRow();
+				$producComprados=$variable['sumatoria'];
+				
+			}
+			if(Yii::app()->authManager->checkAccess("vendedor", $identificador) || Yii::app()->authManager->checkAccess("compraVenta", $identificador))
+			{
+				// ORDENES APROBADAS, PENDIENTES O RECHAZADAS POR EL VENDEDOR o COMPRAVENTA
+				
+				$sql = "select count(*) as contador  from tbl_orden where  estado=0 and almacen_id in (select id from tbl_almacen where empresas_id=".$empresas_id.")";
+				$pendiente = Yii::app()->db->createCommand($sql)->queryRow();
+				$totaPendienteVendidas=$pendiente['contador'];
+				
+				$sql = "select count(*) as contador  from tbl_orden where  estado=2 and almacen_id in (select id from tbl_almacen where empresas_id=".$empresas_id.")";
+				$rechazado = Yii::app()->db->createCommand($sql)->queryRow();
+				$totaRechazadasVendidas=$rechazado['contador'];
+						
+				$sql = "select count(*) as contador  from tbl_orden where  estado=1 and almacen_id in (select id from tbl_almacen where empresas_id=".$empresas_id.")";
+				$aprobado = Yii::app()->db->createCommand($sql)->queryRow();
+				$totaAprobadaVendidas=$aprobado['contador'];	
+				
+				$sql="select sum(cantidad) as sumatoria from tbl_inventario where almacen_id in(select id from tbl_almacen where empresas_id='".$empresas_id."')";
+				$variable = Yii::app()->db->createCommand($sql)->queryRow();
+				$producInventario=$variable['sumatoria'];
+				
+			}
+	
+	        $this->render('index',array(
+		        'model'=>$model,
+				'totaPendienteCompra'=>$totaPendienteCompra,
+				'totaRechazadasCompra'=>$totaRechazadasCompra,
+				'totaAprobadaCompra'=>$totaAprobadaCompra,
+				'totaPendienteVendidas'=>$totaPendienteVendidas,
+				'totaRechazadasVendidas'=>$totaRechazadasVendidas,
+				'totaAprobadaVendidas'=>$totaAprobadaVendidas,
+				'producComprados'=>$producComprados,
+				'producInventario'=>$producInventario,
+				'empresa'=>$empresa,
+				'almacen'=>$almacen,
+				'avatar'=>$avatar,
+				'entro'=>$entro,
+				'identificador'=>$identificador,
+				
 			
-			$sql = "select count(*) as contador  from tbl_orden where  estado=0 and almacen_id in (select id from tbl_almacen where empresas_id=".$empresas_id.")";
-			$pendiente = Yii::app()->db->createCommand($sql)->queryRow();
-			$totaPendienteVendidas=$pendiente['contador'];
-			
-			$sql = "select count(*) as contador  from tbl_orden where  estado=2 and almacen_id in (select id from tbl_almacen where empresas_id=".$empresas_id.")";
-			$rechazado = Yii::app()->db->createCommand($sql)->queryRow();
-			$totaRechazadasVendidas=$rechazado['contador'];
-					
-			$sql = "select count(*) as contador  from tbl_orden where  estado=1 and almacen_id in (select id from tbl_almacen where empresas_id=".$empresas_id.")";
-			$aprobado = Yii::app()->db->createCommand($sql)->queryRow();
-			$totaAprobadaVendidas=$aprobado['contador'];	
-			
-			$sql="select sum(cantidad) as sumatoria from tbl_inventario where almacen_id in(select id from tbl_almacen where empresas_id='".$empresas_id."')";
-			$variable = Yii::app()->db->createCommand($sql)->queryRow();
-			$producInventario=$variable['sumatoria'];
-			
-		}
-
-        $this->render('index',array(
-	        'model'=>$model,
-			'totaPendienteCompra'=>$totaPendienteCompra,
-			'totaRechazadasCompra'=>$totaRechazadasCompra,
-			'totaAprobadaCompra'=>$totaAprobadaCompra,
-			'totaPendienteVendidas'=>$totaPendienteVendidas,
-			'totaRechazadasVendidas'=>$totaRechazadasVendidas,
-			'totaAprobadaVendidas'=>$totaAprobadaVendidas,
-			'producComprados'=>$producComprados,
-			'producInventario'=>$producInventario,
-			'empresa'=>$empresa,
-			'almacen'=>$almacen,
-			'avatar'=>$avatar,
-			
-		
-		));
+			));
 		
 		}
          else{
-                $this->render('index',array('model'=>$model , 'avatar'=>$avatar));
+                $this->render('index',array('model'=>$model , 'avatar'=>$avatar, 'entro'=>$entro, 'identificador'=>$identificador,));
             }
     }
 

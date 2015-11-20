@@ -34,7 +34,7 @@ class BolsaController extends Controller
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
 				'actions'=>array('create','update','agregar','eliminar','authenticate','confirm','cities','addAddress','placeOrder',
 								'sendValidationEmail','actualizar','agregarAjax','calcularEnvio',
-								'authGC','pagoGC','confirmarGC','crearGC','sendsummary','comprarGC','pedidoGC','registrarpagoGC','view'),///TODO quitar carritoIndividual
+								'authGC','pagoGC','confirmarGC','crearGC','sendsummary','comprarGC','pedidoGC','registrarpagoGC','view', 'eliminarOrdenes'),///TODO quitar carritoIndividual
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -1260,5 +1260,17 @@ class BolsaController extends Controller
 		$bolsaInventario->save();
 		
 		echo Yii::app()->session['bolsa']=$bolsa->id;
+	}
+
+	public function actionEliminarOrdenes()
+	{
+		$almacen_id=$_POST['almacen_id'];
+		$bolsa_id=$_POST['bolsa_id'];
+		$model=BolsaHasInventario::model()->findAllByAttributes(array('bolsa_id'=>$bolsa_id, 'almacen_id'=>$almacen_id));
+		foreach($model as $modelado)
+		{
+			$modelado->delete();
+		}
+				
 	}
 }
