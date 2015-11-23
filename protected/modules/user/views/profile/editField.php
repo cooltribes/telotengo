@@ -1,12 +1,11 @@
 <div class="modal-header no_border no_padding_bottom">
      <button type="button" class="close pull-right no_margin_top" data-dismiss="modal" aria-hidden="true">&times;</button>
-     <h3>Editar información</h3>
+     <h3>Editar <?php echo $fname ?></h3>
    
   
 </div>
 <div class="modal-body no_padding_top">
 <hr class="no_margin_top"/>
-
     <div class="padding_small no_padding text-center row-fluid">  
             <div class="col-md-8 col-md-offset-2">
             <?php if($field==1): 
@@ -30,12 +29,19 @@
                 <input class="form-control margin_top_small" type="text" name="telefono" id="telefono" placeholder="Telefono" value="<?php echo $profile->telefono ?>"/>
             <?php endif;?>
             
-            <?php if($field==6): ?>
+            <?php if($field==6): 
+                $vars="var password=$('#password').val(); var new_password=$('#new_password').val(); var new_password2=$('#new_password2').val();";
+                $post="password:password, new_password:new_password, new_password2:new_password2"
+                
+                ?>
+                <input class="form-control margin_top_small" type="password" name="password" id="password" placeholder="Contraseña actual" />
+                <input class="form-control margin_top_small" type="password" name="new_password" id="new_password" placeholder="Nueva contraseña" />
+                <input class="form-control margin_top_small" type="password" name="new_password2" id="new_password2" placeholder="Confirme nueva contraseña"/>
             <?php endif;?>
-            <div class="errorMessage"></div>
-            <button class="btn btn-orange white margin_top_small" onclick="guardar()">Guardar</button>
             
             </div>
+            <div class="errorMessage col-md-12"></div>
+            <button class="btn btn-orange white margin_top_small" onclick="guardar()" id="save-btn">Guardar</button>
         </div>
         
          
@@ -43,8 +49,10 @@
 
 <script>
     function guardar(){
+        
         <?php echo $vars ?>
         editMode=true;
+        $('#save-btn').attr('disabled','disabled');
         $.ajax({
                   url: "editField",
                   type: "post",
@@ -53,11 +61,13 @@
                   success: function(data){
                       if(data.status=="ok"){
                           $('#changeField').modal('toggle');
-                          location.reload();
+                          location.reload(); 
                           
                       }else{
-                          $(".errorMessage").html(data.error);
+                          $(".errorMessage").html('<small>'+data.error+'</small>');
+                          $('#save-btn').removeAttr('disabled');
                       }
+                      
                   },
             });
     }
