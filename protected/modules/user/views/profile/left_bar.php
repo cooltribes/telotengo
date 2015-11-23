@@ -2,7 +2,7 @@
     <div class="avatar margin_top">
         <div class="image text-center">
             <?php 
-                        if($model->avatar_url){
+                        if($model->avatar_url){ 
                             echo CHtml::image(str_replace(".", "_thumb.", Yii::app()->baseUrl.$model->avatar_url),"Avatar",array('width'=>'100%','style'=>'border-radius: 0px;'));
                         }else{
                             echo '<img src="http://placehold.it/300x300" class="img-responsive" alt="Responsive image">';

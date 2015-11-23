@@ -1683,8 +1683,10 @@ class ProductoController extends Controller
 		}	
 		else
 		{
-
-			$document = $connection->getCollection('stage');	//STAGE
+			if(Funciones::isStage())
+				$document = $connection->getCollection('stage');	//STAGE
+			else
+				$document = $connection->getCollection('produccion'); // produccion
 		} 
 			
 

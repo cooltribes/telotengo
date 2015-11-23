@@ -1,5 +1,5 @@
 <div class="col-md-3 profile-leftBar">
-    <?php $this->renderPartial('left_bar',array('model'=>$model, 'identificador'=>$identificador)); ?>
+    <?php $this->renderPartial('left_bar',array('model'=>$model, 'identificador'=>$identificador)); ?> 
 </div>
 <?php if($avatar===true):
     echo "<script>$('#layout-avatar').attr('src','".Yii::app()->getBaseUrl(true);
