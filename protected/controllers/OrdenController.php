@@ -279,11 +279,18 @@ class OrdenController extends Controller
         if($bandera==FALSE){
             unset($_SESSION['searchPedido']);
         }
-            
-        $this->render('mis_compras',array(
-            'model'=>$model,
-            'dataProvider'=>$dataProvider,
-        ));
+          if(Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id) || Yii::app()->authManager->checkAccess("comprador", Yii::app()->user->id))
+		  {
+		  	        $this->render('mis_compras',array(
+          			 'model'=>$model,
+           			 'dataProvider'=>$dataProvider,
+       		 ));	
+		  }
+		  else
+		  {
+		  	throw new CHttpException(403,'No esta autorizado a visualizar este contenido');	
+		  }	
+
     }
     public function actionMisVentas()
     {
@@ -312,16 +319,22 @@ class OrdenController extends Controller
             unset($_SESSION['searchPedido']);
         }
 		
-		
-        $this->render('mis_ventas',array(
-            'model'=>$model,
-            'dataProvider'=>$dataProvider,
-            'contador'=>$empresa->contadoresVentas['total'],
-            'pendiente'=>$empresa->contadoresVentas['pendiente'],
-            'rechazado'=>$empresa->contadoresVentas['rechazado'],
-            'aprobado'=>$empresa->contadoresVentas['aprobado'],
-        ));
-    }
+		 if(Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id) || Yii::app()->authManager->checkAccess("vendedor", Yii::app()->user->id))
+		  {
+	        $this->render('mis_ventas',array(
+	            'model'=>$model,
+	            'dataProvider'=>$dataProvider,
+	            'contador'=>$empresa->contadoresVentas['total'],
+	            'pendiente'=>$empresa->contadoresVentas['pendiente'],
+	            'rechazado'=>$empresa->contadoresVentas['rechazado'],
+	            'aprobado'=>$empresa->contadoresVentas['aprobado'],
+	        	));
+		  }
+		 else 
+		 {
+			 throw new CHttpException(403,'No esta autorizado a visualizar este contenido');	
+		 }
+	}
 
     
   
