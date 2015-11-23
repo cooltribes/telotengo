@@ -377,9 +377,10 @@ class ProfileController extends Controller
     }
 
 public function actionEditField(){
+     $data=array();
      if(isset($_POST['editMode'])){
        $save=false;
-       $error="";    
+   
         $profile=Profile::model()->findByPk(Yii::app()->user->id);    
         if(isset ($_POST['first_name']))
             $profile->first_name=$_POST['first_name'];  
@@ -387,26 +388,57 @@ public function actionEditField(){
             $profile->last_name=$_POST['last_name'];
         if(isset ($_POST['telefono']))
             $profile->telefono=$_POST['telefono'];
-        $save=$profile->save();
+        if(isset ($_POST['first_name'])||isset ($_POST['last_name'])||isset ($_POST['telefono']))
+            $save=$profile->save();
         if(!$save)
-            $error=$profile->errors;
+            $errors=$profile->errors;
         if(isset ($_POST['rol'])){
             $ehu=EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id));
             $ehu->rol=$_POST['rol'];
             $save=$ehu->save();
-            $error=$ehu->errors;
-        }if($save){
-            $data['status']="ok";
+            $errors=$ehu->errors;
+        }
+        if(isset ($_POST['password'])){
+            $user=User::model()->findByPk(Yii::app()->user->id);
+            $identity=new UserIdentity($user->username,$_POST['password']);
+            if($identity->authenticate()){
+                if($_POST['new_password']==$_POST['new_password2']){
+                    if(strlen($_POST['new_password'])>3&&strlen($_POST['new_password'])<128){
+                        $user->password=Yii::app()->controller->module->encrypting($_POST['new_password']);
+                        if($user->save()){   
+                            $save=true;
+                        }else{
+                            $errors=$users->errors;
+                        }
+                    }else{
+                        $errors=array('Nueva contraseña'=>array('Debe tener entre 4 y 128 caracteres'));
+                    }
+                    
+                                  
+                }else{
+                     $errors=array('Nueva contraseña'=>array('Los campos de nueva contraseña no coinciden'));
+                }
+            }else{
+                $errors=array('identificación'=>array('Contrasena incorrecta'));
+            }
+        } 
+
+        if($save){
+          $data['status']="ok";
             echo json_encode($data);
         }else{
-            $data['status']="error";
-            $data['error']=$error;
+
+            $data['error']="";
+             foreach($errors as $key=>$error){ 
+                 $data['error'].=ucwords($key).": ".implode(', ',$error);      
+         
+             }  
             echo json_encode($data);
         }
     } else{
-        $data=array();
-        $data['status']="ok";
-        $data['content']=$this->renderPartial('editField',array( 'field'=>$_POST['field'], 'profile'=>Profile::model()->findByPk(Yii::app()->user->id),'rol'=>EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id))),true);   
+        
+       $data['status']="ok";
+        $data['content']=$this->renderPartial('editField',array( 'fname'=>$_POST['fname'], 'field'=>$_POST['field'], 'profile'=>Profile::model()->findByPk(Yii::app()->user->id),'rol'=>EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id))),true);   
         echo json_encode($data);
     }
        
