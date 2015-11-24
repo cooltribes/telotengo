@@ -368,19 +368,17 @@ class User extends CActiveRecord
 		'solicitud'=>'nueva'));
 							
 		$message = new YiiMailMessage;
-		$message->view = 'mail_template';
+		$message->activarPlantillaMandrill();
 		Yii::app()->session['email']=$user->email;
 							 
-							//userModel is passed to the view
 							
 		$body=Yii::app()->controller->renderPartial($this->setMsg($rol), array( 'activation_url'=>$activation_url ),true);
 		
-		$message->setSubject($this->setSubject($rol));
-		$message->setBody(array('body'=>$body,"undercomment"=>"¿Pediste registrarte en telotengo? Si no es así, es probable que otro usuario haya utilizado tu dirección de correo electrónico por error al registrarse pero no te preocupes no es necesario que tomes alguna medida, puedes ignorar este mensaje"), 'text/html');
+		$message->subject= $this->setSubject($rol);
+		$message->setBody($body,'text/html');
 		
 		
 		$message->addTo($user->email);
-		$message->from = array(Yii::app()->params['adminEmail'] => "Sigma Tiendas");
 		Yii::app()->mail->send($message);
 
 		//Yii::app()->user->setFlash('success','Las instrucciones para la recuperación de la contraseña se han enviado a tu correo electrónico');
@@ -392,15 +390,11 @@ class User extends CActiveRecord
 		$user = User::model()->notsafe()->findbyPk($id);
 					
 		$message = new YiiMailMessage;
-		$message->view = 'mail_template';
+		$message->activarPlantillaMandrill();
 		
 		Yii::app()->session['email']=$user->email;
 		$quien_invita = User::model()->notsafe()->findbyPk($quien_invita);
 		Yii::app()->session['quienInvita']=$quien_invita->username;
-		
-		/*$activation_url = 'http://' . $_SERVER['HTTP_HOST'].Yii::app()->controller->createUrl(implode(Yii::app()->controller->module->recoveryUrl),array("id"=>$id,
-		"u"=>$quien_invita->username,"activkey" => $user->activkey, "email" => $user->email, 
-		'solicitud'=>'nueva'));*/
 		
 		$activation_url = 'http://' . $_SERVER['HTTP_HOST'].Yii::app()->controller->createUrl('/user/user/datos/',array("id"=>$id,
 		"u"=>$quien_invita->username,"activkey" => $user->activkey, "email" => $user->email, 
@@ -409,18 +403,14 @@ class User extends CActiveRecord
 		Yii::app()->session['rol']=$this->buscarRol($id);
 		Yii::app()->session['cargo']=$cargo;
 		Yii::app()->session['invitadoempresa']=$id;
-		//Yii::app()->session['activacion_url']=$activation_url;
-							 
-							//userModel is passed to the view
-							
+		
 		$body=Yii::app()->controller->renderPartial('//mail/registroEmpresaInvitado', array( 'activation_url'=>$activation_url ),true);
 		
-		$message->setSubject("INVITADO COMO MIEMBRO DE EMPRESA");
-		$message->setBody(array('body'=>$body,"undercomment"=>"¿Pediste registrarte en telotengo? Si no es así, es probable que otro usuario haya utilizado tu dirección de correo electrónico por error al registrarse pero no te preocupes no es necesario que tomes alguna medida, puedes ignorar este mensaje"), 'text/html');
+		$message->subject="INVITADO COMO MIEMBRO DE EMPRESA";
+		$message->setBody($body,'text/html');
 		
 		
 		$message->addTo($user->email);
-		$message->from = array(Yii::app()->params['adminEmail'] => "Sigma Tiendas");
 		Yii::app()->mail->send($message);
 
 		//Yii::app()->user->setFlash('success','Las instrucciones para la recuperación de la contraseña se han enviado a tu correo electrónico');
@@ -431,7 +421,7 @@ class User extends CActiveRecord
 		$user = User::model()->notsafe()->findbyPk($id);
 					
 		$message = new YiiMailMessage;
-		$message->view = 'mail_template';
+		$message->activarPlantillaMandrill();
 		
 		$quien_invita = User::model()->notsafe()->findbyPk($quien_invita);
 		Yii::app()->session['quienInvita']=$quien_invita->username;
@@ -442,12 +432,10 @@ class User extends CActiveRecord
 		
 		$body=Yii::app()->controller->renderPartial('//mail/registroClienteInvitado', array( 'activation_url'=>$activation_url ),true);
 		
-		$message->setSubject("INVITADO COMO EMPRESA");
-		$message->setBody(array('body'=>$body,"undercomment"=>"¿Te invitaron a telotengo? Si no es así, es probable que un usuario haya utilizado tu dirección de correo electrónico por error al enviar una invitación pero no te preocupes no es necesario que tomes alguna medida, puedes ignorar este mensaje."), 'text/html');
-		
+		$message->subject="INVITADO COMO EMPRESA";
+		$message->setBody($body,'text/html');
 		
 		$message->addTo($user->email);
-		$message->from = array(Yii::app()->params['adminEmail'] => "Sigma Tiendas");
 		Yii::app()->mail->send($message);
 		
 	}

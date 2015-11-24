@@ -1133,6 +1133,32 @@ class OrdenController extends Controller
 		$orden->refresh();
 		
 		BolsaHasInventario::model()->deleteAllByAttributes(array('bolsa_id'=>$bolsa_id, 'almacen_id'=>$almacen_id)); // los borra todos	
+		
+		// enviar correos para el usuario comprador
+		$message = new YiiMailMessage;
+		$message->activarPlantillaMandrill();
+		$body="haz comprado en telotengo blablabla aqui deberia ir el body"; ////// aqui se debe enviar
+		$message->subject="Haz hecho una compra en Telotengo";
+		$message->setBody($body,'text/html');
+		
+		$message->addTo(User::model()->findByPk(Yii::app()->user->id)->email);
+		Yii::app()->mail->send($message);
+		
+		//enviar correo para el usuario vendedor
+		
+		$almacen=Almacen::model()->findByPk($almacen_id); /// empresa de quien esta vendiendo
+		$vendedoraEmp=EmpresasHasUsers::model()->findAllByAttributes(array('empresas_id'=>$almacen->empresas_id));
+		foreach($vendedoraEmp as $local)
+		{
+			$message = new YiiMailMessage;
+			$message->activarPlantillaMandrill();
+			$body="haz vendido en telotengo blablabla aqui deberia ir el body"; ////// aqui se debe enviar
+			$message->subject="Haz vendido en Telotengo";
+			$message->setBody($body,'text/html');
+		
+			$message->addTo(User::model()->findByPk($local->users_id)->email);
+			Yii::app()->mail->send($message);
+		}
 		echo $orden->id;
 	}
 
