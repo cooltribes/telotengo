@@ -11,11 +11,6 @@ $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
         </div>
         
 
-        
-
-        
-
-            
             
             <div class="col-md-9 main no_horizontal_padding">
                 <div class="row-fluid">
@@ -41,7 +36,7 @@ $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
                                                    <?php 
                                                          if($key==4): echo "</div>"; $key=0; else: $key++; endif;
                                                    endforeach;
-                                                       echo $key<4?"</div>":"";
+                                                       echo $key<5?"</div>":"";
                                                        ?>
                             
                               </div>
@@ -78,7 +73,7 @@ $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
                             <col width="50%">
                             <tr>
                                 <td class="title">Precio en tienda</td>
-                                <td class="throughlined"><?php echo $inventario->precio;?> Bs</td>
+                                <td class="throughlined"><?php echo $inventario->formatPrecio;?></td>
                             </tr>
                             <tr>  
                                 
@@ -161,10 +156,10 @@ $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
                         </tr>
                         <tr>
                             <td class="name">Precio:</td>
-                            <input type="hidden" id="precioUnitario" value="<?php echo  $inventario->precio;?>">
+                            <input type="hidden" id="precioUnitario" value="<?php echo  $inventario->formatPrecio;?>">
                             <input type="hidden" id="maximo" value="<?php echo  $inventario->cantidad;?>">
                             <input type="hidden" id="inventario_id" value="<?php echo  $inventario->id;?>">
-                            <td class="highlighted" id="unitario"><?php echo $inventario->precio?></td>
+                            <td class="highlighted" id="unitario"><?php echo $inventario->formatPrecio?></td>
                         </tr>
                         <tr>
                             <td class="name">Envio:</td>
@@ -216,7 +211,7 @@ $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
                        	  <div class="sellerInfo">
                             <span class="name"><?php echo $data->almacen->empresas->razon_social;?></span>
                             <span class="location"><?php echo $data->almacen->ciudad->nombre; ?></span>
-                            <span><b><?php echo $data->precio;?> Bs.F</b> <?php if($inventario->metodoEnvio==1) echo "Acordado con el cliente"; else echo "A traves del servicio de TELOTENGO"; ?></span>
+                            <span><b><?php echo $data->formatPrecio;?></b> <?php if($inventario->metodoEnvio==1) echo "Acordado con el cliente"; else echo "A traves del servicio de TELOTENGO"; ?></span>
                             	<?php
                             	if(!Yii::app()->user->isAdmin()): ?>
                             		<button class="btn btn-small btn-unfilled ordenarIndividual" id="<?php echo $data->id;?>"> ORDENAR</button>  

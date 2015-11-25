@@ -8,7 +8,7 @@
 	<td><?php echo date('d/m/Y',strtotime($data->fecha)); ?></td>
 	<td><?php echo $data->empresa->razon_social; ?></td> 
 	<td><?php echo User::model()->FindByPk($data->users_id)->profile->first_name." ".User::model()->FindByPk($data->users_id)->profile->last_name; ?></td> 
-	<td class="text-right padding_right"><?php echo $data->monto; ?></td> 
+	<td class="text-right padding_right"><?php echo Funciones::formatPrecio($data->monto); ?></td> 
 	<td><?php echo $data->estados($data->estado); ?></td> 
 	<td><a href="<?php echo Yii::app()->createUrl('orden/detalleVendedor', array('id'=>$data->id));?>">Ver detalles </a></td>
 	

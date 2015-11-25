@@ -109,7 +109,7 @@
     }
 
 
-  $(function() {
+ $(function() {
     $( "#slider" ).slider({
       range: true,
       min: 0, 
@@ -128,4 +128,5 @@
     $( "#to" ).html($( "#slider" ).slider( "values", 1 ));
  
   });
+ 
 </script>

@@ -4,24 +4,6 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
 // $model = Categoria::model()->findAllBySql("select * from tbl_categoria where id_padre in (select id from tbl_categoria where id_padre=0)  order by nombre asc");
  $model=Categoria::model()->findAllByAttributes(array('id_padre'=>0), array('order'=>' id asc'));
 ?>
-<head>
-        
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="">
-        <meta name="author" content="">
-        <link rel="shortcut icon" href="../../docs-assets/ico/favicon.png">
-        
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <meta name="language" content="en" />
-
-        <title>Sigma Tiendas</title>
-
-        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
-
-</head>
-
 <div class="navbar row-fluid b2b clearfix no_margin_bottom" >
     <div class="col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 col-xs-8 col-xs-offset-2 no_horizontal_padding" id="headerContainer">
                 <div class="row-fluid">

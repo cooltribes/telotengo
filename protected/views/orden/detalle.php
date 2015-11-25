@@ -179,10 +179,10 @@
                                 <td class="name"> <?php echo $proc->inventario->producto->nombre;?></td>
                                 <td class="number"><?php echo $proc->inventario->producto->tlt_codigo;?></td>
                                 <td class="number"><?php echo $cantidad=$proc->cantidad;?></td>
-                                <td class="number"><?php echo $precio=$proc->inventario->precio;?> Bs</td>
-                                <td class="number highlighted"><?php echo $sub=$precio*$cantidad; ?>Bs</td>
-                                <td class="number highlighted"><?php echo $iva=$precio*$cantidad*0.12;?> Bs</td>
-                                <td class="number highlighted"><?php echo $tota=$sub+$iva;?> Bs</td>
+                                <td class="number"><?php echo Funciones::formatPrecio($precio=$proc->inventario->precio);?></td>
+                                <td class="number highlighted"><?php echo Funciones::formatPrecio($sub=$precio*$cantidad); ?></td>
+                                <td class="number highlighted"><?php echo Funciones::formatPrecio($iva=$precio*$cantidad*0.12);?></td>
+                                <td class="number highlighted"><?php echo Funciones::formatPrecio($tota=$sub+$iva);?></td>
                                  <?php $acumulado+=$tota; ?>
                                 
                             </tr>
@@ -195,7 +195,7 @@
 
                 <div class="summary text-right">
                     
-                    <span id="total">Total: Bs. <?php echo $acumulado;?></span>
+                    <span id="total">Total: <?php echo Funciones::formatPrecio($acumulado);?></span>
                    
                 </div>
             </div>
