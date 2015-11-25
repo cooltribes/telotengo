@@ -101,9 +101,9 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
                                              <span class="counter">
                                                  <?php 
                                                  if($usuario){
-                                                 
-                                                 $orders=Orden::model()->findAllByAttributes(array('empresa_id'=>$usuario->empresa->id,'estado'=>0), array('order'=>'id desc'));
-                                                 $purchases=Orden::model()->findAllByAttributes(array('users_id'=>$usuario->id,'estado'=>0), array('order'=>'id desc'));
+               
+												$orders=Orden::model()->findAllBySql("select * from tbl_orden where estado=0 and almacen_id in (select id from tbl_almacen where empresas_id='".$usuario->empresa->id."') order by id desc");
+                                                $purchases=Orden::model()->findAllByAttributes(array('empresa_id'=>$usuario->empresa->id,'estado'=>0), array('order'=>'id desc'));
                                                  echo count($orders)+count($purchases);
                                                  } else {
                                                      $orders=array();
@@ -120,11 +120,11 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
                                     </div>                                
                                   </a>
                                   <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                   <?php   if(Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id)):?>
-                                     <li class="padding_left_xsmall"><small><u>COMPRAS</u></small></li>   
+                                   <?php   if(Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id) || Yii::app()->authManager->checkAccess("Vendedor", Yii::app()->user->id)):?>
+                                     <li class="padding_left_xsmall"><small><u><a href="<?php echo Yii::app()->createUrl('orden/misVentas');?>">VENTAS</u></small></li>   
                                    <?php endif; ?>
                                       <?php foreach($orders as $key=>$order): ?> 
-                                       <li><a href="<?php echo Yii::app()->createUrl('orden/detalle', array('id'=>$order->id))?>"><span><?php echo $order->id;?></span> <b><?php echo $order->almacen->empresas->razon_social; ?></b> (<?php echo count($order->ordenHasInventarios); ?>)</a></li>
+                                       <li><a href="<?php echo Yii::app()->createUrl('orden/detalleVendedor', array('id'=>$order->id))?>"><span><?php echo $order->id;?></span> <b><?php echo $order->almacen->empresas->razon_social; ?></b> (<?php echo count($order->ordenHasInventarios); ?>)</a></li>
                                       
                                       <?php  
                                         if($key==2)
@@ -134,8 +134,8 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
                                     <li class="separator"></li>
                                     
                                     <?php 
-                                      if(Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id)):?>
-                                          <li class="padding_left_xsmall"><small><u>VENTAS</u></small></li>       
+                                      if(Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id) || Yii::app()->authManager->checkAccess("comprador", Yii::app()->user->id)):?>
+                                          <li class="padding_left_xsmall"><small><u><a href="<?php echo Yii::app()->createUrl('orden/misCompras');?>">COMPRAS</u></small></li>       
                               <?php      foreach($purchases as $key=>$order): ?> 
                                        <li><a href="<?php echo Yii::app()->createUrl('orden/detalle', array('id'=>$order->id))?>"><span><?php echo $order->id;?></span> <b><?php echo $order->almacen->empresas->razon_social; ?></b> (<?php echo count($order->ordenHasInventarios); ?>)</a></li>
                                       
@@ -144,8 +144,13 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
                                             break;
                                       endforeach; ?> 
                                     <li class="separator"></li>
-                                    <?php endif; ?>
-                                    <li><a href="<?php echo Yii::app()->createUrl('orden/misCompras');?>">Ver todas las ordenes</a></li>
+                                    <?php endif; 
+                                     if(Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id) || Yii::app()->authManager->checkAccess("comprador", Yii::app()->user->id)):?>
+                                   			 <li><a href="<?php echo Yii::app()->createUrl('orden/misCompras');?>">Ver todas las ordenes</a></li>
+                                  <?php endif;
+                                  if(Yii::app()->authManager->checkAccess("vendedor", Yii::app()->user->id)):?>
+                                  		<li><a href="<?php echo Yii::app()->createUrl('orden/misVentas');?>">Ver todas las ordenes</a></li>
+                                  <?php endif; ?>
                                   </ul>
                                 </div>
                             </div>

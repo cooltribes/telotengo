@@ -279,11 +279,18 @@ class OrdenController extends Controller
         if($bandera==FALSE){
             unset($_SESSION['searchPedido']);
         }
-            
-        $this->render('mis_compras',array(
-            'model'=>$model,
-            'dataProvider'=>$dataProvider,
-        ));
+          if(Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id) || Yii::app()->authManager->checkAccess("comprador", Yii::app()->user->id))
+		  {
+		  	        $this->render('mis_compras',array(
+          			 'model'=>$model,
+           			 'dataProvider'=>$dataProvider,
+       		 ));	
+		  }
+		  else
+		  {
+		  	throw new CHttpException(403,'No esta autorizado a visualizar este contenido');	
+		  }	
+
     }
     public function actionMisVentas()
     {
@@ -312,16 +319,22 @@ class OrdenController extends Controller
             unset($_SESSION['searchPedido']);
         }
 		
-		
-        $this->render('mis_ventas',array(
-            'model'=>$model,
-            'dataProvider'=>$dataProvider,
-            'contador'=>$empresa->contadoresVentas['total'],
-            'pendiente'=>$empresa->contadoresVentas['pendiente'],
-            'rechazado'=>$empresa->contadoresVentas['rechazado'],
-            'aprobado'=>$empresa->contadoresVentas['aprobado'],
-        ));
-    }
+		 if(Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id) || Yii::app()->authManager->checkAccess("vendedor", Yii::app()->user->id))
+		  {
+	        $this->render('mis_ventas',array(
+	            'model'=>$model,
+	            'dataProvider'=>$dataProvider,
+	            'contador'=>$empresa->contadoresVentas['total'],
+	            'pendiente'=>$empresa->contadoresVentas['pendiente'],
+	            'rechazado'=>$empresa->contadoresVentas['rechazado'],
+	            'aprobado'=>$empresa->contadoresVentas['aprobado'],
+	        	));
+		  }
+		 else 
+		 {
+			 throw new CHttpException(403,'No esta autorizado a visualizar este contenido');	
+		 }
+	}
 
     
   
@@ -1018,6 +1031,7 @@ class OrdenController extends Controller
 		$empresas_id=$_POST['empresas_id'];
 		$bolsaInventario=BolsaHasInventario::model()->findAllByAttributes(array('bolsa_id'=>$bolsa_id), array('order'=>'almacen_id asc')); // todos los que contengan esta bolsa
 		$almacenTransitorio="";
+		$pila=array();
 		$monto=0;
 		foreach ($bolsaInventario as $bolsaRecorrido)
 		{
@@ -1038,6 +1052,7 @@ class OrdenController extends Controller
 				$orden->monto=$monto;
 				$orden->save();
 				$orden->refresh();
+				array_push($pila, $orden->id);
 				
 				$ordenEstado=new OrdenEstado;
 				$ordenEstado->estado=0;
@@ -1070,6 +1085,35 @@ class OrdenController extends Controller
 			
 
 			$almacenTransitorio=$bolsaRecorrido->almacen_id;
+		}
+
+		///CORREOS ELECTRONICOS
+		foreach($pilas as $stack)
+		{
+			$orden=Orden::model()->findByPk($stack);
+			$store=Almacen::model()->findByPk($orden->almacen_id);
+			$vendedoraEmp=EmpresasHasUsers::model()->findAllByAttributes(array('empresas_id'=>$store->empresas_id));
+			foreach($vendedoraEmp as $local)
+			{
+				$message = new YiiMailMessage;
+				$message->activarPlantillaMandrill();
+				$body="haz vendido en telotengo blablabla aqui deberia ir el body"; ////// aqui se debe enviar
+				$message->subject="Haz vendido en Telotengo";
+				$message->setBody($body,'text/html');
+			
+				$message->addTo(User::model()->findByPk($local->users_id)->email);
+				Yii::app()->mail->send($message);
+			}
+			
+			// correo para el usuario comprador
+			$message = new YiiMailMessage;
+			$message->activarPlantillaMandrill();
+			$body="haz comprado en telotengo blablabla aqui deberia ir el body"; ////// aqui se debe enviar
+			$message->subject="Haz hecho una compra en Telotengo";
+			$message->setBody($body,'text/html');
+		
+			$message->addTo(User::model()->findByPk(Yii::app()->user->id)->email);
+			Yii::app()->mail->send($message);
 		}
 		
 		
@@ -1120,6 +1164,32 @@ class OrdenController extends Controller
 		$orden->refresh();
 		
 		BolsaHasInventario::model()->deleteAllByAttributes(array('bolsa_id'=>$bolsa_id, 'almacen_id'=>$almacen_id)); // los borra todos	
+		
+		// enviar correos para el usuario comprador
+		$message = new YiiMailMessage;
+		$message->activarPlantillaMandrill();
+		$body="haz comprado en telotengo blablabla aqui deberia ir el body"; ////// aqui se debe enviar
+		$message->subject="Haz hecho una compra en Telotengo";
+		$message->setBody($body,'text/html');
+		
+		$message->addTo(User::model()->findByPk(Yii::app()->user->id)->email);
+		Yii::app()->mail->send($message);
+		
+		//enviar correo para el usuario vendedor
+		
+		$almacen=Almacen::model()->findByPk($almacen_id); /// empresa de quien esta vendiendo
+		$vendedoraEmp=EmpresasHasUsers::model()->findAllByAttributes(array('empresas_id'=>$almacen->empresas_id));
+		foreach($vendedoraEmp as $local)
+		{
+			$message = new YiiMailMessage;
+			$message->activarPlantillaMandrill();
+			$body="haz vendido en telotengo blablabla aqui deberia ir el body"; ////// aqui se debe enviar
+			$message->subject="Haz vendido en Telotengo";
+			$message->setBody($body,'text/html');
+		
+			$message->addTo(User::model()->findByPk($local->users_id)->email);
+			Yii::app()->mail->send($message);
+		}
 		echo $orden->id;
 	}
 

@@ -24,6 +24,12 @@ class Funciones {
 		return strpos(Yii::app()->baseUrl, "new") !== false;
 
 	}
+	
+	public static function isStage() // para saber cuando estemos en staging
+	{
+		return strpos(Yii::app()->baseUrl, "staging") !== false;
+
+	}
 
     public static function fillRow($busqueda){
     if(!is_array($busqueda))
