@@ -99,19 +99,23 @@
 	    
 		<?php
 		$template = '{summary}
-	    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-bordered table-hover table-striped">
+	    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-hover table-striped">
+	       <thead>
 	        <tr>
 	           	<th scope="col">SKU</th>
 	            <th scope="col">Codigo TLT</th>
 	            <th scope="col">Imagen</th>
 	            <th scope="col">Nombre</th>
 	            <th scope="col">Cantidad</th>
-	            <th scope="col">Precio</th>
+	            <th scope="col" align="center">Precio</th>
 	            <th scope="col">Almacen</th>
  
 
 	        </tr>
+	       </thead>
+	       <tbody>
 	    {items}
+	       </tbody>
 	    </table>
 	    {pager} 
 		';

@@ -29,7 +29,7 @@
 
 		?>
 	</td> 
-	<td class="text-right padding_right"><?php echo $data->monto; ?></td> 
+	<td class="text-right padding_right"><?php echo Funciones::formatPrecio($data->monto); ?></td> 
 	<td><?php echo $data->estados($data->estado); ?></td> 
 	<td><a href="<?php echo Yii::app()->createUrl('orden/detalle', array('id'=>$data->id));?>">Ver detalles </a></td>
 	

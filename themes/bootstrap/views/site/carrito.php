@@ -11,10 +11,10 @@
         </div>        
         <div class="col-md-3">
             <div class="orderAll margin_top_small">
-                Subtotal: Bs. <?php echo $sub=Yii::app()->session['suma'];?><br/>
-                IVA: Bs. <?php echo $iva=Yii::app()->session['suma']*0.12;?> <br/>
+                Subtotal:<?php echo Funciones::formatPrecio($sub=Yii::app()->session['suma']);?><br/>
+                IVA: <?php echo Funciones::formatPrecio($iva=Yii::app()->session['suma']*0.12);?> <br/>
                 <span class="total">
-                    Total: Bs. <?php echo Yii::app()->session['suma']+$iva;  unset(Yii::app()->session['suma']);?>
+                    Total: <?php echo Funciones::formatPrecio(Yii::app()->session['suma']+$iva);  unset(Yii::app()->session['suma']);?>
                 </span>
                 <input class="btn-green btn btn-danger btn-large margin_top_small" type="submit" id="procesarTodo" name="yt0" value="Procesar todas las órdenes">
             </div>

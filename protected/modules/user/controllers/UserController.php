@@ -807,10 +807,11 @@ class UserController extends Controller
         $model->status=1-$model->status;
 		if($model->registro_password==0)
 		{
-			echo $rol=$model->buscarRol($id);
+			$rol=$model->buscarRol($id);
 			$model->registro_password=1;
 			$model->newPassword($id, $rol);
 		}
+		
         $model->save();
 		$model->refresh();
 		$empresas_id=EmpresasHasUsers::model()->findByAttributes(array('users_id'=>$model->id))->empresas_id;

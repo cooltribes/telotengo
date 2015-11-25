@@ -74,8 +74,8 @@ foreach($bolsaInventario as $carrito)
                                 <input type="hidden" id="maximo<?php echo $bolsa->id?>" value="<?php echo  $bolsa->inventario->cantidad;?>">
                                 <td class="number"><input class="cadaUno" id="<?php echo $bolsa->id;?>cantidad" value="<?php echo $bolsa->cantidad;?>" type="number">
                                <a id="<?php echo $bolsa->id;?>" onclick="actualizar(<?php echo $bolsa->id;?>, 1)" style="" class="btn btn-mini">Actualizar</a></td>
-                                <td class="number" id="unitario<?php echo $bolsa->id;?>"><?php echo $bolsa->inventario->precio;?> Bs</td></td>
-                                <td class="number highlighted" id="subtotal<?php echo $bolsa->id;?>"> <?php echo $bolsa->inventario->precio*$bolsa->cantidad; ?> Bs</td>
+                                <td class="number" id="unitario<?php echo $bolsa->id;?>"><?php echo $bolsa->inventario->formatPrecio;?></td></td>
+                                <td class="number highlighted" id="subtotal<?php echo $bolsa->id;?>"> <?php echo Funciones::formatPrecio($bolsa->inventario->precio*$bolsa->cantidad); ?></td>
                                 <td class="link"><a onclick="actualizar(<?php echo $bolsa->id;?>, 2)">Eliminar</a></td>
                                 
                                 <?php $suma+=$bolsa->inventario->precio*$bolsa->cantidad;?>
@@ -89,7 +89,7 @@ foreach($bolsaInventario as $carrito)
 
                 <div class="summary text-right">
                 	
-                    <span id="total">Total: Bs. <?php echo $suma;  $total+=$suma;?></span>
+                    <span id="total">Total: <?php echo Funciones::formatPrecio($suma);  $total+=$suma;?></span>
                     <?php echo CHtml::submitButton('Generar orden por proveedor', array('id'=>$carrito->almacen_id."boton".$carrito->bolsa_id,'class'=>'btn-orange btn btn-danger btn-large orange_border margin_left cadaOrden')); ?>
                      
                     <!--<input class="btn-orange btn btn-danger btn-large orange_border margin_left" type="submit" name="yt0" value="Generar orden por proveedor"> -->
