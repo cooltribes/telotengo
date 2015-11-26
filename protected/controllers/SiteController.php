@@ -345,8 +345,10 @@ class SiteController extends Controller
 		}	
 		else
 		{
-
-			$document = $connection->getCollection('stage');	//STAGE
+			if(Funciones::isStage())
+				$document = $connection->getCollection('stage');	//STAGE
+			else
+				$document = $connection->getCollection('produccion'); // produccion
 		} 
 		if(!isset($_GET['producto_id']) || !isset($_GET['almacen_id'])) //si no viene nada por get, fue que coloco el URL a mano
 		{

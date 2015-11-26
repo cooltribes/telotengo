@@ -404,9 +404,17 @@ class Producto extends CActiveRecord
 	{
 		$connection = new MongoClass();
 		if(Funciones::isDev())
+		{
 			$document = $connection->getCollection('ejemplo');	//DEVELOP
-		else 
-			$document = $connection->getCollection('stage');	//STAGE
+		}
+		else
+		{
+			if(Funciones::isStage())
+				$document = $connection->getCollection('stage');	//STAGE
+			else	
+				$document = $connection->getCollection('produccion'); // produccion
+		} 
+			
 		$prueba = array("producto"=>$this->id); 
 		$busqueda = $document->findOne($prueba);
 		if($variar==0)	//si es select de las unidades
@@ -436,9 +444,16 @@ class Producto extends CActiveRecord
 	{
 		$connection = new MongoClass();
 		if(Funciones::isDev())
+		{
 			$document = $connection->getCollection('ejemplo');	//DEVELOP
-		else 
-			$document = $connection->getCollection('stage');	//STAGE
+		}
+		else
+		{
+			if(Funciones::isStage())
+				$document = $connection->getCollection('stage');	//STAGE
+			else	
+				$document = $connection->getCollection('produccion'); // produccion
+		} 
 		$prueba = array("producto"=>$this->id);
 		$busqueda = $document->findOne($prueba);	
 		$nombreAlto=$this->cambiarNombre($nombre);

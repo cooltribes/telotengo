@@ -184,9 +184,12 @@ $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
                                		<a href="#" class="btn-orange margin_bottom_small btn btn-danger btn-large orange_border form-control" data-toggle="tooltip"  title="No puede comprar productos de su propia empresa">Ordenar</
 								<?php
 								endif;
-                            	 if(!Yii::app()->user->isAdmin() && $inventario->almacen->empresas->id!=$empre->id)
-                                	echo CHtml::submitButton('ORDENAR', array('id'=>'ordenar','class'=>'btn-orange margin_bottom_small btn btn-danger btn-large orange_border form-control')); 
-                           		?>	
+                            	 if(!Yii::app()->user->isAdmin()  && $inventario->almacen->empresas->id!=$empre->id)
+                                	if(!Yii::app()->authManager->checkAccess("vendedor", Yii::app()->user->id))
+                                		echo CHtml::submitButton('ORDENAR', array('id'=>'ordenar','class'=>'btn-orange margin_bottom_small btn btn-danger btn-large orange_border form-control'));          		
+                           		if(Yii::app()->authManager->checkAccess("vendedor", Yii::app()->user->id)):?>
+									<a href="#" class="btn-orange margin_bottom_small btn btn-danger btn-large orange_border form-control" data-toggle="tooltip"  title="No puede comprar ya que es un usuario Vendedor">Ordenar</
+                           		<?php endif;?>
                             </td>
                         </tr>
                     </table>
@@ -213,7 +216,8 @@ $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
                             <span class="location"><?php echo $data->almacen->ciudad->nombre; ?></span>
                             <span><b><?php echo $data->formatPrecio;?></b> <?php if($inventario->metodoEnvio==1) echo "Acordado con el cliente"; else echo "A traves del servicio de TELOTENGO"; ?></span>
                             	<?php
-                            	if(!Yii::app()->user->isAdmin()): ?>
+                            	if(Yii::app()->authManager->checkAccess("comprador", Yii::app()->user->id) || Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id)): 
+                  					 ?>
                             		<button class="btn btn-small btn-unfilled ordenarIndividual" id="<?php echo $data->id;?>"> ORDENAR</button>  
                             	<?php endif; ?>                   
                         </div>

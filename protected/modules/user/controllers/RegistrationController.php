@@ -92,7 +92,14 @@ class RegistrationController extends Controller
 			}
 
 		    if (Yii::app()->user->id) {
-		    	$this->redirect(Yii::app()->controller->module->profileUrl);
+		    	if(Yii::app()->user->isAdmin())
+				{
+					$this->redirect(Yii::app()->createUrl('/user/profile/index'));
+				}
+				else 
+				{
+					$this->redirect(Yii::app()->createUrl('site/inhome2'));
+				}
 		    } else {
 		    	if(isset($_POST['RegistrationForm'])) {
 					$model->attributes=$_POST['RegistrationForm'];
