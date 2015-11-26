@@ -24,7 +24,7 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
                                   <ul class="dropdown-menu arrow_box" aria-labelledby="dropdownMenu1" id="categories">
                                   	<?php foreach($model as $modelado)
                                   	{?>
-                                  		<li><a href="<?php echo Yii::app()->createUrl('site/category', array('categoria'=>$modelado->id));?>"><?php echo $modelado->nombre;?><span class="arrow"></span></a></li>
+                                  		<li><a href='<?php echo Yii::app()->createUrl('categoria/index', array('url'=>$modelado->url_amigable))?>'><?php echo $modelado->nombre;?><span class="arrow"></span></a></li>
                                   	<?php	
                                   	}?>
                                     

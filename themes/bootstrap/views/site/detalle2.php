@@ -36,7 +36,7 @@ $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
                                                    <?php 
                                                          if($key==4): echo "</div>"; $key=0; else: $key++; endif;
                                                    endforeach;
-                                                       echo $key<5?"</div>":"";
+                                                       echo $key<5&&$key!=0?"</div>":"";
                                                        ?>
                             
                               </div>
