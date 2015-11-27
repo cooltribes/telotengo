@@ -26,7 +26,7 @@ class OrdenController extends Controller
 	{ 
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','detalle'),
+				'actions'=>array('index','detalle','mailtest'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -1101,9 +1101,9 @@ class OrdenController extends Controller
 				$productoOrden=OrdenHasInventario::model()->findAllByAttributes(array('orden_id'=>$orden->id));
 				$ordenEstado=OrdenEstado::model()->findAllByAttributes(array('orden_id'=>$orden->id), array ('order'=>'orden_id desc'));
 			
-				$body=$this->renderPartial("detalleVendedor", array('model'=>$orden, 'productoOrden'=>$productoOrden, 'ordenEstado'=>$ordenEstado), true); 
-				
-				$message->subject="Haz vendido en Telotengo";
+
+				 $body=$this->renderPartial("detalleMail", array('model'=>$orden, 'productoOrden'=>$productoOrden,'infoFrom'=>"Comprador"), true); 
+				$message->subject="Has vendido en Telotengo";
 				$message->setBody($body,'text/html');
 			
 				$message->addTo(User::model()->findByPk($local->users_id)->email);
@@ -1117,8 +1117,7 @@ class OrdenController extends Controller
 	  		$productoOrden=OrdenHasInventario::model()->findAllByAttributes(array('orden_id'=>$orden->id));
 	   		$ordenEstado=OrdenEstado::model()->findAllByAttributes(array('orden_id'=>$orden->id), array ('order'=>'orden_id desc'));
 
-			$body=$this->renderPartial("detalle", array('model'=>$orden, 'productoOrden'=>$productoOrden, 'ordenEstado'=>$ordenEstado), true); 
-		
+		     $body=$this->renderPartial("detalleMail", array('model'=>$orden, 'productoOrden'=>$productoOrden, 'infoFrom'=>"Vendedor"), true); 
 		
 			
 			$message->subject="Haz hecho una compra en Telotengo";
@@ -1131,6 +1130,26 @@ class OrdenController extends Controller
 		
 		BolsaHasInventario::model()->deleteAllByAttributes(array('bolsa_id'=>$bolsa_id)); // los borra todos		
 	}
+
+    public function actionMailtest(){
+            $orden=Orden::model()->findByPk(48);   
+            $message = new YiiMailMessage;
+            $message->activarPlantillaMandrill();
+            #$body="haz comprado en telotengo blablabla aqui deberia ir el body"; ////// aqui se debe enviar
+            $productoOrden=OrdenHasInventario::model()->findAllByAttributes(array('orden_id'=>$orden->id));
+            $ordenEstado=OrdenEstado::model()->findAllByAttributes(array('orden_id'=>$orden->id), array ('order'=>'orden_id desc'));
+
+            $body=$this->renderPartial("detalleMail", array('model'=>$orden, 'productoOrden'=>$productoOrden, 'ordenEstado'=>$ordenEstado, 'infoFrom'=>"Comprador"), true); 
+        
+        
+            
+            $message->subject="Haz registrado una solicitud en Telotengo";
+            $message->setBody($body,'text/html');
+        
+            $message->addTo('');
+            Yii::app()->mail->send($message);
+    }
+
 	
 	public function actionProcesarSimple()
 	{
