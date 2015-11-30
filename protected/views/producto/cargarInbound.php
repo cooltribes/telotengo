@@ -67,7 +67,9 @@ $('#buttonCargaMD').click(function(e) {
                         <h4 class=" margin_top no_margin_bottom">1.- Realizar la validación previa del archivo:</h4>
                     </div>
                     <div class="col-md-6 margin_top_small ">
-                         <a href="../site/plantillaExternos" class="btn btn-darkgray"> <span class="glyphicon glyphicon-download-alt"></span> Descargar Archivo</a>
+                    	<?php echo CHtml::hiddenField('descarga' ,Yii::getPathOfAlias('webroot')  . '/images/categoria/28.jpg' , array('id' => 'descarga')); ?>
+                    	
+                         <a href="#" id="descargar" class="btn btn-darkgray"> <span class="glyphicon glyphicon-download-alt"></span> Descargar Archivo</a>
                     </div>
                     <div class="col-md-12 no_horizontal_padding margin_top_minus">
                         <hr class="dark"/>
@@ -186,6 +188,7 @@ $('#buttonCargaMD').click(function(e) {
         </div>  
                       
     </div>
+
 
 
 

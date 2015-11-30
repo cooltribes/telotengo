@@ -14,7 +14,7 @@
 		$im= '<img src="http://placehold.it/65x65" width="100%">';
 	} 
     	
-    							  
+    echo " <td>".$data->tlt_codigo."</td>"; 							  
     echo " <td>".$im."</td>"; 
     
 		

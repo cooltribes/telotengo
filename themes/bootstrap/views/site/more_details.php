@@ -9,7 +9,7 @@
      
     <tr>
         <?php if(!is_array($busqueda)) break;?>    
-        <td class="title"><?php echo key($busqueda); ?></td>
+        <td class="title"><?php echo Funciones::quitarGuionBajo(key($busqueda)); ?></td>
         <td>
             <?php
             if(is_array(current($busqueda)))
@@ -34,7 +34,7 @@
                         
         <?php if(!isset($solo_una)): ?>               
         <?php if(current($busqueda)===false) break;?>    
-        <td class="title"><?php echo key($busqueda); ?></td>
+        <td class="title"><?php echo Funciones::quitarGuionBajo(key($busqueda)); ?></td>
         <td>
             <?php
             if(is_array(current($busqueda)))
