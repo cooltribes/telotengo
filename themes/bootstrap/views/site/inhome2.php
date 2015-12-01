@@ -21,7 +21,7 @@
                                        <ul class="categoriaHome">
                                        	<?php foreach ($interno as $inter)
 										{?>
-											<li><a href='<?php echo Yii::app()->createUrl('categoria/index', array('url'=>$modelado->url_amigable))?>'><?php echo $inter->nombre?></a></li>
+											<li><a href='<?php echo Yii::app()->createUrl('tienda/index', array('url'=>$modelado->url_amigable))?>'><?php echo $inter->nombre?></a></li>
 										<?php	
 										} ?>
                                        </ul>

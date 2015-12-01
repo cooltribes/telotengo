@@ -1254,7 +1254,7 @@ a:hover, a:focus{
     background: #FFF;
 }
 
-#categoryMenu, #userButton, #orderButton, #cartButton{
+#categoryMenu, #userButton, #orderButton, #cartButton, #inventoryButton{
     background: transparent;
     border:0px;
     padding-top:10px;
@@ -2728,5 +2728,74 @@ h1.dark{
         right: 18px;
     }    
     
-   
 
+
+
+/* DETALLE ORDEN */
+
+.orderInfo{
+    font-size: 16px;
+    .estadoOrden{
+      span{        
+        font-size:24px;
+        font-weight: bold;
+      }  
+      span.success{
+          color: #08CB53;
+      }
+      span.warning{
+        color: #ffe45c;
+      }
+      span.error{
+        color: #a94442;
+      }     
+      
+    }
+     .sellerInfo p{
+        margin:1px 0px; 
+        span.name{
+          font-weight: bold;             
+        }             
+    }  
+    
+}
+.orderActions{
+  table{
+    margin-top:5px;
+    font-size: 16px;
+    font-weight:500;
+    thead > tr > th
+    {
+        background-color: #222;
+        font-weight: 500;
+        color: #FFF;
+    }
+    td, th{
+        padding: 5px 0px 5px 8px;
+    } 
+  }
+  .table-striped{
+     tbody{
+       tr > td{
+            background-color: #eee;
+        }
+        tr:nth-child(odd) > td{
+            background-color: #f9f9f9;
+        }
+     }
+     
+  }
+} 
+  
+    #orderDetail h2{
+        font-size: 18px;
+        font-weight: bolder;
+        margin: 0;
+    }
+    #orderDetail div h3{        
+        margin: 0;
+        font-size: 16px;
+    }
+
+    #estado.rechazado {color: #ec1f24}
+    #estado.aceptado {color: #00AA00}

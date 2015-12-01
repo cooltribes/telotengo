@@ -20,6 +20,7 @@
 			$template = '{summary}
 	    		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-bordered table-hover table-striped">
 			        <tr>
+			            <th scope="col">Codigo TLT</th>
 			            <th scope="col">Imágen</th>
 			            <th scope="col">Referencia</th>
 			            <th scope="col">Acciones</th>

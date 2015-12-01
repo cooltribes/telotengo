@@ -36,7 +36,7 @@ class ProductoController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete','update','eliminar','orden','aprobar','rechazar','poraprobar','calificaciones','eliminarCalificacion','importar','inventario', 'verificarPadre', 'verificarNombre', 'details', 'caracteristicas','activarDesactivar', 'activarDesactivarDestacado'),
+				'actions'=>array('admin','delete','update','eliminar','orden','aprobar','rechazar','poraprobar','calificaciones','eliminarCalificacion','importar','inventario', 'verificarPadre', 'verificarNombre', 'details', 'caracteristicas','activarDesactivar', 'activarDesactivarDestacado', 'verDisponibilidad'),
 				#'users'=>array('admin'),
 				'roles'=>array('admin'),
 			),
@@ -2621,6 +2621,17 @@ class ProductoController extends Controller
                 "nLineas"=>$linea-2,
                 );            
         }
+
+	
+	public function actionVerDisponibilidad()
+	{
+		
+		$id=$_GET['id'];
+		$nombre=$_GET['nombre'];
+		$sql="select  e.id , e.razon_social, sum(i.cantidad) as total from tbl_empresas e JOIN tbl_almacen a on e.id=a.empresas_id JOIN tbl_inventario i on a.id=i.almacen_id where i.producto_id='".$id."' group by e.razon_social";
+		$model=Yii::app()->db->createCommand($sql)->queryAll();
+		$this->render('verDisponibilidad', array('id'=>$id, 'model'=>$model, 'nombre'=>$nombre));
+	}
 
 
 }
