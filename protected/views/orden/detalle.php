@@ -1,8 +1,9 @@
-
-<div id="orderDetail" class="row-fluid">
+<?php $this->breadcrumbs=Yii::app()->user->isAdmin()?array('Ordenes'=>'../admin','Orden #'.$model->id):array('Mis Compras'=>'../misCompras','Orden #'.$model->id); ?> 
+<div id="orderDetail" class="row-fluid margin_top">
     <h2>INTENCION DE COMPRA</h2>
-    <div class="col-md-7 orderInfo no_horizontal_padding">
-        
+    <div class="col-md-6 orderInfo no_horizontal_padding "> 
+        <div class="row-fluid clearfix" >        
+            <div class="col-md-6 padding_bottom_small" >
         <h3 class="margin_top_small">Estado actual: </h3>
                 <?php
         if($model->estado==0)
@@ -21,6 +22,8 @@
 		<?php	
 		}
 		?>
+		</div>
+       </div>
         <div class="margin_top sellerInfo">
             <p>
                 <span class="name">Información del Vendedor</span>
@@ -55,7 +58,7 @@
             </p>-->
         </div>
     </div>
-    <div class="col-md-5 orderActions no_horizontal_padding">
+    <div class="col-md-6 orderActions no_horizontal_padding margin_top_small">
         <h3>Acciones pendientes</h3>
         <table width="100%" class="table-striped">
             <col width="30%">

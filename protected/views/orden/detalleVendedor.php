@@ -1,33 +1,42 @@
-<div id="orderDetail" class="row-fluid">
+<?php $this->breadcrumbs=array('Mis Ventas'=>'misVentas','Orden #'.$model->id); ?> 
+<div id="orderDetail" class="row-fluid margin_top">
     <h2>INTENCION DE COMPRA</h2>
-    <div class="col-md-7 orderInfo no_horizontal_padding">
-        
-        <h3 class="margin_top_small">Estado actual: </h3>
+    <div class="col-md-6 orderInfo no_horizontal_padding margin_top_small">
+
+       <div class="row-fluid clearfix" >        
+           <div class="col-md-6 padding_bottom_small" style="border:1px solid #CCC">
+               <h3 class="margin_top_small">Estado actual: </h3>
         <?php
         if($model->estado==0)
-		{?>
-					<p class="estadoOrden"><span id="estado"><?php echo $model->estados($model->estado);?></span></p>
-		<?php	
-		}
-		if($model->estado==1)
-		{?>
-					<p class="estadoOrden"><span id="estado" class="aceptado"><?php echo $model->estados($model->estado);?></span></p>
-		<?php	
-		}
-		if($model->estado==2)
-		{?>
-					<p class="estadoOrden"><span id="estado" class="rechazado"><?php echo $model->estados($model->estado);?></span></p>
-		<?php	
-		}
-		?>
-		
-       	<?php
-       	if($model->estado==0)
-		{
-         	echo CHtml::submitButton('Aceptar', array('id'=>'aceptar','name'=>$model->id,'class'=>'btn-orange btn btn-danger btn-large orange_border margin_left')); 
-         	echo CHtml::submitButton('Cancelar', array('id'=>'cancelar','name'=>$model->id,'class'=>'btn-orange btn btn-danger btn-large orange_border margin_left')); 
+        {?>
+                    <p class="estadoOrden"><span id="estado"><?php echo $model->estados($model->estado);?></span></p>
+        <?php   
+        }
+        if($model->estado==1)
+        {?>
+                    <p class="estadoOrden"><span id="estado" class="aceptado"><?php echo $model->estados($model->estado);?></span></p>
+        <?php   
+        }
+        if($model->estado==2)
+        {?>
+                    <p class="estadoOrden"><span id="estado" class="rechazado"><?php echo $model->estados($model->estado);?></span></p>
+        <?php   
         }
         ?>
+        
+        <?php
+        if($model->estado==0)
+        {
+            echo CHtml::submitButton('Aceptar', array('id'=>'aceptar','name'=>$model->id,'class'=>'btn-orange btn btn-danger btn-large orange_border margin_left')); 
+            echo CHtml::submitButton('Cancelar', array('id'=>'cancelar','name'=>$model->id,'class'=>'btn-orange btn btn-danger btn-large orange_border margin_left')); 
+        }
+        ?>
+           </div>
+       </div>
+   
+      
+      
+
         <div class="margin_top sellerInfo">
             <p>
                 <span class="name">Información del Comprador</span>
@@ -62,8 +71,9 @@
            </p>
         </div>
     </div>
-    <div class="col-md-5 orderActions no_horizontal_padding">
-        <h3>Acciones pendientes</h3>
+    
+    <div class="col-md-6 orderActions no_horizontal_padding margin_top_small">
+        <h3 class="margin_top_small">Acciones pendientes</h3>
         <table width="100%" class="table-striped" id="tabla">
             <col width="30%">
             <col width="40%">
@@ -76,7 +86,7 @@
                 </tr>
             </thead>
             <tbody>
-            	<?php foreach($ordenEstado as $local): ?>
+                <?php foreach($ordenEstado as $local): ?>
                 <tr>
                     <td><?php echo $local->orden->estados($local->estado);?></td>
                     <td><?php echo $local->user->profile->first_name." ". $local->user->profile->last_name;?></td>

@@ -214,7 +214,7 @@ class AtributoController extends Controller
 		if(isset($_GET['ajax']) && isset($_SESSION['searchAtributo']) && !isset($_POST['query'])){
 			$_POST['query'] = $_SESSION['searchAtributo'];
 			$bandera=true;
-		}
+		} 
 
 		/* Para buscar desde el campo de texto */
 		if (isset($_POST['query'])){

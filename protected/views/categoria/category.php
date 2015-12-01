@@ -1,9 +1,10 @@
+<?php
+    $this->breadcrumbs=array(
 
+        $model->nombre,
+    );
+    ?>
         <div class="col-md-12 margin_top_small subcategory">
-            <div class="breadcrumbs">
-                <a><span>Inicio</span></a>/&nbsp;
-                <a><span class="current">Sub Categoria</span></a>
-            </div>
             <div class="row-fluid clearfix title">
                 <div class="col-md-4 no_horizontal_padding"><div class="braker"></div></div>
                 <div class="col-md-4 no_horizontal_padding text-center"><h1><?php echo $model->nombre;?></h1></div>

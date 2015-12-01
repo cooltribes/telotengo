@@ -1,8 +1,7 @@
-<style>
+<?php $this->breadcrumbs=array('Carrito'); ?> 
 
-</style>
-<div class="col-md-12">
-    <h1 class="dark no_margin">INTENCION DE COMPRA</h1>
+<div class="col-md-12 margin_top_small">
+    <h1 class="dark no_margin">INTENCIONES DE COMPRA</h1>
 </div>
 <div class="col-md-12 no_horizontal_padding cart">
     <div class="row-fluid">
