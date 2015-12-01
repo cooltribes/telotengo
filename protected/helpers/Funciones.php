@@ -65,7 +65,13 @@ class Funciones {
             </td>
     <?php 
         return $busqueda;
-    }  
+    }
+	
+	public static function quitarGuionBajo($cadena)
+	{
+		
+		return str_replace("_"," ",$cadena);
+	}  
     
  
     

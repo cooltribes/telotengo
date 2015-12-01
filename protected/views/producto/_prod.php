@@ -54,7 +54,9 @@ echo"<tr>";
 			{?>
 				<li><a class="pointer" id="des<?php echo $data->id;?>"  tabindex="-1" onclick="desactivarActivarDestacado(<?php echo $data->id;?>)"><i  class="glyphicon glyphicon-ok"></i>  Destacar </a></li>
 			<?php	
-			}
+			}?>
+				<li><a href="<?php echo Yii::app()->createUrl('producto/verDisponibilidad', array('id'=>$data->id, 'nombre'=>$data->nombre));?>" id="descargar" class="btn btn-darkgray"> <span class="glyphicon glyphicon-download-alt"></span> Ver Disponibilidad</a></li>
+		<?php
 		echo '	
 		</ul>
 	    </div></td>	

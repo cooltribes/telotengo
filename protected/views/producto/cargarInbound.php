@@ -62,6 +62,7 @@ $('#buttonCargaMD').click(function(e) {
                 
             ?>
             <div id="myTabContent" class="tab-content">
+
                 <div role="tabpanel" class="tab-pane active in" id="fileLoad" aria-labelledby="home-tab">
                     <div class="row-fluid clearfix">
                         <div class="col-md-6">
@@ -77,6 +78,7 @@ $('#buttonCargaMD').click(function(e) {
                         <div class="col-md-8 well no_radius">
                             <div class="row-fluid">
                                 <div class="col-md-10">
+
                                 <?php
                                 $this->widget('CMultiFileUpload', array(
                                     'name' => 'archivoValidacion',
@@ -96,7 +98,10 @@ $('#buttonCargaMD').click(function(e) {
                                         'icon' => 'ok white',
                                         'htmlOptions' => array(
                                             'name' => 'validar',
-                                            'class'=>'col-md-2 btn-darkgray'
+                                             'id' => 'validar',
+                                            
+                                            'class'=>'col-md-2 btn-darkgray',
+                                              
                                         ),
                                     ));
                                     ?>
@@ -139,8 +144,8 @@ $('#buttonCargaMD').click(function(e) {
                                         'htmlOptions' => array(
                                             'name' => 'cargar',
                                             'id'=>'buttonCargaMD',
-                                            'class'=>'col-md-3 btn-orange orange_border white'
-                                        ),
+                                            'class'=>'col-md-3 btn-orange orange_border white',
+                                                                ),
                                     ));
                                     ?>
                                 </div>
