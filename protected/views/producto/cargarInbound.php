@@ -45,8 +45,8 @@ $('#buttonCargaMD').click(function(e) {
             
                                
             <ul id="myTabs" class="nav nav-tabs" role="tablist">
-              <li role="presentation" class="active"><a href="#fileLoad" id="fileLoad-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true">CARGA MASIVA </a></li>
-              <li role="presentation" class=""><a href="#specifications" role="tab" id="specifications-tab" data-toggle="tab" aria-controls="specifications" aria-expanded="false">CARGA INDIVIDUAL</a></li>
+              <li  class="active"><a href="#fileLoad" id="fileLoad-tab"  aria-controls="home" aria-expanded="true">CARGA MASIVA </a></li>
+              <li  class=""><a id="specifications-tab"   aria-expanded="false" href="seleccion">CARGA INDIVIDUAL</a></li>
            <!--   <li role="presentation" class=""><a href="#plantilla" role="tab" id="plantilla-tab" data-toggle="tab" aria-controls="plantilla" aria-expanded="false">DESCARGA DE PLANTILLA</a></li>-->
               
             </ul>
@@ -62,86 +62,90 @@ $('#buttonCargaMD').click(function(e) {
                 
             ?>
             <div id="myTabContent" class="tab-content">
-                <div role="tabpanel" class="tab-pane active in row-fluid clearfix" id="fileLoad" aria-labelledby="home-tab">
-                    <div class="col-md-6">
-                        <h4 class=" margin_top no_margin_bottom">1.- Realizar la validación previa del archivo:</h4>
-                    </div>
-                    <div class="col-md-6 margin_top_small ">
-                         <a href="../site/plantillaExternos" class="btn btn-darkgray"> <span class="glyphicon glyphicon-download-alt"></span> Descargar Archivo</a>
-                    </div>
-                    <div class="col-md-12 no_horizontal_padding margin_top_minus">
-                        <hr class="dark"/>
-                    </div>
-                    
-                    <div class="col-md-8 well no_radius">
-                        <div class="row-fluid">
-                            <?php
-                            $this->widget('CMultiFileUpload', array(
-                                'name' => 'archivoValidacion',
-                                'accept' => 'xls|xlsx', // useful for verifying files
-                                'duplicate' => 'El archivo está duplicado.', // useful, i think
-                                'denied' => 'Tipo de archivo inválido.', // useful, i think
-                                'htmlOptions'=>array('class'=>'col-md-10')
-                            ));
-                            ?>
-                            
-                                             
-                                <?php
-                                $this->widget('bootstrap.widgets.TbButton', array(
-                                    'buttonType' => 'submit',
-   
-                                    'label' => 'Validar',
-                                    'icon' => 'ok white',
-                                    'htmlOptions' => array(
-                                        'name' => 'validar',
-                                        'class'=>'col-md-2 btn-darkgray'
-                                    ),
-                                ));
-                                ?>
+                <div role="tabpanel" class="tab-pane active in" id="fileLoad" aria-labelledby="home-tab">
+                    <div class="row-fluid clearfix">
+                        <div class="col-md-6">
+                            <h4 class=" margin_top no_margin_bottom">1.- Realizar la validación previa del archivo:</h4>
+                        </div>
+                        <div class="col-md-6 margin_top_small ">
+                             <a href="../site/descargaPlantilla" class="btn btn-darkgray"> <span class="glyphicon glyphicon-download-alt"></span> Descargar Archivo</a>
+                        </div>
+                        <div class="col-md-12 no_horizontal_padding margin_top_minus">
+                            <hr class="dark"/>
                         </div>
                         
-                        
-                            
-                        
-                            
-                    </div>
-                    
-                   <div class="col-md-4" style="display:block; height:120px"></div>
-                    
-                    
-                    
-                    <h4 class="margin_top">2.- Subir archivo previamente validado:</h4>
-                    <hr class="dark no_margin_top"/>
-                    <div class="col-md-8 well no_radius">
-                         <div class="row-fluid">  
-                            <?php
-                            $this->widget('CMultiFileUpload', array(
-                                'name' => 'archivoCarga',
-                                'accept' => 'xls|xlsx', // useful for verifying files
-                                'duplicate' => 'El archivo está duplicado.', // useful, i think
-                                'denied' => 'Tipo de archivo inválido.', // useful, i think
-                                'htmlOptions'=>array('class'=>'col-md-9')
-                            ));
-                            ?>
-        
-                                         
+                        <div class="col-md-8 well no_radius">
+                            <div class="row-fluid">
+                                <div class="col-md-10">
                                 <?php
-                                $this->widget('bootstrap.widgets.TbButton', array(
-                                    'buttonType' => 'submit',
-     
-      
-                                    'label' => 'Cargar Inbound',
-                                    'loadingText'=>'Cargando ...',
-                                    'htmlOptions' => array(
-                                        'name' => 'cargar',
-                                        'id'=>'buttonCargaMD',
-                                        'class'=>'col-md-3 btn-orange orange_border white'
-                                    ),
+                                $this->widget('CMultiFileUpload', array(
+                                    'name' => 'archivoValidacion',
+                                    'accept' => 'xls|xlsx', // useful for verifying files
+                                    'duplicate' => 'El archivo está duplicado.', // useful, i think
+                                    'denied' => 'Tipo de archivo inválido.', // useful, i think
+                                    'htmlOptions'=>array()
                                 ));
                                 ?>
+                                </div>
+                                                 
+                                    <?php
+                                    $this->widget('bootstrap.widgets.TbButton', array(
+                                        'buttonType' => 'submit',
+       
+                                        'label' => 'Validar',
+                                        'icon' => 'ok white',
+                                        'htmlOptions' => array(
+                                            'name' => 'validar',
+                                            'class'=>'col-md-2 btn-darkgray'
+                                        ),
+                                    ));
+                                    ?>
                             </div>
+                            
+                            
+                                
+                            
+                                
+                        </div>
+                        
+                       <div class="col-md-4" style="display:block; height:120px"></div>
+                    </div>
+                    <div class="row-fluid clearfix">
+                    
+                        <h4 class="margin_top">2.- Subir archivo previamente validado:</h4>
+                        <hr class="dark no_margin_top"/>
+                        <div class="col-md-8 well no_radius">
+                             <div class="row-fluid">  
+                                 <div class="col-md-9">
+                                 
+                                <?php
+                                $this->widget('CMultiFileUpload', array(
+                                    'name' => 'archivoCarga',
+                                    'accept' => 'xls|xlsx', // useful for verifying files
+                                    'duplicate' => 'El archivo está duplicado.', // useful, i think
+                                    'denied' => 'Tipo de archivo inválido.', // useful, i think
+                                    'htmlOptions'=>array()
+                                ));
+                                ?>
+                                    </div>
+                                             
+                                    <?php
+                                    $this->widget('bootstrap.widgets.TbButton', array(
+                                        'buttonType' => 'submit',
+         
+          
+                                        'label' => 'Cargar Inbound',
+                                        'loadingText'=>'Cargando ...',
+                                        'htmlOptions' => array(
+                                            'name' => 'cargar',
+                                            'id'=>'buttonCargaMD',
+                                            'class'=>'col-md-3 btn-orange orange_border white'
+                                        ),
+                                    ));
+                                    ?>
+                                </div>
+                          </div>
                       </div>
-                      
                 </div>
           
                   <div role="tabpanel" class="tab-pane padding_top padding_bottom row-fluid clearfix" id="specifications" aria-labelledby="specifications-tab">
@@ -155,7 +159,7 @@ $('#buttonCargaMD').click(function(e) {
                             <a class="col-md-1 btn btn-darkgray" href="#">
                                 Buscar
                             </a>
-                        </div>
+                        </div> 
                     </div>
                  
                   </div>

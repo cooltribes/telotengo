@@ -25,7 +25,7 @@ class SiteController extends Controller
 			array('allow',  // allow all users to perform 'index' and 'view' actions
 				'actions'=>array('index','error','contact','login','logout','captcha','busqueda','inhome','tiendas','info','soporte','garantia','convenios','request','request2',
 								'corporativo','licencias','ofertas','home','store','detalle', 'inhome2', 'autoComplete', 'filtroBusqueda', 'carrito', 'category', 'formuPregunta',
-								'detalleOrden','mailtest'), 
+								'detalleOrden','mailtest','descargaPlantilla'), 
 
 				'users'=>array('*'),
 			),
@@ -482,5 +482,28 @@ class SiteController extends Controller
 		Yii::app()->end();
 		
 	} 
+    
+    public function actionDescargaPlantilla(){
+        
+      
+            
+            $file = Yii::getPathOfAlias("webroot")."/docs/xlsMasterData/Temporal.xlsx";
+
+            
+            if(!$file){ // file does not exist
+                die('file not found');
+            } else {
+                header("Cache-Control: public");
+                header("Content-Description: File Transfer");
+                header("Content-Disposition: attachment; filename=PlantillaTLT.xlsx");
+                header("Content-Type: application/zip");
+                header("Content-Transfer-Encoding: binary");
+            
+                // read the file from disk
+                readfile($file);
+            }
+            
+    
+    }
 
 } 
