@@ -23,20 +23,25 @@ class SiteController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','error','contact','login','logout','captcha','busqueda','inhome','tiendas','info','soporte','garantia','convenios','request','request2',
-								'corporativo','licencias','ofertas','home','store','detalle', 'inhome2', 'autoComplete', 'filtroBusqueda', 'carrito', 'category', 'formuPregunta',
+				'actions'=>array('index','error','contact','login','logout','captcha','busqueda','tiendas','info','soporte','garantia','convenios','request','request2',
+								'corporativo','licencias','ofertas','home','store','detalle', 'autoComplete', 'filtroBusqueda', 'category', 'formuPregunta',
 								'detalleOrden','mailtest','descargaPlantilla'), 
 
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('mensajes','buscarmensaje'), 
+				'actions'=>array('mensajes','buscarmensaje', 'inhome2', 'inhome'), 
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array('admin'),
 				//'users'=>array('admin'),
 				'expression' => 'UserModule::isAdmin()',
+			),
+			array('allow', // COMPRADORESVENDEDORES Y VENDEDORES
+				'actions'=>array('carrito'),
+				#'users'=>array('admin'),
+				'roles'=>array('comprador', 'compraVenta'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),

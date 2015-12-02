@@ -12,11 +12,11 @@ class TiendaController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','filtrar','storefront', 'buscarCategoria'), //TODO acomodar esto cuando se tengan los usuarios
+				'actions'=>array(), //TODO acomodar esto cuando se tengan los usuarios
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array(), 
+				'actions'=>array('index','filtrar','storefront', 'buscarCategoria'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
