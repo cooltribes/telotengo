@@ -19,7 +19,7 @@ echo"<tr>";
 	 
 		<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
 			<li><a tabindex="-1" href="'.Yii::app()->createUrl('/almacen/update',array('id'=>$data->id)).'" ><i class="glyphicon glyphicon-cog"></i> Editar </a></li>
-			<li><a tabindex="-1" href="'.Yii::app()->createUrl('/almacen/delete',array('id'=>$data->id)).'" ><i class="glyphicon glyphicon-trash"></i> Desactivar </a></li>
+			
 		</ul>
         </div></td>
         
@@ -29,4 +29,6 @@ echo"<tr>";
 	
 echo"</tr>";
 
+// esto se comento porque no queremos borrar los almacenes
+// <li><a tabindex="-1" href="'.Yii::app()->createUrl('/almacen/delete',array('id'=>$data->id)).'" ><i class="glyphicon glyphicon-trash"></i> Desactivar </a></li>
 ?>

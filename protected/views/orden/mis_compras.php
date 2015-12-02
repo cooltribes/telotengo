@@ -98,7 +98,7 @@ if(Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id)):
 					'list-auth-categorias',
 					{
 					type: 'POST',	
-					url: '" . CController::createUrl('orden/admin') . "',
+					url: '" . CController::createUrl('orden/misCompras') . "',
 					data: ajaxRequest}
 					)
 					},
@@ -123,7 +123,7 @@ if(Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id)):
 						'list-auth-categorias',
 						{
 						type: 'POST',	
-						url: '" . CController::createUrl('orden/admin') . "',
+						url: '" . CController::createUrl('orden/misCompras') . "',
 						data: ajaxRequest}
 						
 						)
@@ -150,7 +150,7 @@ if(Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id)):
 					'list-auth-ordenes',
 					{
 					type: 'POST',	
-					url: '" . CController::createUrl('orden/admin') . "',
+					url: '" . CController::createUrl('orden/misCompras') . "',
 					data: ajaxRequest}
 					)
 					},
@@ -175,7 +175,7 @@ if(Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id)):
 						'list-auth-ordenes',
 						{
 						type: 'POST',	
-						url: '" . CController::createUrl('orden/admin') . "',
+						url: '" . CController::createUrl('orden/misCompras') . "',
 						data: ajaxRequest}
 						
 						)

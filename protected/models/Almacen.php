@@ -40,7 +40,7 @@ class Almacen extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('ubicacion, empresas_id, alias, ciudad_id, provincia_id', 'required'),
+			array('ubicacion, alias, ciudad_id, provincia_id, nombre', 'required'),
 			array('empresas_id, ciudad_id, provincia_id', 'numerical', 'integerOnly'=>true),
 			array('ubicacion', 'length', 'max'=>245),
 			array('alias', 'length', 'max'=>100),
@@ -94,6 +94,24 @@ class Almacen extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('ubicacion',$this->ubicacion,true);
 		$criteria->compare('empresas_id',$this->empresas_id);
+		$criteria->compare('alias',$this->alias);
+		$criteria->compare('ciudad_id',$this->ciudad_id);
+		$criteria->compare('provincia_id',$this->provincia_id);
+
+		return new CActiveDataProvider($this, array(
+			'criteria'=>$criteria,
+		));
+	}
+	public function searchPropio($empresa_id)
+	{
+		// Warning: Please modify the following code to remove attributes that
+		// should not be searched.
+
+		$criteria=new CDbCriteria;
+
+		$criteria->compare('id',$this->id);
+		$criteria->compare('nombre',$this->nombre,true);
+		$criteria->compare('empresas_id',$empresa_id);
 		$criteria->compare('alias',$this->alias);
 		$criteria->compare('ciudad_id',$this->ciudad_id);
 		$criteria->compare('provincia_id',$this->provincia_id);

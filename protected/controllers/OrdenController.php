@@ -317,8 +317,8 @@ class OrdenController extends Controller
             $bandera=true;
             unset($_SESSION['searchPedido']);
             $_SESSION['searchPedido'] = $_POST['query'];
-            $model->id = $_POST['query'];
-            $dataProvider = $model->searchVentas($empresa->id);
+            echo $model->id = $_POST['query'];
+            $dataProvider = $model->searchVentasIndividual( $_POST['query'], $empresa->id);
         }   
 
         if($bandera==FALSE){

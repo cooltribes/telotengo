@@ -7,7 +7,7 @@
 	<td><?php echo $data->id; ?></td>
 	<td><?php echo date('d/m/Y',strtotime($data->fecha)); ?></td>
 	<td><?php echo Empresas::model()->findByPk($data->almacen->empresas_id)->razon_social;?></td> 
-		<td> 
+		<td>
 	<?php 
 		 if(OrdenEstado::model()->findByAttributes(array('estado'=>1, 'orden_id'=>$data->id))) // si aprobo
 		  {
