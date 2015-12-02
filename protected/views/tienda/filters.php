@@ -1,20 +1,4 @@
-<div class="breadcrumbs">
-                   <a href="#"><span>Inicio</span> </a> / 
-                   <a href="#"><span class="current">Sub Categoria</span></a>
-                   <?php
-                   
-                   $this->widget('zii.widgets.CBreadcrumbs', array(
-    'links'=>array(
-        'Sample post'=>array('post/view', 'id'=>12),
-        'Edit',
-    ),
-));
-                   
-                   ?>
-                   
-                   
-               </div>
-               <h1 class="margin_top">CATEGORIAS</h1>
+                <h1 class="margin_top">CATEGORIAS</h1>
                <input type="hidden" id="categoriasFilter" value="<?php echo $filter['categoria']?>">
                <ul>
              <?php      foreach($categorias as $categoria): ?>

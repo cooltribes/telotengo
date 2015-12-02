@@ -4,13 +4,12 @@
 
 
 $this->breadcrumbs=array(
-	'Unidad',
+	'Almacenes',
 );
 
 ?>
 
-<div class="container">
-		<div class="row-fluid">
+
     	<!-- COLUMNA PRINCIPAL DERECHA ON // OJO: esta de primera para mejorar el SEO sin embargo por CSS se ubica visualmente a la derecha -->
 		<h1 class="col-md-10">Administrar Almacenes</h1>
         <div class="col-md-2 margin_top_medium">
@@ -18,7 +17,7 @@ $this->breadcrumbs=array(
        //  echo CHtml::link('Nueva Unidad', $this->createUrl('create'), array('class'=>'btn form-control btn-success', 'role'=>'button'));
                 ?>
         </div>
-    </div>
+
 		<hr/>
 
 				<?php if(Yii::app()->user->hasFlash('success')){?>
@@ -97,6 +96,7 @@ $this->breadcrumbs=array(
 			<?php
 		$template = '{summary}
 	    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-bordered table-hover table-striped">
+	        <thead>
 	        <tr>
 	            <th scope="col">Nombre</th>
 	            <th scope="col">Ubicacion</th>
@@ -104,6 +104,7 @@ $this->breadcrumbs=array(
 	            <th scope="col">Empresa</th>
 	            <th scope="col">Acciones</th>
 	        </tr>
+	        </thead>
 	    {items}
 	    </table>
 	    {pager} 
@@ -127,4 +128,4 @@ $this->breadcrumbs=array(
 		));  
 		
 		?>
-</div>
+

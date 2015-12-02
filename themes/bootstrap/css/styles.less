@@ -1505,6 +1505,9 @@ a:hover, a:focus{
 }
 
 /*    HOME B2B */
+a{
+    color:#222;
+  }
 .mainHome{
   h1{
     font-size:22px;
@@ -1519,15 +1522,20 @@ a:hover, a:focus{
     }  
   
 }
-
-.categoriaHome{
+.categoriasHome{
+  .categoriaHome{
   li{
         font-weight: 800; 
         font-size: 12px;
         padding-left: 0px;
         padding-right: 5px;
     }
-} 
+  } 
+  a{
+    color:#222 !important;
+  }
+}
+
 .carouselHome{
   .carousel-inner{
     .item{
@@ -1628,16 +1636,24 @@ a:hover, a:focus{
 
     .breadcrumbs{
         font-size: 12px;
-         color:#BBB; 
-        a{
-          span{
-            color:#BBB;   
+        color:#BBB;
+        .no_padding_left; 
+          li{
+              display: inline;
+            a{ 
+              color:#222;          
+            
+            }
+            a.active{
+              color:#BBB; 
+            }
+            .divider{
+              padding-right: 5px;
+              padding-left: 2px;
+              
+              }
           }
-          .current{
-              color: #555;
-          }
-        }        
-    }
+        }      
   
     .leftPanel{
       h1{

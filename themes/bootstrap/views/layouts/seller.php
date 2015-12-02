@@ -56,8 +56,13 @@
       </nav>
       
     <div class="col-md-8 col-md-offset-2 no_horizontal_padding" id="pageContainer">
-        <div class="row-fluid margin_top">   
- 
-<?php echo $content; ?>
+        <div class="row-fluid margin_top_small">   
+         <?php if(isset($this->breadcrumbs)):?>
+          <?php $this->widget('bootstrap.widgets.TbBreadcrumbs', array(
+                    'links'=>$this->breadcrumbs,
+                )); ?>
+          <!-- breadcrumbs -->
+          <?php endif?> 
+        <?php echo $content; ?>
     </div>
 </div>

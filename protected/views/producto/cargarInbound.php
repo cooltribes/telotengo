@@ -1,7 +1,6 @@
 <?php
 $this->breadcrumbs = array(
-    'Productos' => array('admin'),
-    'Importar',
+    'Carga Inventario',
 );
 ?>
 <!-- FLASH ON --> 

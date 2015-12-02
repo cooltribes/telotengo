@@ -3,8 +3,8 @@
 	<div class="row-fluid">
 	<?php
 	$this->breadcrumbs=array(
-		'Productos'=>array('admin'),
-		'Selección',
+
+		'Carga Inventario',
 	);
 	?>
 

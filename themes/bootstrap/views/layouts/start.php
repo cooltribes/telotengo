@@ -24,7 +24,12 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
                                   <ul class="dropdown-menu arrow_box" aria-labelledby="dropdownMenu1" id="categories">
                                   	<?php foreach($model as $modelado)
                                   	{?>
-                                  		<li><a href='<?php echo Yii::app()->createUrl('categoria/index', array('url'=>$modelado->url_amigable))?>'><?php echo $modelado->nombre;?><span class="arrow"></span></a></li>
+                                  		<li>
+                                  		    <a href='<?php echo Yii::app()->createUrl('categoria/index', array('url'=>$modelado->url_amigable))?>'>
+                                  		        <?php echo $modelado->nombre;?>
+                                  		        <span class="arrow"></span>
+                              		        </a>
+                          		        </li>
                                   	<?php	
                                   	}?>
                                     
@@ -111,8 +116,8 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
                                     
                                     <?php
                                     if(Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id) || Yii::app()->authManager->checkAccess("vendedor", Yii::app()->user->id)): ?>
-                                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/seleccion";>Cargar Inventario</a></li>
-                                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/cargarInbound";>Cargar Inventario Masivo</a></li>
+                                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/cargarInbound";>Cargar Inventario</a></li>
+                                       <!--      <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/seleccion";>Cargar Inventario</a></li>-->
                                              <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/productoInventario";>Ver Inventario</a></li>
                                     <?php endif;?> 
                                   
@@ -155,7 +160,7 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
                                      <li class="padding_left_xsmall"><small><u><a href="<?php echo Yii::app()->createUrl('orden/misVentas');?>">VENTAS</u></small></li>   
                                    <?php endif; ?>
                                       <?php foreach($orders as $key=>$order): ?> 
-                                       <li><a href="<?php echo Yii::app()->createUrl('orden/detalleVendedor', array('id'=>$order->id))?>"><span><?php echo $order->id;?></span> <b><?php echo $order->almacen->empresas->razon_social; ?></b> (<?php echo count($order->ordenHasInventarios); ?>)</a></li>
+                                       <li><a href="<?php echo Yii::app()->createUrl('orden/detalleVendedor', array('id'=>$order->id))?>"><span><?php echo $order->id;?></span> <b><?php echo $order->empresa->razon_social; ?></b> (<?php echo count($order->ordenHasInventarios); ?>)</a></li>
                                       
                                       <?php  
                                         if($key==2)
@@ -275,8 +280,8 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
                                              
                                         </div>
                                         <div class="col-md-9 col-sm-9 col-xs-9 no_horizontal_padding title">
-                                             <div class="text user"><?php if(isset($empresas))echo $empresas->empresas->razon_social;?></div>
-                                             <span class="caret <?php echo Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id)?"user":"";?>"></span>
+                                             <div class="text user"><?php if(isset($empresas))echo $empresas->empresas->razon_social; else echo $usuario->empresa->razon_social?></div>
+                                             <span class="caret user"></span>
                                         </div>
                                         
                                     </div>                                
@@ -286,10 +291,10 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
 								<?php
                                     if(Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id)): ?>
                                     <li class="separator"></li>
-                                    
+                                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/productoInventario";>Ver Inventario</a></li>
                                 	 		 <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/seleccion";>Cargar Inventario</a></li>
-                                	 		 <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/cargarInbound";>Cargar Inventario Masivo</a></li>
-                                	  		 <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/productoInventario";>Ver Inventario</a></li>
+                                	 	<!--<li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/cargarInbound";>Cargar Inventario Masivo</a></li> -->
+                                	  		
                                 	<?php endif;?> 
                                 	
                                 	
@@ -312,9 +317,14 @@ if(isset(Yii::app()->session['banner'])){?>
 ?>
 
 <div class="col-md-8 col-md-offset-2 no_horizontal_padding" id="pageContainer">
-        <div class="row-fluid margin_top">   
- 
-<?php echo $content; ?>
+        <div class="row-fluid margin_top_small">   
+             <?php if(isset($this->breadcrumbs)):?>
+              <?php $this->widget('bootstrap.widgets.TbBreadcrumbs', array(
+                        'links'=>$this->breadcrumbs,
+                    )); ?>
+              <!-- breadcrumbs -->
+              <?php endif?> 
+            <?php echo $content; ?>
     </div>
 </div>
 <div class="col-md-12 margin_top_large margin_bottom_large"></div>

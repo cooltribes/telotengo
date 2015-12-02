@@ -1,3 +1,5 @@
+<?php $this->breadcrumbs=array('Mi Perfil'); ?> 
+
 <div class="col-md-3 profile-leftBar">
     <?php $this->renderPartial('left_bar',array('model'=>$model, 'identificador'=>$identificador)); ?> 
 </div>
