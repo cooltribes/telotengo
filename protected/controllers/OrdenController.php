@@ -26,19 +26,29 @@ class OrdenController extends Controller
 	{ 
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','detalle','mailtest'),
+				'actions'=>array('mailtest'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','view','cancelar','listado','detalleusuario','ventas','calificarVendedor','reclamo','responderReclamo'
+				'actions'=>array('cancelar','listado','detalleusuario','ventas','calificarVendedor','reclamo','responderReclamo'
 
-					,'devolucion','procesarDevolucion', 'procesarTodo', 'procesarSimple', 'detalleVendedor', 'cambiarEstado','misCompras','misVentas','misPedidos'), //TODO lista de control de accesos con los roles nuevos... procesarTodo, procesarSimple
+					,'devolucion','procesarDevolucion', 'procesarTodo', 'procesarSimple', 'cambiarEstado','misPedidos'), //TODO lista de control de accesos con los roles nuevos... procesarTodo, procesarSimple
 
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array('admin','delete','verproductos','aceptarpago','rechazarpago','enviar','devolucion','procesarDevolucion','modalorden'),
 				'users'=>array('admin'),
+			),
+			array('allow', // COMPRADORESVENDEDORES Y VENDEDORES
+				'actions'=>array('misVentas', 'detalleVendedor'),
+				#'users'=>array('admin'),
+				'roles'=>array('vendedor', 'compraVenta'),
+			),
+			array('allow', // COMPRADORESVENDEDORES Y COMPRADORES
+				'actions'=>array('misCompras', 'detalle'),
+				#'users'=>array('admin'),
+				'roles'=>array('comprador', 'compraVenta'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
@@ -279,17 +289,13 @@ class OrdenController extends Controller
         if($bandera==FALSE){
             unset($_SESSION['searchPedido']);
         }
-          if(Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id) || Yii::app()->authManager->checkAccess("comprador", Yii::app()->user->id))
-		  {
+          
 		  	        $this->render('mis_compras',array(
           			 'model'=>$model,
            			 'dataProvider'=>$dataProvider,
        		 ));	
-		  }
-		  else
-		  {
-		  	throw new CHttpException(403,'No esta autorizado a visualizar este contenido');	
-		  }	
+		  
+		 	
 
     }
     public function actionMisVentas()
@@ -311,16 +317,14 @@ class OrdenController extends Controller
             $bandera=true;
             unset($_SESSION['searchPedido']);
             $_SESSION['searchPedido'] = $_POST['query'];
-            $model->id = $_POST['query'];
-            $dataProvider = $model->searchVentas($empresa->id);
+            echo $model->id = $_POST['query'];
+            $dataProvider = $model->searchVentasIndividual( $_POST['query'], $empresa->id);
         }   
 
         if($bandera==FALSE){
             unset($_SESSION['searchPedido']);
         }
-		
-		 if(Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id) || Yii::app()->authManager->checkAccess("vendedor", Yii::app()->user->id))
-		  {
+				 
 	        $this->render('mis_ventas',array(
 	            'model'=>$model,
 	            'dataProvider'=>$dataProvider,
@@ -329,11 +333,7 @@ class OrdenController extends Controller
 	            'rechazado'=>$empresa->contadoresVentas['rechazado'],
 	            'aprobado'=>$empresa->contadoresVentas['aprobado'],
 	        	));
-		  }
-		 else 
-		 {
-			 throw new CHttpException(403,'No esta autorizado a visualizar este contenido');	
-		 }
+
 	}
 
     

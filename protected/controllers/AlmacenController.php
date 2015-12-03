@@ -27,10 +27,6 @@ class AlmacenController extends Controller
 	public function accessRules()
 	{
 		return array(
-			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
-				'users'=>array('*'),
-			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
 				'actions'=>array('create','update','listado','delete'), 
 				'users'=>array('@'),
@@ -38,6 +34,11 @@ class AlmacenController extends Controller
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array('admin'),
 				'users'=>array('admin'),
+			),
+			array('allow', // COMPRADORESVENDEDORES Y VENDEDORES
+				'actions'=>array('administrador', 'create'),
+				#'users'=>array('admin'),
+				'roles'=>array('vendedor', 'compraVenta'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
@@ -60,26 +61,24 @@ class AlmacenController extends Controller
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
 	 */
-	public function actionCreate($id_empresa)
+	public function actionCreate()
 	{
 		$model = new Almacen;
-		$empresa = Empresas::model()->findByPk($id_empresa);
-		$model->empresas_id = $empresa->id;
+		$empresa=Empresas::model()->findByPk((EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id))->empresas_id));
 
 		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+		 $this->performAjaxValidation($model);
 
 		if(isset($_POST['Almacen']))
 		{
 			$model->attributes=$_POST['Almacen'];
 			 $model->nombre=$_POST['Almacen']['nombre'];
+			  $model->empresas_id=$empresa->id;
 			if($model->save()){
 				Yii::app()->user->setFlash('success',"Almacen agregado con éxito");
-			}else{
-				Yii::app()->end();
-				Yii::app()->user->setFlash('error',"Error al guardar el Almacen");
+				$this->redirect(array('administrador'));
 			}
-			$this->redirect(array('listado','id_empresa'=>$empresa->id));
+			
 		}
 
 		$this->render('create',array(
@@ -125,14 +124,23 @@ class AlmacenController extends Controller
 				Yii::app()->user->setFlash('error',"Error al modificar el Almacen");
 			}
 			if(!Yii::app()->authManager->checkAccess("admin", Yii::app()->user->id))
-				$this->redirect(array('listado','id_empresa'=>$model->empresas_id));
+				$this->redirect(array('administrador'));
 			else
 				$this->redirect(array('admin'));
 		}
+		$empresa=Empresas::model()->findByPk((EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id))->empresas_id));
+		if($model->empresas_id==$empresa->id)
+		{
+			$this->render('update',array(
+				'model'=>$model,
+				));
+		}
+		else 
+		{
+			 throw new CHttpException(403,'No esta autorizado a visualizar este contenido');
+		}
 
-		$this->render('update',array(
-			'model'=>$model,
-		));
+
 	}
 
 	/**
@@ -227,5 +235,43 @@ class AlmacenController extends Controller
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
+	}
+	
+	public function actionAdministrador() /// gestionar almacenes de una misma empresa
+	{
+		$almacen = new Almacen; 
+		$almacen->unsetAttributes();
+		$bandera=false;
+		$empresa=Empresas::model()->findByPk((EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id))->empresas_id));
+		$dataProvider = $almacen->searchPropio($empresa->id);
+
+		/* Para mantener la paginacion en las busquedas */
+		if(isset($_GET['ajax']) && isset($_SESSION['searchAlmacen']) && !isset($_POST['query'])){
+			$_POST['query'] = $_SESSION['searchAlmacen'];
+			$bandera=true;
+		}
+
+		/* Para buscar desde el campo de texto */
+		if (isset($_POST['query'])){
+			$bandera=true;
+			unset($_SESSION['searchAlmacen']);
+			$_SESSION['searchAlmacen'] = $_POST['query'];
+            $almacen->nombre = $_POST['query'];
+            $dataProvider = $almacen->searchPropio($empresa->id);
+        }	
+
+        if($bandera==FALSE){
+			unset($_SESSION['searchAlmacen']);
+        }
+/*
+		if (isset($_POST['query'])){
+			$almacen->nombre = $_POST['query'];
+		}*/
+		
+		$this->render('administrador',
+			array('model'=>$almacen,
+			'dataProvider'=>$dataProvider,
+			'empresa'=>$empresa,
+		));
 	}
 }

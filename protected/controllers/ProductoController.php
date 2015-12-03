@@ -15,7 +15,7 @@ class ProductoController extends Controller
 	{
 		return array(
 			'accessControl', // perform access control for CRUD operations
-		);
+		); 
 	}
 
 	/**
