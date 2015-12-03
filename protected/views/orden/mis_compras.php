@@ -2,7 +2,7 @@
 /* @var $this FlashsaleController */
 /* @var $model Flashsale */
 $this->breadcrumbs=array(
-	'Administrar',
+	'Mis compras',
 ); 
 
 if(Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id)):
@@ -192,13 +192,14 @@ if(Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id)):
 	    <?php
 	$template = '{summary}
 	    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-hover table-striped margin_top">
-	      <thead>
+	    <col width="10%"> <col width="15%"> <col width="30%"> <col width="15%"> <col width="15%"> <col width="10%"> 
+        <thead>
             <tr>
 	            <th scope="col">N°</th>
 	            <th scope="col">Fecha de emisión</th>
 	            <th scope="col">Empresa Vendedora</th>
-	            <th scope="col">Usuario Vendedor</th>
-	            <th scope="col">Monto</th>
+	
+	            <th class="text-right padding_right_large" scope="col">Monto</th>
 	            <th scope="col">Estado</th>
 	            <th scope="col">Acciones</th>
 	        </tr>
