@@ -5,7 +5,7 @@
 		<div class="col-sm-12">			
 			<div class="no_padding" style="text-align: center">
 				<?php if(Yii::app()->user->hasFlash('success')){?>
-				    <div class="orangepanel white text_align_center no-radius">-->
+				    <div class="orangepanel white text_align_center no-radius">
 				        <?php echo Yii::app()->user->getFlash('success'); ?>
 				    </div>
 				<?php } ?>
