@@ -1,4 +1,5 @@
-        <div class="col-md-2 leftPanel">  
+        <?php $this->breadcrumbs=array('Tienda'); ?> 
+        <div class="col-md-2 leftPanel no_padding_left">  
            	<?php
            	if(isset( $filter['producto']))
            	{

@@ -5,14 +5,16 @@
 
 <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 	'id'=>'almacen-form',
-	// Please note: When you enable ajax validation, make sure the corresponding
-	// controller action is handling ajax validation correctly.
-	// There is a call to performAjaxValidation() commented in generated controller code.
-	// See class documentation of CActiveForm for details on this.
-	'enableAjaxValidation'=>false,
+	'enableAjaxValidation'=>true,
+	'enableClientValidation'=>false,
 	'type'=>'horizontal',
+	'clientOptions'=>array(
+		'validateOnSubmit'=>false,  
+	),
+	'htmlOptions' => array(
+        'enctype' => 'multipart/form-data',
+    ),
 )); ?>
-
 	<?php echo $form->errorSummary($model); ?>
 
 	<div class="form-group">
@@ -61,6 +63,7 @@
 	
 	<div class="form-actions">
 		<?php $this->widget('bootstrap.widgets.TbButton', array(
+			'id'=>'botone',
 			'buttonType'=>'submit',
 			'type'=>'primary',
 			'label'=>$model->isNewRecord ? 'Registrar' : 'Guardar',
@@ -88,7 +91,13 @@
 			});
 		}
 	});*/
-
+$(document).ready(function(){
+	
+	$('#botone').click(function(){
+		alert('asd');
+		
+	});
+	
 	$('#Almacen_provincia_id').change(function(){
 		if($(this).val() != ''){
 			var path = location.pathname.split('/');
@@ -101,6 +110,6 @@
 			      },
 			});
 		}
+		});
 	});
-	
 </script>

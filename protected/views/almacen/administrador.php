@@ -9,9 +9,9 @@ $this->breadcrumbs=array(
 
 ?>
 
-
+		
     	<!-- COLUMNA PRINCIPAL DERECHA ON // OJO: esta de primera para mejorar el SEO sin embargo por CSS se ubica visualmente a la derecha -->
-		<h1 class="col-md-10">Administrar Almacenes</h1>
+		<h1 class="col-md-10">Administrar Almacenes de la Empresa <?php echo $empresa->razon_social?></h1>
         <div class="col-md-2 margin_top_medium">
                 <?php
        //  echo CHtml::link('Nueva Unidad', $this->createUrl('create'), array('class'=>'btn form-control btn-success', 'role'=>'button'));
@@ -29,8 +29,10 @@ $this->breadcrumbs=array(
 		    <div class="alert in alert-block fade alert-danger text_align_center">
 		        <?php echo Yii::app()->user->getFlash('error'); ?>
 		    </div>
-		<?php } ?>
+		<?php } 
 
+		 echo CHtml::link('Crear almacen', Yii::app()->baseUrl."/almacen/create", array('class'=>'btn btn-warning margin_top', 'role'=>'button'));
+		   ?>
 		    <div class="row margin_top margin_bottom ">
 	         <form class="no_margin_bottom form-search row-fluid">
                  <div class="col-md-3 col-md-offset-8 no_padding_right">
@@ -56,7 +58,7 @@ $this->breadcrumbs=array(
 					'list-auth-marcas',
 					{
 					type: 'POST',	
-					url: '" . CController::createUrl('unidad/admin') . "',
+					url: '" . CController::createUrl('almacen/administrador') . "',
 					data: ajaxRequest}
 					)
 					},
@@ -81,7 +83,7 @@ $this->breadcrumbs=array(
 						'list-auth-marcas',
 						{
 						type: 'POST',	
-						url: '" . CController::createUrl('unidad/admin') . "',
+						url: '" . CController::createUrl('almacen/administrador') . "',
 						data: ajaxRequest}
 						
 						)

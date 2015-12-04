@@ -29,7 +29,7 @@
                 <ul class="dropdown-menu">
                    <li><a href="<?php echo Yii::app()->baseUrl; ?>/productoPadre/admin">Productos padre</a></li> 
                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/admin">Variaciones</a></li>
-                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/pregunta/admin">Preguntas</a></li>
+                         <!--   <li><a href="<?php echo Yii::app()->baseUrl; ?>/pregunta/admin">Preguntas</a></li> -->
                 </ul>
               </li>
               <li><a href="<?php echo Yii::app()->baseUrl; ?>/orden/admin">Ordenes</a></li>
@@ -58,8 +58,13 @@
       </nav>
       
     <div class="col-md-8 col-md-offset-2 no_horizontal_padding" id="pageContainer">
-        <div class="row-fluid margin_top">   
- 
-<?php echo $content; ?>
+        <div class="row-fluid margin_top_small">   
+         <?php if(isset($this->breadcrumbs)):?>
+          <?php $this->widget('bootstrap.widgets.TbBreadcrumbs', array(
+                    'links'=>$this->breadcrumbs,
+                )); ?>
+          <!-- breadcrumbs -->
+          <?php endif?> 
+        <?php echo $content; ?>
     </div>
 </div>

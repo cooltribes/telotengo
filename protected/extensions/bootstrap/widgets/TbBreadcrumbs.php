@@ -25,10 +25,11 @@ class TbBreadcrumbs extends CBreadcrumbs
 	 */
 	public function init()
 	{
-		if (isset($this->htmlOptions['class']))
+	    //Comentado para que no tome esa clase
+		/*if (isset($this->htmlOptions['class']))
 			$this->htmlOptions['class'] .= ' breadcrumb';
 		else
-			$this->htmlOptions['class'] = 'breadcrumb';
+			$this->htmlOptions['class'] = 'breadcrumb';*/
 	}
 
 	/**

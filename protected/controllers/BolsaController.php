@@ -28,13 +28,13 @@ class BolsaController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('agregarCarrito', 'actualizarInventario', 'carritoIndividual'), ///TODO quitar de aqui y colocarlo en usuarios logueados
+				'actions'=>array(), ///TODO quitar de aqui y colocarlo en usuarios logueados
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
 				'actions'=>array('create','update','agregar','eliminar','authenticate','confirm','cities','addAddress','placeOrder',
 								'sendValidationEmail','actualizar','agregarAjax','calcularEnvio',
-								'authGC','pagoGC','confirmarGC','crearGC','sendsummary','comprarGC','pedidoGC','registrarpagoGC','view', 'eliminarOrdenes'),///TODO quitar carritoIndividual
+								'authGC','pagoGC','confirmarGC','crearGC','sendsummary','comprarGC','pedidoGC','registrarpagoGC','view', 'eliminarOrdenes', 'agregarCarrito', 'carritoIndividual', 'actualizarInventario'),///TODO quitar carritoIndividual
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions

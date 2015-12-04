@@ -21,8 +21,14 @@
     	
  	
  </style>
-
-
+<?php
+    $this->breadcrumbs=array(
+        'Productos Padre'=>array('productoPadre/admin'),
+        'Crear'
+    );
+    ?>
+    <h1>Selección de categoría</h1>
+    <p class="mute">Selecciona secuencialmente las categorías y subcategorías en las que se clasificará el nuevo producto, al mostrarse el botón de "Seleccionar" haz click para continuar</p>
 
 	<div id="paneles">
 		
