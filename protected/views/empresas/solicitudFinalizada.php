@@ -5,18 +5,18 @@
 		<div class="col-sm-12">			
 			<div class="no_padding" style="text-align: center">
 				<?php if(Yii::app()->user->hasFlash('success')){?>
-				    <div class="alert in alert-block fade alert-success text_align_center">
+				    <div class="orangepanel white text_align_center no-radius">-->
 				        <?php echo Yii::app()->user->getFlash('success'); ?>
 				    </div>
 				<?php } ?>
 				<?php if(Yii::app()->user->hasFlash('error')){?>
-				    <div class="alert in alert-block fade alert-danger text_align_center">
+				    <div class="alert in alert-block fade text_align_center no-radius" style="color:#010">
 				        <?php echo Yii::app()->user->getFlash('error'); ?>
 				    </div>
 				<?php } ?>
 
-				<div>
-					<a href="http://telotengo.com/new"><button type="button" class="btn btn-success">Ir al inicio</button></a>
+				<div class="margin_top">
+					<a href="http://telotengo.com/new" class="white"><b><u>Ir al inicio</u></b></a>
 				</div>
 
 	        </div>    

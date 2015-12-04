@@ -19,16 +19,6 @@
 
 
 <img src="<?php echo Yii::app()->theme->getBaseUrl()."/images/layout/b2b/background.jpg"?>" style="width:100%; z-index:0; height:100%; position:fixed;"?>
-<style>
-    .loginError{
-        margin-top:-16px;
-    }
-    .loginError .help-block.error{
-        margin-top: 2px;
-        margin-bottom: 2px;
-        text-align: center !important;
-    }
-</style>
 
 
 <div class="row-fluid darkpanel" style="position: fixed">

@@ -147,5 +147,24 @@ class RegistrationController extends Controller
 		$lastVisit->lastvisit = time();
 		$lastVisit->save();
 	}
+     
+    public function actionEmailExists(){
+        $user=new User;
+        $user->email=$_POST['email'];
+        if($user->validate()){            
+            if(isset($_POST['email'])){
+                if(User::model()->findByAttributes(array('email'=>$_POST['email']))){
+                    echo json_encode(array('status'=>'exists','message'=>'Su correo ya ha sido registrado en este sitio'));
+                    
+                }else{
+                    echo json_encode(array('status'=>'ok'));                    
+                }                    
+            }
+        }else{
+            echo json_encode(array('status'=>'error','message'=>implode('<br/>',$user->errors['email'])));
+        }
+        
+    }
+    
 	
 }
