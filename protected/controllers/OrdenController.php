@@ -1267,6 +1267,7 @@ class OrdenController extends Controller
 		echo $estado;
 		
 	}
+
     
    
 }
