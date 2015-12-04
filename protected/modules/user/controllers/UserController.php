@@ -25,7 +25,7 @@ class UserController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','datos','respuesta', 'setPassword', 'borrar'),
+				'actions'=>array('index','view','datos','respuesta', 'setPassword', 'borrar','emailExists'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -827,5 +827,21 @@ class UserController extends Controller
 	{
 		$this->render('borrar');
 	}
+    
+    public function actionEmailExists(){
+        $user=new User;
+        if(!$user->validate()){
+            print_r($user->errors);
+        }
+        /*
+        if(isset($_POST['email'])){
+            if(User::model()->findByAttributes(array('email'=>$_POST['email']))){
+                echo json_decode(array('status'=>'ok'));
+                Yii::app()->end();
+            }
+                
+        }*/
+        echo json_decode(array('status'=>'error'));
+    }
 
 }
