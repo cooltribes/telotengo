@@ -16,7 +16,7 @@
 				<?php } ?>
 
 				<div class="margin_top">
-					<a href="http://telotengo.com/new" class="white"><b><u>Ir al inicio</u></b></a>
+					<a href="<?php echo Yii::app()->baseUrl;?>" class="white"><b><u>Ir al inicio</u></b></a>
 				</div>
 
 	        </div>    

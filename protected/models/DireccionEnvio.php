@@ -47,6 +47,7 @@ class DireccionEnvio extends CActiveRecord
 		return array(
 			array('nombre, telefono, direccion_1, ciudad_id, provincia_id', 'required'),
 			array('ciudad_id, provincia_id, users_id', 'numerical', 'integerOnly'=>true),
+			array('direccion_1', 'unique',  'attributeName' => 'direccion_1',  'message'=>'Nombre repetido'),
 			array('telefono, nombre', 'length', 'max'=>50),
 			array('direccion_1, direccion_2', 'length', 'max'=>255),
 			// The following rule is used by search().
@@ -77,8 +78,8 @@ class DireccionEnvio extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'telefono' => 'Telefono',
-			'direccion_1' => 'Direccion 1',
-			'direccion_2' => 'Direccion 2',
+			'direccion_1' => 'Direccion Principal',
+			'direccion_2' => 'Direccion Secundaria',
 			'ciudad_id' => 'Ciudad',
 			'provincia_id' => 'Estado',
 			'users_id' => 'Users',
