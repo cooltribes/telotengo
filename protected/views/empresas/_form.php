@@ -50,7 +50,7 @@
         <?php echo $form->error($model,'telefono'); ?>
     </div>
     <div class="form-group">
-			<?php echo $form->dropDownList($model,'provincia', CHtml::listData(Provincia::model()->findAll(),'id', 'nombre'), 
+			<?php echo $form->dropDownList($model,'provincia', CHtml::listData(Provincia::model()->findAll(array('order'=>'nombre asc')),'id', 'nombre'), 
         array(
         'class'=>'form-control',
         'empty'=>'Seleccione Estado',

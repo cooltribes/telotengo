@@ -31,7 +31,7 @@ class DireccionEnvioController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','listado','cargarciudades','delete'),
+				'actions'=>array('create','update','listado','cargarciudades','delete', 'cargarDirecciones', 'selectdos', 'buscarCiudadeRepetida'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -222,4 +222,55 @@ class DireccionEnvioController extends Controller
 			Yii::app()->end();
 		}
 	}
+	
+	public function actionCargarDirecciones()
+	{
+		$model= new DireccionEnvio;
+		$direcciones=DireccionEnvio::model()->findAllByAttributes(array('empresas_id'=>EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id))->empresas_id));
+		 $this->performAjaxValidation($model);
+		if(isset($_POST['DireccionEnvio']))
+		{
+			$model->attributes=$_POST['DireccionEnvio'];
+			$model->empresas_id=EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id))->empresas_id;
+			$model->save();
+			
+		}
+		$this->render('cargarDirecciones',array(
+				'model'=>$model,
+				'direcciones'=>$direcciones,
+			));
+		
+	}
+	
+	    public function actionSelectdos()
+        {
+            $id_uno = $_POST['DireccionEnvio']['provincia_id'];
+            $lista = Ciudad::model()->findAll('provincia_id = :id_uno',array(':id_uno'=>$id_uno));
+            $lista = CHtml::listData($lista,'id','nombre');
+             
+            echo CHtml::tag('option', array('value' => ''), 'Seleccione', true);
+             
+            foreach ($lista as $valor => $nombre)
+            {
+                echo CHtml::tag('option',array('value'=>$valor),CHtml::encode($nombre), true );
+                 
+            }
+             
+        }
+		
+		public function actionBuscarCiudadeRepetida()
+		{
+			$nombre=$_POST['nombre'];
+			
+			if(count(DireccionEnvio::model()->findByAttributes(array('nombre'=>$nombre)))>0)
+			{
+				echo "1";
+			}
+			else 
+			{
+				echo "0";
+			}
+			
+			
+		}
 }

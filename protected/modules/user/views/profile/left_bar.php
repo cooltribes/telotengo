@@ -91,11 +91,11 @@
                 <span class="col-md-1 no_horizontal_padding icon">
                     <span class="glyphicon glyphicon-plus"></span>
                 </span>
-                
+              <!--  
                 <span class="col-md-8 no_horizontal_padding value">
                     Agregar información
                 </span>
-                
+                -->
                 <span class="col-md-3 text-center no_horizontal_padding edit">
                 <?php if(Yii::app()->user->id==$identificador): // si es igual edite, del resto no?>
                 	<a>Editar</a>
@@ -125,9 +125,9 @@
                     <span class="glyphicon glyphicon-envelope"></span>
                 </span>
                 
-                <span class="col-md-8 no_horizontal_padding value">
+              <!--  <span class="col-md-8 no_horizontal_padding value">
                     Preferencias de Correo
-                </span>
+                </span>-->
                 
                 <span class="col-md-3 text-center no_horizontal_padding edit">
                  <?php if(Yii::app()->user->id==$identificador): // si es igual edite, del resto no?>
