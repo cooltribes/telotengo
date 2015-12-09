@@ -2002,6 +2002,8 @@ class ProductoController extends Controller
                         }
                         $fila++;                        
                     } // foreach
+                   
+                    Yii::app()->user->setFlash('success', "El archivo se subio exitosamente.");
 				 
               }
               

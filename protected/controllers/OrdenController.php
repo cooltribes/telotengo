@@ -1254,6 +1254,16 @@ class OrdenController extends Controller
 				
 				$ordenEstado->refresh();
 				
+				if($estado==1)
+				{
+					$productoOrden=OrdenHasInventario::model()->findAllByAttributes(array('orden_id'=>$model->id));
+					foreach($productoOrden as $cadaUno)
+					{
+						$inventario=Inventario::model()->findByPk($cadaUno->inventario_id);
+						$inventario->cantidad-=$cadaUno->cantidad;
+						$inventario->save();
+					}
+				}
 		/////TODO SACAR EL CORREO ELECTRONICO PARA LOS RESPECTIVOS USUARIOS
 		/* $message= new YiiMailMessage;
          //Opciones de Mandrill
