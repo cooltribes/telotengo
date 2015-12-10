@@ -76,7 +76,7 @@ class Almacen extends CActiveRecord
 			'empresas_id' => 'Empresas',
 			'alias' => 'Alias',
 			'ciudad_id' => 'Ciudad',
-			'provincia_id' => 'Provincia',
+			'provincia_id' => 'Estado',
 		);
 	}
 

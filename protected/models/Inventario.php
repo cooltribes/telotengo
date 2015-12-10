@@ -363,9 +363,9 @@ class Inventario extends CActiveRecord
     
     public function getFormatPrecio($currency = true){
         if($currency)
-            return Yii::app()->numberFormatter->format('¤ ###,###,#00',$this->precio, "Bs");
+            return Yii::app()->numberFormatter->format('¤ ###,###,##0',$this->precio, "Bs");
         else
-            return Yii::app()->numberFormatter->format('###,###,#00',$this->precio);
+            return Yii::app()->numberFormatter->format('###,###,##0',$this->precio);
     
     }
 

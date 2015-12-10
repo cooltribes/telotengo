@@ -156,7 +156,7 @@ $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
                         </tr>
                         <tr>
                             <td class="name">Precio:</td>
-                            <input type="hidden" id="precioUnitario" value="<?php echo  $inventario->formatPrecio;?>">
+                            <input type="hidden" id="precioUnitario" value="<?php echo  $inventario->precio;?>">
                             <input type="hidden" id="maximo" value="<?php echo  $inventario->cantidad;?>">
                             <input type="hidden" id="inventario_id" value="<?php echo  $inventario->id;?>">
                             <td class="highlighted" id="unitario"><?php echo $inventario->formatPrecio?></td>
@@ -254,10 +254,12 @@ $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
 	           	var maximo=$('#maximo').val();
 	           	maximo=parseInt(maximo);
 	           	var unitario=$('#precioUnitario').val();
+
+	           	
 	           	if(cantidad<=0)
 	           	{
 	           		$('#cantidad').val('1');
-	           		$('#unitario').html(unitario);
+	           		$('#unitario').html(formatPrice(unitario));
 	           		//alert('epaa');
 	           	}
 	           	else
@@ -266,12 +268,12 @@ $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
 	           		{
 	           			alert("El maximo de unidades es "+maximo);
 	           			$('#cantidad').val(maximo);
-	           			$('#unitario').html(maximo*unitario);
+	           			$('#unitario').html(formatPrice(maximo*unitario));
 	           			
 	           		}
 	           		else
 	           		{
-	           			$('#unitario').html(cantidad*unitario);
+	           			$('#unitario').html(formatPrice(cantidad*unitario));
 	           		}
 
 	           	}
@@ -411,4 +413,16 @@ $(document).ready(function () {
 $('#myCarousel').carousel({
    interval: 200000
 });});
+
+function formatPrice(x){
+
+    x = x.toString();
+    x=x.replace('.',',');
+    var pattern = /(-?\d+)(\d{3})/;
+    while (pattern.test(x))
+        x = x.replace(pattern, "$1.$2");
+    return "Bs "+x;
+    
+}
+
 </script>  
