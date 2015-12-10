@@ -679,10 +679,12 @@ class CategoriaController extends Controller
    
     public function actionSetSeoAll(){
         foreach(Categoria::model()->findAll() as $cat){
-            if(!$cat->seo)    
+            if(!$cat->seo){
                 $cat->setSeo();
+                $cat->refresh();
+            }   
             echo $cat->nombre.'<br/>';
-            print_r($cat->seo->attributes);
+            var_dump($cat->seo->getAttributes());
             echo "<br/><br/><br/>";
             
         }
