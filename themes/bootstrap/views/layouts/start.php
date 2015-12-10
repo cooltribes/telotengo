@@ -294,11 +294,11 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
                                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/productoInventario";>Ver Inventario</a></li>
                                 	 		 <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/seleccion";>Cargar Inventario</a></li>
                                 	 		 <li><a href="<?php echo Yii::app()->baseUrl; ?>/almacen/administrador";>Almacenes</a></li>
-                                	 	<!--<li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/cargarInbound";>Cargar Inventario Masivo</a></li> -->
-                                	  		
-                                	<?php endif;?> 
-                                	
-                                	
+                                	 	<!--<li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/cargarInbound";>Cargar Inventario Masivo</a></li> -->  		
+                                	<?php endif;
+                                	 if(Yii::app()->authManager->checkAccess("vendedor", Yii::app()->user->id)): ?>
+                                			<li><a href="<?php echo Yii::app()->baseUrl; ?>/almacen/administrador";>Almacenes</a></li>
+                                	<?php endif; ?>
 									<li><a href="<?php echo Yii::app()->baseUrl; ?>/site/logout";>Cerrar sesión</a></li>
                                   </ul>
                                 </div>
