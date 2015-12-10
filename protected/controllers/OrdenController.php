@@ -269,7 +269,8 @@ class OrdenController extends Controller
         $model = new Orden();
         $model->unsetAttributes();  // clear any default values
         $bandera=false;
-        $dataProvider = $model->searchCompra();
+		$empresa=Empresas::model()->findByPk((EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id))->empresas_id)); // id del que esta intentado entrar
+        $dataProvider = $model->searchCompra($empresa->id);
         
                 /* Para mantener la paginacion en las busquedas */
         if(isset($_GET['ajax']) && isset($_SESSION['searchPedido']) && !isset($_POST['query'])){
@@ -283,7 +284,7 @@ class OrdenController extends Controller
             unset($_SESSION['searchPedido']);
             $_SESSION['searchPedido'] = $_POST['query'];
             $model->id = $_POST['query'];
-            $dataProvider = $model->searchCompra();
+            $dataProvider = $model->searchCompraIndividual($_POST['query'],$empresa->id);
         }   
 
         if($bandera==FALSE){

@@ -75,13 +75,13 @@ if(Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id)):
 		 <hr/>    
 		    <div class="margin_top margin_bottom_small">Filtrar</div>
 	   <form class="margin_bottom form-search no_horizontal_padding row-fluid clearfix">
-                         <div class="col-md-3 no_horizontal_padding">
-                             <input class="form-control no_radius" id="query" name="query" type="text" placeholder="Número de Orden">                   
+                         <div class="col-md-4 no_horizontal_padding">
+                             <input class="form-control no_radius" id="query" name="query" type="text" placeholder="Número de Orden o Empresa Vendedora">                   
                          </div>
                          <div class="col-md-1 no_padding_left">
                              <a href="#" class="btn form-control btn-darkgray white" id="btn_search_event">Buscar</a>
                          </div>
-                         <div class="col-md-offset-8"></div>
+                         <div class="col-md-offset-7"></div>
                                 
         </form>
 	   </div>
