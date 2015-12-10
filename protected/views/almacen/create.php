@@ -6,7 +6,7 @@
 
 $this->breadcrumbs=array(
 	'Empresas' => array('empresas/vendedoras'),
-	'Sucursales'=>array('almacen/administrador/id_empresa/'.$empresa->id),
+	'Almacenes'=>array('almacen/administrador/id_empresa/'.$empresa->id),
 	'Crear',
 );
 ?>
