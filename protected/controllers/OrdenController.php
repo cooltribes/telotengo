@@ -37,7 +37,7 @@ class OrdenController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete','verproductos','aceptarpago','rechazarpago','enviar','devolucion','procesarDevolucion','modalorden'),
+				'actions'=>array('admin','delete','verproductos','aceptarpago','rechazarpago','enviar','devolucion','procesarDevolucion','modalorden', 'detalle', 'detalleVendedor'),
 				'users'=>array('admin'),
 			),
 			array('allow', // COMPRADORESVENDEDORES Y VENDEDORES
