@@ -31,7 +31,7 @@ class CategoriaController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete','create','update','upload','listimages', 'menu', 'categoriaRelacionada', 'catRela', 'crearAvanzar', 'categoriaAtributo', 'catAtrib','categoriaSeo', 'activarDesactivar','storefrontConf','formConfImage'),
+				'actions'=>array('admin','delete','create','update','upload','listimages', 'menu', 'categoriaRelacionada', 'catRela', 'crearAvanzar', 'categoriaAtributo', 'catAtrib','categoriaSeo', 'activarDesactivar','storefrontConf','formConfImage','setSeoAll'),
 				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -160,6 +160,7 @@ class CategoriaController extends Controller
 			$categoria->attributes = $_POST['Categoria'];
 			$categoria->nomenclatura = $_POST['Categoria']['nomenclatura'];
             $categoria->setSeo();
+            
 
 
 			if($_POST['Categoria']['id_padre'] != "") // significa que depende
@@ -208,6 +209,8 @@ class CategoriaController extends Controller
 					
 				}
 				else {
+				    $seo=Seo::model()->findByPk($categoria->id_seo);
+                    if($seo) $seo->delete();
 		        	$categoria->delete();
 				}
 		        
@@ -366,12 +369,13 @@ class CategoriaController extends Controller
 	}
     
     public function actionIndex($url)
-    {
-        $categoria=Categoria::model()->findByAttributes(array('url_amigable'=>$url));
-        //$this->layout='//layouts/start';
-
-        if($categoria)
-            $this->render('category',array('model'=>$categoria,'imagenes'=>$categoria->getStorefrontImgs(2,7),'mainImg'=>$categoria->getStorefrontImgs(1,1))); 
+    {   
+        $seo=Seo::model()->findByAttributes(array('amigable'=>$url));
+        if($seo){  
+            $categoria=Categoria::model()->findByAttributes(array('id_seo'=>$seo->id)); 
+            if($categoria)
+                $this->render('category',array('model'=>$categoria,'imagenes'=>$categoria->getStorefrontImgs(2,7),'mainImg'=>$categoria->getStorefrontImgs(1,1))); 
+        }
         else
             throw new CHttpException(404,'Categoría no encontrada');
             
@@ -673,5 +677,17 @@ class CategoriaController extends Controller
         }
     
    
-    
+    public function actionSetSeoAll(){
+        foreach(Categoria::model()->findAll() as $cat){
+            if(!$cat->seo){
+                $cat->setSeo();
+                $cat->refresh();
+            }   
+            echo $cat->nombre.'<br/>';
+            var_dump($cat->seo->getAttributes());
+            echo "<br/><br/><br/>";
+            
+        }
+        
+    }
 }

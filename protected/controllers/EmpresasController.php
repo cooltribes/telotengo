@@ -682,7 +682,8 @@ class EmpresasController extends Controller
 	    public function actionSelectdos()
         {
             $id_uno = $_POST['Empresas']['provincia'];
-            $lista = Ciudad::model()->findAll('provincia_id = :id_uno',array(':id_uno'=>$id_uno));
+            #$lista = Ciudad::model()->findAll('provincia_id = :id_uno',array(':id_uno'=>$id_uno), array('order'=>'nombre asc'));
+            $lista = Ciudad::model()->findAll('provincia_id = "'.$id_uno.'" order by nombre asc');
             $lista = CHtml::listData($lista,'id','nombre');
 		
              

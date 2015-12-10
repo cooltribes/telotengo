@@ -31,7 +31,7 @@ class ProductoPadreController extends Controller
 	{
 		return array(
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete', 'busqueda', 'cambiarStatus', 'autocomplete', 'activarDesactivar'),
+				'actions'=>array('admin','delete', 'busqueda', 'cambiarStatus', 'autocomplete', 'activarDesactivar', 'create', 'update'),
 				'users'=>array('admin'),
 			),
 			array('allow', // COMPRADORESVENDEDORES Y VENDEDORES

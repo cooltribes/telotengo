@@ -1,5 +1,3 @@
-
-         
            <div class="col-md-9 mainHome">
                <div class="row-fluid">
                    <div class="col-md-12"><h1>CATEGORIAS DESTACADAS</h1></div>
@@ -14,20 +12,19 @@
                        		<article class="col-md-4" style="max-height:150px; min-height:150px; overflow-y:hidden">
                                <div class="row-fluid">
                                    <div class="col-md-12 no_horizontal_padding">
-                                       
-                                       <h3><a href='<?php echo Yii::app()->createUrl('categoria/index', array('url'=>$modelado->url_amigable))?>'><?php echo $modelado->nombre?></a></h3>
+                                             <h3><a href='<?php echo Yii::app()->createUrl('categoria/index', array('url'=>$modelado->seo->amigable))?>'><?php echo $modelado->nombre?></a></h3>
                                    </div>
                                    <div class="col-md-7 no_horizontal_padding">
                                        <ul class="categoriaHome">
                                        	<?php foreach ($interno as $inter)
 										{?>
-											<li><a href='<?php echo Yii::app()->createUrl('tienda/index', array('url'=>$modelado->url_amigable))?>'><?php echo $inter->nombre?></a></li>
+											<li><a href='<?php echo Yii::app()->createUrl('tienda/index', array('url'=>$modelado->seo->amigable))?>'><?php echo $inter->nombre?></a></li>
 										<?php	
 										} ?>
                                        </ul>
                                    </div>
                                    <div class="col-md-5 no_horizontal_padding">
-                                   	<a href="<?php echo Yii::app()->createUrl('site/category', array('categoria'=>$modelado->id))?>">
+                                        <a href='<?php echo Yii::app()->createUrl('categoria/index', array('url'=>$modelado->seo->amigable))?>'><?php echo $modelado->nombre?>
                                    		
                                    	
                                        <?php 	
