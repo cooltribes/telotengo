@@ -1,5 +1,4 @@
-<div class="container">
-	<div class="row-fluid">
+
 		<!-- COLUMNA PRINCIPAL DERECHA ON // OJO: esta de primera para mejorar el SEO sin embargo por CSS se ubica visualmente a la derecha -->
 		<div>
 			<h1>Información Vital<small> - Nuevo producto</small></h1>
@@ -8,7 +7,7 @@
 			<?php echo $this->renderPartial('_menu', array('model'=>$model, 'activo'=>'informacion_general')); ?>
 			<!-- SUBMENU OFF -->
 
-			<div class="well">
+	
 				<div class="row-fluid">
 					<div>
 						<?php 
@@ -27,8 +26,8 @@
 								<?php echo $form->textField($model,'nombre',array('id'=>'nombre','class'=>'form-control','maxlength'=>150)); ?>
 								<?php echo $form->error($model,'nombre'); ?>
 								
-									<span class="help-block muted text_align_left padding_right">
-		                    			<span class="help-block error" id="esconder" style="display: block;">Nombre Ya existe
+									<span class="help-block text_align_left padding_right">
+		                    			<span class="help-block error" id="esconder" style="display: none;">Nombre Ya existe
 		                    			</span>
                     				</span>	
 							</div>
@@ -73,8 +72,8 @@
 								    ),
 									));
 									?>
-									<span class="help-block muted text_align_left padding_right" >
-		                    			<span class="help-block error" id="errorUrl" style="display: block;">Nombre del Producto padre no existe
+									<span class="help-block text_align_left padding_right" >
+		                    			<span class="help-block error" id="errorUrl" style="display: none;">Nombre del Producto padre no existe
 		                    			</span>
                     				</span>	
 							<?php
@@ -206,7 +205,7 @@
 
 
 				</div>
-			</div>
+	
 			<?php
 			/*$template = '{summary}
 				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-bordered table-hover table-striped">
@@ -242,8 +241,6 @@
 
 		<!-- COLUMNA PRINCIPAL DERECHA OFF // -->
 
-	</div>
-</div>
 	<script>
 	
 $(document).ready(function() {
@@ -276,12 +273,12 @@ $(document).ready(function() {
 	
 		$('#nombre').blur(function(){ 
 		var nombre= $('#nombre').val();
-		var id= <?php echo $model->id;?>;
+		var id= <?php echo isset($model->id)?$model->id:"0";?>;
 		$.ajax({
 		         url: "<?php echo Yii::app()->createUrl('producto/verificarNombre') ?>",
 	             type: 'POST',
 		         data:{
-	                    nombre:nombre, id:id,
+	                    nombre:nombre,id:id
 	                   },
 		        success: function (data) {
 					

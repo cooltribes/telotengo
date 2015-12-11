@@ -198,7 +198,7 @@ if(Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id)):
 	            <th scope="col">N°</th>
 	            <th scope="col">Fecha de emisión</th>
 	            <th scope="col">Empresa Vendedora</th>
-	
+	            <th scope="col">Vendido por</th>	
 	            <th class="text-right padding_right_large" scope="col">Monto</th>
 	            <th scope="col">Estado</th>
 	            <th scope="col">Acciones</th>
