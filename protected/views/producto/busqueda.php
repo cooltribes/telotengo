@@ -1,6 +1,4 @@
-<!-- CONTENIDO ON -->
-<div class="container">
-	<div class="row-fluid">        	
+        	
 	<?php
 	$this->breadcrumbs=array(
 		'Productos'=>array('admin'),
@@ -9,7 +7,7 @@
 	);
 	?>
 	<!-- COLUMNA PRINCIPAL DERECHA ON // OJO: esta de primera para mejorar el SEO sin embargo por CSS se ubica visualmente a la derecha -->
-	<div>
+
 		<?php //echo CHtml::button('Regresar',array('submit' => array('producto/seleccion'), 'class'=>'btn btn-danger')); ?>
     	
     	<div class="page-header">
@@ -19,12 +17,19 @@
 		<?php 
 			$template = '{summary}
 	    		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-bordered table-hover table-striped">
+			      
+			        <col width="10%">
+			         <col width="10%">
+			          <col width="65%">
+			           <col width="15%">
+			           <thead>
 			        <tr>
 			            <th scope="col">Codigo TLT</th>
 			            <th scope="col">Imágen</th>
 			            <th scope="col">Referencia</th>
 			            <th scope="col">Acciones</th>
 			        </tr>
+			        </thead>
 	    		{items}
 	    		</table>
 			    {pager} 
@@ -48,7 +53,3 @@
 		));  
 
 		?>
-			</div><!-- COLUMNA PRINCIPAL DERECHA OFF // -->
-
-		</div><!-- CONTENIDO OFF -->
-	</div>

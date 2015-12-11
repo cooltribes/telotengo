@@ -32,11 +32,11 @@ class ProductoController extends Controller
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
 				'actions'=>array('seleccion','busqueda','create','hijos','imagenes','seo','create','agregarCaracteristica','eliminarCaracteristica','agregarInventario',
-								 'agregarInventarioAjax','eliminarInventario','multi','orden', 'clasificar', 'niveles', 'nivelPartial', 'crearProducto', 'autoComplete'),
+								 'agregarInventarioAjax','eliminarInventario','multi','orden', 'clasificar', 'niveles', 'nivelPartial', 'crearProducto', 'autoComplete','verificarPadre', 'verificarNombre'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete','update','eliminar','orden','aprobar','rechazar','poraprobar','calificaciones','eliminarCalificacion','importar','inventario', 'verificarPadre', 'verificarNombre', 'details', 'caracteristicas','activarDesactivar', 'activarDesactivarDestacado', 'verDisponibilidad'),
+				'actions'=>array('admin','delete','update','eliminar','orden','aprobar','rechazar','poraprobar','calificaciones','eliminarCalificacion','importar','inventario', 'details', 'caracteristicas','activarDesactivar', 'activarDesactivarDestacado', 'verDisponibilidad'),
 				#'users'=>array('admin'),
 				'roles'=>array('admin'),
 			),

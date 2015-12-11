@@ -3,8 +3,7 @@
 /* @var $this ProductoPadreController */
 /* @var $model ProductoPadre */
 $this->breadcrumbs=array(
-	'Producto Padre'=>array('index'),
-	$model->id=>array('view','id'=>$model->id),
+	'Producto Padre'=>array('admin'),
 	'Actualizar',
 );
 
