@@ -4,6 +4,8 @@ $this->breadcrumbs=array(
 	'Agregar',
 );
 
-?>
 
-<?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
+
+ echo $this->renderPartial('_form', array('model'=>$model));
+
+?>

@@ -6,12 +6,12 @@
     							
     if($principal)
 	{
-		$im = CHtml::image(str_replace(".","_x180.",$principal->getUrl()), "Imagen ", array());
+		$im = CHtml::image(str_replace(".","_x180.",$principal->getUrl()), "Imagen ", array("height"=>"65px"));
 	} 
     	
    	else
 	{
-		$im= '<img src="http://placehold.it/65x65" width="100%">';
+		$im= '<img src="http://placehold.it/65x65" height="65px">';
 	} 
     	
     echo " <td>".$data->tlt_codigo."</td>"; 							  
@@ -24,7 +24,7 @@
 			</p>
 		</td>";								
 								
-    echo ' <td><a href="'.Yii::app()->baseUrl.'/producto/inventario/'.$data->id.'" class="margin_top btn btn-success btn-sm">Agregar Inventario</a></td>';
+    echo ' <td class="text_align_center"><a href="'.Yii::app()->baseUrl.'/producto/inventario/'.$data->id.'" class="margin_top btn btn-darkgray gray"><span class="glyphicon glyphicon-plus"></span> Agregar Inventario</a></td>';
 
 
 ?>   
