@@ -91,6 +91,8 @@ const SECTOR_EDUCACION = 16;
 	
 	public $tipoEmpresa, $provincia, $ciudad;
 	
+	public $otraOpcion;
+	
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
@@ -283,7 +285,8 @@ const SECTOR_EDUCACION = 16;
 				'Dueño o Socio' => 'Dueño o Socio',
 				'Junta Directiva' => 'Junta Directiva',
 				'Gerente' => 'Gerente',
-				'Empleado' => 'Empleado', 
+				'Empleado' => 'Empleado',
+				'Otro'=>'Otro', 
 			),
 			'NumEmpleados' => array(
 				'1 a 20' => '1 a 20',

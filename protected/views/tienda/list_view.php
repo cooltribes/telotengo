@@ -1,6 +1,7 @@
 <?php
 $way=0; // 2 consultas
 $quitar=0; // para quitar del inventario su mismo producto si es el mas barato
+$sumatoria=0;
 if($model2!="") //TODO ver esto
 {
 	$model=$model2;
@@ -33,7 +34,11 @@ if(!Yii::app()->user->isAdmin())
 		}
 
 		if($quitar==0 ||($quitar==1 && $modelado['id']!=""))
+		{
+			$sumatoria++;	
 			$this->renderPartial('_detail2', array('modelado'=>$modelado, 'way'=>$way, 'producto'=>$producto, 'contador'=>$contador, 'quitar'=>$quitar));
+		}
+			
 	}
 	else 
 	{
@@ -58,6 +63,7 @@ if(!Yii::app()->user->isAdmin())
 		
 		if(($quitar==0 && count($inventario)>0) || ($quitar==1 && $inventario['id']!=""))
 		{
+			$sumatoria++;	
 			$this->renderPartial('_detail2', array('modelado'=>$modelado, 'way'=>$way, 'inventario'=>$inventario, 'contador'=>$contador, 'quitar'=>$quitar));
 		}
 			
@@ -70,7 +76,9 @@ if(!Yii::app()->user->isAdmin())
     
     
 <?php 
-} ?>
+}
+Yii::app()->session['total']=$sumatoria;
+ ?>
 <!--
 <div class="pager text-center margin_top">
     <a href="#"><span class="active">1</span></a>
