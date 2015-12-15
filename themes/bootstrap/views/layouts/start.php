@@ -287,18 +287,22 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
                                     </div>                                
                                   </a>
                                   <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                    <li><a href="<?php echo Yii::app()->baseUrl.'/user/profile/index';?>">Mi perfil</a></li>
+                                    
 								<?php
                                     if(Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id)): ?>
-                                    <li class="separator"></li>
+                                    
                                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/productoInventario";>Ver Inventario</a></li>
                                 	 		 <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/seleccion";>Cargar Inventario</a></li>
                                 	 		 <li><a href="<?php echo Yii::app()->baseUrl; ?>/almacen/administrador";>Almacenes</a></li>
+                                	 		 <li class="separator"></li>
                                 	 	<!--<li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/cargarInbound";>Cargar Inventario Masivo</a></li> -->  		
                                 	<?php endif;
                                 	 if(Yii::app()->authManager->checkAccess("vendedor", Yii::app()->user->id)): ?>
                                 			<li><a href="<?php echo Yii::app()->baseUrl; ?>/almacen/administrador";>Almacenes</a></li>
+                                			<li class="separator"></li>
                                 	<?php endif; ?>
+                                	<li><a href="<?php echo Yii::app()->baseUrl.'/tienda/index';?>">Tienda</a></li>
+                                	<li><a href="<?php echo Yii::app()->baseUrl.'/user/profile/index';?>">Mi perfil</a></li>
 									<li><a href="<?php echo Yii::app()->baseUrl; ?>/site/logout";>Cerrar sesión</a></li>
                                   </ul>
                                 </div>
