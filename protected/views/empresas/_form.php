@@ -14,10 +14,23 @@
     <?php echo $form->errorSummary($model); ?>
     <div class="form-group">
     
-            <?php echo $form->dropDownList($model,'cargo',Empresas::itemAlias('Cargo'),array('class'=>'form-control','empty'=>'Tu cargo o posición')); ?>
+            <?php echo $form->dropDownList($model,'cargo',Empresas::itemAlias('Cargo'),array('class'=>'form-control cargos','empty'=>'Tu cargo o posición')); ?>
             <?php echo $form->error($model,'cargo'); ?>
 
     </div>
+    
+    <div class="form-group">
+    
+
+             <?php echo $form->textField($model,'otraOpcion', array('id'=>'otraOpcion','class'=>'form-control', 'placeholder'=>'Otro cargo o posición', 'maxlength'=>205, 'style'=>'display:none')); ?>
+            <?php echo $form->error($model,'otraOpcion'); ?>
+            <span class="help-block text_align_left padding_right">
+		              <span class="help-block error" id="esconder" style="display: none;">No puede ser nulo
+		              </span>
+             </span>	
+
+    </div>
+    
     <div class="form-group">
     
 
@@ -34,7 +47,7 @@
     
     <div class="form-group row-fluid">
  
-            <?php echo $form->textField($model,'rif', array('id'=>'rif','class'=>'form-control', 'placeholder'=>'RIF (Letra seguida del número sin espacios ni guiones)', 'maxlength'=>45)); ?>
+            <?php echo $form->textField($model,'rif', array('class'=>'form-control rifs', 'placeholder'=>'RIF (Letra seguida del número sin espacios ni guiones)', 'maxlength'=>45)); ?>
 
             <?php echo $form->error($model,'rif'); ?>            
 
@@ -143,7 +156,7 @@
             'buttonType'=>'submit',
             'type'=>'primary',
             'label'=>"Enviar datos",
-            'htmlOptions'=>array('class'=>'btn-black btn btn-danger btn-large'),
+            'htmlOptions'=>array('class'=>'btn-black btn btn-danger btn-large botone'),
         )); ?>
     </div>
 
@@ -155,12 +168,15 @@
 <script>
 
 $(document).ready(function() {
+	//$("#otraOpcion").hide();	
 	var completo="";
 	var soloLetra='';
 	var zipCompleto="";
 	var telefonoCompleto="";
-	$('#rif').on('input', function(event) {
-		var palabra=$(this).val();
+	$('.rifs').on('input', function(event) {
+		var id=$(this).attr('id');
+		//var palabra=$(this).val();
+		var palabra=$("#"+id).val();
 		var letras = " jevgJEVG"; //JVEG rifs posibles
 		var numeros = " 1234567890"; //JVEG rifs posibles
 		var primeraLetra=palabra.charAt(0);
@@ -168,7 +184,7 @@ $(document).ready(function() {
 		{
 			alert('Iniciales de Rifs son J, V, E, G');
 			soloLetra=primeraLetra;
-			$(this).val('');
+			$("#"+id).val('');
 		}
 		//$(this).val().charAt(0).toUpperCase();
 		 if(palabra.substring(1))
@@ -179,10 +195,10 @@ $(document).ready(function() {
 			if(numeros.indexOf(separar)==-1)
 			{
 				alert('Solo se permiten numeros');
-				$(this).val(completo);
+				$("#"+id).val(completo);
 			}	
 		 }
-	completo=$(this).val();
+	completo=$("#"+id).val();
 	});
 	
 	
@@ -217,5 +233,30 @@ $(document).ready(function() {
 		}
 	});
 	
+	
+	$('.cargos').on('change', function(event) {
+		var ca=$(this).attr('id');
+		if($("#"+ca).val()=="Otro")
+		{
+			$("#otraOpcion").show();
+		}	
+		else
+		{
+			$("#otraOpcion").hide();
+			$('#esconder').hide();
+			
+		}
+				
+		
+		
+	});
+	
+	$('.botone').on('click', function(event) {
+		if($("#Empresas_cargo").val()=="Otro" && $("#otraOpcion").val()=="")
+		{
+			$('#esconder').show();
+			return false;
+		}
+	});
 });	
 </script>

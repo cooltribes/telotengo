@@ -17,7 +17,7 @@
                        <div class="row-fluid">
                            <div class="col-md-4 no_horizontal_padding">
                                <div class="margin_top_small">
-                                   <span class="muted">Mostrando 1 - 16 de 256 resultados</span>
+                                   <span class="muted" id="mostrando"></span>
                                </div>
                            </div>
                            <div class="col-md-4 col-md-offset-4 no_horizontal_padding">
@@ -62,6 +62,9 @@
                </div> 
            </div>
 <script>
+$(document).ready(function() {
+	$("#mostrando").html("Mostrando <?php echo Yii::app()->session['total'];?> resultado(s)");
+});		
     function removeLast(string,letter){
          if(string.substring(string.length - 1, string.length)==letter){
             string=string.substring(0, string.length - 1);
