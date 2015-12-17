@@ -1207,8 +1207,12 @@ h1,h2,h3,h4,h5{
     text-align: left;
     color: #FFF;
     font-size: 10px;
-  }
-}
+  }  
+} 
+input.login-b2b{
+      padding-right: 5px;
+      text-align: right;
+    }
 
 .navbar{
   border: 0px;
@@ -2310,15 +2314,69 @@ h1{
   #headerContainer, #pageContainer{
     width: 100%;
     margin-left: 0;
-  }
-  
+  } 
+    
 }
  @media  (max-width: 768px){
   #searchSet, #categorySearch, #headLinks{
     display:none;
   }
+  .encabezado{
+    padding-top:20px;
+    .stripe{
+      height: auto;
+      width: 100%;
+      margin-left: 0px;
+      font-size: 18px;
+      line-height: 25px;    
+    }
+    h1{
+      font-size:25px;
+    }
+    h2{
+      font-size:20px;
+    }
+    h4{
+      text-align: center;
+    }
+  } 
+  #b2b-header{
+    .col-logo{
+      width:100%;
+      text-align: center;
+    }
+    .loginError{
+      height: auto;
+    }
+  }
+  #submit-btn.btn-block,#btn-login-b2b.btn-block{
+    width: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+    display: inline;
+  }
+   #submit-btn.btn-block{
+     margin-top: .5em;
+   }
+}
+@media  (max-width: 991px) and (min-width: 768px){
+  .loginError.margin_top_xsmall{
+    margin-top: 0px !important;
+  }
   
 }
+
+@media  (max-width: 1191px) and (min-width: 768px){
+  #b2b-header{
+    .col-login{
+      width:70%;
+    }
+    .col-logo{
+      width: 30%;
+    }
+  }
+}
+
  @media  (max-width: 391px){
    #userMenu .title, #userMenu .name{
      display: none;
@@ -2327,6 +2385,13 @@ h1{
    .orderContainer .detail table td{
      img{
        display:none;
+     }
+   }
+   .login-inputs{
+     .col-xs-6{
+       width:100%;
+       margin-top: .3em;
+       padding-left:0px;
      }
    }
  }

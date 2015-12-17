@@ -24,7 +24,7 @@
                                        </ul>
                                    </div>
                                    <div class="col-md-5 no_horizontal_padding">
-                                        <a href='<?php echo Yii::app()->createUrl('categoria/index', array('url'=>$modelado->seo->amigable))?>'><?php echo $modelado->nombre?>
+                                        <a href='<?php echo Yii::app()->createUrl('categoria/index', array('url'=>$modelado->seo->amigable))?>'>
                                    		
                                    	
                                        <?php 	

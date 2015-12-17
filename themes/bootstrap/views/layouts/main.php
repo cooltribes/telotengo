@@ -13,9 +13,9 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
 <?php Yii::app()->bootstrap->register(); ?>
 <?php  Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/styles.css',null); 
 
-        $assetUrl=Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('application.modules.user.views.asset'));
-        Yii::app()->getClientScript()->registerCssFile($assetUrl.'/css/redmond/jquery-ui.css');
-        Yii::app()->getClientScript()->registerScriptFile($assetUrl.'/js/jquery-ui.min.js');
+        #$assetUrl=Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('application.modules.user.views.asset'));
+        #Yii::app()->getClientScript()->registerCssFile($assetUrl.'/css/redmond/jquery-ui.css');
+        #Yii::app()->getClientScript()->registerScriptFile($assetUrl.'/js/jquery-ui.min.js');
 ?>
 <head>
       
