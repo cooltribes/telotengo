@@ -1,4 +1,4 @@
-<?php $this->breadcrumbs=array('Mis Ventas'=>'misVentas','Orden #'.$model->id); ?> 
+<?php $this->breadcrumbs=array('Mis Ventas'=>Yii::app()->createUrl('orden/misVentas'),'Orden #'.$model->id); ?> 
 <div id="orderDetail" class="row-fluid margin_top">
     <h2>INTENCION DE COMPRA</h2>
     <div class="col-md-6 orderInfo no_horizontal_padding margin_top_small">

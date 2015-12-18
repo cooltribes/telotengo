@@ -18,16 +18,7 @@
 						));
 						?>
 							<?php echo $form->errorSummary($model); ?>
-							
-							<div class="form-group">
-								<?php echo $form->labelEx($model,'descripcion'); ?> 
-								<?php echo $form->textArea($model,'descripcion',array('class'=>'form-control','rows'=>4, 'cols'=>40)); ?>
-								<?php echo $form->error($model,'descripcion'); ?>
-							</div>
-									
-
-							</div>
-													
+						
 							<div class="form-group">
 								<label>Caracteristica</label>
 								<?php echo $form->textField($model,'caracteristica1' ,array('class'=>'form-control','maxlength'=>250)); ?>
@@ -36,8 +27,14 @@
 								<?php echo $form->textField($model,'caracteristica4' ,array('class'=>'form-control','maxlength'=>250)); ?>
 								<?php echo $form->textField($model,'caracteristica5' ,array('class'=>'form-control','maxlength'=>250)); ?>
 							</div>
-							
+							<div class="form-group">
+								<?php echo $form->labelEx($model,'descripcion'); ?> 
+								<?php $this->widget('ext.yiiredactor.widgets.redactorjs.Redactor', array( 'model' => $model, 'attribute' => 'descripcion' )); ?>
+								<?php echo $form->error($model,'descripcion'); ?>
+							</div>
+									
 
+							</div>
 
 
 							<?php $this->widget('bootstrap.widgets.TbButton', array(

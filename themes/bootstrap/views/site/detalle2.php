@@ -3,12 +3,17 @@ $baseUrl = Yii::app()->baseUrl;
 $cs = Yii::app()->getClientScript();
 $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
 ?>
-        <div class="breadcrumbs margin_top">
+      <!--  <div class="breadcrumbs margin_top">
                 <a><span>Inicio</span></a>/&nbsp;
-                <a><span>Sub Categoria</span></a>/&nbsp;
-                <a><span>Sub Categoria 1.1</span></a>/&nbsp;
-                <a><span class="current">Producto</span></a>
+                <a href="<?php ?>"><span><?php echo $categoria->nombre;?></span></a>/&nbsp;
+                <a><span><?php echo $subCategoria->nombre;?></span></a>/&nbsp;
+                <a><span class="current"><?php echo $model->nombre;?></span></a>
         </div>
+       -->
+        <?php 
+        $this->breadcrumbs=array($categoria->nombre=>Yii::app()->createUrl('categoria/index', array('url'=>$categoria->seo->amigable)),
+        						 $subCategoria->nombre=>Yii::app()->createUrl('tienda/index', array('categoria'=>$subCategoria->url_amigable)),
+        						 $model->nombre); ?> 
         
 
             
