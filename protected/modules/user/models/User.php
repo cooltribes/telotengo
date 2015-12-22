@@ -242,6 +242,7 @@ class User extends CActiveRecord
 		$criteria->compare ('registro_password',0, true);
 		$criteria->compare ('superuser',0, true);
 		$criteria->addCondition('type <> 3');
+		$criteria->order = "id DESC";
 		//$criteria->addInCondition('type', array ('1','2', '4'));
 
         return new CActiveDataProvider(get_class($this), array(

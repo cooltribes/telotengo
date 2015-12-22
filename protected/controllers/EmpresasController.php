@@ -197,6 +197,18 @@ class EmpresasController extends Controller
 				$almacen->alias=$model->razon_social.' - principal';
 				$almacen->nombre=$model->razon_social.' - principal';
 				$almacen->save();
+				
+				
+				$message = new YiiMailMessage;
+				$message->activarPlantillaMandrill();					
+				$body=Yii::app()->controller->renderPartial('//mail/solicitudRecibida', array( '$user'=>$user ),true);				
+				$message->subject= "SOLICITUD RECIBIDA";
+				$message->setBody($body,'text/html');
+								
+				$message->addTo(Yii::app()->session["usuarionuevo"]);
+				Yii::app()->mail->send($message);
+				
+				
 				if(isset(Yii::app()->session['cliente']))
 				{
 					$this->redirect(Yii::app()->session['url_act']);

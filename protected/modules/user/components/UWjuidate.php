@@ -64,8 +64,8 @@ class UWjuidate {
 		$basePath=Yii::getPathOfAlias('user.views.asset');
 		$baseUrl=Yii::app()->getAssetManager()->publish($basePath);
 		$cs = Yii::app()->getClientScript();
-		$cs->registerCssFile($baseUrl.'/css/'.$this->params['ui-theme'].'/jquery-ui.css');
-		$cs->registerScriptFile($baseUrl.'/js/jquery-ui.min.js');
+		//$cs->registerCssFile($baseUrl.'/css/'.$this->params['ui-theme'].'/jquery-ui.css');
+		//$cs->registerScriptFile($baseUrl.'/js/jquery-ui.min.js');
 		
 		$language = $this->params['language'];
 		if ($language!='en') {
