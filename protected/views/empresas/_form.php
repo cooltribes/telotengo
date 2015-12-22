@@ -1,3 +1,4 @@
+<?php #echo Yii::app()->session['username'];?>
 <div class="row-fluid">
     <div>
 
