@@ -1,3 +1,10 @@
+<style>
+
+    .form-group{
+       height: 51px;
+       margin-bottom:10px;
+    }
+</style>
 <div class="row-fluid">
     <div>
 
@@ -11,7 +18,7 @@
     ),
 )); ?>
 
-    <?php echo $form->errorSummary($model); ?>
+    <?php //echo $form->errorSummary($model); ?>
     <div class="form-group">
     
             <?php echo $form->dropDownList($model,'cargo',Empresas::itemAlias('Cargo'),array('class'=>'form-control cargos','empty'=>'Tu cargo o posición')); ?>
@@ -19,10 +26,10 @@
 
     </div>
     
-    <div class="form-group">
+    <div class="form-group" id="otraContainer" style="display:none">
     
 
-             <?php echo $form->textField($model,'otraOpcion', array('id'=>'otraOpcion','class'=>'form-control', 'placeholder'=>'Otro cargo o posición', 'maxlength'=>205, 'style'=>'display:none')); ?>
+             <?php echo $form->textField($model,'otraOpcion', array('id'=>'otraOpcion','class'=>'form-control', 'placeholder'=>'Otro cargo o posición', 'maxlength'=>205)); ?>
             <?php echo $form->error($model,'otraOpcion'); ?>
             <span class="help-block text_align_left padding_right">
 		              <span class="help-block error" id="esconder" style="display: none;">No puede ser nulo
@@ -47,7 +54,7 @@
     
     <div class="form-group row-fluid">
  
-            <?php echo $form->textField($model,'rif', array('class'=>'form-control rifs', 'placeholder'=>'RIF (Letra seguida del número sin espacios ni guiones)', 'maxlength'=>45)); ?>
+            <?php echo $form->textField($model,'rif', array('class'=>'form-control rifs', 'placeholder'=>'RIF (Letra y número sin espacios ni guiones)', 'maxlength'=>45)); ?>
 
             <?php echo $form->error($model,'rif'); ?>            
 
@@ -57,7 +64,7 @@
     
         
     <div class="form-group">
-            <?php echo $form->textField($model,'telefono', array('id'=>'telefono', 'class'=>'form-control', 'placeholder'=>'Teléfono (código seguido del número sin espacios ni guiones)', 'maxlength'=>11)); ?>
+            <?php echo $form->textField($model,'telefono', array('id'=>'telefono', 'class'=>'form-control', 'placeholder'=>'Teléfono (código y número sin espacios ni guiones)', 'maxlength'=>11)); ?>
 
 
         <?php echo $form->error($model,'telefono'); ?>
@@ -238,13 +245,12 @@ $(document).ready(function() {
 		var ca=$(this).attr('id');
 		if($("#"+ca).val()=="Otro")
 		{
-			$("#otraOpcion").show();
+			$("#otraContainer").show();
 		}	
 		else
 		{
-			$("#otraOpcion").hide();
-			$('#esconder').hide();
-			
+			$("#otraContainer").hide();
+		
 		}
 				
 		

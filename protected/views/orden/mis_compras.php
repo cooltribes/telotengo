@@ -192,7 +192,7 @@ if(Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id)):
 	    <?php
 	$template = '{summary}
 	    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-hover table-striped margin_top">
-	    <col width="10%"> <col width="15%"> <col width="30%"> <col width="15%"> <col width="15%"> <col width="10%"> 
+
         <thead>
             <tr>
 	            <th scope="col">N°</th>

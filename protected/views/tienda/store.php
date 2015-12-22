@@ -100,6 +100,10 @@ $(document).ready(function() {
         $(id).val(value);
         filtrar();
     }
+    function clean(id){
+        $(id).val('');
+        filtrar();
+    }
     function reqCheck(id,value,name){
          if($(id).is(':checked')){
             $('#'+name).val(''+value+'-'+$('#'+name).val()); 

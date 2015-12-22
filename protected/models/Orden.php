@@ -471,8 +471,17 @@ class Orden extends CActiveRecord
 		}
 	}
 	
-	public function estados($estado)
+	public function estados($estado,$class=null)
 	{
+		if(!is_null($class)){
+		    if($estado==0)
+                return "yellow-text";
+            if($estado==1)
+                return "green-text";
+            if($estado==2)
+                return "red-text";
+		    
+		}    
 		if($estado==0)
 			return "Pendiente";
 		if($estado==1)
@@ -481,5 +490,18 @@ class Orden extends CActiveRecord
 			return "Rechazada";
 		
 	}
+    
+    public function getTotal(){
+        return $this->monto*1.12;
+    }
+    public function ultima_fecha($format ="Y-m-d h:i:s"){
+        $sql="select fecha from tbl_estado where orden_id=".$this->id." order by fecha desc";
+        $obj=Yii::app()->db->createCommand($sql)->queryScalar();
+        
+        if($obj)
+            return date($format,$obj);
+        else
+            return '-';
+    }
 
 }

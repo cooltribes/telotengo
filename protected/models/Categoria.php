@@ -194,7 +194,7 @@ class Categoria extends CActiveRecord
             $this->id_seo =$seo->id;
             return $this->save(); 
         }
-        return false;
+        return true;
     }
     
     public function getCategoriasEnExistencia(){
