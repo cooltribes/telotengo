@@ -196,10 +196,12 @@ if(Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id)):
             <tr>
 	            <th scope="col">N°</th>
 	            <th scope="col">Fecha de emisión</th>
-	            <th scope="col">Empresa Compradora</th>
-	            <th scope="col">Usuario Comprador</th>
-	            <th scope="col">Monto</th>
-	            <th scope="col">Estado</th>
+	            <th scope="col">Fecha última acción</th>
+	             <th scope="col">Estado</th>
+	             <th scope="col">Empresa Compradora</th>
+	            <th scope="col">Usuario Comprador</th> 
+	            <th scope="col">Monto sin IVA</th>
+	            <th scope="col">Monto con IVA</th>	            	           
 	            <th scope="col">Acciones</th>
 	        </tr>
 	       </thead>

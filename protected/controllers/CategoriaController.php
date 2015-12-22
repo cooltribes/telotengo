@@ -679,13 +679,8 @@ class CategoriaController extends Controller
    
     public function actionSetSeoAll(){
         foreach(Categoria::model()->findAll() as $cat){
-            if(!$cat->seo){
-                $cat->setSeo();
-                $cat->refresh();
-            }   
-            echo $cat->nombre.'<br/>';
-            var_dump($cat->seo->getAttributes());
-            echo "<br/><br/><br/>";
+            $cat->url_amigable=Funciones::cleanUrlSeo($cat->url_amigable);
+            var_dump($cat->seo);
             
         }
         

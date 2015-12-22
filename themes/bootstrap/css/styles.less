@@ -4,16 +4,32 @@
 
 @white:#fff;
 @blue:#00a5e2;
-@yellow: #ffe45c;
-@green: #08caa2;
+@yellow: #f4a611;
+@green: #3ca13c;
 @fucsia: #e93a61;
 @black: #000;
 @gray: #fbfbfb;
 @darkgray:#666;
+@red: #ea2424;
 @b2bOrange:#ff5b0b;
 .white{color:#FFF !important; }
 .red{color:#F00;} 
 .gray{color:#222;}
+
+.yellow-text{
+  font-weight: 900;
+  color:@yellow;
+}
+
+.red-text{ 
+  color: @red;
+  font-weight: 900;
+}
+
+.green-text{
+  font-weight: 900;
+  color:@green;
+}
 
 
 body{ 
@@ -22,7 +38,9 @@ body{
    background-color: #fff;
    color: #555;
 }
-
+.highlighted{
+              color: #ff5b0b !important; 
+              }
 .well{
   background-color: #e5e5e5;
   border-color: #e5e5e5;
@@ -45,7 +63,19 @@ h4{
         url('../fonts/JanepixHandwriting.svg#JanepixHandwriting') format('svg');
 }
 
-
+.underlined{
+  text-decoration: underline;
+}
+.cleanFilter{
+    font-size: 12px;
+    margin-left: 2px;
+    color: #428bca;
+    text-decoration: underline;
+    margin-top: -14px;
+    margin-bottom: 5px;
+    cursor: pointer;
+    display: block;
+}
 .janepix{
    font-family: 'JanepixHandwriting', arial, san-serif;
    font-weight: normal !important;
@@ -315,6 +345,13 @@ h4{
   background-color: #2a9bda;
   color:#FFF;
 
+}
+
+.btn-large{
+  height: 45px !important;
+  font-size:18px !important;
+  line-height: 27px !important;
+  padding:8px 15px;
 }
 
 .btn-sigmablue:visited{
@@ -1207,8 +1244,12 @@ h1,h2,h3,h4,h5{
     text-align: left;
     color: #FFF;
     font-size: 10px;
-  }
-}
+  }  
+} 
+input.login-b2b{
+      padding-right: 5px;
+      text-align: right;
+    }
 
 .navbar{
   border: 0px;
@@ -2014,6 +2055,7 @@ h1{
     border: 2px solid #222;
     padding: 10px 6px; 
     table{
+        margin: 0 auto;
         td.highlighted{
           color: #ec1f24;
           font-weight:900;
@@ -2024,16 +2066,14 @@ h1{
           font-weight:900;
           font-size: 18px;
       }
-      td.call{
-          padding:0px 15%;        
-      }
+     
    /**/   td.name{
           color: #222;
           font-weight:900;
           font-size: 18px;
-          padding-left:15%;
+
       }
-      td{
+      td{ 
         padding: 7px ;
         input.quantity{
             width:60%;
@@ -2041,16 +2081,17 @@ h1{
       } 
     }
     .sellerInfo{
-        padding: 5px 5% 5px 15%;
+        width:95%;
+        margin: 0 auto;
         span{
             display:block;
         }
         .title{
-          font-size:18px;
+          font-size:12px;
         }
         .name{
             font-size:18px;
-            margin-top:12px;
+            margin-top:5px;
             font-weight: 900;
         }
         .location{
@@ -2310,15 +2351,69 @@ h1{
   #headerContainer, #pageContainer{
     width: 100%;
     margin-left: 0;
-  }
-  
+  } 
+    
 }
  @media  (max-width: 768px){
   #searchSet, #categorySearch, #headLinks{
     display:none;
   }
+  .encabezado{
+    padding-top:20px;
+    .stripe{
+      height: auto;
+      width: 100%;
+      margin-left: 0px;
+      font-size: 18px;
+      line-height: 25px;    
+    }
+    h1{
+      font-size:25px;
+    }
+    h2{
+      font-size:20px;
+    }
+    h4{
+      text-align: center;
+    }
+  } 
+  #b2b-header{
+    .col-logo{
+      width:100%;
+      text-align: center;
+    }
+    .loginError{
+      height: auto;
+    }
+  }
+  #submit-btn.btn-block,#btn-login-b2b.btn-block{
+    width: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+    display: inline;
+  }
+   #submit-btn.btn-block{
+     margin-top: .5em;
+   }
+}
+@media  (max-width: 991px) and (min-width: 768px){
+  .loginError.margin_top_xsmall{
+    margin-top: 0px !important;
+  }
   
 }
+
+@media  (max-width: 1191px) and (min-width: 768px){
+  #b2b-header{
+    .col-login{
+      width:70%;
+    }
+    .col-logo{
+      width: 30%;
+    }
+  }
+}
+
  @media  (max-width: 391px){
    #userMenu .title, #userMenu .name{
      display: none;
@@ -2327,6 +2422,13 @@ h1{
    .orderContainer .detail table td{
      img{
        display:none;
+     }
+   }
+   .login-inputs{
+     .col-xs-6{
+       width:100%;
+       margin-top: .3em;
+       padding-left:0px;
      }
    }
  }
@@ -2825,3 +2927,29 @@ h1.dark{
 
     #estado.rechazado {color: #ec1f24}
     #estado.aceptado {color: #00AA00}
+    
+/* SELECCION CATEGORIA PRODUCTO PADRE */
+
+
+.niveles{
+  margin-top: 40px;
+        display: inline-block;
+        border: 2px solid #000;
+        padding: 5px;
+        background: white;
+        width: 240px;
+        height: 400px;
+        overflow-y: scroll;
+        float: left;
+  .active{
+    background-color:@black;
+    color:white; 
+  }
+  a{
+    display:block;
+    padding:5px;
+  }
+}
+
+
+

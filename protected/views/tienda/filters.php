@@ -1,32 +1,42 @@
-                <h1 class="margin_top">CATEGORIAS</h1>
+                 
+               <h1 class="margin_top">CATEGORIAS</h1>
+               
+                <?php if($filter['categoria']!=''):?>
+                    <a href="#" class="cleanFilter" onclick="clean('#categoriasFilter')">Ver Todas</a>
+               <?php endif; ?>
                <input type="hidden" id="categoriasFilter" value="<?php echo $filter['categoria']?>">
                <ul>
              <?php      foreach($categorias as $categoria): ?>
-                        <li><a href="#" onclick="go('#categoriasFilter','<?php echo $categoria['objeto']->url_amigable ?>');"><?php echo $categoria['objeto']->nombre; ?></a>
+                           
+                        <li><a href="#" class="<?php echo $filter['categoria']==$categoria['objeto']->url_amigable?"underlined highlighted":'';?>" onclick="go('#categoriasFilter','<?php echo $categoria['objeto']->url_amigable ?>');"><?php echo $categoria['objeto']->nombre; ?></a>
             <?php           
                            
                             if(count($categoria['hijos'])>0):  ?>
                 <ul>
             <?php              foreach($categoria['hijos'] as $subcategoria): ?>
                
-                                <li><a href="#" onclick="go('#categoriasFilter','<?php echo $subcategoria->url_amigable ?>');"><?php echo $subcategoria->nombre ?></a></li>
+                                <li><a href="#" class="<?php echo $filter['categoria']==$subcategoria->url_amigable?"underlined highlighted":''?>" onclick="go('#categoriasFilter','<?php echo $subcategoria->url_amigable ?>');"><?php echo $subcategoria->nombre ?></a></li>
                             
                  <?php      endforeach; ?>
                 </ul>
             <?php            endif; ?>      
-                            
+                             
                             
                              
              <?php      endforeach; ?>
 
-                   </li>
-                  
-               </ul>
+               </li> 
+                   
+               </ul>  
 
 
         
                <div class="separator"></div>
                <h1>MARCAS</h1>
+
+               <?php if($filter['marcas']!=''):?>
+                   <a href="#" class="cleanFilter" onclick="clean('#marcasFilter')">Ver Todas</a>
+               <?php endif; ?>
                <input type="hidden" id="marcasFilter" value="<?php echo $filter['marcas']?>">
                <ul>
                	<?php /*
@@ -90,7 +100,11 @@
                 ?>
                <div class="separator"></div>
                
-               <h1>PRECIO</h1> 
+               <h1>PRECIO</h1>
+           
+               <?php if($filter['precio']!=''):?>
+                   <a href="#" class="cleanFilter" onclick="clean('#precioFilter')">Todos</a>
+               <?php endif; ?> 
                  <input type="hidden" id="precioFilter" value="<?php echo $filter['precio']?>">
                 <div class="margin_top_small margin_bottom clearfix">    
                     <div id="slider"></div>
@@ -101,7 +115,7 @@
                           <div class="indicator" id="to"></div>
                       </div>
                       <?php
-                            echo CHtml::hiddenField('minPrice',''); 
+                            echo CHtml::hiddenField('minPrice','');  
                             echo CHtml::hiddenField('maxPrice',''); 
                         ?>
                     </p>

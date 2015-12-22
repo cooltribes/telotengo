@@ -81,6 +81,8 @@ class EmpresasController extends Controller
 			
 			if(isset(Yii::app()->session['vacio'])) //evitar el bug de dejar el registro a medias
 			{
+				/*echo $_POST['Empresas']['otro'];
+				Yii::app()->end();	*/
 				echo Yii::app()->session['usuarionuevo'];
 				$modelado = new RegistrationForm;
         		$profile = new Profile;
@@ -154,7 +156,10 @@ class EmpresasController extends Controller
 			$model->estado = 1; # solicitado 
 			#$model->forma_legal = $_POST['Empresas']['forma_legal'];
 			$model->sector = $_POST['Empresas']['sector'];
-			$model->cargo = $_POST['Empresas']['cargo'];
+			if($_POST['Empresas']['cargo']=="Otro")
+				$model->cargo=$_POST['Empresas']['otraOpcion'];
+			else
+				$model->cargo = $_POST['Empresas']['cargo'];
 			$model->zip = $_POST['Empresas']['zip'];
 			#$model->num_empleados = $_POST['Empresas']['num_empleados'];
 			$rol=$_POST['Empresas']['tipoEmpresa'];
@@ -192,6 +197,18 @@ class EmpresasController extends Controller
 				$almacen->alias=$model->razon_social.' - principal';
 				$almacen->nombre=$model->razon_social.' - principal';
 				$almacen->save();
+				
+				
+				$message = new YiiMailMessage;
+				$message->activarPlantillaMandrill();					
+				$body=Yii::app()->controller->renderPartial('//mail/solicitudRecibida', array( '$user'=>$user ),true);				
+				$message->subject= "SOLICITUD RECIBIDA";
+				$message->setBody($body,'text/html');
+								
+				$message->addTo(Yii::app()->session["usuarionuevo"]);
+				Yii::app()->mail->send($message);
+				
+				
 				if(isset(Yii::app()->session['cliente']))
 				{
 					$this->redirect(Yii::app()->session['url_act']);

@@ -25,7 +25,7 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
                                   	<?php foreach($model as $modelado)
                                   	{?>
                                   		<li>
-                                  		    <a href='<?php echo Yii::app()->createUrl('categoria/index', array('url'=>$modelado->url_amigable))?>'>
+                                  		    <a href='<?php echo Yii::app()->createUrl('tienda/index', array('categoria'=>$modelado->url_amigable))?>'>
                                   		        <?php echo $modelado->nombre;?>
                                   		        <span class="arrow"></span>
                               		        </a>
@@ -91,7 +91,7 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
                             <div class="col-md-2 col-sm-2 col-xs-2 no_horizontal_padding">
                                 <?php 
                                 $usuario=User::model()->findByPk(Yii::app()->user->id);
-                                echo CHtml::submitButton('Buscar', array('id'=>'botonBusqueda','class'=>'btn-orange btn btn-danger btn-large orange_border')); ?>
+                                echo CHtml::submitButton('Buscar', array('id'=>'botonBusqueda','class'=>'btn-orange btn btn-danger orange_border')); ?>
                             </div>
                         </div>
                     </div> 
@@ -287,18 +287,22 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
                                     </div>                                
                                   </a>
                                   <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                    <li><a href="<?php echo Yii::app()->baseUrl.'/user/profile/index';?>">Mi perfil</a></li>
+                                    
 								<?php
                                     if(Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id)): ?>
-                                    <li class="separator"></li>
+                                    
                                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/productoInventario";>Ver Inventario</a></li>
                                 	 		 <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/seleccion";>Cargar Inventario</a></li>
                                 	 		 <li><a href="<?php echo Yii::app()->baseUrl; ?>/almacen/administrador";>Almacenes</a></li>
+                                	 		 <li class="separator"></li>
                                 	 	<!--<li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/cargarInbound";>Cargar Inventario Masivo</a></li> -->  		
                                 	<?php endif;
                                 	 if(Yii::app()->authManager->checkAccess("vendedor", Yii::app()->user->id)): ?>
                                 			<li><a href="<?php echo Yii::app()->baseUrl; ?>/almacen/administrador";>Almacenes</a></li>
+                                			<li class="separator"></li>
                                 	<?php endif; ?>
+                                	<li><a href="<?php echo Yii::app()->baseUrl.'/tienda/index';?>">Tienda</a></li>
+                                	<li><a href="<?php echo Yii::app()->baseUrl.'/user/profile/index';?>">Mi perfil</a></li>
 									<li><a href="<?php echo Yii::app()->baseUrl; ?>/site/logout";>Cerrar sesión</a></li>
                                   </ul>
                                 </div>

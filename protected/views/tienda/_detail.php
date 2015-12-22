@@ -65,12 +65,12 @@
 				{
 					if($quitar==0):
 					?>
-                    <span class="quantity"><?php echo strlen($inventario->formatPrecio)>7?"<small>".$inventario->formatPrecio."</small>":$inventario->formatPrecio; ?><small> </small></span>
+                    <span class="quantity"><?php echo strlen($inventario->formatPrecio)>7?"<small>".$inventario->formatPrecio."</small>":$inventario->formatPrecio; ?></span>
 				<?php
 					endif;
 					if($quitar==1):
 					?>
-                    <span class="quantity"><?php echo $inventario['menor']<10000?$inventario['menor']:$inventario['menor']?><small> </small></span>
+                    <span class="quantity"><?php echo strlen(Funciones::formatPrecio($inventario['menor']))>7?"<small>".Funciones::formatPrecio($inventario['menor'])."</small>":Funciones::formatPrecio($inventario['menor']); ?></span>
 				<?php
 					endif;
 				}
@@ -78,12 +78,12 @@
 				{
 					if($quitar==0):
 					?>
-                    <span class="quantity"><?php echo $modelado['menor']<10000?$modelado['menor']:$modelado['menor'];?><small> </small></span>
+                    <span class="quantity"><?php echo strlen(Funciones::formatPrecio($modelado['menor']))>7?"<small>".Funciones::formatPrecio($modelado['menor'])."</small>":Funciones::formatPrecio($modelado['menor']); ?></span>
 				<?php
 					endif;
 					if($quitar==1):
 					?>
-                    <span class="quantity"><?php echo $modelado['menoro']<10000?$modelado['menoro']:$modelado['menoro'];?><small> </small></span>
+                    <span class="quantity"><<?php echo strlen(Funciones::formatPrecio($modelado['menoro']))>7?"<small>".Funciones::formatPrecio($modelado['menoro'])."</small>":Funciones::formatPrecio($modelado['menoro']); ?></span>
 				<?php
 					endif;
 				}
@@ -128,7 +128,7 @@
 					endif;
 					if($quitar==1):
 					?>
-                  	  <span class="quantity"><?php echo $inventario['menor'];?> </span>
+                  	  <span class="quantity"><?php echo Funciones::formatPrecio($inventario['menor']);?> </span>
 				<?php
 					endif;
 				}

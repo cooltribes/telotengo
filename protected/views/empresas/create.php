@@ -12,7 +12,7 @@
             	<?php }?>
             
    </h5>
-    <div class="col-md-6 col-md-offset-3 margin_top orangepanel">
+    <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 margin_top orangepanel">
         <h4 class="text-center">
             Ahora permítenos conocer acerca de tu empresa
         </h4>

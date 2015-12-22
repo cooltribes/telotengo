@@ -7,7 +7,7 @@
     </div>    
     
     <div class="row-fluid margin_top">
-        <div class="col-md-5">
+        <div class="col-md-5 col-sm-5">
              <h4 class="text_align_left no_margin_top">Si has recibido una invitación o quieres recibir una incluye tu correo electrónico</h4>
         </div>
         
@@ -27,14 +27,14 @@
                                 echo CHtml::hiddenField('facebook_id','');
                             ?>
               
-        <div class="col-md-5">
+        <div class="col-md-5 col-sm-4">
              <?php echo $form->emailField($model,'email', array('class'=>'form-control no-radius', 'placeholder'=>'Correo Electrónico', 'id'=>'email')); ?>
              <?php echo $form->error($model,'email'); ?>
              <div class="text-center white" id="email_error">
                  
              </div>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-2 col-sm-3 no_horizontal_padding text_align_center">
              <?php echo CHtml::button('Solicitar invitación', array('id'=>'submit-btn','class'=>'btn-block btn-orange btn btn-danger btn-large','onclick'=>'exists()')); ?> 
         </div>
         

@@ -363,6 +363,18 @@ class SiteController extends Controller
 		$almacen_id=$_GET['almacen_id'];
 		$almacen=Almacen::model()->findByPk($almacen_id);
 		$model=Producto::model()->findByPk($producto_id);
+		
+		
+		//$categoria=$model->padre->idCategoria->idCategoria->id;
+		$vector=ARRAY();
+    	$vector=Categoria::model()->buscarPadres($model->padre->idCategoria->id, $vector);
+		
+		$subCategoria=Categoria::model()->findByPk($vector[0]);
+		//$subCategoria=Categoria::model()->findByPk(Categoria::model()->findByPk($vector[count($vector)-3])->id_padre);
+		$categoria=Categoria::model()->findByPk(Categoria::model()->findByPk($vector[count($vector)-2])->id_padre);
+		
+		
+		
 		$inventario=Inventario::model()->findByAttributes(array('producto_id'=>$producto_id, 'almacen_id'=>$almacen_id));
 		$imagen=Imagenes::model()->findAllByAttributes(array('producto_id'=>$producto_id));
 		$imagenPrincipal=Imagenes::model()->findByAttributes(array('producto_id'=>$producto_id, 'orden'=>1));
@@ -387,7 +399,7 @@ class SiteController extends Controller
 		else // si es admin
 	    	$otros = Inventario::model()->findAllBySql("select * from tbl_inventario where producto_id=".$producto_id." and almacen_id!=".$almacen_id." and almacen_id not in(select id from tbl_almacen where empresas_id=".$empresa->id.")");
 	    $this->render('detalle2', array('model'=>$model, 'inventario'=>$inventario, 'imagen'=>$imagen, 'imagenPrincipal'=>$imagenPrincipal, 'busqueda'=>$busqueda, 'empresa'=>$empresa, 'almacen'=>$almacen, 
-       'otros'=>$otros, 'similares'=>$similares));
+       'otros'=>$otros, 'similares'=>$similares, 'subCategoria'=>$subCategoria, 'categoria'=>$categoria));
     }
     public function actionAutoComplete()
 		{

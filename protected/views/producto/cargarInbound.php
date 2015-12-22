@@ -44,8 +44,9 @@ $('#buttonCargaMD').click(function(e) {
             
                                
             <ul id="myTabs" class="nav nav-tabs" role="tablist">
-              <li  class="active"><a href="#fileLoad" id="fileLoad-tab"  aria-controls="home" aria-expanded="true">CARGA MASIVA </a></li>
               <li  class=""><a id="specifications-tab"   aria-expanded="false" href="seleccion">CARGA INDIVIDUAL</a></li>
+              <li  class="active"><a href="#fileLoad" id="fileLoad-tab"  aria-controls="home" aria-expanded="true">CARGA MASIVA </a></li>
+              
            <!--   <li role="presentation" class=""><a href="#plantilla" role="tab" id="plantilla-tab" data-toggle="tab" aria-controls="plantilla" aria-expanded="false">DESCARGA DE PLANTILLA</a></li>-->
               
             </ul>

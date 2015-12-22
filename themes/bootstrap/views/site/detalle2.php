@@ -3,14 +3,19 @@ $baseUrl = Yii::app()->baseUrl;
 $cs = Yii::app()->getClientScript();
 $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
 ?>
-        <div class="breadcrumbs margin_top">
+      <!--  <div class="breadcrumbs margin_top">
                 <a><span>Inicio</span></a>/&nbsp;
-                <a><span>Sub Categoria</span></a>/&nbsp;
-                <a><span>Sub Categoria 1.1</span></a>/&nbsp;
-                <a><span class="current">Producto</span></a>
+                <a href="<?php ?>"><span><?php echo $categoria->nombre;?></span></a>/&nbsp;
+                <a><span><?php echo $subCategoria->nombre;?></span></a>/&nbsp;
+                <a><span class="current"><?php echo $model->nombre;?></span></a>
         </div>
+       -->
+        <?php 
+        $this->breadcrumbs=array($categoria->nombre=>Yii::app()->createUrl('categoria/index', array('url'=>$categoria->seo->amigable)),
+        						 $subCategoria->nombre=>Yii::app()->createUrl('tienda/index', array('categoria'=>$subCategoria->url_amigable)),
+        						 $model->nombre); ?> 
         
-
+ 
             
             <div class="col-md-9 main no_horizontal_padding">
                 <div class="row-fluid">
@@ -67,10 +72,11 @@ $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
                         <h1 class="no_margin_top" style="height: auto">
                           <?php echo $model->nombre;?> 
                         </h1>
+                     <small>Marca:&nbsp;<?php echo $model->padre->idMarca->nombre; ?></small> 
                         <div class="separator"></div>
                         <table width="100%" class="priceTable">
                             <col width="50%">
-                            <col width="50%">
+                            <col width="50%"> 
                             <tr>
                                 <td class="title">Precio en tienda</td>
                                 <td class="throughlined"><?php echo $inventario->formatPrecio;?></td>
@@ -149,10 +155,10 @@ $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
         
             <div class="col-md-3 no_padding_right ">
                 <div class="orderBox">
-                    <table width="80%" style="width:80%; max-width: 80%;">
+                    <table width="95%">
                         <tr>
-                            <td width="50%" class="name">Cantidad:</td>
-                            <td width="50%"><input id="cantidad"type="number" value="1" class="quantity" /></td>
+                            <td class="name">Cantidad:</td>
+                            <td><input id="cantidad"type="number" value="1" class="quantity" /></td>
                         </tr>
                         <tr>
                             <td class="name">Precio:</td>
@@ -166,12 +172,12 @@ $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
                              <?php 
                                 	if($inventario->metodoEnvio==1)
 									{?>
-										<td class="option emphasis">Acordado con el cliente</td>
+										<td class="option">Acordado con el cliente</td>
 									<?php
 									}
 									else
 									{?>
-										<td class="option emphasis">A traves del servicio de TELOTENGO</td>
+										<td class="option">A traves del servicio de TELOTENGO</td>
 									<?php	
 									}
                                 	?>
@@ -186,7 +192,7 @@ $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
 								endif;
                             	 if(!Yii::app()->user->isAdmin()  && $inventario->almacen->empresas->id!=$empre->id)
                                 	if(!Yii::app()->authManager->checkAccess("vendedor", Yii::app()->user->id))
-                                		echo CHtml::submitButton('ORDENAR', array('id'=>'ordenar','class'=>'btn-orange margin_bottom_small btn btn-danger btn-large orange_border form-control'));          		
+                                		echo CHtml::submitButton('ORDENAR', array('id'=>'ordenar','class'=>'btn-orange margin_bottom_small white form-control'));          		
                            		if(Yii::app()->authManager->checkAccess("vendedor", Yii::app()->user->id)):?>
 									<a href="#" class="btn-orange margin_bottom_small btn btn-danger btn-large orange_border form-control" data-toggle="tooltip"  title="No puede comprar ya que es un usuario Vendedor">Ordenar</
                            		<?php endif;?>

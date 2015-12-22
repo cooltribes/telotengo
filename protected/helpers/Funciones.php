@@ -16,9 +16,9 @@ class Funciones {
 	
     public static function formatPrecio($precio,$currency = true){
         if($currency)
-            return Yii::app()->numberFormatter->format('¤ ###,###,#00',$precio, "Bs");
+            return Yii::app()->numberFormatter->format('¤ ###,###,##0',$precio, "Bs");
         else
-            return Yii::app()->numberFormatter->format('###,###,#00',$precio);
+            return Yii::app()->numberFormatter->format('###,###,##0',$precio);
     }
     
 	public static function isDev() // para saber cuando estemos en develop
