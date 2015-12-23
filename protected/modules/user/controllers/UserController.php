@@ -633,11 +633,22 @@ class UserController extends Controller
 	*/
 	public function actionDatos(){
 		 $get="";
-		 $clienteEmpresa="";	
+		 $clienteEmpresa="";
+		 $tipoUsuario="";
+		 //session_unset();
+		 /* Yii::app()->session['username']="";
+		  Yii::app()->session['cliente']="";*/
+		//$_GET['u'];	
 		 if(isset($_GET['id']))
 		 {
 		 	$get=$_GET['id'];
 		 }
+		 
+		 if(isset($_GET['u']))
+		 {
+		 	 Yii::app()->session['username']=$_GET['u']; // si viene algo por get guarda el tipo de username puede ser admin o el correo de otra persona
+		 }
+
 
 	    //$this->layout='//layouts/b2b';
 		$model = new RegistrationForm;
@@ -804,12 +815,14 @@ class UserController extends Controller
     {
         $id=$_POST['id'];
         $model = User::model()->findByPk($id);
-        $model->status=1-$model->status;
+        #$model->status=1-$model->status;
 		if($model->registro_password==0)
 		{
 			$rol=$model->buscarRol($id);
 			$model->registro_password=1;
 			$model->newPassword($id, $rol);
+			$model->pendiente=0;
+			//$model->
 		}
 		
         $model->save();
