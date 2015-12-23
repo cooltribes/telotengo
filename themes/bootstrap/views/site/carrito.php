@@ -15,7 +15,10 @@
                 <span class="total">
                     Total: <?php echo Funciones::formatPrecio(Yii::app()->session['suma']+$iva);  unset(Yii::app()->session['suma']);?>
                 </span>
-                <input class="btn-green btn btn-danger btn-large margin_top_small" type="submit" id="procesarTodo" name="yt0" value="Procesar todas las órdenes">
+                <input class="btn-green btn btn-danger margin_top_small" type="submit" id="procesarTodo" name="yt0" value="Procesar todas las órdenes">
+            </div>
+            <div class="text-center margin_top_xsmall">
+                <a class="blueLink" href=" <?php echo Yii::app()->baseUrl; ?>/tienda">Seguir Comprando</a>
             </div>
             <div class="text-center mutedLink">
                 <a class="muted" href="#">Ver políticas de envíos y devoluciones</a>

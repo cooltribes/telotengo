@@ -1,4 +1,7 @@
-
+<style>
+    
+    
+</style>
 <?php 
 echo CHtml::hiddenField('name' , '', array('id' => 'oculto')); 
 // $model = Categoria::model()->findAllBySql("select * from tbl_categoria where id_padre in (select id from tbl_categoria where id_padre=0)  order by nombre asc");
@@ -101,7 +104,7 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
                                  <div class="col-md-3 col-sm-3 col-xs-3 no_horizontal_padding">
                                  
                                           
-                                  <div class="dropdown drophover">
+                                  <div class="dropdown drophover menu-tlt">
                                   <a class="form-control text-left dropdown-toggle no_padding no_border" id="inventoryButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                     <div class="row-fluid">
                                         
@@ -129,10 +132,15 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
                                     </div>
                             <?php endif; ?>
                             <div class="col-md-4 col-sm-4 col-xs-4 no_right_padding">
-                                <div class="dropdown drophover">
-                                  <a class="form-control text-left dropdown-toggle no_padding no_border " id="orderButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                <div class="dropdown drophover menu-tlt padding_left_xsmall">
+                                  <a class="form-control text-left dropdown-toggle no_padding no_border " id="orderButton" aria-haspopup="true" aria-expanded="true" href="<?php echo (Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id) || Yii::app()->authManager->checkAccess("comprador", Yii::app()->user->id))?Yii::app()->createUrl('orden/misCompras'):Yii::app()->createUrl('orden/misVentas'); ?>">
                                     <div class="row-fluid">
-                                        <div class="col-md-3 col-md-3 col-xs-3 no_horizontal_padding icon">
+                                        <div class="col-md-9 col-sm-9 col-xs-9 no_horizontal_padding title" style="float:right">
+                                             <span class="text">Ordenes</span>
+                                       
+                                            <span class="caret no_margin_left"></span>
+                                        </div>
+                                        <div class="col-md-3 col-md-3 col-xs-3 no_horizontal_padding icon"  style="float:right">
                                              <span class="glyphicon glyphicon-inbox"></span>
                                              <span class="counter">
                                                  <?php 
@@ -148,11 +156,7 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
                                                  ?> 
                                              </span>
                                         </div>
-                                        <div class="col-md-9 col-sm-9 col-xs-9 no_horizontal_padding title">
-                                             <span class="text">Ordenes</span>
-                                       
-                                            <span class="caret no_margin_left"></span>
-                                        </div>
+                                        
                                     </div>                                
                                   </a>
                                   <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
@@ -192,9 +196,9 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
                             </div>
                            <?php if(!Yii::app()->authManager->checkAccess("vendedor", Yii::app()->user->id)): ?> 
                             <div class="col-md-3 col-sm-3 col-xs-3 no_horizontal_padding">
-                                <div class="dropdown drophover">
+                                <div class="dropdown drophover menu-tlt padding_left_xsmall">
                           
-                               <a class="form-control text-left dropdown-toggle no_padding no_border" id="cartButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                               <a class="form-control text-left dropdown-toggle no_padding no_border" id="cartButton"  aria-haspopup="true" aria-expanded="true" href="<?php echo Yii::app()->getBaseUrl(true)."/site/carrito"?>">
                                     <div class="row-fluid">
                                         <div class="col-md-4 col-sm-4 col-xs-4 no_horizontal_padding icon">
                                              <span class="glyphicon glyphicon-shopping-cart"></span>
@@ -252,7 +256,7 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
                             </div>
                             <?php endif; ?>
                             <div class="col-md-5 col-sm-5 col-xs-5 no_horizontal_padding">
-                                <div class="dropdown drophover">
+                                <div class="dropdown drophover menu-tlt padding_left_xsmall">
                                   <a class="form-control text-left dropdown-toggle no_padding no_border" id="userButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                     <div class="row-fluid">
                                         <div class="col-md-3 col-sm-3 col-xs-3 no_horizontal_padding image">
