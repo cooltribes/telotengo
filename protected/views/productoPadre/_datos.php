@@ -30,7 +30,7 @@ echo"<tr>";
 			else{?><li><a class="pointer" id=<?php echo $data->id;?>  tabindex="-1" onclick="desactivarActivar(<?php echo $data->id;?>)"><i class="glyphicon glyphicon-ok"></i> Activar </a></li><?php } 
 			
         ?>
-            <form id="form<?php echo $data->id?>" action="../producto/create" method="post">
+            <form id="form<?php echo $data->id?>" action="<?php echo Yii::app()->getBaseUrl(true)?>/producto/create" method="post">
                 <input type="hidden" name="padre"  value="<?php echo $data->id?>"/>
             </form>
         <?php

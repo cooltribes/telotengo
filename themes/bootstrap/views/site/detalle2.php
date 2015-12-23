@@ -120,28 +120,28 @@ $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
                         
                     </div>
                         
-                    
+                    <ul  class="nav nav-tabs">
+                              <li class="active"><a class="pointer" onclick="goTo('#detalles')"  >DETALLES DEL PRODUCTO</a></li>
+                              <li  class=""><a class="pointer" onclick="goTo('#caracteristicas')" >CARACTERÍSTICAS GENERALES</a></li>
+                           <!--   <li role="presentation" class=""><a href="#recommendations" role="tab" id="recommendations-tab" data-toggle="tab" aria-controls="recommendations" aria-expanded="false">RECOMENDACIONES DEL PRODUCTO</a></li>--></-->
+                              
+                    </ul>
                     
                     
                     <div class="col-md-12 no_padding_left margin_top">
-                         <div class="moreDetails">                                       
-                            <ul id="myTabs" class="nav nav-tabs" role="tablist">
-                              <li role="presentation" class="active"><a href="#moreDetails" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true">DETALLES DEL PRODUCTO</a></li>
-                              <li role="presentation" class=""><a href="#specifications" role="tab" id="specifications-tab" data-toggle="tab" aria-controls="specifications" aria-expanded="false">CARACTERÍSTICAS GENERALES</a></li>
-                           <!--   <li role="presentation" class=""><a href="#recommendations" role="tab" id="recommendations-tab" data-toggle="tab" aria-controls="recommendations" aria-expanded="false">RECOMENDACIONES DEL PRODUCTO</a></li>--></-->
-                              
-                            </ul>
-                            <div id="myTabContent" class="tab-content">
-                              <div role="tabpanel" class="tab-pane fade active in" id="moreDetails" aria-labelledby="home-tab">
+                         <div class="moreDetails no_border">                                       
+                            
+                            
+                              <div  id="detalles" aria-labelledby="home-tab" id="details">
                                  
                                 <?php if(!is_null($busqueda))$this->renderPartial('more_details', array('busqueda'=>$busqueda,'solo_una'=>true));else echo "<div class='text-center margin_top'>No hay información disponible</div>" ?>
                               </div>
-                              <div role="tabpanel" class="tab-pane padding_top padding_bottom" id="specifications" aria-labelledby="specifications-tab">
+                              <div  class="padding_top padding_bottom" id="caracteristicas" aria-labelledby="specifications-tab">
                                  <?php echo $model->descripcion; ?>
                              
                               </div>
                               
-                            </div>
+                           
                         </div>
                     </div>  
                     
@@ -431,4 +431,7 @@ function formatPrice(x){
     
 }
 
+function goTo(id){
+    $(window).scrollTop($(id).position().top+200);
+}
 </script>  
