@@ -8,13 +8,13 @@
 			{
 				if($cate->ultimo==0)
 				{ ?>
-					<a href="#" onclick="buscar(<?php echo $cate->id;?>, <?php echo $nivel;?>)" > <br> <?php echo $cate->nombre; ?><br></a>
+					<a href="#" id="cate<?php echo $cate->id;?>" onclick="buscar(<?php echo $cate->id;?>, <?php echo $nivel;?>,'cate<?php echo $cate->id;?>')" ><?php echo $cate->nombre; ?></a>
 				<?php	
 				}
 				else 
 				{
 				?>
-					<a href="#" onclick="seleccion(<?php echo $cate->id;?>)" > <br> <?php echo $cate->nombre; ?><br></a>
+					<a href="#" id="cate<?php echo $cate->id;?>"  onclick="seleccion(<?php echo $cate->id;?>,'cate<?php echo $cate->id;?>')" > <?php echo $cate->nombre; ?></a>
 			<?php
 				}
 			}	

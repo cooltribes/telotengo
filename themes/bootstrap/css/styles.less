@@ -4,16 +4,32 @@
 
 @white:#fff;
 @blue:#00a5e2;
-@yellow: #ffe45c;
-@green: #08caa2;
+@yellow: #f4a611;
+@green: #3ca13c;
 @fucsia: #e93a61;
 @black: #000;
 @gray: #fbfbfb;
 @darkgray:#666;
+@red: #ea2424;
 @b2bOrange:#ff5b0b;
 .white{color:#FFF !important; }
 .red{color:#F00;} 
 .gray{color:#222;}
+
+.yellow-text{
+  font-weight: 900;
+  color:@yellow;
+}
+
+.red-text{ 
+  color: @red;
+  font-weight: 900;
+}
+
+.green-text{
+  font-weight: 900;
+  color:@green;
+}
 
 
 body{ 
@@ -22,7 +38,9 @@ body{
    background-color: #fff;
    color: #555;
 }
-
+.highlighted{
+              color: #ff5b0b !important; 
+              }
 .well{
   background-color: #e5e5e5;
   border-color: #e5e5e5;
@@ -45,7 +63,19 @@ h4{
         url('../fonts/JanepixHandwriting.svg#JanepixHandwriting') format('svg');
 }
 
-
+.underlined{
+  text-decoration: underline;
+}
+.cleanFilter{
+    font-size: 12px;
+    margin-left: 2px;
+    color: #428bca;
+    text-decoration: underline;
+    margin-top: -14px;
+    margin-bottom: 5px;
+    cursor: pointer;
+    display: block;
+}
 .janepix{
    font-family: 'JanepixHandwriting', arial, san-serif;
    font-weight: normal !important;
@@ -315,6 +345,13 @@ h4{
   background-color: #2a9bda;
   color:#FFF;
 
+}
+
+.btn-large{
+  height: 45px !important;
+  font-size:18px !important;
+  line-height: 27px !important;
+  padding:8px 15px;
 }
 
 .btn-sigmablue:visited{
@@ -2018,6 +2055,7 @@ h1{
     border: 2px solid #222;
     padding: 10px 6px; 
     table{
+        margin: 0 auto;
         td.highlighted{
           color: #ec1f24;
           font-weight:900;
@@ -2028,16 +2066,14 @@ h1{
           font-weight:900;
           font-size: 18px;
       }
-      td.call{
-          padding:0px 15%;        
-      }
+     
    /**/   td.name{
           color: #222;
           font-weight:900;
           font-size: 18px;
-          padding-left:15%;
+
       }
-      td{
+      td{ 
         padding: 7px ;
         input.quantity{
             width:60%;
@@ -2045,16 +2081,17 @@ h1{
       } 
     }
     .sellerInfo{
-        padding: 5px 5% 5px 15%;
+        width:95%;
+        margin: 0 auto;
         span{
             display:block;
         }
         .title{
-          font-size:18px;
+          font-size:12px;
         }
         .name{
             font-size:18px;
-            margin-top:12px;
+            margin-top:5px;
             font-weight: 900;
         }
         .location{
@@ -2890,3 +2927,29 @@ h1.dark{
 
     #estado.rechazado {color: #ec1f24}
     #estado.aceptado {color: #00AA00}
+    
+/* SELECCION CATEGORIA PRODUCTO PADRE */
+
+
+.niveles{
+  margin-top: 40px;
+        display: inline-block;
+        border: 2px solid #000;
+        padding: 5px;
+        background: white;
+        width: 240px;
+        height: 400px;
+        overflow-y: scroll;
+        float: left;
+  .active{
+    background-color:@black;
+    color:white; 
+  }
+  a{
+    display:block;
+    padding:5px;
+  }
+}
+
+
+

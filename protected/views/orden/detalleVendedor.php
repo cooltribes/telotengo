@@ -1,112 +1,122 @@
 <?php $this->breadcrumbs=array('Mis Ventas'=>Yii::app()->createUrl('orden/misVentas'),'Orden #'.$model->id); ?> 
 <div id="orderDetail" class="row-fluid margin_top">
     <h2>INTENCION DE COMPRA</h2>
-    <div class="col-md-6 orderInfo no_horizontal_padding margin_top_small">
-
-       <div class="row-fluid clearfix" >        
-           <div class="col-md-6 padding_bottom_small" style="border:1px solid #CCC">
-               <h3 class="margin_top_small">Estado actual: </h3>
-        <?php
-        if($model->estado==0)
-        {?>
-                    <p class="estadoOrden"><span id="estado"><?php echo $model->estados($model->estado);?></span></p>
-        <?php   
-        }
-        if($model->estado==1)
-        {?>
-                    <p class="estadoOrden"><span id="estado" class="aceptado"><?php echo $model->estados($model->estado);?></span></p>
-        <?php   
-        }
-        if($model->estado==2)
-        {?>
-                    <p class="estadoOrden"><span id="estado" class="rechazado"><?php echo $model->estados($model->estado);?></span></p>
-        <?php   
-        }
-        ?>
+    <div class="col-md-4 margin_top_small">
         
-        <?php
-        if($model->estado==0)
-        {
-            echo CHtml::submitButton('Aceptar', array('id'=>'aceptar','name'=>$model->id,'class'=>'btn-orange btn btn-danger btn-large orange_border margin_left')); 
-            echo CHtml::submitButton('Cancelar', array('id'=>'cancelar','name'=>$model->id,'class'=>'btn-orange btn btn-danger btn-large orange_border margin_left')); 
-        }
-        ?>
-           </div>
-       </div>
-   
-      
-      
+        <div class="orderInfo no_horizontal_padding ">
 
-        <div class="margin_top sellerInfo">
-            <p>
-                <span class="name">Información del Comprador</span>
-            </p>
-            <p>
-                <span class="name">N° de Orden:</span>
-                <span class="value"><?php echo $model->id;?></span>
-            </p>
-            <p>
-                <span class="name">Fecha de Emisión:</span>
-                <span class="value"><?php $date = date_create($model->fecha);echo date_format($date, 'd/m/Y H:i:s');?></span>
-            </p>
-            <p>
-                <span class="name">Empresa:</span>
-                <span class="value"><?php echo $model->empresa->razon_social;?></span>
-            </p>
-            <p>
-                <span class="name">RIF:</span>
-                <span class="value"><?php echo $model->empresa->rif;?></span>
-            </p>
-           <!-- <p>
-                <span class="name">Dirección de Envío:</span>
-                <span class="value">Edif. Los Mirtos, Piso 3 Oficina 3 San Cristóbal Edo. Táchira</span>
-           </p> -->
-            <p>
-                <span class="name">Teléfono:</span>
-                <span class="value"><?php echo $model->empresa->telefono;?></span>
-            </p>
-           <p>
-                <span class="name">Correo Electrónico:</span>
-                <span class="value"><?php echo $model->users->email;?></span>
-           </p>
+          
+               <div class="padding_left padding_bottom" style="border:1px solid #CCC">
+                   <h3 class="margin_top_small">Estado actual: </h3>
+            <?php
+            if($model->estado==0)
+            {?>
+                        <p class="estadoOrden"><span id="estado"><?php echo $model->estados($model->estado);?></span></p>
+            <?php   
+            }
+            if($model->estado==1)
+            {?>
+                        <p class="estadoOrden"><span id="estado" class="aceptado"><?php echo $model->estados($model->estado);?></span></p>
+            <?php   
+            }
+            if($model->estado==2)
+            {?>
+                        <p class="estadoOrden"><span id="estado" class="rechazado"><?php echo $model->estados($model->estado);?></span></p>
+            <?php   
+            }
+            ?>
+            
+            <?php
+            if($model->estado==0)
+            {
+                echo CHtml::submitButton('Aceptar', array('id'=>'aceptar','name'=>$model->id,'class'=>'btn-orange btn btn-danger orange_border margin_left')); 
+                echo CHtml::submitButton('Cancelar', array('id'=>'cancelar','name'=>$model->id,'class'=>'btn-orange btn btn-danger orange_border margin_left')); 
+            }
+            ?>
+               </div>
+      
+       
+          
+          
+    
+            <div class="margin_top sellerInfo">
+                <p>
+                    <span class="name">Información del Comprador</span>
+                </p>
+                <p>
+                    <span class="name">N° de Orden:</span>
+                    <span class="value"><?php echo $model->id;?></span>
+                </p>
+                <p>
+                    <span class="name">Fecha de Emisión:</span>
+                    <span class="value"><?php $date = date_create($model->fecha);echo date_format($date, 'd/m/Y H:i:s');?></span>
+                </p>
+                <p>
+                    <span class="name">Empresa:</span>
+                    <span class="value"><?php echo $model->empresa->razon_social;?></span>
+                </p>
+                <p>
+                    <span class="name">RIF:</span>
+                    <span class="value"><?php echo $model->empresa->rif;?></span>
+                </p>
+               <!-- <p>
+                    <span class="name">Dirección de Envío:</span>
+                    <span class="value">Edif. Los Mirtos, Piso 3 Oficina 3 San Cristóbal Edo. Táchira</span>
+               </p> -->
+                <p>
+                    <span class="name">Teléfono:</span>
+                    <span class="value"><?php echo $model->empresa->telefono;?></span>
+                </p>
+               <p>
+                    <span class="name">Correo Electrónico:</span>
+                    <span class="value"><?php echo $model->users->email;?></span>
+               </p>
+            </div>
         </div>
+        <div class="separator"></div>
+        
+        <div class=" orderActions no_horizontal_padding margin_top_small">
+            <h3 class="margin_top_small">Acciones pendientes</h3>
+            <table width="100%" class="table-striped" id="tabla">
+                <col width="30%">
+                <col width="40%">
+                <col width="30%">
+                <thead>
+                    <tr>
+                        <th>Estado</th>
+                        <th>Usuario</th>
+                        <th>Fecha</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach($ordenEstado as $local): ?>
+                    <tr>
+                        <td><?php echo $local->orden->estados($local->estado);?></td>
+                        <td><?php echo $local->user->profile->first_name." ". $local->user->profile->last_name;?></td>
+                        <td><?php $date = date_create($local->fecha);echo date_format($date, 'd/m/Y H:i:s');;?></td>
+                    </tr>
+                    
+                   <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+        
+        
+        
+        
+        
     </div>
     
-    <div class="col-md-6 orderActions no_horizontal_padding margin_top_small">
-        <h3 class="margin_top_small">Acciones pendientes</h3>
-        <table width="100%" class="table-striped" id="tabla">
-            <col width="30%">
-            <col width="40%">
-            <col width="30%">
-            <thead>
-                <tr>
-                    <th>Estado</th>
-                    <th>Usuario</th>
-                    <th>Fecha</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach($ordenEstado as $local): ?>
-                <tr>
-                    <td><?php echo $local->orden->estados($local->estado);?></td>
-                    <td><?php echo $local->user->profile->first_name." ". $local->user->profile->last_name;?></td>
-                    <td><?php $date = date_create($local->fecha);echo date_format($date, 'd/m/Y H:i:s');;?></td>
-                </tr>
-                
-               <?php endforeach; ?>
-            </tbody>
-        </table>
-    </div>
 
-    <div class="col-md-12 cart no_horizontal_padding">
-        <div class="orderContainer margin_top_large margin_bottom">
+    <div class="col-md-8 cart no_horizontal_padding margin_top_small">
+        <div class="orderContainer margin_bottom">
                 <div class="title clearfix">
                    <div class="row-fluid">
                       <div class="col-md-6 no_horizontal_padding">ORDEN #<?php echo $model->id;?></div>
                        <div class="col-md-6 no_horizontal_padding text-right"><?php echo $model->almacen->empresas->razon_social;?></div>
                    </div>
                 </div>
-                <div class="detail">
+                <div class="detail padding_left_small padding_right_small">
                     <table width="100%">
                         <colgroup>
                         <col width="10%">

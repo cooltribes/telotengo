@@ -1,5 +1,15 @@
 <?php /* @var $this Controller */ ?>
 <!DOCTYPE html>
+<head>
+<?php 
+    Header("Cache-Control: must-revalidate");
+    Header("Pragma: cache");
+
+ $offset = 60 * 60 * 24 * 6;
+ $ExpStr = "Expires: " . gmdate("D, d M Y H:i:s", time() + $offset) . " GMT";
+ Header($ExpStr);
+    
+     ?>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
 <link rel="icon" href="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/favicon75.png" type="image/x-icon">
@@ -17,7 +27,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
         #Yii::app()->getClientScript()->registerCssFile($assetUrl.'/css/redmond/jquery-ui.css');
         #Yii::app()->getClientScript()->registerScriptFile($assetUrl.'/js/jquery-ui.min.js');
 ?>
-<head>
+ 
       
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">

@@ -16,11 +16,11 @@
             <ul class="nav navbar-nav navbar-right">
               <li><a href="<?php echo Yii::app()->baseUrl; ?>/tienda">Tienda</a></li>
               <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Usuarios <span class="caret"></span></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Empresas<span class="caret"></span></a>
                 <ul class="dropdown-menu">
                            
-                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/user/admin/solicitudes">Solicitudes</a></li>
                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/user/admin">Usuarios</a></li>
+                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/user/admin/solicitudes">Solicitudes</a></li>                            
                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/almacen/admin">Almacenes</a> </li>
                 </ul>
               </li>
