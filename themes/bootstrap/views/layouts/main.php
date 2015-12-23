@@ -2,12 +2,12 @@
 <!DOCTYPE html>
 <head>
 <?php 
-    Header("Cache-Control: must-revalidate");
+ /*   Header("Cache-Control: must-revalidate");
     Header("Pragma: cache");
 
  $offset = 60 * 60 * 24 * 6;
  $ExpStr = "Expires: " . gmdate("D, d M Y H:i:s", time() + $offset) . " GMT";
- Header($ExpStr);
+ Header($ExpStr);*/
     
      ?>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
