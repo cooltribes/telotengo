@@ -29,6 +29,15 @@ class RecoveryController extends Controller
 									$find->status = 1;
 								}
 								$find->save();
+								$find->refresh();
+								$empresas_id=EmpresasHasUsers::model()->findByAttributes(array('users_id'=>$find->id))->empresas_id;
+								if(!Bolsa::model()->findByAttributes(array('empresas_id'=>$empresas_id))) // si es primera vez que ingresa creele la bolsa
+								{
+									$bolsa= new Bolsa;
+									$bolsa->empresas_id=$empresas_id;
+									$bolsa->save();
+								}
+
 								Yii::app()->user->setFlash('success','Nueva contraseña guardada');
 								$this->redirect('login');
 							}
