@@ -301,6 +301,7 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
                                 			<li><a href="<?php echo Yii::app()->baseUrl; ?>/almacen/administrador";>Almacenes</a></li>
                                 			<li class="separator"></li>
                                 	<?php endif; ?>
+                                	<li><a href="<?php echo Yii::app()->baseUrl; ?>/user/admin/invitarUsuario";>Invitaciones</a></li>
                                 	<li><a href="<?php echo Yii::app()->baseUrl.'/tienda/index';?>">Tienda</a></li>
                                 	<li><a href="<?php echo Yii::app()->baseUrl.'/user/profile/index';?>">Mi perfil</a></li>
 									<li><a href="<?php echo Yii::app()->baseUrl; ?>/site/logout";>Cerrar sesión</a></li>

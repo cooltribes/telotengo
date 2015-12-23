@@ -14,6 +14,8 @@
 			<?php echo $form->labelEx($model,'email'); ?>
 			<?php echo $form->textField($model,'email',array('size'=>60,'maxlength'=>128, 'class'=>'form-control')); ?>
 			<?php echo $form->error($model,'email'); ?>
+			<span class="help-block error" id="esconderEmail" style="display: none;">
+		    </span>
 		</div>
 	</div>
 
@@ -26,8 +28,19 @@
 	</div>
 
 	<?php
+	if(Yii::app()->user->isAdmin())
+	{
 		$models = Empresas::model()->findAll();
+		
+	}
+	else 
+	{
+		$empresas_id=EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id))->empresas_id; // id del que esta intentado entrar
+		$models = Empresas::model()->findAll('id="'.$empresas_id.'"');
+	}
+
 		$list = CHtml::listData($models, 'id', 'razon_social'); 
+
 
 	?>
 	
@@ -88,4 +101,22 @@ $('#User_type').on('change', function() {
 });
 
 
+
+
 </script>
+
+
+<?php 
+
+if(!Yii::app()->user->isAdmin()) /// si no es usuario haga las validaciones, porque no estan funcionando con este layout
+	{?>
+		
+	<script>
+		
+		
+	</script>
+<?php		
+	}
+
+
+?>

@@ -26,8 +26,12 @@ class AdminController extends Controller
 		return array(
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array('admin','addSaldo','delete','create','update','view','cargarSaldo','reclamos','eliminarReclamo',
-								'eliminarComentario','cargaSaldo','invitarUsuario', 'solicitudes'),
+								'eliminarComentario','cargaSaldo', 'solicitudes'),
 				'users'=>UserModule::getAdmins(),
+			),
+			array('allow', 
+				'actions'=>array('invitarUsuario'),
+				'users'=>array('@'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
@@ -219,7 +223,9 @@ class AdminController extends Controller
 		
 		if(isset($_POST['User']))
 		{
+			
 			$model->attributes=$_POST['User'];
+			$model->type=$_POST['User']['type'];	
 			$model->status = 1; #Activo
 			$model->username = $_POST['User']['email']; #Mismo Mail
 			$model->email = $_POST['User']['email']; #Mismo Mail
@@ -239,14 +245,15 @@ class AdminController extends Controller
 			if($model->validate()&&$profile->validate()) {
 				$model->password=Yii::app()->controller->module->encrypting($model->password);
 				if($model->save()) {
+					$model->refresh();
 					$profile->user_id=$model->id;
 					$profile->save();
 					
 					#opcion de que sea invitado por admin para ser parte de empresa
-					if($model->type == 2){
+					if($model->type == 2)
+					{
 						$cargo = $_POST['cargo'];
 						$empresa_id = $_POST['empresas'];
-						
 						#agregar a empresa tiene usuarios
 						$nuevo = new EmpresasHasUsers;
 						$nuevo->empresas_id = $empresa_id;
@@ -260,12 +267,21 @@ class AdminController extends Controller
 					
 					if($model->type == 3) // invitar como cliente
 					{
+						/*if(!Yii::app()->user->isAdmin())
+						{
+							$model->pendiente=1;
+							$model->save();
+						}*/	
 						$model->emailClienteInvitado($model->id, Yii::app()->user->id);
 					}
 
 					Yii::app()->user->setFlash('success',"Usuario invitado correctamente");
 				}
-				$this->redirect(array('admin'));
+				if(Yii::app()->user->isAdmin())
+					$this->redirect(array('admin'));
+				else 
+					$this->redirect(Yii::app()->createUrl('user/profile/index'));
+				
 			}
 		}
 

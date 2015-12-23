@@ -61,6 +61,8 @@ class EmpresasController extends Controller
 	 */
 	public function actionCreate()
 	{
+			
+		#echo Yii::app()->session['cliente'];
 		$model = new Empresas;
 		//$this->layout='//layouts/b2b';
 		$empresa_user = new EmpresasHasUsers();
@@ -76,14 +78,16 @@ class EmpresasController extends Controller
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 		$model->tipoEmpresa="vendedor";
-		if(isset($_POST['Empresas'])){
+		if(isset($_POST['Empresas']))
+		{
 
 			
 			if(isset(Yii::app()->session['vacio'])) //evitar el bug de dejar el registro a medias
 			{
-				/*echo $_POST['Empresas']['otro'];
-				Yii::app()->end();	*/
-				echo Yii::app()->session['usuarionuevo'];
+				
+				
+				$email= Yii::app()->session['usuarionuevo'];
+				
 				$modelado = new RegistrationForm;
         		$profile = new Profile;
 				$profile->regMode = true;
@@ -115,38 +119,16 @@ class EmpresasController extends Controller
 				}
 			}elseif(isset(Yii::app()->session['cliente'])) //evitar el bug de dejar el registro a medias
 			{
-	
-				$modelado = new RegistrationForm;
-        		$profile = new Profile;
+				$user = User::model()->findByPk(Yii::app()->session['cliente']);
+				$email=$user->email;
+        		$profile = Profile::model()->findByPk(Yii::app()->session['cliente']);
 				$profile->regMode = true;
 				$profile->attributes=Yii::app()->session['atributos'];
 				
 				$soucePassword = User::generarPassword();
-				$modelado->email = $user->email;
-				$modelado->status=0;
-				$modelado->username = $user->username; #Mismo Mail
-				$modelado->activkey = UserModule::encrypting(microtime().$soucePassword);
-				$modelado->password = UserModule::encrypting($soucePassword);
-				$modelado->verifyPassword = UserModule::encrypting($modelado->verifyPassword);
-				$modelado->quien_invita = 0; #el mismo, se modifica cuando tenga ID luego del save
-				$modelado->type = User::TYPE_USUARIO_SOLICITA;
-				$profile->user_id=0;
-				
-
-				if($modelado->validate()&&$profile->validate())
-				{
-													echo $user->username."///";echo $user->email;
-				Yii::app()->end();	
-					if($modelado->save()){
-						if(isset(Yii::app()->session['cliente'])){
-							$modelado->quien_invita =Yii::app()->session['quieninvita'];
-							$modelado->save();
-						}
 	
-						$profile->user_id = $modelado->id;
-						$profile->save();	
-					}
-				}
+				$profile->save();
+
 			}
 
 			
@@ -172,7 +154,10 @@ class EmpresasController extends Controller
 			{
 				$model->tipo = $user->type; # el mismo tipo de empresa que recibio en la invitación	
 			}
-
+			
+			/*$user->pendiente=1;
+			$user->save();
+			$user->refresh();*/
 			
 
 			//$almacen->save();
@@ -197,19 +182,25 @@ class EmpresasController extends Controller
 				$almacen->alias=$model->razon_social.' - principal';
 				$almacen->nombre=$model->razon_social.' - principal';
 				$almacen->save();
-				
-				
+
 				$message = new YiiMailMessage;
 				$message->activarPlantillaMandrill();					
 				$body=Yii::app()->controller->renderPartial('//mail/solicitudRecibida', array( '$user'=>$user ),true);				
 				$message->subject= "SOLICITUD RECIBIDA";
 				$message->setBody($body,'text/html');
 								
-				$message->addTo(Yii::app()->session["usuarionuevo"]);
+				$message->addTo($email);
 				Yii::app()->mail->send($message);
 				
 				
-				if(isset(Yii::app()->session['cliente']))
+				if(Yii::app()->session['username']!="admin" && Yii::app()->session['username']!="" && Yii::app()->session['cliente']!="") // para el caso de que la invitacion sea para crear una empresa, hecha por otra empresa
+				{
+					$user->pendiente=1;
+					$user->save();	
+					$this->redirect(array('solicitudFinalizada'));
+				}
+				
+				if(isset(Yii::app()->session['cliente'])) ///LLEVAR HACER LA CONTRASENA CUANDO SE ESTE invitando desde el admin como empresa
 				{
 					$this->redirect(Yii::app()->session['url_act']);
 				}

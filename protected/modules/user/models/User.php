@@ -147,7 +147,7 @@ class User extends CActiveRecord
                 'condition'=>'superuser=1',
             ),
             'notsafe'=>array(
-            	'select' => 'id, username, password, email, activkey, create_at, lastvisit_at, superuser, status, facebook_id, avatar_url, quien_invita',
+            	'select' => 'id, username, password, email, activkey, create_at, lastvisit_at, superuser, status, facebook_id, avatar_url, quien_invita, pendiente',
             ),
         );
     }
@@ -239,9 +239,10 @@ class User extends CActiveRecord
 		$criteria->compare('facebook_id',$this->facebook_id);
 		$criteria->compare('avatar_url',$this->avatar_url);
 		$criteria->compare('avatar_url',$this->avatar_url);
-		$criteria->compare ('registro_password',0, true);
+		$criteria->compare ('pendiente',1, true);
+		#$criteria->compare ('registro_password',0, true);
 		$criteria->compare ('superuser',0, true);
-		$criteria->addCondition('type <> 3');
+		#$criteria->addCondition('type <> 3');
 		$criteria->order = "id DESC";
 		//$criteria->addInCondition('type', array ('1','2', '4'));
 
@@ -405,7 +406,7 @@ class User extends CActiveRecord
 		Yii::app()->session['cargo']=$cargo;
 		Yii::app()->session['invitadoempresa']=$id;
 		
-		$body=Yii::app()->controller->renderPartial('//mail/registroEmpresaInvitado', array( 'activation_url'=>$activation_url ),true);
+		$body=Yii::app()->controller->renderPartial('//mail/registroEmpresaInvitado', array( 'activation_url'=>$activation_url, 'empresa_id'=>$empresa_id ),true);
 		
 		$message->subject="INVITADO COMO MIEMBRO DE EMPRESA";
 		$message->setBody($body,'text/html');
@@ -492,7 +493,7 @@ class User extends CActiveRecord
 					echo 'Agropecuaria';
 					break;
 				case 14:
-					echo 'Banca';
+					echo 'Banca'; 
 					break;
 				case 15:
 					echo 'Energia';
