@@ -30,7 +30,7 @@
 	<?php
 	if(Yii::app()->user->isAdmin())
 	{
-		$models = Empresas::model()->findAll();
+		$models = Empresas::model()->findAll(array('order'=>'razon_social asc'));
 		
 	}
 	else 
