@@ -27,45 +27,45 @@
            <p class="note"><small>Los campos con <span class="required">*</span> son requeridos.</small></p>
             <?php echo $form->errorSummary($model); ?>
        </div>
-       <div class="col-md-4 no_margin_left text_align_right">
+       <div class="col-md-4 col-sm-4 col-xs-4 no_margin_left text_align_right">
              <?php echo $form->labelEx($model,'alt'); ?>         
        </div>
-       <div class="col-md-8">
+       <div class="col-md-8 col-sm-8 col-xs-8">
            <?php echo $form->textField($model,'alt'); ?>
 		   <?php echo $form->error($model,'alt'); ?>
        </div>
        
        
-       <div class="col-md-4 no_margin_left text_align_right margin_top_small">
+       <div class="col-md-4 col-sm-4 col-xs-4 no_margin_left text_align_right margin_top_small">
             <?php echo $form->labelEx($model,'title'); ?>         
        </div>
-       <div class="col-md-8 margin_top_small">           
+       <div class="col-md-8 col-sm-8 col-xs-8 margin_top_small">           
             <?php echo $form->textField($model,'title'); ?>
             <?php echo $form->error($model,'title'); ?>
        </div>
        
        
-       <div class="col-md-4 no_margin_left text_align_right margin_top_small">
+       <div class="col-md-4 col-sm-4 col-xs-4 no_margin_left text_align_right margin_top_small">
          <?php echo $form->labelEx($model,'copy'); ?>            
        </div>
-       <div class="col-md-8 margin_top_small">           
+       <div class="col-md-8 col-sm-8 col-xs-8 margin_top_small">           
         <?php echo $form->textArea($model,'copy',array('style'=>'resize:none','rows'=>'6')); ?>
 
        </div>
        
-       <div class="col-md-4 no_margin_left text_align_right margin_top_small">
+       <div class="col-md-4 col-sm-4 col-xs-4 no_margin_left text_align_right margin_top_small">
         <?php echo $form->labelEx($model,'link'); ?>          
        </div>
-       <div class="col-md-8 margin_top_small">
+       <div class="col-md-8 col-sm-8 col-xs-8 margin_top_small">
            <?php echo $form->textField($model,'link'); ?>
             <?php echo $form->error($model,'link'); ?>            
        </div>
        
        
-       <div class="col-md-4 no_margin_left text_align_right margin_top_small">
+       <div class="col-md-4 col-sm-4 col-xs-4 no_margin_left text_align_right margin_top_small">
         <?php echo $form->labelEx($model,'path'); ?>          
        </div>
-       <div class="col-md-8 margin_top_small">
+       <div class="col-md-8 col-sm-8 col-xs-8 margin_top_small">
            <?php echo CHtml::activeFileField($model, 'path', array('required'=>'required','accept'=>'image/*'));?>
 		  <?php echo $form->error($model,'path'); ?>
 		  <?php if($dimError):?>
@@ -87,7 +87,7 @@
 	
 
 	<div class="buttons col-md-6 col-md-offset-3 margin_top_small">
-		<?php echo CHtml::submitButton('Submit',array('class'=>'btn btn-danger btn-large form-control')); ?>
+		<?php echo CHtml::submitButton('Submit',array('class'=>'btn btn-orange white form-control margin_top_small')); ?>
 	</div>
     
 <?php $this->endWidget(); ?>

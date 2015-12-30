@@ -13,12 +13,69 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
                     <div class="col-md-2 col-sm-2 col-xs-5 no_padding_left">
                         <a href="<?php echo Yii::app()->baseUrl."/site/inhome2"; ?>"><img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/logo.png" width="100%"/></a> 
                     </div>     
-                    <div class="col-md-5 col-sm-5 col-xs-6  no_horizontal_padding" id="headLinks"></div>
+              <!--      <div class="col-md-5 col-sm-5 col-xs-6  no_horizontal_padding" id="headLinks"></div>
                     <div class="col-md-5 col-sm-5  col-xs-6 no_horizontal_padding">
                         <div class="text-right clientService" title="(0800) 568.36.46 - SERVICIO@TELOTENGO.COM">
                             SERVICIO AL CLIENTE: (0800) 568.36.46 | SERVICIO@TELOTENGO.COM
                         </div>
-                    </div> 
+                    </div> -->
+                    <div class="col-md-10 col-sm-10 col-xs-12 no_horizontal_padding">
+                        <div class="row-fluid searchBar">
+                            <div class="col-md-2 col-sm-2 col-xs-2 no_horizontal_padding">
+                                <div class="dropdown">
+                                  <select class="btn btn-default form-control no_radius dropdown-toggle orange_border_left"  id="categorySearch" >
+                                    <option value="" selected>Todas las categorias</option>
+                                 <?php 
+                                 foreach($model as $modelado)
+                                 {?>
+                                  <option value="<?php echo $modelado->id?>"><?php echo $modelado->nombre;?></option>
+                                 <?php  
+                                 }?>      
+                                  </select>
+                                  
+                                <!--  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                    <li><a href="#">Action in <span class="highlighted">Your life</span></a></li>
+                                    <li><a href="#">Another action in <span class="highlighted">Another's life</span></a></li>
+                                    <li class="separator"></li>
+                                    <li><a href="#">Something else here</a></li>
+                                    <li><a href="#">Separated link</a></li>
+                                </ul> -->
+                                </div> 
+                            </div> 
+                            <div class="col-md-9 col-sm-9 col-xs-9 no_horizontal_padding">
+                               <!-- <input class="form-control no_radius orange_border_middle" placeholder:"incluye palabras clave..."/> -->
+                               <?php
+                                    $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
+                                    'id'=>'busqueda',
+                                    'name'=>'busqueda',
+                                    'source'=>Yii::app()->createUrl('Site/autoComplete'),
+                                    'htmlOptions'=>array(
+                                          //'size'=>22,
+                                          'placeholder'=>'Incluye palabras claves...',
+                                          'class'=>'form-control no_radius orange_border_middle',
+                                          //'maxlength'=>45,
+                                        ),
+                                    // additional javascript options for the autocomplete plugin
+                                    'options'=>array(
+                                            'showAnim'=>'fold'
+                                             
+                                            
+                                    ),
+                                    )); 
+                                    ?>
+                            </div>
+                            <div class="col-md-1 col-sm-1 col-xs-1 no_horizontal_padding">
+                                <?php 
+                                $usuario=User::model()->findByPk(Yii::app()->user->id);
+                                echo CHtml::submitButton('Buscar', array('id'=>'botonBusqueda','class'=>'form-control btn-orange btn btn-danger orange_border')); ?>
+                            </div>
+                        </div>
+                        
+                        
+                        
+                    </div>
+                    
+                    
                     <div class="col-md-2 col-sm-2 col-xs-2 no_padding_left" id="categoryMenu">
                         <div class="dropdown drophover">
                                   <a class="form-control text-left dropdown-toggle no_horizontal_padding no_border" id="categoryMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -47,59 +104,74 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
                     </div>
                     
                     <div class="col-md-6 col-sm-6 col-xs-6 no_horizontal_padding" id="searchSet">
-                        <div class="row-fluid searchBar">
-                            <div class="col-md-3 col-sm-3 col-xs-3 no_horizontal_padding">
-                                <div class="dropdown">
-                                  <select class="btn btn-default form-control no_radius dropdown-toggle orange_border_left"  id="categorySearch" >
-                                	<option value="" selected>Todas las categorias</option>
-                                 <?php 
-                                 foreach($model as $modelado)
-								 {?>
-								  <option value="<?php echo $modelado->id?>"><?php echo $modelado->nombre;?></option>
-								 <?php	
-								 }?>      
-                                  </select>
-                                  
-                                <!--  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                    <li><a href="#">Action in <span class="highlighted">Your life</span></a></li>
-                                    <li><a href="#">Another action in <span class="highlighted">Another's life</span></a></li>
-                                    <li class="separator"></li>
-                                    <li><a href="#">Something else here</a></li>
-                                    <li><a href="#">Separated link</a></li>
-                                </ul> -->
-                                </div> 
-                            </div> 
-                            <div class="col-md-7 col-sm-7 col-xs-7 no_horizontal_padding">
-                               <!-- <input class="form-control no_radius orange_border_middle" placeholder:"incluye palabras clave..."/> -->
-                               <?php
-                                    $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
-								    'id'=>'busqueda',
-									'name'=>'busqueda',
-									'source'=>Yii::app()->createUrl('Site/autoComplete'),
-									'htmlOptions'=>array(
-								          //'size'=>22,
-										  'placeholder'=>'Incluye palabras claves...',
-										  'class'=>'form-control no_radius orange_border_middle',
-								          //'maxlength'=>45,
-								        ),
-								    // additional javascript options for the autocomplete plugin
-								    'options'=>array(
-								            'showAnim'=>'fold'
-								             
-								            
-								    ),
-									));	
-									?>
-                            </div>
-                            <div class="col-md-2 col-sm-2 col-xs-2 no_horizontal_padding">
-                                <?php 
-                                $usuario=User::model()->findByPk(Yii::app()->user->id);
-                                echo CHtml::submitButton('Buscar', array('id'=>'botonBusqueda','class'=>'btn-orange btn btn-danger orange_border')); ?>
-                            </div>
-                        </div>
+                        <div style="width: 100%; height: 100%"></div>
                     </div> 
                     <div class="col-md-4 col-sm-4 col-xs-12 no_horizontal_margin no_horizontal_padding">
                         <div class="row-fluid" id="userMenu">
+                            
+                            <div class="col-md-5 col-sm-5 col-xs-5 no_horizontal_padding">
+                                <div class="dropdown drophover menu-tlt padding_left_xsmall">
+                                  <a class="form-control text-left dropdown-toggle no_padding no_border" id="userButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    <div class="row-fluid">
+                                        <div class="col-md-3 col-sm-3 col-xs-3 no_horizontal_padding image">
+                                            <div class="imgContainer">
+                                        
+                                                <?php 
+                                                if(isset($usuario))
+                                                {   if(!is_null($usuario->avatar_url)):
+                                                     ?>   
+                                                    <img src="<?php echo Yii::app()->baseUrl;
+                                                                if(strpos($usuario->avatar_url, ".png")==-1)
+                                                                    echo str_replace(".jpg", "_thumb.jpg", $usuario->avatar_url);
+                                                                else
+                                                                    echo str_replace(".png", "_thumb.png", $usuario->avatar_url); ?>" height="26px" width="26px"/>    
+                                                    
+                                                    <?php  else: ?>
+                                                        <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/favicon75.2.png" width="100%" id="layout-avatar"/>       
+                                                    <?php endif;                                                 
+                                                } 
+    
+                                                ?>
+                                          
+                                                
+                                            </div>
+                                             
+                                        </div>
+                                        <div class="col-md-9 col-sm-9 col-xs-9 no_horizontal_padding title">
+                                             <div class="text user"><?php if(isset($empresas))echo $empresas->empresas->razon_social; else echo $usuario->empresa->razon_social?></div>
+                                             <span class="caret user"></span>
+                                        </div>
+                                        
+                                    </div>                                
+                                  </a>
+                                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                    
+                                <?php
+                                    if(Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id)): ?>
+                                    
+                                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/productoInventario";>Ver Inventario</a></li>
+                                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/seleccion";>Cargar Inventario</a></li>
+                                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/almacen/administrador";>Almacenes</a></li>
+                                             <li class="separator"></li>
+                                        <!--<li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/cargarInbound";>Cargar Inventario Masivo</a></li> -->          
+                                    <?php endif;
+                                     if(Yii::app()->authManager->checkAccess("vendedor", Yii::app()->user->id)): ?>
+                                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/almacen/administrador";>Almacenes</a></li>
+                                            <li class="separator"></li>
+                                    <?php endif; ?>
+                                    <li><a href="<?php echo Yii::app()->baseUrl; ?>/user/admin/invitarUsuario";>Invitaciones</a></li>
+                                    <li><a href="<?php echo Yii::app()->baseUrl.'/tienda/index';?>">Tienda</a></li>
+                                    <li><a href="<?php echo Yii::app()->baseUrl.'/user/profile/index';?>">Mi perfil</a></li>
+                                    <li><a href="<?php echo Yii::app()->baseUrl; ?>/site/logout";>Cerrar sesión</a></li>
+                                  </ul>
+                                </div>
+                            </div>
+                            
+                            
+                            
+                            
+                            
+                            
                             <?php if( Yii::app()->authManager->checkAccess("vendedor", Yii::app()->user->id)): ?>
                                  <div class="col-md-3 col-sm-3 col-xs-3 no_horizontal_padding">
                                  
@@ -255,63 +327,7 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
                                 </div>
                             </div>
                             <?php endif; ?>
-                            <div class="col-md-5 col-sm-5 col-xs-5 no_horizontal_padding">
-                                <div class="dropdown drophover menu-tlt padding_left_xsmall">
-                                  <a class="form-control text-left dropdown-toggle no_padding no_border" id="userButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                    <div class="row-fluid">
-                                        <div class="col-md-3 col-sm-3 col-xs-3 no_horizontal_padding image">
-                                            <div class="imgContainer">
-                                     	
-                                            	<?php 
-                                                if(isset($usuario))
-                                                {   if(!is_null($usuario->avatar_url)):
-                                                     ?>   
-                                                    <img src="<?php echo Yii::app()->baseUrl;
-                                                                if(strpos($usuario->avatar_url, ".png")==-1)
-                                                                    echo str_replace(".jpg", "_thumb.jpg", $usuario->avatar_url);
-                                                                else
-                                                                    echo str_replace(".png", "_thumb.png", $usuario->avatar_url); ?>" height="26px" width="26px"/>    
-                                                    
-                                                    <?php  else: ?>
-                                                        <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/favicon75.2.png" width="100%" id="layout-avatar"/>       
-                                                    <?php endif;                                                 
-                                                } 
-    
-                                                ?>
-                                          
-                                            	
-                                            </div>
-                                             
-                                        </div>
-                                        <div class="col-md-9 col-sm-9 col-xs-9 no_horizontal_padding title">
-                                             <div class="text user"><?php if(isset($empresas))echo $empresas->empresas->razon_social; else echo $usuario->empresa->razon_social?></div>
-                                             <span class="caret user"></span>
-                                        </div>
-                                        
-                                    </div>                                
-                                  </a>
-                                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                    
-								<?php
-                                    if(Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id)): ?>
-                                    
-                                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/productoInventario";>Ver Inventario</a></li>
-                                	 		 <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/seleccion";>Cargar Inventario</a></li>
-                                	 		 <li><a href="<?php echo Yii::app()->baseUrl; ?>/almacen/administrador";>Almacenes</a></li>
-                                	 		 <li class="separator"></li>
-                                	 	<!--<li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/cargarInbound";>Cargar Inventario Masivo</a></li> -->  		
-                                	<?php endif;
-                                	 if(Yii::app()->authManager->checkAccess("vendedor", Yii::app()->user->id)): ?>
-                                			<li><a href="<?php echo Yii::app()->baseUrl; ?>/almacen/administrador";>Almacenes</a></li>
-                                			<li class="separator"></li>
-                                	<?php endif; ?>
-                                	<li><a href="<?php echo Yii::app()->baseUrl; ?>/user/admin/invitarUsuario";>Invitaciones</a></li>
-                                	<li><a href="<?php echo Yii::app()->baseUrl.'/tienda/index';?>">Tienda</a></li>
-                                	<li><a href="<?php echo Yii::app()->baseUrl.'/user/profile/index';?>">Mi perfil</a></li>
-									<li><a href="<?php echo Yii::app()->baseUrl; ?>/site/logout";>Cerrar sesión</a></li>
-                                  </ul>
-                                </div>
-                            </div>
+                            
                         </div>
                     </div>
                     

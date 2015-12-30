@@ -397,7 +397,7 @@ class OrdenController extends Controller
 	   
 	   $model=Orden::model()->findByPk($id);	   
 	   $productoOrden=OrdenHasInventario::model()->findAllByAttributes(array('orden_id'=>$model->id));
-	   $ordenEstado=OrdenEstado::model()->findAllByAttributes(array('orden_id'=>$model->id), array ('order'=>'orden_id desc'));
+	   $ordenEstado=OrdenEstado::model()->findAllByAttributes(array('orden_id'=>$model->id), array ('order'=>'id desc'));
 	   
 		if(Yii::app()->authManager->checkAccess("admin", Yii::app()->user->id)) // si es Administrador
 		{
@@ -450,7 +450,7 @@ class OrdenController extends Controller
 		 $model=Orden::model()->findByPk($id);	
 		 $empresas_id=EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id))->empresas_id; // id del que esta intentado entrar	
 		$productoOrden=OrdenHasInventario::model()->findAllByAttributes(array('orden_id'=>$model->id));
-		$ordenEstado=OrdenEstado::model()->findAllByAttributes(array('orden_id'=>$model->id), array ('order'=>'orden_id desc'));
+		$ordenEstado=OrdenEstado::model()->findAllByAttributes(array('orden_id'=>$model->id), array ('order'=>'id desc'));
 		if(Orden::model()->findBySql("select * from tbl_orden where id=".$id." and almacen_id in (select id from tbl_almacen where empresas_id=".$empresas_id.")")) // la empresa que vendio
 		{
 			$this->render("detalleVendedor", array('model'=>$model, 'productoOrden'=>$productoOrden, 'ordenEstado'=>$ordenEstado));  

@@ -3,6 +3,23 @@ $baseUrl = Yii::app()->baseUrl;
 $cs = Yii::app()->getClientScript();
 $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
 ?>
+<style>
+    .moreOptions .item{
+        width:95%;
+        margin: 0 auto;
+        padding:0px;
+    }
+    .item .title{
+        color: #222;
+        font-weight: 900;
+        font-size: 18px;
+        display:block;
+        text-align: center;
+    }
+    .moreOptions .item .sellerInfo span{
+        display: block;
+    }
+</style>
       <!--  <div class="breadcrumbs margin_top">
                 <a><span>Inicio</span></a>/&nbsp;
                 <a href="<?php ?>"><span><?php echo $categoria->nombre;?></span></a>/&nbsp;
@@ -215,20 +232,23 @@ $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
                   <div class="moreOptions margin_top">
                     <div class="item">
                        <span class="title">Mas opciones de compra</span>    
-                       <?php foreach($otros as $data)
+                       <?php foreach($otros as $key=>$data)
                        {?>
                        	  <div class="sellerInfo">
-                            <span class="name"><?php echo $data->almacen->empresas->razon_social;?></span>
+                            <span class="name"><b><?php echo $data->almacen->empresas->razon_social;?></b></span>
                             <span class="location"><?php echo $data->almacen->ciudad->nombre; ?></span>
-                            <span><b><?php echo $data->formatPrecio;?></b> <?php if($inventario->metodoEnvio==1) echo "Acordado con el cliente"; else echo "A traves del servicio de TELOTENGO"; ?></span>
+                            <span><b><?php echo $data->formatPrecio;?></b> 
+                            <span><small>Envío <?php if($inventario->metodoEnvio==1) echo "acordado con el cliente"; else echo "a través del servicio de TELOTENGO"; ?></span></small></span>
                             	<?php
                             	if(Yii::app()->authManager->checkAccess("comprador", Yii::app()->user->id) || Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id)): 
                   					 ?>
-                            		<button class="btn btn-small btn-unfilled ordenarIndividual" id="<?php echo $data->id;?>"> ORDENAR</button>  
+                            	<div class="text-right">	<button class="btn btn-small btn-unfilled ordenarIndividual" id="<?php echo $data->id;?>"> ORDENAR</button>  </div>
                             	<?php endif; ?>                   
                         </div>
+                        <?php if($key<count($otros)-1): ?>
                          <div class="plainSeparator"></div> 
                        <?php
+                       endif;
                        }
                        ?>                
    
