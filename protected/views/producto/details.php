@@ -21,19 +21,27 @@ $user = $document->findOne($prueba); //busqueda
 	
 	
 # $document->update(array("producto"=>"19"), array('$set'=>array("count"=>"40"))); //modificacion
-var_dump($busqueda);
+#var_dump($busqueda);
 
  ?>
  
+ <style>
+     .mdAttribute--input select, .mdAttribute--input input[type="text"]{
+         line-height: 14px;
+        height: 25px;
+     }
+     
+     
+ </style>
  
- <div class="container">
- <div class="row-fluid">
+ 
+
       <h1>Más detalles<small> - <?php echo $producto->nombre; ?></small></h1>
             <!-- Nav tabs -->
             <!-- SUBMENU ON -->
             <?php echo $this->renderPartial('_menu', array('model'=>$producto, 'activo'=>'detalles')); ?>
- 	<div class="well clearfix">
- 	<form method="post" id="idx">
+ 	<div class="clearfix mdPanel">
+ 	<form method="post" id="idx" class="mdForm">
  <?php
  $i=1;
  $hidden=array();
@@ -47,17 +55,23 @@ var_dump($busqueda);
 	$tipo= $atributo->buscarTipo($atributo->tipo);
 	 $patron= $atributo->buscarPatron();
 	 $mensaje=$atributo->buscarMensaje();
-	$obligatorio= $atributo->buscarObligatorio($atributo->obligatorio);
+	$obligatorio= $atributo->buscarObligatorio($atributo->obligatorio);?>
+    <div class="margin_top row-fluid clearfix mdAttribute">
+        <div class="col-md-4 text-right mdAttribute--name">
+            <?php    echo CHtml::label($atributo->nombre,'etiqueta');  if($obligatorio=="required") echo "*"; ?>
+        </div>
+        <div class="col-md-8 mdAttribute--input">
+
+ <?php   
 	if( $tipo!="range" && (($atributo->tipo_unidad=="" || !isset($atributo->tipo_unidad)))) // si no tiene rango ni tipos de unidad es porque es solo un simple campo de texto
 	{
 	
 		if($atributo->tipo==6) // si es boleano
 		{?>
 			
-			<div class="col-md-6 col-md-offset-3 margin_top_small">
-				<?php echo CHtml::label($atributo->nombre,'etiqueta'); 	if($obligatorio=="required") echo "*";?>
-				<input type="checkbox" <?php echo $producto->buscarBoolean($atributo->nombre);?> name="<?php echo $atributo->nombre?>" id="<?php echo $i;?>" class="<?php echo $tipo;?>"><br>				
-			</div>
+		
+				<input type="checkbox" <?php echo $producto->buscarBoolean($atributo->nombre);?> name="<?php echo $atributo->nombre?>" id="<?php echo $i;?>" class="<?php echo $tipo;?>">				
+		
 		<?php
 		}
 		else 
@@ -65,20 +79,18 @@ var_dump($busqueda);
 			if($atributo->tipo==5) // si es de tipo fecha
 			{
 				?>
-				<div class="col-md-6 col-md-offset-3 margin_top_small">
-					<?php echo CHtml::label($atributo->nombre,'etiqueta'); if($obligatorio=="required") echo "*";?>
-					<input type="date" value="<?php echo isset($busqueda[$producto->cambiarNombre($atributo->nombre)])?  $busqueda[$producto->cambiarNombre($atributo->nombre)]:''; ?>" name="<?php echo $atributo->nombre?>" id="<?php echo $i;?>" class="<?php echo $tipo;?>" <?php echo $obligatorio;?>><br>
-				</div>
+
+					<input type="date" value="<?php echo isset($busqueda[$producto->cambiarNombre($atributo->nombre)])?  $busqueda[$producto->cambiarNombre($atributo->nombre)]:''; ?>" name="<?php echo $atributo->nombre?>" id="<?php echo $i;?>" class="<?php echo $tipo;?>" <?php echo $obligatorio;?>>
+		
 			<?php
 			}
 			else // si es de otro tipo
 			{
 				?>
-				<div class="col-md-6 col-md-offset-3 margin_top_small">
-					<?php echo CHtml::label($atributo->nombre,'etiqueta'); if($obligatorio=="required") echo "*";?>
+			
 					<input type="text" name="<?php echo $atributo->nombre?>" value="<?php echo isset($busqueda[$producto->cambiarNombre($atributo->nombre)])?  $busqueda[$producto->cambiarNombre($atributo->nombre)]:''; ?>" id="<?php echo $i;?>" class="<?php echo $tipo;?>" <?php echo $obligatorio;?> <?php echo $patron;?> <?php echo $mensaje;?>>
-					<span id="<?php echo $i."e";?>" class="error margin_top_small_minus hide"><br/><small>Formato no válido</small></span><br>
-				</div>
+					<span id="<?php echo $i."e";?>" class="error margin_top_small_minus hide"><br/><small>Formato no válido</small></span>
+			
 				<?php	
 			}	
 		}	
@@ -95,11 +107,8 @@ var_dump($busqueda);
 				// dropdown
 				?>
 
-				<div class="col-md-6 col-md-offset-3 margin_top_small">
-				<?php 
-				echo CHtml::label($atributo->nombre,'etiqueta'); if($obligatorio=="required") echo "*";
-				$rango=explode(",", $unidad->rango);
-				?>
+				
+				<?php $rango=explode(",", $unidad->rango);?>
 				<input type="text" name="<?php echo $atributo->nombre?>" value="<?php echo isset($busqueda[$producto->cambiarNombre($atributo->nombre)])?  $busqueda[$producto->cambiarNombre($atributo->nombre)]:''; ?>" id="<?php echo $i;?>" class="<?php echo $tipo;?>" <?php echo $obligatorio;?> <?php echo $patron;?> <?php echo $mensaje;?>>
 				
 				<select name="<?php echo $atributo->nombre;?>*-*UNIDAD">
@@ -114,16 +123,14 @@ var_dump($busqueda);
 				?>
 				</select>
 				
-				<span id="<?php echo $i."e";?>" class="error margin_top_small_minus hide"><br/><small>Formato no válido</small></span><br>
-				</div>
+				<span id="<?php echo $i."e";?>" class="error margin_top_small_minus hide"><br/><small>Formato no válido</small></span>
+	
 				<?php
 			}
 			else ///ESTE CASO NUNCA VA A PASAR( POR AHORA)
 			{?>
-				<div class="col-md-6 col-md-offset-3 margin_top_small" id="<?php echo "checkbox-".$i?>">
-				<?php 
-				echo CHtml::label($atributo->nombre,'etiqueta');if($obligatorio=="required") echo "*";?><br> <?php
-				$rango=explode(",", $unidad->rango); ?>
+				<div id="<?php echo "checkbox-".$i?>">
+				<?php $rango=explode(",", $unidad->rango); ?>
 				<input type="text" name="<?php echo $atributo->nombre?>" value="<?php echo isset($busqueda[$producto->cambiarNombre($atributo->nombre)])?  $busqueda[$producto->cambiarNombre($atributo->nombre)]:''; ?>" id="<?php echo $i;?>" class="<?php echo $tipo;?>" <?php echo $obligatorio;?> <?php echo $patron;?> <?php echo $mensaje;?>>
 				<?php
 				$j=1;
@@ -131,7 +138,7 @@ var_dump($busqueda);
 				{
 					$arreglo=explode("==", $ra);
 				?>				
-					<input type="checkbox" name="<?php echo $arreglo[1];?>" id="<?php echo $i."a".$j?>" value="<?php echo $arreglo[1];?>"><?php echo $arreglo[1];?><br>
+					<input type="checkbox" name="<?php echo $arreglo[1];?>" id="<?php echo $i."a".$j?>" value="<?php echo $arreglo[1];?>"><?php echo $arreglo[1];?>
 				<?php
 				$j++;
 				}
@@ -147,11 +154,7 @@ var_dump($busqueda);
 			if($atributo->multiple==0)
 			{
 				// dropdown
-				?>
-
-				<div class="col-md-6 col-md-offset-3 margin_top_small">
-				<?php 
-				echo CHtml::label($atributo->nombre,'etiqueta');if($obligatorio=="required") echo "*";
+				
 				$rango=explode(",", $atributo->rango);
 				?>
 				
@@ -159,7 +162,7 @@ var_dump($busqueda);
 				if($atributo->obligatorio==1)
 				{
 				?>
-					<select class="form-control" name="<?php echo $atributo->nombre;?>">
+					<select class="" name="<?php echo $atributo->nombre;?>">
 					<?php 
 					foreach($rango as $ra)
 					{
@@ -175,7 +178,7 @@ var_dump($busqueda);
 				else
 				{
 				?>
-					<select class="form-control" name="<?php echo $atributo->nombre;?>">
+					<select class="" name="<?php echo $atributo->nombre;?>">
 					<option  value="opcion-vacia">Seleccione una opcion, en caso contrario deje esta opcion</option>
 					<?php 
 					foreach($rango as $ra)
@@ -192,15 +195,14 @@ var_dump($busqueda);
 				}
 				?>
 				
-				</div>
+			
 				<?php
 			}
 			else 
 			{?>
-				<div class="col-md-6 col-md-offset-3 margin_top_small" id="<?php echo "checkbox-".$i?>">
-				<?php 
-				echo CHtml::label($atributo->nombre,'etiqueta'); if($obligatorio=="required") echo "*"; ?>
-				<span class="error" id="<?php echo $atributo->nombre_mongo ?>_error" style="display:none">Seleccione una o mas opciones</span><br> <?php
+				<div id="<?php echo "checkbox-".$i?>">
+
+				<span class="error" id="<?php echo $atributo->nombre_mongo ?>_error" style="display:none">Seleccione una o mas opciones</span> <?php
 				
                     
 				$rango=explode(",", $atributo->rango);
@@ -235,12 +237,17 @@ var_dump($busqueda);
 	echo "\n";
 	$i++;
 	//if(($atributo->tipo_unidad=="" || isset($atributo->tipo_unidad)) && ($atributo->rango=="" || isset($atributo->rango))) // si no tiene rango ni tipos de unidad es porque es solo un simple campo de texto
- }
+ ?> 
+    </div>
+ 
+ </div>
+<?php
+}
 
  ?>
- 	<div id="avanzar" class="col-md-6 col-md-offset-3 margin_top" >
+ 	<div id="avanzar" class="margin_top row-fluid clearfix" >
 			
-			<button class="btn btn-danger form-control" title="Guardar" id="btnx" type="submit">Guardar</button>
+			<button class="btn btn-orange white col-md-6 col-md-offset-2" title="Guardar" id="btnx" type="submit">Guardar</button>
 	</div>
 	
 	</form>

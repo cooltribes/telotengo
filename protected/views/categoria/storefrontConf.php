@@ -16,27 +16,27 @@
         <div class="col-md-12 no_horizontal_padding">
             <div class="row-fluid">
            
-                    <div onclick="js:modal(2,false);" class="col-md-4 margin_top subcat" >
+                    <div onclick="js:modal(2,false);" class="col-md-4 col-sm-4 col-xs-4 margin_top subcat" >
                               <?php echo $imConf->getImage($name='categoria',$index=2, $categoria_id=$model->id);?>
                               <span class="imgNumber small">2</span>
                     </div>
-                    <div onclick="js:modal(3,false);" class="col-md-4 margin_top subcat" >
+                    <div onclick="js:modal(3,false);" class="col-md-4 col-sm-4 col-xs-4 margin_top subcat" >
                               <?php echo $imConf->getImage($name='categoria',$index=3, $categoria_id=$model->id);?>
                               <span class="imgNumber  small">3</span>
                     </div>
-                    <div onclick="js:modal(4,false);" class="col-md-4 margin_top subcat" >
+                    <div onclick="js:modal(4,false);" class="col-md-4 col-sm-4 col-xs-4 margin_top subcat" >
                               <?php echo $imConf->getImage($name='categoria',$index=4, $categoria_id=$model->id);?>
                               <span class="imgNumber  small">4</span>
                     </div>
-                    <div onclick="js:modal(5,false);" class="col-md-4 margin_top subcat" >
+                    <div onclick="js:modal(5,false);" class="col-md-4 col-sm-4 col-xs-4 margin_top subcat" >
                               <?php echo $imConf->getImage($name='categoria',$index=5, $categoria_id=$model->id);?>
                               <span class="imgNumber  small">5</span>
                     </div>
-                    <div onclick="js:modal(6,false);" class="col-md-4 margin_top subcat" >
+                    <div onclick="js:modal(6,false);" class="col-md-4 col-sm-4 col-xs-4 margin_top subcat" >
                               <?php echo $imConf->getImage($name='categoria',$index=6, $categoria_id=$model->id);?>
                               <span class="imgNumber  small">6</span>
                     </div>
-                    <div onclick="js:modal(7,false);" class="col-md-4 margin_top subcat" >
+                    <div onclick="js:modal(7,false);" class="col-md-4 col-sm-4 col-xs-4 margin_top subcat" >
                               <?php echo $imConf->getImage($name='categoria',$index=7, $categoria_id=$model->id);?>
                               <span class="imgNumber  small">7</span>
                     </div>

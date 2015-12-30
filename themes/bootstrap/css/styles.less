@@ -1573,17 +1573,35 @@ a{
         text-align: center !important;
     }
 
+.categoriaHome{
+    list-style-type:inherit !important;
+    
+    li{
+      a{
+        
+      }
+    }
+}
+
 .categoriasHome{
   .categoriaHome{
+    list-style-type:inherit !important;
+    padding-right: 15px;
   li{
         font-weight: 800; 
-        font-size: 12px;
+        font-size: 14px;
         padding-left: 0px;
         padding-right: 5px;
     }
   } 
   a{
-    color:#222 !important;
+    color:#333 !important;
+    margin-left: -5px;    
+    font-weight: 500;
+  }
+  
+  h3 a{
+    font-weight: 900;
   }
 }
 
@@ -1874,8 +1892,11 @@ a{
               display:block
             }
             ul{
-              list-style:none;
+              list-style:inherit;
               padding-left: 0px;
+              li{
+                font-size: 13px;
+              }
               
             }
         }
@@ -1919,7 +1940,7 @@ a{
 .itemGridView:hover{
   text-decoration: none;  
   .orange_border;
-  .name{
+ /* .name{
     width:65%;
     transition: width 1s linear;
     float: left;
@@ -1954,7 +1975,7 @@ a{
       display: block;
       transition:display 1s linear;
     } 
-  }
+  }*/
 }
 
 .pager{
@@ -2879,18 +2900,50 @@ h1.dark{
       }     
       
     }
-     .sellerInfo p{
-        margin:1px 0px; 
-        span.name{
-          font-weight: bold;             
-        }             
-    }  
-    
+       h4{
+         color: #444;
+         font-weight: bolder;
+         margin: 0px;
+         font-size: 16px;
+       }
+       h3{
+         color: #444;
+         font-weight: bolder;
+         text-transform: uppercase;
+         margin: 0px;
+         font-size: 16px;
+       }
+       
+
+   
+     .sellerInfo{
+       
+       ul{
+         margin:1px 0px;
+         /*list-style: inherit;
+          margin:1px 0px 1px 10px; */
+        li{
+          span{
+            font-size: 13px;
+          }
+          span.name{
+            font-weight: bold;             
+          }  
+        }            
+      }  
+     } 
+     
 }
 .orderActions{
+  h4{
+         color: #444;
+         font-weight: bolder;
+         margin: 0px;
+         font-size: 16px;
+       }
   table{
     margin-top:5px;
-    font-size: 16px;
+    font-size: 13px;
     font-weight:500;
     thead > tr > th
     {
@@ -2952,8 +3005,10 @@ h1.dark{
 } 
 a.blueLink{
   color: #428bca;
-  text-decoration: underline;
-  font-size: 14px;
+  font-size: 14px; 
+}
+a.blueLink:hover{
+  text-decoration:underline;
 }
 
 .dropdown.drophover.menu-tlt:hover{

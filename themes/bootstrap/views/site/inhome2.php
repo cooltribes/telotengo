@@ -4,7 +4,7 @@
                    
 <!-- +++++++++++++++++++++++++++++ CATEGORIAS ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->                   
                    <div class="col-md-12 no_horizontal_padding">
-                       <section class="row-fluid">
+                       <section class="row-fluid categoriasHome">
                        	<?php foreach($model as $modelado)
                        	{
                        		$interno = Categoria::model()->findAllBySql("select * from tbl_categoria where id_padre =".$modelado->id." order by destacado desc limit 6");
@@ -18,7 +18,7 @@
                                        <ul class="categoriaHome">
                                        	<?php foreach ($interno as $inter)
 										{?>
-											<li><a href='<?php echo Yii::app()->createUrl('tienda/index', array('url'=>$modelado->seo->amigable))?>'><?php echo $inter->nombre?></a></li>
+											<li><a href='<?php echo Yii::app()->createUrl('tienda/index', array('categoria'=>$inter->url_amigable))?>'><?php echo $inter->nombre?></a></li>
 										<?php	
 										} ?>
                                        </ul>

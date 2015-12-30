@@ -1,111 +1,7 @@
 <?php $this->breadcrumbs=array('Mis Ventas'=>Yii::app()->createUrl('orden/misVentas'),'Orden #'.$model->id); ?> 
 <div id="orderDetail" class="row-fluid margin_top">
-    <h2>INTENCION DE COMPRA</h2>
-    <div class="col-md-4 margin_top_small">
-        
-        <div class="orderInfo no_horizontal_padding ">
-
-          
-               <div class="padding_left padding_bottom" style="border:1px solid #CCC">
-                   <h3 class="margin_top_small">Estado actual: </h3>
-            <?php
-            if($model->estado==0)
-            {?>
-                        <p class="estadoOrden"><span id="estado"><?php echo $model->estados($model->estado);?></span></p>
-            <?php   
-            }
-            if($model->estado==1)
-            {?>
-                        <p class="estadoOrden"><span id="estado" class="aceptado"><?php echo $model->estados($model->estado);?></span></p>
-            <?php   
-            }
-            if($model->estado==2)
-            {?>
-                        <p class="estadoOrden"><span id="estado" class="rechazado"><?php echo $model->estados($model->estado);?></span></p>
-            <?php   
-            }
-            ?>
-            
-            <?php
-            if($model->estado==0)
-            {
-                echo CHtml::submitButton('Aceptar', array('id'=>'aceptar','name'=>$model->id,'class'=>'btn-orange btn btn-danger orange_border margin_left')); 
-                echo CHtml::submitButton('Cancelar', array('id'=>'cancelar','name'=>$model->id,'class'=>'btn-orange btn btn-danger orange_border margin_left')); 
-            }
-            ?>
-               </div>
-      
-       
-          
-          
+    <h2>SOLICITUD DE VENTA</h2>
     
-            <div class="margin_top sellerInfo">
-                <p>
-                    <span class="name">Información del Comprador</span>
-                </p>
-                <p>
-                    <span class="name">N° de Orden:</span>
-                    <span class="value"><?php echo $model->id;?></span>
-                </p>
-                <p>
-                    <span class="name">Fecha de Emisión:</span>
-                    <span class="value"><?php $date = date_create($model->fecha);echo date_format($date, 'd/m/Y H:i:s');?></span>
-                </p>
-                <p>
-                    <span class="name">Empresa:</span>
-                    <span class="value"><?php echo $model->empresa->razon_social;?></span>
-                </p>
-                <p>
-                    <span class="name">RIF:</span>
-                    <span class="value"><?php echo $model->empresa->rif;?></span>
-                </p>
-               <!-- <p>
-                    <span class="name">Dirección de Envío:</span>
-                    <span class="value">Edif. Los Mirtos, Piso 3 Oficina 3 San Cristóbal Edo. Táchira</span>
-               </p> -->
-                <p>
-                    <span class="name">Teléfono:</span>
-                    <span class="value"><?php echo $model->empresa->telefono;?></span>
-                </p>
-               <p>
-                    <span class="name">Correo Electrónico:</span>
-                    <span class="value"><?php echo $model->users->email;?></span>
-               </p>
-            </div>
-        </div>
-        <div class="separator"></div>
-        
-        <div class=" orderActions no_horizontal_padding margin_top_small">
-            <h3 class="margin_top_small">Acciones pendientes</h3>
-            <table width="100%" class="table-striped" id="tabla">
-                <col width="30%">
-                <col width="40%">
-                <col width="30%">
-                <thead>
-                    <tr>
-                        <th>Estado</th>
-                        <th>Usuario</th>
-                        <th>Fecha</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach($ordenEstado as $local): ?>
-                    <tr>
-                        <td><?php echo $local->orden->estados($local->estado);?></td>
-                        <td><?php echo $local->user->profile->first_name." ". $local->user->profile->last_name;?></td>
-                        <td><?php $date = date_create($local->fecha);echo date_format($date, 'd/m/Y H:i:s');;?></td>
-                    </tr>
-                    
-                   <?php endforeach; ?>
-                </tbody>
-            </table>
-        </div>
-        
-        
-        
-        
-        
-    </div>
     
 
     <div class="col-md-8 cart no_horizontal_padding margin_top_small">
@@ -172,6 +68,131 @@
                    
                 </div>
             </div>
+    </div>
+    
+    
+    <div class="col-md-4 margin_top_small">
+        
+        <div class="orderInfo no_horizontal_padding ">
+
+          
+           
+            <?php
+            if($model->estado==0)
+            {?>
+                <div class="padding_left padding_bottom" style="border:1px solid #CCC">
+                   <h4 class="margin_top_small">Estado actual </h4>
+                   <p class="estadoOrden"><span id="estado" class="yellow-text"><?php echo $model->estados($model->estado);?></span></p> 
+           <?php    echo CHtml::submitButton('Aceptar', array('id'=>'aceptar','name'=>$model->id,'class'=>'btn-orange btn btn-danger orange_border margin_left')); 
+                    echo CHtml::submitButton('Cancelar', array('id'=>'cancelar','name'=>$model->id,'class'=>'btn-orange btn btn-danger orange_border margin_left')); ?> 
+                </div>
+                    
+            <?php   
+            }
+            if($model->estado==1)
+            {?>         <h4>Estado actual </h4>
+                        <p class="estadoOrden"><span id="estado" class="aceptado"><?php echo $model->estados($model->estado);?></span></p>
+            <?php   
+            }
+            if($model->estado==2)
+            {?>         <h4>Estado actual </h4>
+                        <p class="estadoOrden"><span id="estado" class="rechazado"><?php echo $model->estados($model->estado);?></span></p>
+            <?php   
+            }
+            ?>
+        
+       
+            <div class="margin_top sellerInfo">
+   
+                    <h3>Información del Comprador</h3>
+          
+               <ul>
+                   <li>
+        
+                            <span class="name">N° de Orden:</span>
+                            <span class="value"><?php echo $model->id;?></span>
+                
+                   </li>
+            
+                   <li>
+                  
+                            <span class="name">Fecha de Emisión:</span>
+                            <span class="value"><?php $date = date_create($model->fecha);echo date_format($date, 'd/m/Y H:i:s');?></span>
+              
+                       
+                   </li>
+                   <li>
+                
+                            <span class="name">Empresa:</span>
+                            <span class="value"><?php echo $model->empresa->razon_social;?></span>
+                 
+                   </li>
+                   <li>
+                    
+                            <span class="name">RIF:</span>
+                            <span class="value"><?php echo $model->empresa->rif;?></span>
+                   
+                   </li>
+                   <li>
+               
+                            <span class="name">Teléfono:</span>
+                            <span class="value"><?php echo $model->empresa->telefono;?></span>
+                      
+                       
+                   </li>
+                   <li>
+                     
+                            <span class="name">Correo Electrónico:</span>
+                            <span class="value"><?php echo $model->users->email;?></span>
+                       
+                   </li>
+                   
+                   
+               </ul>
+                
+               
+                
+                
+               <!-- <p>
+                    <span class="name">Dirección de Envío:</span>
+                    <span class="value">Edif. Los Mirtos, Piso 3 Oficina 3 San Cristóbal Edo. Táchira</span>
+               </p> -->
+                
+               
+            </div>
+        </div>
+        <div class="separator margin_top_small margin_bottom_small"></div>
+        
+        <div class=" orderActions no_horizontal_padding margin_top_small">
+            <h4 class="margin_top_small">Acciones pendientes</h4>
+            <table width="100%" class="table-striped" id="tabla">
+                <col width="30%">
+                <col width="40%">
+                <col width="30%">
+                <thead>
+                    <tr>
+                        <th>Estado</th>
+                        <th>Usuario</th>
+                        <th>Fecha</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach($ordenEstado as $local): ?>
+                    <tr>
+                        <td><?php echo $local->orden->estados($local->estado);?></td>
+                        <td><?php echo $local->user->profile->first_name." ". $local->user->profile->last_name;?></td>
+                        <td><?php $date = date_create($local->fecha);echo date_format($date, 'd/m/Y H:i:s');;?></td>
+                    </tr>
+                    
+                   <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+        
+        
+        
+        
+        
     </div>
     
     
