@@ -76,31 +76,32 @@
         <div class="orderInfo no_horizontal_padding ">
 
           
-           
-            <?php
-            if($model->estado==0)
-            {?>
-                <div class="padding_left padding_bottom" style="border:1px solid #CCC">
+            <div class="padding_left" style="border:1px solid #CCC">
                    <h4 class="margin_top_small">Estado actual </h4>
+            <?php
+            if($model->estado==0) 
+            {?>
+               
                    <p class="estadoOrden"><span id="estado" class="yellow-text"><?php echo $model->estados($model->estado);?></span></p> 
-           <?php    echo CHtml::submitButton('Aceptar', array('id'=>'aceptar','name'=>$model->id,'class'=>'btn-orange btn btn-danger orange_border margin_left')); 
-                    echo CHtml::submitButton('Cancelar', array('id'=>'cancelar','name'=>$model->id,'class'=>'btn-orange btn btn-danger orange_border margin_left')); ?> 
+                   <div class="padding_bottom">
+           <?php    echo CHtml::submitButton('Aceptar', array('id'=>'aceptar','name'=>$model->id,'class'=>'btn-orange btn orange_border margin_left white')); 
+                    echo CHtml::submitButton('Cancelar', array('id'=>'cancelar','name'=>$model->id,'class'=>'btn btn-darkgray margin_left')); ?> 
                 </div>
                     
             <?php   
             }
             if($model->estado==1)
-            {?>         <h4>Estado actual </h4>
+            {?>       
                         <p class="estadoOrden"><span id="estado" class="aceptado"><?php echo $model->estados($model->estado);?></span></p>
             <?php   
             }
             if($model->estado==2)
-            {?>         <h4>Estado actual </h4>
+            {?>       
                         <p class="estadoOrden"><span id="estado" class="rechazado"><?php echo $model->estados($model->estado);?></span></p>
             <?php   
             }
             ?>
-        
+        </div>
        
             <div class="margin_top sellerInfo">
    

@@ -1333,6 +1333,19 @@ a:hover, a:focus{
 }
 #userMenu{
   cursor: pointer;
+  .dropdown.drophover:hover{
+    #orderButton, #cartButton, #userButton{
+      .no_radius;
+        background: #fff;
+      background: -moz-linear-gradient(top,transparent 0,#fff 20%,#dadada 80%,#d6d6d6 100%);
+      background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,transparent),color-stop(20%,#fff),color-stop(80%,#dadada),color-stop(100%,#d6d6d6));
+      background: -webkit-linear-gradient(top,transparent 0,#fff 20%,#dadada 80%,#d6d6d6 100%);
+      background: -o-linear-gradient(top,transparent 0,#fff 20%,#dadada 80%,#d6d6d6 100%);
+      background: -ms-linear-gradient(top,transparent 0,#fff 20%,#dadada 80%,#d6d6d6 100%); 
+      background: linear-gradient(to bottom,transparent 0,#fff 20%,#dadada 80%,#d6d6d6 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#d6d6d6', GradientType=0);  
+    }
+  }
   .title{
     text-align: left;
     padding-top:7px;
@@ -1446,7 +1459,20 @@ a:hover, a:focus{
     text-overflow: ellipsis;
     
 }
+.searchBar>.col-md-3{
+    width: 28.5%;
+}
+.searchBar>.col-md-2{
+    width: 12.5%;
+}
+.searchBar>.col-md-7{
+    width: 58.99%;
+}
+
 .searchBar{
+  
+  
+  
   button, input{
       height: 34px;
       font-size: 14px;
@@ -1894,8 +1920,17 @@ a{
             ul{
               list-style:inherit;
               padding-left: 0px;
+              margin-left:15px;
+              margin-bottom: 5px;
+              margin-top: 6px;
               li{
-                font-size: 13px;
+                height:15px;
+                span{
+                  margin-left: -5px;
+                  font-size: 13px;
+                }
+                
+                
               }
               
             }
