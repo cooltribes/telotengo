@@ -97,21 +97,21 @@
                    		{
                    			if($quitar==0):
                    			?>
-                   				<li>Unidades: <?php echo $inventario->cantidad;?></li>
+                   				<li><span>Unidades: <?php echo $inventario->cantidad;?></span></li>
                    		<?php
 							endif;
 							if($quitar==1):
                    			?>
-                   				<li>Unidades: <?php echo $inventario['cantidad'];?></li>
+                   				<li><span>Unidades: <?php echo $inventario['cantidad'];?></span></li>
                    		<?php
 							endif;
 						}
 						else 
 						{?>
-							 <li>Unidades:  <?php echo $modelado['cantidad'];?></li>
+							 <li><span>Unidades:  <?php echo $modelado['cantidad'];?></span></li>
 						<?php
 						} ?>
-					<li>Proveedores: <?php echo $contador;?></li>
+					<li><span>Proveedores: <?php echo $contador;?></span></li>
                    
                    </ul>
                    

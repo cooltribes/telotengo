@@ -76,7 +76,8 @@
         <div class="orderInfo no_horizontal_padding ">
 
           
-           <h4>Estado actual </h4>
+           <div class="padding_left" style="border:1px solid #CCC">
+                   <h4 class="margin_top_small">Estado actual </h4>
             <?php
             if($model->estado==0)
             {?>
@@ -98,7 +99,7 @@
             <?php   
             }
             ?>
-        
+        </div>
        
             <div class="margin_top sellerInfo">
    
