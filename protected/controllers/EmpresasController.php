@@ -155,14 +155,6 @@ class EmpresasController extends Controller
 				$model->tipo = $user->type; # el mismo tipo de empresa que recibio en la invitación	
 			}
 			
-			/*$user->pendiente=1;
-			$user->save();
-			$user->refresh();*/
-			
-
-			//$almacen->save();
-			 
-
 
 			if($model->save()){
 				$model->refresh();
@@ -192,7 +184,12 @@ class EmpresasController extends Controller
 				$message->addTo($email);
 				Yii::app()->mail->send($message);
 				
-				
+				if(Yii::app()->session['tipo']=="") // en caso de ser una peticion normal
+				{
+					$user->pendiente=1;
+					$user->save();	
+					$this->redirect(array('solicitudFinalizada'));
+				}
 				if(Yii::app()->session['username']!="admin" && Yii::app()->session['username']!="" && Yii::app()->session['cliente']!="") // para el caso de que la invitacion sea para crear una empresa, hecha por otra empresa
 				{
 					$user->pendiente=1;

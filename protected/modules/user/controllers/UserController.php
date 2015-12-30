@@ -636,8 +636,11 @@ class UserController extends Controller
 		 $clienteEmpresa="";
 		 $tipoUsuario="";
 		 //session_unset();
-		 /* Yii::app()->session['username']="";
-		  Yii::app()->session['cliente']="";*/
+		 Yii::app()->session['username']="";
+		  Yii::app()->session['cliente']="";
+		  Yii::app()->session['tipo']="";
+		  if(isset($_GET['tipo']))
+		  	 Yii::app()->session['tipo']=$_GET['tipo'];
 		//$_GET['u'];	
 		 if(isset($_GET['id']))
 		 {
@@ -818,6 +821,10 @@ class UserController extends Controller
         #$model->status=1-$model->status;
 		if($model->registro_password==0)
 		{
+			if($model->status==0)
+			{
+				$model->status=1;
+			}		
 			$rol=$model->buscarRol($id);
 			$model->registro_password=1;
 			$model->newPassword($id, $rol);
