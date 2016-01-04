@@ -80,7 +80,7 @@
                     <?php $this->widget('bootstrap.widgets.TbButton', array(
                         'buttonType'=>'submit',
                         'type'=>'danger',
-                        'size'=>'large',
+                        
                         'label'=>"Ingresa",
                         'htmlOptions'=>array('class'=>'btn-block btn-orange', 'id'=>'btn-login-b2b'),
                     )); ?>

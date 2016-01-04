@@ -1198,6 +1198,8 @@ class ProductoController extends Controller
 		if(isset($_POST['Inventario'])){
 			$inventario->almacen_id = $_POST['Inventario']['almacen_id'];
 			$inventario->producto_id = $_POST['Inventario']['producto_id'];
+            $inventario->iva = $_POST['Inventario']['iva'];
+            $inventario->precio_iva = $_POST['Inventario']['precio_iva'];
 			
 			if(isset(Yii::app()->session['almacen_id']))
 			{

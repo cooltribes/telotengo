@@ -34,12 +34,12 @@
                <?php
                if(isset($imagenPrincipal))
                {?>
-               		<img  width="90" height="90" src="<?php echo Yii::app()->getBaseUrl(true).$imagenPrincipal->url;?>"/>
+               		<img  width="180" height="180" src="<?php echo Yii::app()->getBaseUrl(true).$imagenPrincipal->url;?>"/>
                <?php
                }
                else
                {?>
-               		<img src="http://placehold.it/200x200" width="90" height="90"/>
+               		<img src="http://placehold.it/200x200" width="180" height="180"/>
 			   <?php
 			   }?>
                 

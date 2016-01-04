@@ -35,7 +35,7 @@
              </div>
         </div>
         <div class="col-md-2 col-sm-3 no_horizontal_padding text_align_center">
-             <?php echo CHtml::button('Solicitar invitación', array('id'=>'submit-btn','class'=>'btn-block btn-orange btn btn-danger btn-large','onclick'=>'exists()')); ?> 
+             <?php echo CHtml::button('Solicitar invitación', array('id'=>'submit-btn','class'=>'btn-block btn-orange btn btn-danger','onclick'=>'exists()')); ?> 
         </div>
         
         <?php $this->endWidget(); ?>
