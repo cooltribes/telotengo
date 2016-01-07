@@ -370,5 +370,6 @@ class Inventario extends CActiveRecord
             return Yii::app()->numberFormatter->format('###,###,##0',$this->precio);
     
     }
+    
 
 }

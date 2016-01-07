@@ -374,7 +374,7 @@ class CategoriaController extends Controller
         if($seo){  
             $categoria=Categoria::model()->findByAttributes(array('id_seo'=>$seo->id)); 
             if($categoria)
-                $this->render('category',array('model'=>$categoria,'imagenes'=>$categoria->getStorefrontImgs(2,7),'mainImg'=>$categoria->getStorefrontImgs(1,1))); 
+                $this->render('category',array('model'=>$categoria,'imagenes'=>$categoria->getStorefrontImgs(2,7),'mainImg'=>$categoria->getStorefrontImgs(1,2))); 
         }
         else
             throw new CHttpException(404,'Categoría no encontrada');

@@ -95,4 +95,59 @@ class BolsaHasInventario extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+    
+        protected function afterSave()
+    {
+        $historial= new HistorialBolsa;
+        $historial->users_id= Yii::app()->user->id;
+        $historial->bolsa_has_inventario_id=$this->id;
+        $historial->fecha=date("Y-m-d H:i:s"); 
+        if($this->isNewRecord ){
+            $historial->tipo=1;
+            $historial->descripcion="Adición de producto (".$this->cantidad." unds.)";
+            $historial->save();
+        }
+        
+        parent::afterSave();
+    }
+    
+    
+    public function beforeSave() 
+    {
+        #BeforeSave porque necesito la cantidad anterior    
+        $historial= new HistorialBolsa;
+        $historial->users_id= Yii::app()->user->id;
+        $historial->bolsa_has_inventario_id=$this->id;
+        $historial->fecha=date("Y-m-d H:i:s"); 
+        $diff=0;   
+        if(!$this->isNewRecord)
+        {           
+            $diff=$this->cantidad-$this->findByPk($this->id)->cantidad;
+            if($diff<0){
+                $historial->descripcion="Disminución de cantidad en ".abs($diff)." unds.";
+                $historial->tipo=2;                
+            }
+            else{
+                $historial->descripcion="Aumento de cantidad en ".$diff." unds.";
+                $historial->tipo=3;                
+            }            
+        }
+        if($diff!=0)
+            $historial->save();
+        return parent::beforeSave();
+    }
+    
+    public function beforeDelete()
+    {
+      $historial= new HistorialBolsa;
+      $historial->users_id= Yii::app()->user->id;
+      $historial->bolsa_has_inventario_id=$this->id;
+      $historial->descripcion="Eliminación de producto";
+      $historial->tipo=4;
+      $historial->fecha=date("Y-m-d H:i:s"); 
+      $historial->save();           
+      return parent::beforeDelete();
+    }
+    
+    
 }
