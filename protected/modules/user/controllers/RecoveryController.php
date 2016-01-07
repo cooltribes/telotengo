@@ -53,19 +53,17 @@ class RecoveryController extends Controller
 			    		if($form->validate()){
 			    			$user = User::model()->notsafe()->findbyPk($form->user_id);
 							$activation_url = 'http://' . $_SERVER['HTTP_HOST'].$this->createUrl(implode(Yii::app()->controller->module->recoveryUrl),array("activkey" => $user->activkey, "email" => $user->email, 'solicitud'=>'recuperar'));
-							
-							$message = new YiiMailMessage;
-							$message->view = 'mail_template';
-							 
-							//userModel is passed to the view
-							$body=$this->renderPartial('//mail/mail_chngpsswd_request', array( 'activation_url'=>$activation_url ),true);
-							$message->setSubject('Recuperación de contraseña');
-							$message->setBody(array('body'=>$body,"undercomment"=>"¿No pediste restablecer tu contraseña? Si no pediste cambiar tu contraseña,
-								es probable que otro usuario haya introducido tu nombre de usuario o dirección de correo electrónico por error al intentar restablecer su contraseña.
-								Si ese es el caso, no es necesario tomar ninguna medida y puedes ignorar este mensaje."), 'text/html');
-							$message->addTo($user->email);
-							$message->from = array(Yii::app()->params['adminEmail'] => "Sigma Tiendas");
-							Yii::app()->mail->send($message);
+							                          
+                            
+                            
+                            $message = new YiiMailMessage;
+                            $message->activarPlantillaMandrill();                   
+                            $body=$this->renderPartial('//mail/mail_chngpsswd_request', array( 'activation_url'=>$activation_url ),true);             
+                            $message->subject= 'Recuperación de contraseña';
+                            $message->setBody($body,'text/html');                           
+                            $message->addTo($user->email);
+                            Yii::app()->mail->send($message);
+                            
 
 							Yii::app()->user->setFlash('success','Las instrucciones para la recuperación de la contraseña se han enviado a tu correo electrónico');
 			    			$this->redirect(Yii::app()->getBaseUrl());

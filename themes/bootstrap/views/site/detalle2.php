@@ -35,7 +35,7 @@ $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
  
             
             <div class="col-md-9 main no_horizontal_padding">
-                <div class="row-fluid">
+                <div class="row-fluid clearfix">
                 
                     <div class="col-md-4 no_left_padding">
                         <div class='imagen_principal' style="overflow:hidden; max-height: 300px;"> 
@@ -136,13 +136,17 @@ $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
                         </div> 
                         
                     </div>
-                        
-                    <ul  class="nav nav-tabs">
+                    <div class="col-md-12">
+                        <ul  class="nav nav-tabs">
                               <li class="active"><a class="pointer" onclick="goTo('#detalles')"  >DETALLES DEL PRODUCTO</a></li>
                               <li  class=""><a class="pointer" onclick="goTo('#caracteristicas')" >CARACTERÍSTICAS GENERALES</a></li>
                            <!--   <li role="presentation" class=""><a href="#recommendations" role="tab" id="recommendations-tab" data-toggle="tab" aria-controls="recommendations" aria-expanded="false">RECOMENDACIONES DEL PRODUCTO</a></li>--></-->
                               
-                    </ul>
+                        </ul>
+                    </div>   
+            
+                        
+                    
                     
                     
                     <div class="col-md-12 no_padding_left margin_top">
@@ -439,6 +443,11 @@ $(document).ready(function () {
 $('#myCarousel').carousel({
    interval: 200000
 });});
+
+$('.nav.nav-tabs li').click(function(){
+    $('.nav.nav-tabs li').removeClass('active');
+    $(this).addClass('active');
+});
 
 function formatPrice(x){
 

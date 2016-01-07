@@ -6,10 +6,10 @@
 <div class="row-fluid">
 
     <div class="col-md-8 col-md-offset-2 margin_top orangepanel">
-      <h3>  <?php
+      <h3 class="justified">  <?php
          if($get!="")
             {
-                echo "El usuario ".$_GET['u']." te ha ha invitado a formar parte de Telotengo, una tienda online creada únicamente para Empresas. Donde podrás participar como vendedor, comprador o de ambas formas.";
+                echo "El usuario ".$_GET['u']." te ha invitado a formar parte de Telotengo, una tienda online creada únicamente para Empresas.";
             }
             else
             {

@@ -319,4 +319,34 @@ const SECTOR_EDUCACION = 16;
         
         return array('total'=>$contador['contador'],'pendiente'=>$pendiente['contador'],'rechazado'=>$rechazado['contador'],'aprobado'=>$aprobado['contador']);
     }
+    
+    public function getEditoresCarrito($idProveedor=0,$all=false){
+        $array=array();
+        $sql="select h.users_id, h.id from tbl_historial_bolsa h JOIN tbl_bolsa_has_tbl_inventario bhi ON h.bolsa_has_inventario_id=bhi.id JOIN tbl_bolsa b ON b.id=bhi.bolsa_id JOIN tbl_almacen a ON a.id=bhi.almacen_id JOIN tbl_empresas e ON e.id=a.empresas_id WHERE a.empresas_id =".$idProveedor." AND b.empresas_id =".$this->id." order by h.fecha desc";
+        $pairs=Yii::app()->db->createCommand($sql)->queryAll();
+        if($all){
+            foreach($pairs as $key=>$pair){
+                $array[$key]['user']=User::model()->findByPk($pair['users_id']);
+                $array[$key]['accion']=HistorialBolsa::model()->findByPk($pair['id']);
+            }
+        }else{
+            if(count($pairs)>2)
+            {
+                 $array[0]['user']=User::model()->findByPk($pairs[count($pairs)-1]['users_id']);
+                 $array[0]['accion']=HistorialBolsa::model()->findByPk($pairs[count($pairs)-1]['id']);
+                $array[1]['user']=User::model()->findByPk($pairs[0]['users_id']);
+                 $array[1]['accion']=HistorialBolsa::model()->findByPk($pairs[0]['id']);
+                 
+            }
+            if(count($pairs)==1)
+            {
+                 
+                 $array[0]['user']=User::model()->findByPk($pairs[count($pairs)-1]['users_id']);
+                 $array[0]['accion']=HistorialBolsa::model()->findByPk($pairs[count($pairs)-1]['id']);
+            }
+        }
+        return $array;        
+    }
+    
+    
 }

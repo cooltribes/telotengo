@@ -5,12 +5,20 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h3 class="modal-title align_center">Eliminar Intencion de Compra</h3>
+          <h3 class="modal-title align_center">¿Seguro que desea eliminar la intención de compra para este proveedor?</h3>
         </div>
         <div align="center">
 	        <div class="modal-body">
-	         <button type="button" id='accept' onclick="" class="btn-orange btn btn-danger btn-large orange_border margin_left">Si</button>
-	          <button type="button" class="btn-orange btn btn-danger btn-large orange_border margin_left" data-dismiss="modal">No</button>
+	            <div class="row-fluid clearfix margon_bottom">
+	                <div class="col-md-offset-2 col-md-2">
+	                    <button type="button" id='accept' onclick="" class="btn-darkgray btn margin_left form-control white">Si</button>
+	                </div>
+	                <div class="col-md-offset-2 col-md-2">
+                        <button type="button" class="btn-orange btn margin_left form-control" data-dismiss="modal">No</button>
+                    </div>
+	            </div>
+	         
+	          
 	        </div>
         </div>
       </div>
@@ -30,16 +38,12 @@ foreach($bolsaInventario as $carrito)
 		?>
 
 
-
-
-  
-
 <div class="orderContainer margin_top_small margin_bottom">
                 <div class="title clearfix row-fluid" style="position: relative">
     
                       <a href="#" class="close" onclick='modalConfirm(<?php echo $carrito->almacen_id;?>,<?php echo $carrito->bolsa_id;?>)'><span class="glyphicon glyphicon-remove"></span></a>
                       <div class="col-md-6 no_horizontal_padding"></div>
-                       <div class="col-md-6 no_horizontal_padding text-right"><?php echo $carrito->almacen->empresas->razon_social;?></div>
+                      <div class="col-md-6 no_horizontal_padding text-right"><?php echo $carrito->almacen->empresas->razon_social;?></div>
 
                 </div>
                 <div class="detail">
@@ -87,12 +91,34 @@ foreach($bolsaInventario as $carrito)
                 </div>
                
 
-                <div class="summary text-right">
+                <div class="summary">
+                    <div class="row-fluid clearfix">
+                        <div class="col-md-6">
+                            <?php
+                                foreach($carrito->bolsa->empresas->getEditoresCarrito($carrito->almacen->empresas->id,false) as $key=>$editor){
+                                    if($key==0):?>
+                                        Creado por: <?php echo $editor['user']->profile->first_name." ".$editor['user']->profile->last_name; ?><br/>
+                                        Fecha: <?php echo date('d/m/y',strtotime($editor['accion']->fecha)) ?> Hora: <?php echo date('h:i:s',strtotime($editor['accion']->fecha))  ?>
+                                    <?php else: ?>
+                                        <br/>
+                                        Ultima edición realizada por: <?php echo $editor['user']->profile->first_name." ".$editor['user']->profile->last_name; ?><br/>
+                                        Fecha: <?php echo date('d/m/y',strtotime($editor['accion']->fecha)) ?> Hora: <?php echo date('h:i:s',strtotime($editor['accion']->fecha))  ?>
+                                    <?php endif;     
+                                        
+                                } ?>
+           
+                        </div>
+                        <div class="col-md-6 text-right">
+                            <span id="total">Total: <?php echo Funciones::formatPrecio($suma);  $total+=$suma;?></span>
+                            <?php echo CHtml::submitButton('Generar orden por proveedor', array('id'=>$carrito->almacen_id."boton".$carrito->bolsa_id,'class'=>'btn-orange btn btn-danger btn-large orange_border margin_left cadaOrden')); ?>
+                             
+                            <!--<input class="btn-orange btn btn-danger btn-large orange_border margin_left" type="submit" name="yt0" value="Generar orden por proveedor"> -->
+                            
+                
+                        </div>
+                    </div>
                 	
-                    <span id="total">Total: <?php echo Funciones::formatPrecio($suma);  $total+=$suma;?></span>
-                    <?php echo CHtml::submitButton('Generar orden por proveedor', array('id'=>$carrito->almacen_id."boton".$carrito->bolsa_id,'class'=>'btn-orange btn btn-danger btn-large orange_border margin_left cadaOrden')); ?>
-                     
-                    <!--<input class="btn-orange btn btn-danger btn-large orange_border margin_left" type="submit" name="yt0" value="Generar orden por proveedor"> -->
+                    
                 </div>
             </div>
 <?php	

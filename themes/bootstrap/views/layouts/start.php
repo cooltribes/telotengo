@@ -113,7 +113,7 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
                                                     
                                                 </div>                                
                                               </a>
-                                              <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                              <ul class="dropdown-menu right" aria-labelledby="dropdownMenu1">
                                                 
                                             <?php
                                                 if(Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id)): ?>
@@ -153,7 +153,7 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
                                                     
                                                 </div>                                
                                               </a>
-                                              <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                              <ul class="dropdown-menu right" aria-labelledby="dropdownMenu2">
                                                 
                                                 <?php
                                                 if(Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id) || Yii::app()->authManager->checkAccess("vendedor", Yii::app()->user->id)): ?>
@@ -196,7 +196,7 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
                                                     </div>
                                                 </div>                                
                                               </a>
-                                              <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                              <ul class="dropdown-menu right" aria-labelledby="dropdownMenu1">
                                                <?php   if(Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id) || Yii::app()->authManager->checkAccess("Vendedor", Yii::app()->user->id)):?>
                                                  <li class="padding_left_xsmall"><small><u><a href="<?php echo Yii::app()->createUrl('orden/misVentas');?>">VENTAS</u></small></li>   
                                                <?php endif; ?>
@@ -264,7 +264,7 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
                                                     </div>
                                                 </div>                                
                                               </a>
-                                              <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                              <ul class="dropdown-menu right" aria-labelledby="dropdownMenu1">
                                                 
                                                
                                                     <?php 

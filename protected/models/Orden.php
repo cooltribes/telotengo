@@ -495,13 +495,15 @@ class Orden extends CActiveRecord
         return $this->monto*1.12;
     }
     public function ultima_fecha($format ="Y-m-d h:i:s"){
-        $sql="select fecha from tbl_estado where orden_id=".$this->id." order by fecha desc";
+        $sql="select fecha from tbl_orden_estado where orden_id=".$this->id." order by fecha desc  limit 1";
         $obj=Yii::app()->db->createCommand($sql)->queryScalar();
         
         if($obj)
-            return date($format,$obj);
+            return date($format,strtotime($obj));
         else
             return '-';
     }
+    
+    
 
 }
