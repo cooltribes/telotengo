@@ -64,15 +64,30 @@ $this->breadcrumbs=array(
 							
 							<div class="form-group"> 
 								<label>Costo</label>
-								<?php echo $form->textField($model,'costo',array('class'=>'form-control','maxlength'=>150, 'placeholder'=>'Precio a vender')); ?>
+								<?php echo $form->textField($model,'costo',array('class'=>'form-control','maxlength'=>150, 'placeholder'=>'Costo')); ?>
 								<?php echo $form->error($model,'costo');  ?>
 							</div>
 							
 							<div class="form-group"> 
 								<label>Precio *</label>
-								<?php echo $form->textField($model,'precio',array('class'=>'form-control','maxlength'=>150, 'placeholder'=>'Precio de costo')); ?>
+								<?php echo $form->textField($model,'precio',array('class'=>'form-control','id'=>'precio','maxlength'=>150, 'placeholder'=>'Precio para la venta (sin IVA)')); ?>
 								<?php echo $form->error($model,'precio');  ?>
 							</div>
+							<div class="form-group"> 
+                                <label>IVA a apicar *</label>
+                                <div style="position: relative">
+                                    <?php echo $form->textField($model,'iva',array('class'=>'form-control', 'id'=>'iva','maxlength'=>150, 'placeholder'=>'IVA a aplicar')); ?>
+                                    <div style="position: absolute; right: 10px; top: 6px">%</div>
+                                </div>
+                                
+                                <?php echo $form->error($model,'iva');  ?>
+                                
+                            </div>
+                            <div class="form-group"> 
+                                <label>Precio con IVA *</label>
+                                <?php echo $form->textField($model,'precio_iva',array('class'=>'form-control','id'=>'precio_iva','maxlength'=>150, 'disabled'=>'disabled', 'placeholder'=>'Precio para la venta (con IVA)')); ?>
+                                <?php echo $form->error($model,'precio_iva');  ?>
+                            </div>
 													
 							
 							<div class="form-group">
@@ -169,7 +184,7 @@ $this->breadcrumbs=array(
 
 <script>
 	$(document).ready(function() {
-		
+
 		$('#condicion').on('change', function(event) {
 			
 			if($('#condicion').val()=="usado" || $('#condicion').val()=="reformado")
@@ -180,7 +195,37 @@ $this->breadcrumbs=array(
 			{
 				$('#notaCondicion').hide();
 			}
-		});	
+		});
+		
+		
+		$('#iva').focusout(function(){		   	    
+		    precio_iva();
+		});
+		$('#precio').focusout(function(){                
+            precio_iva();
+        });
+		
+		function precio_iva(){
+		    price=parseFloat($('#precio').val().replace(',','.'));        
+            iva=parseFloat($('#iva').val().replace(',','.'));
+            if(price!=''&&iva!=''){
+                if(!isNaN(price)&&!isNaN(iva)){
+                     $('#precio_iva').val((price*iva/100)+price);
+                }
+                if(isNaN(price)){
+                    $('#precio').val('');
+                    $('#precio').focus();
+                } 
+                if(isNaN(iva)){
+                    $('#iva').val('');
+                    $('#iva').focus();
+                }   
+            }
+            
+		}
+		
+		
+			
 });	
 	
 </script>

@@ -62,9 +62,9 @@ class Inventario extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('precio,  cantidad, almacen_id, producto_id, estado, condicion,  almacen_id', 'required'),
+			array('precio,  cantidad, almacen_id, producto_id, estado, condicion,  almacen_id, iva, precio_iva', 'required'),
 			array('cantidad, almacen_id, producto_id, estado', 'numerical', 'integerOnly'=>true),
-			array('precio, costo', 'numerical'),
+			array('precio, costo, iva, precio_iva', 'numerical'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, precio, costo, cantidad, almacen_id, producto_id, estado, sku', 'safe', 'on'=>'search'),
@@ -96,6 +96,8 @@ class Inventario extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'precio' => 'Precio',
+			'precio_iva' => 'Precio con IVA',
+			'iva' => 'IVA a aplicar',
 			'cantidad' => 'Cantidad',
 			'almacen_id' => 'Almacen',
 			'producto_id' => 'Producto',

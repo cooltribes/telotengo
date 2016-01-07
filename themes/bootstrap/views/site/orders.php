@@ -73,7 +73,7 @@ foreach($bolsaInventario as $carrito)
                                 <td class="name"> <?php echo $bolsa->inventario->producto->nombre;?></td>
                                 <input type="hidden" id="maximo<?php echo $bolsa->id?>" value="<?php echo  $bolsa->inventario->cantidad;?>">
                                 <td class="number"><input class="cadaUno" id="<?php echo $bolsa->id;?>cantidad" value="<?php echo $bolsa->cantidad;?>" type="number">
-                               <a id="<?php echo $bolsa->id;?>" onclick="actualizar(<?php echo $bolsa->id;?>, 1)" style="" class="btn btn-mini">Actualizar</a></td>
+                               <a id="<?php echo $bolsa->id;?>" onclick="actualizar(<?php echo $bolsa->id;?>, 1)" style="" class="blueLink pointer"><small>Actualizar</small></a></td>
                                 <td class="number" id="unitario<?php echo $bolsa->id;?>"><?php echo $bolsa->inventario->formatPrecio;?></td></td>
                                 <td class="number highlighted" id="subtotal<?php echo $bolsa->id;?>"> <?php echo Funciones::formatPrecio($bolsa->inventario->precio*$bolsa->cantidad); ?></td>
                                 <td class="link"><a onclick="actualizar(<?php echo $bolsa->id;?>, 2)">Eliminar</a></td>
