@@ -2,6 +2,12 @@
 <!DOCTYPE html>
 <head>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<?php
+    header('Pragma: cache'); 
+    header('Cache-Control: public');
+    header('Expires: Mon, 09 Jan 2015 05:00:00 GMT');
+    
+?>
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
 <link rel="icon" href="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/favicon75.png" type="image/x-icon"> 
 <link rel="shortcut icon" href="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/favicon.ico" type="image/x-icon">

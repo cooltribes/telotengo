@@ -153,7 +153,7 @@ class ConfImage extends CActiveRecord
                 if($img){              
                     
                     return "<a  target='_blank' href='".$img->link."' title='".$img->title."' class='".$class."'>".CHtml::image($img->path, $img->alt,array('title'=>$img->title,'width'=>$width,'height'=>$height))."</a>";
-                }
+                } 
                 else 
               
                        return "<a  target='_blank' href='' title='Default' class='".$class."'>".CHtml::image(Yii::app()->theme->baseUrl.'/images/home/default/'.$name.$index.'.jpg', "Default",array('width'=>$width,'height'=>$height))."</a>";
@@ -162,5 +162,11 @@ class ConfImage extends CActiveRecord
                  $url=$index==1?"http://placehold.it/1200x450":"http://placehold.it/380x270"; 
                  return "<a  target='_blank' href='' title='Default' class='".$class."'>".CHtml::image($url, "Default",array('width'=>$width,'height'=>$height))."</a>";
                
-            }
+            } 
+
+        public function getLinkedTitle($class=''){ 
+                 
+                    return "<a href='".$this->link."' class='".$class."'>".$this->title."</a>";
+        }
+               
 }

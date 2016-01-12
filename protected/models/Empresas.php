@@ -330,7 +330,7 @@ const SECTOR_EDUCACION = 16;
                 $array[$key]['accion']=HistorialBolsa::model()->findByPk($pair['id']);
             }
         }else{
-            if(count($pairs)>2)
+            if(count($pairs)>=2)
             {
                  $array[0]['user']=User::model()->findByPk($pairs[count($pairs)-1]['users_id']);
                  $array[0]['accion']=HistorialBolsa::model()->findByPk($pairs[count($pairs)-1]['id']);

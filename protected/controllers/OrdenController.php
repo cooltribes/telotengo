@@ -1034,6 +1034,7 @@ class OrdenController extends Controller
 		$almacenTransitorio="";
 		$pila=array();
 		$monto=0;
+        $html=" ";
 		foreach ($bolsaInventario as $bolsaRecorrido)
 		{
 			if($almacenTransitorio!=$bolsaRecorrido->almacen_id)
@@ -1083,12 +1084,14 @@ class OrdenController extends Controller
 			$ordenInventario->almacen_id=$bolsaRecorrido->almacen_id;
 			$ordenInventario->orden_id=$orden->id;
 			$ordenInventario->save();
+            //$html=$html.$this->renderPartial("orderSummary", array('orden'=>$orden,'separator'=>'ok'), true);
 			
 
 			$almacenTransitorio=$bolsaRecorrido->almacen_id;
 		}
 
 		///CORREOS ELECTRONICOS
+		
 		foreach($pila as $stack)
 		{
 			$orden=Orden::model()->findByPk($stack);
@@ -1126,11 +1129,14 @@ class OrdenController extends Controller
 		
 			$message->addTo(User::model()->findByPk(Yii::app()->user->id)->email);
 			Yii::app()->mail->send($message);
-		}
+			
+			
+		}	
 		
-		
-		BolsaHasInventario::model()->deleteAllByAttributes(array('bolsa_id'=>$bolsa_id)); // los borra todos		
-	}
+	    BolsaHasInventario::model()->deleteAllByAttributes(array('bolsa_id'=>$bolsa_id)); // los borra todos		
+	    $return=array('status'=>'ok','html'=>$html);
+        echo json_encode($return);
+    }
 
     public function actionMailtest(){
             $orden=Orden::model()->findByPk(48);   
@@ -1232,7 +1238,8 @@ class OrdenController extends Controller
 			$message->addTo(User::model()->findByPk($local->users_id)->email);
 			Yii::app()->mail->send($message);
 		}
-		echo $orden->id;
+        $return=array('status'=>'ok','html'=>$this->renderPartial("orderSummary", array('orden'=>$orden), true));
+		echo json_encode($return);
 	}
 
 	public function actionCambiarEstado()
