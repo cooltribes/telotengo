@@ -20,13 +20,14 @@
 
         <div class="col-md-12 no_horizontal_padding margin_bottom_large">
             <div class="row-fluid">
-                 <?php
-                 foreach($imagenes as $img)
+                 <?php 
+                 foreach($imagenes as $img) 
                  {?>
                      <div class="col-md-4 margin_top">
                         <?php echo $img->getLinkedImage($name = $img->name,$index=$img->index, $categoria_id=$model->id);?>
+                        <h3 class="text-center"><?php echo $img->linkedTitle; ?></h3>
                     </div>
-                 <?php
+                 <?php 
                  }
                  if(count($imagenes)==0){
                      for($i=0;$i<6;$i++): ?>

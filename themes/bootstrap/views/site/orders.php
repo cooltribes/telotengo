@@ -29,7 +29,7 @@
 $diferente=0;
 $primera=0;
 $total=0;
-foreach($bolsaInventario as $carrito)
+foreach($bolsaInventario as $key=>$carrito)
 {
 	if($diferente!=$carrito->almacen_id)
 	{
@@ -38,7 +38,7 @@ foreach($bolsaInventario as $carrito)
 		?>
 
 
-<div class="orderContainer margin_top_small margin_bottom">
+<div class="orderContainer margin_top_small margin_bottom" id="preorder<?php echo $key?>">
                 <div class="title clearfix row-fluid" style="position: relative">
     
                       <a href="#" class="close" onclick='modalConfirm(<?php echo $carrito->almacen_id;?>,<?php echo $carrito->bolsa_id;?>)'><span class="glyphicon glyphicon-remove"></span></a>
@@ -110,7 +110,8 @@ foreach($bolsaInventario as $carrito)
                         </div>
                         <div class="col-md-6 text-right">
                             <span id="total">Total: <?php echo Funciones::formatPrecio($suma);  $total+=$suma;?></span>
-                            <?php echo CHtml::submitButton('Generar orden por proveedor', array('id'=>$carrito->almacen_id."boton".$carrito->bolsa_id,'class'=>'btn-orange btn btn-danger btn-large orange_border margin_left cadaOrden')); ?>
+                            <?php echo CHtml::submitButton('Generar orden por proveedor', array('id'=>$carrito->almacen_id."boton".$carrito->bolsa_id,'class'=>'btn-orange btn btn-danger orange_border margin_left cadaOrden')); ?>
+                            <input type="hidden" value="<?php echo $key?>"/>
                              
                             <!--<input class="btn-orange btn btn-danger btn-large orange_border margin_left" type="submit" name="yt0" value="Generar orden por proveedor"> -->
                             
@@ -167,6 +168,7 @@ Yii::app()->session['suma']=$total;
 		
 		
 		$('.cadaOrden').click(function() {
+		    var hidden = $(this).next().val();
 			var oid = $(this).attr("id");
 			var res = oid.split("b"); //por el comienzo de la palabra boton
 			var almacen_id=res[0];
@@ -177,13 +179,20 @@ Yii::app()->session['suma']=$total;
 			$.ajax({
 			         url: "<?php echo Yii::app()->createUrl('Orden/procesarSimple') ?>",
 		             type: 'POST',
+		             dataType:'json',
 			         data:{
 		                    almacen_id:almacen_id, bolsa_id:bolsa_id, empresas_id:empresas_id
 		                   },
 			        success: function (data) {
+			            if(data.status=='ok'){
+			                $('#orderedContainer>.ordered').html(data.html);
+			                 $('#orderedContainer').fadeIn();
+			                 $('#preorder'+hidden).fadeOut();
+			                 $('#preorder'+hidden).remove();
+			            }
+			            
 			        	
-						var path="<?php echo Yii::app()->createUrl('Orden/detalle') ?>";
-						window.location.href = path+'/'+data;
+						
 			       	}
 			    })
 			

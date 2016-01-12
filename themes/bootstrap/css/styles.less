@@ -1419,10 +1419,18 @@ a:hover, a:focus{
   }
   .dropdown{
       .dropdown-menu{
-      
+       
       top: 100%;
       left:0%;
       border-radius: 2px;
+      li.title{
+            padding-top: 0;
+          
+            font-size: 13px;
+          
+            color: #222;
+            padding-left: 3%;
+      }
       li.separator{
           width:100%;
           height: 1px;
@@ -1431,7 +1439,7 @@ a:hover, a:focus{
        }
       li{
         a{
-          padding:2px 6%;
+          padding:2px 7%;
           font-size: 12px;
           .arrow{
               float:right;
@@ -2634,6 +2642,34 @@ h1.dark{
     
 }
 
+.orderedContainer{
+    display:none; 
+    .ordered{
+        border: solid 1px #666;        
+        padding:12px;  
+        .item{
+            display:block;
+            span{
+                font-size:11px;
+                color:#222;
+            }
+            .value{
+                font-weight: bold;
+            }
+        }
+        .goDetail{
+            text-align: center;            
+            a{
+                color:@b2bOrange;
+                text-decoration: underline;
+                font-weight: bold;
+                font-size: 11px;
+            }
+        }
+                
+    }
+
+}
 .btn-green{
     background: #00A000;
     border-radius: 0px;

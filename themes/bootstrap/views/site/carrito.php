@@ -1,5 +1,4 @@
 <?php $this->breadcrumbs=array('Carrito'); ?> 
-
 <div class="col-md-12 margin_top_small">
     <h1 class="dark no_margin">INTENCIONES DE COMPRA</h1>
 </div>
@@ -23,12 +22,20 @@
             <div class="text-center mutedLink">
                 <a class="muted" href="#">Ver políticas de envíos y devoluciones</a>
             </div>
-            
+            <div class="orderedContainer margin_top_small" id="orderedContainer">
+                <div class="ordered">
+                    
+                </div>
+                <div class="margin_top text-center">
+                    <a class="btn btn-darkgray" href="<?php echo Yii::app()->baseUrl?>/orden/misCompras">Ver Todas</a>
+                </div>
+                
+            </div>
         </div>
         
     </div>
 </div>
- 
+  
 
 <script>
 	$(document).ready(function() {
@@ -41,14 +48,27 @@
 						$.ajax({
 			         url: "<?php echo Yii::app()->createUrl('Orden/procesarTodo') ?>",
 		             type: 'POST',
+		             dataType:'json', 
 			         data:{
 		                    bolsa_id:bolsa_id, empresas_id:empresas_id, monto:monto, iva:iva
 		                   },
 			        success: function (data) {
-			        	
-						var path= "<?php echo Yii::app()->createUrl('Orden/misCompras') ?>";
-						window.location.href = path;
-			       	}
+			         
+                        if(data.status='ok'){
+                            
+                            
+                        var path= "<?php echo Yii::app()->createUrl('Orden/misCompras') ?>";
+                        window.location.href = path;
+                            
+                           /* $('#orderedContainer>.ordered').html(data.html);
+                             $('#orderedContainer').fadeIn();
+                             $('.orderContainer').fadeOut();
+                             $('.orderContainer').remove();*/
+                        }
+                        
+                        
+                        
+                    }
 			    })
 		});
 	});	

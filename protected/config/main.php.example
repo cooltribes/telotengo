@@ -10,8 +10,8 @@ Yii::setPathOfAlias('bootstrap', dirname(__FILE__).'/../extensions/bootstrap');
 return array(
 	'theme'=>'bootstrap',
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-	'name'=>'Sigma Tiendas',
-	
+	'name'=>'Telotengo',
+    'timeZone' => 'America/Caracas', 
 	'language' => 'es', // the language that the user is using and the application should be targeted to
 	
 	// preloading 'log' component

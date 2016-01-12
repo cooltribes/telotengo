@@ -87,7 +87,7 @@ $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
                     <div class="col-md-8 mainDetail">
                         
                         <h1 class="no_margin_top" style="height: auto">
-                          <?php echo $model->nombre;?> 
+                          <?php echo $model->nombre; ?> 
                         </h1>
                      <small>Marca:&nbsp;<?php echo $model->padre->idMarca->nombre; ?></small> 
                         <div class="separator"></div>
@@ -136,7 +136,7 @@ $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
                         </div> 
                         
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-md-12 margin_top">
                         <ul  class="nav nav-tabs">
                               <li class="active"><a class="pointer" onclick="goTo('#detalles')"  >DETALLES DEL PRODUCTO</a></li>
                               <li  class=""><a class="pointer" onclick="goTo('#caracteristicas')" >CARACTERÍSTICAS GENERALES</a></li>
