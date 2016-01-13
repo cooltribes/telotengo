@@ -503,6 +503,17 @@ class Orden extends CActiveRecord
         else
             return '-';
     }
+    public function searchByEmpresa($query){
+
+        $ids=implode(',',Yii::app()->db->createCommand("select id from tbl_empresas where razon_social LIKE '%".$query."%'")->queryColumn());
+        $alms=implode(',',Yii::app()->db->createCommand("select id from tbl_almacen where empresas_id IN(".$ids.")")->queryColumn());
+        $criteria=new CDbCriteria;
+        $criteria->addCondition(" t.almacen_id IN (".$alms.") OR t.empresa_id IN(".$ids.")");
+        return new CActiveDataProvider($this, array(
+            'criteria'=>$criteria,
+        ));
+        
+    }
     
     
 

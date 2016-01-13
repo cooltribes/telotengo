@@ -251,8 +251,13 @@ class OrdenController extends Controller
 			$bandera=true;
 			unset($_SESSION['searchPedido']);
 			$_SESSION['searchPedido'] = $_POST['query'];
-            $model->id = $_POST['query'];
-            $dataProvider = $model->search();
+            if(is_double($_POST['query'])){
+                $model->id = $_POST['query'];
+                $dataProvider = $model->search();
+            }else{
+                $dataProvider = $model->searchByEmpresa($_POST['query']);
+            }
+            
         }	
 
         if($bandera==FALSE){

@@ -69,7 +69,7 @@ $this->breadcrumbs=array(
 		    <div class="margin_top margin_bottom_small">Filtrar</div>
 	   <form class="margin_bottom form-search no_horizontal_padding row-fluid clearfix">
                          <div class="col-md-3 no_horizontal_padding">
-                             <input class="form-control no_radius" id="query" name="query" type="text" placeholder="Número de Orden">                   
+                             <input class="form-control no_radius" id="query" name="query" type="text" placeholder="N° o nombre de empresa">                   
                          </div>
                          <div class="col-md-1 no_padding_left">
                              <a href="#" class="btn form-control btn-darkgray white" id="btn_search_event">Buscar</a>
