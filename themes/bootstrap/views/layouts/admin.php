@@ -41,6 +41,7 @@
                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/unidad/admin">Unidad</a></li>
                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/atributo/admin">Atributo</a></li>
                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/categoria/admin">Categorías</a></li>
+                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/user/admin/adminInvite">Invitaciones</a></li> 
 
                 </ul>
               </li>

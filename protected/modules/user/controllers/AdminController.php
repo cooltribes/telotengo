@@ -25,7 +25,7 @@ class AdminController extends Controller
 	{
 		return array(
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','addSaldo','delete','create','update','view','cargarSaldo','reclamos','eliminarReclamo',
+				'actions'=>array('admin','addSaldo','delete','create','update','view','cargarSaldo','reclamos','eliminarReclamo','adminInvite',
 								'eliminarComentario','cargaSaldo', 'solicitudes'),
 				'users'=>UserModule::getAdmins(),
 			),
@@ -454,4 +454,37 @@ class AdminController extends Controller
         ));
 	}
 	
+    public function actionAdminInvite()
+    {
+        $model = new User();
+        $model->unsetAttributes();  // clear any default values
+        $bandera=false;
+        $dataProvider = $model->invitedUsers;
+        
+                /* Para mantener la paginacion en las busquedas */
+        if(isset($_GET['ajax']) && isset($_SESSION['searchInvite']) && !isset($_POST['query'])){
+            $_POST['query'] = $_SESSION['searchInvite'];
+            $bandera=true;
+        }
+
+        /* Para buscar desde el campo de texto */
+        if (isset($_POST['query'])){
+            $bandera=true;
+            unset($_SESSION['searchInvite']);
+            $_SESSION['searchInvite'] = $_POST['query'];
+            $dataProvider = $model->searchInvited($_POST['query']);
+            
+        }   
+
+        if($bandera==FALSE){
+            unset($_SESSION['searchInvite']);
+        }
+            
+        $this->render('adminInvite',array(
+            'model'=>$model,
+            'dataProvider'=>$dataProvider,
+        ));
+    }
+    
+    
 }

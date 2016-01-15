@@ -98,6 +98,8 @@ class User extends CActiveRecord
         $relations = Yii::app()->getModule('user')->relations;
         if (!isset($relations['profile']))
             $relations['profile'] = array(self::HAS_ONE, 'Profile', 'user_id');
+        $relations['invited_by']=array(self::BELONGS_TO, 'User', 'quien_invita');
+        $relations['empresaRel']=array(self::MANY_MANY, 'Empresas', 'tbl_empresas_has_tbl_users(empresas_id,users_id)');
       
 
         return $relations;
@@ -537,7 +539,10 @@ class User extends CActiveRecord
         
         public function getEmpresa(){
             $ehu=EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id));
-            return Empresas::model()->findByPk($ehu->empresas_id);
+            if($ehu)
+                return Empresas::model()->findByPk($ehu->empresas_id);
+            else
+                return new Empresas;
         }
         public function getBolsa(){
             return $this->empresa->bolsa;
@@ -570,6 +575,47 @@ class User extends CActiveRecord
             $ehu=EmpresasHasUsers::model()->findByAttributes(array('users_id'=>$identificador));
             return Empresas::model()->findByPk($ehu->empresas_id);
         }
+           
+           public function getInvitedUsers(){
+               
+            $criteria=new CDbCriteria;            
+            
+            $criteria->addCondition('type IN (1,2,3)');
+    
+            return new CActiveDataProvider(get_class($this), array(
+                'criteria'=>$criteria,
+                'pagination'=>array(
+                    'pageSize'=>Yii::app()->getModule('user')->user_page_size,
+                ),
+            ));
+               
+           }
+           
+           public function searchInvited($query){
+               if(str_replace(' ', '', $query)!=''){
+                   $ids=Yii::app()->db->createCommand("select u.id from tbl_profiles p JOIN tbl_users u ON p.user_id=u.id where ".Funciones::long_query($query,"p.last_name")." OR ".Funciones::long_query($query,"p.first_name")." OR ".Funciones::long_query($query,"u.email"). " AND u.type IN (1,2,3)")->queryColumn();
+                   $invs=Yii::app()->db->createCommand("select quien_invita from tbl_users where type IN (1,2,3) ")->queryColumn();
+                   if(count($invs)>0)
+                        $inviters=Yii::app()->db->createCommand("select u.id from tbl_profiles p JOIN tbl_users u ON p.user_id=u.id where ".Funciones::long_query($query,"p.last_name")." OR ".Funciones::long_query($query,"p.first_name")." OR ".Funciones::long_query($query,"u.email"). " AND id IN(".implode(',',$invs).")")->queryColumn();
+                   $criteria=new CDbCriteria;
+                    if(count(array_merge($ids,$inviters))>0)
+                        $criteria->addCondition(" id IN (".implode(',',array_merge($ids,$inviters)).")");
+                    else
+                            $criteria->addCondition(" id = 0");
+                    return new CActiveDataProvider($this, array(
+                        'criteria'=>$criteria,
+                    ));
+               }
+               else
+                return $this->invitedUsers;
+        
+           }
+           
+           public function countInvited($type = null){
+               if(is_null($type))
+                    return Yii::app()->db->createCommand("SELECT COUNT(id) from tbl_users where type IN (2,3,4)")->queryScalar();               
+               return Yii::app()->db->createCommand("SELECT COUNT(id) from tbl_users where type =".$type)->queryScalar();
+           }
         
         
 }
