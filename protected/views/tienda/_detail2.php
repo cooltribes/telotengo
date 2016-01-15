@@ -85,12 +85,12 @@
 				{
 					if($quitar==0):
 					?>
-                    <span class="quantity"><?php echo $inventario->precio;?> BS</span>
+                    <span class="quantity"><?php echo Funciones::formatPrecio($inventario->precio);?></span>
 				<?php
 					endif;
 					if($quitar==1):
 					?>
-                    <span class="quantity"><?php echo $inventario['menor'];?> BS</span>
+                    <span class="quantity"><?php echo Funciones::formatPrecio($inventario['menor']);?></span>
 				<?php
 					endif;
 				}
@@ -98,12 +98,12 @@
 				{
 					if($quitar==0):
 					?>
-                    <span class="quantity"><?php echo $modelado['menor'];?> BS</span>
+                    <span class="quantity"><?php echo Funciones::formatPrecio($modelado['menor']);?></span>
 				<?php
 					endif;
 					if($quitar==1):
 					?>
-                    <span class="quantity"><?php echo $modelado['menoro'];?> BS</span>
+                    <span class="quantity"><?php echo Funciones::formatPrecio($$modelado['menoro']);?> BS</span>
 				<?php
 					endif;
 				}
