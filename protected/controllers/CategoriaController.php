@@ -605,7 +605,7 @@ class CategoriaController extends Controller
             if(isset($_POST['ConfImage']))
             {   $model=new ConfImage; 
                 $model->attributes=$_POST['ConfImage'];
-                $previa=ConfImage::model()->findByAttributes(array('name'=>$_POST['ConfImage']['name'],'index'=>$_POST['ConfImage']['index']));
+                $previa=ConfImage::model()->findByAttributes(array('categoria_id'=>$_POST['ConfImage']['categoria_id'],'name'=>$_POST['ConfImage']['name'],'index'=>$_POST['ConfImage']['index']));
                     
                     $rnd = rand(0,9999);  
                     
@@ -638,9 +638,7 @@ class CategoriaController extends Controller
                         }                       
                         $images->saveAs($nombre . $extension);  
                         $model->path=$url. $extension;
-                        $old=ConfImage::model()->findByAttributes(array('path'=>$url. $extension));
-                        if($old)
-                            $old->delete();
+                       
                         if($model->save()){
                             if(!is_null($previa))    
                                 $previa->delete();
@@ -661,7 +659,7 @@ class CategoriaController extends Controller
                 
             }else{
                 $response=array();
-                $model=ConfImage::model()->findByAttributes(array('name'=>$_POST['name'],'index'=>$_POST['index']));
+                $model=ConfImage::model()->findByAttributes(array('name'=>$_POST['name'],'index'=>$_POST['index'],'categoria_id'=>$_POST['categoria_id']));
                 $response['confirm']=true;
                 if(is_null($model)){
                     $model=new ConfImage;

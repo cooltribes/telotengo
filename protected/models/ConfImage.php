@@ -126,7 +126,9 @@ class ConfImage extends CActiveRecord
 	{
 		return parent::model($className);
 	}
-        public function getTypes(){
+    
+    
+    public function getTypes(){
         $array=array(1=>'Desktop',2=>'Mobile',3=>'Ambas');
         return $array;
     }
@@ -168,5 +170,5 @@ class ConfImage extends CActiveRecord
                  
                     return "<a href='".$this->link."' class='".$class."'>".$this->title."</a>";
         }
-               
+    
 }

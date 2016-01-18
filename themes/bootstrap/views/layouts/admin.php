@@ -1,3 +1,9 @@
+<?php
+$assetUrl=Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('application.modules.user.views.asset'));
+        Yii::app()->getClientScript()->registerCssFile($assetUrl.'/css/redmond/jquery-ui.css');
+        Yii::app()->getClientScript()->registerScriptFile($assetUrl.'/js/jquery-ui.min.js');
+
+?>
 <nav class="navbar navbar-default row-fluid" id="adminNav">
         <div class="container-fluid col-md-8 col-md-offset-2">
           <!--<div class="navbar-header">
@@ -20,7 +26,8 @@
                 <ul class="dropdown-menu">
                            
                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/user/admin">Usuarios</a></li>
-                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/user/admin/solicitudes">Solicitudes</a></li>                            
+                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/user/admin/adminInvite">Invitaciones</a></li>  
+                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/user/admin/solicitudes">Solicitudes</a></li>                                                    
                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/almacen/admin">Almacenes</a> </li>
                 </ul>
               </li>
@@ -41,7 +48,7 @@
                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/unidad/admin">Unidad</a></li>
                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/atributo/admin">Atributo</a></li>
                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/categoria/admin">Categorías</a></li>
-                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/user/admin/adminInvite">Invitaciones</a></li> 
+                             
 
                 </ul>
               </li>
