@@ -174,8 +174,8 @@ class User extends CActiveRecord
 				'1' => UserModule::t('Yes'),
 			),
 			'UserType' => array (
-				self::TYPE_INVITADO_EMPRESA => "Invitar como empresa",
-				self::TYPE_INVITADO_CLIENTE => "Invitar como cliente",
+				self::TYPE_INVITADO_EMPRESA => "Invitar como miembro de empresa",
+				self::TYPE_INVITADO_CLIENTE => "Invitar como nueva empresa",
 			),
 		);
 		if (isset($code))

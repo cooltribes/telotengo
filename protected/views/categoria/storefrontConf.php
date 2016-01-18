@@ -1,9 +1,9 @@
 <?php
 $this->breadcrumbs=array(
-    "Categorías" => array($model->nombre=>Yii::app()->baseUrl."/categoria/admin"),
+    "Categorías" => array("/categoria/admin"),
     $model->nombre => array(Yii::app()->baseUrl."/categoria/create".$model->id),
-    "Storefront"
-);
+    "Storefront" 
+); 
 ?> 
 <div class="col-md-6 col-md-offset-3 margin_bottom_large" >
     <div class="row-fluid">
