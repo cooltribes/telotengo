@@ -92,7 +92,7 @@
 				'htmlOptions' => array('enctype' => 'multipart/form-data'),
 			)); ?>
 			
-		<div class="well">
+		<div class="margin_top">
     	    <div class="row padding_left_small">
                 <div class="col-md-6 col-md-offset-3">
                     <div class="form-group">

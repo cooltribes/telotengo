@@ -8,7 +8,7 @@
 			<?php echo $this->renderPartial('_menu', array('model'=>$model, 'activo'=>'caracteristicas')); ?>
 			<!-- SUBMENU OFF -->
 
-			<div class="well">
+			<div class="margin_top">
 				<div class="row-fluid">
 					<div>
 						<?php 
@@ -35,13 +35,15 @@
 									
 
 							</div>
-
-
-							<?php $this->widget('bootstrap.widgets.TbButton', array(
+                            <div class="align_center">
+                                <?php $this->widget('bootstrap.widgets.TbButton', array(
 								'buttonType'=>'submit',
-								'htmlOptions'=>array('class'=>'btn btn-primary margin_top_small col-md-3', 'id'=>'button_send'),
+								'htmlOptions'=>array('class'=>'btn btn-orange white btn-large', 'id'=>'button_send'),
 								'label'=>$model->isNewRecord ? 'Agregar' : 'Guardar',
 							)); ?>
+                            </div>
+
+							
 
 						<?php $this->endWidget(); ?>
 					</div>

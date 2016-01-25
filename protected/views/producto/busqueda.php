@@ -32,7 +32,10 @@
 			        </thead>
 	    		{items}
 	    		</table>
-			    {pager} 
+			    {pager}
+                <p class="margin_top_minus">
+                    Si no ves el producto que necesitas, <a class="blueLink" href="nuevoProducto"> crea un producto nuevo </a>
+                </p> 
 				';
 
 			$this->widget('zii.widgets.CListView', array(

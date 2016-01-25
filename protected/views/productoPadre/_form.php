@@ -4,7 +4,6 @@
 /* @var $form CActiveForm */
 ?>
 
-<div class="row-fluid">
 <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array( 
 	'id'=>'producto-padre-form',
 	'enableAjaxValidation'=>false,
@@ -17,7 +16,6 @@
         'enctype' => 'multipart/form-data',
     ),
 ));?>
-</div>
 
 	<div class="col-md-6 col-md-offset-3 margin_top_small">
 	<?php echo $form->textFieldRow($model,'nombre',array('id'=>'nombre','class'=>'form-control')); ?>

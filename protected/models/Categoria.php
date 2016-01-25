@@ -357,5 +357,46 @@ class Categoria extends CActiveRecord
     public function getStorefrontImgs($from = 1, $to = 6){
         return ConfImage::model()->findAll(array('condition'=>'t.index >='.$from.' AND t.index<='.$to.' AND categoria_id='.$this->id.' order by t.index asc'));
     }
+    
+    public function getLastChildren($id = NULL){
+        #Con $id se devuelve todos los descendientes de una categoria padre en un array con $key=$id
+        
+        $ids=Yii::app()->db->createCommand("select id from tbl_categoria where ultimo = 1")->queryColumn();       
+        $array=array();
+        foreach($ids as $item){
+            if(!isset($array[Categoria::model()->getCategoriaOrigen($item)]))
+                $array[Categoria::model()->getCategoriaOrigen($item)]=array();
+            array_push($array[Categoria::model()->getCategoriaOrigen($item)],$item);
+        }
+        if(is_null($id))
+            return $array;
+        else
+            if(isset($array[$id])) return $array[$id]; else return NULL;
+    }
+
+    
+    public function name($id, $padre=false){
+        $cat=$this->findByPk($id);
+        if($cat){
+            if($cat->padre&&$padre)
+                return $cat->padre->nombre;
+            if(!$padre)
+                return $cat->nombre;
+        }
+            
+        return NULL;
+    }
+    public function optionName($id){
+        $cat=$this->findByPk($id);
+        if($cat){
+            if($cat->padre)
+                if($cat->padre->id_padre!=0)
+                    return $cat->padre->nombre." - ".$cat->nombre;
+            else
+                return $cat->nombre;
+        }            
+        return NULL;
+    }
+    
 	
 }

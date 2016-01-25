@@ -35,7 +35,7 @@ class ProductoPadreController extends Controller
 				'users'=>array('admin'),
 			),
 			array('allow', // COMPRADORESVENDEDORES Y VENDEDORES
-				'actions'=>array('busqueda'),
+				'actions'=>array('busqueda' , 'autocomplete'),
 				#'users'=>array('admin'),
 				'roles'=>array('vendedor', 'compraVenta'),
 			),

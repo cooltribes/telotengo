@@ -41,7 +41,7 @@ class ProductoController extends Controller
 				'roles'=>array('admin'),
 			),
 			array('allow', // COMPRADORESVENDEDORES Y VENDEDORES
-				'actions'=>array('inventario', 'cargarInbound', 'productoInventario'),
+				'actions'=>array('inventario', 'cargarInbound', 'productoInventario','nuevoProducto','ultimasCategorias','imagenes','caracteristicas','details'),
 				#'users'=>array('admin'),
 				'roles'=>array('vendedor', 'compraVenta'),
 			),
@@ -212,6 +212,9 @@ class ProductoController extends Controller
 			$model->gtin=$_POST['Producto']['gtin'];
 			$model->nparte=$_POST['Producto']['nparte'];
 			$model->color=$_POST['Producto']['color'];
+            $model->user_id=Yii::app()->user->id;
+            $model->created_at=date("Y-m-d h:i:s");
+            $model->aprobado = 1;
 			
 			if($model->save())
 			{
@@ -1642,15 +1645,18 @@ class ProductoController extends Controller
 		}
 
 	public function actionVerificarPadre()
-	{
+	{   $data=array();
 		$nombre=$_POST['nombre'];
 		$model=ProductoPadre::model()->findByAttributes(array('nombre'=>$nombre));
-		if($model)
-			echo "1";
+		if($model){
+		    $data['status']="1";
+            $data['id']=$model->id;
+		}
+			
 		else 
-			echo "0";
+			$data['status']= "0";
 		
-		
+		echo json_encode($data);
 	}
 	
 	public function actionVerificarNombre()
@@ -2636,6 +2642,61 @@ class ProductoController extends Controller
 		$model=Yii::app()->db->createCommand($sql)->queryAll();
 		$this->render('verDisponibilidad', array('id'=>$id, 'model'=>$model, 'nombre'=>$nombre));
 	}
+    
+    public function actionNuevoProducto(){
+        
+        $padres=Categoria::model()->findAllByAttributes(array('id_padre'=>0));
+        if(isset($_POST['Producto'])){
+            $padre= ProductoPadre::model()->findByPk($_POST['padre_id']);  
+            $producto=new Producto;
+            $producto->nombre=$_POST['padre_name'];
+            $producto->fabricante=$_POST['Producto']['fabricante'];
+            $producto->fabricante=$_POST['Producto']['modelo'];
+            $producto->annoFabricacion=$_POST['Producto']['annoFabricacion'];
+            $producto->upc=$_POST['Producto']['upc'];
+            $producto->ean=$_POST['Producto']['ean'];
+            $producto->gtin=$_POST['Producto']['gtin'];
+            $producto->nparte=$_POST['Producto']['nparte'];
+            $producto->color=$_POST['Producto']['color'];
+            $producto->color_id=$_POST['Producto']['color_id'];
+            $producto->modelo=$_POST['Producto']['modelo'];
+            $producto->user_id=Yii::app()->user->id;
+            $producto->created_at=date("Y-m-d h:i:s");
+            if(!$padre){
+                $padre= new ProductoPadre;
+                $padre->attributes=$_POST['ProductoPadre'];
+                $padre->nombre=$_POST['padre_name'];
+                $padre->id_categoria=$_POST['ProductoPadre']['id_categoria'];
+                $padre->save();
+                $padre->refresh();
+                $producto->nombre=$_POST['padre_name']." - ".$producto->modelo=$_POST['Producto']['modelo'];                
+            }  
+           $producto->padre_id=$padre->id;
+            
+            if($producto->save())
+            {
+                     $this->redirect(Yii::app()->baseUrl.'/producto/imagenes/'.$producto->id);     
+
+            }                     
+
+        }
+        
+        $this->render('nuevoProducto',array('categorias'=>$padres));
+        
+    }
+    
+    public function actionUltimasCategorias(){
+        $array=Categoria::model()->getLastChildren($_POST['padre_id']);         
+        if(count($array)>0) 
+        {   $return['options']="<option value=''>Seleccione una Subcategoria</option>";  
+            foreach($array as $key=>$item){
+                $return['options'].="<option value='".$item."'>".Categoria::model()->optionName($item)."</option>";
+            }
+        }
+        else
+            $return['options']="<option value=''>Seleccione una Subcategoria</option>"; 
+        echo json_encode($return);
+    }
 
 
 }

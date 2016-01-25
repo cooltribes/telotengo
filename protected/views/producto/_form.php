@@ -251,12 +251,13 @@ $(document).ready(function() {
 		$.ajax({
 		         url: "<?php echo Yii::app()->createUrl('producto/verificarPadre') ?>",
 	             type: 'POST',
+	             dataType:"json",
 		         data:{
 	                    nombre:nombre, 
 	                   },
 		        success: function (data) {
 					
-					if(data==1)
+					if(data.status=='1')
 					{
 						  $('#errorUrl').hide();
 	       				  $('#button_send').attr('disabled',false);
