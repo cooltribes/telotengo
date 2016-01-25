@@ -63,10 +63,9 @@
 </script>
 
 <!-- CONTENIDO ON -->
-<div class="container">
-	<div class="row-fluid">
+
         <!-- COLUMNA PRINCIPAL DERECHA ON // OJO: esta de primera para mejorar el SEO sin embargo por CSS se ubica visualmente a la derecha -->
-        <div>
+        <div class="margin-top">
         			
 		<?php
 		$this->breadcrumbs=array(
@@ -82,7 +81,7 @@
 			   Yii::app()->clientScript->registerScript('form_sending', "
 			            $('#producto-form').submit(function(){
 			                $('#wrapper_content').addClass('loading');
-			            });
+			            }); 
 			            ");
 			  
 			  $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
@@ -127,8 +126,8 @@
 									'buttonType'=>'submit',
 									'type'=>'primary',
 									'label'=>'Cargar imagen(es)',
-									'htmlOptions'=>array('class'=>'btn-lg'),
-								)); ?>
+									'htmlOptions'=>array('class'=>'btn-large btn-orange white'), 
+								)); ?> 
 								
 						              </div>
 	                            	
@@ -190,7 +189,5 @@
 
     </div>
 		
-  </div>
-  
-  </div>
+
 <!-- /container --> 
