@@ -41,7 +41,7 @@ class ProductoController extends Controller
 				'roles'=>array('admin'),
 			),
 			array('allow', // COMPRADORESVENDEDORES Y VENDEDORES
-				'actions'=>array('inventario', 'cargarInbound', 'productoInventario','nuevoProducto','ultimasCategorias'),
+				'actions'=>array('inventario', 'cargarInbound', 'productoInventario','nuevoProducto','ultimasCategorias','imagenes','caracteristicas','details'),
 				#'users'=>array('admin'),
 				'roles'=>array('vendedor', 'compraVenta'),
 			),
@@ -212,6 +212,9 @@ class ProductoController extends Controller
 			$model->gtin=$_POST['Producto']['gtin'];
 			$model->nparte=$_POST['Producto']['nparte'];
 			$model->color=$_POST['Producto']['color'];
+            $model->user_id=Yii::app()->user->id;
+            $model->created_at=date("Y-m-d h:i:s");
+            $model->aprobado = 1;
 			
 			if($model->save())
 			{
@@ -2644,7 +2647,7 @@ class ProductoController extends Controller
         
         $padres=Categoria::model()->findAllByAttributes(array('id_padre'=>0));
         if(isset($_POST['Producto'])){
-            $padre= ProductoPadre::model()->findByPk($_POST['padre_id']);    
+            $padre= ProductoPadre::model()->findByPk($_POST['padre_id']);  
             $producto=new Producto;
             $producto->nombre=$_POST['padre_name'];
             $producto->fabricante=$_POST['Producto']['fabricante'];
@@ -2657,16 +2660,24 @@ class ProductoController extends Controller
             $producto->color=$_POST['Producto']['color'];
             $producto->color_id=$_POST['Producto']['color_id'];
             $producto->modelo=$_POST['Producto']['modelo'];
+            $producto->user_id=Yii::app()->user->id;
+            $producto->created_at=date("Y-m-d h:i:s");
             if(!$padre){
                 $padre= new ProductoPadre;
                 $padre->attributes=$_POST['ProductoPadre'];
                 $padre->nombre=$_POST['padre_name'];
                 $padre->id_categoria=$_POST['ProductoPadre']['id_categoria'];
                 $padre->save();
-                $padre->refresh();                
-            }
+                $padre->refresh();
+                $producto->nombre=$_POST['padre_name']." - ".$producto->modelo=$_POST['Producto']['modelo'];                
+            }  
            $producto->padre_id=$padre->id;
-           $producto->save();                      
+            
+            if($producto->save())
+            {
+                     $this->redirect(Yii::app()->baseUrl.'/producto/imagenes/'.$producto->id);     
+
+            }                     
 
         }
         
