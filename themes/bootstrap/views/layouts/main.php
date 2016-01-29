@@ -3,9 +3,10 @@
 <head>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <?php
-    header('Pragma: cache'); 
-    header('Cache-Control: public');
-    header('Expires: Mon, 09 Jan 2015 05:00:00 GMT');
+   # header('Pragma: cache'); 
+   # header('Cache-Control: public');
+   # header('Expires: '.gmdate('D, d M Y H:i:s', time()+(3600*24*5)).' GMT');
+
     
 ?>
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
@@ -43,7 +44,8 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
 </head>
 <body>
    
-<?php   if(Yii::app()->user->isAdmin()): 
+<?php   
+if(Yii::app()->user->isAdmin()): 
               include 'admin.php';    
         else: 
             if(!Yii::app()->user->isGuest): 

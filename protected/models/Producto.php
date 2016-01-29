@@ -100,6 +100,7 @@ class Producto extends CActiveRecord
 			'mainimage' => array(self::HAS_ONE, 'Imagenes', 'producto_id','on' => 'orden=1'),
 			'caracteristicasProducto' => array(self::HAS_MANY, 'CaracteristicasProducto', 'producto_id'),
 			'padre' => array(self::BELONGS_TO, 'ProductoPadre', 'padre_id'),
+			'creador' => array(self::BELONGS_TO, 'User', 'user_id'),
 			'seo' => array(self::BELONGS_TO, 'Seo', 'id_seo'),
 			'colore' => array(self::BELONGS_TO, 'Color', 'color_id'),
 		);
@@ -510,7 +511,21 @@ class Producto extends CActiveRecord
             return $imagenPrincipal;
     }
 	
+    public function getNuevos($query = null)
+    {
+        // Warning: Please modify the following code to remove attributes that
+        // should not be searched.
 
+        $criteria=new CDbCriteria;
+        $criteria->addCondition('user_id <>'.Yii::app()->user->id.' AND user_id  <> 0');      
+        if(!is_null($query))
+              $criteria->addCondition('nombre LIKE "%'.$query.'%"');
+            
+        return new CActiveDataProvider($this, array(
+            'criteria'=>$criteria,
+            'pagination'=>array('pageSize'=>15,),
+        ));
+    }
     
 	
 }

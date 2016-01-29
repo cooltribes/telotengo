@@ -136,12 +136,12 @@
 				{
 					if($quitar==0):
 					?>
-                    <span class="quantity"><?php echo $modelado['menor'];?> </span>
+                    <span class="quantity"><?php echo Funciones::formatPrecio($modelado['menor']);?> </span>
 				<?php
 					endif;
 					if($quitar==1):
 					?>
-                    <span class="quantity"><?php echo $modelado['menoro'];?> </span>
+                    <span class="quantity"><?php echo Funciones::formatPrecio($modelado['menoro']);?> </span>
 				<?php
 					endif;
 				}

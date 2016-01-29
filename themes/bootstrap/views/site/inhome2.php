@@ -7,9 +7,9 @@
                        <section class="row-fluid categoriasHome">
                        	<?php foreach($model as $modelado)
                        	{
-                       		$interno = Categoria::model()->findAllBySql("select * from tbl_categoria where id_padre =".$modelado->id." order by destacado desc limit 6");
+                       		$interno = Categoria::model()->findAllBySql("select * from tbl_categoria where id_padre =".$modelado->id." order by destacado desc limit 4");
                        		?>
-                       		<article class="col-md-4" style="max-height:150px; min-height:150px; overflow-y:hidden">
+                       		<article class="col-md-4" style="max-height:150px; min-height:150px; overflow-y:hidden;">
                                <div class="row-fluid">
                                    <div class="col-md-12 no_horizontal_padding">
                                              <h3><a href='<?php echo Yii::app()->createUrl('categoria/index', array('url'=>$modelado->seo->amigable))?>'><?php echo $modelado->nombre?></a></h3>
@@ -32,7 +32,7 @@
                                      </a>    
                                    </div>
                                </div>                       
-                           </article>
+                           </article> 
                        	
                        	<?php	
                        	}?>    
