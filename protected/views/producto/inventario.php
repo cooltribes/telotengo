@@ -74,7 +74,7 @@ $this->breadcrumbs=array(
 								<?php echo $form->error($model,'precio');  ?>
 							</div>
 							<div class="form-group"> 
-                                <label>IVA a apicar *</label>
+                                <label>IVA a aplicar *</label>
                                 <div style="position: relative">
                                     <?php echo $form->textField($model,'iva',array('class'=>'form-control', 'id'=>'iva','maxlength'=>150, 'placeholder'=>'IVA a aplicar')); ?>
                                     <div style="position: absolute; right: 10px; top: 6px">%</div>
@@ -85,8 +85,10 @@ $this->breadcrumbs=array(
                             </div>
                             <div class="form-group"> 
                                 <label>Precio con IVA *</label>
-                                <?php echo $form->textField($model,'precio_iva',array('class'=>'form-control','id'=>'precio_iva','maxlength'=>150, 'disabled'=>'disabled', 'placeholder'=>'Precio para la venta (con IVA)')); ?>
+                                <input type="text"  class="form-control" disabled="disabled" id ="precio_iva" value="<?php echo (is_null($model->precio)||is_null($model->iva))?"":$model->precio+($model->precio*$model->iva);?>"/>
+                                <?php #echo $form->textField($model,'precio_iva',array('class'=>'form-control','id'=>'precio_iva','maxlength'=>150, 'disabled'=>'disabled', 'placeholder'=>'Precio para la venta (con IVA)')); ?>
                                 <?php echo $form->error($model,'precio_iva');  ?>
+                                   <?php echo $form->hiddenField($model,'precio_iva'); ?>
                             </div>
 													
 							
@@ -134,7 +136,7 @@ $this->breadcrumbs=array(
                             <div class="form-group text_align_center">
 							<?php $this->widget('bootstrap.widgets.TbButton', array(
 								'buttonType'=>'submit',
-								'htmlOptions'=>array('class'=>'btn btn-orange white margin_top_small'),
+								'htmlOptions'=>array('class'=>'btn btn-orange white margin_top_small','onclick'=>'$("precio_iva").removeAttr("disabled");'),
 								'label'=>$model->isNewRecord ? 'Agregar' : 'Guardar',
 							)); ?>
                             </div> 
@@ -219,7 +221,9 @@ $this->breadcrumbs=array(
                 if(isNaN(iva)){
                     $('#iva').val('');
                     $('#iva').focus();
-                }   
+                } 
+                 $('#Inventario_precio_iva').val( $('#precio_iva'));
+             
             }
             
 		}

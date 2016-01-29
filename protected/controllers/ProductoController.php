@@ -36,7 +36,7 @@ class ProductoController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete','update','eliminar','orden','aprobar','rechazar','poraprobar','calificaciones','eliminarCalificacion','importar','inventario', 'details', 'caracteristicas','activarDesactivar', 'activarDesactivarDestacado', 'verDisponibilidad'),
+				'actions'=>array('admin','delete','update','eliminar','orden','aprobar','rechazar','poraprobar','calificaciones','eliminarCalificacion','importar','inventario', 'details', 'caracteristicas','activarDesactivar', 'activarDesactivarDestacado', 'verDisponibilidad','revisionNuevos'),
 				#'users'=>array('admin'),
 				'roles'=>array('admin'),
 			),
@@ -2698,5 +2698,19 @@ class ProductoController extends Controller
         echo json_encode($return);
     }
 
-
+    public function actionRevisionNuevos(){
+        if(isset($_POST['query']))
+        {
+            $productos=Producto::model()->getNuevos($_POST['query']);
+            Yii::app()->session['queryNuevos']=$_POST['query'];            
+        }
+        else{
+            if(isset($_GET['page']))
+                $productos=Producto::model()->getNuevos(Yii::app()->session['queryNuevos']);
+            else  
+                $productos=Producto::model()->nuevos; 
+        }
+        
+        $this->render('revisionNuevos',array('dataProvider'=>$productos));
+    }
 }
