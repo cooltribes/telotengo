@@ -48,7 +48,7 @@ $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
                               <!-- Wrapper for slides -->
                               <div class="carousel-inner" role="listbox">
                             <?php $key=0;
-                                                       foreach($imagen as $image): 
+                                                       foreach($model->imagenes as $image): 
                                                        
                                                          echo $key==0?"<div class='item miniSlide'>":"";?>
                                                   

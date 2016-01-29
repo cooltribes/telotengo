@@ -1276,7 +1276,13 @@ class OrdenController extends Controller
 						$inventario->cantidad-=$cadaUno->cantidad;
 						$inventario->save();
 					}
+                    $subject="Tu orden #".$model->id." ha sido aprobada";
+                    $body="La empresa ".$model->almacen->empresas->razon_social." ha aprobado tu solicitud de compra #".$model->id.".";
 				}
+                else {
+                    $subject="Tu orden #".$model->id." ha sido rechazada";
+                     $body="La empresa ".$model->almacen_id->empresas->razon_social." ha aprobado tu solicitud de compra #".$model->id.".";
+                }
 		/////TODO SACAR EL CORREO ELECTRONICO PARA LOS RESPECTIVOS USUARIOS
 		/* $message= new YiiMailMessage;
          //Opciones de Mandrill
@@ -1287,7 +1293,17 @@ class OrdenController extends Controller
 		 $message->setBody($body, 'text/html');                
 		 $message->addTo($user->email);
 		 Yii::app()->mail->send($message);*/
-		echo $estado;
+		 $message= new YiiMailMessage;
+       
+        $message->activarPlantillaMandrill();
+ 
+     
+         $message->subject    = $subject;
+         $message->setBody($body, 'text/html');                
+         $message->addTo($model->users->email);
+         Yii::app()->mail->send($message);
+         
+        echo $estado;
 		
 	}
 

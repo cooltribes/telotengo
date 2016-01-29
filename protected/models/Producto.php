@@ -96,7 +96,7 @@ class Producto extends CActiveRecord
 			'inventarios' => array(self::HAS_ONE, 'Inventario', 'producto_id'),
 			'preguntas' => array(self::HAS_MANY, 'Pregunta', 'producto_id'),
 			//'marca' => array(self::BELONGS_TO, 'Marca', 'marca_id'),
-			'imagenes' => array(self::HAS_MANY, 'Imagenes', 'producto_id','order' => 'k.orden ASC', 'alias' => 'k'),
+			'imagenes' => array(self::HAS_MANY, 'Imagenes', 'producto_id','order' => 'orden ASC'),
 			'mainimage' => array(self::HAS_ONE, 'Imagenes', 'producto_id','on' => 'orden=1'),
 			'caracteristicasProducto' => array(self::HAS_MANY, 'CaracteristicasProducto', 'producto_id'),
 			'padre' => array(self::BELONGS_TO, 'ProductoPadre', 'padre_id'),
@@ -526,6 +526,11 @@ class Producto extends CActiveRecord
             'pagination'=>array('pageSize'=>15,),
         ));
     }
+    public function getOrderedImages(){
+        return Imagenes::model()->findAllByAttributes(array('producto_id'=>$this->id),array('order'=>'orden ASC'));
+        
+    }
+    
     
 	
 }
