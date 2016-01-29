@@ -1,67 +1,7 @@
-<script type="text/javascript">
-    $(document).ready(function(){
-	var uno=0;
-
-	$("#ul_imagenes span").live('click',function(){
-	    var span = $(this);
-			
-        $.ajax({
-            type:"POST",
-            url: "<?php echo CController::createUrl('producto/eliminar'); ?>",
-            cache:false,
-           	data: "id="+$(this).parent().parent().attr('id').replace('img_',''),
-            success: function(data){
-
-                if(data=='OK'){                        
-                    span.parent().parent().fadeOut('medium', function() {
-				    span.parent().parent().remove(); // se quita el elemento
-						    
-				    var order = $("#ul_imagenes").sortable("serialize") + '&action=actualizar_orden';
-								
-				    	$.ajax({
-	                        type:"POST",
-	                        url: "<?php echo CController::createUrl('producto/orden'); ?>",
-	                        cache:false,
-	                        data: order,
-	                        success: function(data){
-
-	                            $("#respuesta").empty();
-	                            $("#respuesta").html(data); 
-	                        }
-	                    });
-			    	});
-                    }
-               }
-            });
-        })
-
-        $(function() {
-            $("#ul_imagenes").sortable({
-                opacity: 0.3,
-                cursor: 'move',
-                update: function() {
- 
-                    //alert("movi");
-					var order = $(this).sortable("serialize") + '&action=actualizar_orden';
-                    //alert(order);
-
-                    $.ajax({
-                        type:"POST",
-                        url: "<?php echo CController::createUrl('producto/orden'); ?>",
-                        cache:false,
-                        data: order,
-                        success: function(data){
-
-                            $("#respuesta").empty();
-                            $("#respuesta").html(data);
-                        }
-                    });
-                }
-            });
-        });
-    });
-</script>
-
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <link rel="stylesheet" href="/resources/demos/style.css">
 <!-- CONTENIDO ON -->
 
         <!-- COLUMNA PRINCIPAL DERECHA ON // OJO: esta de primera para mejorar el SEO sin embargo por CSS se ubica visualmente a la derecha -->
@@ -121,17 +61,20 @@
 									
 						            <?php echo $form->error($imagen, 'url'); ?>
 						            
-						            <div class="margin_top_small pull-right">
-						                <?php $this->widget('bootstrap.widgets.TbButton', array(
-									'buttonType'=>'submit',
-									'type'=>'primary',
-									'label'=>'Cargar imagen(es)',
-									'htmlOptions'=>array('class'=>'btn-large btn-orange white'), 
-								)); ?> 
-								
-						              </div>
+						            
 	                            	
                         </div>                
+				</div>
+				<div class="col-md-3">
+				    <div class="margin_top_small">
+                                        <?php $this->widget('bootstrap.widgets.TbButton', array(
+                                    'buttonType'=>'submit',
+                                    'type'=>'primary',
+                                    'label'=>'Cargar imagen(es)',
+                                    'htmlOptions'=>array('class'=>'btn-large btn-orange white'), 
+                                )); ?> 
+                                
+                                      </div>
 				</div>
 			</div>
 			
@@ -141,15 +84,9 @@
         
         <?php $this->endWidget(); ?>	 
 
-        <div class="alert alert-info text-center">
-
-          
-             Recuerda que la primera imagen será la principal del producto<br/>
-            Arrastra las imágenes para ordenar la forma de mostrarlas en tienda
-         
-        </div>
+       
         
-        <div class="row-fluid">
+        <div class="row-fluid clearfix margin_top_large">
         
         	<?php
 			$imagenes = $model->imagenes;
@@ -158,16 +95,20 @@
 			
 			$contador = 0;
         	$lis = array();
-
-	        foreach ($imagenes as $img) {
+ 
+	        foreach ($imagenes as $key => $img) {
 	            $contador++;
+                $lis['img_'.$img->id]=   "<div id='img".$img->id."' />".CHtml::image($img->getUrl(array('type'=>'thumb'), "Imagen " . $img->id, array("width" => "100%")))."</div><span>X</span>";
+                
 				//Yii::app()->baseUrl . str_replace(".","_thumb.",$img->url)
-	            $lis['img_' . $img->id] =
-	            		'<div class="col-xs-6 col-md-3">'.
+	          /*  $lis['img_' . $img->id] =
+	            		'<div class="col-xs-6 col-md-3" id="cont'.$key.'">'.
 	                    CHtml::image($img->getUrl(array('type'=>'thumb')), "Imagen " . $img->id, array("width" => "160", "height" => "160")) . 
 	                    '<span>X</span><h4> Enlace: </h4>'.
 	                    CHtml::textField('Enlace',Yii::app()->getBaseUrl(true).$model->mainimage->url,array('disabled'=>'disabled'))
-	                    .'</div>'; 
+	                    .'</div>'; */
+                        
+                   
 			}			
 
 	        $this->widget('zii.widgets.jui.CJuiSortable', array( 
@@ -185,9 +126,74 @@
 			}
         
         ?> 
+        
+         <div class="alert alert-info text-center col-md-12">
+
+          
+             Recuerda que la primera imagen será la principal del producto<br/>
+            Arrastra las imágenes para ordenar la forma de mostrarlas en tienda
+         
+        </div>
 		</div>
 
     </div>
-		
+    
+    <script type="text/javascript">
 
-<!-- /container --> 
+    $("#ul_imagenes span").on('click',function(){
+        var span = $(this);
+            
+        $.ajax({
+            type:"POST",
+            url: "<?php echo CController::createUrl('producto/eliminar'); ?>",
+            cache:false,
+            data: "id="+$(this).parent().attr('id').replace('img_',''),
+            success: function(data){
+
+                if(data=='OK'){                        
+                    span.parent().fadeOut('medium', function() {
+                    span.parent().remove(); // se quita el elemento
+                            
+                    var order = $("#ul_imagenes").sortable("serialize") + '&action=actualizar_orden';
+                                
+                        $.ajax({
+                            type:"POST",
+                            url: "<?php echo CController::createUrl('producto/orden'); ?>",
+                            cache:false,
+                            data: order,
+                            success: function(data){
+
+                                $("#respuesta").empty();
+                                $("#respuesta").html(data); 
+                            }
+                        });
+                    });
+                    }
+               }
+            });
+        })
+
+       $("#ul_imagenes").sortable({
+                opacity: 0.3,
+                cursor: 'move',
+                update: function() {
+ 
+                    //alert("movi");
+                    var order = $(this).sortable("serialize") + '&action=actualizar_orden';
+                    //alert(order);
+
+                    $.ajax({
+                        type:"POST",
+                        url: "<?php echo CController::createUrl('producto/orden'); ?>",
+                        cache:false,
+                        data: order,
+                        success: function(data){
+
+                            $("#respuesta").empty();
+                            $("#respuesta").html(data);
+                        }
+                    });
+                }
+            });
+
+</script>
