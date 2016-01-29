@@ -98,7 +98,7 @@
  
 	        foreach ($imagenes as $key => $img) {
 	            $contador++;
-                $lis['img_'.$img->id]=   "<div id='img".$img->id."' />".CHtml::image($img->getUrl(array('type'=>'thumb'), "Imagen " . $img->id, array("width" => "100%")))."</div><span>X</span>";
+                $lis['img_'.$img->id]=   "<div id='img".$img->id."' />".CHtml::image($img->getUrl(array('type'=>'thumb')), "Imagen " . $img->id, array("width" => "160", "height" => "160"))."</div><span>X</span>";
                 
 				//Yii::app()->baseUrl . str_replace(".","_thumb.",$img->url)
 	          /*  $lis['img_' . $img->id] =
