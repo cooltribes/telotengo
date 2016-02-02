@@ -1158,7 +1158,7 @@ class OrdenController extends Controller
             $message->subject="Haz registrado una solicitud en Telotengo";
             $message->setBody($body,'text/html');
         
-            $message->addTo('');
+            $message->addTo('cruiz@upsidecorp.ch');
             Yii::app()->mail->send($message);
     }
 
@@ -1276,30 +1276,21 @@ class OrdenController extends Controller
 						$inventario->cantidad-=$cadaUno->cantidad;
 						$inventario->save();
 					}
-                    $subject="Tu orden #".$model->id." ha sido aprobada";
-                    $body="La empresa ".$model->almacen->empresas->razon_social." ha aprobado tu solicitud de compra #".$model->id.".";
+                    $subject="TU INTENCIÓN DE COMPRA HA SIDO APROBADA";
+                    
 				}
                 else {
-                    $subject="Tu orden #".$model->id." ha sido rechazada";
-                     $body="La empresa ".$model->almacen_id->empresas->razon_social." ha aprobado tu solicitud de compra #".$model->id.".";
+                    $subject="TU INTENCIÓN DE COMPRA HA SIDO RECHAZADA";
+                     
                 }
-		/////TODO SACAR EL CORREO ELECTRONICO PARA LOS RESPECTIVOS USUARIOS
-		/* $message= new YiiMailMessage;
-         //Opciones de Mandrill
-       //  $message->activarPlantillaMandrill();
-         $subject = 'Han realizado una compra en TELOTENGO';
-         $body = "deberia ir un texto aqui";		
-		 $message->subject    = $subject;
-		 $message->setBody($body, 'text/html');                
-		 $message->addTo($user->email);
-		 Yii::app()->mail->send($message);*/
+
 		 $message= new YiiMailMessage;
        
-        $message->activarPlantillaMandrill();
+         $message->activarPlantillaMandrill();
  
      
          $message->subject    = $subject;
-         $message->setBody($body, 'text/html');                
+         $message->setBody($this->renderPartial("../mail/mail_orden_status", array('orden'=>$model,'destinatario'=>$model->users),true), 'text/html');                
          $message->addTo($model->users->email);
          Yii::app()->mail->send($message);
          

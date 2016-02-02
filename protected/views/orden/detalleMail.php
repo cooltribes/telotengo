@@ -1,8 +1,8 @@
 <div id="orderDetail" class="row-fluid" style="font-size:14px;">
-    <h2 style="font-size: 22px; font-weight: bolder; margin: 10px 0;">Detalle de la solicitud</h2>
+    <h2 style="font-size: 22px; font-weight: bolder; margin: 20px 0;">Detalle de la solicitud</h2>
     <div class="col-md-7 orderInfo no_horizontal_padding">
 
-        <div class="margin_top sellerInfo" style="font-size: 16px;">
+        <div class="margin_top sellerInfo" style="font-size: 14px;">
             <table width="60%">
                  <colgroup>
                         <col width="20%">
@@ -10,6 +10,29 @@
                         <col width="30%">
                         <col width="30%">                     
                  </colgroup>
+                 <tr>
+                    <td colspan="4" align="left" style="font-weight: 900; padding:5px 10px;">Estado</td>
+                 </tr> 
+                 <tr><td colspan="4" align="left" style="font-weight: 900; padding:5px 10px;">
+                        <?php 
+                                switch($model->estado){
+                                    case 0:
+                                        echo "<span style='color:#f4a611; font-size: 16px;'>Pendiente</span>";
+                                    break;
+                                    case 1:
+                                        echo "<span style='color:#3ca13c; font-size: 16px;'>Aprobada</span>";
+                                    break;
+                                    case 2:
+                                        echo "<span style='color:#ea2424; font-size: 16px;'>Rechazada</span>";
+                                    break;
+                                    default:
+                                        echo " N/D ";
+                                    break;
+                                    
+                                }
+                        ?>
+                    </td>                    
+                </tr>                
                  
                 <tr>
                     <td colspan="2" align="left" style="font-weight: 900; padding:5px 10px;">N° de Orden</td>
@@ -21,7 +44,7 @@
                     <td colspan="2" align="left" style="padding:2px 10px;"><?php echo date_format(date_create($model->fecha), 'd/m/Y H:i:s');?></td>                    
                 </tr>
                 <tr>
-                    <td colspan="4" align="center" style="font-weight: 900; padding:8px 10px;">Información del <?php echo $infoFrom ?></td>
+                    <td colspan="4" style="font-weight: 900; padding:8px 10px; text-transform: uppercase; text-decoration: underline">Información del <?php echo $infoFrom ?></td>
                 </tr
                 <tr>
                     <td colspan="2" align="left" style="font-weight: 900; padding:5px 10px;">Razón Social</td>
