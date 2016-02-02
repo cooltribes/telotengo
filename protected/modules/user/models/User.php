@@ -538,7 +538,7 @@ class User extends CActiveRecord
 		}
         
         public function getEmpresa(){
-            $ehu=EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id));
+            $ehu=EmpresasHasUsers::model()->findByAttributes(array('users_id'=>$this->id));
             if($ehu)
                 return Empresas::model()->findByPk($ehu->empresas_id);
             else

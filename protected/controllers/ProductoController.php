@@ -36,7 +36,7 @@ class ProductoController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete','update','eliminar','orden','aprobar','rechazar','poraprobar','calificaciones','eliminarCalificacion','importar','inventario', 'details', 'caracteristicas','activarDesactivar', 'activarDesactivarDestacado', 'verDisponibilidad','revisionNuevos'),
+				'actions'=>array('admin','delete','update','eliminar','orden','aprobar','rechazar','poraprobar','calificaciones','eliminarCalificacion','importar','inventario', 'details', 'caracteristicas','activarDesactivar', 'activarDesactivarDestacado', 'verDisponibilidad','revisionNuevos','aprobarNuevo'),
 				#'users'=>array('admin'),
 				'roles'=>array('admin'),
 			),
@@ -1771,6 +1771,16 @@ class ProductoController extends Controller
         echo $model->estado;
         
     }
+    
+    public function actionAprobarNuevo()
+    {
+        $id=$_POST['id'];
+        $model = Producto::model()->findByPk($id);
+        $model->aprobado=1-$model->aprobado;
+        $model->save();
+        echo $model->aprobado;
+        
+    }
 	
 	public function actionAutocomplete()
 	{
@@ -2667,6 +2677,7 @@ class ProductoController extends Controller
                 $padre->attributes=$_POST['ProductoPadre'];
                 $padre->nombre=$_POST['padre_name'];
                 $padre->id_categoria=$_POST['ProductoPadre']['id_categoria'];
+                $padre->activo = 0;
                 $padre->save();
                 $padre->refresh();
                 $producto->nombre=$_POST['padre_name']." - ".$producto->modelo=$_POST['Producto']['modelo'];                
