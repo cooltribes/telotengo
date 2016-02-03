@@ -42,6 +42,13 @@ Tipos de empresa (tipo):
 4 = realizó la solicitud y hay que verificar
 */
 
+/*
+Tipos de contribuyente (tipo_contribuyente):
+0 = Contribuyente Ordinario
+1 = Contribuyente Especial
+2 = Contribuyente Formal
+*/
+
 const TYPE_EMPRESA = 2;
 const TYPE_CLIENTE = 3;
 const TYPE_USUARIO_SOLICITA = 4;
@@ -119,7 +126,7 @@ const SECTOR_EDUCACION = 16;
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('razon_social, rif, direccion,  ciudad,  sector, cargo,  ciudad, provincia', 'required'),
+			array('razon_social, rif, direccion,  ciudad,  sector, cargo,  ciudad, provincia, tipo_contribuyente', 'required'),
 			array('estado, destacado, tipo', 'numerical', 'integerOnly'=>true),
 			array('telefono', 'numerical', 'integerOnly'=>true, 'message'=>'Debe escribir el código seguido por el número sin espacios ni guiones'),
 			array('url', 'length', 'max'=>255),
@@ -141,7 +148,7 @@ const SECTOR_EDUCACION = 16;
 			
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, telefono, razon_social, rif, estado, destacado, tipo, url, direccion, mail, web, numero, prefijo, ciudad, comentario, forma_legal, sector, num_empleados, cargo', 'safe', 'on'=>'search'),
+			array('id, telefono, razon_social, rif, estado, destacado, tipo, url, direccion, mail, web, numero, prefijo, ciudad, comentario, forma_legal, sector, num_empleados, cargo, tipo_contribuyente', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -186,6 +193,7 @@ const SECTOR_EDUCACION = 16;
 			'cargo' => 'Cargo',
 			'provincia'=>'Estado',
 			'ciudad'=>'Ciudad',
+			'tipo_contribuyente'=>'Tipo de contribuyente',
 		);
 	}
 
@@ -212,6 +220,7 @@ const SECTOR_EDUCACION = 16;
 		$criteria->compare('forma_legal',$this->forma_legal);
 		$criteria->compare('sector',$this->sector);
 		$criteria->compare('num_empleados',$this->num_empleados);
+		$criteria->compare('tipo_contribuyente',$this->forma_legal);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

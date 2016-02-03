@@ -63,6 +63,16 @@
         
     </div>
     
+        <div class="form-group row-fluid">
+ 
+            <?php //echo $form->textField($model,'tipo_contribuyente', array('class'=>'form-control', 'placeholder'=>'Tipo de contribuyente', 'maxlength'=>45)); ?>
+			 <?php echo $form->dropDownList($model,'tipo_contribuyente',array('0'=>'Contribuyente Ordinario', '1'=>'Contribuyente Especial', '2'=>'Contribuyente Formal'),array('class'=>'form-control','empty'=>'Seleccione un tipo de contribuyente')); ?>
+            <?php echo $form->error($model,'tipo_contribuyente'); ?>            
+
+        
+        
+    </div>
+    
         
     <div class="form-group">
             <?php echo $form->textField($model,'telefono', array('id'=>'telefono', 'class'=>'form-control', 'placeholder'=>'Teléfono (código y número sin espacios ni guiones)', 'maxlength'=>11)); ?>
