@@ -89,12 +89,7 @@ $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
 </select>
 <span class="help-inline error hide" id="categoria_em" style="">Debe elegir una subcategoria</span>
 </div>
-<div class="margin_top_small" id="activo">
-        <label>Status</label> <br>
-            <input name="ProductoPadre[activo]" id="ProductoPadre_activo" value="1" checked="checked" type="checkbox"> Activo
-        
- </div>  
-                        
+               
                                                                                
                             <div class="margin_top_small">
                                 <label>Fabricante</label>
@@ -158,16 +153,6 @@ $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
 
                         <?php $this->endWidget(); ?>
                     </div>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
 
 
     
@@ -175,10 +160,6 @@ $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
             <a class="btn btn-large btn-orange white"  title="Guardar" onclick="submitForm()">Guardar</a>
     </div>
     
-
-
-
-
 
 <script>
      $('#categoria').change( function(){
