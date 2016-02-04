@@ -1,6 +1,6 @@
 <?php 
 $this->breadcrumbs=array(
-        'Productos'=>array('admin'),
+        'Productos'=>array('productoInventario'),
         'Inventario',
     );?>
 

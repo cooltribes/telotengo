@@ -16,7 +16,7 @@ class OrdenController extends Controller
 		return array(
 			'accessControl', // perform access control for CRUD operations
 		);
-	}
+	} 
 	/**
 	 * Specifies the access control rules.
 	 * This method is used by the 'accessControl' filter.
@@ -1214,8 +1214,8 @@ class OrdenController extends Controller
 		#$body="haz comprado en telotengo blablabla aqui deberia ir el body"; ////// aqui se debe enviar
 		$productoOrden=OrdenHasInventario::model()->findAllByAttributes(array('orden_id'=>$orden->id));
 	   	$ordenEstado=OrdenEstado::model()->findAllByAttributes(array('orden_id'=>$orden->id), array ('order'=>'orden_id desc'));
-
-		$body=$this->renderPartial("detalle", array('model'=>$orden, 'productoOrden'=>$productoOrden, 'ordenEstado'=>$ordenEstado), true); 
+        
+		$body=$this->renderPartial("detalleMail", array('model'=>$orden, 'productoOrden'=>$productoOrden, 'infoFrom'=>"Vendedor"),true);
 		$message->subject="Haz hecho una compra en Telotengo";
 		$message->setBody($body,'text/html');
 		
@@ -1234,7 +1234,7 @@ class OrdenController extends Controller
 			$productoOrden=OrdenHasInventario::model()->findAllByAttributes(array('orden_id'=>$orden->id));
 			$ordenEstado=OrdenEstado::model()->findAllByAttributes(array('orden_id'=>$orden->id), array ('order'=>'orden_id desc'));
 			
-			$body=$this->renderPartial("detalleVendedor", array('model'=>$orden, 'productoOrden'=>$productoOrden, 'ordenEstado'=>$ordenEstado), true); 
+			$body=$this->renderPartial("detalleMail", array('model'=>$orden, 'productoOrden'=>$productoOrden, 'infoFrom'=>"Comprador"),true);
 			
 			#$body="haz vendido en telotengo blablabla aqui deberia ir el body"; ////// aqui se debe enviar
 			$message->subject="Haz vendido en Telotengo";
