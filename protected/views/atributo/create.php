@@ -5,7 +5,7 @@
 $this->breadcrumbs=array(
 	'Atributo'=>array('admin'),
 	'Agregar',
-);
+); 
 ?>
 
 <div class="row-fluid">
