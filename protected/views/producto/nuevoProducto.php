@@ -1,3 +1,26 @@
+<style>
+    #caution{
+        background: #FFF;
+        width: 50%;
+        margin: 200px auto;
+        height: 500px;
+        
+    }
+        
+</style>
+<div id="caution" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+   <div class="modal-body" style="width: 100%; height 100%"
+       <div class="row-fluid">
+           <div class="col-md-3 col-md-offset-2"><a class="btn btn-orange white">Buscar Producto</a></div>
+           <div class="col-md-3 col-md-offset-1"><a class="btn btn-darkgray white">Continuar</a></div>
+       </div>
+    </div>
+</div>
+<script>
+    $('#caution').modal();
+</script>
+
+
 <?php $this->breadcrumbs=array("Inventario"=>array("producto/productoInventario"),"Cargar inventario"=>array("producto/seleccion"),'Nuevo Producto'); ?> 
 
 <?php

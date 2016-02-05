@@ -517,7 +517,7 @@ class Producto extends CActiveRecord
         // should not be searched.
 
         $criteria=new CDbCriteria;
-        $criteria->addCondition('user_id <>'.Yii::app()->user->id.' AND user_id  <> 0');      
+        $criteria->addCondition('user_id <>'.Yii::app()->user->id.' AND user_id  <> 0 and aprobado = 0');      
         if(!is_null($query))
               $criteria->addCondition('nombre LIKE "%'.$query.'%"');
             

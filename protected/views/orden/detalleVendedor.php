@@ -9,7 +9,7 @@
                 <div class="title clearfix">
                    <div class="row-fluid">
                       <div class="col-md-6 no_horizontal_padding">ORDEN #<?php echo $model->id;?></div>
-                       <div class="col-md-6 no_horizontal_padding text-right"><?php echo $model->almacen->empresas->razon_social;?></div>
+                       <div class="col-md-6 no_horizontal_padding text-right"><?php echo $model->empresa->razon_social;?></div>
                    </div>
                 </div>
                 <div class="detail padding_left_small padding_right_small">

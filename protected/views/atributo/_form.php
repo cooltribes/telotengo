@@ -13,7 +13,7 @@
         'enctype' => 'multipart/form-data',
     ),
 )); ?>
-</div>
+</div> 
 
 
 	<div class="col-md-6 col-md-offset-3 margin_top_small">
