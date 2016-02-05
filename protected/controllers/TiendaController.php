@@ -483,5 +483,92 @@ class TiendaController extends Controller
 		$id=$_POST['filtroBusqueda'];
 		echo Categoria::model()->findByPk($id)->url_amigable;
 	}
+    
+    public function actionIndex2(){       
+        $filtrar=$_GET;
+        echo "<br/><br/><br/>";
+        $condition = array();
+        $r1=false;
+        $query="";
+        if(!isset($_GET['page'])){
+            unset(Yii::app()->session['store_condition']);
+            if(isset($_GET['producto']))
+            {
+                $condition['productos']=Funciones::long_query($_GET['producto'],"padre.nombre")." OR ";
+                $condition['productos'].=Funciones::long_query($_GET['producto'],"marca.nombre")." OR ";  
+                $condition['productos'].=Funciones::long_query($_GET['producto'],"producto.nombre"); 
+                $query=$query.$condition['productos'];
+                $r1=true;
+            }
+            if(isset($_GET['marcas']))
+            {
+                if(isset($_GET['producto']))
+                     $query=$query." AND ";        
+                $condition['marcas']= Funciones::inCondition(str_replace('-',',', $_GET['marcas']),'marca.id');
+                $query=$query.$condition['marcas'];
+                $r1=true;
+            }
+            if(isset($_GET['categoria']))
+            {
+                if(isset($_GET['marcas'])||isset($_GET['producto']))
+                    $query=$query." AND ";     
+                $categoria=Categoria::model()->findByAttributes(array('url_amigable'=>$_GET['categoria']));
+                if($categoria){
+                    $hijos=$categoria->buscarHijos($categoria->id);
+                    $implode=implode(',',$hijos);
+                    var_dump(Funciones::inCondition($implode,'categoria.id'));
+                    if(count($hijos)>1)
+                        $condition['categoria']=Funciones::inCondition($implode,'categoria.id');
+                    else
+                        $condition['categoria']='categoria.id = '.$hijos[0];
+                    
+                    $query=$query.$condition['categoria']; 
+                    
+                }
+                $r1=true;            
+            }
+            if($r1){
+                echo "<br/><br/><br/>PRIMERO<br/>";
+                $sql="select producto.id from tbl_producto producto JOIN tbl_producto_padre padre ON padre.id=producto.padre_id JOIN tbl_marca marca ON marca.id=padre.id_marca JOIN tbl_categoria categoria ON categoria.id=padre.id_categoria WHERE producto.aprobado = 1 AND producto.estado = 1 AND(".$query.") ";  
+                $r1=Yii::app()->db->createCommand($sql)->queryColumn();            
+                print_r($r1);
+                echo "<br/><br/><br/>"; 
+            }
+            else{
+                $r1=array();
+            }
+                       
+            if(isset($_GET['precio']))
+            {
+                $precios=explode('-',$filtrar['precio']);
+                $filtrar['maxPrecio']=$precios[1];
+                $filtrar['minPrecio']=$precios[0];
+                $condition['precios']=" precio <= ".$filtrar['maxPrecio']." AND "."precio >= ".$filtrar['minPrecio'];
+                $sql="select distinct(producto.id) from tbl_inventario inventario JOIN tbl_producto producto ON producto.id=inventario.producto_id WHERE producto.estado = 1 AND producto.aprobado = 1 AND ".$condition['precios'];
+     
+            }
+            else{
+                 $sql="select distinct(producto.id) from tbl_inventario inventario JOIN tbl_producto producto ON producto.id=inventario.producto_id WHERE producto.estado = 1 AND producto.aprobado = 1 AND inventario.cantidad > 1";
+            }
+            $r2=Yii::app()->db->createCommand($sql)->queryColumn();
+            echo "SEGUNDO<br/>";
+            print_r($r2);                   
+            echo "<br/><br/><br/>";          
+            $result=implode(',',array_merge($r1,$r2));
+            Yii::app()->session['store_condition']=(strlen($result)>0)?$result:0;
+            $page=0;            
+        }else{
+            $page=$_GET['page'];
+        }
+                    
+        $criteria=new CDbCriteria;            
+        $criteria->addCondition(" id IN (".Yii::app()->session['store_condition'].")");  
+        $dataProvider= new CActiveDataProvider("Producto", array(
+        'criteria'=>$criteria,
+        'pagination'=>array('pageSize'=>9, 'currentPage'=>$page),
+         ));
+    }
+    
+    
 	
 }

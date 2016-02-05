@@ -94,7 +94,8 @@ $(document).ready(function() {
             url[0]=url[0]+"index";        
         }
             
-        window.location.href=url[0]+removeLast(params,'&'); 
+        //window.location.href=url[0]+removeLast(params,'&'); 
+        window.location.href="index2/tienda"+removeLast(params,'&'); 
     }
     function go(id,value){
         $(id).val(value);

@@ -75,12 +75,14 @@ class Funciones {
 		return str_replace("_"," ",$cadena);
 	}  
     
-    public static function long_query($query,$field = ''){
+    public static function long_query($query,$field){
         $array=explode(" ",$query);
         $return="";
         foreach ($array as $key=>$item){            
             if($key<count($array)-1)
-                $return.=$field." LIKE '%".$item."%' OR ";
+                    $return.=$field." LIKE '%".$item."%' OR ";
+            
+                
             else
                 $return.=$field." LIKE '%".$item."%'";
                 
@@ -89,11 +91,11 @@ class Funciones {
         
     }
     
-    public static function inCondition($string= "",$field = NULL){
-        if(strlen($string)>0||is_null($field))
-            return ;
-        else
-            return $field." IN (".$string.")";
+    public static function inCondition($string,$field){
+            if(strlen($string)>0)     
+                return $field." IN (".$string.")";
+            else
+                return "";
     }
     
  
