@@ -103,6 +103,10 @@ class Producto extends CActiveRecord
 			'creador' => array(self::BELONGS_TO, 'User', 'user_id'),
 			'seo' => array(self::BELONGS_TO, 'Seo', 'id_seo'),
 			'colore' => array(self::BELONGS_TO, 'Color', 'color_id'),
+			'minPrecio' => array(self::STAT, 'Inventario', 'producto_id',
+                'select'=> 'MIN(precio)',
+                'condition'=>'cantidad>0'
+                ),
 		);
 	}
 
@@ -528,6 +532,13 @@ class Producto extends CActiveRecord
     }
     public function getOrderedImages(){
         return Imagenes::model()->findAllByAttributes(array('producto_id'=>$this->id),array('order'=>'orden ASC'));
+         
+    } 
+    
+    public function getMinPrice(){
+          
+            return Yii::app()->db->createCommand("select min(precio) from tbl_inventario where producto_id = ".$this->id)->queryScalar();
+        
         
     }
     

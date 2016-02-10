@@ -164,329 +164,7 @@ class TiendaController extends Controller
 	 
 
 	public function actionIndex(){
-        //$this->layout='//layouts/start'; 
-		$sql="";
-		$sub="";
-		$otraForma="";
-		$opcion2="";
-		$filtroCategoria="";
-		$sqlCategoria2="";
-		$sqlCategoria="";
-		$filtroMarca="";
-		$filtroPrecio="";
-		$padre="";
-		if(isset($_GET['producto']))
-		{
-	
-            $filter['producto']=$_GET['producto'];
-			$productoPartido=explode("(", $_GET['producto']);		
-			$num=count($productoPartido);
-			$i=1;
-			$produc="";
-			$cadena="";
-			
-			foreach($productoPartido as $prod) /// sirve con todos, probar con el s6 
-			{
-				if($i==1)	
-				{
-					$produc=$prod;
-				}
-				else
-				{
-					$cadena=str_replace(")", "", $prod);	
-					if(!Categoria::model()->findByAttributes(array('nombre'=>$cadena))) // sirve con dos parentesis
-					{
-						 $prod="(".$prod;
-						 $produc=$produc.$prod;
-					}
-					else 
-					{
-						$cate=Categoria::model()->findByAttributes(array('nombre'=>$cadena));
-						$var=trim($produc);
-						if(isset($_GET['categoria']) && !ProductoPadre::model()->findByAttributes(array('nombre'=>$var)))
-						{
-							if($_GET['categoria']!="") // si el filtro no es vacio
-								if($_GET['categoria']==$cate->url_amigable)
-									$filter['producto']=trim($produc);
-						}
-						else
-						{
-							$var=trim($produc);
-							if(ProductoPadre::model()->findByAttributes(array('nombre'=>$var))) // si esta bien, entre; del resto es invento del usuario
-							{
-								$padre=ProductoPadre::model()->findByAttributes(array('nombre'=>$var));
-								$padre_id=ProductoPadre::model()->buscarProducto($var);
-								$otraForma=1;
-							}
-						}	
-					}
-				}	
-				$i++;
-			}
-			//echo $filter['producto'];
-			//echo $produc;
-
-			/*if(isset($productoPartido[$num-1]) && isset($productoPartido[$num-2])  && isset($productoPartido[$num-3])) // funcion puede dar error
-			{
-												
-				$variable="";
-
-				for($i=0;$i<=$num-3;$i++)
-				{	
-					if($i!=$num-3)	
-						$variable=$variable.$productoPartido[$i]." ";
-					else	
-					   $variable=$variable.$productoPartido[$i];
-				}
-				
-				if($_GET['categoria']=="")
-				{
-					$otraForma=1;
-				}
-				else 
-				{
-					$otraForma=0;
-				}
-				if(Categoria::model()->buscarCategoria($productoPartido[$num-1])!="" && $productoPartido[$num-2]=="en" && ProductoPadre::model()->buscarProducto($variable)!="" && $otraForma==1)
-				{
-					$padre_id=ProductoPadre::model()->buscarProducto($variable);
-					$otraForma=1; // bandera
-					$sql="select p.id, p.nombre, min(i.precio) as menor,  p.padre_id, p.modelo, p.annoFabricacion, p.upc, p.ean, p.gtin, p.nparte, p.tlt_codigo, p.color, p.color_id, p.descripcion, p.destacado, p.estado, p.caracteristicas, p.id_seo
-					 from tbl_producto p join tbl_inventario i on p.id=i.producto_id where p.padre_id=".$padre_id.""; //TODO mejorar esto, forma menos optima
-				}	
-			}*/
-			if($otraForma!=1) // bandera activa
-			{
-				//echo "basta de";
-					$sql="select p.id, p.nombre,  min(i.precio) as menor, p.padre_id, p.modelo, p.annoFabricacion, p.upc, p.ean, p.gtin, p.nparte, p.tlt_codigo, p.color, p.color_id, p.descripcion, p.destacado, p.estado, p.caracteristicas, p.id_seo
-					 from tbl_producto p join tbl_inventario i on p.id=i.producto_id where p.nombre LIKE '%".$filter['producto']."%' "; //TODO mejorar esto, forma menos optima
-			}
-			else 
-			{
-				$sql="select p.id, p.nombre,  min(i.precio) as menor, p.padre_id, p.modelo, p.annoFabricacion, p.upc, p.ean, p.gtin, p.nparte, p.tlt_codigo, p.color, p.color_id, p.descripcion, p.destacado, p.estado, p.caracteristicas, p.id_seo
-					 from tbl_producto p join tbl_inventario i on p.id=i.producto_id where p.padre_id='".$padre->id."' "; 
-			}
-				
-
-
-
-			if($filter['producto']!="") //filtros
-			{
-				$filter['producto'];
-			}
-		}
-		else 
-		{   $filter['producto']="";
-			$sql="select p.id, p.nombre, min(i.precio) as menor,  p.padre_id, p.modelo, p.annoFabricacion, p.upc, p.ean, p.gtin, p.nparte, p.tlt_codigo, p.color, p.color_id, p.descripcion, p.destacado, p.estado, p.caracteristicas, p.id_seo from tbl_producto p join tbl_inventario i on p.id=i.producto_id where p.nombre <>''"; //TODO mejorar esto, forma menos optima 
-		}
-        $filter['categoria']=isset($_GET['categoria'])?$_GET['categoria']:'';
-        $filter['marcas']=isset($_GET['marcas'])?$_GET['marcas']:'';
-
-        
-		if(isset($_GET['precio'])){
-			$filter['precio']=$_GET['precio'];
-			$filtroPrecio=explode("-", $filter['precio']);
-			$filter['precioMenor']=$filtroPrecio[0];
-			$filter['precioMayor']=$filtroPrecio[1];
-		}else{
-			$filter['precio']='';
-			$filter['precioMenor']=0;
-			$filter['precioMayor']=200000;
-		}
-		
-		$order=isset($_GET['order'])?$_GET['order']:'';
-        //$filter['caracteristica']=isset($_GET['caracteristica'])?$_GET['caracteristica']:''; TODO para otra entrega
-        
-		if(isset($filter['categoria'])){
-    		if($filter['categoria']!="")//filtros
-    		{
-    			// $filtroCategoria=$filter['categoria'];
-    			// $filtroCategoria=Categoria::model()->findByAttributes(array('nombre'=>$filtroCategoria));
-    			// echo $filtroCategoria;
-    
-    			$filtroCategoria=$filter['categoria'];
-    			$filtroCategoria=Categoria::model()->findByAttributes(array('url_amigable'=>$filtroCategoria));
-    			$vector=ARRAY();
-    			//$vector=Categoria::model()->buscarPadres($filtroCategoria->id, $vector); //TODO MEJORAR ESTO
-    			//echo $word=Categoria::model()->incluir($vector);
-    			$vector=Categoria::model()->buscarHijos($filtroCategoria->id, $vector); //TODO MEJORAR ESTO
-    		    $word=Categoria::model()->incluir($vector);
-				if($word=="")
-					$word=0; ///////////// si no existe ningun producto con esa categoria
-    			$sqlCategoria="and p.padre_id in (select pa.id from tbl_producto_padre pa where pa.id_categoria in(".$word."))";
-    			$sqlCategoria2="where pa.id_categoria in(".$word.")";
-    			//var_dump($vector);
-    		}
-        }	
-
-		
-		if(isset($filter['marcas'])){//filtros
-    		if($filter['marcas']!="")
-    		{
-    			$filtroMarca=explode("-", $filter['marcas']);
-    			$contador=count($filtroMarca)-1;
-    			if($sqlCategoria2!="") // si hay filtro de categoria
-    			{
-    				$sql=$sql." and p.padre_id in (select pa.id from tbl_producto_padre pa ".$sqlCategoria2." and pa.id_marca in (";
-    				$opcion2=" and p.padre_id in (select pa.id from tbl_producto_padre pa ".$sqlCategoria2."  and pa.id_marca in (";
-    			}
-    			else 
-    			{
-    				$sql=$sql." and p.padre_id in (select pa.id from tbl_producto_padre pa where pa.id_marca in (";
-    				$opcion2=" and p.padre_id in (select pa.id from tbl_producto_padre pa where pa.id_marca in (";
-    			}
-    
-    			$i=0;	
-    			foreach($filtroMarca as $marca)
-    			{
-    				$sql=$sql.$marca;
-    				$opcion2=$opcion2.$marca;
-    				if($contador!=$i)
-    				{
-    					$sql=$sql.",";
-    					$opcion2=$opcion2.",";
-    				}
-    			$i++;
-    			}
-    			$sql=$sql."))";
-    			$opcion2=$opcion2."))";
-    			
-    
-    			
-    			
-    		}
-        }else{
-    		    $filter['marcas']="";
-    		}
-		
-		
-		if($filter['precio']!="")//filtros
-		{
-
-			if($opcion2=="")
-			{
-				if($sqlCategoria!="")
-				{
-					$opcion2=$sqlCategoria;
-				}
-			}
-			if($otraForma!=1) // si es busqueda por variacion
-			{	
-				if($opcion2!="")
-					$sub="select i.id, min(i.precio) as menor, i.costo, i.cantidad, i.almacen_id, i.notaCondicion, i.garantia, i.producto_id, i.estado, i.condicion, i.sku, i.numFabricante, i.metodoEnvio from tbl_inventario i where i.producto_id in (select p.id from tbl_producto p where p.nombre LIKE '%".$filter['producto']."%' ".$opcion2.") and i.precio between ".$filtroPrecio[0]." and ".$filtroPrecio[1]."";
-				else
-					$sub="select i.id, min(i.precio) as menor, i.costo, i.cantidad, i.almacen_id, i.notaCondicion, i.garantia, i.producto_id, i.estado, i.condicion, i.sku, i.numFabricante, i.metodoEnvio from tbl_inventario i where i.producto_id in (select p.id from tbl_producto p where p.nombre LIKE '%".$filter['producto']."%') and i.precio between ".$filtroPrecio[0]." and ".$filtroPrecio[1]."";
-			}
-			else // si es busqueda por producto padre
-			{
-				if($opcion2!="")
-					$sub="select i.id, min(i.precio) as menor, i.costo, i.cantidad, i.almacen_id, i.notaCondicion, i.garantia, i.producto_id, i.estado, i.condicion, i.sku, i.numFabricante, i.metodoEnvio from tbl_inventario i where i.producto_id in (select p.id from tbl_producto p where p.padre_id='".$padre_id."' ".$opcion2.") and i.precio between ".$filtroPrecio[0]." and ".$filtroPrecio[1]."";
-				else
-					$sub="select i.id, min(i.precio) as menor, i.costo, i.cantidad, i.almacen_id, i.notaCondicion, i.garantia, i.producto_id, i.estado, i.condicion, i.sku, i.numFabricante, i.metodoEnvio from tbl_inventario i where i.producto_id in (select p.id from tbl_producto p where p.padre_id='".$padre_id."') and i.precio between ".$filtroPrecio[0]." and ".$filtroPrecio[1]."";
-			}
-			
-			//echo $sub;
-		}
-		if($filtroMarca=="" && $filtroPrecio=="" && $filtroCategoria!="") // si solo hay filtro de categoria
-		{
-			 $sql=$sql.$sqlCategoria;
-
-		}
-		//TODO caracteristica para proxima entrega
-	/*	if($filter['caracteristica']!="")//filtros
-		{
-			echo $filter['caracteristica'];
-		}*/
-		//echo $sql;echo $sub;
-		
-		
-		
-		if($sql!="") /// GROUP BY
-		{
-			$or=" group by p.id";
-			$sql=$sql.$or;	
-		}
-		if($sub!="")
-		{
-			$or=" group by i.producto_id";
-			$sub=$sub.$or;	
-		}
-		
-		if($order!="")
-		{ 
-				if($order=="nombre-asc")
-				{
-					$sql=$sql." order by p.nombre";
-				}
-				else
-				{
-						if($order=="mayorPrecio-asc")
-						{
-							if($sql!="")	
-								$sql=$sql." order by menor desc";
-							if($sub!="")
-								$sub=$sub." order by menor desc";
-						}
-						else 
-						{
-							if($sql!="")		
-								$sql=$sql." order by menor asc";
-							if($sub!="")
-								$sub=$sub." order by menor asc";
-						}
-				}	
-		}		
-		if($sql!="")
-		{
-			//echo $sql;
-			$model="";
-			#echo "<br>";
-			$model=Yii::app()->db->createCommand($sql)->queryAll();
-			#var_dump($model);
-		}			
-		else
-		{
-			$model="";
-		}
-		
-		
-		
-		if($sub!="") //TODO mejorar esto substiuyo la consulta ya que las relaciones estaban mal hechas
-		{
-			//echo $sql;
-			$model2="";
-			//echo $sub;
-			$model2=Yii::app()->db->createCommand($sub)->queryAll();
-		}	
-		else
-		{
-			$model2="";
-		}
-		
-		
-		if(isset( $_GET['display']))
-		{
-			$list= $_GET['display'];
-		}
-		else 
-		{
-			$list=0;
-		}
-		//echo $sql;
-		//echo $sub;
-		
-       $this->render('store', array('categorias'=>Categoria::model()->categoriasEnExistencia,'list'=>$list,'filter'=>$filter, 'model'=>$model, 'model2'=>$model2, 'order'=>$order));
-    }
-
-	public function actionBuscarCategoria()
-	{
-		$id=$_POST['filtroBusqueda'];
-		echo Categoria::model()->findByPk($id)->url_amigable;
-	}
-    
-    public function actionIndex2(){       
-        $filtrar=$_GET;
-        echo "<br/><br/><br/>";
+        $filter=$_GET;
         $condition = array();
         $r1=false;
         $query="";
@@ -508,6 +186,9 @@ class TiendaController extends Controller
                 $query=$query.$condition['marcas'];
                 $r1=true;
             }
+            else{
+                $filter['marcas']='';
+            }
             if(isset($_GET['categoria']))
             {
                 if(isset($_GET['marcas'])||isset($_GET['producto']))
@@ -516,7 +197,7 @@ class TiendaController extends Controller
                 if($categoria){
                     $hijos=$categoria->buscarHijos($categoria->id);
                     $implode=implode(',',$hijos);
-                    var_dump(Funciones::inCondition($implode,'categoria.id'));
+       
                     if(count($hijos)>1)
                         $condition['categoria']=Funciones::inCondition($implode,'categoria.id');
                     else
@@ -526,47 +207,408 @@ class TiendaController extends Controller
                     
                 }
                 $r1=true;            
+            }else{
+                 $filter['categoria']='';
             }
             if($r1){
-                echo "<br/><br/><br/>PRIMERO<br/>";
+               
                 $sql="select producto.id from tbl_producto producto JOIN tbl_producto_padre padre ON padre.id=producto.padre_id JOIN tbl_marca marca ON marca.id=padre.id_marca JOIN tbl_categoria categoria ON categoria.id=padre.id_categoria WHERE producto.aprobado = 1 AND producto.estado = 1 AND(".$query.") ";  
-                $r1=Yii::app()->db->createCommand($sql)->queryColumn();            
-                print_r($r1);
-                echo "<br/><br/><br/>"; 
+                $r1=Yii::app()->db->createCommand($sql)->queryColumn();           
+               
             }
             else{
-                $r1=array();
+                $sql="select producto.id from tbl_producto producto JOIN tbl_inventario inventario ON inventario.producto_id=producto.id WHERE producto.aprobado = 1 AND producto.estado = 1 AND inventario.cantidad > 0 ";  
+                $r1=Yii::app()->db->createCommand($sql)->queryColumn();
             }
-                       
+                            
             if(isset($_GET['precio']))
             {
-                $precios=explode('-',$filtrar['precio']);
-                $filtrar['maxPrecio']=$precios[1];
-                $filtrar['minPrecio']=$precios[0];
-                $condition['precios']=" precio <= ".$filtrar['maxPrecio']." AND "."precio >= ".$filtrar['minPrecio'];
-                $sql="select distinct(producto.id) from tbl_inventario inventario JOIN tbl_producto producto ON producto.id=inventario.producto_id WHERE producto.estado = 1 AND producto.aprobado = 1 AND ".$condition['precios'];
+                $precios=explode('-',$filter['precio']);
+                $filter['precioMayor']=$precios[1];
+                $filter['precioMenor']=$precios[0];
+                $condition['precios']=" precio >= ".$filter['precioMenor']." AND "."precio <= ".$filter['precioMayor'];
+                $sql="select disdtinct(producto.id) from tbl_inventario inventario JOIN tbl_producto producto ON producto.id=inventario.producto_id WHERE producto.estado = 1 AND producto.aprobado = 1 AND ".$condition['precios'];
      
             }
             else{
                  $sql="select distinct(producto.id) from tbl_inventario inventario JOIN tbl_producto producto ON producto.id=inventario.producto_id WHERE producto.estado = 1 AND producto.aprobado = 1 AND inventario.cantidad > 1";
+                  $filter['precio']='';
+                  $filter['precioMayor']=200000;
+                $filter['precioMenor']=0;
             }
             $r2=Yii::app()->db->createCommand($sql)->queryColumn();
-            echo "SEGUNDO<br/>";
-            print_r($r2);                   
-            echo "<br/><br/><br/>";          
-            $result=implode(',',array_merge($r1,$r2));
+         
+            $result=implode(',',array_intersect($r1,$r2));
+         
             Yii::app()->session['store_condition']=(strlen($result)>0)?$result:0;
+           
             $page=0;            
         }else{
             $page=$_GET['page'];
         }
-                    
+                     
         $criteria=new CDbCriteria;            
-        $criteria->addCondition(" id IN (".Yii::app()->session['store_condition'].")");  
+        $criteria->addCondition(" t.id IN (".Yii::app()->session['store_condition'].")");
+        if(isset($_GET['order'])){
+            $criteria->with='inventarios';
+            $criteria->order='min(inventarios.precio) '.$_GET['order'];
+            $criteria->group="t.id"; 
+            $criteria->together;
+        }
+         
         $dataProvider= new CActiveDataProvider("Producto", array(
         'criteria'=>$criteria,
-        'pagination'=>array('pageSize'=>9, 'currentPage'=>$page),
+        'pagination'=>array('pageSize'=>9),
          ));
+          if(isset( $_GET['display']))
+        {
+            $list= $_GET['display'];
+        }
+        else 
+        {
+            $list=0;
+        }
+        
+          if(isset( $_GET['order']))
+        {
+            $order= $_GET['order'];
+        }
+        else 
+        {
+            $order="";
+        }
+		 	 
+       $this->render('store', array('categorias'=>Categoria::model()->categoriasEnExistencia,'list'=>$list,'filter'=>$filter,'order'=>$order, 'dataProvider'=>$dataProvider));
+    }
+
+	public function actionBuscarCategoria()
+	{
+		$id=$_POST['filtroBusqueda'];
+		echo Categoria::model()->findByPk($id)->url_amigable;
+	}
+    
+    public function actionIndex2(){       
+        
+         
+         
+         //CODIGO ANTERIOR 
+         
+         //$this->layout='//layouts/start'; 
+        $sql="";
+        $sub="";
+        $otraForma="";
+        $opcion2="";
+        $filtroCategoria="";
+        $sqlCategoria2="";
+        $sqlCategoria="";
+        $filtroMarca="";
+        $filtroPrecio="";
+        $padre="";
+        if(isset($_GET['producto']))
+        {
+    
+            $filter['producto']=$_GET['producto'];
+            $productoPartido=explode("(", $_GET['producto']);       
+            $num=count($productoPartido);
+            $i=1;
+            $produc="";
+            $cadena="";
+            
+            foreach($productoPartido as $prod) /// sirve con todos, probar con el s6 
+            {
+                if($i==1)   
+                {
+                    $produc=$prod;
+                }
+                else
+                {
+                    $cadena=str_replace(")", "", $prod);    
+                    if(!Categoria::model()->findByAttributes(array('nombre'=>$cadena))) // sirve con dos parentesis
+                    {
+                         $prod="(".$prod;
+                         $produc=$produc.$prod;
+                    }
+                    else 
+                    {
+                        $cate=Categoria::model()->findByAttributes(array('nombre'=>$cadena));
+                        $var=trim($produc);
+                        if(isset($_GET['categoria']) && !ProductoPadre::model()->findByAttributes(array('nombre'=>$var)))
+                        {
+                            if($_GET['categoria']!="") // si el filtro no es vacio
+                                if($_GET['categoria']==$cate->url_amigable)
+                                    $filter['producto']=trim($produc);
+                        }
+                        else
+                        {
+                            $var=trim($produc);
+                            if(ProductoPadre::model()->findByAttributes(array('nombre'=>$var))) // si esta bien, entre; del resto es invento del usuario
+                            {
+                                $padre=ProductoPadre::model()->findByAttributes(array('nombre'=>$var));
+                                $padre_id=ProductoPadre::model()->buscarProducto($var);
+                                $otraForma=1;
+                            }
+                        }   
+                    }
+                }   
+                $i++;
+            }
+            //echo $filter['producto'];
+            //echo $produc;
+
+            /*if(isset($productoPartido[$num-1]) && isset($productoPartido[$num-2])  && isset($productoPartido[$num-3])) // funcion puede dar error
+            {
+                                                
+                $variable="";
+
+                for($i=0;$i<=$num-3;$i++)
+                {   
+                    if($i!=$num-3)  
+                        $variable=$variable.$productoPartido[$i]." ";
+                    else    
+                       $variable=$variable.$productoPartido[$i];
+                }
+                
+                if($_GET['categoria']=="")
+                {
+                    $otraForma=1;
+                }
+                else 
+                {
+                    $otraForma=0;
+                }
+                if(Categoria::model()->buscarCategoria($productoPartido[$num-1])!="" && $productoPartido[$num-2]=="en" && ProductoPadre::model()->buscarProducto($variable)!="" && $otraForma==1)
+                {
+                    $padre_id=ProductoPadre::model()->buscarProducto($variable);
+                    $otraForma=1; // bandera
+                    $sql="select p.id, p.nombre, min(i.precio) as menor,  p.padre_id, p.modelo, p.annoFabricacion, p.upc, p.ean, p.gtin, p.nparte, p.tlt_codigo, p.color, p.color_id, p.descripcion, p.destacado, p.estado, p.caracteristicas, p.id_seo
+                     from tbl_producto p join tbl_inventario i on p.id=i.producto_id where p.padre_id=".$padre_id.""; //TODO mejorar esto, forma menos optima
+                }   
+            }*/
+            if($otraForma!=1) // bandera activa
+            {
+                //echo "basta de";
+                    $sql="select p.id, p.nombre,  min(i.precio) as menor, p.padre_id, p.modelo, p.annoFabricacion, p.upc, p.ean, p.gtin, p.nparte, p.tlt_codigo, p.color, p.color_id, p.descripcion, p.destacado, p.estado, p.caracteristicas, p.id_seo
+                     from tbl_producto p join tbl_inventario i on p.id=i.producto_id where p.nombre LIKE '%".$filter['producto']."%' "; //TODO mejorar esto, forma menos optima
+            }
+            else 
+            {
+                $sql="select p.id, p.nombre,  min(i.precio) as menor, p.padre_id, p.modelo, p.annoFabricacion, p.upc, p.ean, p.gtin, p.nparte, p.tlt_codigo, p.color, p.color_id, p.descripcion, p.destacado, p.estado, p.caracteristicas, p.id_seo
+                     from tbl_producto p join tbl_inventario i on p.id=i.producto_id where p.padre_id='".$padre->id."' "; 
+            }
+                
+
+
+
+            if($filter['producto']!="") //filtros
+            {
+                $filter['producto'];
+            }
+        }
+        else 
+        {   $filter['producto']="";
+            $sql="select p.id, p.nombre, min(i.precio) as menor,  p.padre_id, p.modelo, p.annoFabricacion, p.upc, p.ean, p.gtin, p.nparte, p.tlt_codigo, p.color, p.color_id, p.descripcion, p.destacado, p.estado, p.caracteristicas, p.id_seo from tbl_producto p join tbl_inventario i on p.id=i.producto_id where p.nombre <>''"; //TODO mejorar esto, forma menos optima 
+        }
+        $filter['categoria']=isset($_GET['categoria'])?$_GET['categoria']:'';
+        $filter['marcas']=isset($_GET['marcas'])?$_GET['marcas']:'';
+
+        
+        if(isset($_GET['precio'])){
+            $filter['precio']=$_GET['precio'];
+            $filtroPrecio=explode("-", $filter['precio']);
+            $filter['precioMenor']=$filtroPrecio[0];
+            $filter['precioMayor']=$filtroPrecio[1];
+        }else{
+            $filter['precio']='';
+            $filter['precioMenor']=0;
+            $filter['precioMayor']=200000;
+        }
+        
+        $order=isset($_GET['order'])?$_GET['order']:'';
+        //$filter['caracteristica']=isset($_GET['caracteristica'])?$_GET['caracteristica']:''; TODO para otra entrega
+        
+        if(isset($filter['categoria'])){
+            if($filter['categoria']!="")//filtros
+            {
+                // $filtroCategoria=$filter['categoria'];
+                // $filtroCategoria=Categoria::model()->findByAttributes(array('nombre'=>$filtroCategoria));
+                // echo $filtroCategoria;
+    
+                $filtroCategoria=$filter['categoria'];
+                $filtroCategoria=Categoria::model()->findByAttributes(array('url_amigable'=>$filtroCategoria));
+                $vector=ARRAY();
+                //$vector=Categoria::model()->buscarPadres($filtroCategoria->id, $vector); //TODO MEJORAR ESTO
+                //echo $word=Categoria::model()->incluir($vector);
+                $vector=Categoria::model()->buscarHijos($filtroCategoria->id, $vector); //TODO MEJORAR ESTO
+                $word=Categoria::model()->incluir($vector);
+                if($word=="")
+                    $word=0; ///////////// si no existe ningun producto con esa categoria
+                $sqlCategoria="and p.padre_id in (select pa.id from tbl_producto_padre pa where pa.id_categoria in(".$word."))";
+                $sqlCategoria2="where pa.id_categoria in(".$word.")";
+                //var_dump($vector);
+            }
+        }   
+
+        
+        if(isset($filter['marcas'])){//filtros
+            if($filter['marcas']!="")
+            {
+                $filtroMarca=explode("-", $filter['marcas']);
+                $contador=count($filtroMarca)-1;
+                if($sqlCategoria2!="") // si hay filtro de categoria
+                {
+                    $sql=$sql." and p.padre_id in (select pa.id from tbl_producto_padre pa ".$sqlCategoria2." and pa.id_marca in (";
+                    $opcion2=" and p.padre_id in (select pa.id from tbl_producto_padre pa ".$sqlCategoria2."  and pa.id_marca in (";
+                }
+                else 
+                {
+                    $sql=$sql." and p.padre_id in (select pa.id from tbl_producto_padre pa where pa.id_marca in (";
+                    $opcion2=" and p.padre_id in (select pa.id from tbl_producto_padre pa where pa.id_marca in (";
+                }
+    
+                $i=0;   
+                foreach($filtroMarca as $marca)
+                {
+                    $sql=$sql.$marca;
+                    $opcion2=$opcion2.$marca;
+                    if($contador!=$i)
+                    {
+                        $sql=$sql.",";
+                        $opcion2=$opcion2.",";
+                    }
+                $i++;
+                }
+                $sql=$sql."))";
+                $opcion2=$opcion2."))";
+                
+    
+                
+                
+            }
+        }else{
+                $filter['marcas']="";
+            }
+        
+        
+        if($filter['precio']!="")//filtros
+        {
+
+            if($opcion2=="")
+            {
+                if($sqlCategoria!="")
+                {
+                    $opcion2=$sqlCategoria;
+                }
+            }
+            if($otraForma!=1) // si es busqueda por variacion
+            {   
+                if($opcion2!="")
+                    $sub="select i.id, min(i.precio) as menor, i.costo, i.cantidad, i.almacen_id, i.notaCondicion, i.garantia, i.producto_id, i.estado, i.condicion, i.sku, i.numFabricante, i.metodoEnvio from tbl_inventario i where i.producto_id in (select p.id from tbl_producto p where p.nombre LIKE '%".$filter['producto']."%' ".$opcion2.") and i.precio between ".$filtroPrecio[0]." and ".$filtroPrecio[1]."";
+                else
+                    $sub="select i.id, min(i.precio) as menor, i.costo, i.cantidad, i.almacen_id, i.notaCondicion, i.garantia, i.producto_id, i.estado, i.condicion, i.sku, i.numFabricante, i.metodoEnvio from tbl_inventario i where i.producto_id in (select p.id from tbl_producto p where p.nombre LIKE '%".$filter['producto']."%') and i.precio between ".$filtroPrecio[0]." and ".$filtroPrecio[1]."";
+            }
+            else // si es busqueda por producto padre
+            {
+                if($opcion2!="")
+                    $sub="select i.id, min(i.precio) as menor, i.costo, i.cantidad, i.almacen_id, i.notaCondicion, i.garantia, i.producto_id, i.estado, i.condicion, i.sku, i.numFabricante, i.metodoEnvio from tbl_inventario i where i.producto_id in (select p.id from tbl_producto p where p.padre_id='".$padre_id."' ".$opcion2.") and i.precio between ".$filtroPrecio[0]." and ".$filtroPrecio[1]."";
+                else
+                    $sub="select i.id, min(i.precio) as menor, i.costo, i.cantidad, i.almacen_id, i.notaCondicion, i.garantia, i.producto_id, i.estado, i.condicion, i.sku, i.numFabricante, i.metodoEnvio from tbl_inventario i where i.producto_id in (select p.id from tbl_producto p where p.padre_id='".$padre_id."') and i.precio between ".$filtroPrecio[0]." and ".$filtroPrecio[1]."";
+            }
+            
+            //echo $sub;
+        }
+        if($filtroMarca=="" && $filtroPrecio=="" && $filtroCategoria!="") // si solo hay filtro de categoria
+        {
+             $sql=$sql.$sqlCategoria;
+
+        }
+        //TODO caracteristica para proxima entrega
+    /*  if($filter['caracteristica']!="")//filtros
+        {
+            echo $filter['caracteristica'];
+        }*/
+        //echo $sql;echo $sub;
+        
+        
+        
+        if($sql!="") /// GROUP BY
+        {
+            $or=" group by p.id";
+            $sql=$sql.$or;  
+        }
+        if($sub!="")
+        {
+            $or=" group by i.producto_id";
+            $sub=$sub.$or;  
+        }
+        
+        if($order!="")
+        { 
+                if($order=="nombre-asc")
+                {
+                    $sql=$sql." order by p.nombre";
+                }
+                else
+                {
+                        if($order=="mayorPrecio-asc")
+                        {
+                            if($sql!="")    
+                                $sql=$sql." order by menor desc";
+                            if($sub!="")
+                                $sub=$sub." order by menor desc";
+                        }
+                        else 
+                        {
+                            if($sql!="")        
+                                $sql=$sql." order by menor asc";
+                            if($sub!="")
+                                $sub=$sub." order by menor asc";
+                        }
+                }   
+        }       
+        if($sql!="")
+        {
+            //echo $sql;
+            $model="";
+            #echo "<br>";
+            $model=Yii::app()->db->createCommand($sql)->queryAll();
+            #var_dump($model);
+        }           
+        else
+        {
+            $model="";
+        }
+        
+        
+        
+        if($sub!="") //TODO mejorar esto substiuyo la consulta ya que las relaciones estaban mal hechas
+        {
+            //echo $sql;
+            $model2="";
+            //echo $sub;
+            $model2=Yii::app()->db->createCommand($sub)->queryAll();
+        }   
+        else
+        {
+            $model2="";
+        }
+        
+        
+        if(isset( $_GET['display']))
+        {
+            $list= $_GET['display'];
+        }
+        else 
+        {
+            $list=0;
+        }
+        //echo $sql;
+        //echo $sub;
+         
+         
+         
+         
+         
+         
     }
     
     
