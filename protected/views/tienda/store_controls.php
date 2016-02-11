@@ -1,6 +1,6 @@
 <div class="row-fluid clearfix">
                            <div class="col-md-4 no_horizontal_padding">
-                               <div class="margin_top_small">
+                               <div class="margin_top">
                                    <span class="muted" id="mostrando">{summary}</span>
                                </div>
                            </div>

@@ -31,14 +31,15 @@
       <div class="'.$class.'">
         {items}
       </div>
-      <div class="plainSeparator"></div>{pager}
+      <div class="plainSeparator"></div>{pager}      
         ';
 
             $this->widget('zii.widgets.CListView', array(
             'id'=>'list-auth-productos',
+            'beforeAjaxUpdate'=>'function(id,options){$(window).scrollTop($(".list-view").position().top);  }',
             'dataProvider'=>$dataProvider,
             'itemView'=>$list?'list_DP':'grid_DP',
-            'template'=>$template,
+            'template'=>$template,          
             'summaryCssClass'=>'pull-left',
             'enableSorting'=>'true',
             'pager'=>array(

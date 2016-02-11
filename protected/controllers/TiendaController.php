@@ -201,7 +201,7 @@ class TiendaController extends Controller
                     if(count($hijos)>1)
                         $condition['categoria']=Funciones::inCondition($implode,'categoria.id');
                     else
-                        $condition['categoria']='categoria.id = '.$hijos[0];
+                        $condition['categoria']='categoria.id = '.$categoria->id;
                     
                     $query=$query.$condition['categoria']; 
                     
@@ -227,7 +227,7 @@ class TiendaController extends Controller
                 $filter['precioMayor']=$precios[1];
                 $filter['precioMenor']=$precios[0];
                 $condition['precios']=" precio >= ".$filter['precioMenor']." AND "."precio <= ".$filter['precioMayor'];
-                $sql="select disdtinct(producto.id) from tbl_inventario inventario JOIN tbl_producto producto ON producto.id=inventario.producto_id WHERE producto.estado = 1 AND producto.aprobado = 1 AND ".$condition['precios'];
+                $sql="select distinct(producto.id) from tbl_inventario inventario JOIN tbl_producto producto ON producto.id=inventario.producto_id WHERE producto.estado = 1 AND producto.aprobado = 1 AND ".$condition['precios'];
      
             }
             else{
