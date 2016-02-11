@@ -39,7 +39,11 @@ $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
                 
                     <div class="col-md-4 no_left_padding">
                         <div class='imagen_principal' style="overflow:hidden; max-height: 300px;"> 
+                           <?php if($imagenPrincipal):?>
                            <img src="<?php echo Yii::app()->getBaseUrl(true).$imagenPrincipal->url;?>" width="100%" id="mainImage" />
+                           <?php else: ?>
+                                <img src="http://placehold.it/280x280" width="100%" id="mainImage" />
+                           <? endif; ?>
                         </div>
                         
                          <div class="secondary_images">

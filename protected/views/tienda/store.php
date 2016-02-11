@@ -14,57 +14,55 @@
            <div class="col-md-10">
                <div class="row-fluid">
                    <div class="col-md-12 mainStore margin_top_minus no_horizontal_padding ">
-                       <div class="row-fluid">
-                           <div class="col-md-4 no_horizontal_padding">
-                               <div class="margin_top_small">
-                                   <span class="muted" id="mostrando"></span>
-                               </div>
-                           </div>
-                           <div class="col-md-4 col-md-offset-4 no_horizontal_padding">
-                               <div style="float:right">
-                               Ordenar por: 
-                               <input type="hidden" id="orderBy" value="<?php echo $order?>">
-                               <div class="dropdown sorter">
-                                  <button class="btn btn-default no_radius dropdown-toggle" type="button" id="categorySearch" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                        Seleccione
-                                    <span class="caret"></span>
-                                  </button>
-                                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                <!--    <li><a href="#" onclick="go('#orderBy','nombre-asc');">Nombre </a></li> -->
-                                    <li><a href="#" onclick="go('#orderBy','mayorPrecio-asc');">Mayor Precio </a></li>
-                                    <li><a href="#" onclick="go('#orderBy','menorPrecio-desc');">Menor Precio </a></li>
-
-                                     
-                                  </ul>  
-                                </div>
-                                <div class="storeControls no_padding_right">
-                                	 <input type="hidden" id="display" value="<?php echo $list?>"> 
-                                	 
-                                    <a href="#" onclick="go('#display',0);"><span class="glyphicon glyphicon-th-large"></span></a>
-                               	    <a href="#" onclick="go('#display',1);"><span class="glyphicon glyphicon-th-list"></span></a>
-                                </div>
-                                </div>
-                           </div>
-                           <div class="col-md-12 plainSeparator margin_bottom"></div>
-                           <div class="col-md-12 no_horizontal_padding">
+                       
+                           
+                    
                                <?php  
-                               if($list==1)
+                               $class=$list?'':'row-fluid clearfix';
+                         /*      if($list==1)
                                 $this->renderPartial('list_view', array('model'=>$model, 'model2'=>$model2));
                                else
-							   	$this->renderPartial('grid_view', array('model'=>$model, 'model2'=>$model2));
+							   	$this->renderPartial('grid_view', array('model'=>$model, 'model2'=>$model2)); */
+							   	
+
+				   	
+							   	
+							   	$template = $this->renderPartial('store_controls',array('list'=>$list,'order'=>$order),true).'
+      <div class="'.$class.'">
+        {items}
+      </div>
+      <div class="plainSeparator"></div>{pager}      
+        ';
+
+            $this->widget('zii.widgets.CListView', array(
+            'id'=>'list-auth-productos',
+            'beforeAjaxUpdate'=>'function(id,options){$(window).scrollTop($(".list-view").position().top);  }',
+            'dataProvider'=>$dataProvider,
+            'itemView'=>$list?'list_DP':'grid_DP',
+            'template'=>$template,          
+            'summaryCssClass'=>'pull-left',
+            'enableSorting'=>'true',
+            'pager'=>array(
+                'header'=>'',
+                'htmlOptions'=>array(
+                'class'=>'pagination pagination-right',
+            )
+            ),                  
+        ));
+							   	
+							   	
+							   	
                                    ?>
                                
-                           </div>
+                          
                            
-                       </div>
+                      
                        
                    </div>
                </div> 
            </div>
 <script>
-$(document).ready(function() {
-	$("#mostrando").html("Mostrando <?php echo Yii::app()->session['total'];?> resultado(s)");
-});		
+		
     function removeLast(string,letter){
          if(string.substring(string.length - 1, string.length)==letter){
             string=string.substring(0, string.length - 1);
@@ -95,6 +93,7 @@ $(document).ready(function() {
         }
             
         window.location.href=url[0]+removeLast(params,'&'); 
+        
     }
     function go(id,value){
         $(id).val(value);
