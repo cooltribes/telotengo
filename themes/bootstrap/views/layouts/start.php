@@ -126,6 +126,7 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
                                                          <li class="title">VENDER</li>
                                                          <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/productoInventario";>Ver Inventario</a></li>
                                                          <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/seleccion";>Cargar Inventario</a></li>
+                                                         <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/nuevoProducto";>Agregar un producto</a></li>
                                                          <li><a href="<?php echo Yii::app()->baseUrl; ?>/almacen/administrador";>Ver Almacenes</a></li>
                                                
                                                     <!--<li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/cargarInbound";>Cargar Inventario Masivo</a></li> -->          
@@ -136,6 +137,7 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
                                                 <?php endif; 
                                                 
                                                     if(Yii::app()->authManager->checkAccess("vendedor", Yii::app()->user->id)):?>
+                                                    
                                                     <li><a href="<?php echo Yii::app()->baseUrl; ?>/almacen/administrador";>Ver Almacenes</a></li>
                                                      <li class="separator"></li>
                                                     <li><a href="<?php echo Yii::app()->baseUrl.'/tienda/index';?>">Ir a la tienda</a></li>   
@@ -171,9 +173,11 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
                                                 
                                                 <?php
                                                 if(Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id) || Yii::app()->authManager->checkAccess("vendedor", Yii::app()->user->id)): ?>
+                                                          
                                                          <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/cargarInbound";>Cargar Inventario</a></li>
                                                    <!--      <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/seleccion";>Cargar Inventario</a></li>-->
                                                          <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/productoInventario";>Ver Inventario</a></li>
+                                                         <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/nuevoProducto";>Agregar un producto</a></li>
                                                 <?php endif;?> 
                                               
                                               </ul>
