@@ -32,7 +32,7 @@ class InboundController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('create','update', 'administrador', 'descargarExcel'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -131,15 +131,67 @@ class InboundController extends Controller
 	/**
 	 * Manages all models.
 	 */
-	public function actionAdmin()
+	public function actionAdministrador()  /// para cada usuario, falta el general
 	{
-		$model=new Inbound('search');
-		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['Inbound']))
-			$model->attributes=$_GET['Inbound'];
+		$inbound = new Inbound; 
+		$inbound->unsetAttributes();
+		$bandera=false;
+		$dataProvider = $inbound->searchPropio();
 
-		$this->render('admin',array(
-			'model'=>$model,
+		/* Para mantener la paginacion en las busquedas */
+		if(isset($_GET['ajax']) && isset($_SESSION['searchInbound']) && !isset($_POST['query'])){
+			$_POST['query'] = $_SESSION['searchInbound'];
+			$bandera=true;
+		}
+
+		/* Para buscar desde el campo de texto */
+		if (isset($_POST['query'])){
+			$bandera=true;
+			unset($_SESSION['searchInbound']);
+			$_SESSION['searchInbound'] = $_POST['query'];
+            $dataProvider = $inbound->searchPropio($_POST['query']);
+        }	
+
+        if($bandera==FALSE){
+			unset($_SESSION['searchInbound']);
+        }
+		
+		$this->render('administrador',
+			array('model'=>$inbound,
+			'dataProvider'=>$dataProvider,
+		));
+	}
+	
+	
+	public function actionAdmin()  /// para cada usuario, falta el general
+	{
+		$inbound = new Inbound; 
+		$inbound->unsetAttributes();
+		$bandera=false;
+		$dataProvider = $inbound->search();
+
+		/* Para mantener la paginacion en las busquedas */
+		if(isset($_GET['ajax']) && isset($_SESSION['searchInbound']) && !isset($_POST['query'])){
+			$_POST['query'] = $_SESSION['searchInbound'];
+			$bandera=true;
+		}
+
+		/* Para buscar desde el campo de texto */
+		if (isset($_POST['query'])){
+			$bandera=true;
+			unset($_SESSION['searchInbound']);
+			$_SESSION['searchInbound'] = $_POST['query'];
+			//$inbound->id=$_POST['query'];
+            $dataProvider = $inbound->search($_POST['query']);
+        }	
+
+        if($bandera==FALSE){
+			unset($_SESSION['searchInbound']);
+        }
+		
+		$this->render('admin',
+			array('model'=>$inbound,
+			'dataProvider'=>$dataProvider,
 		));
 	}
 
@@ -169,5 +221,30 @@ class InboundController extends Controller
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
+	}
+	
+	public function actionDescargarExcel()
+	{
+            //Revisar la extension
+            $archivo = Yii::getPathOfAlias("webroot").'/docs/xlsMasterData/inbound/'.
+                    $_GET["id"].".xlsx";
+            $existe = file_exists($archivo);
+            
+            //si no existe con extension xlsx, poner xls
+            if(!$existe){
+                $archivo = substr($archivo, 0, -1);
+            }
+            
+            header('Content-Description: File Transfer');
+            header('Content-Type: application/octet-stream');
+            header('Content-Disposition: attachment; filename=Inbound-'.basename($archivo));
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate');
+            header('Pragma: public');
+            header('Content-Length: ' . filesize($archivo));
+            ob_clean();
+            flush();
+            readfile($archivo);
+            
 	}
 }

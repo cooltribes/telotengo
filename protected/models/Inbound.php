@@ -47,7 +47,7 @@ class Inbound extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'user' => array(self::BELONGS_TO, 'Users', 'user_id'),
+			'user' => array(self::BELONGS_TO, 'User', 'user_id'),
 		);
 	}
 
@@ -77,18 +77,51 @@ class Inbound extends CActiveRecord
 	 * @return CActiveDataProvider the data provider that can return the models
 	 * based on the search/filter conditions.
 	 */
-	public function search()
+	public function search($busqueda="")
 	{
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id);
-		$criteria->compare('user_id',$this->user_id);
+		//$criteria->compare('id',$busqueda);
+		if($busqueda!="")
+		{
+				$condicion1="id='".$busqueda."'";
+				$condicion2="or user_id in (select user_id from tbl_profiles where first_name like '%".$busqueda."%' or last_name like '%".$busqueda."%' )";	
+				$condicion3="or user_id in (select users_id from tbl_empresas_has_tbl_users where empresas_id in (select id from tbl_empresas where razon_social like '%".$busqueda."%'))";
+				$criteria->condition=$condicion1.$condicion2.$condicion3;
+		}		
+		//$criteria->compare('user_id',$busqueda);
+		/*$criteria->compare('user_id',$this->user_id);
 		$criteria->compare('fecha_carga',$this->fecha_carga,true);
 		$criteria->compare('total_productos',$this->total_productos);
-		$criteria->compare('total_cantidad',$this->total_cantidad);
+		$criteria->compare('total_cantidad',$this->total_cantidad);*/
 
+		return new CActiveDataProvider($this, array(
+			'criteria'=>$criteria,
+		));
+	}
+	
+	public function searchPropio($busqueda="")
+	{
+		// @todo Please modify the following code to remove attributes that should not be searched.
+
+		$criteria=new CDbCriteria;
+		$empresa=Empresas::model()->findByPk((EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id))->empresas_id));
+		$condicion3="user_id in (select users_id from tbl_empresas_has_tbl_users where empresas_id='".$empresa->id."')";
+		
+		if($busqueda!="")
+		{
+			$condicion1="id='".$busqueda."'";	
+			$condicion2="or user_id in (select user_id from tbl_profiles where first_name like '%".$busqueda."%' or last_name like '%".$busqueda."%' )";
+			
+			$criteria->condition=$condicion1.$condicion2."and ".$condicion3;
+		}
+		else 
+		{
+			$criteria->condition=$condicion3;
+		}
+			
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));

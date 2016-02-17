@@ -40,7 +40,7 @@ $this->breadcrumbs=array(
 
 	         <form class="margin_bottom form-search row-fluid">
                  <div class="col-md-3 no_horizontal_padding">
-                 	<input class="form-control no_radius_right" id="query" name="query" type="text" placeholder="Filtre por ID, Nombre de Empresa o Nombre de Usuario">              
+                     <input class="form-control no_radius" id="query" name="query" type="text" placeholder="Busca por ID o por Usuario">                   
                  </div>
                  <div class="col-md-1 no_padding_left">
                      <a href="#" class="btn form-control btn-darkgray white" id="btn_search_event">Buscar</a>
@@ -62,7 +62,7 @@ $this->breadcrumbs=array(
 					'list-auth-marcas',
 					{
 					type: 'POST',	
-					url: '" . CController::createUrl('inbound/admin') . "',
+					url: '" . CController::createUrl('inbound/administrador') . "',
 					data: ajaxRequest}
 					)
 					},
@@ -87,7 +87,7 @@ $this->breadcrumbs=array(
 						'list-auth-marcas',
 						{
 						type: 'POST',	
-						url: '" . CController::createUrl('inbound/admin') . "',
+						url: '" . CController::createUrl('inbound/administrador') . "',
 						data: ajaxRequest}
 						
 						)
@@ -105,7 +105,6 @@ $this->breadcrumbs=array(
 	        <thead>
 	        <tr>
 	            <th scope="col">ID</th>
-	            <th scope="col">Empresa</th>
 	            <th scope="col">Usuario</th>
 	            <th scope="col">Fecha Carga</th>
 	            <th scope="col">Total Productos</th>

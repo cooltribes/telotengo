@@ -128,6 +128,7 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
                                                          <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/seleccion";>Cargar Inventario</a></li>
                                                          <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/nuevoProducto";>Agregar un producto</a></li>
                                                          <li><a href="<?php echo Yii::app()->baseUrl; ?>/almacen/administrador";>Ver Almacenes</a></li>
+                                                         <li><a href="<?php echo Yii::app()->baseUrl; ?>/inbound/administrador";>Ver Inbound</a></li>
                                                
                                                     <!--<li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/cargarInbound";>Cargar Inventario Masivo</a></li> -->          
                                                 <?php endif; 
