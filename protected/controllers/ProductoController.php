@@ -2869,37 +2869,48 @@ class ProductoController extends Controller
          $tags=$producto->getFileTags("all");
          $resumen=null;
          if(isset($_FILES["validar"])){
-            $resumen=$this->validarMasterData(Yii::app()->yexcel->readActiveSheet($_FILES["validar"]["tmp_name"]));
-             $summary=1;
-             
+            if(is_file($_FILES["validar"]["tmp_name"])){ 
+                $resumen=$this->validarMasterData(Yii::app()->yexcel->readActiveSheet($_FILES["validar"]["tmp_name"]));             
+            }
+            else{
+                $resumen=array("errores"=>1,"resumen"=>"No se seleccionó un archivo valido");
+            }
+            $summary=1; 
          }
          
           
-        if(isset($_FILES["cargar"])){            
-            
-            $tempSheet=Yii::app()->yexcel->readActiveSheet($_FILES["cargar"]["tmp_name"]);
-            $resumen=$this->validarMasterData($tempSheet,true);
-            if(!$resumen["unproccesed"]){
-                $inicial = basename($_FILES["cargar"]["name"]);        
-                $ext = pathinfo($inicial,PATHINFO_EXTENSION);
-                $master= new Masterdata;                    
-                $master->filas=count($tempSheet)-1;  
-                $master->uploaded_at=date("Y-m-d H:i:s");
-                $master->uploaded_by=Yii::app()->user->id;
-                $master->errors=$resumen['errores'];
-                if($master->save()){
-                    $master->refresh();
-                    $target_file = Yii::getPathOfAlias('webroot')."/docs/xlsMasterData/".$master->id.".".$ext;
-                    if(move_uploaded_file($_FILES["cargar"]["tmp_name"], $target_file)){
-                        $master->path=$target_file;
-                        if($master->save()){
-                            if(count($resumen["saved"]>0))
-                                Producto::model()->updateAll(array('masterdata_id'=>$master->id),"id IN (".implode(",",$resumen["saved"]).")");
-                        }                                   
+        if(isset($_FILES["cargar"])){
+            if(is_file($_FILES["cargar"]["tmp_name"])){
+                $tempSheet=Yii::app()->yexcel->readActiveSheet($_FILES["cargar"]["tmp_name"]);
+                $resumen=$this->validarMasterData($tempSheet,true);
+                if(!$resumen["unproccesed"]){
+                    $inicial = basename($_FILES["cargar"]["name"]);        
+                    $ext = pathinfo($inicial,PATHINFO_EXTENSION);
+                    $master= new Masterdata;                    
+                    $master->filas=count($tempSheet)-1;  
+                    $master->uploaded_at=date("Y-m-d H:i:s");
+                    $master->uploaded_by=Yii::app()->user->id;
+                    $master->errors=$resumen['errores'];
+                    if($master->save()){
+                        $master->refresh();
+                        $target_file = Yii::getPathOfAlias('webroot')."/docs/xlsMasterData/".$master->id.".".$ext;
+                        if(move_uploaded_file($_FILES["cargar"]["tmp_name"], $target_file)){
+                            $master->path=$target_file;
+                            if($master->save()){
+                                if(count($resumen["saved"]>0))
+                                    Producto::model()->updateAll(array('masterdata_id'=>$master->id),"id IN (".implode(",",$resumen["saved"]).")");
+                            }                                   
+                        }
                     }
                 }
+                               
+                
             }
-                           
+            else
+            {
+                $resumen=array("errores"=>1,"resumen"=>"No se seleccionó un archivo valido");
+            }            
+            
             $summary=2;
         }           
             
