@@ -121,17 +121,23 @@ $('#buttonCargaMD').click(function(e) {
                         <hr class="dark no_margin_top"/>
                         <div class="col-md-8 well no_radius">
                              <div class="row-fluid">  
+                                 <form method="post" enctype="multipart/form-data">
                                  <div class="col-md-9">
                                  
                                 <?php
-                                $this->widget('CMultiFileUpload', array(
+                               /* $this->widget('CMultiFileUpload', array(
                                     'name' => 'archivoCarga',
                                     'accept' => 'xls|xlsx', // useful for verifying files
                                     'duplicate' => 'El archivo está duplicado.', // useful, i think
                                     'denied' => 'Tipo de archivo inválido.', // useful, i think
                                     'htmlOptions'=>array()
-                                ));
-                                ?>
+                                )); */?>
+                                
+								
+								  <input type="file" name="archivoCarga" accept="xls|xlsx"> 
+								 
+								
+                                
                                     </div>
                                              
                                     <?php
@@ -149,6 +155,7 @@ $('#buttonCargaMD').click(function(e) {
                                     ));
                                     ?>
                                 </div>
+                                <form>
                           </div>
                       </div>
                 </div>

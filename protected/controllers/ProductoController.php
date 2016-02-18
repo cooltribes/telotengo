@@ -1919,9 +1919,23 @@ class ProductoController extends Controller
 				 //Tercer paso - Subir el Archivo
               }elseif(isset($_POST["cargar"]))
               {
-				$archivo = CUploadedFile::getInstancesByName('archivoCarga');
-                           
-                    if (isset($archivo) && count($archivo) > 0) {
+				
+				$target_dir = Yii::getPathOfAlias('webroot')."/docs/xlsMasterData/";
+				 $nombre = $target_dir . "Archivo";
+				 $extension=".xlsx";
+                    if(!move_uploaded_file($_FILES["archivoCarga"]["tmp_name"], $nombre.$extension))
+                    {
+                    	        Yii::app()->user->updateSession();
+                                Yii::app()->user->setFlash('error', UserModule::t("Error al cargar el archivo."));
+                                $this->render('cargarInbound');
+                                Yii::app()->end();
+                    }
+					
+					//Yii::app()->end();
+                    
+                /*    
+				 				$archivo = CUploadedFile::getInstancesByName('archivoCarga');
+				 if (isset($archivo) && count($archivo) > 0) {
                         $nombreTemporal = "Archivo";
                         $rutaArchivo = Yii::getPathOfAlias('webroot').'/docs/xlsMasterData/';
                         foreach ($archivo as $arc => $xls) {
@@ -1945,7 +1959,7 @@ class ProductoController extends Controller
                                 
                             }
                         }
-                    }
+                    }*/
                     
                     // ==============================================================================
 
@@ -1961,11 +1975,27 @@ class ProductoController extends Controller
 
 						Yii::app()->end();
                     }
+					else /// parte nueva, se guardara cada Inbound
+					{
+	
+						$sql="select count(*) from tbl_inbound";
+						$posicion=Inbound::model()->countBySql($sql)+1;
+						 $target_dir = Yii::getPathOfAlias('webroot')."/docs/xlsMasterData/inbound/";
+						 $nombre2 = $target_dir . $posicion;
+						 if(!copy( $nombre.$extension,  $nombre2.$extension))
+                    	 {
+                    	        Yii::app()->user->updateSession();
+                                Yii::app()->user->setFlash('error', UserModule::t("Error al cargar el archivo del Inbound."));
+								$this->render('cargarInbound');
+                                Yii::app()->end();
+                    	 }		  
+					}
 
 				 $sheetArray = Yii::app()->yexcel->readActiveSheet($nombre . $extension);
 				    
 				    $fila = 1;
                     $totalCantidades = 0;
+					$totalProductos=0;
 					
 					// variable para los ids de ptc
 					$combinaciones = array();
@@ -1983,6 +2013,9 @@ class ProductoController extends Controller
 						$almacenCopy="";
 						$producto="";
 						$empresa=EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id));
+						
+						$totalCantidades+=$cantidad;
+						
 						
 						if(explode(",", $row['C']))
 						{
@@ -2035,9 +2068,23 @@ class ProductoController extends Controller
 								$inventario->garantia=$garantia;
 								$inventario->almacen_id=$almacenes->id;
 								$inventario->producto_id=$producto;
+								$inventario->iva=Yii::app()->params['IVA']['value'];
+								$inventario->precio_iva=($precio*Yii::app()->params['IVA']['value'])+$precio;
 								
 								if(!$inventario->save())
-								print_r($inventario->errors);
+								{
+									print_r($inventario->errors);
+									unlink($nombre2 . $extension);
+									Yii::app()->user->updateSession();
+                               		Yii::app()->user->setFlash('error', UserModule::t("Error guardando Inbound, por favor volver a subir."));
+                                	$this->render('cargarInbound');
+                                	Yii::app()->end();
+								}
+								else
+								{
+									$totalProductos++;
+								}	
+								
 							}
 							else //la forma normal
 							{
@@ -2050,6 +2097,8 @@ class ProductoController extends Controller
 									$inventario->cantidad=$cantidad;
 									$inventario->precio=$precio;
 									$inventario->garantia=$garantia;
+									$inventario->iva=Yii::app()->params['IVA']['value'];
+									$inventario->precio_iva=($precio*Yii::app()->params['IVA']['value'])+$precio;
 								
 								}
 								else 
@@ -2075,9 +2124,24 @@ class ProductoController extends Controller
 									$inventario->garantia=$garantia;
 									$inventario->almacen_id=$almacenes->id;
 									$inventario->producto_id=$producto;
+									$inventario->iva=Yii::app()->params['IVA']['value'];
+									$inventario->precio_iva=($precio*Yii::app()->params['IVA']['value'])+$precio;
 									
 								}
-									$inventario->save();
+									//$inventario->save();
+								if(!$inventario->save())
+								{
+									print_r($inventario->errors);
+									unlink($nombre2 . $extension);
+									Yii::app()->user->updateSession();
+                               		Yii::app()->user->setFlash('error', UserModule::t("Error guardando Inbound, por favor volver a subir."));
+                                	$this->render('cargarInbound');
+                                	Yii::app()->end();
+								}
+								else 
+								{
+									$totalProductos++;
+								}
 
 
 								
@@ -2087,7 +2151,14 @@ class ProductoController extends Controller
                         }
                         $fila++;                        
                     } // foreach
-                   
+                    
+                   $inbound= new Inbound;
+				   $inbound->user_id=Yii::app()->user->id;
+				   $inbound->fecha_carga=date("Y-m-d H:i:s");
+				   $inbound->total_productos=$totalProductos;
+				   $inbound->total_cantidad=$totalCantidades;
+				   $inbound->save();
+				   
                     Yii::app()->user->setFlash('success', "El archivo se subio exitosamente.");
 				 
               }
