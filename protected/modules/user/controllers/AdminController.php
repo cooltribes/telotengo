@@ -262,7 +262,7 @@ class AdminController extends Controller
 						$nuevo->users_id = $model->id;
 						$nuevo->rol = $cargo;
 						$nuevo->save();
-						//$model->emailEmpresaInvitado($empresa_id, $cargo, $model->id, Yii::app()->user->id);
+						$model->emailEmpresaInvitado($empresa_id, $cargo, $model->id, Yii::app()->user->id);
 					}
 					
 					if($model->type == 3) // invitar como cliente
