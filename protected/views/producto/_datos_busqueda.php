@@ -24,7 +24,14 @@
 			</p>
 		</td>";								
 								
-    echo ' <td class="text_align_center"><a href="'.Yii::app()->baseUrl.'/producto/inventario/'.$data->id.'" class="margin_top btn btn-darkgray gray"><span class="glyphicon glyphicon-plus"></span> Agregar Inventario</a></td>';
+    echo ' <td class="text_align_center">';
+    if($data->aprobado&&$data->estado)
+    echo'<a href="'.Yii::app()->baseUrl.'/producto/inventario/'.$data->id.'" class="margin_top btn btn-darkgray gray"><span class="glyphicon glyphicon-plus"></span> Agregar Inventario</a>'; 
+    else{
+        echo !$data->aprobado?"No aprobado<br/>":"";
+        echo !$data->aprobado?"Inactivo":"";
+    }
+    echo'</td>';
 
 
 ?>   
