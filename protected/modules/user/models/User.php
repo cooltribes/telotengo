@@ -199,6 +199,7 @@ class User extends CActiveRecord
         //$criteria->compare('username',$this->username,true);
         $criteria->addCondition("username LIKE '%".$this->username."%'",'OR');
         $criteria->addCondition("email LIKE '%".$this->email."%'",'OR');
+		$criteria->addCondition("status = '1'",'AND');
         $criteria->compare('password',$this->password);
         //$criteria->compare('email',$this->email,true);
         $criteria->compare('activkey',$this->activkey);
