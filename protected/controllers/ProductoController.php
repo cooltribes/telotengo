@@ -41,7 +41,7 @@ class ProductoController extends Controller
 				'roles'=>array('admin'),
 			),
 			array('allow', // COMPRADORESVENDEDORES Y VENDEDORES
-				'actions'=>array('inventario', 'cargarInbound', 'productoInventario','nuevoProducto','ultimasCategorias','imagenes','caracteristicas','details'),
+				'actions'=>array('inventario', 'cargarInbound', 'productoInventario','nuevoProducto','ultimasCategorias','imagenes','caracteristicas','details','masterdata'),
 				#'users'=>array('admin'),
 				'roles'=>array('vendedor', 'compraVenta'),
 			),
@@ -65,13 +65,15 @@ class ProductoController extends Controller
 	// seleccion entre crear o buscar
 	public function actionSeleccion() 
 	{
-		if(isset($_POST['busqueda'])){
+		    
+		if(isset($_POST['busqueda'])||isset($_GET['query'])){
+			$query=isset($_POST['busqueda'])?$_POST['busqueda']:$_GET['query'];    
 			Yii::app()->session['busquedaPalabra']="";
 		    $producto = new Producto;
             $producto->unsetAttributes();     
-            $producto->nombre = $_POST['busqueda'];        
+            $producto->nombre = $query;        
             $dataProvider = $producto->busquedaSeleccion();
-            Yii::app()->session['busquedaPalabra']=$_POST['busqueda'];      
+            Yii::app()->session['busquedaPalabra']=$query;      
             $this->render('seleccion',array('dataProvider'=>$dataProvider));
 		}
 		else
@@ -382,8 +384,69 @@ class ProductoController extends Controller
 			'imagen'=>$imagen,
 		));
 	}
+    public function actionDetalle(){
+        //$this->layout='//layouts/start';
+        $otros="";
+        $connection = new MongoClass();
+        if(Funciones::isDev())
+        {
+            $document = $connection->getCollection('ejemplo');  //DEVELOP
 
-	public function actionDetalle()
+        }   
+        else
+        {
+            if(Funciones::isStage())
+                $document = $connection->getCollection('stage');    //STAGE
+            else
+                $document = $connection->getCollection('produccion'); // produccion
+        } 
+        if(!isset($_GET['producto_id']) || !isset($_GET['almacen_id'])) //si no viene nada por get, fue que coloco el URL a mano
+        {
+            $this->redirect(array('site/inhome2'));
+        }
+        $producto_id=$_GET['producto_id'];
+        $almacen_id=$_GET['almacen_id'];
+        $almacen=Almacen::model()->findByPk($almacen_id);
+        $model=Producto::model()->findByPk($producto_id);
+        
+        
+        //$categoria=$model->padre->idCategoria->idCategoria->id;
+        $vector=ARRAY();
+        $vector=Categoria::model()->buscarPadres($model->padre->idCategoria->id, $vector);
+        
+        $subCategoria=Categoria::model()->findByPk($vector[0]);
+        //$subCategoria=Categoria::model()->findByPk(Categoria::model()->findByPk($vector[count($vector)-3])->id_padre);
+        $categoria=Categoria::model()->findByPk(Categoria::model()->findByPk($vector[count($vector)-2])->id_padre);
+        
+        
+        
+        $inventario=Inventario::model()->findByAttributes(array('producto_id'=>$producto_id, 'almacen_id'=>$almacen_id));
+        $imagen=Imagenes::model()->findAllByAttributes(array('producto_id'=>$producto_id));
+        $imagenPrincipal=Imagenes::model()->findByAttributes(array('producto_id'=>$producto_id, 'orden'=>1));
+        
+        if(!Yii::app()->user->isAdmin())
+            $empresaPropia=Empresas::model()->findByPk((EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id))->empresas_id)); // id del que esta intentado entrar
+        
+        $prueba = array("producto"=>(string)$producto_id); //MEJORAR ESTO 
+        $busqueda = $document->findOne($prueba);
+        //echo $almacen->empresas->razon_social;
+         $empresa=$almacen->empresas;
+         //$empresa_id=$almacen->empresas->id;
+        // $empresa_nombre=$almacen->empresas->nombre;
+        //var_dump($busqueda); 
+        if(Inventario::model()->findAllByAttributes(array('producto_id'=>$producto_id), array('condition'=>'almacen_id<>'.$almacen_id)))
+            $similares=Inventario::model()->findAllByAttributes(array('producto_id'=>$producto_id), array('condition'=>'almacen_id<>'.$almacen_id)); // buscar otros
+        else
+            $similares=NULL;
+        //var_dump($data);
+        if(!Yii::app()->user->isAdmin()) // si no es admin
+            $otros = Inventario::model()->findAllBySql("select * from tbl_inventario where producto_id=".$producto_id." and almacen_id!=".$almacen_id." and almacen_id not in(select id from tbl_almacen where empresas_id=".$empresaPropia->id.")");
+        else // si es admin
+            $otros = Inventario::model()->findAllBySql("select * from tbl_inventario where producto_id=".$producto_id." and almacen_id!=".$almacen_id." and almacen_id not in(select id from tbl_almacen where empresas_id=".$empresa->id.")");
+        $this->render('detalle2', array('model'=>$model, 'inventario'=>$inventario, 'imagen'=>$imagen, 'imagenPrincipal'=>$imagenPrincipal, 'busqueda'=>$busqueda, 'empresa'=>$empresa, 'almacen'=>$almacen, 
+       'otros'=>$otros, 'similares'=>$similares, 'subCategoria'=>$subCategoria, 'categoria'=>$categoria));
+    }
+	public function actionDetalleOLD()
 	{
 		if(isset($_POST['Pregunta']))
 		{
@@ -1179,6 +1242,7 @@ class ProductoController extends Controller
 			unset(Yii::app()->session['almacen_id']); 
 			$id = $_GET['id'];
 			$producto = Producto::model()->findByPk($id);
+            
 			$empresas_id = EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id))->empresas_id;
 			$almacen_id=$producto->busquedaInventarioAlmacen($empresas_id);
 			if($almacen_id=="")
@@ -1244,12 +1308,15 @@ class ProductoController extends Controller
 			if($inventario->save())	
 				Yii::app()->user->setFlash('success',"Inventario guardado exitosamente. El producto está ahora activo.");
 		}
-		
-		$this->render('inventario',array(
-			'producto'=>$producto,
-			'model'=>$inventario,
-			'empresas_id'=>$empresas_id,
-		));
+        
+        if($producto->aprobado&&$producto->estado)		
+    		$this->render('inventario',array(
+    			'producto'=>$producto,
+    			'model'=>$inventario,
+    			'empresas_id'=>$empresas_id,
+    		));
+        else
+            $this->render('error_producto',array());
 	}
 	
 	public function actionHijos(){
@@ -2795,4 +2862,130 @@ class ProductoController extends Controller
         
         $this->render('revisionNuevos',array('dataProvider'=>$productos));
     }
+    
+   public function actionMasterdata(){
+         $producto = new Producto;
+         $summary=0;
+         $tags=$producto->getFileTags("all");
+         $resumen=null;
+         if(isset($_FILES["validar"])){
+            $resumen=$this->validarMasterData(Yii::app()->yexcel->readActiveSheet($_FILES["validar"]["tmp_name"]));
+             $summary=1;
+             
+         }
+         
+          
+        if(isset($_FILES["cargar"])){            
+            
+            $tempSheet=Yii::app()->yexcel->readActiveSheet($_FILES["cargar"]["tmp_name"]);
+            $resumen=$this->validarMasterData($tempSheet,true);
+            if(!$resumen["unproccesed"]){
+                $inicial = basename($_FILES["cargar"]["name"]);        
+                $ext = pathinfo($inicial,PATHINFO_EXTENSION);
+                $master= new Masterdata;                    
+                $master->filas=count($tempSheet)-1;  
+                $master->uploaded_at=date("Y-m-d H:i:s");
+                $master->uploaded_by=Yii::app()->user->id;
+                $master->errors=$resumen['errores'];
+                if($master->save()){
+                    $master->refresh();
+                    $target_file = Yii::getPathOfAlias('webroot')."/docs/xlsMasterData/".$master->id.".".$ext;
+                    if(move_uploaded_file($_FILES["cargar"]["tmp_name"], $target_file)){
+                        $master->path=$target_file;
+                        if($master->save()){
+                            if(count($resumen["saved"]>0))
+                                Producto::model()->updateAll(array('masterdata_id'=>$master->id),"id IN (".implode(",",$resumen["saved"]).")");
+                        }                                   
+                    }
+                }
+            }
+                           
+            $summary=2;
+        }           
+            
+        
+         $this->render('masterdata',array("resumen"=>$resumen,"summary"=>$summary));
+    }
+    public function validarMasterData($excel,$save=false){
+        $tags=Producto::model()->getFileTags("columns");
+        #print_r($tags); echo"<br/><br/>"; print_r($excel[1]);
+        $saved=array();
+        if(!($tags===array_slice($excel[1],0,20))){
+            return array("errores"=>1,"resumen"=>"Encabezados no coinciden con la plantilla","unproccesed"=>1,"saved"=>$saved);
+        }
+        unset($excel[1]);
+        $resumen="";
+        $errores=0;        
+        foreach($excel as $key=>$fila){
+            $error=false;
+            $resumen.="Producto #".($key-1).": <br/><ul>";
+            $exists=Producto::model()->findByAttributes(array('nombre'=>$fila["E"]));
+            if($exists){
+                $resumen.='<li>Ya existe un producto con el nombre <a href="'.$this->createUrl('producto/seleccion',array('query'=>$exists->nombre)).'" class="blueLink" target="_blank"><u>'.$exists->nombre.'</u></a></li>';
+                $errores++;
+                $error=true;
+           
+            }
+            if($fila["A"]==""&&$fila["B"]==""&&$fila["C"]==""&&$fila["D"]==""){
+                $resumen.="<li>Debe presentar al menos un valor en los campos".$tags["A"].", ".$tags["B"].", ".$tags["C"]." y ".$tags["D"]." <li/>";
+                $errores++;$error=true;                
+            }
+            if($fila["F"]==""||$fila["G"]==""||$fila["E"]==""||$fila["H"]==""){
+                $resumen.="<li>Los campos ".$tags["F"].", ".$tags["G"].", ".$tags["E"]." y ".$tags["H"]." son obligatorios</li>";
+                $errores++;$error=true;
+            }
+            if(strlen($fila["J"])>250||strlen($fila["K"])>250||strlen($fila["L"])>250||strlen($fila["M"])>250){
+                $resumen.="<li>Los campos Característica deben tener máximo 250 caracteres(".strlen($fila["J"]).",".strlen($fila["K"]).",".strlen($fila["L"]).",".strlen($fila["M"]).")</li>";
+                $errores++;$error=true;
+            }
+            $resumen.="</ul>";
+            if(!$error){
+                if($save)
+                {
+                   $producto= new Producto;
+                        
+                        //$producto->sku=$fila["A"];
+                        $producto->upc=$fila["A"];
+                        $producto->ean=$fila["B"];
+                        $producto->gtin=$fila["C"];
+                        $producto->nparte=$fila["D"];
+                        if(strpos(strtoupper($fila["E"]),strtoupper($fila["F"]))==-1)
+                            $producto->nombre=$fila["F"]." | ".$fila["E"];
+                        else
+                            $producto->nombre=$fila["E"];
+                        $producto->modelo=$fila["G"];
+                        $color=Color::model()->findByAttributes(array('nombre'=>strtoupper($fila['H'])));
+                        if($color)
+                             $producto->color_id=$color->id;
+                        $producto->color=$fila["I"];/* LA H */
+                        $producto->descripcion=$fila["J"];
+                        $producto->caracteristicas=$fila["K"]."*-*".$fila["L"]."*-*".$fila["M"]."*-*".$fila["N"];
+                        $producto->padre_id=11111;
+                        if($producto->save()){
+                            $producto->refresh();
+                            $seo = new Seo;
+                            $seo->descripcion = $fila["S"]; 
+                            $seo->tags = $fila["T"]; 
+                            $seo->amigable = $fila["U"];
+                            if($seo->save()){
+                                $seo->refresh();
+                                $producto->id_seo=$seo->id;
+                                $producto->created_at=date("Y-m-d H:i:s");
+                                $producto->user_id=Yii::app()->user->id;
+                                if($producto->save())
+                                    $resumen.="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Guardado con éxito<br/><br/>";
+                                    array_push($saved,$producto->id);
+                            }
+                                          
+                        }else{
+                             $resumen.="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Error en guardado<br/><br/>";
+                        }
+                }else{
+                    $resumen.="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Validado con éxito<br/><br/>";
+                }
+            }
+        }
+        return array("errores"=>$errores,"resumen"=>$resumen,"unproccesed"=>0,"saved"=>$saved);   
+    }
+    
 }

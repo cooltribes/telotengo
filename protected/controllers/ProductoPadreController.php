@@ -278,4 +278,6 @@ class ProductoPadreController extends Controller
 		echo $model->activo;
 		
 	}
+   
+
 }

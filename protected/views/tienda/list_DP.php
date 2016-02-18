@@ -36,7 +36,7 @@ $inventario=Inventario::model()->findByAttributes(array('producto_id'=>$data->id
         
      
                 
-                    <a href="<?php echo Yii::app()->createUrl("site/detalle",array("producto_id"=>$data->id, 'almacen_id'=>$inventario->almacen_id));?>">
+                    <a href="<?php echo Yii::app()->createUrl("producto/detalle",array("producto_id"=>$data->id, 'almacen_id'=>$inventario->almacen_id));?>">
                     <?php
                     echo $data->nombre;
                     ?>

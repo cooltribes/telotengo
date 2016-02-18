@@ -538,9 +538,65 @@ class Producto extends CActiveRecord
     public function getMinPrice(){
           
             return Yii::app()->db->createCommand("select min(precio) from tbl_inventario where producto_id = ".$this->id)->queryScalar();
-        
-        
     }
+    
+    public function getFileTags($key = "noIndex", $index = null){
+         $fieldIndex=array(
+                    "upc"=>"CÓDIGO UPC",
+                    "ean"=>"CÓDIGO EAN",
+                    "gtin"=>"CÓDIGO GTIN",
+                    "nparte"=>"N° DE PARTE",
+                    "nombre"=>"NOMBRE*",
+                    "marca"=>"MARCA*",
+                    "modelo"=>"MODELO*",
+                    "color"=>"COLOR*",
+                    "descripcion"=>"DESCRIPCIÓN",
+                    "caracteristica1"=>"CARACTERISTICA 1",
+                    "caracteristica2"=>"CARACTERISTICA 2",
+                    "caracteristica3"=>"CARACTERISTICA 3",
+                    "caracteristica4"=>"CARACTERISTICA 4",
+                    "longitud"=>"LONGITUD (cm)",
+                    "ancho"=>"ANCHO (cm)",
+                    "altura"=>"ALTURA (cm)",
+                    "peso"=>"PESO (Kg)",
+                    "seo->descripcion"=>"DESCRIPCIÓN SEO",
+                    "seo->tags"=>"TAGS",
+                    "seo->amigable"=>"URL AMIGABLE");
+            $columnIndex = array(   "A"=>"CÓDIGO UPC",
+                                    "B"=>"CÓDIGO EAN",
+                                    "C"=>"CÓDIGO GTIN",
+                                    "D"=>"N° DE PARTE",
+                                    "E"=>"NOMBRE*",
+                                    "F"=>"MARCA*",
+                                    "G"=>"MODELO*",
+                                    "H"=>"COLOR*",
+                                    "I"=>"DESCRIPCIÓN",
+                                    "J"=>"CARACTERISTICA 1",
+                                    "K"=>"CARACTERISTICA 2",
+                                    "L"=>"CARACTERISTICA 3",
+                                    "M"=>"CARACTERISTICA 4",
+                                    "N"=>"LONGITUD (cm)",
+                                    "O"=>"ANCHO (cm)",
+                                    "P"=>"ALTURA (cm)",
+                                    "Q"=>"PESO (Kg)",
+                                    "R"=>"DESCRIPCIÓN SEO",
+                                    "S"=>"TAGS",
+                                    "T"=>"URL AMIGABLE");
+            $noIndex = array("CÓDIGO UPC","CÓDIGO EAN","CÓDIGO GTIN","N° DE PARTE","NOMBRE*","MARCA*","MODELO*","COLOR*","DESCRIPCIÓN","CARACTERISTICA 1","CARACTERISTICA 2","CARACTERISTICA 3","CARACTERISTICA 4","LONGITUD (cm)","ANCHO (cm)","ALTURA (cm)","PESO (Kg)","DESCRIPCIÓN SEO","TAGS","URL AMIGABLE");
+            
+        if($key=="all"){
+            return array("fieldIndex"=>$fieldIndex,"columnIndex"=>$columnIndex,"noIndex"=>$noIndex);    
+        }     
+        if($key=="fields"){
+           return $fieldIndex;
+        }else{
+            if($key=="columns")
+                return $columnIndex;
+            
+            return $noIndex;            
+        }
+    }
+        
     
     
 	
