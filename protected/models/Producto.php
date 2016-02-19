@@ -597,7 +597,20 @@ class Producto extends CActiveRecord
         }
     }
         
-    
+    public function searchByMasterData($id)
+    {
+        // Warning: Please modify the following code to remove attributes that
+        // should not be searched.
+
+        $criteria=new CDbCriteria;
+
+        $criteria->compare('masterdata_id',$id);        
+            
+        return new CActiveDataProvider($this, array(
+            'criteria'=>$criteria,
+            'pagination'=>array('pageSize'=>15,),
+        ));
+    }
     
 	
 }

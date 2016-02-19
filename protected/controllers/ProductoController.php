@@ -36,7 +36,7 @@ class ProductoController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete','update','eliminar','orden','aprobar','rechazar','poraprobar','calificaciones','eliminarCalificacion','importar','inventario', 'details', 'caracteristicas','activarDesactivar', 'activarDesactivarDestacado', 'verDisponibilidad','revisionNuevos','aprobarNuevo'),
+				'actions'=>array('admin','delete','update','eliminar','orden','aprobar','rechazar','poraprobar','calificaciones','eliminarCalificacion','importar','inventario', 'details', 'caracteristicas','activarDesactivar', 'activarDesactivarDestacado', 'verDisponibilidad','revisionNuevos','aprobarNuevo','detalleMasterdata','setColor'),
 				#'users'=>array('admin'),
 				'roles'=>array('admin'),
 			),
@@ -2868,6 +2868,7 @@ class ProductoController extends Controller
          $summary=0;
          $tags=$producto->getFileTags("all");
          $resumen=null;
+                      
          if(isset($_FILES["validar"])){
             if(is_file($_FILES["validar"]["tmp_name"])){ 
                 $resumen=$this->validarMasterData(Yii::app()->yexcel->readActiveSheet($_FILES["validar"]["tmp_name"]));             
@@ -2893,9 +2894,10 @@ class ProductoController extends Controller
                     $master->errors=$resumen['errores'];
                     if($master->save()){
                         $master->refresh();
-                        $target_file = Yii::getPathOfAlias('webroot')."/docs/xlsMasterData/".$master->id.".".$ext;
+                        $path="/docs/xlsMasterData/".$master->id.".".$ext;
+                        $target_file = Yii::getPathOfAlias('webroot').$path;
                         if(move_uploaded_file($_FILES["cargar"]["tmp_name"], $target_file)){
-                            $master->path=$target_file;
+                            $master->path=$path;
                             if($master->save()){
                                 if(count($resumen["saved"]>0))
                                     Producto::model()->updateAll(array('masterdata_id'=>$master->id),"id IN (".implode(",",$resumen["saved"]).")");
@@ -2966,14 +2968,43 @@ class ProductoController extends Controller
                             $producto->nombre=$fila["E"];
                         $producto->modelo=$fila["G"];
                         $color=Color::model()->findByAttributes(array('nombre'=>strtoupper($fila['H'])));
-                        if($color)
-                             $producto->color_id=$color->id;
-                        $producto->color=$fila["I"];/* LA H */
+                        if($color){
+                            $producto->color_id=$color->id;
+                        }
+                        else
+                            $producto->color_id=0;                             
+                        $producto->color=$fila["H"];/* LA H */
                         $producto->descripcion=$fila["J"];
                         $producto->caracteristicas=$fila["K"]."*-*".$fila["L"]."*-*".$fila["M"]."*-*".$fila["N"];
-                        $producto->padre_id=11111;
+                        $producto->padre_id=0;
                         if($producto->save()){
                             $producto->refresh();
+                            $saveMongo=false;
+                            $mongoData=array();
+                            if(strlen(str_replace(" ","",$fila["N"]))>0){
+                                $mongoData["Longitud"]=$fila["N"];
+                                $mongoData["Longitud*-*UNIDAD"]=1;
+                                $saveMongo=true;
+                            }  
+                            if(strlen(str_replace(" ","",$fila["O"]))>0){
+                                $mongoData["Ancho"]=$fila["O"];
+                                $mongoData["Ancho*-*UNIDAD"]=1;
+                                $saveMongo=true;
+                            }
+                            if(strlen(str_replace(" ","",$fila["P"]))>0){
+                                $mongoData["Altura"]=$fila["P"];
+                                $mongoData["Altura*-*UNIDAD"]=1;
+                                $saveMongo=true;
+                            }  
+                            if(strlen(str_replace(" ","",$fila["Q"]))>0){
+                                $mongoData["Peso"]=$fila["Q"];
+                                $mongoData["Peso*-*UNIDAD"]=4;
+                                $saveMongo=true;
+                            }
+    
+                            if($saveMongo)
+                                $this->saveToMongo($producto->id,$mongoData);                             
+                                                       
                             $seo = new Seo;
                             $seo->descripcion = $fila["S"]; 
                             $seo->tags = $fila["T"]; 
@@ -2997,6 +3028,75 @@ class ProductoController extends Controller
             }
         }
         return array("errores"=>$errores,"resumen"=>$resumen,"unproccesed"=>0,"saved"=>$saved);   
+    }
+
+    public function actionDetalleMasterdata($id){
+        $master=Masterdata::model()->findByPk($id);
+        
+        if($master){
+            
+            $productos=Producto::model()->searchByMasterData($master->id);
+            $this->render('detalleMD',array("model"=>$master,"productos"=>$productos));
+        }
+             
+        else
+            throw new CHttpException(404,'The requested page does not exist.');
+        
+    }
+    
+    public function saveToMongo($id,$data){
+        
+        $connection = new MongoClass();
+        if(Funciones::isDev())
+        {
+            $document = $connection->getCollection('ejemplo');  //DEVELOP
+        }   
+        else
+        {
+            if(Funciones::isStage())
+                $document = $connection->getCollection('stage');    //STAGE
+            else
+                $document = $connection->getCollection('produccion'); // produccion
+        } 
+            
+        if(count($data)>0)
+        {            
+            $data['producto']=$id;
+            $prueba = array("producto"=>$id); 
+            $user = $document->findOne($prueba); // vamos a buscar si existe el registro            
+            if(!is_null($user)) // si no existe el registro, inserte uno nuevo
+            {
+                $document->remove(array("producto"=>$id));  //quito la coleccion
+            }
+            if($document->insert($data))
+                return true;
+            else
+                return false; 
+        }
+         
+    }
+    
+    public function actionSetColor()
+    {
+        $producto = Producto::model()->findByPk($_POST['id']);
+        $color = Color::model()->findByPk($_POST['color']);
+        if($color&&$producto){
+            $result=array();
+            $producto->color_id=$color->id;
+            if($producto->save()){
+                    $producto->refresh();
+                   $result['status']="ok";
+                    $result['html']=$producto->colore->nombre."<br/><small><b>Tono: </b>".$producto->color."</small>";
+            }else{
+                $result['status']="error";
+            }
+        }else{
+                $result['status']="error";
+            }
+        echo json_encode($result);
+        
+        
+        
     }
     
 }
