@@ -36,7 +36,7 @@ class ProductoController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete','update','eliminar','orden','aprobar','rechazar','poraprobar','calificaciones','eliminarCalificacion','importar','inventario', 'details', 'caracteristicas','activarDesactivar', 'activarDesactivarDestacado', 'verDisponibilidad','revisionNuevos','aprobarNuevo','detalleMasterdata','setColor'),
+				'actions'=>array('admin','delete','update','eliminar','orden','aprobar','rechazar','poraprobar','calificaciones','eliminarCalificacion','importar','inventario', 'details', 'caracteristicas','activarDesactivar', 'activarDesactivarDestacado', 'verDisponibilidad','revisionNuevos','aprobarNuevo','detalleMasterdata','setColor','setPadre'),
 				#'users'=>array('admin'),
 				'roles'=>array('admin'),
 			),
@@ -81,8 +81,9 @@ class ProductoController extends Controller
 	}
 	
 	public function actionClasificar()
-	{
-		$this->render('clasificar');
+	{   $son=isset($_GET['son'])?$_GET['son']:null;
+            
+		$this->render('clasificar',array("son"=>$son));
 	}
 	
 	public function actionNiveles()
@@ -3076,17 +3077,17 @@ class ProductoController extends Controller
          
     }
     
-    public function actionSetColor()
+    public function actionSetPadre()
     {
         $producto = Producto::model()->findByPk($_POST['id']);
-        $color = Color::model()->findByPk($_POST['color']);
-        if($color&&$producto){
+        $padre = ProductoPadre::model()->findByPk($_POST['padre']);
+        if($padre&&$producto){
             $result=array();
-            $producto->color_id=$color->id;
+            $producto->padre_id=$padre->id;
             if($producto->save()){
                     $producto->refresh();
                    $result['status']="ok";
-                    $result['html']=$producto->colore->nombre."<br/><small><b>Tono: </b>".$producto->color."</small>";
+                    $result['html']=$producto->padre->nombre;
             }else{
                 $result['status']="error";
             }

@@ -1,11 +1,34 @@
 <tr><td scope="col"><?php echo $data->nombre; ?></td>
 <td scope="col"><?php echo $data->modelo; ?></td>
- <td scope="col">
-     <?php if($data->padre_id!=0){
-         echo $data->padre->nombre;
-     }else{?>
-         <a class="blueLink"><u>Asignar Padre</u></a>
-     <?php } ?>
+     <?php if($data->padre_id!=0):?>
+     <td scope="col">     
+     <?php    echo $data->padre->nombre;
+      else: ?>
+     <td scope="col" align="center" id="pa<?php echo $data->id;?>">
+    <?php      $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
+                                    'id'=>'padre'.$data->id,
+                                    'name'=>'padre'.$data->id,
+                                    'source'=>$this->createUrl('ProductoPadre/autocomplete'),
+                                    'htmlOptions'=>array(
+                                          'size'=>30,
+                                          'placeholder'=>'Introduzca nombre del producto',
+                                          'class'=>'padding_left_small padding_right_small'
+                                          
+                                          //'maxlength'=>45,
+                                        ),
+                                    // additional javascript options for the autocomplete plugin
+                                    'options'=>array(
+                                            'showAnim'=>'fold',
+                                    ),
+                                    ));
+                   
+                                    ?><br/>
+        <div class="padreOptions">
+            <div> <a class="blueLink pointer" onclick="set_padre(<?php echo $data->id;?>)"><small><u>Asignar Padre</u></small></a></div>
+            <div><div class="padreCreate" style="display:none;" id="crear_padre<?php echo $data->id?>">Padre no existe 
+                <a href="<?php echo Yii::app()->createUrl("Producto/clasificar",array("son"=>$data->id));?>">Crear</a></div> </div>
+        </div>
+     <?php endif; ?>
  </td>
 <td scope="col" id="co<?php echo $data->id;?>"> <?php if($data->color_id!=0){
          echo $data->colore->nombre;

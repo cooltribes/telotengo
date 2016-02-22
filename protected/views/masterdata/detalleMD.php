@@ -9,6 +9,30 @@
     #resumen thead tr td{        
         padding: 5px;               
     }
+    .padreOptions{
+        width:100%;
+        float:left;        
+    }
+    .padreOptions>div{
+        width:50%;
+        float:left;
+        text-align:left;
+    }
+    .padreOptions>div>.padreCreate{
+        text-align: right;
+        width: 100%;
+        font-size: 12px;
+        color: crimson;
+        padding-right:4px;
+    }
+    .padreOptions>div>.padreCreate>a{
+        color:#428bca;
+        text-decoration: underline;
+    }
+    .ui-autocomplete-input{
+        width:90%;
+    }
+    
 </style>
 <h1>Detalle de Masterdata #<?php echo $model->id;?></h1>
 <table id="resumen" class="margin_top" width="100%;">
@@ -156,5 +180,39 @@
           } });
            
        }}
+       function set_padre(id){
+            var nombre= $('#padre'+id).val();
+            $.ajax({
+                     url: "<?php echo Yii::app()->createUrl('producto/verificarPadre') ?>",
+                     type: 'POST',
+                     dataType:"json",
+                     data:{
+                            nombre:nombre, 
+                           },
+                    success: function (data) {
+                        if(data.status=='1')
+                        {
+                              $.ajax({
+                                 url: "<?php echo Yii::app()->createUrl('producto/setPadre') ?>",
+                                 type: 'POST',
+                                 dataType:"json",
+                                 data:{
+                                        id:id,
+                                        padre:data.id
+                                       },
+                                success: function (data2) {
+                                    
+                                        $('#pa'+id).html(data2.html);
+                                    
+                                    
+                              } });
+                        }
+                        else{
+                            $('#crear_padre'+id).show();
+                        }
+                    }
+                   });
+  
+           }
         
 </script>

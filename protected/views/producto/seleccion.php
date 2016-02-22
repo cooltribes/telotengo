@@ -29,12 +29,12 @@
         <h1 class="margin_bottom">Carga de Inventario</h1>
         <div>
             
-                               
+          <!--                       
             <ul id="myTabs" class="nav nav-tabs" role="tablist">
-                <li  class="active"><a id="specifications-tab"  aria-controls="home"  aria-expanded="false" href="seleccion" aria-expanded="true">CARGA INDIVIDUAL</a></li>
-              <li>  <a href="cargarInbound" id="fileLoad-tab"  >CARGA MASIVA </a></li>
+                <li  ><a id="specifications-tab"  aria-controls="home"  aria-expanded="false" href="seleccion" aria-expanded="true">CARGA INDIVIDUAL</a></li>
+              <li class="active">  <a href="cargarInbound" id="fileLoad-tab"  >CARGA MASIVA </a></li>
               
-           <!--   <li role="presentation" class=""><a href="#plantilla" role="tab" id="plantilla-tab" data-toggle="tab" aria-controls="plantilla" aria-expanded="false">DESCARGA DE PLANTILLA</a></li>-->
+            <li role="presentation" class=""><a href="#plantilla" role="tab" id="plantilla-tab" data-toggle="tab" aria-controls="plantilla" aria-expanded="false">DESCARGA DE PLANTILLA</a></li>-->
               
             </ul>
             

@@ -17,7 +17,7 @@
     </div>
 </div>
 <script>
-    $('#caution').modal();
+   // $('#caution').modal();
 </script>
 
 
@@ -50,6 +50,7 @@ $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
     ),
  
 ));?>
+<h1>Nuevo Producto</h1>
 <div class="col-md-6 col-md-offset-3 margin_top_small">
     <div class="margin_top_small">
      <?php echo $form->labelEx($ppadre,'nombre'); ?> 

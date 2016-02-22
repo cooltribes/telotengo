@@ -103,4 +103,32 @@ class Masterdata extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+    
+    public function getAll($query = null)
+    {
+        // @todo Please modify the following code to remove attributes that should not be searched.
+        $criteria=new CDbCriteria;
+        $criteria->order="uploaded_at desc";
+        if(!is_null($query)){
+            if(is_numeric($query)){
+                $criteria->addCondition("id = ".$query);
+                
+            }else{
+                $users=$user_empresa=array();    
+                $users=Yii::app()->db->createCommand("select user_id from tbl_profiles where ".Funciones::long_query($query, "first_name")." AND ".Funciones::long_query($query, "first_name"))->queryColumn();
+                $empresas=Yii::app()->db->createCommand("select id from tbl_empresas where ".Funciones::long_query($query, "razon_social"))->queryColumn();
+                if(count($empresas)>0){
+                    $user_empresa=Yii::app()->db->createCommand("select users_id from tbl_empresas_has_tbl_users where empresas_id IN (".implode(",",$empresas).")")->queryColumn();                    
+                }
+                $users=array_merge($users,$user_empresa);               
+                if(count($users)>0)
+                    $criteria->addCondition("uploaded_by IN (".implode(',',$users).")");
+                
+            }
+        }
+        return new CActiveDataProvider($this, array(
+            'criteria'=>$criteria,
+            'pagination'=>array('pageSize'=>15)
+        ));
+    }
 }

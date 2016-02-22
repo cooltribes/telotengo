@@ -70,8 +70,10 @@ class ProductoPadreController extends Controller
 		if(isset($_POST['ProductoPadre']))
 		{
 			$model->attributes=$_POST['ProductoPadre'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+			if($model->save()){
+			     $this->redirect(array('view','id'=>$model->id));
+			}
+				
 		}
 
 		$this->render('create',array(
@@ -195,53 +197,73 @@ class ProductoPadreController extends Controller
 	
 	public function actionBusqueda()
 	{
-		$nombre=$_POST['nombre'];
-		$idAct=$_POST['idAct'];
-		$marca=$_POST['marca'];
-		$categoria=$_POST['categoria'];
-		$activo=$_POST['activo'];
-		$busqueda=ProductoPadre::model()->findByAttributes(array('nombre'=>$nombre));
-		if($busqueda=="")
-		{
-			echo "1";
-			if($idAct=="")
-				$guardar=1;
-			else
-				$guardar=2;
-		}
-		else 
-		{
-			if($busqueda->id==$idAct)
-			{
-				echo "1";
-				$guardar=2;
-			}	
-			else
-			{
-				echo "0";
-				$guardar=0;	
-			}
-						
-		}
-		if($guardar==1)
-		{
-			$productoPadre = new ProductoPadre; 
-			$productoPadre->nombre=$nombre;
-			$productoPadre->id_marca=$marca;
-			$productoPadre->id_categoria=$categoria;
-			$productoPadre->activo=$activo;
-			$productoPadre->save();
-		}
-		if($guardar==2)
-		{
-			$model=ProductoPadre::model()->findByPk($idAct);
-			$model->nombre=$nombre;
-			$model->id_marca=$marca;
-			$model->id_categoria=$categoria;
-			$model->activo=$activo;
-			$model->save();
-		}
 		
+        $nombre=$_POST['nombre'];
+        $idAct=$_POST['idAct'];
+        $marca=$_POST['marca'];
+        $categoria=$_POST['categoria'];
+        $activo=$_POST['activo'];
+        $result=array();
+        $busqueda=ProductoPadre::model()->findByAttributes(array('nombre'=>$nombre));
+        if($busqueda=="")
+        {
+            
+            if($idAct=="")
+                $guardar=1;
+            else
+                $guardar=2;
+        }
+        else 
+        {
+            if($busqueda->id==$idAct)
+            {
+                
+                $guardar=2;
+            }   
+            else
+            {
+                $result['status']=0;
+                $guardar=0; 
+            }
+                        
+        }
+        if($guardar==1)
+        {
+            $productoPadre = new ProductoPadre; 
+            $productoPadre->nombre=$nombre;
+            $productoPadre->id_marca=$marca;
+            $productoPadre->id_categoria=$categoria;
+            $productoPadre->activo=$activo;
+            if($productoPadre->save()){
+                if(isset($_GET['son'])){
+                    $son=Producto::model()->findbyPk($_GET['son']);
+                    if($son){
+                        $son->padre_id=$productoPadre->id;
+                        $son->save();
+                        $result['status']="2";
+                        $result['masterData']=$son->masterdata_id;                        
+                    }                    
+                }
+            }else{
+                $result['status']="1";
+                 $result['id']=$productoPadre->id;
+            }
+            
+            
+        }
+        if($guardar==2)
+        {
+            $model=ProductoPadre::model()->findByPk($idAct);
+            $model->nombre=$nombre;
+            $model->id_marca=$marca;
+            $model->id_categoria=$categoria;
+            $model->activo=$activo;
+            $model->save();
+            $result['status']="1";
+            $result['id']=$model->id;
+        }
+		echo json_encode($result);
+                
 		
 	
 	}
