@@ -95,7 +95,7 @@ $('#<?php echo $carousel;?>').carousel({
                     
 ?>
                      <div>
-                     	<a href="<?php echo Yii::app()->getBaseUrl(true)."/site/detalle/?producto_id=".$producto."&almacen_id=".$variable;?>">  <?php //TODO mejorar ?>
+                     	<a href="<?php echo Yii::app()->getBaseUrl(true)."/producto/detalle/?producto_id=".$producto."&almacen_id=".$variable;?>">  <?php //TODO mejorar ?>
                        <!-- <a href="<?php echo Yii::app()->createUrl("site/detalle",array("producto_id"=>$model->id));?>"> -->
 
                             <img width="100%" style="max-height:150px" src="<?php echo $url;?>">
