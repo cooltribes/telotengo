@@ -37,8 +37,8 @@ $assetUrl=Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('applicatio
                    <li><a href="<?php echo Yii::app()->baseUrl; ?>/productoPadre/admin">Productos padre</a></li> 
                     <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/admin">Variaciones</a></li>
                     <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/revisionNuevos">En Revisión</a></li>
-                    <li><a href="<?php echo Yii::app()->baseUrl; ?>/inbound/admin">Ver Inbound</a></li>
-                    <li><a href="<?php echo Yii::app()->baseUrl; ?>/masterdata/admin">Ver Masterdata</a></li>
+                    <li><a href="<?php echo Yii::app()->baseUrl; ?>/inbound/admin">Inbound</a></li>
+                    <li><a href="<?php echo Yii::app()->baseUrl; ?>/masterdata/admin">Masterdata</a></li>
                          <!--   <li><a href="<?php echo Yii::app()->baseUrl; ?>/pregunta/admin">Preguntas</a></li> -->
                 </ul>
               </li>

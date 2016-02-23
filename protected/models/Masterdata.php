@@ -131,4 +131,29 @@ class Masterdata extends CActiveRecord
             'pagination'=>array('pageSize'=>15)
         ));
     }
+
+    public function getByEmpresa($staff,$query = "")
+    {
+        // @todo Please modify the following code to remove attributes that should not be searched.
+        $criteria=new CDbCriteria;
+        $criteria->order="uploaded_at desc";
+        if(!is_null($query)){
+            if(is_numeric($query)){
+                $criteria->addCondition("id = ".$query);
+                
+            }else{                
+                $users=Yii::app()->db->createCommand("select user_id from tbl_profiles where ".Funciones::long_query($query, "first_name")." AND ".Funciones::long_query($query, "first_name"))->queryColumn();               
+                $users=array_intersect($users, $staff);
+                if(count($users)>0)
+                    $criteria->addCondition("uploaded_by IN (".implode(',',$users).")");
+                
+            }
+        }
+        return new CActiveDataProvider($this, array(
+            'criteria'=>$criteria,
+            'pagination'=>array('pageSize'=>15)
+        ));
+    }
+
+
 }

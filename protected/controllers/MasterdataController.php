@@ -2,58 +2,54 @@
 
 class MasterdataController extends Controller
 {
-	
+	/**
+	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
+	 * using two-column layout. See 'protected/views/layouts/column2.php'.
+	 */
+	public $layout='//layouts/column2';
 
-    /**
-     * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
-     * using two-column layout. See 'protected/views/layouts/column2.php'.
-     */
-    public $layout='//layouts/column2';
+	/**
+	 * @return array action filters
+	 */
+	public function filters()
+	{
+		return array(
+			'accessControl', // perform access control for CRUD operations
+			'postOnly + delete', // we only allow deletion via POST request
+		);
+	}
 
-    /**
-     * @return array action filters
-     */
-    public function filters()
-    {
-        return array(
-            'accessControl', // perform access control for CRUD operations
-        ); 
-    }
+	/**
+	 * Specifies the access control rules.
+	 * This method is used by the 'accessControl' filter.
+	 * @return array access control rules
+	 */
+	public function accessRules()
+	{
+		return array(
+			array('allow',  // allow all users to perform 'index' and 'view' actions
+				'actions'=>array('index','view'),
+				'users'=>array('*'),
+			),
+			array('allow', // allow authenticated user to perform 'create' and 'update' actions
+				'actions'=>array('upload','misMasterdata','detalleUsuario'),
+				'users'=>array('@'),
+			),
+			array('allow', // allow admin user to perform 'admin' and 'delete' actions
+				'actions'=>array('detalle','setPadre','admin'),
+				'users'=>array('admin'),
+			),
+			array('deny',  // deny all users
+				'users'=>array('*'),
+			),
+		);               
+	}
 
-    /**
-     * Specifies the access control rules.
-     * This method is used by the 'accessControl' filter.
-     * @return array access control rules
-     */
-    public function accessRules()
-    {
-        return array(
-            array('allow',  // allow all users to perform 'index' and 'view' actions
-                'actions'=>array(),
-                'users'=>array('*'),
-            ),
-            array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions'=>array(),
-                'users'=>array('@'),
-            ),
-            array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                'actions'=>array('detalle','setPadre','admin'),
-                #'users'=>array('admin'),
-                'roles'=>array('admin'),
-            ),
-            array('allow', // COMPRADORESVENDEDORES Y VENDEDORES
-                'actions'=>array('upload'),
-                #'users'=>array('admin'),
-                'roles'=>array('vendedor', 'compraVenta'),
-            ),
-            array('deny',  // deny all users
-                'users'=>array('*'),
-            ),
-        );
-    }
-
-      
-   public function actionUpload(){
+	/**
+	 * Displays a particular model.
+	 * @param integer $id the ID of the model to be displayed
+	 */
+	public function actionUpload(){
          $producto = new Producto;
          $summary=0;
          $tags=$producto->getFileTags("all");
@@ -233,6 +229,19 @@ class MasterdataController extends Controller
             throw new CHttpException(404,'The requested page does not exist.');
         
     }
+     public function actionDetalleUsuario($id){
+        $master=Masterdata::model()->findByPk($id);
+        
+        if($master){
+            
+            $productos=Producto::model()->searchByMasterData($master->id);
+            $this->render('detalleMDUser',array("model"=>$master,"productos"=>$productos));
+        }
+             
+        else
+            throw new CHttpException(404,'The requested page does not exist.');
+        
+    }
     
     public function saveToMongo($id,$data){
         
@@ -320,23 +329,39 @@ class MasterdataController extends Controller
             'dataProvider'=>$dataProvider,
         ));
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+     public function actionMisMasterdata()
+    {
+        $model = new Masterdata;
+        $user = User::model()->findByPk(Yii::app()->user->id);
+        $model->unsetAttributes();  // clear any default values
+        $bandera=false;
+        $dataProvider=$model->getByEmpresa($user->empresa->getStaff($user->empresa->id,false),"");
+        
+                /* Para mantener la paginacion en las busquedas */
+        if(isset($_GET['ajax']) && isset($_SESSION['searchMD']) && !isset($_POST['query'])){
+            $_POST['query'] = $_SESSION['searchMD'];
+            $bandera=true;
+        }
+
+        /* Para buscar desde el campo de texto */
+        if (isset($_POST['query'])){
+            #echo "select user_id from tbl_profiles where ".Funciones::long_query($_POST['query'], "first_name")." OR ".Funciones::long_query($_POST['query'], "last_name");
+            $bandera=true;
+            unset($_SESSION['searchMD']);
+            $_SESSION['searchMD'] = $_POST['query'];
+            $dataProvider = $model->getByEmpresa($user->empresa->getStaff($user->empresa->id,false),$_POST['query']);
+            
+        }   
+
+        if($bandera==FALSE){
+            unset($_SESSION['searchMD']);
+        }
+            
+        $this->render('misMasterdata',array(
+            'model'=>$model,
+            'user'=>$user,
+            'dataProvider'=>$dataProvider,
+        ));
+    }
 }

@@ -50,7 +50,15 @@ $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
     ),
  
 ));?>
-<h1>Nuevo Producto</h1>
+<h1 class="margin_top margin_bottom">Nuevo Producto</h1>
+  <ul id="myTabs" class="nav nav-tabs" role="tablist">
+              <li >  <a  id="massive-tab"  aria-controls="home"  href="../masterdata/upload"  >CARGA MASIVA </a></li>
+                <li  class="active"><a >CARGA INDIVIDUAL</a></li>
+              
+              
+         <!--    <li role="presentation" class=""><a href="#plantilla" role="tab" id="plantilla-tab" data-toggle="tab" aria-controls="plantilla" aria-expanded="false">DESCARGA DE PLANTILLA</a></li>-->
+              
+            </ul>
 <div class="col-md-6 col-md-offset-3 margin_top_small">
     <div class="margin_top_small">
      <?php echo $form->labelEx($ppadre,'nombre'); ?> 

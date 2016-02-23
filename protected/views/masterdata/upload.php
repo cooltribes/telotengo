@@ -40,12 +40,13 @@ $('#buttonCargaMD').click(function(e) {
 
 <div class="col-md-12 no_horizontal_padding margin_top">
         <h1 class="margin_bottom">Carga de Productos</h1>
-       <!--  
+  
           <ul id="myTabs" class="nav nav-tabs" role="tablist">
-                <li  class="active"><a id="specifications-tab"  aria-controls="home"  aria-expanded="false" href="seleccion" aria-expanded="true">CARGA INDIVIDUAL</a></li>
-              <li>  <a href="../producto/seleccion" id="fileLoad-tab"  >CARGA MASIVA </a></li>
+              <li class="active">  <a  id="fileLoad-tab"  >CARGA MASIVA </a></li>
+                <li  ><a id="individual-tab"  aria-controls="home"  href="../producto/nuevoProducto">CARGA INDIVIDUAL</a></li>
               
-             <li role="presentation" class=""><a href="#plantilla" role="tab" id="plantilla-tab" data-toggle="tab" aria-controls="plantilla" aria-expanded="false">DESCARGA DE PLANTILLA</a></li>-->
+              
+         <!--    <li role="presentation" class=""><a href="#plantilla" role="tab" id="plantilla-tab" data-toggle="tab" aria-controls="plantilla" aria-expanded="false">DESCARGA DE PLANTILLA</a></li>-->
               
             </ul>
         
@@ -70,7 +71,7 @@ $('#buttonCargaMD').click(function(e) {
                             <h4 class=" margin_top no_margin_bottom">1.- Realizar la validación previa del archivo:</h4>
                         </div>
                         <div class="col-md-6 margin_top_small ">
-                             <a href="../site/descargaPlantilla" class="btn btn-darkgray"> <span class="glyphicon glyphicon-download-alt"></span> Descargar Archivo</a>
+                             <a href="<?php echo Yii::app()->getBaseUrl(true)."/docs/xlsMasterData/TLT-Masterdata.xlsx"; ?>" class="btn btn-darkgray"> <span class="glyphicon glyphicon-download-alt"></span> Descargar Archivo</a>
                         </div>
                         <div class="col-md-12 no_horizontal_padding margin_top_minus">
                             <hr class="dark"/>

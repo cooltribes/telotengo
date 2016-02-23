@@ -128,7 +128,9 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
                                                          <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/seleccion";>Cargar Inventario</a></li>
                                                          <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/nuevoProducto";>Agregar un producto</a></li>
                                                          <li><a href="<?php echo Yii::app()->baseUrl; ?>/almacen/administrador";>Ver Almacenes</a></li>
-                                                         <li><a href="<?php echo Yii::app()->baseUrl; ?>/inbound/administrador";>Ver Inbound</a></li>
+                                                         <li class="separator"></li>
+                                                         <li><a href="<?php echo Yii::app()->baseUrl; ?>/inbound/administrador";>Inbound</a></li>
+                                                         <li><a href="<?php echo Yii::app()->baseUrl; ?>/masterdata/misMasterdata";>Masterdata</a></li>
 
                                                
                                                     <!--<li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/cargarInbound";>Cargar Inventario Masivo</a></li> -->          
@@ -176,10 +178,11 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
                                                 <?php
                                                 if(Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id) || Yii::app()->authManager->checkAccess("vendedor", Yii::app()->user->id)): ?>
                                                           
+                                                         <li><a href="<?php echo Yii::app()->baseUrl; ?>/masterdata/upload";>Cargar Productos</a></li>
                                                          <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/cargarInbound";>Cargar Inventario</a></li>
                                                    <!--      <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/seleccion";>Cargar Inventario</a></li>-->
                                                          <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/productoInventario";>Ver Inventario</a></li>
-                                                         <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/nuevoProducto";>Agregar un producto</a></li>
+                                                         
                                                 <?php endif;?> 
                                               
                                               </ul>
