@@ -140,4 +140,92 @@
         ?>
         </div>
     </div>
-   
+   <script>
+
+    function desactivarActivar(id)
+    {
+            
+            $.ajax({
+             url: "<?php echo Yii::app()->createUrl('producto/activarDesactivar') ?>",
+             type: 'POST',
+             data:{
+                    id:id,
+                   },
+            success: function (data) {
+                if(data==0)//lo contrario
+                {
+                    $('#act'+id).html('<i class="glyphicon glyphicon-ok"></i> Activar');
+                    $('#ac'+id).html('Inactivo');
+                    $('#ac'+id).removeClass();
+                    $('#ac'+id).addClass("red-text");
+                }
+                else
+                {
+                    $('#act'+id).html('<i class="glyphicon glyphicon-remove"></i> Desactivar');
+                    $('#ac'+id).html('Activo');
+                    $('#ac'+id).removeClass();
+                    $('#ac'+id).addClass("green-text");
+                }
+            }
+           })
+        
+    }
+    
+    function aprobar(id)
+    {
+            
+            $.ajax({
+             url: "<?php echo Yii::app()->createUrl('producto/aprobarNuevo') ?>",
+             type: 'POST',
+             data:{
+                    id:id,
+                   },
+            success: function (data) {
+                if(data==0)//lo contrario
+                {
+                    $('#apr'+id).html("<span class='glyphicon glyphicon-thumbs-up'></span> Aprobar");
+                    $('#ap'+id).html('Rechazado');
+                    $('#ap'+id).removeClass();
+                    $('#ap'+id).addClass("red-text");
+                }
+                else
+                {
+                    $('#apr'+id).html("<span class='glyphicon glyphicon-thumbs-down'></span> Rechazar");
+                    $('#ap'+id).html('Aprobado');
+                    $('#ap'+id).removeClass();
+                    $('#ap'+id).addClass("green-text");
+                }
+            }
+           });
+       }
+        
+    
+    function desactivarActivarDestacado(id)
+    {
+            
+            $.ajax({
+             url: "<?php echo Yii::app()->createUrl('producto/activarDesactivarDestacado') ?>",
+             type: 'POST',
+             data:{
+                    id:id,
+                   },
+            success: function (data) {
+                
+                if(data==0)
+                {
+                    $('#des'+id).html('<i class="glyphicon glyphicon-ok"></i> Destacar');
+                    $('#pal'+id).html('No Destacado');
+                }
+                else
+                {
+                    $('#des'+id).html('<i class="glyphicon glyphicon-ok"></i> Quitar Destacado');
+                    $('#pal'+id).html('Destacado');
+                }
+            }
+            
+            
+           })
+        
+    }
+
+</script>

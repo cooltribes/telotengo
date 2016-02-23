@@ -44,12 +44,7 @@
 
 	
 	<div id="principale" class="col-md-6 col-md-offset-3 margin_top" class="btn btn-danger form-control">
-		<?php $this->widget('bootstrap.widgets.TbButton', array(
-			'buttonType'=>'submit',
-			'type'=>'primary',
-			'label'=>$model->isNewRecord ? 'Crear' : 'Guardar',
-			'htmlOptions'=>array('class'=>'form-control')
-		)); ?>
+
 
 	</div> 
 	
@@ -86,22 +81,28 @@ $(document).ready(function() {
 		else
 		{ 
 				$.ajax({
-		         url: "<?php echo Yii::app()->createUrl('productoPadre/busqueda') ?>",
+		         url: "<?php echo isset($_GET['son'])?Yii::app()->createUrl('productoPadre/busqueda',array('son'=>$_GET['son'])):Yii::app()->createUrl('productoPadre/busqueda'); ?>",
 	             type: 'POST',
+	             dataType:'json',
 		         data:{
 	                    nombre:nombre, idAct:idAct, marca:marca, categoria:categoria, activo:activo
 	                   },
 		        success: function (data) {
 					
-					if(data==0)
+					if(data.status==0)
 					{
 						alert('Nombre ya existente');
 						return false;
+					}else{
+					    if(data.status==2){
+						    window.location.href ='../producto/detalleMasterdata/'+data.masterData;
+					    }else{
+					        window.location.href = 'admin';
+					    }
 					}
-					else
-					{
-						window.location.href = '../admin/';
-					}
+					
+						
+					
 		       	}
 		       })
 			

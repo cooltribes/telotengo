@@ -99,7 +99,7 @@ class User extends CActiveRecord
         if (!isset($relations['profile']))
             $relations['profile'] = array(self::HAS_ONE, 'Profile', 'user_id');
         $relations['invited_by']=array(self::BELONGS_TO, 'User', 'quien_invita');
-        $relations['empresaRel']=array(self::MANY_MANY, 'Empresas', 'tbl_empresas_has_tbl_users(empresas_id,users_id)');
+        $relations['empresaRel']=array(self::MANY_MANY, 'Empresas', 'tbl_empresas_has_tbl_users(users_id,empresas_id,)');
       
 
         return $relations;
@@ -199,6 +199,7 @@ class User extends CActiveRecord
         //$criteria->compare('username',$this->username,true);
         $criteria->addCondition("username LIKE '%".$this->username."%'",'OR');
         $criteria->addCondition("email LIKE '%".$this->email."%'",'OR');
+		$criteria->addCondition("status = '1'",'AND');
         $criteria->compare('password',$this->password);
         //$criteria->compare('email',$this->email,true);
         $criteria->compare('activkey',$this->activkey);
@@ -615,6 +616,16 @@ class User extends CActiveRecord
                if(is_null($type))
                     return Yii::app()->db->createCommand("SELECT COUNT(id) from tbl_users where type IN (2,3,4)")->queryScalar();               
                return Yii::app()->db->createCommand("SELECT COUNT(id) from tbl_users where type =".$type)->queryScalar();
+           }
+           
+           public function getPartners($objects=true){
+              
+               $ids=Yii::app()->db->createCommand("SELECT users_id from tbl_empresa_has_tbl_users where empresas_id = ".$this->empresaRel->id)->queryColumn();   
+               if($objects){
+                   return $this->findAll("id IN (".count($ids)>0?implode(",",$ids):"0".")");
+               }
+               else
+                   return $ids;
            }
         
         

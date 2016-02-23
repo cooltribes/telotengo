@@ -8,7 +8,7 @@ $inventario=Inventario::model()->findByAttributes(array('producto_id'=>$data->id
         <article class="itemGridView">
         	
         	
-					<a href="<?php echo Yii::app()->createUrl("site/detalle",array("producto_id"=>$data->id, 'almacen_id'=>$inventario->almacen_id));?>">
+					<a href="<?php echo Yii::app()->createUrl("producto/detalle",array("producto_id"=>$data->id, 'almacen_id'=>$inventario->almacen_id));?>">
 		
             <div class="img text-center">
             	<?php

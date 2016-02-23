@@ -357,5 +357,17 @@ const SECTOR_EDUCACION = 16;
         return $array;        
     }
     
+     public function getStaff($id = 0,$objects=true){
+               if($id==0) 
+                    $empresa=$this;
+               else
+                   $empresa=$this->findByPk($id);
+               $ids=Yii::app()->db->createCommand("SELECT users_id from tbl_empresas_has_tbl_users where empresas_id = ".$empresa->id)->queryColumn();   
+               if($objects){
+                   return User::model()->findAll("id IN (".count($ids)>0?implode(",",$ids):"0".")");
+               }
+               else
+                   return $ids;
+           }
     
 }

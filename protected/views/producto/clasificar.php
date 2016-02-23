@@ -84,7 +84,11 @@
 	{
 		//$("#texto").html("<h4><strong>"+id+" </strong></h4>");
 		$("#texto").show();
-		$("#boton").attr("href", "../productoPadre/create/"+id);
+		<?php if(is_null($son)):?>
+		$("#boton").attr("href", "../productoPadre/create?id="+id);
+		<?php else:?>
+		$("#boton").attr("href", "../productoPadre/create?id="+id+"&son=<?php echo $son?>");
+		<?php endif;?>
 		$("#boton").show();
 		$('#'+element).parent().children().removeClass('active');
         $('#'+element).addClass('active');
