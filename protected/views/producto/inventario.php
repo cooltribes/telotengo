@@ -74,9 +74,9 @@ $this->breadcrumbs=array(
 								<?php echo $form->error($model,'precio');  ?>
 							</div>
 							<div class="form-group"> 
-                                <label>IVA a aplicar *</label>
+                                <label>IVA a aplicar</label>
                                 <div style="position: relative">
-                                    <?php echo $form->textField($model,'iva',array('class'=>'form-control', 'id'=>'iva','maxlength'=>150, 'placeholder'=>'IVA a aplicar')); ?>
+                                    <?php echo $form->textField($model,'iva',array('class'=>'form-control', 'id'=>'iva','maxlength'=>150, 'value'=>Yii::app()->params['IVA']['porcentaje'],'disabled'=>'disabled')); ?>
                                     <div style="position: absolute; right: 10px; top: 6px">%</div>
                                 </div>
                                 
