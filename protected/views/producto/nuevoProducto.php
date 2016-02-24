@@ -50,7 +50,7 @@ $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
     ),
  
 ));?>
-<h1 class="margin_top margin_bottom">Nuevo Producto</h1>
+<h1 class="margin_top margin_bottom">Carga de Productos</h1>
   <ul id="myTabs" class="nav nav-tabs" role="tablist">
               <li >  <a  id="massive-tab"  aria-controls="home"  href="../masterdata/upload"  >CARGA MASIVA </a></li>
                 <li  class="active"><a >CARGA INDIVIDUAL</a></li>

@@ -11,6 +11,8 @@ $this->breadcrumbs=array(
 <div class="container">
 	<h1>Administrar Usuarios</h1>
 	<hr/>
+	
+	
 
 		<?php if(Yii::app()->user->hasFlash('success')){?>
 		    <div class="alert in alert-block fade alert-success text_align_center">
@@ -42,6 +44,7 @@ $this->breadcrumbs=array(
 			
 	    </div>
 	    <hr/>
+	    
 	    
 	    <?php
 	$template = '{summary}

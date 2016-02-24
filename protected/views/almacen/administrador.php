@@ -99,6 +99,8 @@ $this->breadcrumbs=array(
 			});",CClientScript::POS_READY
 		);	
 		?>
+		
+		<div class="margin_top_small">
 			<?php
 		$template = '{summary}
 	    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-hover table-striped">
@@ -134,4 +136,5 @@ $this->breadcrumbs=array(
 		));  
 		
 		?>
+		</div>
 

@@ -100,7 +100,7 @@ $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
                             <col width="50%"> 
                             <tr>
                                 <td class="title">Precio en tienda</td>
-                                <td class="throughlined"><?php echo $inventario->formatPrecio;?></td>
+                                <td><?php echo $inventario->formatPrecio;?></td>
                             </tr>
                             <tr>  
                                 
@@ -250,7 +250,7 @@ $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
                             	<?php
                             	if(Yii::app()->authManager->checkAccess("comprador", Yii::app()->user->id) || Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id)): 
                   					 ?>
-                            	<div class="text-right">	<button class="btn btn-small btn-unfilled ordenarIndividual" id="<?php echo $data->id;?>"> ORDENAR</button>  </div>
+                            	<div class="text-right">	<a href="detalle?producto_id=<?php echo $data->producto_id?>&almacen_id=<?php echo $data->almacen_id;?>" class="btn btn-small btn-unfilled ordenarIndividual" id="<?php echo $data->id;?>">Ver producto</a>  </div>
                             	<?php endif; ?>                   
                         </div>
                         <?php if($key<count($otros)-1): ?>

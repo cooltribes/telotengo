@@ -19,6 +19,52 @@ $this->breadcrumbs=array(
 
 <div class="container">
 	<h1>Administrar Usuarios</h1>
+	<hr/>
+	 <div class="row-fluid clearfix stats">
+             <div class="col-md-1 stat">
+                 <span class="value"><?php echo User::model()->countByAttributes(array());?></span>
+                 <span class="legend">Totales</span>
+             </div>
+             <div class="col-md-2 stat">
+                 <span class="value"><?php echo User::model()->countByAssignment("admin");?></span>
+                 <span class="legend">Administradores</span>
+             </div>
+             <div class="col-md-2 stat">
+                 <span class="value"><?php echo User::model()->countByAssignment("vendedor");?></span>
+                 <span class="legend">Vendedores</span>
+             </div>
+             <div class="col-md-2 stat">
+                 <span class="value"><?php echo User::model()->countByAssignment("comprador");?></span>
+                 <span class="legend">Compradores</span>
+             </div>
+             <div class="col-md-2 stat">
+                 <span class="value"><?php echo User::model()->countByAssignment("compraVenta");?></span>
+                 <span class="legend">Compra-Venta</span>
+             </div>
+             <!--
+             <div class="col-md-1 stat">
+                 <span class="value">8888</span>
+                 <span class="legend">Pago confirmado</span>
+             </div>
+             <div class="col-md-1 stat">
+                 <span class="value">8888</span>
+                 <span class="legend">Pago insuficiente</span>
+             </div>
+             <div class="col-md-1 stat">
+                 <span class="value">8888</span>
+                 <span class="legend">Enviados</span>
+             </div>
+             <div class="col-md-1 stat">
+                 <span class="value">8888</span>
+                 <span class="legend">Recibidos</span>
+             </div>
+             <div class="col-md-1 stat">
+                 <span class="value">8888</span>
+                 <span class="legend">Devueltos</span>
+             </div>
+             -->
+         </div>   
+         <hr/>  
 	<div class="row-fluid clearfix margin_top margin_bottom">
         <div class="col-md-4 no_padding_left">
                 <form class="no_margin_bottom form-search row-fluid formularionuevo clearfix">
