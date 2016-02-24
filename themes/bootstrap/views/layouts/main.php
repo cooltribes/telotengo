@@ -44,16 +44,27 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
 </head>
 <body>
    
-<?php   
+<?php
+if(!isset(Yii::app()->session['seller']))
+    Yii::app()->session['seller']=false;       
 if(Yii::app()->user->isAdmin()): 
               include 'admin.php';    
         else: 
             if(!Yii::app()->user->isGuest): 
-                 if(Yii::app()->authManager->checkAccess("vendedor", Yii::app()->user->id)||Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id)):
-                    include 'start.php';
-                 else:
-                     include 'start.php';
-                 endif;
+                if(Yii::app()->authManager->checkAccess("vendedor", Yii::app()->user->id)):
+                    include 'vendedor.php';
+                endif;
+                if(Yii::app()->authManager->checkAccess("comprador", Yii::app()->user->id)):
+                    include 'comprador.php';
+                endif;
+                if(Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id)):
+                        if(Yii::app()->session['seller']):
+                            include 'compraVenta_V.php';
+                        else:
+                            include 'compraVenta_C.php';
+                        endif;
+                    
+                endif;
             else:                  
                 include 'b2b.php';
             endif;    
