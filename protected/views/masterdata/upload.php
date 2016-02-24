@@ -34,7 +34,7 @@ $('#buttonCargaMD').click(function(e) {
     
 });
 
-</script>
+</script> 
 
 
 
@@ -136,7 +136,7 @@ $('#buttonCargaMD').click(function(e) {
                                         'buttonType' => 'submit',
          
           
-                                        'label' => 'Cargar Inbound',
+                                        'label' => 'Cargar Masterdata',
                                         'loadingText'=>'Cargando ...',
                                         'htmlOptions' => array(
                                             'name' => 'cargar',

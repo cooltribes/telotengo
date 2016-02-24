@@ -13,7 +13,7 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
             
                             
                             
-                           
+                            
                             
                     <div class="col-md-6 col-sm-6 col-xs-6 no_horizontal_padding" id="searchSet">
                         <div class="row-fluid searchBar">
@@ -113,85 +113,20 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
                                                     
                                                 </div>                                
                                               </a>
+                                              
                                               <ul class="dropdown-menu right" aria-labelledby="dropdownMenu1">
-                                                  <li><a href="<?php echo Yii::app()->baseUrl.'/user/profile/index';?>">Mi perfil</a></li>
+                                                  <li><a href="<?php echo Yii::app()->baseUrl.'/user/profile/index';?>">Mi Perfil</a></li>
                                                   <li><a href="<?php echo Yii::app()->baseUrl; ?>/user/admin/invitarUsuario";>Invitaciones</a></li>
+                                                  <li><a href="<?php echo Yii::app()->baseUrl; ?>/almacen/administrador";>Ver Almacenes</a></li>
+                                                  <li><a href="<?php echo Yii::app()->baseUrl; ?>/site/changeMode";>Vender</a></li>
                                                   <li class="separator"></li>
-                                                
-                                            <?php
-                                                if(Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id)): ?>
-                                                        <li class="title">COMPRAR</li>
-                                                        <li><a href="<?php echo Yii::app()->baseUrl.'/tienda/index';?>">Ir a la tienda</a></li>
-                                                        <li class="separator"></li>
-                                                         <li class="title">VENDER</li>
-                                                         <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/productoInventario";>Ver Inventario</a></li>
-                                                         <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/seleccion";>Cargar Inventario</a></li>
-                                                         <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/nuevoProducto";>Agregar un producto</a></li>
-                                                         <li><a href="<?php echo Yii::app()->baseUrl; ?>/almacen/administrador";>Ver Almacenes</a></li>
-                                                         <li class="separator"></li>
-                                                         <li><a href="<?php echo Yii::app()->baseUrl; ?>/inbound/administrador";>Inbound</a></li>
-                                                         <li><a href="<?php echo Yii::app()->baseUrl; ?>/masterdata/misMasterdata";>Masterdata</a></li>
-
-                                               
-                                                    <!--<li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/cargarInbound";>Cargar Inventario Masivo</a></li> -->          
-                                                <?php endif; 
-                                                
-                                                    if(Yii::app()->authManager->checkAccess("comprador", Yii::app()->user->id)):?>
-                                                          <li><a href="<?php echo Yii::app()->baseUrl.'/tienda/index';?>">Ir a la tienda</a></li>                                                
-                                                <?php endif; 
-                                                
-                                                    if(Yii::app()->authManager->checkAccess("vendedor", Yii::app()->user->id)):?>
-                                                    
-                                                    <li><a href="<?php echo Yii::app()->baseUrl; ?>/almacen/administrador";>Ver Almacenes</a></li>
-                                                     <li class="separator"></li>
-                                                    <li><a href="<?php echo Yii::app()->baseUrl.'/tienda/index';?>">Ir a la tienda</a></li>   
-                                                                                                        
-                                                <?php endif; ?>
-                                               
-                                               
-                                               
-                                                <li class="separator"></li>
-                                                <li><a href="<?php echo Yii::app()->baseUrl; ?>/site/logout";>Cerrar sesión</a></li>
+                                                  <li><a href="<?php echo Yii::app()->baseUrl; ?>/site/logout";>Cerrar sesión</a></li>
                                               </ul>
+                                              
+                                                                                            
                                             </div>
                                         </div>
-                                        
-                                        
-                                        
-                                        <?php if( Yii::app()->authManager->checkAccess("vendedor", Yii::app()->user->id)): ?>
-                                             <div class="col-md-3 col-sm-3 col-xs-3 no_horizontal_padding">
-                                             
-                                                      
-                                              <div class="dropdown drophover">
-                                              <a class="form-control text-left dropdown-toggle no_padding no_border" id="inventoryButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                                <div class="row-fluid">
-                                                    
-                                                    <div class="col-md-12 col-sm-12 col-xs-12 no_horizontal_padding title">
-                                                        <span class="text" >Inventario</span>
-                                                         <span class="caret"></span>
-                                                    </div>
-                                                    
-                                                </div>                                
-                                              </a>
-                                              <ul class="dropdown-menu right" aria-labelledby="dropdownMenu2">
-                                                
-                                                <?php
-                                                if(Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id) || Yii::app()->authManager->checkAccess("vendedor", Yii::app()->user->id)): ?>
-                                                          
-                                                         <li><a href="<?php echo Yii::app()->baseUrl; ?>/masterdata/upload";>Cargar Productos</a></li>
-                                                         <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/cargarInbound";>Cargar Inventario</a></li>
-                                                   <!--      <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/seleccion";>Cargar Inventario</a></li>-->
-                                                         <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/productoInventario";>Ver Inventario</a></li>
-                                                         
-                                                <?php endif;?> 
-                                              
-                                              </ul>
-                                            </div>          
-                                                      
-                                                      
-                                                      
-                                                </div>
-                                        <?php endif; ?>
+                                      
                                         <div class="col-md-4 col-sm-4 col-xs-4 no_right_padding">
                                             <div class="dropdown drophover">
                                               <a class="form-control text-left dropdown-toggle no_padding no_border " id="orderButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -199,12 +134,12 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
                                                     <div class="col-md-3 col-md-3 col-xs-3 no_horizontal_padding icon">
                                                          <span class="glyphicon glyphicon-inbox"></span>
                                                          <span class="counter">
-                                                             <?php 
+                                                             <?php  
                                                              if($usuario){
                            
-                                                            $orders=Orden::model()->findAllBySql("select * from tbl_orden where estado=0 and almacen_id in (select id from tbl_almacen where empresas_id='".$usuario->empresa->id."') order by id desc");
+                                                          
                                                             $purchases=Orden::model()->findAllByAttributes(array('empresa_id'=>$usuario->empresa->id,'estado'=>0), array('order'=>'id desc'));
-                                                             echo count($orders)+count($purchases);
+                                                             echo count($purchases);
                                                              } else {
                                                                  $orders=array();
                                                                  $purchases=array();
@@ -219,24 +154,8 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
                                                     </div>
                                                 </div>                                
                                               </a>
-                                              <ul class="dropdown-menu right" aria-labelledby="dropdownMenu1">
-                                               <?php   if(Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id) || Yii::app()->authManager->checkAccess("Vendedor", Yii::app()->user->id)):?>
-                                                 <li class="padding_left_xsmall"><small><u><a href="<?php echo Yii::app()->createUrl('orden/misVentas');?>">VENTAS</u></small></li>   
-                                               <?php endif; ?>
-                                                  <?php foreach($orders as $key=>$order): ?> 
-                                                   <li><a href="<?php echo Yii::app()->createUrl('orden/detalleVendedor', array('id'=>$order->id))?>"><span><?php echo $order->id;?></span> <b><?php echo $order->empresa->razon_social; ?></b> (<?php echo count($order->ordenHasInventarios); ?>)</a></li>
-                                                  
-                                                  <?php  
-                                                    if($key==2)
-                                                        break;
-                                                  endforeach; ?> 
-                                                  
-                                                <li class="separator"></li>
-                                                
-                                                <?php 
-                                                  if(Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id) || Yii::app()->authManager->checkAccess("comprador", Yii::app()->user->id)):?>
-                                                      <li class="padding_left_xsmall"><small><u><a href="<?php echo Yii::app()->createUrl('orden/misCompras');?>">COMPRAS</u></small></li>       
-                                          <?php      foreach($purchases as $key=>$order): ?> 
+                                              <ul class="dropdown-menu right" aria-labelledby="dropdownMenu1"> 
+                                                <?php      foreach($purchases as $key=>$order): ?> 
                                                    <li><a href="<?php echo Yii::app()->createUrl('orden/detalle', array('id'=>$order->id))?>"><span><?php echo $order->id;?></span> <b><?php echo $order->almacen->empresas->razon_social; ?></b> (<?php echo count($order->ordenHasInventarios); ?>)</a></li>
                                                   
                                                   <?php  
@@ -244,17 +163,13 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
                                                         break;
                                                   endforeach; ?> 
                                                 <li class="separator"></li>
-                                                <?php endif; 
-                                                 if(Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id) || Yii::app()->authManager->checkAccess("comprador", Yii::app()->user->id)):?>
-                                                         <li><a href="<?php echo Yii::app()->createUrl('orden/misCompras');?>">Ver todas las ordenes</a></li>
-                                              <?php endif;
-                                              if(Yii::app()->authManager->checkAccess("vendedor", Yii::app()->user->id)):?>
-                                                    <li><a href="<?php echo Yii::app()->createUrl('orden/misVentas');?>">Ver todas las ordenes</a></li>
-                                              <?php endif; ?>
+                                                <li><a href="<?php echo Yii::app()->createUrl('orden/misCompras');?>">Ver todas las ordenes</a></li>
                                               </ul>
                                             </div>
                                         </div>
-                                       <?php if(!Yii::app()->authManager->checkAccess("vendedor", Yii::app()->user->id)): ?> 
+                                        
+                                        
+                                    
                                         <div class="col-md-3 col-sm-3 col-xs-3 no_horizontal_padding">
                                             <div class="dropdown drophover">
                                       
@@ -313,18 +228,11 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
                                              
                                             </div>
                                         </div>
-                                        <?php endif; ?>
+                                       
                                         
                                     </div>
                                 </div>
-                            
-                            
-                            
-                            
-                            
-                            
-                                           
-               
+                                               
              <!--       <div class="col-md-5 col-sm-5 col-xs-6  no_horizontal_padding" id="headLinks"></div>
                     <div class="col-md-5 col-sm-5  col-xs-6 no_horizontal_padding">
                         <div class="text-right clientService" title="(0800) 568.36.46 - SERVICIO@TELOTENGO.COM">

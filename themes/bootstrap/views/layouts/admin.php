@@ -25,9 +25,9 @@ $assetUrl=Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('applicatio
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Empresas<span class="caret"></span></a>
                 <ul class="dropdown-menu">
                            
+                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/user/admin/solicitudes">Solicitudes</a></li>     
                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/user/admin">Usuarios</a></li>
-                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/user/admin/adminInvite">Invitaciones</a></li>  
-                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/user/admin/solicitudes">Solicitudes</a></li>                                                    
+                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/user/admin/adminInvite">Invitaciones</a></li>
                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/almacen/admin">Almacenes</a> </li>
                 </ul>
               </li>
@@ -37,6 +37,7 @@ $assetUrl=Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('applicatio
                    <li><a href="<?php echo Yii::app()->baseUrl; ?>/productoPadre/admin">Productos padre</a></li> 
                     <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/admin">Variaciones</a></li>
                     <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/revisionNuevos">En Revisión</a></li>
+                    <li class="separator"></li>
                     <li><a href="<?php echo Yii::app()->baseUrl; ?>/inbound/admin">Inbound</a></li>
                     <li><a href="<?php echo Yii::app()->baseUrl; ?>/masterdata/admin">Masterdata</a></li>
                          <!--   <li><a href="<?php echo Yii::app()->baseUrl; ?>/pregunta/admin">Preguntas</a></li> -->
@@ -47,9 +48,9 @@ $assetUrl=Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('applicatio
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administración <span class="caret"></span></a>
                 <ul class="dropdown-menu">
                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/marca/admin">Marcas</a></li>
-                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/color/admin">Color</a></li>
-                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/unidad/admin">Unidad</a></li>
-                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/atributo/admin">Atributo</a></li>
+                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/color/admin">Colores</a></li>
+                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/unidad/admin">Unidades</a></li>
+                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/atributo/admin">Atributos</a></li>
                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/categoria/admin">Categorías</a></li>
                              
 
@@ -59,7 +60,7 @@ $assetUrl=Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('applicatio
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Cuenta <span class="caret"></span></a>
                 <ul class="dropdown-menu">
                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/user/profile/index">Perfil</a></li>
-                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/site/logout">Salir</a></li>                            
+                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/site/logout">Cerrar sesión</a></li>                            
 
                 </ul>
               </li>   

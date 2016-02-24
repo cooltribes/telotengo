@@ -36,12 +36,12 @@ class ProductoController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete','update','eliminar','orden','aprobar','rechazar','poraprobar','calificaciones','eliminarCalificacion','importar','inventario', 'details', 'caracteristicas','activarDesactivar', 'activarDesactivarDestacado', 'verDisponibilidad','revisionNuevos','aprobarNuevo','detalleMasterdata','setColor','setPadre'),
+				'actions'=>array('admin','delete','update','eliminar','orden','aprobar','rechazar','poraprobar','calificaciones','eliminarCalificacion','importar', 'details', 'caracteristicas','activarDesactivar', 'activarDesactivarDestacado', 'verDisponibilidad','revisionNuevos','aprobarNuevo','detalleMasterdata','setColor','setPadre'),
 				#'users'=>array('admin'),
 				'roles'=>array('admin'),
 			),
 			array('allow', // COMPRADORESVENDEDORES Y VENDEDORES
-				'actions'=>array('inventario', 'cargarInbound', 'productoInventario','nuevoProducto','ultimasCategorias','imagenes','caracteristicas','details','masterdata'),
+				'actions'=>array('inventario', 'cargarInbound', 'productoInventario','nuevoProducto','ultimasCategorias','imagenes','caracteristicas','details','masterdata','inventario'),
 				#'users'=>array('admin'),
 				'roles'=>array('vendedor', 'compraVenta'),
 			),
@@ -1292,6 +1292,7 @@ class ProductoController extends Controller
 			//$inventario->numFabricante = $_POST['Inventario']['numFabricante'];
 			$inventario->condicion = $_POST['Inventario']['condicion'];
 			$inventario->notaCondicion = $_POST['Inventario']['notaCondicion'];
+            $inventario->iva=Yii::app()->params['IVA']['porcentaje'];
 			
 			if($inventario->condicion=="nuevo")
 				$inventario->notaCondicion = "";
