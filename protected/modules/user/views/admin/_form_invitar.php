@@ -11,11 +11,18 @@
 
 	<div class="form-group">
 		<div class="col-sm-12">
-			<?php echo $form->labelEx($model,'email'); ?>
-			<?php echo $form->textField($model,'email',array('size'=>60,'maxlength'=>128, 'class'=>'form-control')); ?>
-			<?php echo $form->error($model,'email'); ?>
-			<span class="help-block error" id="esconderEmail" style="display: none;">
-		    </span>
+			<?php echo $form->labelEx($model,'email'); 
+				 echo $form->textField($model,'email',array('size'=>60,'maxlength'=>128, 'class'=>'form-control emails')); 
+				 echo $form->error($model,'email'); 
+		
+			
+			 ?>
+			<!--<span class="help-block error" id="esconderEmail" style="display: none;">
+		 </span> -->
+		    <span class="help-block text_align_left padding_right">
+		   		 <span class="help-block error" id="esconder" style="display: none;">Correo Electronico ya existe.
+		   		 </span>
+            </span>	
 		</div>
 	</div>
 
@@ -70,11 +77,12 @@
 
 	<div class="form-group">
 	
-		<div class="form-actions col-sm-offset-2 col-sm-10 no_margin">
+		<div class="form-actions col-sm-offset-2 col-sm-10 no_margin botone">
 			<?php $this->widget('bootstrap.widgets.TbButton', array(
 				'buttonType'=>'submit',
 				'type'=>'primary',
 				'label'=> 'Invitar',
+				'htmlOptions'=>array('id'=>'guardar', 'disabled'=>'disabled')
 			)); ?>
 		</div> 
 
@@ -112,7 +120,104 @@ if(!Yii::app()->user->isAdmin()) /// si no es usuario haga las validaciones, por
 	{?>
 		
 	<script>
-		
+	
+		$(document).ready(function() {
+			$('.emails').blur(function(){ 
+				var email= $('.emails').val();
+				if(email=="")
+				{
+					$('#esconder').empty();
+					$('#esconder').append("Correo electronico vacio");
+					 $('#esconder').show();	
+					 $('#guardar').attr('disabled',true);
+					 return false;
+				}
+				$.ajax({
+				         url: "<?php echo Yii::app()->createUrl('user/admin/validarEmail') ?>",
+			             type: 'POST',
+			             dataType:"json",
+				         data:{
+			                    email:email, 
+			                   },
+				        success: function (data) {
+							
+							if(data=='1')
+							{
+								  $('#esconder').hide();
+			       				  $('#guardar').attr('disabled',false);
+							}
+							else
+							{
+								$('#esconder').empty();
+								if(data=='0')
+								{
+									$('#esconder').append("Correo electronico es repetido");	
+								}
+								 if(data=='2')
+								 {
+								 	$('#esconder').append("No es un correo electronico");	
+								 }
+								 
+								 $('#guardar').attr('disabled',true);
+			        			 $('#esconder').show();
+							}
+				       	}
+				       })
+			});
+			$('.botone').click(function(){ 
+				var email= $('.emails').val();
+				var usuario=$('#User_type').val();
+				if(email=="")
+				{
+					$('#esconder').empty();
+					$('#esconder').append("Correo electronico vacio");
+					 $('#esconder').show();	
+					 $('#guardar').attr('disabled',true);
+					 return false;
+				}
+				if(usuario=="" || email=="")
+				{
+					alert('hay campos vacios');
+					return false;
+				}
+						$.ajax({
+				         url: "<?php echo Yii::app()->createUrl('user/admin/validarEmail') ?>",
+			             type: 'POST',
+			             dataType:"json",
+				         data:{
+			                    email:email, 
+			                   },
+				        success: function (data) {
+							
+							if(data=='1')
+							{
+								  $('#esconder').hide();
+			       				  $('#guardar').attr('disabled',false);
+							}
+							else
+							{
+								$('#esconder').empty();
+								if(data=='0')
+								{
+									$('#esconder').append("Correo electronico es repetido");	
+								}
+								 if(data=='2')
+								 {
+								 	$('#esconder').append("No es un correo electronico");	
+								 }
+								 
+								 $('#guardar').attr('disabled',true);
+			        			 $('#esconder').show();
+							}
+				       	}
+				       })
+				
+				
+				
+					
+			});
+			
+		});
 		
 	</script>
 <?php		

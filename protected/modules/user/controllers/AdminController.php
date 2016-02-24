@@ -30,7 +30,7 @@ class AdminController extends Controller
 				'users'=>UserModule::getAdmins(),
 			),
 			array('allow', 
-				'actions'=>array('invitarUsuario'),
+				'actions'=>array('invitarUsuario', 'validarEmail'),
 				'users'=>array('@'),
 			),
 			array('deny',  // deny all users
@@ -485,6 +485,24 @@ class AdminController extends Controller
             'dataProvider'=>$dataProvider,
         ));
     }
+
+	public function actionValidarEmail()
+	{
+		$email=$_POST['email'];
+		if(User::model()->findByAttributes(array('email'=>$email)))
+		{
+			echo "0";
+		}
+		else
+		{
+			if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+   				 echo "1";
+			}
+			else {
+				echo "2";
+			}
+		}
+	}
     
     
 }

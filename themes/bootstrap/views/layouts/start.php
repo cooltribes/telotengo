@@ -13,7 +13,7 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
             
                             
                             
-                            
+                           
                             
                     <div class="col-md-6 col-sm-6 col-xs-6 no_horizontal_padding" id="searchSet">
                         <div class="row-fluid searchBar">
