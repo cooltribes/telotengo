@@ -319,14 +319,13 @@ class OrdenController extends Controller
         }
 
         /* Para buscar desde el campo de texto */
-        if (isset($_POST['query'])){
+        if (isset($_POST['query'])||isset($_GET['query'])){
+            $query=isset($_POST['query'])?$_POST['query']:$_GET['query'];
             $bandera=true;
             unset($_SESSION['searchPedido']);
-            $_SESSION['searchPedido'] = $_POST['query'];
-            echo $model->id = $_POST['query'];
-            $dataProvider = $model->searchVentasIndividual( $_POST['query'], $empresa->id);
-        }   
-
+            $_SESSION['searchPedido'] = $query;
+            $dataProvider = $model->searchVentasIndividual( $query, $empresa->id);
+        }
         if($bandera==FALSE){
             unset($_SESSION['searchPedido']);
         }

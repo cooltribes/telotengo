@@ -85,7 +85,7 @@ class MasterdataController extends Controller
                         if(move_uploaded_file($_FILES["cargar"]["tmp_name"], $target_file)){
                             $master->path=$path;
                             if($master->save()){
-                                if(count($resumen["saved"]>0))
+                                if(count($resumen["saved"])>0)
                                     Producto::model()->updateAll(array('masterdata_id'=>$master->id),"id IN (".implode(",",$resumen["saved"]).")");
                             }                                   
                         }
@@ -113,6 +113,9 @@ class MasterdataController extends Controller
             return array("errores"=>1,"resumen"=>"Encabezados no coinciden con la plantilla","unproccesed"=>1,"saved"=>$saved);
         }
         unset($excel[1]);
+        if(count($excel)<1){
+            return array("errores"=>1,"resumen"=>"Archivo no contiene registros","unproccesed"=>1,"saved"=>$saved);
+        }
         $resumen="";
         $errores=0;        
         foreach($excel as $key=>$fila){
