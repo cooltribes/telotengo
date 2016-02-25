@@ -225,8 +225,6 @@ $assetUrl=Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('applicatio
             if($('#sellerOptions').val()=="orden"){
                 window.location.href ='<?php echo $this->createUrl('orden/misVentas')?>?query='+$('#querySeller').val();
             }
-       /*     "inventario"=>"Inventario",
-            "orden"=>"Ordenes",*/
            
         }
         
