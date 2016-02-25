@@ -305,7 +305,7 @@ class Producto extends CActiveRecord
 
 		$criteria->compare('nparte',$this->nparte);
 		$criteria->order='nombre';
-
+        $criteria->addCondition("aprobado = 1");
 		
 		return new CActiveDataProvider($this, array(
 
