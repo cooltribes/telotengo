@@ -22,7 +22,7 @@ $this->breadcrumbs=array(
 	<hr/>
 	 <div class="row-fluid clearfix stats">
              <div class="col-md-1 stat">
-                 <span class="value"><?php echo User::model()->countByAttributes(array());?></span>
+                 <span class="value"><?php echo User::model()->countByAssignment("all");?></span>
                  <span class="legend">Totales</span>
              </div>
              <div class="col-md-2 stat">
