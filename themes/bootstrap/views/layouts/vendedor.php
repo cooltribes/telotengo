@@ -19,11 +19,44 @@ $assetUrl=Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('applicatio
           
           <div id="navbar" class="navbar-collapse collapse">
           <div class="row-fluid" id="sellerMenu">
-              <div class="col-md-2"><a class="" href="<?php echo Yii::app()->getBaseUrl(true);?>"><img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/whitelogo.png" width="100%"/></a></div>
-              <div class="col-md-5"></div>
-              <div class="col-md-5 no_horizontal_padding">
+              <div class="col-md-2 col-sm-2 col-xs-2"><a class="" href="<?php echo Yii::app()->getBaseUrl(true);?>"><img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/whitelogo.png" width="100%"/></a></div>
+              <div class="col-md-5 col-sm-5 col-xs-5 no_horizontal_padding">
+                  <div class="row-fluid searchBar">
+                            <div class="col-md-3 col-sm-3 col-xs-3 no_horizontal_padding">
+                                <div class="dropdown">
+                                  <select class="btn btn-default form-control no_radius dropdown-toggle orange_border_left"  id="sellerOptions" >
+                                    <option value="" selected>Buscar en:</option>
+                                 <?php 
+                                 foreach(Funciones::sellerOptions() as $key=>$opciones)
+                                 {?>
+                                  <option value="<?php echo $key?>"><?php echo $opciones;?></option>
+                                 <?php  
+                                 }?>     
+                                  </select>
+                                  
+                                <!--  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                    <li><a href="#">Action in <span class="highlighted">Your life</span></a></li>
+                                    <li><a href="#">Another action in <span class="highlighted">Another's life</span></a></li>
+                                    <li class="separator"></li>
+                                    <li><a href="#">Something else here</a></li>
+                                    <li><a href="#">Separated link</a></li>
+                                </ul> -->
+                                </div> 
+                            </div> 
+                            <div class="col-md-7 col-sm-7 col-xs-7 no_horizontal_padding">
+                               <input class="form-control no_radius orange_border_middle" id="querySeller" placeholder:"Nombres o números de registro"/>
+                              
+                            </div>
+                            <div class="col-md-2 col-sm-2 col-xs-2 no_horizontal_padding">
+                                <?php 
+                                $usuario=User::model()->findByPk(Yii::app()->user->id);
+                                echo CHtml::submitButton('Buscar', array('id'=>'btn-sellerLayout','class'=>'btn-orange btn btn-danger orange_border')); ?>
+                            </div>
+                        </div>
+              </div>
+              <div class="col-md-5 col-sm-5 col-xs-5 no_horizontal_padding">
                   <div class="row-fluid">
-                      <div class="col-md-6">
+                      <div class="col-md-5 col-sm-5 col-xs-5 no_right_padding">
                           <div class="dropdown drophover">
                                                       <a class="form-control text-left dropdown-toggle no_padding no_border" id="userButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                                         <div class="row-fluid">
@@ -72,7 +105,11 @@ $assetUrl=Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('applicatio
                                                                                                     
                                                     </div>
                       </div>
-              <div class="col-md-3">
+                      
+              <div class="col-md-7 col-sm-7 col-xs-7 no_horizontal_padding">
+                  <div class="row-fluid">
+                      
+              <div class="col-md-6 col-sm-6 col-xs-6 no_right_padding">
                   <div class="dropdown drophover">
                                                       <a class="form-control text-left dropdown-toggle no_padding no_border" id="userButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                                         <div class="row-fluid">
@@ -102,7 +139,7 @@ $assetUrl=Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('applicatio
               
               
               </div>
-              <div class="col-md-3 col-sm-3 col-xs-3 no_right_padding">
+              <div class="col-md-6 col-sm-6 col-xs-6 no_right_padding">
                                             <div class="dropdown drophover">
                                               <a class="form-control text-left dropdown-toggle no_padding no_border " id="orderButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                                 <div class="row-fluid">
@@ -147,31 +184,11 @@ $assetUrl=Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('applicatio
                                               </ul>
                                             </div>
                                         </div>
-              
+              </div></div>
               
               
               
           </div> 
-               
-               
-               
-               
-               
-            
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
           </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->
       </nav>
@@ -194,3 +211,24 @@ $assetUrl=Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('applicatio
         <?php echo $content; ?>
     </div>
 </div>
+
+<script>
+    $('#btn-sellerLayout').click(function(e){
+        e.preventDefault();
+        if($('#querySeller').val().replace(" ","").length>0&&$('')&&$('#sellerOptions').val()!=""){
+            if($('#sellerOptions').val()=="producto"){
+                window.location.href ='<?php echo $this->createUrl('producto/seleccion')?>?query='+$('#querySeller').val();
+            }
+            if($('#sellerOptions').val()=="inventario"){
+                window.location.href ='<?php echo $this->createUrl('producto/productoInventario')?>?query='+$('#querySeller').val();
+            }
+            if($('#sellerOptions').val()=="orden"){
+                window.location.href ='<?php echo $this->createUrl('orden/misVentas')?>?query='+$('#querySeller').val();
+            }
+       /*     "inventario"=>"Inventario",
+            "orden"=>"Ordenes",*/
+           
+        }
+        
+    });
+</script>

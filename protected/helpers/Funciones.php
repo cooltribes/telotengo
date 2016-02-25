@@ -97,6 +97,13 @@ class Funciones {
             else
                 return "";
     }
+     public static function sellerOptions(){
+        return array(
+            "producto"=>"Productos",
+            "inventario"=>"Inventario",
+            "orden"=>"Ordenes",
+        );
+    }
     
  
     

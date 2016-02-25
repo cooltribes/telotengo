@@ -61,7 +61,7 @@ class ProductoController extends Controller
 			'model'=>$this->loadModel($id),
 		));
 	}
-	
+	 
 	// seleccion entre crear o buscar
 	public function actionSeleccion() 
 	{
@@ -1491,13 +1491,15 @@ class ProductoController extends Controller
 		}
 
 		/* Para buscar desde el campo de texto */
-		if (isset($_POST['query'])){
+		if (isset($_POST['query'])||isset($_GET['query'])){
 			$bandera=true;
+             $query=isset($_POST['query'])?$_POST['query']:$_GET['query'];  
 			unset($_SESSION['searchBox']);
-			$_SESSION['searchBox'] = $_POST['query'];
-            $model->nombre = $_POST['query'];
-            $dataProvider = $model->busquedaInventario($_POST['query']);
-        }	
+			$_SESSION['searchBox'] =  $query;
+            $model->nombre =  $query;
+            $dataProvider = $model->busquedaInventario($query);
+        }
+         	
 
         if($bandera==FALSE){
 			unset($_SESSION['searchBox']);
@@ -1803,11 +1805,17 @@ class ProductoController extends Controller
 				$document->insert($data); //inserto un nuevo registro
 			}
 			//var_dump($user);
-			//var_dump($existente);
+			//var_dump($existente); 
 			//var_dump($data);
-			Yii::app()->user->setFlash('success', 'Se han cargado los datos con exito');
+			Yii::app()->user->setFlash('success', 'Se han cargado los datos con exito, el producto debe ser aprobado para visualizarlo.');
 			//$this->render('admin');
-			$this->redirect(array('admin'));
+			if(Yi::app()->user->isAdmin())
+			 $this->redirect(array('admin'));
+            else
+                $this->redirect(array('productoInventario')); 
+            
+                
+                
 		}
 		 
 
@@ -2865,187 +2873,7 @@ class ProductoController extends Controller
         $this->render('revisionNuevos',array('dataProvider'=>$productos));
     }
     
-   public function actionMasterdata(){
-         $producto = new Producto;
-         $summary=0;
-         $tags=$producto->getFileTags("all");
-         $resumen=null;
-                      
-         if(isset($_FILES["validar"])){
-            if(is_file($_FILES["validar"]["tmp_name"])){ 
-                $resumen=$this->validarMasterData(Yii::app()->yexcel->readActiveSheet($_FILES["validar"]["tmp_name"]));             
-            }
-            else{
-                $resumen=array("errores"=>1,"resumen"=>"No se seleccionó un archivo valido");
-            }
-            $summary=1; 
-         }
-         
-          
-        if(isset($_FILES["cargar"])){
-            if(is_file($_FILES["cargar"]["tmp_name"])){
-                $tempSheet=Yii::app()->yexcel->readActiveSheet($_FILES["cargar"]["tmp_name"]);
-                $resumen=$this->validarMasterData($tempSheet,true);
-                if(!$resumen["unproccesed"]){
-                    $inicial = basename($_FILES["cargar"]["name"]);        
-                    $ext = pathinfo($inicial,PATHINFO_EXTENSION);
-                    $master= new Masterdata;                    
-                    $master->filas=count($tempSheet)-1;  
-                    $master->uploaded_at=date("Y-m-d H:i:s");
-                    $master->uploaded_by=Yii::app()->user->id;
-                    $master->errors=$resumen['errores'];
-                    if($master->save()){
-                        $master->refresh();
-                        $path="/docs/xlsMasterData/".$master->id.".".$ext;
-                        $target_file = Yii::getPathOfAlias('webroot').$path;
-                        if(move_uploaded_file($_FILES["cargar"]["tmp_name"], $target_file)){
-                            $master->path=$path;
-                            if($master->save()){
-                                if(count($resumen["saved"]>0))
-                                    Producto::model()->updateAll(array('masterdata_id'=>$master->id),"id IN (".implode(",",$resumen["saved"]).")");
-                            }                                   
-                        }
-                    }
-                }
-                               
-                
-            }
-            else
-            {
-                $resumen=array("errores"=>1,"resumen"=>"No se seleccionó un archivo valido");
-            }            
-            
-            $summary=2;
-        }           
-            
-        
-         $this->render('masterdata',array("resumen"=>$resumen,"summary"=>$summary));
-    }
-    public function validarMasterData($excel,$save=false){
-        $tags=Producto::model()->getFileTags("columns");
-        #print_r($tags); echo"<br/><br/>"; print_r($excel[1]);
-        $saved=array();
-        if(!($tags===array_slice($excel[1],0,20))){
-            return array("errores"=>1,"resumen"=>"Encabezados no coinciden con la plantilla","unproccesed"=>1,"saved"=>$saved);
-        }
-        unset($excel[1]);
-        $resumen="";
-        $errores=0;        
-        foreach($excel as $key=>$fila){
-            $error=false;
-            $resumen.="Producto #".($key-1).": <br/><ul>";
-            $exists=Producto::model()->findByAttributes(array('nombre'=>$fila["E"]));
-            if($exists){
-                $resumen.='<li>Ya existe un producto con el nombre <a href="'.$this->createUrl('producto/seleccion',array('query'=>$exists->nombre)).'" class="blueLink" target="_blank"><u>'.$exists->nombre.'</u></a></li>';
-                $errores++;
-                $error=true;
-           
-            }
-            if($fila["A"]==""&&$fila["B"]==""&&$fila["C"]==""&&$fila["D"]==""){
-                $resumen.="<li>Debe presentar al menos un valor en los campos".$tags["A"].", ".$tags["B"].", ".$tags["C"]." y ".$tags["D"]." <li/>";
-                $errores++;$error=true;                
-            }
-            if($fila["F"]==""||$fila["G"]==""||$fila["E"]==""||$fila["H"]==""){
-                $resumen.="<li>Los campos ".$tags["F"].", ".$tags["G"].", ".$tags["E"]." y ".$tags["H"]." son obligatorios</li>";
-                $errores++;$error=true;
-            }
-            if(strlen($fila["J"])>250||strlen($fila["K"])>250||strlen($fila["L"])>250||strlen($fila["M"])>250){
-                $resumen.="<li>Los campos Característica deben tener máximo 250 caracteres(".strlen($fila["J"]).",".strlen($fila["K"]).",".strlen($fila["L"]).",".strlen($fila["M"]).")</li>";
-                $errores++;$error=true;
-            }
-            $resumen.="</ul>";
-            if(!$error){
-                if($save)
-                {
-                   $producto= new Producto;
-                        
-                        //$producto->sku=$fila["A"];
-                        $producto->upc=$fila["A"];
-                        $producto->ean=$fila["B"];
-                        $producto->gtin=$fila["C"];
-                        $producto->nparte=$fila["D"];
-                        if(strpos(strtoupper($fila["E"]),strtoupper($fila["F"]))==-1)
-                            $producto->nombre=$fila["F"]." | ".$fila["E"];
-                        else
-                            $producto->nombre=$fila["E"];
-                        $producto->modelo=$fila["G"];
-                        $color=Color::model()->findByAttributes(array('nombre'=>strtoupper($fila['H'])));
-                        if($color){
-                            $producto->color_id=$color->id;
-                        }
-                        else
-                            $producto->color_id=0;                             
-                        $producto->color=$fila["H"];/* LA H */
-                        $producto->descripcion=$fila["J"];
-                        $producto->caracteristicas=$fila["K"]."*-*".$fila["L"]."*-*".$fila["M"]."*-*".$fila["N"];
-                        $producto->padre_id=0;
-                        if($producto->save()){
-                            $producto->refresh();
-                            $saveMongo=false;
-                            $mongoData=array();
-                            if(strlen(str_replace(" ","",$fila["N"]))>0){
-                                $mongoData["Longitud"]=$fila["N"];
-                                $mongoData["Longitud*-*UNIDAD"]=1;
-                                $saveMongo=true;
-                            }  
-                            if(strlen(str_replace(" ","",$fila["O"]))>0){
-                                $mongoData["Ancho"]=$fila["O"];
-                                $mongoData["Ancho*-*UNIDAD"]=1;
-                                $saveMongo=true;
-                            }
-                            if(strlen(str_replace(" ","",$fila["P"]))>0){
-                                $mongoData["Altura"]=$fila["P"];
-                                $mongoData["Altura*-*UNIDAD"]=1;
-                                $saveMongo=true;
-                            }  
-                            if(strlen(str_replace(" ","",$fila["Q"]))>0){
-                                $mongoData["Peso"]=$fila["Q"];
-                                $mongoData["Peso*-*UNIDAD"]=4;
-                                $saveMongo=true;
-                            }
-    
-                            if($saveMongo)
-                                $this->saveToMongo($producto->id,$mongoData);                             
-                                                       
-                            $seo = new Seo;
-                            $seo->descripcion = $fila["S"]; 
-                            $seo->tags = $fila["T"]; 
-                            $seo->amigable = $fila["U"];
-                            if($seo->save()){
-                                $seo->refresh();
-                                $producto->id_seo=$seo->id;
-                                $producto->created_at=date("Y-m-d H:i:s");
-                                $producto->user_id=Yii::app()->user->id;
-                                if($producto->save())
-                                    $resumen.="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Guardado con éxito<br/><br/>";
-                                    array_push($saved,$producto->id);
-                            }
-                                          
-                        }else{
-                             $resumen.="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Error en guardado<br/><br/>";
-                        }
-                }else{
-                    $resumen.="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Validado con éxito<br/><br/>";
-                }
-            }
-        }
-        return array("errores"=>$errores,"resumen"=>$resumen,"unproccesed"=>0,"saved"=>$saved);   
-    }
-
-    public function actionDetalleMasterdata($id){
-        $master=Masterdata::model()->findByPk($id);
-        
-        if($master){
-            
-            $productos=Producto::model()->searchByMasterData($master->id);
-            $this->render('detalleMD',array("model"=>$master,"productos"=>$productos));
-        }
-             
-        else
-            throw new CHttpException(404,'The requested page does not exist.');
-        
-    }
-    
+  
     public function saveToMongo($id,$data){
         
         $connection = new MongoClass();
