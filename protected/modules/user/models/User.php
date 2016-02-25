@@ -629,7 +629,10 @@ class User extends CActiveRecord
            }
            
            public function countByAssignment($rol=""){
-               return Yii::app()->db->createCommand("SELECT count(itemname) from tbl_authAssignment where itemname = '".$rol."'")->queryScalar();   
+               $condition="";    
+               if($rol!="all")
+                $condition="itemname = '".$rol."' and ";                    
+               return Yii::app()->db->createCommand("SELECT count(itemname) from tbl_authAssignment WHERE ".$condition." userid IN( select id from tbl_users)")->queryScalar();   
            }
         
         

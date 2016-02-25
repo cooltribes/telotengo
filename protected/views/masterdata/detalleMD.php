@@ -165,7 +165,7 @@
            var color =$('#color'+id).val();
            if(color!=0&&color!=""){
            $.ajax({
-             url: "<?php echo Yii::app()->createUrl('producto/setColor') ?>",
+             url: "<?php echo Yii::app()->createUrl('masterdata/setColor') ?>",
              type: 'POST',
              dataType:"json",
              data:{
@@ -193,7 +193,7 @@
                         if(data.status=='1')
                         {
                               $.ajax({
-                                 url: "<?php echo Yii::app()->createUrl('producto/setPadre') ?>",
+                                 url: "<?php echo Yii::app()->createUrl('masterdata/setPadre') ?>",
                                  type: 'POST',
                                  dataType:"json",
                                  data:{
@@ -203,6 +203,7 @@
                                 success: function (data2) {
                                     
                                         $('#pa'+id).html(data2.html);
+                                        $('#pa'+id).attr("align","left");
                                     
                                     
                               } });

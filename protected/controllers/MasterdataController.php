@@ -36,7 +36,7 @@ class MasterdataController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('detalle','setPadre','admin'),
+				'actions'=>array('detalle','setPadre','admin','setColor'),
 				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -367,4 +367,26 @@ class MasterdataController extends Controller
             'dataProvider'=>$dataProvider,
         ));
     }
+public function actionSetColor()
+     {
+         $producto = Producto::model()->findByPk($_POST['id']);
+         $color = Color::model()->findByPk($_POST['color']);
+         if($color&&$producto){
+             $result=array();
+            $producto->color_id=$color->id;
+             if($producto->save()){
+                     $producto->refresh();
+                    $result['status']="ok";
+                     $result['html']=$producto->colore->nombre."<br/><small><b>Tono: </b>".$producto->color."</small>";
+             }else{
+                 $result['status']="error";
+             }
+         }else{
+                 $result['status']="error";
+             }
+         echo json_encode($result);
+        
+         
+         
+     }
 }

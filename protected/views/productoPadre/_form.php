@@ -95,7 +95,7 @@ $(document).ready(function() {
 						return false;
 					}else{
 					    if(data.status==2){
-						    window.location.href ='../producto/detalleMasterdata/'+data.masterData;
+						    window.location.href ='../masterdata/detalle/'+data.masterData;
 					    }else{
 					        window.location.href = 'admin';
 					    }
