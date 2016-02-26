@@ -5,7 +5,7 @@ $assetUrl=Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('applicatio
                                         $usuario=User::model()->findByPk(Yii::app()->user->id);
 
 ?>
-<nav class="navbar navbar-default row-fluid" id="adminNav">
+<nav class="navbar navbar-default row-fluid seller" id="adminNav">
         <div class="container-fluid col-md-8 col-md-offset-2 no_horizontal_padding">
           <!--<div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -17,10 +17,10 @@ $assetUrl=Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('applicatio
             <a class="navbar-brand" href="#">Project name</a>
           </div>-->
           
-          <div id="navbar" class="navbar-collapse collapse">
+          <div id="navbar">
           <div class="row-fluid" id="sellerMenu">
-              <div class="col-md-2 col-sm-2 col-xs-2"><a class="" href="<?php echo Yii::app()->getBaseUrl(true);?>"><img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/whitelogo.png" width="100%"/></a></div>
-              <div class="col-md-5 col-sm-5 col-xs-5 no_horizontal_padding">
+              <div class="col-md-2 col-sm-5 col-xs-5"><a class="" href="<?php echo Yii::app()->getBaseUrl(true);?>"><img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/whitelogo.png" width="100%"/></a></div>
+              <div class="col-md-5 col-sm-7 col-xs-7 no_horizontal_padding" id="search-bar">
                   <div class="row-fluid searchBar">
                             <div class="col-md-3 col-sm-3 col-xs-3 no_horizontal_padding">
                                 <div class="dropdown">
@@ -54,13 +54,13 @@ $assetUrl=Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('applicatio
                             </div>
                         </div>
               </div>
-              <div class="col-md-5 col-sm-5 col-xs-5 no_horizontal_padding">
+              <div class="col-md-5 col-sm-12 col-xs-12 no_right_padding">
                   <div class="row-fluid">
                       <div class="col-md-5 col-sm-5 col-xs-5 no_right_padding">
                           <div class="dropdown drophover">
                                                       <a class="form-control text-left dropdown-toggle no_padding no_border" id="userButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                                         <div class="row-fluid">
-                                                            <div class="col-md-3 col-sm-3 col-xs-3 no_horizontal_padding image">
+                                                            <div class="col-md-3 col-sm-3 col-xs-3 image">
                                                                 <div class="imgContainer">
                                                             
                                                                     <?php 
@@ -85,7 +85,7 @@ $assetUrl=Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('applicatio
                                                                 </div>
                                                                  
                                                             </div>
-                                                            <div class="col-md-9 col-sm-9 col-xs-9 no_horizontal_padding title">
+                                                            <div class="col-md-9 col-sm-9 col-xs-9 no_right_padding title">
                                                                  <div class="text user"><?php if(isset($empresas))echo $empresas->empresas->razon_social; else echo $usuario->empresa->razon_social?></div>
                                                                  <span class="caret user"></span>
                                                             </div>
