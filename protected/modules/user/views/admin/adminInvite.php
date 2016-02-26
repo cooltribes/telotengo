@@ -39,7 +39,7 @@ $this->breadcrumbs=array(
             
          <div class="row-fluid clearfix stats">
              <div class="col-md-1 stat">
-                 <span class="value"><?php echo User::model()->countInvited();?></span>
+                 <span class="value"><?php echo User::model()->countInvited(2)+User::model()->countInvited(3);?></span>
                  <span class="legend">Totales</span>
              </div>
              <div class="col-md-2 stat">
@@ -50,10 +50,10 @@ $this->breadcrumbs=array(
                  <span class="value"><?php echo User::model()->countInvited(3);?></span>
                  <span class="legend">Cómo miembro de empresa</span>
              </div>
-             <div class="col-md-2 stat">
+      <!--       <div class="col-md-2 stat">
                  <span class="value"><?php echo User::model()->countInvited(4);?></span>
                  <span class="legend">Por solicitud de membresía</span>
-             </div>
+         </div>-->
              <!--
              <div class="col-md-1 stat">
                  <span class="value">8888</span>

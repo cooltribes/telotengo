@@ -202,7 +202,7 @@ $user = $document->findOne($prueba); //busqueda
 			{?>
 				<div id="<?php echo "checkbox-".$i?>">
 
-				<span class="error" id="<?php echo $atributo->nombre_mongo ?>_error" style="display:none">Seleccione una o mas opciones</span> <?php
+				<span class="error" id="<?php echo $atributo->nombre_mongo ?>_error" style="display:none">Seleccione una o mas opciones<br/></span> <?php
 				
                     
 				$rango=explode(",", $atributo->rango);
@@ -247,7 +247,7 @@ $user = $document->findOne($prueba); //busqueda
  ?>
  	<div id="avanzar" class="margin_top row-fluid clearfix" >
 			
-			<button class="btn btn-orange white col-md-6 col-md-offset-2" title="Guardar" id="btnx" type="submit">Guardar</button>
+			<button class="btn btn-orange white col-md-6 col-md-offset-2 margin_bottom_large" title="Guardar" id="btnx" type="submit">Guardar</button>
 	</div>
 	
 	</form>

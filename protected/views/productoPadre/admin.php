@@ -11,14 +11,11 @@ $this->breadcrumbs=array(
 
 
     	<!-- COLUMNA PRINCIPAL DERECHA ON // OJO: esta de primera para mejorar el SEO sin embargo por CSS se ubica visualmente a la derecha -->
-		<h1 class="col-md-10">Administrar Productos Padres</h1>
-        <div class="col-md-2 margin_top_medium">
-                <?php
-         echo CHtml::link('Nuevo Producto Padre', Yii::app()->baseUrl."/producto/clasificar", array('class'=>'btn form-control btn-success', 'role'=>'button'));
-         echo CHtml::link('Crear Variacion', Yii::app()->baseUrl."/producto/create", array('class'=>'btn form-control btn-warning margin_top', 'role'=>'button'));
-		        ?>
-		        <br> 
-        </div>
+		<div class="row-fluid">
+		<div class="col-md-9 margin_top "><h1>Administrar Productos Padres</h1></div>
+	
+        
+         </div>
 
 		<hr/>  
 
@@ -33,15 +30,32 @@ $this->breadcrumbs=array(
 		    </div>
 		<?php } ?>
 
-		    <div class="row margin_top margin_bottom ">
-	         <form class="no_margin_bottom form-search row-fluid">
-                 <div class="col-md-3"> <!-- col-md-offset-8 no_padding_right">-->
-                     <input class="form-control no_radius_right" id="query" name="query" type="text" placeholder="Escribe tu criterio de búsqueda">                   
+		    <div class="row-fluid margin_top margin_bottom_small ">
+	          <div class="margin_top col-md-12 no_horizontal_padding">
+                 <div>Buscar</div>
+
+
+             <form class="margin_bottom form-search row-fluid">
+                 <div class="col-md-3 no_horizontal_padding">
+                    <input class="form-control no_radius_right" id="query" name="query" type="text" placeholder="Criterio de búsqueda">              
                  </div>
                  <div class="col-md-1 no_padding_left">
-                     <a href="#" class="btn form-control btn-sigmablue no_radius_left" id="btn_search_event">Buscar</a>
-                 </div>   
+                     <a href="#" class="btn form-control btn-darkgray white" id="btn_search_event">Buscar</a>
+                 </div>
+                 
+                 <div class="col-md-3 col-md-offset-3 "> 
+                <?php
+                    echo CHtml::link('Crear Producto Padre', Yii::app()->baseUrl."/producto/clasificar", array('class'=>'btn form-control btn-orange orange_border white', 'role'=>'button')); ?>
+                </div>
+                
+                <div class="col-md-2"> 
+              <?php      echo CHtml::link('Crear Variacion', Yii::app()->baseUrl."/producto/create", array('class'=>'btn form-control btn-darkgray white', 'role'=>'button'));
+                ?>
+                 </div>
+                 
+                    
              </form>
+            </div> 
 			
 	    </div>
 	    
