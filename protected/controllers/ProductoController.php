@@ -1809,7 +1809,7 @@ class ProductoController extends Controller
 			//var_dump($data);
 			Yii::app()->user->setFlash('success', 'Se han cargado los datos con exito, el producto debe ser aprobado para visualizarlo.');
 			//$this->render('admin');
-			if(Yi::app()->user->isAdmin())
+			if(Yii::app()->user->isAdmin())
 			 $this->redirect(array('admin'));
             else
                 $this->redirect(array('productoInventario')); 
@@ -2809,7 +2809,6 @@ class ProductoController extends Controller
             $producto=new Producto;
             $producto->nombre=$_POST['padre_name'];
             $producto->fabricante=$_POST['Producto']['fabricante'];
-            $producto->fabricante=$_POST['Producto']['modelo'];
             $producto->annoFabricacion=$_POST['Producto']['annoFabricacion'];
             $producto->upc=$_POST['Producto']['upc'];
             $producto->ean=$_POST['Producto']['ean'];

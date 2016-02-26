@@ -9,13 +9,13 @@
 		<h1 class="col-md-10">Administrar Variaciones de los Productos</h1>
         <div class="col-md-2 margin_top_medium">
                 <?php
-         echo CHtml::link('Crear Producto', $this->createUrl('create'), array('class'=>'btn form-control btn-success', 'role'=>'button'));
+         echo CHtml::link('Crear Producto', $this->createUrl('create'), array('class'=>'btn form-control btn-orange orange_border white', 'role'=>'button'));
                 ?>
         </div>
     </div>
     
     <div class="row-fluid">
-            <hr class="no_margin_top"/>
+            <hr/>
 	
 		<div>
 
@@ -31,15 +31,25 @@
 			<?php } ?>
 
 		<div class="row-fluid margin_top">
-	         <form class="no_margin_bottom form-search row-fluid">
-                         <div class="col-md-3 col-md-offset-8 no_padding_right">
-                             <input class="form-control no_radius_right" id="query" name="query" type="text" placeholder="Escribe tu criterio de búsqueda">                   
-                         </div>
-                         <div class="col-md-1 no_padding_left">
-                             <a href="#" class="btn form-control btn-sigmablue no_radius_left" id="btn_search_event">Buscar</a>
-                         </div>
-                                
-             </form>	       
+	       
+             
+             
+            <div class="margin_top col-md-12 no_horizontal_padding">
+                 <div>Buscar</div>
+
+
+             <form class="margin_bottom form-search row-fluid">
+                 <div class="col-md-3 no_horizontal_padding">
+                    <input class="form-control no_radius_right" id="query" name="query" type="text" placeholder="Criterio de búsqueda">              
+                 </div>
+                 <div class="col-md-1 no_padding_left">
+                     <a href="#" class="btn form-control btn-darkgray white" id="btn_search_event">Buscar</a>
+                 </div>   
+             </form>
+            </div> 
+             
+             
+             	       
 
 		<?php
 		Yii::app()->clientScript->registerScript('query1',

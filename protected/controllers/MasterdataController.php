@@ -163,8 +163,8 @@ class MasterdataController extends Controller
                         else
                             $producto->color_id=0;                             
                         $producto->color=$fila["H"];/* LA H */
-                        $producto->descripcion=$fila["J"];
-                        $producto->caracteristicas=$fila["K"]."*-*".$fila["L"]."*-*".$fila["M"]."*-*".$fila["N"];
+                        $producto->descripcion=$fila["I"];
+                        $producto->caracteristicas=$fila["J"].$fila["K"]."*-*".$fila["L"]."*-*".$fila["M"]."*-*";
                         $producto->padre_id=0;
                         if($producto->save()){
                             $producto->refresh();
@@ -195,9 +195,9 @@ class MasterdataController extends Controller
                                 $this->saveToMongo($producto->id,$mongoData);                             
                                                        
                             $seo = new Seo;
-                            $seo->descripcion = $fila["S"]; 
-                            $seo->tags = $fila["T"]; 
-                            $seo->amigable = $fila["U"];
+                            $seo->descripcion = $fila["R"]; 
+                            $seo->tags = $fila["S"]; 
+                            $seo->amigable = $fila["T"];
                             if($seo->save()){
                                 $seo->refresh();
                                 $producto->id_seo=$seo->id;
