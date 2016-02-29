@@ -164,7 +164,7 @@ class MasterdataController extends Controller
                             $producto->color_id=0;                             
                         $producto->color=$fila["H"];/* LA H */
                         $producto->descripcion=$fila["I"];
-                        $producto->caracteristicas=$fila["J"].$fila["K"]."*-*".$fila["L"]."*-*".$fila["M"]."*-*";
+                        $producto->caracteristicas=implode("*-*",array($fila["J"],$fila["K"],$fila["L"],$fila["M"]));
                         $producto->padre_id=0;
                         if($producto->save()){
                             $producto->refresh();
