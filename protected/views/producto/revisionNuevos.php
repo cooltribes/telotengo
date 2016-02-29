@@ -7,18 +7,10 @@
         );
     ?>
 
-        <h1 class="col-md-10">Productos creados por usuarios</h1>
-        <div class="col-md-2 margin_top_medium">
-                <?php
-        # echo CHtml::link('Crear Producto', $this->createUrl('create'), array('class'=>'btn form-control btn-orange white', 'role'=>'button'));
-                ?>
-        </div>
- 
+        <h1>Productos creados por usuarios</h1>
+        <hr/>
     
- 
-            <hr class="col-md-12 no_margin_top"/>
-    
-        <div>
+        <div class="col-md-12">
 
             <?php if(Yii::app()->user->hasFlash('success')){?>
                 <div class="alert in alert-block fade alert-success text_align_center">
@@ -30,7 +22,7 @@
                     <?php echo Yii::app()->user->getFlash('error'); ?>
                 </div>
             <?php } ?>
-
+         </div>
         <form class="margin_bottom margin_top form-search no_horizontal_padding row-fluid clearfix">
                          <div class="col-md-3 no_horizontal_padding">
                              <input class="form-control no_radius" id="query" name="query" type="text" placeholder="Nombre del Producto">                   
@@ -139,7 +131,7 @@
         
         ?>
         </div>
-    </div>
+
    <script>
 
     function desactivarActivar(id)

@@ -1809,8 +1809,16 @@ class ProductoController extends Controller
 			//var_dump($data);
 			Yii::app()->user->setFlash('success', 'Se han cargado los datos con exito, el producto debe ser aprobado para visualizarlo.');
 			//$this->render('admin');
-			if(Yii::app()->user->isAdmin())
-			 $this->redirect(array('admin'));
+			if(Yii::app()->user->isAdmin()){
+			    $producto=Producto::model()->findByPk($id);
+                if($producto){
+                    if($producto->aprobado==0)
+                        $this->redirect(array('revisionNuevos'));
+                        
+                }
+                $this->redirect(array('admin'));
+			}
+			 
             else
                 $this->redirect(array('productoInventario')); 
             
