@@ -11,6 +11,7 @@ $this->breadcrumbs=array(
 
 		
     	<!-- COLUMNA PRINCIPAL DERECHA ON // OJO: esta de primera para mejorar el SEO sin embargo por CSS se ubica visualmente a la derecha -->
+		<div class="row-fluid">
 		<h1 class="col-md-10 no_padding_left">Administrar Almacenes de la Empresa <?php echo $empresa->razon_social?></h1>
         <div class="col-md-2 margin_top_medium text-right no_padding_right">
                 <?php
@@ -99,10 +100,11 @@ $this->breadcrumbs=array(
 			});",CClientScript::POS_READY
 		);	
 		?>
-		
+		</div>
 		<div class="margin_top_small">
 			<?php
-		$template = '{summary}
+		$template = '
+		<div>{summary}</div>
 	    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-hover table-striped">
 	        <thead>
 	        <tr>
