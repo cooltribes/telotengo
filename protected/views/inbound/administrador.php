@@ -14,7 +14,7 @@ $this->breadcrumbs=array(
 		<h1 class="col-md-10 no_padding_left">Administrador de Inbound</h1>
         <div class="col-md-2 margin_top_medium text-right no_padding_right">
                 <?php
-       # echo CHtml::link('<span class="glyphicon glyphicon-plus"></span> Crear almacen', Yii::app()->baseUrl."/almacen/create", array('class'=>'btn btn-orange white', 'role'=>'button'));
+        echo CHtml::link('<span class="glyphicon glyphicon-plus"></span> Subir Inbound', Yii::app()->baseUrl."/producto/cargarInbound", array('class'=>'btn btn-orange white', 'role'=>'button'));
                 ?>
         </div>
 
