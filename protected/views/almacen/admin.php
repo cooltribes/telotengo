@@ -30,13 +30,7 @@ $this->breadcrumbs=array(
 		        <?php echo Yii::app()->user->getFlash('error'); ?>
 		    </div>
 		<?php } ?>
-
-		    <div class="row margin_top margin_bottom ">Buscar</div>
-
-
-		        
-		        
-		        
+     
 	         <form class="no_margin_bottom form-search row-fluid">
                  <div class="col-md-3 col-md-offset-8 no_padding_right">
                      <input class="form-control no_radius_right" id="query" name="query" type="text" placeholder="Escribe tu criterio de búsqueda">                   

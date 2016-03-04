@@ -303,6 +303,11 @@ const SECTOR_EDUCACION = 16;
 				'51 a 100' => '51 a 100',
 				'Más de 100' => 'Más de 100', 
 			),
+			'TipoContribuyente' => array(
+				'0' => 'Contribuyente Ordinario',
+				'1' => 'Contribuyente Especial',
+				'2' => 'Contribuyente Formal',
+			),
 		);
 		if (isset($code))
 			return isset($_items[$type][$code]) ? $_items[$type][$code] : false;

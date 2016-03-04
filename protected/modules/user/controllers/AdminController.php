@@ -26,7 +26,7 @@ class AdminController extends Controller
 		return array(
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array('admin','addSaldo','delete','create','update','view','cargarSaldo','reclamos','eliminarReclamo','adminInvite',
-								'eliminarComentario','cargaSaldo', 'solicitudes'),
+								'eliminarComentario','cargaSaldo', 'solicitudes', 'detalle'),
 				'users'=>UserModule::getAdmins(),
 			),
 			array('allow', 
@@ -419,6 +419,24 @@ class AdminController extends Controller
        
     }
 
+    public function actionDetalle($id)
+    {
+    	if($id)
+    	{
+			$model = User::model()->findByPk($id);
+			$profile = $model->profile;
+			$empresas=Empresas::model()->findByPk((EmpresasHasUsers::model()->findByAttributes(array('users_id'=>$model->id))->empresas_id));
+			$provincia=Ciudad::model()->findByPk($empresas->ciudad)->provincia_id;
+			$this->render('detalle',array(
+			'model'=>$model,
+			'profile'=>$profile,
+			'empresas'=>$empresas,
+			'provincia'=>$provincia,
+		));
+		}
+
+    }
+
 	public function actionSolicitudes()
 	{
 		$model = new User();
@@ -437,8 +455,8 @@ class AdminController extends Controller
 			$bandera=true;
 			unset($_SESSION['searchBox']);
 			$_SESSION['searchBox'] = $_POST['query'];
-            $model->email = $_POST["query"];
-            $dataProvider = $model->search();
+            //$model->email = $_POST["query"];
+            $dataProvider = $model->buscarDesactivo($_POST["query"]);
         }	
 
         if($bandera==FALSE){
