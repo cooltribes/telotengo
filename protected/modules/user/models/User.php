@@ -221,14 +221,14 @@ class User extends CActiveRecord
         ));
     }
 
-	   public function buscarDesactivo()
+	   public function buscarDesactivo($query=NULL)
     {
         // Warning: Please modify the following code to remove attributes that
         // should not be searched.
 
         $criteria=new CDbCriteria;
         
-        $criteria->compare('id',$this->id);
+       /* $criteria->compare('id',$this->id);
         $criteria->compare('username',$this->username,true);
         $criteria->compare('password',$this->password);
         $criteria->compare('email',$this->email,true);
@@ -247,7 +247,51 @@ class User extends CActiveRecord
 		$criteria->compare ('superuser',0, true);
 		#$criteria->addCondition('type <> 3');
 		$criteria->order = "id DESC";
-		//$criteria->addInCondition('type', array ('1','2', '4'));
+		//$criteria->addInCondition('type', array ('1','2', '4'));*/
+
+		$criteria->addCondition("pendiente = '1'",'AND');
+		$criteria->addCondition("superuser = '0'",'AND');
+		$condicion=
+		$var="";
+		if(isset($query))
+		{	
+			$var=explode(" ", $query);
+			if(isset($var[1]))
+			{
+				$sql="id in (select user_id from tbl_profiles 
+				where first_name like '%".$var[0]."%' and last_name like '%".$var[1]."%'
+				)";
+				/*$criteria->addCondition("id in (select user_id from tbl_profiles 
+				where first_name like '%".$var[0]."%' and last_name like '%".$var[1]."%'
+				)",'AND');	*/
+			}
+			else
+			{
+				$sql="id in (select user_id from tbl_profiles 
+				where first_name like '%".$query."%' or last_name like '%".$query."%'
+				)";
+				/*$criteria->addCondition("id in (select user_id from tbl_profiles 
+				where first_name like '%".$query."%' or last_name like '%".$query."%'
+				)",'AND');	*/
+			}
+		}
+		else
+		{
+			$sql="id in (select user_id from tbl_profiles 
+				where first_name like '%".$query."%' or last_name like '%".$query."%'
+				)";
+			/*$criteria->addCondition("id in (select user_id from tbl_profiles 
+			where first_name like '%".$query."%' or last_name like '%".$query."%'
+			)",'AND');	*/
+		}
+
+		$sql2="id in (select users_id from tbl_empresas_has_tbl_users where empresas_id in 
+			(select id from tbl_empresas where razon_social like '%".$query."%'))";
+		
+		$sql=$sql." or ".$sql2;
+		$criteria->addCondition($sql,'AND');	
+
+		$criteria->order = "id DESC";
 
         return new CActiveDataProvider(get_class($this), array(
             'criteria'=>$criteria,

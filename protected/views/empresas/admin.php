@@ -20,37 +20,86 @@ $this->breadcrumbs=array(
 		    </div>
 		<?php } ?>
 
-	    <div class="row margin_top margin_bottom ">
-	        <div class="span4">
-	            <form class="no_margin_bottom form-search">
-	            	<div class="input-prepend"> <span class="add-on"><i class="icon-search"></i></span>
-	            		<input class="span3" id="query" name="query" type="text" placeholder="Buscar">
-	                	<a href="#" class="btn" id="btn_search_event">Buscar</a>
-	           		</div>         
-           		</form>
-	        </div>
-	        
-	        <div class="pull-right">
-	        <?php
-	        	echo CHtml::link('Crear Empresa', $this->createUrl('create'), array('class'=>'btn btn-success', 'role'=>'button'));
-	        ?>
-			</div>
-			
-	    </div>
+            <div class="margin_top col-md-12 no_horizontal_padding">
+
+             <form class="margin_bottom form-search row-fluid">
+                 <div class="col-md-3 col-md-offset-8 no_padding_right">
+                    <input class="form-control no_radius_right" id="query" name="query" type="text" placeholder="Criterio de búsqueda">              
+                 </div>
+                 <div class="col-md-1 no_padding_left">
+                     <a href="#" class="btn form-control btn-darkgray white" id="btn_search_event">Buscar</a>
+                 </div>   
+             </form>
+            </div> 
 	    <hr/>
+
+
+
+		<?php
+		Yii::app()->clientScript->registerScript('query1',
+			"var ajaxUpdateTimeout;
+			var ajaxRequest;
+			$('#btn_search_event').click(function(){
+				ajaxRequest = $('#query').serialize();
+				clearTimeout(ajaxUpdateTimeout);
+				
+				ajaxUpdateTimeout = setTimeout(function () {
+					$.fn.yiiListView.update(
+					'list-auth-categorias',
+					{
+					type: 'POST',	
+					url: '" . CController::createUrl('empresas/admin') . "',
+					data: ajaxRequest}
+					)
+					},
+			300);
+			return false;
+			});",CClientScript::POS_READY
+		);
+		
+		// Codigo para actualizar el list view cuando presionen ENTER
+		
+		Yii::app()->clientScript->registerScript('query',
+			"var ajaxUpdateTimeout;
+			var ajaxRequest; 
+			
+			$(document).keypress(function(e) {
+			    if(e.which == 13) {
+					ajaxRequest = $('#query').serialize();
+					clearTimeout(ajaxUpdateTimeout);
+					
+					ajaxUpdateTimeout = setTimeout(function () {
+						$.fn.yiiListView.update(
+						'list-auth-categorias',
+						{
+						type: 'POST',	
+						url: '" . CController::createUrl('empresas/admin') . "',
+						data: ajaxRequest}
+						
+						)
+						},
+				
+				300);
+				return false;
+			    }
+			});",CClientScript::POS_READY
+		);	
+		?>
 	    
 	    <?php
 	$template = '{summary}
 	    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-bordered table-hover table-striped">
+	       <thead>
 	        <tr>
-	        	<th scope="col">ID</th>
+	            <th  width="30%" scope="col">Razón Social</th>
 	            <th scope="col">RIF</th>
-	            <th scope="col">Razón Social</th>
-	            <th scope="col">Estado</th>
-	            <th scope="col">Tipo</th>
-	            <th scope="col">Representante</th>
+	            <th  width="35%" scope="col">Direccion fiscal</th>
+	            <th colspan="2" rowspan="2" scope="col" width="20%">Ubicacion</th>
+	            <th scope="col">Telefono</th>
+	            <th scope="col">Tipo de Empresa</th>
 	            <th scope="col">Acción</th>
 	        </tr>
+	        <thead>
 	    {items}
 	    </table>
 	    {pager} 
@@ -58,7 +107,7 @@ $this->breadcrumbs=array(
 
 			$this->widget('zii.widgets.CListView', array(
 		    'id'=>'list-auth-categorias',
-		    'dataProvider'=>$model->search(),
+		    'dataProvider'=>$dataProvider,
 		    'itemView'=>'_view',
 		    'template'=>$template,
 		    'enableSorting'=>'true',

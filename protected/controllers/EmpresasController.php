@@ -35,7 +35,7 @@ class EmpresasController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete','vendedoras','compradoras','solicitudes','detalles','aprobar','rechazar','suspender','update','calificaciones','eliminarCalificacion'),
+				'actions'=>array('admin','delete','vendedoras','compradoras','solicitudes','detalles','aprobar','rechazar','suspender','update','calificaciones','eliminarCalificacion', 'verEmpresa'),
 				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -351,20 +351,18 @@ class EmpresasController extends Controller
 	public function actionUpdate($id)
 	{	
 		$model=$this->loadModel($id);
-		$connected_user = User::model()->findByPk(Yii::app()->user->id);
-		$empresa_users = EmpresasHasUsers::model()->findByAttributes(array('empresas_id'=>$id));		
-		$user = User::model()->findByPk($empresa_users->users_id);
-		
-		$partes = explode("-", $model->rif);
-		$model->prefijo = $partes[0]; 
-		$model->numero = $partes[1]; 
+		#$empresa_users = EmpresasHasUsers::model()->findByAttributes(array('empresas_id'=>$id));		
 			
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
 		if(isset($_POST['Empresas']))
 		{
+			if($_POST['Empresas']['ciudad']=="")
+				$_POST['Empresas']['ciudad']=$_POST['Empresas']['ciudad2'];
+			$model->zip=$_POST['Empresas']['zip'];
 			$model->attributes=$_POST['Empresas'];
+			#$model->rol=$_POST['Empresas']['tipoEmpresa'];
 			if($model->save())
 			{
 				Yii::app()->user->setFlash('success', 'Datos modificados correctamente.');
@@ -379,9 +377,6 @@ class EmpresasController extends Controller
 
 		$this->render('update',array(
 			'model'=>$model,
-			'empresa_user'=>$empresa_users,
-			'user'=>$user,
-			'connected_user'=>$connected_user,
 		));
 	}
 
@@ -648,13 +643,38 @@ class EmpresasController extends Controller
 	 */
 	public function actionAdmin()
 	{
-		$model=new Empresas('search');
+		
+		$model = new Empresas;
 		$model->unsetAttributes();  // clear any default values
+		$bandera=false;
+		$dataProvider = $model->search();
+
+		/* Para mantener la paginacion en las busquedas */
+		if(isset($_GET['ajax']) && isset($_SESSION['searchBox']) && !isset($_POST['query'])){
+			$_POST['query'] = $_SESSION['searchBox'];
+			$bandera=true;
+		}
+
+		/* Para buscar desde el campo de texto */
+		if (isset($_POST['query'])){
+			$bandera=true;
+			unset($_SESSION['searchBox']);
+			$_SESSION['searchBox'] = $_POST['query'];
+            $query = $_POST['query'];
+            echo $query;
+            $dataProvider = $model->search($query);
+        }	
+
+        if($bandera==FALSE){
+			unset($_SESSION['searchBox']);
+        }
+
 		if(isset($_GET['Empresas']))
 			$model->attributes=$_GET['Empresas'];
-	
+
 		$this->render('admin',array(
 			'model'=>$model,
+			'dataProvider' => $dataProvider,
 		));
 	}
 
@@ -702,5 +722,16 @@ class EmpresasController extends Controller
 			echo $id_uno;
 			Yii::app()->end();
              
+        }
+
+        public function actionVerEmpresa($id)
+        {
+        	$empresas=Empresas::model()->findByPk($id);
+        	$provincia_id=Ciudad::model()->findByPk($empresas->ciudad)->provincia_id;
+        	$this->render('verEmpresa',array(
+			'empresas'=>$empresas,
+			'provincia_id'=>$provincia_id,
+			));
+
         }
 }

@@ -27,7 +27,7 @@ $this->breadcrumbs=array(
 				<input class="form-control no_radius_right" id="query" name="query" type="text" placeholder="Buscar">	                 
 			</div>
 			<div class="col-md-1 no_padding_left">
-				<a href="#" class="btn form-control btn-sigmablue no_radius_left" id="btn_search_event">Buscar</a>
+				<a href="#" class="btn form-control btn-darkgray white" id="btn_search_event">Buscar</a>
 			</div>
 		</form>
 
@@ -45,7 +45,7 @@ $this->breadcrumbs=array(
 					'list-auth-categorias',
 					{
 					type: 'POST',	
-					url: '" . CController::createUrl('admin/admin') . "',
+					url: '" . CController::createUrl('admin/solicitudes') . "',
 					data: ajaxRequest}
 					)
 					},
@@ -69,7 +69,7 @@ $this->breadcrumbs=array(
 						'list-auth-categorias',
 						{
 						type: 'POST',	
-						url: '" . CController::createUrl('admin/admin') . "',
+						url: '" . CController::createUrl('admin/solicitudes') . "',
 						data: ajaxRequest}
 						
 						)
@@ -85,18 +85,18 @@ $this->breadcrumbs=array(
 	    <?php
 		$template = '{summary}
 	    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-bordered table-hover table-striped">
-	        <tr>
-	            <th colspan="2" rowspan="2" scope="col" width="25%">Usuario</th>
-	            <th scope="col">Rol</th>
-	            <th scope="col">Tipo de invitación</th>
-	            <th scope="col">¿Quien invitó?</th>
-	            <th colspan="2" rowspan="2" scope="col" width="25%">Empresa</th>
-	            <th scope="col">Acción</th>
-	        </tr>
-	        <tr>
-	        
-			
-	        </tr>
+	        <thead>
+		        <tr>
+		            <th scope="col "width="8%">Fecha</th> 
+		            <th colspan="2" rowspan="2" scope="col" width="25%">Usuario</th>
+		            <th scope="col">Rol</th>
+		            <th scope="col">Tipo de invitación</th>
+		            <th scope="col">¿Quien invitó?</th>
+		            <th colspan="2" rowspan="2" scope="col" width="25%">Empresa</th>
+		            <th scope="col">Acción</th>
+		        </tr>
+		        </tr>
+	        </thead>
 	    {items}
 	    </table>
 	    {pager} 

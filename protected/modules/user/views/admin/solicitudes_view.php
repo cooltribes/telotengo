@@ -2,25 +2,30 @@
 <?php
  echo '<tr id="'.$data->id.'">';
  $fecha_nacimiento= date("d-m-Y", strtotime($data->profile->fecha_nacimiento));
+ $fecha_creado= date("d-m-Y", strtotime($data->create_at));
  	//echo '<td>'.CHtml::image($data->getAvatar(),'Avatar',array("width"=>"70", "height"=>"70")).'';
  	?>
-	
+	<td>
+		<?php echo $fecha_creado;?>
+	</td>
 	   <td>
         <h5 class="no_margin_bottom">  <strong>Nombre</strong>:<?php echo $data->profile->first_name.' '.$data->profile->last_name; ?></h5>
         <small><strong>Cedula</strong>: <?php echo $data->profile->cedula; ?><br/>
         	<strong>Genero</strong>: <?php echo $data->buscarSexo($data->profile->sexo); ?><br/>
-        	 <span class="label label-warning">Nuevo Usuario</span>
+        	<!-- <span class="label label-warning">Nuevo Usuario</span> -->
 		</small>
       </td>
 	
 	    <td><small><?php echo $data->email; ?><br/>
         <strong>Telf.</strong>: <?php echo $data->profile->telefono; ?> <br/>
         <strong>Fecha de Nacimiento</strong>: <?php echo $fecha_nacimiento; ?> <br/>
-        <?php if($data->status == 0){ ?>
+        <?php
+         /*if($data->status == 0){ ?>
         <strong class="text-warning text-center">Cuenta Desactivada</strong>
         <?php }else if($data->status == 1){ ?>          
         <strong class="text-error text-center">Cuenta Activa</strong>
-        <?php } ?>   
+        <?php }*/
+        ?>   
      </small>
 
         </td>
@@ -74,7 +79,9 @@
 			';
 			?>
 				<!--<li><a class="pointer" id=<?php echo $data->id;?> tabindex="-1" onclick="desactivarActivar(<?php echo $data->id;?>)"><i class="glyphicon glyphicon-remove"></i> Desaprobar </a></li> --><?php 
-			?><li><a class="pointer" id=<?php echo $data->id;?>  tabindex="-1" onclick="desactivarActivar(<?php echo $data->id;?>)"><i class="glyphicon glyphicon-ok"></i> Aprobar </a></li><?php 
+			?><li><a class="pointer" id=<?php echo $data->id;?>  tabindex="-1" onclick="desactivarActivar(<?php echo $data->id;?>)"><i class="glyphicon glyphicon-ok"></i> Aprobar </a></li>
+			<li><a href="<?php echo Yii::app()->createUrl("user/admin/detalle", array("id"=>$data->id))?>" class="pointer" id=<?php echo $data->id;?>  tabindex="-1" ><i class="glyphicon glyphicon-eye-open"></i> Ver detalle </a></li>
+			<?php 
 			echo '
 		</ul>
 	    </div></td>

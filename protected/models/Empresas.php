@@ -96,7 +96,7 @@ const SECTOR_EDUCACION = 16;
 	public $prefijo="";
 	public $numero="";
 	
-	public $tipoEmpresa, $provincia, $ciudad;
+	public $tipoEmpresa, $provincia, $ciudad, $ciudad2;
 	
 	public $otraOpcion;
 	
@@ -201,7 +201,7 @@ const SECTOR_EDUCACION = 16;
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
 	 */
-	public function search(){
+	public function search($query=NULL){
 
 		$criteria=new CDbCriteria;
 
@@ -221,6 +221,8 @@ const SECTOR_EDUCACION = 16;
 		$criteria->compare('sector',$this->sector);
 		$criteria->compare('num_empleados',$this->num_empleados);
 		$criteria->compare('tipo_contribuyente',$this->forma_legal);
+		$criteria->addCondition(" id in (select empresas_id from tbl_bolsa) and razon_social like '%".$query."%'");
+
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -302,6 +304,11 @@ const SECTOR_EDUCACION = 16;
 				'21 a 50' => '21 a 50',
 				'51 a 100' => '51 a 100',
 				'Más de 100' => 'Más de 100', 
+			),
+			'TipoContribuyente' => array(
+				'0' => 'Contribuyente Ordinario',
+				'1' => 'Contribuyente Especial',
+				'2' => 'Contribuyente Formal',
 			),
 		);
 		if (isset($code))

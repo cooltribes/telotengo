@@ -128,17 +128,27 @@ class AlmacenController extends Controller
 			else
 				$this->redirect(array('admin'));
 		}
-		$empresa=Empresas::model()->findByPk((EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id))->empresas_id));
-		if($model->empresas_id==$empresa->id)
+		if(Yii::app()->user->isAdmin())
 		{
 			$this->render('update',array(
-				'model'=>$model,
-				));
+			'model'=>$model,
+			));
 		}
-		else 
+		else
 		{
-			 throw new CHttpException(403,'No esta autorizado a visualizar este contenido');
+			$empresa=Empresas::model()->findByPk((EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id))->empresas_id));
+			if($model->empresas_id==$empresa->id)
+			{
+				$this->render('update',array(
+					'model'=>$model,
+					));
+			}
+			else 
+			{
+				 throw new CHttpException(403,'No esta autorizado a visualizar este contenido');
+			}
 		}
+
 
 
 	}
