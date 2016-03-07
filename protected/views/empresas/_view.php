@@ -1,35 +1,22 @@
 <?php
 $empresa_user = EmpresasHasUsers::model()->findByAttributes(array('empresas_id'=>$data->id));
-$representante = User::model()->findByPk($empresa_user->users_id);
+
 
 
 echo"<tr>";
-	echo '<td>'.$data->id.'</td>';
-	echo "<td>".$data->rif."</td>";
 	echo '<td>'.$data->razon_social.'</td>';
+	echo "<td>".$data->rif."</td>";
+	echo '<td>'.$data->direccion.'</td>'; 
+
+	echo '<td>'.Ciudad::model()->findByPk($data->ciudad)->nombre.'</td>';
+	$provincia=Ciudad::model()->findByPk($data->ciudad)->provincia_id;
+	echo '<td>'.Provincia::model()->findByPk($provincia)->nombre .'</td>';
+	echo '<td>'.$data->telefono.'</td>';
+	echo '<td>'.$data->rol.'</td>';	
 	
-	switch ($data->estado)
-	{
-	case 1:
-		echo "<td> Solicitado </td>";
-	  	break;
-	case 2:
-		echo "<td> Aprobado </td>";
-	  	break;
-	case 3:
-		echo "<td> Rechazado </td>";
-	  	break;
-	case 4:
-		echo "<td> Suspendido </td>";
-	  	break;
-	}	
+
 	
-	if($data->tipo == 1)
-		echo "<td> Compradora </td>";
-	else if($data->tipo == 2) 
-		echo "<td> Vendedora </td>";
-	
-	echo "<td>".$representante->profile->first_name.' '.$representante->profile->last_name."</td>";
+
 		
 	echo '<td>
 
@@ -40,7 +27,7 @@ echo"<tr>";
 
 		<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
 			<li><a tabindex="-1" href="'.Yii::app()->createUrl('/empresas/update',array('id'=>$data->id)).'" ><i class="icon-cog"></i> Editar </a></li>
-			<li><a tabindex="-1" href="'.Yii::app()->createUrl('/empresas/delete',array('id'=>$data->id)).'" ><i class="icon-trash"></i> Eliminar </a></li>
+			<li><a tabindex="-1" href="'.Yii::app()->createUrl('/empresas/verEmpresa',array('id'=>$data->id)).'" ><i class="icon-trash"></i> Ver </a></li>
 		</ul>
 	    </div></td>
 	    

@@ -432,7 +432,7 @@ class AdminController extends Controller
 			'profile'=>$profile,
 			'empresas'=>$empresas,
 			'provincia'=>$provincia,
-		));
+			));
 		}
 
     }

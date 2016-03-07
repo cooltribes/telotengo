@@ -1,5 +1,4 @@
 <style>
-
     .form-group{
        height: 51px;
        margin-bottom:10px;
@@ -33,9 +32,9 @@
              <?php echo $form->textField($model,'otraOpcion', array('id'=>'otraOpcion','class'=>'form-control', 'placeholder'=>'Otro cargo o posición', 'maxlength'=>205)); ?>
             <?php echo $form->error($model,'otraOpcion'); ?>
             <span class="help-block text_align_left padding_right">
-		              <span class="help-block error" id="esconder" style="display: none;">No puede ser nulo
-		              </span>
-             </span>	
+                      <span class="help-block error" id="esconder" style="display: none;">No puede ser nulo
+                      </span>
+             </span>    
 
     </div>
     
@@ -66,7 +65,7 @@
         <div class="form-group row-fluid">
  
             <?php //echo $form->textField($model,'tipo_contribuyente', array('class'=>'form-control', 'placeholder'=>'Tipo de contribuyente', 'maxlength'=>45)); ?>
-			 <?php echo $form->dropDownList($model,'tipo_contribuyente',array('0'=>'Contribuyente Ordinario', '1'=>'Contribuyente Especial', '2'=>'Contribuyente Formal'),array('class'=>'form-control','empty'=>'Seleccione un tipo de contribuyente')); ?>
+             <?php echo $form->dropDownList($model,'tipo_contribuyente',array('0'=>'Contribuyente Ordinario', '1'=>'Contribuyente Especial', '2'=>'Contribuyente Formal'),array('class'=>'form-control','empty'=>'Seleccione un tipo de contribuyente')); ?>
             <?php echo $form->error($model,'tipo_contribuyente'); ?>            
 
         
@@ -81,7 +80,7 @@
         <?php echo $form->error($model,'telefono'); ?>
     </div>
     <div class="form-group">
-			<?php echo $form->dropDownList($model,'provincia', CHtml::listData(Provincia::model()->findAll(array('order'=>'nombre asc')),'id', 'nombre'), 
+            <?php echo $form->dropDownList($model,'provincia', CHtml::listData(Provincia::model()->findAll(array('order'=>'nombre asc')),'id', 'nombre'), 
         array(
         'class'=>'form-control',
         'empty'=>'Seleccione Estado',
@@ -127,10 +126,8 @@
     </div> 
 
 <!--    <div class="form-group">
-
             <?php echo $form->dropDownList($model,'forma_legal',Empresas::itemAlias('FormaLegal'),array('class'=>'form-control')); ?>
             <?php echo $form->error($model,'forma_legal'); ?>
-
     </div>-->
 
     
@@ -138,16 +135,12 @@
     
 
 <!--    <div class="form-group">
-
             <?php echo $form->dropDownList($model,'num_empleados',Empresas::itemAlias('NumEmpleados'),array('class'=>'form-control')); ?>
             <?php echo $form->error($model,'num_empleados'); ?>
-
 </div>-->
 
 <!--    <div class="form-group">
-
             <?php echo $form->textField($model,'mail', array('class'=>'form-control', 'placeholder'=>'', 'maxlength'=>85)); ?>
-
         <?php echo $form->error($model,'mail'); ?>
     </div>-->
     
@@ -184,96 +177,95 @@
 
 
 <script>
-
 $(document).ready(function() {
-	//$("#otraOpcion").hide();	
-	var completo="";
-	var soloLetra='';
-	var zipCompleto="";
-	var telefonoCompleto="";
-	$('.rifs').on('input', function(event) {
-		var id=$(this).attr('id');
-		//var palabra=$(this).val();
-		var palabra=$("#"+id).val();
-		var letras = " jevgJEVG"; //JVEG rifs posibles
-		var numeros = " 1234567890"; //JVEG rifs posibles
-		var primeraLetra=palabra.charAt(0);
-		if(letras.indexOf(primeraLetra)==-1)
-		{
-			alert('Iniciales de Rifs son J, V, E, G');
-			soloLetra=primeraLetra;
-			$("#"+id).val('');
-		}
-		//$(this).val().charAt(0).toUpperCase();
-		 if(palabra.substring(1))
-		 {
-		 	var largo= palabra.length;
-		 	var separar=palabra[largo-1];
-		 	//alert(separar);
-			if(numeros.indexOf(separar)==-1)
-			{
-				alert('Solo se permiten numeros');
-				$("#"+id).val(completo);
-			}	
-		 }
-	completo=$("#"+id).val();
-	});
-	
-	
-	$('#zip').on('input', function(event) {
-		var zip=$.isNumeric($("#zip").val());
-		if(zip==false)
-		{
-			alert ("introduzca numeros enteros");
-			$("#zip").val(zipCompleto);
-			return false;
-			
-		}
-		else
-		{
-			zipCompleto=$("#zip").val();
-		}
-	});
-	
-	
-	$('#telefono').on('input', function(event) {
-		var telefono=$.isNumeric($("#telefono").val());
-		if(telefono==false)
-		{
-			alert ("introduzca numeros enteros");
-			$("#telefono").val(telefonoCompleto);
-			return false;
-			
-		}
-		else
-		{
-			telefonoCompleto=$("#telefono").val();
-		}
-	});
-	
-	
-	$('.cargos').on('change', function(event) {
-		var ca=$(this).attr('id');
-		if($("#"+ca).val()=="Otro")
-		{
-			$("#otraContainer").show();
-		}	
-		else
-		{
-			$("#otraContainer").hide();
-		
-		}
-				
-		
-		
-	});
-	
-	$('.botone').on('click', function(event) {
-		if($("#Empresas_cargo").val()=="Otro" && $("#otraOpcion").val()=="")
-		{
-			$('#esconder').show();
-			return false;
-		}
-	});
-});	
+    //$("#otraOpcion").hide();  
+    var completo="";
+    var soloLetra='';
+    var zipCompleto="";
+    var telefonoCompleto="";
+    $('.rifs').on('input', function(event) {
+        var id=$(this).attr('id');
+        //var palabra=$(this).val();
+        var palabra=$("#"+id).val();
+        var letras = " jevgJEVG"; //JVEG rifs posibles
+        var numeros = " 1234567890"; //JVEG rifs posibles
+        var primeraLetra=palabra.charAt(0);
+        if(letras.indexOf(primeraLetra)==-1)
+        {
+            alert('Iniciales de Rifs son J, V, E, G');
+            soloLetra=primeraLetra;
+            $("#"+id).val('');
+        }
+        //$(this).val().charAt(0).toUpperCase();
+         if(palabra.substring(1))
+         {
+            var largo= palabra.length;
+            var separar=palabra[largo-1];
+            //alert(separar);
+            if(numeros.indexOf(separar)==-1)
+            {
+                alert('Solo se permiten numeros');
+                $("#"+id).val(completo);
+            }   
+         }
+    completo=$("#"+id).val();
+    });
+    
+    
+    $('#zip').on('input', function(event) {
+        var zip=$.isNumeric($("#zip").val());
+        if(zip==false)
+        {
+            alert ("introduzca numeros enteros");
+            $("#zip").val(zipCompleto);
+            return false;
+            
+        }
+        else
+        {
+            zipCompleto=$("#zip").val();
+        }
+    });
+    
+    
+    $('#telefono').on('input', function(event) {
+        var telefono=$.isNumeric($("#telefono").val());
+        if(telefono==false)
+        {
+            alert ("introduzca numeros enteros");
+            $("#telefono").val(telefonoCompleto);
+            return false;
+            
+        }
+        else
+        {
+            telefonoCompleto=$("#telefono").val();
+        }
+    });
+    
+    
+    $('.cargos').on('change', function(event) {
+        var ca=$(this).attr('id');
+        if($("#"+ca).val()=="Otro")
+        {
+            $("#otraContainer").show();
+        }   
+        else
+        {
+            $("#otraContainer").hide();
+        
+        }
+                
+        
+        
+    });
+    
+    $('.botone').on('click', function(event) {
+        if($("#Empresas_cargo").val()=="Otro" && $("#otraOpcion").val()=="")
+        {
+            $('#esconder').show();
+            return false;
+        }
+    });
+}); 
 </script>

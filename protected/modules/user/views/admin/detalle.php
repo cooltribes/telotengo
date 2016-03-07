@@ -178,7 +178,7 @@
 
 							<div class="form-group">
 								<div class="col-sm-12">
-									<?php echo $form->labelEx($empresas,'rol'); ?>
+									<?php echo $form->labelEx($empresas, 'tipo de Empresa'); ?>
 									<?php echo $form->textField($empresas,'rol',array('size'=>60,'maxlength'=>128, 'class'=>'form-control', 'disabled'=>'disabled')); ?>
 									<?php echo $form->error($empresas,'rol'); ?>
 								</div>
