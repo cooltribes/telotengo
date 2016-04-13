@@ -1264,10 +1264,12 @@ class ProductoController extends Controller
 		}
 
 		if(isset($_POST['Inventario'])){
+			//echo ($_POST['Inventario']['precio']*Yii::app()->params['IVA']['value'])+$_POST['Inventario']['precio'];
+			//Yii::app()->end();
 			$inventario->almacen_id = $_POST['Inventario']['almacen_id'];
 			$inventario->producto_id = $_POST['Inventario']['producto_id'];
-            $inventario->iva = $_POST['Inventario']['iva'];
-            $inventario->precio_iva = $_POST['Inventario']['precio_iva'];
+            $inventario->iva = Yii::app()->params['IVA']['porcentaje'];
+            $inventario->precio_iva = (Yii::app()->params['IVA']['value']*$_POST['Inventario']['precio'])+$_POST['Inventario']['precio'];
 			
 			if(isset(Yii::app()->session['almacen_id']))
 			{
@@ -1292,7 +1294,6 @@ class ProductoController extends Controller
 			//$inventario->numFabricante = $_POST['Inventario']['numFabricante'];
 			$inventario->condicion = $_POST['Inventario']['condicion'];
 			$inventario->notaCondicion = $_POST['Inventario']['notaCondicion'];
-            $inventario->iva=Yii::app()->params['IVA']['porcentaje'];
 			
 			if($inventario->condicion=="nuevo")
 				$inventario->notaCondicion = "";

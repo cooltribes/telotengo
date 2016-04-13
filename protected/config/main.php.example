@@ -152,7 +152,7 @@ return array(
 		// uncomment the following to use a MySQL database
 		
 		'db'=>array(
-			'connectionString' => 'mysql:host=telotengo.com;dbname=db_telotengo',
+			'connectionString' => 'mysql:host=telotengo.com;dbname=db_telotengoR',
 			'emulatePrepare' => true,
 			'username' => 'telotengo',
 			'password' => 'SFGth$$%67',

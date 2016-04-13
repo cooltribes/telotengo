@@ -85,10 +85,10 @@ $this->breadcrumbs=array(
                             </div>
                             <div class="form-group"> 
                                 <label>Precio con IVA *</label>
-                                <input type="text"  class="form-control" disabled="disabled" id ="precio_iva" value="<?php echo (is_null($model->precio)||is_null($model->iva))?"":$model->precio+($model->precio*$model->iva);?>"/>
+                                <input type="text"  class="form-control" disabled="disabled" id ="precio_iva" value="<?php echo (is_null($model->precio)||is_null($model->iva))?"":$model->precio+($model->precio*($model->iva/100));?>"/>
                                 <?php #echo $form->textField($model,'precio_iva',array('class'=>'form-control','id'=>'precio_iva','maxlength'=>150, 'disabled'=>'disabled', 'placeholder'=>'Precio para la venta (con IVA)')); ?>
                                 <?php echo $form->error($model,'precio_iva');  ?>
-                                   <?php echo $form->hiddenField($model,'precio_iva'); ?>
+                                   <?php //echo $form->hiddenField($model,'precio_iva'); ?>
                             </div>
 													
 							
