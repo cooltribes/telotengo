@@ -89,12 +89,12 @@ $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
     
    <div class="margin_top_small">
         <?php echo $form->labelEx($ppadre,'id_marca'); ?> 
-        <?php echo $form->dropDownList($ppadre,'id_marca', CHtml::listData(Marca::model()->findAll(array('order' => 'nombre')), 'id', 'nombre'),array('id'=>'id_marca','class'=>'form-control','empty'=>'Seleccione una marca')); ?>
+        <?php echo $form->dropDownList($ppadre,'id_marca', CHtml::listData(Marca::model()->findAll(array('order' => 'nombre')), 'id', 'nombre'),array('id'=>'id_marca','class'=>'form-control comunes','empty'=>'Seleccione una marca')); ?>
            <span class="help-inline error hide" id='id_marca_em' style="">Debe elegir una marca</span>
     </div>
     <div class="margin_top_small">
           <?php echo $form->labelEx($producto,'modelo'); ?> 
-          <?php echo $form->textField($producto,'modelo',array('class'=>'form-control','maxlength'=>150)); ?>
+          <?php echo $form->textField($producto,'modelo',array('class'=>'form-control comunes','maxlength'=>150)); ?>
           <span class="help-inline error hide" id="Producto_modelo_em" style="">Debe indicar un modelo para el producto</span>
      </div>
      <div class="margin_top_small">    
@@ -116,7 +116,7 @@ $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
 </div>
 <div class="margin_top_small">   
 <label>Subcategoria<span class="required">*</span></label>
-<select class="form-control" id="subcategoria" name="ProductoPadre[id_categoria]" disabled="disabled"> 
+<select class="form-control comunes" id="subcategoria" name="ProductoPadre[id_categoria]" disabled="disabled"> 
     <option value=''>Seleccione una Subcategoria</option>   
 </select>
 <span class="help-inline error hide" id="categoria_em" style="">Debe elegir una subcategoria</span>
@@ -129,12 +129,13 @@ $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
                                 <?php echo $form->error($producto,'fabricante');  ?>
                             </div>
                             
-                            <div class="margin_top_small">
-                                <label>Año de fabricacion</label>
-                                <?php echo $form->textField($producto,'annoFabricacion',array('class'=>'form-control','maxlength'=>20)); ?>
+                          <!--  <div class="margin_top_small"> -->
+                            <?php /*
+                                <label>Año de fabricacion</label>*/ ?>
+                                <?php echo $form->textField($producto,'annoFabricacion',array('id'=>'annoFabricacion','class'=>'form-control hide','maxlength'=>20)); ?>
                                 <?php echo $form->error($producto,'annoFabricacion');  ?>
-                            </div>
-
+                          <!--  </div> -->
+                         
                             
                             <div class="margin_top_small">
                                 <label>UPC</label>
@@ -194,8 +195,77 @@ $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
     
 
 <script>
+  /*  $('.comunes').change( function(){ // no entiendo porque no funciona
+      alert($(this).attr('id'));
+        if($(this).val() != '')
+        {
+          $(this).attr('id').removeClass('error');
+          $(this).attr('id'+'_em').addClass('hide');
+        }
+        else
+        {
+            $(this).attr('id').addClass('error');
+            $(this).attr('id'+'_em').removeClass('hide');
+        }
+    });*/
+
+    $('#color_id').change( function(){
+        if($(this).val() != '')
+        {
+          $('#color_id').removeClass('error');
+          $('#color_id'+'_em').addClass('hide');
+        }
+        else
+        {
+            $('#color_id').addClass('error');
+            $('#color_id'+'_em').removeClass('hide');
+        }
+    });
+
+    $('#subcategoria').change( function(){
+        if($(this).val() != '')
+        {
+          $('#subcategoria').removeClass('error');
+          $('#subcategoria'+'_em').addClass('hide');
+        }
+        else
+        {
+            $('#subcategoria').addClass('error');
+            $('#subcategoria'+'_em').removeClass('hide');
+        }
+    });
+
+     $('#Producto_modelo').change( function(){
+        if($(this).val() != '')
+        {
+          $('#Producto_modelo').removeClass('error');
+          $('#Producto_modelo'+'_em').addClass('hide');
+        }
+        else
+        {
+            $('#Producto_modelo').addClass('error');
+            $('#Producto_modelo'+'_em').removeClass('hide');
+        }
+    });
+
+     $('#id_marca').change( function(){
+        if($(this).val() != '')
+        {
+          $('#id_marca').removeClass('error');
+          $('#id_marca'+'_em').addClass('hide');
+        }
+        else
+        {
+            $('#id_marca').addClass('error');
+            $('#id_marca'+'_em').removeClass('hide');
+        }
+    });
+
+
      $('#categoria').change( function(){
         if($(this).val() != ''){
+          $('#categoria').removeClass('error');
+          $('#categoria'+'_em').addClass('hide');
             var path = location.pathname.split('/');
             $.ajax({
                   url: "<?php echo Yii::app()->createUrl('producto/ultimasCategorias'); ?>",
@@ -216,6 +286,16 @@ $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
 
     $('#padre_name').blur(function(){ 
         var nombre= $(this).val();
+        if(nombre=="")
+        {
+            $('#padre_name').addClass('error');
+            $('#padre_name'+'_em').removeClass('hide');
+        }
+        else
+        {
+            $('#padre_name').removeClass('error');
+            $('#padre_name'+'_em').addClass('hide');
+        }
         $.ajax({
                  url: "<?php echo Yii::app()->createUrl('producto/verificarPadre') ?>",
                  type: 'POST',
@@ -236,6 +316,7 @@ $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
                 }
                })
     });
+
     
     function submitForm(){
         var resp;  
@@ -249,7 +330,7 @@ $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
             if(resp[1]!='')
                 field = resp[1];
         }    
-        if(submit){
+        if(field==""){
             $('#producto-padre-form').submit();
         }            
         else{

@@ -1808,7 +1808,6 @@ class ProductoController extends Controller
 			//var_dump($user);
 			//var_dump($existente); 
 			//var_dump($data);
-			Yii::app()->user->setFlash('success', 'Se han cargado los datos con exito, el producto debe ser aprobado para visualizarlo.');
 			//$this->render('admin');
 			if(Yii::app()->user->isAdmin()){
 			    $producto=Producto::model()->findByPk($id);
@@ -1817,11 +1816,14 @@ class ProductoController extends Controller
                         $this->redirect(array('revisionNuevos'));
                         
                 }
+                Yii::app()->user->setFlash('success', 'Se ha creado el producto exitosamente.');
                 $this->redirect(array('admin'));
-			}
-			 
+			} 
             else
+            {
+                Yii::app()->user->setFlash('success', 'Se han cargado los datos con exito, el producto debe ser aprobado para visualizarlo.');
                 $this->redirect(array('productoInventario')); 
+            }
             
                 
                 
@@ -1863,6 +1865,11 @@ class ProductoController extends Controller
         $id=$_POST['id'];
         $model = Producto::model()->findByPk($id);
         $model->aprobado=1-$model->aprobado;
+		$cate=Categoria::model()->findByPk($model->padre->idCategoria->id_padre);
+		$nombreCategoria=$model->padre->idCategoria->nomenclatura;
+		$contador=$id+1;
+		$model->tlt_codigo=$model->buscarPadre($cate->id).$cate->nomenclatura.$nombreCategoria.'-'.$contador;
+
         $model->save();
         echo $model->aprobado;
         
