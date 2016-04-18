@@ -16,7 +16,9 @@
     
     <div class="row-fluid">
             <hr class="no_margin_top"/>
-	
+	     <div class="col-md-2 no_padding_left">
+         	<a class="btn btn-orange white" href="<?php echo Yii::app()->createUrl('producto/seleccion');?>">Cargar Inventario</a>
+         </div>
 		<div>
 
 			<?php if(Yii::app()->user->hasFlash('success')){?>

@@ -34,6 +34,14 @@
     }
     
 </style>
+<?php
+    $this->breadcrumbs=array(
+    'Masterdata' => array('masterdata/admin'),
+     'detalle',
+);
+?>
+
+
 <h1>Detalle de Masterdata #<?php echo $model->id;?></h1>
 <table id="resumen" class="margin_top" width="100%;">
     <thead>

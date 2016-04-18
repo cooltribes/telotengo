@@ -104,6 +104,15 @@ class Funciones {
             "orden"=>"Ordenes",
         );
     }
+
+    public static function cambiarValor($cadena)
+    {
+        if($cadena=="on")
+            return "si";
+        else
+            return $cadena;
+        
+    }
     
  
     

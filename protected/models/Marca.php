@@ -41,7 +41,8 @@ class Marca extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('nombre, descripcion', 'required'),
+			array('nombre, descripcion', 'required','on'=>'superUser'),
+			array('nombre', 'required','on'=>'normalUser'),
 			array('nombre, destacado', 'length', 'max'=>45),
 			array('descripcion, url_imagen', 'length', 'max'=>250),
 			// The following rule is used by search().

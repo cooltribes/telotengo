@@ -2820,10 +2820,32 @@ class ProductoController extends Controller
     public function actionNuevoProducto(){
         
         $padres=Categoria::model()->findAllByAttributes(array('id_padre'=>0));
-        if(isset($_POST['Producto'])){
+        if(isset($_POST['Producto']))
+        {
+
+            $marca_id="";
+            if(Marca::model()->findByAttributes(array('nombre'=>$_POST['id_marca'])))
+           {
+           		$marca=Marca::model()->findByAttributes(array('nombre'=>$_POST['id_marca']));
+           		$marca_id=$marca->id;
+           }
+           else
+           {
+           		$marca= new Marca;
+           		$marca->scenario="normalUser";
+           		$marca->nombre=$_POST['id_marca'];
+           		$marca->destacado=0;
+           		$marca->activo=0;
+           		if(!$marca->save())
+           		{
+           			var_dump($marca->getErrors());
+           			Yii::app()->end();
+           		}
+           		$marca->refresh();
+           		$marca_id=$marca->id;	
+           }	
             $padre= ProductoPadre::model()->findByPk($_POST['padre_id']);  
             $producto=new Producto;
-            $producto->nombre=$_POST['padre_name'];
             $producto->fabricante=$_POST['Producto']['fabricante'];
             $producto->annoFabricacion=$_POST['Producto']['annoFabricacion'];
             $producto->upc=$_POST['Producto']['upc'];
@@ -2841,17 +2863,24 @@ class ProductoController extends Controller
                 $padre->nombre=$_POST['padre_name'];
                 $padre->id_categoria=$_POST['ProductoPadre']['id_categoria'];
                 $padre->activo = 0;
-                $padre->save();
+                $padre->id_marca=$marca_id;
+                if(!$padre->save())
+                	var_dump($padre->getErrors());
                 $padre->refresh();
-                $producto->nombre=$_POST['padre_name']." - ".$producto->modelo=$_POST['Producto']['modelo'];                
+                $producto->nombre=$_POST['padre_name'];                
             }  
-           $producto->padre_id=$padre->id;
-            
+            $producto->padre_id=$padre->id;
+
             if($producto->save())
             {
                      $this->redirect(Yii::app()->baseUrl.'/producto/imagenes/'.$producto->id);     
 
-            }                     
+            } 
+            else
+            {
+            	print_r($producto->getErrors());
+            	Yii::app()->end();
+            }                    
 
         }
         

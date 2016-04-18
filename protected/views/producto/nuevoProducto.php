@@ -89,8 +89,25 @@ $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
     
    <div class="margin_top_small">
         <?php echo $form->labelEx($ppadre,'id_marca'); ?> 
-        <?php echo $form->dropDownList($ppadre,'id_marca', CHtml::listData(Marca::model()->findAll(array('order' => 'nombre')), 'id', 'nombre'),array('id'=>'id_marca','class'=>'form-control comunes','empty'=>'Seleccione una marca')); ?>
-           <span class="help-inline error hide" id='id_marca_em' style="">Debe elegir una marca</span>
+        <?php 
+                    $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
+                    'id'=>'id_marca',
+                  'name'=>'id_marca',
+                    'source'=>$this->createUrl('marca/autocomplete'),
+                  'htmlOptions'=>array(
+                          'size'=>100,
+                      'placeholder'=>'Debe escribir una marca o elegir una sugerencia',
+                      'class'=>'form-control',
+                          //'maxlength'=>45,
+                        ),
+                    // additional javascript options for the autocomplete plugin
+                    'options'=>array(
+                            'showAnim'=>'fold',
+                    ),
+                  ));
+        ?>
+        <?php #echo $form->dropDownList($ppadre,'id_marca', CHtml::listData(Marca::model()->findAll(array('order' => 'nombre')), 'id', 'nombre'),array('id'=>'id_marca','class'=>'form-control comunes','empty'=>'Seleccione una marca')); ?>
+           <span class="help-inline error hide" id='id_marca_em' style="">Debe escribir una marca o elegir una sugerencia</span>
     </div>
     <div class="margin_top_small">
           <?php echo $form->labelEx($producto,'modelo'); ?> 
