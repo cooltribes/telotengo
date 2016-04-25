@@ -74,25 +74,13 @@
 		                    			</span>
                     				</span>	
 							</div>
-							<?php if($model->padre_id!="")
-							{    
-							?>
-    							<div class="form-group">
-    							    <label>Marca </label>
-    							    <?php 
-                                      echo CHtml::textField('marca', $model->padre->idMarca->nombre, array('id'=>'marca','class'=>'form-control','maxlength'=>100, 
-                                            'width'=>100,'disabled'=>'disabled')); ?> 
-                                </div>
-                            <?php 
-                            }?>
 							<div class="form-group">
                                 <?php echo $form->labelEx($model,'padre_id'); 
-						
-							if($model->padre_id=="")
-							{
-						   		    $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
+		
+								     $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
 								    'id'=>'padre_id',
 									'name'=>'padre_id',
+									'value'=>$model->padre->nombre,
 								    'source'=>$this->createUrl('ProductoPadre/autocomplete'),
 									'htmlOptions'=>array(
 								          'size'=>100,
@@ -110,21 +98,80 @@
 									<span class="help-block text_align_left padding_right" >
 		                    			<span class="help-block error" id="errorUrl" style="display: none;">Nombre del Producto padre no existe
 		                    			</span>
-                    				</span>	
-							<?php
-							 }
-							 else 
-							 {
 
-							 	 echo CHtml::textField('nombrePadre', $model->padre->nombre, array('id'=>'nombrePadre','class'=>'form-control','maxlength'=>100, 
-										'width'=>100,'disabled'=>'disabled'));
-                                 echo CHtml::hiddenField('padre_id', $model->padre->nombre);  
-                                 
-							 }
-								?>
+							
 								
 
 							</div>
+
+							<div class="form-group">
+								 <label>Marca<span class="required">*</span></label>
+                                <?php 
+		
+								     $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
+								    'id'=>'marca',
+									'name'=>'marca',
+									'value'=>$model->padre->idMarca->nombre,
+								    'source'=>$this->createUrl('Marca/autocomplete'),
+									'htmlOptions'=>array(
+								          'size'=>100,
+										  'placeholder'=>'Introduzca la marca',
+										  'class'=>'form-control',
+								          //'maxlength'=>45,
+								        ),
+								    // additional javascript options for the autocomplete plugin
+								    'options'=>array(
+								            'showAnim'=>'fold',
+								    ),
+									));
+									?>
+									<?php #echo $form->error($model,'padre_id'); ?>
+									<span class="help-block text_align_left padding_right" >
+		                    			<span class="help-block error" id="esconderMarca" style="display: none;">Nombre de la marca no existe
+		                    			</span>
+
+							
+								
+
+							</div>
+
+
+							     <div class="margin_top_small">
+								    <label>Categoria<span class="required">*</span></label>
+								    <select id="categoria" class="form-control">
+								        <option value="">Seleccione una Categoría</option>
+								<?php 
+
+
+								    foreach($categorias as $categoria)
+								    {
+								    	
+								    	if($categoria->id==$CategoriaSuperPadre)
+								    	{ ?>
+								    		<option selected="selected" value="<?php echo $categoria->id ?>"><?php echo $categoria->nombre;?></option> 
+								    	<?php
+								    	}
+								    	else
+								    	{?>
+								    		<option value="<?php echo $categoria->id ?>"><?php echo $categoria->nombre;?></option> 
+								    	<?php
+								    	}
+
+									} ?>
+
+
+								</select>
+								<span class="help-inline error hide" id="categoria_em" style="">Debe elegir una categoria</span>
+								</div>
+								<div class="margin_top_small">   
+								<label>Subcategoria<span class="required">*</span></label>
+								<select class="form-control comunes" id="subcategoria" name="ProductoPadre[id_categoria]"> 
+								    <option value=''>Seleccione una Subcategoria</option>  
+								    <option value='<?php echo $subCategoria;?>' selected="selected"><?php echo Categoria::model()->findByPk($subCategoria)->nombre;?></option> 
+								</select>
+								<span class="help-inline error hide" id="categoria_em" style="">Debe elegir una subcategoria</span>
+								<input type="hidden" id="subs" name="subs" value="">
+								</div>
 											
 							
 							<div class="form-group">
@@ -267,13 +314,20 @@
 
 		<!-- COLUMNA PRINCIPAL DERECHA OFF // -->
 
+
+
+
 	<script>
+
 	
 $(document).ready(function() {
 	 $('#esconder').hide();
+	 $('#subs').val('<?php echo $subCategoria;?>');
+
+	 var nameIni='<?php echo $nombreProducto?>';
 	
 	$('#button_send').click(function(){
-		if(($('#nombre').val()=="" || $('#padre_id').val()=="" || $('#modelo').val()=="" || $('#color_id').val()==""))
+		if(($('#categoria').val()=="" || $('#subcategoria').val()=="" || $('#nombre').val()=="" || $('#padre_id').val()=="" || $('#modelo').val()=="" || $('#color_id').val()=="" || $('#marca').val()==""))
 		{
 			if($('#padre_id').val()=="")
 			{
@@ -295,9 +349,26 @@ $(document).ready(function() {
 				$('#esconderColor').text('Nombre del color no puede ser vacio');
 				$('#esconderColor').show();
 			}
+			if($('#marca').val()=="")
+			{
+				$('#esconderMarca').text('Nombre de la Marca no puede ser vacio');
+				$('#esconderMarca').show();
+			}
+			if($('#subcategoria').val()=="")
+			{
+          		 $('#subcategoria').addClass('error');
+           		 $('#subcategoria'+'_em').removeClass('hide');
+			}
+			if($('#categoria').val()=="")
+			{
+          		 $('#categoria').addClass('error');
+           		 $('#categoria'+'_em').removeClass('hide');
+			}
+
+			//categoria_em
 			return false;
 		}
-		if($('#esconder').is(":visible") || $('#esconderModelo').is(":visible") || $('#esconderColor').is(":visible") || $('#errorUrl').is(":visible") )
+		if($('#esconder').is(":visible") || $('#esconderMarca').is(":visible") || $('#esconderModelo').is(":visible") || $('#esconderColor').is(":visible") || $('#errorUrl').is(":visible") )
 		{
 			return false;
 		} 
@@ -307,33 +378,51 @@ $(document).ready(function() {
 		var nombre= $('#padre_id').val();
 		if (nombre=="")
 		{
-			$('#button_send').attr('disabled',true);
+			//$('#button_send').attr('disabled',true);
 			$('#errorUrl').text('Nombre del producto padre no puede ser vacio');
 			$('#errorUrl').show();
-			return false;
+			$("#marca").prop('disabled', false);
+			$("#categoria").prop('disabled', false);
+			$("#subcategoria").prop('disabled', false);
+
 		}
-		$.ajax({
-		         url: "<?php echo Yii::app()->createUrl('producto/verificarPadre') ?>",
+		else
+		{	
+			
+			$.ajax({
+		         url: "<?php echo Yii::app()->createUrl('producto/verificarTodaInformacion') ?>",
 	             type: 'POST',
-	             dataType:"json",
 		         data:{
-	                    nombre:nombre, 
+	                    nombre:nombre, nameIni:nameIni
 	                   },
 		        success: function (data) {
 					
-					if(data.status=='1')
+					if(data!='0')
 					{
-						  $('#errorUrl').hide();
-	       				  $('#button_send').attr('disabled',false);
+						var variables = data.split("//");
+						
+
+						if(variables[4]=="no")
+						{
+							$("#marca").prop('disabled', true);
+							$("#subcategoria").prop('disabled', true);
+							$("#categoria").prop('disabled', true);
+						    $('#marca').val(variables[0]);
+							$('#subcategoria').html(variables[1]);
+							$('#categoria').html(variables[2]);
+							$('#subs').val(variables[3]);
+						}
+						
 					}
 					else
 					{
-						 $('#button_send').attr('disabled',true);
-	        			 $('#errorUrl').text('Nombre del producto padre no existe');
-	        			 $('#errorUrl').show();
+							$("#marca").prop('disabled', false);
+							$("#subcategoria").prop('disabled', false);
+							$("#categoria").prop('disabled', false);
 					}
 		       	}
 		       })
+		}
 	});
 	
 	
@@ -341,7 +430,7 @@ $(document).ready(function() {
 		var nombre= $('#nombre').val();
 		if (nombre=="")
 		{
-			$('#button_send').attr('disabled',true);
+			//$('#button_send').attr('disabled',true);
 			$('#esconder').text('Nombre no puede ser vacio');
 			$('#esconder').show();
 			return false;
@@ -357,14 +446,14 @@ $(document).ready(function() {
 					
 					if(data==1)
 					{
-						 $('#button_send').attr('disabled',true);
+						// $('#button_send').attr('disabled',true);
 						 $('#esconder').text('Nombre ya existe');
 	        			 $('#esconder').show();
 					}
 					else
 					{
 						  $('#esconder').hide();
-	       				  $('#button_send').attr('disabled',false);
+	       				  //$('#button_send').attr('disabled',false);
 						 
 					}
 		       	}
@@ -375,12 +464,12 @@ $(document).ready(function() {
 		var nombre= $('#modelo').val();
 		if (nombre=="")
 		{
-			$('#button_send').attr('disabled',true);
+			//$('#button_send').attr('disabled',true);
 			$('#esconderModelo').show();
 		}
 		else
 		{
-			$('#button_send').attr('disabled',false);
+			//$('#button_send').attr('disabled',false);
 			$('#esconderModelo').hide();	
 		}
 
@@ -389,18 +478,66 @@ $(document).ready(function() {
 		var nombre= $('#color_id').val();
 		if (nombre=="")
 		{
-			$('#button_send').attr('disabled',true);
+			//$('#button_send').attr('disabled',true);
 			$('#esconderColor').show();
 		}
 		else
 		{
-			$('#button_send').attr('disabled',false);
+			//$('#button_send').attr('disabled',false);
 			$('#esconderColor').hide();
 		}
 
 	});
+	$('#marca').blur(function(){
+		var nombre= $('#marca').val();
+		if (nombre=="")
+		{
+			//$('#button_send').attr('disabled',true);
+			$('#esconderMarca').show();
+		}
+		else
+		{
+			//$('#button_send').attr('disabled',false);
+			$('#esconderMarca').hide();
+		}
 
+	});
 
+	$('#subcategoria').change( function(){
+		 $('#subs').val($(this).val());
+        if($(this).val() != '')
+        {
+          $('#subcategoria').removeClass('error');
+          $('#subcategoria'+'_em').addClass('hide');
+        }
+        else
+        {
+            $('#subcategoria').addClass('error');
+            $('#subcategoria'+'_em').removeClass('hide');
+        }
+    });
+
+	$('#categoria').click( function(){
+        if($(this).val() != ''){
+          $('#categoria').removeClass('error');
+          $('#categoria'+'_em').addClass('hide');
+            var path = location.pathname.split('/');
+            $.ajax({
+                  url: "<?php echo Yii::app()->createUrl('producto/ultimasCategorias'); ?>",
+                  type: "post",
+                  dataType: "json",
+                  data: { padre_id : $(this).val(), as_options: true },
+                  success: function(data){
+                       $('#subcategoria').html(data.options);
+                       $('#subcategoria').removeAttr('disabled');
+                      
+                  },
+            });
+        }else{
+            $('#subcategoria').html("<option value=''>Seleccione una Subcategoria</option>");
+             $('#subcategoria').attr('disabled','disabled');
+        }
+    });
 	
 	
 });	

@@ -1,7 +1,7 @@
 <div class="container">
 	<?php
 	$this->breadcrumbs=array(
-		UserModule::t('Users')=>array('admin'),
+		'Solicitudes' => array('admin/solicitudes'),
 		'Ver usuario',
 	);
 	?>

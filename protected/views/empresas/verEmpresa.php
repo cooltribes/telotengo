@@ -1,3 +1,9 @@
+	<?php
+
+	$this->breadcrumbs=array(
+		'Empresas' => array('empresas/admin'),
+		'ver',
+);?>	
 		<div class="row" id="empresa" >
 		<div class="col-md-offset-3 col-md-6">
 			<h1><?php echo "Ver Empresa"; ?></h1>
@@ -83,7 +89,7 @@
 
 							<div>
 								<div class="col-md-3 col-md-offset-5 padding_right">
-									<a href="<?php echo Yii::app()->createUrl('empresas/admin')?>" id="admin" class="btn btn-primary" id="btn_search_event">Ir Admin</a>
+									<a href="<?php echo Yii::app()->createUrl('empresas/admin')?>" id="admin" class="btn btn-primary" id="btn_search_event">Volver</a>
 								</div>
 
 						<?php $this->endWidget(); ?>

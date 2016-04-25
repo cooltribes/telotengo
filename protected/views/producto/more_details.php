@@ -19,13 +19,13 @@
                     echo $item."<br/>";
                 }
             } else{
-                 echo current($busqueda);
+                 echo Funciones::cambiarValor(current($busqueda));
             }
             if(next($busqueda)===false)
                 break;
             else{
                     if(strpos(key($busqueda),'*-*')){
-                        echo current($busqueda).' ';
+                        echo Funciones::cambiarValor(current($busqueda)).' ';
                         next($busqueda);
                     }                                                                  
                     
@@ -44,13 +44,13 @@
                     echo $item."<br/>";
                 }
             } else{
-                 echo current($busqueda);
+                 echo Funciones::cambiarValor(current($busqueda));
             }
             if(next($busqueda)===false)
                 break;
             else{
                     if(strpos(key($busqueda),'*-*')){
-                        echo current($busqueda).' ';
+                        echo Funciones::cambiarValor(current($busqueda)).' ';
                         next($busqueda);
                     }                                                                  
                     

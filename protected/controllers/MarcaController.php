@@ -27,7 +27,7 @@ class MarcaController extends Controller
 	{
 		return array( 
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','store','filtrar'),
+				'actions'=>array('index','view','store','filtrar', 'autocomplete'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -62,7 +62,7 @@ class MarcaController extends Controller
 		}else{
 			$marca = Marca::model()->findByPk($id);
 		}
-		
+		$marca->scenario="superUser";
 		if(isset($_POST['Marca'])){
 			$marca->attributes = $_POST['Marca'];
 			//$marca->urlImagen = $_POST['Marca']['Urlimagen'];
@@ -149,6 +149,7 @@ class MarcaController extends Controller
 	public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
+		$model->scenario="superUser";
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
@@ -365,6 +366,19 @@ class MarcaController extends Controller
 			}
 		}
 		return $items;
+	}
+	public function actionAutocomplete()
+	{
+	    	$res =array();
+	    	if (isset($_GET['term'])) 
+			{
+				$qtxt ="SELECT nombre FROM tbl_marca WHERE nombre LIKE :nombre and activo=1";
+				$command =Yii::app()->db->createCommand($qtxt);
+				$command->bindValue(":nombre", '%'.$_GET['term'].'%', PDO::PARAM_STR);
+				$res =$command->queryColumn();
+	    	}
+	     	echo CJSON::encode($res);
+	    	Yii::app()->end();
 	}	
 	
 	

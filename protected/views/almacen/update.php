@@ -1,5 +1,6 @@
 <?php
 $this->breadcrumbs=array(
+	'Almacen' => array('almacen/admin'),
 	'Editar Sucursal',
 );
 
