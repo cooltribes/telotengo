@@ -141,10 +141,6 @@ $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
                
                                                                                
                             <div class="margin_top_small">
-                                <label>Fabricante</label>
-                                <?php echo $form->textField($producto,'fabricante',array('class'=>'form-control','maxlength'=>250)); ?>
-                                <?php echo $form->error($producto,'fabricante');  ?>
-                            </div>
                             
                           <!--  <div class="margin_top_small"> -->
                             <?php /*
@@ -156,20 +152,20 @@ $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
                             
                             <div class="margin_top_small">
                                 <label>UPC</label>
-                                <?php echo $form->textField($producto,'upc',array('class'=>'form-control','maxlength'=>50)); ?>
+                                <?php echo $form->textField($producto,'upc',array('placeholder'=>'El codigo UPC debe contener 12 digitos','class'=>'form-control','maxlength'=>50)); ?>
                                 <?php echo $form->error($producto,'upc'); ?>
                             </div>
                             
                             
                             <div class="margin_top_small">
                                 <label>EAN</label>
-                                <?php echo $form->textField($producto,'ean',array('class'=>'form-control','maxlength'=>50)); ?>
+                                <?php echo $form->textField($producto,'ean',array('placeholder'=>'El codigo EAN debe contener 13 digitos','class'=>'form-control','maxlength'=>50)); ?>
                                 <?php echo $form->error($producto,'ean'); ?>
                             </div>
                             
                             <div class="margin_top_small">
                                 <label>GTIN</label>
-                                <?php echo $form->textField($producto,'gtin',array('class'=>'form-control','maxlength'=>50)); ?>
+                                <?php echo $form->textField($producto,'gtin',array('placeholder'=>'El codigo GTIN debe contener minimo 8 y maximo 14 digitos','class'=>'form-control','maxlength'=>50)); ?>
                                 <?php echo $form->error($producto,'gtin'); ?>
                             </div>
                             

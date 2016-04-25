@@ -8,7 +8,11 @@
  * 2- rechazado
  * 
  * =======================
- * 
+ * Aprobado:
+ * 0- Pendiente
+ * 1- Aprobado
+ * 2- Rechazado
+ * =======================
  * Notificado:
  * 0- El admin no ha revisado el producto
  * 1- El admin ya reviso el producto y decidio
@@ -70,11 +74,14 @@ class Producto extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('nombre, padre_id, modelo, color_id', 'required'),
-			array('destacado', 'numerical', 'integerOnly'=>true),
+			array('destacado, upc, ean, gtin', 'numerical','message'=>'Ingrese un numero entero' ,'integerOnly'=>true),
 			//array('peso', 'numerical'),
 			array('nombre', 'length', 'max'=>200), 
 			//array('descripcion', 'length', 'max'=>1000),
 			array('modelo', 'length', 'max'=>255),
+			array('upc', 'length', 'max'=>12, 'min'=>12, 'message'=>'El codigo UPC debe contener 12 digitos'),
+			array('ean', 'length', 'max'=>13, 'min'=>13, 'message'=>'El codigo EAN debe contener 13 digitos'),
+			array('gtin', 'length', 'max'=>14, 'min'=>8, 'message'=>'El codigo GTIN debe contener 13 digitos'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, nombre, descripcion, destacado, modelo, estado, users_id, notificado, codigo, interno, nparte', 'safe', 'on'=>'search'),

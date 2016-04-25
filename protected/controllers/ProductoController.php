@@ -32,16 +32,16 @@ class ProductoController extends Controller
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
 				'actions'=>array('seleccion','busqueda','create','hijos','imagenes','seo','create','agregarCaracteristica','eliminarCaracteristica','agregarInventario',
-								 'agregarInventarioAjax','eliminarInventario','multi','orden', 'clasificar', 'niveles', 'nivelPartial', 'crearProducto', 'autoComplete','verificarPadre', 'verificarNombre'),
+								 'agregarInventarioAjax','eliminarInventario','multi','orden', 'clasificar', 'niveles', 'nivelPartial', 'crearProducto', 'autoComplete','verificarPadre', 'verificarNombre', 'autoCompleteVer', 'autoCompleteModelo', 'modificarProducto', 'ultimasCategorias', 'verificarTodaInformacion'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete','update','eliminar','orden','aprobar','rechazar','poraprobar','calificaciones','eliminarCalificacion','importar', 'details', 'caracteristicas','activarDesactivar', 'activarDesactivarDestacado', 'verDisponibilidad','revisionNuevos','aprobarNuevo'),
+				'actions'=>array('admin','delete','update','eliminar','orden','aprobar','rechazar','poraprobar','calificaciones','eliminarCalificacion','importar', 'details', 'caracteristicas','activarDesactivar', 'activarDesactivarDestacado', 'verDisponibilidad','revisionNuevos','aprobarNuevo', 'rechazarProducto'),
 				#'users'=>array('admin'),
 				'roles'=>array('admin'),
 			),
 			array('allow', // COMPRADORESVENDEDORES Y VENDEDORES
-				'actions'=>array('inventario', 'cargarInbound', 'productoInventario','nuevoProducto','ultimasCategorias','imagenes','caracteristicas','details','masterdata','inventario'),
+				'actions'=>array('inventario', 'cargarInbound', 'productoInventario','nuevoProducto','imagenes','caracteristicas','details','masterdata','inventario'),
 				#'users'=>array('admin'),
 				'roles'=>array('vendedor', 'compraVenta'),
 			),
@@ -172,10 +172,7 @@ class ProductoController extends Controller
 	}
 	
 	public function actionCreate($id = null)
-	{
-     	
-		$contador = Yii::app()->db->createCommand('SELECT id FROM tbl_producto order by id desc limit 1')->queryScalar()+1;	
-		 
+	{    	 
          if(is_null($id)){
              $model=new Producto;
           
@@ -188,14 +185,14 @@ class ProductoController extends Controller
             {
                 $model->padre_id=$_POST['padre'];
                 //$model->padre->nombre;
-            }   
+            }  
             
 		
 		// Uncomment the following line if AJAX validation is needed
-		  $this->performAjaxValidation($model);
-
+		  $this->performAjaxValidation($model);	 
 		if(isset($_POST['Producto']))
 		{
+			#$contador = Yii::app()->db->createCommand('SELECT id FROM tbl_producto order by id desc limit 1')->queryScalar()+1;	
 			if(isset($_POST['padre_id']))
 			{   $modelado=ProductoPadre::model()->findByAttributes(array('nombre'=>$_POST['padre_id']));	
 	
@@ -204,32 +201,175 @@ class ProductoController extends Controller
 			$nombreCategoria=$model->padre->idCategoria->nomenclatura;
 			$cate=Categoria::model()->findByPk($model->padre->idCategoria->id_padre);
 			$nombreCategoria=$model->padre->idCategoria->nomenclatura; 
-			$model->tlt_codigo=$model->buscarPadre($cate->id).$cate->nomenclatura.$nombreCategoria.'-'.$contador;
-
-			$model->attributes=$_POST['Producto'];
+			#$model->tlt_codigo=$model->buscarPadre($cate->id).$cate->nomenclatura.$nombreCategoria.'-'.$contador;
+			$model->nombre=$_POST['nombre'];
+			$model->modelo=$_POST['modelo'];
+			#$model->attributes=$_POST['Producto'];
             $model->setSeo();
-			$model->fabricante=$_POST['Producto']['fabricante'];
-			$model->annoFabricacion=$_POST['Producto']['annoFabricacion'];
+			#$model->fabricante=$_POST['Producto']['fabricante'];
+			#$model->annoFabricacion=$_POST['Producto']['annoFabricacion'];
 			$model->upc=$_POST['Producto']['upc'];
 			$model->ean=$_POST['Producto']['ean'];
 			$model->gtin=$_POST['Producto']['gtin'];
 			$model->nparte=$_POST['Producto']['nparte'];
 			$model->color=$_POST['Producto']['color'];
+			$model->color_id=$_POST['Producto']['color_id'];
             $model->user_id=Yii::app()->user->id;
             $model->created_at=date("Y-m-d h:i:s");
             $model->aprobado = 1;
 			
 			if($model->save())
 			{
-					 $this->redirect(Yii::app()->baseUrl.'/producto/imagenes/'.$model->id);     
+				 $model->refresh();
+				 $contador=$model->id+1;
+				 $model->tlt_codigo=$model->buscarPadre($cate->id).$cate->nomenclatura.$nombreCategoria.'-'.$contador;
+				 $model->save();
+				 $this->redirect(Yii::app()->baseUrl.'/producto/imagenes/'.$model->id);     
 
-			}
-			
+			}	
 		}
 
 		$this->render('create',array(
 			'model'=>$model,
 		));
+	}
+
+	public function actionModificarProducto($id)
+	{
+		$model=Producto::model()->findByPk($id);
+		$padres=Categoria::model()->findAllByAttributes(array('id_padre'=>0));
+		$CategoriaSuperPadre= Categoria::model()->getCategoriaOrigen($model->padre->id_categoria); //super padre de las categorias
+		$subCategoria=$model->padre->id_categoria; // sub categoria
+		$this->performAjaxValidation($model);
+		if(isset($_POST['Producto'])) // padre_id trae es un nombre
+		{
+
+			/*echo $_POST['subs'];
+			Yii::app()->end();*/
+			$model->nombre=$_POST['nombre'];
+			$model->modelo=$_POST['modelo'];
+			$model->upc=$_POST['Producto']['upc'];
+			$model->ean=$_POST['Producto']['ean'];
+			$model->gtin=$_POST['Producto']['gtin'];
+			$model->nparte=$_POST['Producto']['nparte'];
+			$model->color=$_POST['Producto']['color'];
+			$model->color_id=$_POST['Producto']['color_id'];
+			$model->aprobado=1;
+			//Caso 1
+			//si el producto padre existe, pero es distinto al que tengo guardado
+			//reviso si el producto padre (distinto) esta activo o desactivo, si esta desactivo, borro este campo
+			// asigno todos los campos de de categoria, marca y modifico el nombre del producto si fuera necesario
+
+
+			if(ProductoPadre::model()->findByAttributes(array('activo'=>1,'nombre'=>$_POST['padre_id']))) //si existe y esta activo
+			{
+				//Caso 1 //la marca no es necesario revisarla porque la trae el producto padre
+				$padre=ProductoPadre::model()->findByAttributes(array('activo'=>1,'nombre'=>$_POST['padre_id']));
+				$model->padre_id=$padre->id;
+			}
+			else
+			{
+				//caso 2 //escribio un producto que esta guardado pero no esta activo
+				if(ProductoPadre::model()->findByAttributes(array('activo'=>0,'nombre'=>$_POST['padre_id'])))
+				{
+					
+					$padre=ProductoPadre::model()->findByAttributes(array('activo'=>0,'nombre'=>$_POST['padre_id']));
+					$model->padre_id=$padre->id;
+					$padre->id_categoria=$_POST['subs'];
+					if(Marca::model()->findByAttributes(array('nombre'=>$_POST['marca']))) // si la marca existe bien sea activa o inactiva
+					{
+						$marca=Marca::model()->findByAttributes(array('nombre'=>$_POST['marca']));
+						$padre->id_marca=$marca->id;
+						$marca->activo=1;
+						$marca->save();
+						$padre->activo=1;
+						$padre->save();
+					}
+					else
+					{
+						$marca=new Marca;
+						$marca->nombre=$_POST['marca'];
+						$marca->descripcion="."; //TODO arreglar en un futuro
+						$marca->activo=1;
+						$marca->save();
+						$marca->refresh();
+						$padre->id_marca=$marca->id;
+						$padre->activo=1;
+						$padre->save();
+					}
+				}
+				else ///caso 3// si el producto padre es nuevo y no esta guardado
+				{
+					// aqui lo mejor es revisar la marca primero
+					if(Marca::model()->findByAttributes(array('nombre'=>$_POST['marca']))) // si la marca existe bien sea activa o inactiva
+					{
+						$marca=Marca::model()->findByAttributes(array('nombre'=>$_POST['marca']));
+						//$padre->id_marca=$marca->id;
+						$marca->activo=1;
+						$marca->save();
+						$marca->refresh();
+					}
+					else
+					{
+						$marca=new Marca;
+						$marca->nombre=$_POST['marca'];
+						$marca->descripcion="."; //TODO arreglar en un futuro
+						$marca->activo=1;
+						$marca->save();
+						$marca->refresh();
+					}
+
+					$padre=new ProductoPadre;
+					$padre->nombre=$_POST['padre_id'];
+					$padre->id_marca=$marca->id;
+					$padre->id_categoria=$_POST['subs'];
+					$padre->activo=1;
+					$padre->save();
+					$padre->refresh();
+					$model->padre_id=$padre->id;
+				}
+
+
+			}
+
+
+			//Caso 2
+			// si el producto padre es nuevo y el admin revisando se da cuenta que esta bien escrito (original)
+			//lo que debe hacer es activar el campo (activo) de producto padre
+
+			//Caso 2.1
+			// si la marca esta bien escrita no pasa nada
+
+			//Caso 2.2
+			//la marca esta mal escrita se modifica la marca por una previamente creada
+
+			//Caso 2.3
+			//la marca no existe y la marca que esta colocando tampoco existe, entonces se crea la marca y se le asigna esa marca nueva
+			//entonces comparo este campo
+
+			//Caso 3
+			//si el producto padre es nuevo y esta mal escrito 
+			// debe modificarse el nombre y activar el campo activo verificar los otros campos el 2.1 el 2.2 y el 2.3  
+		
+			if($model->save()) // lo ultimo es guardar
+			{
+				 $this->redirect(Yii::app()->baseUrl.'/producto/imagenes/'.$model->id);     
+
+			}
+			else
+			{
+				var_dump($model->getErrors());
+			}	
+
+		}	
+		$this->render('modificarProducto',array(
+			'model'=>$model,
+			'categorias'=>$padres,
+			'CategoriaSuperPadre'=>$CategoriaSuperPadre,
+			'subCategoria'=>$subCategoria,
+			'nombreProducto'=>$model->nombre
+		));
+
 	}
 	
 	
@@ -1888,6 +2028,32 @@ class ProductoController extends Controller
 	     	echo CJSON::encode($res);
 	    	Yii::app()->end();
 	}
+	public function actionAutocompleteVer()
+	{
+	    	$res =array();
+	    	if (isset($_GET['term'])) 
+			{
+				$qtxt ="SELECT nombre FROM tbl_producto WHERE nombre LIKE :nombre";
+				$command =Yii::app()->db->createCommand($qtxt);
+				$command->bindValue(":nombre", '%'.$_GET['term'].'%', PDO::PARAM_STR);
+				$res =$command->queryColumn();
+	    	}
+	     	echo CJSON::encode($res);
+	    	Yii::app()->end();
+	}
+	public function actionAutocompleteModelo()
+	{
+	    	$res =array();
+	    	if (isset($_GET['term'])) 
+			{
+				$qtxt ="SELECT modelo FROM tbl_producto WHERE nombre LIKE :nombre";
+				$command =Yii::app()->db->createCommand($qtxt);
+				$command->bindValue(":nombre", '%'.$_GET['term'].'%', PDO::PARAM_STR);
+				$res =$command->queryColumn();
+	    	}
+	     	echo CJSON::encode($res);
+	    	Yii::app()->end();
+	}
 	
 	public function actionActivarDesactivarDestacado()
 	{
@@ -2846,8 +3012,8 @@ class ProductoController extends Controller
            }	
             $padre= ProductoPadre::model()->findByPk($_POST['padre_id']);  
             $producto=new Producto;
-            $producto->fabricante=$_POST['Producto']['fabricante'];
-            $producto->annoFabricacion=$_POST['Producto']['annoFabricacion'];
+            #$producto->fabricante=$_POST['Producto']['fabricante'];
+            #$producto->annoFabricacion=$_POST['Producto']['annoFabricacion'];
             $producto->upc=$_POST['Producto']['upc'];
             $producto->ean=$_POST['Producto']['ean'];
             $producto->gtin=$_POST['Producto']['gtin'];
@@ -2972,5 +3138,51 @@ class ProductoController extends Controller
         
         
     }
+
+    public function actionVerificarTodaInformacion()
+	{
+		if(ProductoPadre::model()->findByAttributes(array('activo'=>1,'nombre'=>$_POST['nombre'])))
+		{
+			$model=ProductoPadre::model()->findByAttributes(array('nombre'=>$_POST['nombre']));
+			$marca=Marca::model()->findByPk($model->id_marca)->nombre;
+			$subCategoria=Categoria::model()->findByPk($model->id_categoria)->nombre;
+			$superPadre=Categoria::model()->findByPk(Categoria::model()->getCategoriaOrigen($model->id_categoria))->nombre; //super padre de las categorias
+			$superPadre_id=Categoria::model()->findByPk(Categoria::model()->getCategoriaOrigen($model->id_categoria))->id;
+			$subCategoria='<option value="'.$model->id_categoria.'">'.$subCategoria.'</option>';
+			$superPadre='<option value="'.$superPadre_id.'">'.$superPadre.'</option>';
+			echo $marca."//".$subCategoria."//".$superPadre."//".$model->id_categoria."//no";
+		}
+		else
+		{
+			if($_POST['nameIni']==$_POST['nombre']) //no es necesario este if
+			{
+				if(ProductoPadre::model()->findByAttributes(array('nombre'=>$_POST['nameIni'])))
+				{
+					$model=ProductoPadre::model()->findByAttributes(array('nombre'=>$_POST['nameIni']));
+					$marca=Marca::model()->findByPk($model->id_marca)->nombre;
+					$subCategoria=Categoria::model()->findByPk($model->id_categoria)->nombre;
+					$superPadre=Categoria::model()->findByPk(Categoria::model()->getCategoriaOrigen($model->id_categoria))->nombre; //super padre de las categorias
+					$superPadre_id=Categoria::model()->findByPk(Categoria::model()->getCategoriaOrigen($model->id_categoria))->id;
+					$subCategoria='<option value="'.$model->id_categoria.'">'.$subCategoria.'</option>';
+					$superPadre='<option value="'.$superPadre_id.'">'.$superPadre.'</option>';
+					echo $marca."//".$subCategoria."//".$superPadre."//".$model->id_categoria."//ini";
+				}
+			}
+			else
+			{
+				echo "0";
+			}
+		
+		}
+
+	}
+	public function actionRechazarProducto()
+	{
+		$id=$_POST['id'];
+        $model = Producto::model()->findByPk($id);
+        $model->aprobado=2;
+        $model->save();
+        echo $model->aprobado;
+	}
     
 }

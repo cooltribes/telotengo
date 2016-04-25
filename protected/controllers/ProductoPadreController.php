@@ -282,7 +282,7 @@ class ProductoPadreController extends Controller
 	    	$res =array();
 	    	if (isset($_GET['term'])) 
 			{
-				$qtxt ="SELECT nombre FROM tbl_producto_padre WHERE nombre LIKE :nombre";
+				$qtxt ="SELECT nombre FROM tbl_producto_padre WHERE nombre LIKE :nombre and activo=1";
 				$command =Yii::app()->db->createCommand($qtxt);
 				$command->bindValue(":nombre", '%'.$_GET['term'].'%', PDO::PARAM_STR);
 				$res =$command->queryColumn();

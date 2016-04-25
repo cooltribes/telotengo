@@ -190,6 +190,21 @@
             }
            });
        }
+     function rechazar(id)
+    {
+            
+            $.ajax({
+             url: "<?php echo Yii::app()->createUrl('producto/rechazarProducto') ?>",
+             type: 'POST',
+             data:{
+                    id:id,
+                   },
+            success: function (data) {
+                    $('#'+id).hide();
+            }
+           });
+       }
+
         
     
     function desactivarActivarDestacado(id)

@@ -5,7 +5,7 @@
     }
 </style>
 <?php      
-echo"<tr>";
+echo '<tr id="'.$data->id.'">';
 	$imagen = Imagenes::model()->findByAttributes(array('producto_id'=>$data->id,'orden'=>'1'));
 	
 	if($imagen)
@@ -35,10 +35,11 @@ echo"<tr>";
         <i class="icon-cog"></i> <b class="caret"></b> 
         </a>
             <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">'; ?>
-                 <li><a class="pointer" id="apr<?php echo $data->id;?>" onclick="aprobar(<?php echo $data->id;?>)"><?php echo $data->aprobado?"<span class='glyphicon glyphicon-thumbs-down'></span> Rechazar":"<span class='glyphicon glyphicon-thumbs-up'></span> Aprobar";?></a></li>
-                <li><a class="pointer" id="act<?php echo $data->id;?>" onclick="desactivarActivar(<?php echo $data->id;?>)"><?php echo $data->estado?"<i class='glyphicon glyphicon-remove'></i> Desactivar":"<i class='glyphicon glyphicon-ok'></i> Activar";?></a></li>
-                <li><a class="pointer" href="<?php echo Yii::app()->baseUrl;?>/producto/create/<?php echo $data->id;?>"><i class="glyphicon glyphicon-cog"></i> Editar</a></li>
-                 <li><a class="pointer" href="<?php echo Yii::app()->baseUrl;?>/productoPadre/update/<?php echo $data->padre->id;?>"><span class="glyphicon glyphicon-arrow-up"></span> Editar Padre</a></li>
+                
+               
+                <li><a class="pointer"href="<?php echo Yii::app()->createUrl('producto/modificarProducto', array('id'=>$data->id))?>"><i class="glyphicon glyphicon-cog"></i> Verificar</a></li>
+                 <li><a class="pointer"  onclick="rechazar(<?php echo $data->id;?>)"><i class='glyphicon glyphicon-remove'></i> Eliminar Producto</a></li>
+                
                 
      <?php  echo '  
             </ul>
