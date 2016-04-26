@@ -35,9 +35,9 @@ $this->breadcrumbs=array(
 		   ?>
 		   
 		     <div class="margin_top col-md-12 no_horizontal_padding">
-		         <div>Buscar</div>
+		        
 
-
+		  <div class="row-fluid margin_top">
 	         <form class="margin_bottom form-search row-fluid">
                  <div class="col-md-3 no_horizontal_padding">
                      <input class="form-control no_radius" id="query" name="query" type="text" placeholder="Busca por ID o por Usuario">                   
@@ -48,7 +48,7 @@ $this->breadcrumbs=array(
              </form>
 			</div>
 	    
-	    
+	  
 	    		<?php
 		Yii::app()->clientScript->registerScript('query1',
 			"var ajaxUpdateTimeout;
@@ -136,3 +136,4 @@ $this->breadcrumbs=array(
 		
 		?>
 
+</div>

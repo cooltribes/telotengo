@@ -7,18 +7,14 @@
 	?>
 	<div class="row-fluid clearfix">
 		<h1 class="col-md-10">Productos en Inventario</h1>
-        <div class="col-md-2 margin_top_medium">
-                <?php
-       //  echo CHtml::link('Crear Producto', $this->createUrl('create'), array('class'=>'btn form-control btn-success', 'role'=>'button'));
-                ?>
+        <div class="col-md-2 margin_top_medium text-right no_padding_right">
+                
+       			<a class="btn btn-orange white" href="<?php echo Yii::app()->createUrl('producto/seleccion');?>">Cargar Inventario</a>   
         </div>
     </div>
     
     <div class="row-fluid">
             <hr class="no_margin_top"/>
-	     <div class="col-md-2 no_padding_left">
-         	<a class="btn btn-orange white" href="<?php echo Yii::app()->createUrl('producto/seleccion');?>">Cargar Inventario</a>
-         </div>
 		<div>
 
 			<?php if(Yii::app()->user->hasFlash('success')){?>
@@ -34,11 +30,11 @@
 
 		<div class="row-fluid margin_top">
 	         <form class="no_margin_bottom form-search row-fluid">
-                         <div class="col-md-3 col-md-offset-8 no_padding_right">
+                         <div class="col-md-3 col-md-offset-0 no_padding_right">
                              <input class="form-control no_radius_right" id="query" name="query" type="text" placeholder="Escribe tu criterio de búsqueda">                   
                          </div>
                          <div class="col-md-1 no_padding_left">
-                             <a href="#" class="btn form-control btn-sigmablue no_radius_left" id="btn_search_event">Buscar</a>
+                             <a href="#" class="btn form-control btn-darkgray white" id="btn_search_event">Buscar</a>
                          </div>
                                 
              </form>	       

@@ -1,8 +1,19 @@
 <?php
-$this->breadcrumbs=array(
+if(Yii::app()->user->isAdmin())
+{
+	$this->breadcrumbs=array(
 	'Almacen' => array('almacen/admin'),
 	'Editar Sucursal',
-);
+	);
+}
+else
+{
+	$this->breadcrumbs=array(
+	'Almacen' => array('almacen/administrador'),
+	'Editar Sucursal',
+	);
+}
+
 
 ?>
 <div class="container">

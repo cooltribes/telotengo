@@ -193,6 +193,7 @@ class ProductoController extends Controller
 		if(isset($_POST['Producto']))
 		{
 			#$contador = Yii::app()->db->createCommand('SELECT id FROM tbl_producto order by id desc limit 1')->queryScalar()+1;	
+			$contador=$model->id+1;
 			if(isset($_POST['padre_id']))
 			{   $modelado=ProductoPadre::model()->findByAttributes(array('nombre'=>$_POST['padre_id']));	
 	
@@ -201,7 +202,7 @@ class ProductoController extends Controller
 			$nombreCategoria=$model->padre->idCategoria->nomenclatura;
 			$cate=Categoria::model()->findByPk($model->padre->idCategoria->id_padre);
 			$nombreCategoria=$model->padre->idCategoria->nomenclatura; 
-			#$model->tlt_codigo=$model->buscarPadre($cate->id).$cate->nomenclatura.$nombreCategoria.'-'.$contador;
+			$model->tlt_codigo=$model->buscarPadre($cate->id).$cate->nomenclatura.$nombreCategoria.'-'.$contador;
 			$model->nombre=$_POST['nombre'];
 			$model->modelo=$_POST['modelo'];
 			#$model->attributes=$_POST['Producto'];
@@ -255,6 +256,10 @@ class ProductoController extends Controller
 			$model->color=$_POST['Producto']['color'];
 			$model->color_id=$_POST['Producto']['color_id'];
 			$model->aprobado=1;
+			$contador=$model->id+1;
+			$cate=Categoria::model()->findByPk($model->padre->idCategoria->id_padre);
+			$nombreCategoria=$model->padre->idCategoria->nomenclatura; 
+			$model->tlt_codigo=$model->buscarPadre($cate->id).$cate->nomenclatura.$nombreCategoria.'-'.$contador;
 			//Caso 1
 			//si el producto padre existe, pero es distinto al que tengo guardado
 			//reviso si el producto padre (distinto) esta activo o desactivo, si esta desactivo, borro este campo
@@ -356,10 +361,6 @@ class ProductoController extends Controller
 				 $this->redirect(Yii::app()->baseUrl.'/producto/imagenes/'.$model->id);     
 
 			}
-			else
-			{
-				var_dump($model->getErrors());
-			}	
 
 		}	
 		$this->render('modificarProducto',array(
@@ -1325,7 +1326,9 @@ class ProductoController extends Controller
                 $model->descripcion=$_POST['Producto']['descripcion'];
 				$model->caracteristicas=$var;
 				if($model->save())
-                    $this->redirect(Yii::app()->baseUrl.'/producto/details/'.$model->id);     
+                    $this->redirect(Yii::app()->baseUrl.'/producto/details/'.$model->id);
+                else
+                	print_r($model->getErrors());     
 				//HACER ALGO IR ALGUN LADO
 			
 					
