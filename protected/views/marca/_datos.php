@@ -6,7 +6,7 @@ echo"<tr>";
 
 	$ima = CHtml::image(Yii::app()->baseUrl.'/images/marca/'.$data->id.'_thumb.jpg', $data->nombre);
 
-	if(isset($ima))
+	if(isset($ima) && isset($data->url_imagen))
    		echo "<td>".$ima."</td>";
 	else
 		echo '<td><img src="http://placehold.it/100" align="Nombre de la marca"/> </td>';
