@@ -31,7 +31,7 @@ class ProductoPadre extends CActiveRecord
 		return array(
 			array('nombre, id_marca', 'required'),
 			array('id_marca', 'numerical', 'integerOnly'=>true),
-			array('nombre', 'length', 'max'=>50),
+			array('nombre', 'length', 'max'=>250),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, nombre, id_marca', 'safe', 'on'=>'search'),
@@ -84,6 +84,7 @@ class ProductoPadre extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('nombre',$this->nombre,true);
 		$criteria->compare('id_marca',$this->id_marca);
+		$criteria->compare('activo',"1");
 		$criteria->order = 'nombre ASC';
 
 		return new CActiveDataProvider($this, array(
