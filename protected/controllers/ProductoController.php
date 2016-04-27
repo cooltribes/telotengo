@@ -1254,8 +1254,19 @@ class ProductoController extends Controller
 		  
 		if(isset($_GET['id'])){
 		    $model=Producto::model()->findByPk($id);
-              if(is_null($model->seo))
-                    $model->setSeo();  
+            if(is_null($model->seo))
+            {
+               	 $seo=new Seo;
+           		 $seo->amigable=Funciones::cleanUrlSeo($model->nombre); 
+           		 $seo->save();
+           		 $seo->refresh();          
+           		 $model->id_seo =$seo->id;
+            	 $model->save(); 
+            }
+            else
+            {
+            	$seo=$model->seo;
+            }
             
 		}
 		    
@@ -1263,12 +1274,6 @@ class ProductoController extends Controller
             throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
             Yii::app()->end;
         }
-
-			
-            
-		  
-		
-        $seo=$model->seo;
 
 		
 		if(isset($_POST['Seo'])){
@@ -1954,11 +1959,14 @@ class ProductoController extends Controller
 			//$this->render('admin');
 			if(Yii::app()->user->isAdmin()){
 			    $producto=Producto::model()->findByPk($id);
-                if($producto){
+			    $producto->aprobado=1;
+				$producto->save();
+               /* if($producto){
                     if($producto->aprobado==0)
                         $this->redirect(array('revisionNuevos'));
                         
-                }
+                }*/
+
                 Yii::app()->user->setFlash('success', 'Se ha creado el producto exitosamente.');
                 $this->redirect(array('admin'));
 			} 
