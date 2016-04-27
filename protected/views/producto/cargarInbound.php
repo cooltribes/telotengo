@@ -69,7 +69,7 @@ $('#buttonCargaMD').click(function(e) {
                             <h4 class=" margin_top no_margin_bottom">1.- Realizar la validación previa del archivo:</h4>
                         </div>
                         <div class="col-md-6 margin_top_small ">
-                             <a href="../site/descargaPlantilla" class="btn btn-darkgray"> <span class="glyphicon glyphicon-download-alt"></span> Descargar Archivo</a>
+                             <a href="<?php echo Yii::app()->getBaseUrl(true)."/docs/xlsMasterData/inbound/inboundTLT.xlsx"; ?>" class="btn btn-darkgray"> <span class="glyphicon glyphicon-download-alt"></span> Descargar Archivo</a>
                         </div>
                         <div class="col-md-12 no_horizontal_padding margin_top_minus">
                             <hr class="dark"/>
