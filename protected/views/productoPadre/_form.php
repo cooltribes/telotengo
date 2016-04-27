@@ -97,7 +97,7 @@ $(document).ready(function() {
 					    if(data.status==2){
 						    window.location.href ='../masterdata/detalle/'+data.masterData;
 					    }else{
-					        window.location.href = '../admin';
+					        window.location.href = '../productoPadre/admin';
 					    }
 					}
 					
