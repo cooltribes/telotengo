@@ -305,9 +305,8 @@ $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
 	           	var maximo=$('#maximo').val();
 	           	maximo=parseInt(maximo);
 	           	var unitario=$('#precioUnitario').val();
-
 	           	
-	           	if(cantidad<=0)
+	           	if(cantidad<=0 || !$.isNumeric(cantidad))
 	           	{
 	           		$('#cantidad').val('1');
 	           		$('#unitario').html(formatPrice(unitario));
