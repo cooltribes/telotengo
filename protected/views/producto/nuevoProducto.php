@@ -21,7 +21,7 @@
 </script>
 
 
-<?php $this->breadcrumbs=array("Inventario"=>array("producto/productoInventario"),"Cargar inventario"=>array("producto/seleccion"),'Nuevo Producto'); ?> 
+<?php $this->breadcrumbs=array("Inventario"=>array("producto/productoInventario"),'Nuevo Producto'); ?> 
 
 <?php
 

@@ -155,9 +155,9 @@ $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
                         
                     </div>
                     <div class="col-md-12 margin_top">
-                        <ul  class="nav nav-tabs">
-                              <li class="active"><a class="pointer" onclick="goTo('#detalles')"  >DETALLES DEL PRODUCTO</a></li>
-                              <li  class=""><a class="pointer" onclick="goTo('#caracteristicas')" >CARACTERÍSTICAS GENERALES</a></li>
+                        <ul  class="nav nav-tabs"> 
+                              <li  class="active"><a class="pointer" onclick="goTo('#caracteristicas')" >CARACTERÍSTICAS GENERALES</a></li>
+                              <li class=""><a class="pointer" onclick="goTo('#detalles')"  >DETALLES DEL PRODUCTO</a></li>
                            <!--   <li role="presentation" class=""><a href="#recommendations" role="tab" id="recommendations-tab" data-toggle="tab" aria-controls="recommendations" aria-expanded="false">RECOMENDACIONES DEL PRODUCTO</a></li>--></-->
                               
                         </ul>
@@ -168,19 +168,17 @@ $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
                     
                     
                     <div class="col-md-12 no_padding_left margin_top">
-                         <div class="moreDetails no_border">                                       
-                            
-                            
-                              <div  id="detalles" aria-labelledby="home-tab" id="details">
-                                 
+                         <div class="moreDetails no_border"> 
+                         <h3>Caracteristicas generales</h3>                                      
+                              <div  class="padding_top padding_bottom" id="caracteristicas" aria-labelledby="specifications-tab">
+                                 <?php echo $model->descripcion; ?>              
+                              </div>
+
+                               <div  id="detalles" aria-labelledby="home-tab" id="details">
+                                <h3>Detalles del Producto</h3>
                                 <?php if(!is_null($busqueda))$this->renderPartial('more_details', array('busqueda'=>$busqueda,'solo_una'=>true));else echo "<div class='text-center margin_top'>No hay información disponible</div>" ?>
                               </div>
-                              <div  class="padding_top padding_bottom" id="caracteristicas" aria-labelledby="specifications-tab">
-                                 <?php echo $model->descripcion; ?>
-                             
-                              </div>
-                              
-                           
+
                         </div>
                     </div>  
                     
@@ -301,7 +299,7 @@ $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
            	$(document).ready(function() {
            		$('[data-toggle="tooltip"]').tooltip(); 
            
-	           	$('#cantidad').change(function() {
+	           	$("#cantidad").on("change keyup", function(){
 	           	var cantidad=$('#cantidad').val();
 	           	cantidad=parseInt(cantidad);
 	           	var maximo=$('#maximo').val();
@@ -332,6 +330,7 @@ $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
 	           	}
 	           	
 	           	});
+
 	           	
 	           	$('#ordenar').click(function() {
 	           		var inventario=$('#inventario_id').val();

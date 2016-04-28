@@ -1,9 +1,19 @@
 <div class="container">
 	<?php
-	$this->breadcrumbs=array(
+	if(Yii::app()->user->isAdmin())
+	{
+		$this->breadcrumbs=array(
 		UserModule::t('Users')=>array('admin'),
 		'Invitar usuario',
-	);
+		);
+	}
+	else
+	{
+		$this->breadcrumbs=array(
+		'Invitar usuario',
+		);
+	}
+
 	?>
 	<div class="row">
 		<div class="col-md-offset-3 col-md-6">

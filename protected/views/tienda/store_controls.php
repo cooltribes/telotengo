@@ -10,18 +10,28 @@
                                <input type="hidden" id="orderBy" value="<?php echo $order?>">
                                <div class="dropdown" style="display:inline">
                                   <button class="btn btn-default no_radius dropdown-toggle" type="button" id="categorySearch" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                       <?php echo $order=='asc'?"Menor Precio":$order=='desc'?"Mayor Precio":"Seleccione"; ?>
+                                       <?php #echo $order=='asc'?"Menor Precio":$order=='desc'?"Mayor Precio":"Seleccione"; ?>
+                                       <?php 
+                                        switch ($order)
+                                        {
+                                              case "asc":
+                                                echo "Menor Precio";
+                                              break;
+                                              case "desc":
+                                               echo "Mayor Precio";
+                                              break;
+                                              default:
+                                                 echo "Seleccione";
+                                        }
+                                       ?>
                                     <span class="caret"></span>
                                   </button>
                                   <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                                 <!--    <li><a href="#" onclick="go('#orderBy','nombre-asc');">Nombre </a></li> -->
-                                    <li><a href="#" onclick="go('#orderBy','asc');">Mayor Precio </a></li>
-                                    <li><a href="#" onclick="go('#orderBy','desc');">Menor Precio </a></li>
-
-                                     
+                                    <li><a href="#" onclick="go('#orderBy','asc');">Menor Precio </a></li>
+                                    <li><a href="#" onclick="go('#orderBy','desc');">Mayor Precio </a></li>              
                                   </ul>  
                                 </div>
-                                
                                 
                                 <div class="storeControls no_padding_right">
                                      <input type="hidden" id="display" value="<?php echo $list?>"> 
