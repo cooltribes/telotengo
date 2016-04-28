@@ -40,6 +40,7 @@
 <script>
 	$(document).ready(function() {
 		$('#procesarTodo').click(function() {
+            $('#procesarTodo').prop( "disabled", true );
 			var bolsa_id= '<?php echo $model->id;?>';
 			var empresas_id='<?php echo $model->empresas_id;?>';
 			var monto= <?php echo $sub;?>;

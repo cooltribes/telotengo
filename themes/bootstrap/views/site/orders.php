@@ -170,6 +170,7 @@ Yii::app()->session['suma']=$total;
 		$('.cadaOrden').click(function() {
 		    var hidden = $(this).next().val();
 			var oid = $(this).attr("id");
+			$('#'+oid).prop( "disabled", true );
 			var res = oid.split("b"); //por el comienzo de la palabra boton
 			var almacen_id=res[0];
 			var res2 = oid.split("n");

@@ -95,7 +95,7 @@ $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
                         </h1>
                      <small>Marca:&nbsp;<?php echo $model->padre->idMarca->nombre; ?></small> 
                         <div class="separator"></div>
-                        <table width="100%" class="priceTable">
+                        <table width="40%" class="priceTable">
                             <col width="50%">
                             <col width="50%"> 
                             <tr>
@@ -119,6 +119,20 @@ $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
                                 	 
                                                    
                             </tr>
+                            <?php 
+                            if($inventario->cantidad>0)
+                            {
+                              ?> 
+                              <tr>
+                                  <td class="title">Cantidad</td>
+                                  <td><?php echo $inventario->cantidad;?></td> 
+
+                              </tr> 
+
+
+                            <?php
+                            }
+                            ?>
 
                         </table>
                         <div class="specs margin_top">
