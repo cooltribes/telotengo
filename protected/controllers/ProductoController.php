@@ -1456,15 +1456,21 @@ class ProductoController extends Controller
 			
 			//$producto->saveAttributes(array('estado'=>1));
 
-			if($inventario->save())	
+			if($inventario->save())
+			{
 				Yii::app()->user->setFlash('success',"Inventario guardado exitosamente. El producto está ahora activo.");
+				$this->redirect(array('productoInventario'));
+			}	
+				
 		}
-        
+        $numeroAlmacen=Almacen::model()->countByAttributes(array('empresas_id'=>$empresas_id));
+
         if($producto->aprobado&&$producto->estado)		
     		$this->render('inventario',array(
     			'producto'=>$producto,
     			'model'=>$inventario,
     			'empresas_id'=>$empresas_id,
+    			'numeroAlmacen'=>$numeroAlmacen,
     		));
         else
             $this->render('error_producto',array());

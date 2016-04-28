@@ -28,7 +28,7 @@
 	<div class="col-md-6 col-md-offset-3 margin_top_small">
 		<?php
 		 echo $form->labelEx($model,'tipo');  
-		 echo CHtml::activeDropDownList($model,'tipo',$model->getTiposAtributos(),array('id'=>'tipo','prompt'=>'Eliga un tipo',
+		 echo CHtml::activeDropDownList($model,'tipo',$model->getTiposAtributos(),array('id'=>'tipo','prompt'=>'Elija un tipo',
                                 'class'=>'form-control'));
 		echo $form->error($model,'tipo');
 		?>

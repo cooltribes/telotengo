@@ -202,6 +202,7 @@
 <script>
 		$(document).ready(function() {
 			$('#aceptar').click(function() {
+                $('#aceptar').prop( "disabled", true );
 				var id=$(this).attr("name");
 				var estado=1;
 				cambio(id, estado);
@@ -209,6 +210,7 @@
 			});
 			
 			$('#cancelar').click(function() {
+                $('#cancelar').prop( "disabled", true );
 				var id=$(this).attr("name");
 				var estado=2;
 				cambio(id, estado);

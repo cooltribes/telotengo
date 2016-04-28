@@ -85,8 +85,8 @@ $this->breadcrumbs=array(
                             </div>
                             <div class="form-group"> 
                                 <label>Precio con IVA *</label>
-                                <input type="text"  class="form-control" disabled="disabled" id ="precio_iva" value="<?php echo (is_null($model->precio)||is_null($model->iva))?"":$model->precio+($model->precio*($model->iva/100));?>"/>
-                                <?php #echo $form->textField($model,'precio_iva',array('class'=>'form-control','id'=>'precio_iva','maxlength'=>150, 'disabled'=>'disabled', 'placeholder'=>'Precio para la venta (con IVA)')); ?>
+                                
+                                <?php echo $form->textField($model,'precio_iva',array('class'=>'form-control','id'=>'precio_iva','maxlength'=>150, 'disabled'=>'disabled', 'placeholder'=>'Precio para la venta (con IVA)')); ?>
                                 <?php echo $form->error($model,'precio_iva');  ?>
                                    <?php //echo $form->hiddenField($model,'precio_iva'); ?>
                             </div>
@@ -112,14 +112,25 @@ $this->breadcrumbs=array(
 							
 							<div class="form-group">
 								<?php
-								echo $form->dropDownListRow(
+								if($numeroAlmacen>1)
+								{
+									echo $form->dropDownListRow(
 								 	$model,'almacen_id', CHtml::listData(
 								 		Almacen::model()->findAllByAttributes(array('empresas_id'=>$empresas_id)),'id','alias'
 									), array(
 										'class'=>'form-control',
-										'empty' => 'seleccione un almacen'
+										'empty' => 'Seleccione un almacen'
 										)
 									);
+								}
+								else
+								{
+									$almacenn=Almacen::model()->findByAttributes(array('empresas_id'=>$empresas_id));
+									echo $form->dropDownListRow($model,'almacen_id',
+										array($almacenn->id=>$almacenn->alias), 
+										array('empty' => 'Seleccione un almacen','class'=>'form-control','options' => array($almacenn->id=>array('selected'=>true))));
+								}
+
 								//echo $form->error($model,'almacen_id'); ?>
 							</div> 
 							
@@ -204,6 +215,9 @@ $this->breadcrumbs=array(
 		    precio_iva();
 		});
 		$('#precio').focusout(function(){                
+            precio_iva();
+        });
+        $('#precio').on('keyup', function(event) {        
             precio_iva();
         });
 		

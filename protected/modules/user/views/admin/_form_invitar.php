@@ -51,7 +51,7 @@
 
 	?>
 	
-	<div id="miembroEmpresa">
+	<div id="miembroEmpresa" class="hide">
 		<h3>Solo para el caso de invitar como miembro de empresa</h3>
 		<div class="form-group">
 		<div class="col-sm-12">
@@ -97,11 +97,13 @@
 $('#User_type').on('change', function() {
   //alert($(this).val()); 
   if($(this).val()==2){ // empresa
-  	 $('#miembroEmpresa').show();
+  	 //$('#miembroEmpresa').show();
+  	 $("#miembroEmpresa").removeClass("hide");
   	 $('#empresas').prop('disabled', false);
   	 $('#cargo').prop('disabled', false);
   }else{
-  	 $('#miembroEmpresa').hide();
+  	// $('#miembroEmpresa').hide();
+  	 $("#miembroEmpresa").addClass("hide");
   	 $('#empresas').prop('disabled', 'disabled');
   	 $('#cargo').prop('disabled', 'disabled');
   }

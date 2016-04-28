@@ -69,7 +69,7 @@ $('.add').click(function(){
       });
   	}
     else {
-  		alert("Eliga un Atributo");
+  		alert("Elija un Atributo");
     }
 });
 

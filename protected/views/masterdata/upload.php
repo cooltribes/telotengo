@@ -42,8 +42,9 @@ $('#buttonCargaMD').click(function(e) {
         <h1 class="margin_bottom">Carga de Productos</h1>
   
           <ul id="myTabs" class="nav nav-tabs" role="tablist">
+             <li  ><a id="individual-tab"  aria-controls="home"  href="../producto/nuevoProducto">CARGA INDIVIDUAL</a></li>
               <li class="active">  <a  id="fileLoad-tab"  >CARGA MASIVA </a></li>
-                <li  ><a id="individual-tab"  aria-controls="home"  href="../producto/nuevoProducto">CARGA INDIVIDUAL</a></li>
+                
               
               
          <!--    <li role="presentation" class=""><a href="#plantilla" role="tab" id="plantilla-tab" data-toggle="tab" aria-controls="plantilla" aria-expanded="false">DESCARGA DE PLANTILLA</a></li>-->
