@@ -100,6 +100,7 @@
 	    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-hover table-striped">
 	       <thead>
 	        <tr>
+	           	<th scope="col">Fecha de actualizacion</th>
 	           	<th scope="col">SKU</th>
 	            <th scope="col">Codigo TLT</th>
 	            <th scope="col">Imagen</th>

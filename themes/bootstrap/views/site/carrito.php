@@ -14,7 +14,7 @@
                 <span class="total">
                     Total: <?php echo Funciones::formatPrecio(Yii::app()->session['suma']+$iva);  unset(Yii::app()->session['suma']);?>
                 </span>
-                <input class="btn-green btn btn-danger margin_top_small" type="submit" id="procesarTodo" name="yt0" value="Procesar todas las órdenes">
+                <input class="btn-green btn btn-danger margin_top_small todosBotones" type="submit" id="procesarTodo" name="yt0" value="Procesar todas las órdenes">
             </div>
             <div class="text-center margin_top_xsmall">
                 <a class="blueLink" href=" <?php echo Yii::app()->baseUrl; ?>/tienda">Seguir Comprando</a>
@@ -40,7 +40,7 @@
 <script>
 	$(document).ready(function() {
 		$('#procesarTodo').click(function() {
-            $('#procesarTodo').prop( "disabled", true );
+            $('.todosBotones').prop( "disabled", true );
 			var bolsa_id= '<?php echo $model->id;?>';
 			var empresas_id='<?php echo $model->empresas_id;?>';
 			var monto= <?php echo $sub;?>;

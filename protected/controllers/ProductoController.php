@@ -921,6 +921,7 @@ class ProductoController extends Controller
 		                $nombre = Yii::getPathOfAlias('webroot').'/images/producto/'. $id .'/'. $imagen->id;
 		                $extension_ori = ".jpg";
 						$extension = '.'.$pic->extensionName;
+						//$pic->resize(600, 600);
 						
 		                if ($pic->saveAs($nombre . $extension)) {
 		
@@ -1418,7 +1419,8 @@ class ProductoController extends Controller
 			$inventario->producto_id = $_POST['Inventario']['producto_id'];
             $inventario->iva = Yii::app()->params['IVA']['porcentaje'];
             $inventario->precio_iva = (Yii::app()->params['IVA']['value']*$_POST['Inventario']['precio'])+$_POST['Inventario']['precio'];
-			
+			$inventario->fecha_act=	 date('Y-m-d G:i:s');
+
 			if(isset(Yii::app()->session['almacen_id']))
 			{
 				/*echo $inventario->almacen_id."///";
@@ -2113,7 +2115,7 @@ class ProductoController extends Controller
                     Yii::app()->user->setFlash('error', UserModule::t("Debes seleccionar un archivo."));                            
                     $error = true;
                 }              
-				echo $extension;
+				//echo $extension;
                 //Si no hubo errores
                 if(!$error && is_array($resValidacion = $this->validarInbound($nombre . $extension))){
 

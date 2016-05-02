@@ -60,6 +60,8 @@ class MasterdataController extends Controller
                 $resumen=$this->validarMasterData(Yii::app()->yexcel->readActiveSheet($_FILES["validar"]["tmp_name"]));             
             }
             else{
+                Yii::app()->user->updateSession();
+                Yii::app()->user->setFlash('error', UserModule::t("Debes seleccionar un archivo.")); 
                 $resumen=array("errores"=>1,"resumen"=>"No se seleccionó un archivo valido");
             }
             $summary=1; 
@@ -97,6 +99,8 @@ class MasterdataController extends Controller
             else
             {
                 $resumen=array("errores"=>1,"resumen"=>"No se seleccionó un archivo valido");
+                Yii::app()->user->updateSession();
+                Yii::app()->user->setFlash('error',"No se seleccionó un archivo valido.");
             }            
             
             $summary=2;
