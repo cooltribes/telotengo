@@ -110,7 +110,7 @@ $('#buttonCargaMD').click(function(e) {
                         </form>
                        </div> 
                        <div class="col-md-4" style="display:block; height:120px"></div>
-                 <?php  if($summary==1):?>
+                 <?php  /*if($summary==1):?>
                         <b><u>Resumen:</u></b><br/>
                         <div class="col-md-12">
                           
@@ -118,7 +118,7 @@ $('#buttonCargaMD').click(function(e) {
                            
                            <?php echo $resumen["resumen"]; ?>    
                        </div>
-                 <?php endif; ?>
+                 <?php endif; */?>
                     </div>
                     <div class="row-fluid clearfix">
                     
@@ -150,7 +150,7 @@ $('#buttonCargaMD').click(function(e) {
                           </form>
                       </div>
                           <div class="col-md-4" style="display:block; height:120px"></div>
-                           <?php  if($summary==2):?>
+                           <?php  /*if($summary==2):?>
                        <b><u>Resumen:</u></b><br/>
                         <div class="col-md-12">
                           
@@ -158,7 +158,7 @@ $('#buttonCargaMD').click(function(e) {
                            
                            <?php echo $resumen["resumen"]; ?>    
                        </div>
-                 <?php endif; ?>
+                 <?php endif; */?>
                       </div>
                 </div>
           

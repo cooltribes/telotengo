@@ -1,6 +1,10 @@
 <?php
 #$model=Inventario::model()->findByAttributes(array('producto_id'=>$data->id));
 echo"<tr>";
+	if(isset($data['fecha_act']))
+		echo "<td>".Funciones::invertirFecha($data['fecha_act'])."</td>";
+	else
+		echo "<td>".$data['fecha_act']."</td>";
 	echo "<td>".$data['sku']."</td>";
 	echo "<td>".$data['tlt_codigo']."</td>";
 	$imagen = Imagenes::model()->findByAttributes(array('producto_id'=>$data['id'],'orden'=>'1'));

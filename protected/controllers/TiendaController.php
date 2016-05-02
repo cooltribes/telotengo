@@ -234,7 +234,7 @@ class TiendaController extends Controller
             else{
                  $sql="select distinct(producto.id) from tbl_inventario inventario JOIN tbl_producto producto ON producto.id=inventario.producto_id WHERE producto.estado = 1 AND producto.aprobado = 1 AND inventario.cantidad > 1";
                   $filter['precio']='';
-                  $filter['precioMayor']=200000;
+                  $filter['precioMayor']=5000000;
                 $filter['precioMenor']=0;
             }
             $r2=Yii::app()->db->createCommand($sql)->queryColumn();
@@ -421,7 +421,7 @@ class TiendaController extends Controller
         }else{
             $filter['precio']='';
             $filter['precioMenor']=0;
-            $filter['precioMayor']=200000;
+            $filter['precioMayor']=5000000;
         }
         
         $order=isset($_GET['order'])?$_GET['order']:'';

@@ -110,7 +110,7 @@ foreach($bolsaInventario as $key=>$carrito)
                         </div>
                         <div class="col-md-6 text-right">
                             <span id="total">Total: <?php echo Funciones::formatPrecio($suma);  $total+=$suma;?></span>
-                            <?php echo CHtml::submitButton('Generar orden por proveedor', array('id'=>$carrito->almacen_id."boton".$carrito->bolsa_id,'class'=>'btn-orange btn btn-danger orange_border margin_left cadaOrden')); ?>
+                            <?php echo CHtml::submitButton('Generar orden por proveedor', array('id'=>$carrito->almacen_id."boton".$carrito->bolsa_id,'class'=>'btn-orange btn btn-danger orange_border margin_left cadaOrden todosBotones')); ?>
                             <input type="hidden" value="<?php echo $key?>"/>
                              
                             <!--<input class="btn-orange btn btn-danger btn-large orange_border margin_left" type="submit" name="yt0" value="Generar orden por proveedor"> -->
@@ -170,7 +170,7 @@ Yii::app()->session['suma']=$total;
 		$('.cadaOrden').click(function() {
 		    var hidden = $(this).next().val();
 			var oid = $(this).attr("id");
-			$('#'+oid).prop( "disabled", true );
+			$('.todosBotones').prop( "disabled", true );
 			var res = oid.split("b"); //por el comienzo de la palabra boton
 			var almacen_id=res[0];
 			var res2 = oid.split("n");
@@ -186,6 +186,7 @@ Yii::app()->session['suma']=$total;
 		                   },
 			        success: function (data) {
 			            if(data.status=='ok'){
+			            	$('.todosBotones').prop( "disabled", false );
 			                $('#orderedContainer>.ordered').html(data.html);
 			                 $('#orderedContainer').fadeIn();
 			                 $('#preorder'+hidden).fadeOut();

@@ -1093,6 +1093,7 @@ class OrdenController extends Controller
 
 			$almacenTransitorio=$bolsaRecorrido->almacen_id;
 		}
+		BolsaHasInventario::model()->deleteAllByAttributes(array('bolsa_id'=>$bolsa_id)); // los borra todos	
 
 		///CORREOS ELECTRONICOS
 		
@@ -1132,12 +1133,10 @@ class OrdenController extends Controller
 			$message->setBody($body,'text/html');
 		
 			$message->addTo(User::model()->findByPk(Yii::app()->user->id)->email);
-			Yii::app()->mail->send($message);
-			
-			
-		}	
+			Yii::app()->mail->send($message);	
+		}
 		
-	    BolsaHasInventario::model()->deleteAllByAttributes(array('bolsa_id'=>$bolsa_id)); // los borra todos		
+	    	
 	    $return=array('status'=>'ok','html'=>$html);
         echo json_encode($return);
     }

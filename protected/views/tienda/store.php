@@ -116,11 +116,12 @@
     }
 
 
- $(function() {
+
+ $(function() {
     $( "#slider" ).slider({
       range: true,
       min: 0, 
-      max: 200000,
+      max: 5000000,
       values: [<?php echo $filter['precioMenor'] ?> , <?php echo $filter['precioMayor']?> ],
 
       

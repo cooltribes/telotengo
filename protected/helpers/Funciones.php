@@ -113,6 +113,14 @@ class Funciones {
             return $cadena;
         
     }
+
+    public static function invertirFecha($fecha)
+    {
+        $parte1 = explode(" ",$fecha);
+        $invert = explode("-",$parte1[0]); 
+        $fecha_invert = $invert[2]."-".$invert[1]."-".$invert[0]; 
+        return $fecha_invert." ".$parte1[1]; 
+    }
     
  
     
