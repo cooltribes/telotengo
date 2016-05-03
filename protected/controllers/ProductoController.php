@@ -27,12 +27,12 @@ class ProductoController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','detalle','loadInventario','calificar','agregarFavorito'),
+				'actions'=>array('index','view','loadInventario','calificar','agregarFavorito'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
 				'actions'=>array('seleccion','busqueda','create','hijos','imagenes','seo','create','agregarCaracteristica','eliminarCaracteristica','agregarInventario',
-								 'agregarInventarioAjax','eliminarInventario','multi','orden', 'clasificar', 'niveles', 'nivelPartial', 'crearProducto', 'autoComplete','verificarPadre', 'verificarNombre', 'autoCompleteVer', 'autoCompleteModelo', 'modificarProducto', 'ultimasCategorias', 'verificarTodaInformacion'),
+								 'agregarInventarioAjax','eliminarInventario','multi','orden', 'clasificar', 'niveles', 'nivelPartial', 'crearProducto', 'autoComplete','verificarPadre', 'verificarNombre', 'autoCompleteVer', 'autoCompleteModelo', 'modificarProducto', 'ultimasCategorias', 'verificarTodaInformacion', 'detalle'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions

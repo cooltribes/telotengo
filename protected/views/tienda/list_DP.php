@@ -16,7 +16,7 @@ $inventario=Inventario::model()->findByAttributes(array('producto_id'=>$data->id
                <?php
                if(isset($imagenPrincipal))
                {?>
-                    <img  width="90" height="90" src="<?php echo Yii::app()->getBaseUrl(true).$imagenPrincipal->url;?>"/>
+                   <a href="<?php echo Yii::app()->createUrl("producto/detalle",array("producto_id"=>$data->id, 'almacen_id'=>$inventario->almacen_id));?>"> <img width="90" height="90" src="<?php echo Yii::app()->getBaseUrl(true).$imagenPrincipal->url;?>"/> </a>
                <?php
                }
                else
