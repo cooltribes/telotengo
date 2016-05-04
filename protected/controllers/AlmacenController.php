@@ -75,6 +75,13 @@ class AlmacenController extends Controller
 			 $model->nombre=$_POST['Almacen']['nombre'];
 			  $model->empresas_id=$empresa->id;
 			if($model->save()){
+				$model->refresh();
+		        $log=new Log;
+                $log->id_user=Yii::app()->user->id;
+                $log->id_almacen=$model->id;
+                $log->fecha=date('Y-m-d G:i:s');
+                $log->accion=14; //ha creado un almacen
+                $log->save();
 				Yii::app()->user->setFlash('success',"Almacen agregado con éxito");
 				$this->redirect(array('administrador'));
 			}
@@ -119,6 +126,13 @@ class AlmacenController extends Controller
 			$model->attributes=$_POST['Almacen'];
 			$model->nombre=$_POST['Almacen']['nombre'];
 			if($model->save()){
+				$model->refresh();
+				$log=new Log;
+                $log->id_user=Yii::app()->user->id;
+                $log->id_almacen=$model->id;
+                $log->fecha=date('Y-m-d G:i:s');
+                $log->accion=15; //ha modificado un almacen
+                $log->save();
 				Yii::app()->user->setFlash('success',"Almacen modificado con éxito");
 			}else{
 				Yii::app()->user->setFlash('error',"Error al modificar el Almacen");

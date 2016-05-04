@@ -79,30 +79,13 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>00/00/0000</td>
-                <td>Acción realizada en un día determinado llevando a cabo un evento pautado</td>
+        <?php foreach($ultimosLog as $ult):?>
+             <tr>
+                <td><?php echo Funciones::invertirFecha($ult->fecha);?></td>
+                <td><?php echo Log::model()->retornarAcciones($ult->id_user,$ult->id_orden, $ult->id_empresa, $ult->id_producto, 
+                $ult->id_email_invitacion, $ult->id_masterData, $ult->id_inbound, $ult->id_almacen, $ult->fecha, $ult->accion);?></td>
             </tr>
-            <tr>
-                <td>00/00/0000</td>
-                <td>Acción realizada en un día determinado llevando a cabo un evento pautado</td>
-            </tr>
-            <tr>
-                <td>00/00/0000</td>
-                <td>Acción realizada en un día determinado llevando a cabo un evento pautado</td>
-            </tr>
-            <tr>
-                <td>00/00/0000</td>
-                <td>Acción realizada en un día determinado llevando a cabo un evento pautado</td>
-            </tr>
-            <tr>
-                <td>00/00/0000</td>
-                <td>Acción realizada en un día determinado llevando a cabo un evento pautado</td>
-            </tr>
-            <tr>
-                <td>00/00/0000</td>
-                <td>Acción realizada en un día determinado llevando a cabo un evento pautado</td>
-            </tr>
+        <?php endforeach;?>
         </tbody>
         
     </table>

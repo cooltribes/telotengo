@@ -82,6 +82,12 @@ class MasterdataController extends Controller
                     $master->errors=$resumen['errores'];
                     if($master->save()){
                         $master->refresh();
+                        $log=new Log;
+                        $log->id_user=Yii::app()->user->id;
+                        $log->id_masterData=$master->id;
+                        $log->fecha=date('Y-m-d G:i:s');
+                        $log->accion=13; //ha subido un masterdata
+                        $log->save();
                         $path="/docs/xlsMasterData/".$master->id.".".$ext;
                         $target_file = Yii::getPathOfAlias('webroot').$path;
                         if(move_uploaded_file($_FILES["cargar"]["tmp_name"], $target_file)){
