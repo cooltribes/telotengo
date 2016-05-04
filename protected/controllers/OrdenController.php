@@ -1093,7 +1093,19 @@ class OrdenController extends Controller
 
 			$almacenTransitorio=$bolsaRecorrido->almacen_id;
 		}
-		BolsaHasInventario::model()->deleteAllByAttributes(array('bolsa_id'=>$bolsa_id)); // los borra todos	
+		BolsaHasInventario::model()->deleteAllByAttributes(array('bolsa_id'=>$bolsa_id)); // los borra todos
+
+		///////log
+		foreach($pila as $pilas)
+		{
+			$log=new Log;
+			$log->id_user=Yii::app()->user->id;
+			$log->id_orden=$pilas;
+			$log->fecha=date('Y-m-d G:i:s');
+			$log->accion=4; //genero una intencion de compra
+			$log->save();		
+		}
+
 
 		///CORREOS ELECTRONICOS
 		
@@ -1206,6 +1218,14 @@ class OrdenController extends Controller
 		
 		BolsaHasInventario::model()->deleteAllByAttributes(array('bolsa_id'=>$bolsa_id, 'almacen_id'=>$almacen_id)); // los borra todos	
 		
+		$log=new Log;
+		$log->id_user=Yii::app()->user->id;
+		$log->id_orden=$orden->id;
+		$log->fecha=date('Y-m-d G:i:s');
+		$log->accion=4; //genero una intencion de compra
+		$log->save();
+
+
 		// enviar correos para el usuario comprador
 		$message = new YiiMailMessage;
 		$message->activarPlantillaMandrill();
@@ -1281,6 +1301,27 @@ class OrdenController extends Controller
                     $subject="TU INTENCIÓN DE COMPRA HA SIDO RECHAZADA";
                      
                 }
+
+             
+         	$log=new Log;
+			$log->id_user=$model->users_id;
+			$log->id_orden=$model->id;
+			$log->fecha=date('Y-m-d G:i:s');
+			if($estado==1)
+				$log->accion=5; //notificar al comprador que le han aceptado una intencion de compra
+			else
+				$log->accion=6; //notificar al comprador que le han rechazado una intencion de compra
+			$log->save();
+
+			$log2=new Log;
+			$log2->id_user=Yii::app()->user->id;
+			$log2->id_orden=$model->id;
+			$log2->fecha=date('Y-m-d G:i:s');
+			if($estado==1)
+				$log2->accion=8; //notificar al vendedor (el mismo usuario) que ha aceptado una intencion de compra
+			else
+				$log2->accion=9; //notificar al vendedor (el mismo usuario) que ha rechazado una intencion de compra
+			$log2->save();
 
 		 $message= new YiiMailMessage;
        

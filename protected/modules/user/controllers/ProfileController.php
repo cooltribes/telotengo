@@ -350,6 +350,7 @@ class ProfileController extends Controller
 				$producInventario=$variable['sumatoria'];
 				
 			}
+			$ultimosLog=Log::model()->findAllByAttributes(array('id_user'=>Yii::app()->user->id), array('order'=>'fecha desc', 'limit'=>10));
 	
 	        $this->render('index',array(
 		        'model'=>$model,
@@ -366,6 +367,7 @@ class ProfileController extends Controller
 				'avatar'=>$avatar,
 				'entro'=>$entro,
 				'identificador'=>$identificador,
+				'ultimosLog'=>$ultimosLog,
 				
 			
 			));

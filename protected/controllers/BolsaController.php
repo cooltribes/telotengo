@@ -1181,6 +1181,13 @@ class BolsaController extends Controller
 		}
 		$bolsaInventario->almacen_id=$inventarios->almacen_id;		
 		$bolsaInventario->save();
+
+		$log=new Log;
+		$log->id_user=Yii::app()->user->id;
+		$log->id_producto=$inventarios->producto_id;
+		$log->fecha=date('Y-m-d G:i:s');
+		$log->accion=1; //agrego
+		$log->save();
 		
 		echo Yii::app()->session['bolsa']=$bolsa->id;
 		
@@ -1200,16 +1207,31 @@ class BolsaController extends Controller
 		$id=$_POST['id'];
 		
 		$bolsa=BolsaHasInventario::model()->findByPk($id);
+		$producto_id=$bolsa->inventario->producto_id;
 		if($opcion==1)
 		{
 			$bolsa->cantidad=$cantidad;
 			$bolsa->save();
+			$log=new Log;
+			$log->id_user=Yii::app()->user->id;
+			$log->id_producto=$producto_id;
+			$log->fecha=date('Y-m-d G:i:s');
+			$log->accion=3; //actualizar
+			$log->save();
+			
 		}
 		if($opcion==2)
 		{
 			$bolsa->delete();
+			$log=new Log;
+			$log->id_user=Yii::app()->user->id;
+			$log->id_producto=$producto_id;
+			$log->fecha=date('Y-m-d G:i:s');
+			$log->accion=2; //borrar
+			$log->save();
 		}
 		
+
 		
 		Yii::app()->end();
 		

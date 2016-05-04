@@ -27,12 +27,12 @@ class ProductoController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','detalle','loadInventario','calificar','agregarFavorito'),
+				'actions'=>array('index','view','loadInventario','calificar','agregarFavorito'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
 				'actions'=>array('seleccion','busqueda','create','hijos','imagenes','seo','create','agregarCaracteristica','eliminarCaracteristica','agregarInventario',
-								 'agregarInventarioAjax','eliminarInventario','multi','orden', 'clasificar', 'niveles', 'nivelPartial', 'crearProducto', 'autoComplete','verificarPadre', 'verificarNombre', 'autoCompleteVer', 'autoCompleteModelo', 'modificarProducto', 'ultimasCategorias', 'verificarTodaInformacion'),
+								 'agregarInventarioAjax','eliminarInventario','multi','orden', 'clasificar', 'niveles', 'nivelPartial', 'crearProducto', 'autoComplete','verificarPadre', 'verificarNombre', 'autoCompleteVer', 'autoCompleteModelo', 'modificarProducto', 'ultimasCategorias', 'verificarTodaInformacion', 'detalle'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -1460,6 +1460,14 @@ class ProductoController extends Controller
 
 			if($inventario->save())
 			{
+			    $inventario->refresh();
+			    $log=new Log;
+				$log->id_user=Yii::app()->user->id;
+				$log->id_producto=$inventario->producto_id;
+				$log->fecha=date('Y-m-d G:i:s');
+				$log->accion=11; //cargar inventario
+				$log->id_almacen=$inventario->almacen_id;
+				$log->save();
 				Yii::app()->user->setFlash('success',"Inventario guardado exitosamente. El producto está ahora activo.");
 				$this->redirect(array('productoInventario'));
 			}	
@@ -2281,9 +2289,11 @@ class ProductoController extends Controller
 								$inventario->producto_id=$producto;
 								$inventario->iva=Yii::app()->params['IVA']['value'];
 								$inventario->precio_iva=($precio*Yii::app()->params['IVA']['value'])+$precio;
+								$inventario->fecha_act=date('Y-m-d G:i:s');
 								
 								if(!$inventario->save())
 								{
+									
 									print_r($inventario->errors);
 									unlink($nombre2 . $extension);
 									Yii::app()->user->updateSession();
@@ -2310,6 +2320,7 @@ class ProductoController extends Controller
 									$inventario->garantia=$garantia;
 									$inventario->iva=Yii::app()->params['IVA']['value'];
 									$inventario->precio_iva=($precio*Yii::app()->params['IVA']['value'])+$precio;
+									$inventario->fecha_act=date('Y-m-d G:i:s');
 								
 								}
 								else 
@@ -2337,6 +2348,7 @@ class ProductoController extends Controller
 									$inventario->producto_id=$producto;
 									$inventario->iva=Yii::app()->params['IVA']['value'];
 									$inventario->precio_iva=($precio*Yii::app()->params['IVA']['value'])+$precio;
+									$inventario->fecha_act=date('Y-m-d G:i:s');
 									
 								}
 									//$inventario->save();
@@ -2369,6 +2381,14 @@ class ProductoController extends Controller
 				   $inbound->total_productos=$totalProductos;
 				   $inbound->total_cantidad=$totalCantidades;
 				   $inbound->save();
+				   $inbound->refresh();
+
+				   	$log=new Log;
+					$log->id_user=Yii::app()->user->id;
+					$log->id_inbound=$inbound->id;
+					$log->fecha=date('Y-m-d G:i:s');
+					$log->accion=12; //ha subido un inbound
+					$log->save();
 				   
                     Yii::app()->user->setFlash('success', "El archivo se subio exitosamente.");
 				 
@@ -3058,6 +3078,13 @@ class ProductoController extends Controller
 
             if($producto->save())
             {
+                    $producto->refresh();
+                    $log=new Log;
+					$log->id_user=Yii::app()->user->id;
+					$log->id_producto=$producto->id;
+					$log->fecha=date('Y-m-d G:i:s');
+					$log->accion=10; //solicitar la creacion de un producto
+					$log->save();
                      $this->redirect(Yii::app()->baseUrl.'/producto/imagenes/'.$producto->id);     
 
             } 
