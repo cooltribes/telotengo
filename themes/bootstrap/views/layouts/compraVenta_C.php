@@ -156,7 +156,7 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
                                               </a>
                                               <ul class="dropdown-menu right" aria-labelledby="dropdownMenu1"> 
                                                 <?php      foreach($purchases as $key=>$order): ?> 
-                                                   <li><a href="<?php echo Yii::app()->createUrl('orden/detalle', array('id'=>$order->id))?>"><span><?php echo $order->id;?></span> <b><?php echo $order->almacen->empresas->razon_social; ?></b> (<?php echo count($order->ordenHasInventarios); ?>)</a></li>
+                                                   <li><a href="<?php echo Yii::app()->createUrl('orden/detalle', array('id'=>$order->id))?>"><b><?php echo $order->almacen->empresas->razon_social; ?></b> (<?php echo count($order->ordenHasInventarios); ?>)</a></li>
                                                   
                                                   <?php  
                                                     if($key==2)

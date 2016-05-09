@@ -170,6 +170,9 @@ class TiendaController extends Controller
         $condition = array();
         $r1=false;
         $query="";
+        $variablePrecio=0;
+        $minPrice=0;
+        $maxPrice=0;
         if(!isset($_GET['page'])){
             unset(Yii::app()->session['store_condition']);
             if(isset($_GET['producto']))
@@ -227,8 +230,13 @@ class TiendaController extends Controller
             if(isset($_GET['precio']))
             {
                 $precios=explode('-',$filter['precio']);
-                $filter['precioMayor']=$precios[1];
-                $filter['precioMenor']=$precios[0];
+               $maxPrice=$filter['precioMayor']=$precios[1];
+               $minPrice= $filter['precioMenor']=$precios[0];
+                if($filter['precioMayor']==0 || $filter['precioMenor']==0)
+                {
+                    $filter['precioMayor']=$maxPrice;
+                    $filter['precioMenor']=$minPrice;
+                }
                 $condition['precios']=" precio >= ".$filter['precioMenor']." AND "."precio <= ".$filter['precioMayor'];
                 $sql="select distinct(producto.id) from tbl_inventario inventario JOIN tbl_producto producto ON producto.id=inventario.producto_id WHERE producto.estado = 1 AND producto.aprobado = 1 AND ".$condition['precios'];
      
@@ -236,12 +244,68 @@ class TiendaController extends Controller
             else{
                  $sql="select distinct(producto.id) from tbl_inventario inventario JOIN tbl_producto producto ON producto.id=inventario.producto_id WHERE producto.estado = 1 AND producto.aprobado = 1 AND inventario.cantidad > 1";
                   $filter['precio']='';
-                  $filter['precioMayor']=5000000;
-                $filter['precioMenor']=0;
+                  $variablePrecio=1;
             }
             $r2=Yii::app()->db->createCommand($sql)->queryColumn();
          
-            $result=implode(',',array_intersect($r1,$r2));
+             $result=implode(',',array_intersect($r1,$r2));
+
+            if($variablePrecio==1) //calcular el valor minimo y maximo de los precios para el filtro
+            {
+               
+                $vec=explode(",", $result);
+                if(count($vec)>1)
+                {
+                    foreach($vec as $vecs)
+                    {
+                        $sqls="select min(precio) as minimo from tbl_inventario where producto_id=".$vecs;
+                        $consulta=Yii::app()->db->createCommand($sqls)->queryRow();
+                        if($minPrice==0)
+                        {
+                            $minPrice=$consulta['minimo'];
+                        }
+                        else
+                        {
+                            if($consulta['minimo']<$minPrice)
+                            {
+                                $minPrice=$consulta['minimo'];
+                            }
+                        }
+
+                        if($maxPrice==0)
+                        {
+                            $maxPrice=$consulta['minimo'];
+                        }
+                        else
+                        {
+                            if($consulta['minimo']>$maxPrice)
+                            {
+                                $maxPrice=$consulta['minimo'];
+                            }
+                        }
+                    }  
+                }
+                else
+                {
+                    if($result!="")
+                    {
+                        $minPrice=0;
+                        $sqls="select min(precio) as minimo from tbl_inventario where producto_id=".$result;
+                        $consulta=Yii::app()->db->createCommand($sqls)->queryRow();
+                        $maxPrice=$consulta['minimo'];  
+                    }
+                    else
+                    {
+                        $minPrice=0;
+                        $maxPrice=100000; //estandar que se puede modificar
+                    }
+                }
+
+                $filter['precioMayor']=$maxPrice;
+                $filter['precioMenor']=$minPrice;
+
+            }
+            
          
             Yii::app()->session['store_condition']=(strlen($result)>0)?$result:0;
            
@@ -249,7 +313,8 @@ class TiendaController extends Controller
         }else{
             $page=$_GET['page'];
         }
-                     
+        $filter['precioMayor']=$maxPrice;
+        $filter['precioMenor']=$minPrice;             
         $criteria=new CDbCriteria;            
         $criteria->addCondition(" t.id IN (".Yii::app()->session['store_condition'].")");
         if(isset($_GET['order'])){
@@ -281,7 +346,7 @@ class TiendaController extends Controller
             $order="";
         }
 		 	 
-       $this->render('store', array('categorias'=>Categoria::model()->categoriasEnExistencia,'list'=>$list,'filter'=>$filter,'order'=>$order, 'dataProvider'=>$dataProvider));
+       $this->render('store', array('maxPrice'=>$filter['precioMayor'],'minPrice'=>$filter['precioMenor'],'categorias'=>Categoria::model()->categoriasEnExistencia,'list'=>$list,'filter'=>$filter,'order'=>$order, 'dataProvider'=>$dataProvider));
     }
 
 	public function actionBuscarCategoria()

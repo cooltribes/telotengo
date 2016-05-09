@@ -121,6 +121,22 @@ class Funciones {
         $fecha_invert = $invert[2]."-".$invert[1]."-".$invert[0]; 
         return $fecha_invert." ".$parte1[1]; 
     }
+
+    public static function convertirVectoraCadena($vec)
+    {
+        $i=1;
+        $cadena="";
+        $veces=count($vec);
+        foreach($vec as $vector)
+        {
+            if($i!=$veces)
+                $cadena=$cadena.$vector.",";
+            else
+                 $cadena=$cadena.$vector;
+            $i++;
+        }
+        return $cadena;
+    }
     
  
     

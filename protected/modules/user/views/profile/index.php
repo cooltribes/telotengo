@@ -75,13 +75,16 @@
         <thead>
             <tr>
                 <th>Fecha</th>
+                <th>Hora</th>
                 <th>Acción</th>
             </tr>
         </thead>
         <tbody>
         <?php foreach($ultimosLog as $ult):?>
              <tr>
-                <td><?php echo Funciones::invertirFecha($ult->fecha);?></td>
+             <?php $fecha=explode(" ", Funciones::invertirFecha($ult->fecha));?>
+                <td><?php echo $fecha[0];?></td>
+                <td><?php echo $fecha[1];?></td>
                 <td><?php echo Log::model()->retornarAcciones($ult->id_user,$ult->id_orden, $ult->id_empresa, $ult->id_producto, 
                 $ult->id_email_invitacion, $ult->id_masterData, $ult->id_inbound, $ult->id_almacen, $ult->fecha, $ult->accion);?></td>
             </tr>

@@ -18,10 +18,8 @@ $this->breadcrumbs=array(
         echo CHtml::link('<span class="glyphicon glyphicon-plus"></span> Crear almacen', Yii::app()->baseUrl."/almacen/create", array('class'=>'btn btn-orange white', 'role'=>'button'));
                 ?>
         </div>
-
-		
-
-				<?php if(Yii::app()->user->hasFlash('success')){?>
+		     <div class="margin_top col-md-12 no_horizontal_padding">
+		     				<?php if(Yii::app()->user->hasFlash('success')){?>
 		    <div class="alert in alert-block fade alert-success text_align_center">
 		        <?php echo Yii::app()->user->getFlash('success'); ?>
 		    </div>
@@ -30,12 +28,8 @@ $this->breadcrumbs=array(
 		    <div class="alert in alert-block fade alert-danger text_align_center">
 		        <?php echo Yii::app()->user->getFlash('error'); ?>
 		    </div>
-		<?php } 
-
-		
+		<?php } 		
 		   ?>
-		   
-		     <div class="margin_top col-md-12 no_horizontal_padding">
 		         <div>Buscar</div>
 
 
