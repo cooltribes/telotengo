@@ -371,10 +371,17 @@ class CategoriaController extends Controller
     public function actionIndex($url)
     {   
         $seo=Seo::model()->findByAttributes(array('amigable'=>$url));
-        if($seo){  
-            $categoria=Categoria::model()->findByAttributes(array('id_seo'=>$seo->id)); 
+        if($seo){
+        	$categoria=Categoria::model()->findByAttributes(array('id_seo'=>$seo->id)); 
+            $vec =$categoria->buscarHijos($categoria->id); 
+		    $cadena=Funciones::convertirVectoraCadena($vec);
+
+		    $sql="select distinct(marca.id), marca.nombre from tbl_inventario inven join tbl_producto producto on inven.producto_id=producto.id join tbl_producto_padre padre on producto.padre_id=padre.id join tbl_marca marca on padre.id_marca=marca.id join tbl_categoria categoria on padre.id_categoria=categoria.id  
+		    where inven.cantidad>0 and categoria.id in(".$cadena.")";
+		    $marcas=Marca::model()->findAllBySql($sql);  
+            
             if($categoria)
-                $this->render('category',array('model'=>$categoria,'imagenes'=>$categoria->getStorefrontImgs(2,7),'mainImg'=>$categoria->getStorefrontImgs(1,1))); 
+                $this->render('category',array('model'=>$categoria,'imagenes'=>$categoria->getStorefrontImgs(2,7),'marcas'=>$marcas,'mainImg'=>$categoria->getStorefrontImgs(1,1))); 
         }
         else
             throw new CHttpException(404,'Categoría no encontrada');

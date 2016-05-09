@@ -8,7 +8,7 @@
            	 <?php 
            	 }
            	 ?>             
-               <?php $this->renderPartial('filters',array('categorias'=>$categorias,'filter'=>$filter)); ?>
+               <?php $this->renderPartial('filters',array('maxPrice'=>$maxPrice,'minPrice'=>$minPrice,'categorias'=>$categorias,'filter'=>$filter)); ?>
            </div>   
                     
            <div class="col-md-10">
@@ -96,6 +96,10 @@
         
     }
     function go(id,value){
+      if(value=="-")
+      {
+        value="<?php echo $minPrice.'-'.$maxPrice;?>";
+      }
         $(id).val(value);
         filtrar();
     }
@@ -120,8 +124,8 @@
  $(function() {
     $( "#slider" ).slider({
       range: true,
-      min: 0, 
-      max: 5000000,
+      min: <?php echo $minPrice;?>, 
+      max: <?php echo $maxPrice;?>,
       values: [<?php echo $filter['precioMenor'] ?> , <?php echo $filter['precioMayor']?> ],
 
       

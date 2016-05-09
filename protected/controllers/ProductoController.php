@@ -2391,6 +2391,7 @@ class ProductoController extends Controller
 					$log->save();
 				   
                     Yii::app()->user->setFlash('success', "El archivo se subio exitosamente.");
+                    $this->redirect(array('producto/productoInventario'));   
 				 
               }
               

@@ -3,6 +3,7 @@
 
         $model->nombre,
     );
+
     ?>
         <div class="col-md-12 margin_top_small subcategory">
             <div class="row-fluid clearfix title">
@@ -44,18 +45,20 @@
                     
             </div>
         </div>
-     <!--   <div class="col-md-12 margin_top_large">
-            <div class="row-fluid title">
-                <div class="col-md-5 no_horizontal_padding"><div class="braker"></div></div>
-                <div class="col-md-2 no_horizontal_padding text-center"><h1>MARCAS</h1></div>
-                <div class="col-md-5 no_horizontal_padding"><div class="braker"></div></div>                
+         <?php if(count($marcas)>0): ?>
+            <div class="col-md-12 margin_top_large">
+                <div class="row-fluid title">
+                    <div class="col-md-5 no_horizontal_padding"><div class="braker"></div></div>
+                    <div class="col-md-2 no_horizontal_padding text-center"><h1>MARCAS</h1></div>
+                    <div class="col-md-5 no_horizontal_padding"><div class="braker"></div></div>                
+                </div>
             </div>
-        </div>
-        
-        <div class="col-md-10 col-md-offset-1">
-            <?php //$this->renderPartial('carousel_marcas'); ?>
-        </div> -->
             
+            <div class="col-md-10 col-md-offset-3">
+                <?php $this->renderPartial('carousel_marcas', array('marcas'=>$marcas, 'model'=>$model)); ?>
+            </div> 
+        <?php endif;?>
+
         
         
             
