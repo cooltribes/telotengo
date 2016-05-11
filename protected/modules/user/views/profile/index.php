@@ -14,8 +14,8 @@
      echo "');</script>"; 
      endif;  
 ?>
+   <div class="col-md-9 profile-center">
 <?php if($entro==0): ?>
-    <div class="col-md-9 profile-center">
     <h1>Panel de Control</h1>
     <h3>Ordenes</h3>
     
@@ -70,6 +70,7 @@
           </div> 
        </div>
    </div>
+   <?php endif; ?>
     <h3>Ultimas Acciones</h3>
     <table class="table table-striped" width="100%">
         <thead>
@@ -86,13 +87,14 @@
                 <td><?php echo $fecha[0];?></td>
                 <td><?php echo $fecha[1];?></td>
                 <td><?php echo Log::model()->retornarAcciones($ult->id_user,$ult->id_orden, $ult->id_empresa, $ult->id_producto, 
-                $ult->id_email_invitacion, $ult->id_masterData, $ult->id_inbound, $ult->id_almacen, $ult->fecha, $ult->accion);?></td>
+                $ult->id_email_invitacion, $ult->id_masterData, $ult->id_inbound, $ult->id_almacen, $ult->fecha, $ult->accion, 
+                $ult->id_admin, $ult->id_producto_padre, $ult->id_marca, $ult->id_color, $ult->id_unidad, $ult->id_atributo, 
+                $ult->id_categoria);?></td>
             </tr>
         <?php endforeach;?>
         </tbody>
         
     </table>
-    <?php endif; ?>
 </div>
 
 <script>

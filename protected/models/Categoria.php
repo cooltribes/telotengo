@@ -21,7 +21,7 @@ class Categoria extends CActiveRecord
 	 * @param string $className active record class name.
 	 * @return Categoria the static model class
 	 */
-	public $oculta;
+	public $oculta, $nuevo;
 	
 	public static function model($className=__CLASS__)
 	{

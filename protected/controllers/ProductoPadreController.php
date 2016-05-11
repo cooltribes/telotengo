@@ -70,8 +70,10 @@ class ProductoPadreController extends Controller
 		if(isset($_POST['ProductoPadre']))
 		{
 			$model->attributes=$_POST['ProductoPadre'];
-			if($model->save()){
-			     $this->redirect(array('view','id'=>$model->id));
+			if($model->save())
+			{
+			     $model->refresh();
+			    # $this->redirect(array('view','id'=>$model->id));
 			}
 				
 		}
@@ -197,7 +199,7 @@ class ProductoPadreController extends Controller
 	
 	public function actionBusqueda()
 	{
-		
+		$padre_id="";
         $nombre=$_POST['nombre'];
         $idAct=$_POST['idAct'];
         $marca=$_POST['marca'];
@@ -235,6 +237,7 @@ class ProductoPadreController extends Controller
             $productoPadre->id_categoria=$categoria;
             $productoPadre->activo=$activo;
             if($productoPadre->save()){
+            	$padre_id=$productoPadre->id;
                 if(isset($_GET['son'])){
                     $son=Producto::model()->findbyPk($_GET['son']);
                     if($son){
@@ -259,9 +262,33 @@ class ProductoPadreController extends Controller
             $model->id_categoria=$categoria;
             $model->activo=$activo;
             $model->save();
+            $model->refresh();
+            $padre_id=$model->id;
             $result['status']="1";
             $result['id']=$model->id;
         }
+		if(Yii::app()->user->isAdmin())
+	     {
+	     	 if($guardar==1)
+	     	 {
+	     	 	$log=new Log;
+				$log->id_producto_padre=$padre_id;
+				$log->fecha=date('Y-m-d G:i:s');
+				$log->id_admin=Yii::app()->user->id;
+				$log->accion=22; //creo un nuevo producto padre
+				$log->save();	
+	     	 }
+	     	 else
+	     	 {
+	     	 	$log=new Log;
+				$log->id_producto_padre=$padre_id;
+				$log->fecha=date('Y-m-d G:i:s');
+				$log->id_admin=Yii::app()->user->id;
+				$log->accion=27; //has modificado un producto padre
+				$log->save();
+	     	 }
+	     	 
+	     }
 		echo json_encode($result);
                 
 		

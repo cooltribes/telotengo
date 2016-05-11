@@ -198,8 +198,18 @@ class AdminController extends Controller
 					}
 						
 					$profile->save();
+					if(Yii::app()->user->isAdmin())
+					{
+						$log=new Log;
+						$log->id_admin=Yii::app()->user->id;
+						$log->id_user=$id;
+						$log->fecha=date('Y-m-d G:i:s');
+						$log->accion=18; //modifico a un usuario
+						$log->save();
+					}
 					Yii::app()->user->setFlash('success',"Usuario guardado");
 				}
+
 				$this->redirect(array('admin'));
 			}
 		}

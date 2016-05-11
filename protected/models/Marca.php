@@ -20,6 +20,7 @@ class Marca extends CActiveRecord
 	 * @param string $className active record class name.
 	 * @return Marca the static model class
 	 */
+	public $marcaNueva;
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
@@ -94,6 +95,7 @@ class Marca extends CActiveRecord
 		$criteria->compare('destacado',$this->destacado,true);
 		$criteria->compare('descripcion',$this->descripcion,true);
 		$criteria->compare('url_imagen',$this->url_imagen,true);
+		//$criteria->compare('activo',1,true);
 		$criteria->order = 'nombre ASC';
 		
 

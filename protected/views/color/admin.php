@@ -99,6 +99,7 @@ $this->breadcrumbs=array(
 	    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-bordered table-hover table-striped">
 	        <tr>
 	            <th scope="col">Nombre</th>
+	            <th scope="col">Estatus</th>
 	            <th scope="col">Editar</th>
 	        </tr>
 	    {items}

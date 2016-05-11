@@ -32,7 +32,7 @@ class AtributoController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
+				'actions'=>array('admin','delete', 'activarDesactivar'),
 				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -75,7 +75,15 @@ class AtributoController extends Controller
 			$model->nombre_mongo=Funciones::cleanUrlSeo($model->nombre);
 
 			if($model->save())
+			{
+				$log=new Log;
+				$log->id_atributo=$model->id;
+				$log->fecha=date('Y-m-d G:i:s');
+				$log->id_admin=Yii::app()->user->id;
+				$log->accion=40;
+				$log->save();
 				$this->redirect(array('admin'));
+			}
 		}
 		else {
 	
@@ -86,11 +94,13 @@ class AtributoController extends Controller
 				$vector=$_POST['vector'];
 				if($_POST['idAct']=="")
 				{
-					$model=new Atributo;	
+					$model=new Atributo;
+					$nuevo=1;	
 				}
 				else 
 				{
 					$model=Atributo::model()->findByPk($_POST['idAct']);
+					$nuevo=0;
 				}
 					
 				$model->nombre=$_POST['nombre'];
@@ -126,7 +136,18 @@ class AtributoController extends Controller
 					$model->multiple=0;
 					$model->rango="";
 				}
-			   $model->save();	
+			  	$model->save();
+			    $model->refresh();
+			    $log=new Log;
+			    $log->id_atributo=$model->id;
+			    $log->fecha=date('Y-m-d G:i:s');
+			    $log->id_admin=Yii::app()->user->id;
+			    if($nuevo==1)
+			   		$log->accion=40;// creo la unidad
+			   	else
+			   		$log->accion=41; // modifico la unidad
+			    $log->save();
+
 			}	
 			
 		}
@@ -163,7 +184,15 @@ class AtributoController extends Controller
 			}
 			$model->descripcion=$_POST['Atributo']['descripcion'];
 			if($model->save())
+			{
+				$log=new Log;
+			    $log->id_atributo=$model->id;
+			    $log->fecha=date('Y-m-d G:i:s');
+			    $log->id_admin=Yii::app()->user->id;
+			   	$log->accion=41; // modifico la unidad
+			    $log->save();
 				$this->redirect(array('admin'));
+			}
 		}
 
 		$this->render('update',array(
@@ -176,13 +205,37 @@ class AtributoController extends Controller
 	 * If deletion is successful, the browser will be redirected to the 'admin' page.
 	 * @param integer $id the ID of the model to be deleted
 	 */
-	public function actionDelete($id)
+	public function actionActivarDesactivar($id)
 	{
-		$this->loadModel($id)->delete();
+		/*$this->loadModel($id)->delete();
 
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 		if(!isset($_GET['ajax']))
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));*/
+		//$id=$_POST['id'];
+		$model = Atributo::model()->findByPk($id);
+		$model->activo=1-$model->activo;
+		$model->save();
+		$model->refresh();
+		$log=new Log;
+		$log->id_atributo=$model->id;
+		$log->fecha=date('Y-m-d G:i:s');
+		$log->id_admin=Yii::app()->user->id;
+		if($model->activo==0)
+		{
+			$log->accion=42; //desactivo el atributo
+			$mensaje="Atributo desactivado correctamente."; 
+		}
+        else
+        {
+            $log->accion=43; //activo el atributo
+            $mensaje="Atributo activado correctamente."; 
+        }
+		$log->save();
+		Yii::app()->user->setFlash('success',$mensaje);
+		
+		$this->redirect(array('admin'));
+				echo $model->activo;
 	}
 
 	/**

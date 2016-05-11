@@ -59,8 +59,10 @@ class MarcaController extends Controller
 	{
 		if(!$id){
 			$marca = new Marca;
+			$marca->marcaNueva=1;
 		}else{
 			$marca = Marca::model()->findByPk($id);
+			$marca->marcaNueva=0;
 		}
 		$marca->scenario="superUser";
 		if(isset($_POST['Marca'])){
@@ -68,7 +70,6 @@ class MarcaController extends Controller
 			//$marca->urlImagen = $_POST['Marca']['Urlimagen'];
 		
 			#echo($_POST['url']);
-		
 			if(!is_dir(Yii::getPathOfAlias('webroot').'/images/marca/'))
 				{
 	   				mkdir(Yii::getPathOfAlias('webroot').'/images/marca/',0777,true);
@@ -87,11 +88,23 @@ class MarcaController extends Controller
 		        $nombre = Yii::getPathOfAlias('webroot').'/images/marca/'.$marca->id;
 		        $extension_ori = ".jpg";
 				$extension = '.'.$images->extensionName;
+				$log=new Log;
+				$log->id_marca=$marca->id;
+				$log->fecha=date('Y-m-d G:i:s');
+				$log->id_admin=Yii::app()->user->id;
+				if($marca->marcaNueva==1)
+					$log->accion=28; //creo marca  
+		        else
+		            $log->accion=29; //modifico marca  
+		        $log->save();
 
 		       	if ($images->saveAs($nombre . $extension)) {
 					
 		       		$marca->url_imagen = $marca->id.$extension;
 		            $marca->save();
+		            $marca->refresh();
+
+
 									
 					Yii::app()->user->setFlash('success',"Marca guardada exitosamente.");
 
@@ -129,6 +142,15 @@ class MarcaController extends Controller
 		        
 			}else{
 		    	if($marca->save()){
+		    		$log=new Log;
+					$log->id_marca=$marca->id;
+					$log->fecha=date('Y-m-d G:i:s');
+					$log->id_admin=Yii::app()->user->id;
+					if($marca->marcaNueva==1)
+						$log->accion=28; //creo marca  
+			        else
+			            $log->accion=29; //modifico marca  
+			        $log->save();
 		        	Yii::app()->user->setFlash('success',"Marca guardada exitosamente.");
 		        }else{
 		        	Yii::app()->user->setFlash('error',"Marca no pudo ser guardada.");
@@ -173,9 +195,27 @@ class MarcaController extends Controller
 	 */
 	public function actionDelete($id)
 	{
-		$this->loadModel($id)->delete();
+		$model=$this->loadModel($id);
+		$model->activo=1-$model->activo;
+		$model->save();
+		$model->refresh();
+	    $log=new Log;
+		$log->id_marca=$model->id;
+		$log->fecha=date('Y-m-d G:i:s');
+		$log->id_admin=Yii::app()->user->id;
+		if($model->activo==0)
+		{
+			$log->accion=30; //desactivo la marca
+			$mensaje="Marca desactivada correctamente."; 
+		}
+        else
+        {
+            $log->accion=31; //activo la marca
+            $mensaje="Marca activada correctamente."; 
+        }
+        $log->save();
 		
-		Yii::app()->user->setFlash('success',"Marca eliminada correctamente.");
+		Yii::app()->user->setFlash('success',$mensaje);
 		
 		$this->redirect(array('admin'));
 		

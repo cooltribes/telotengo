@@ -175,10 +175,12 @@ class ProductoController extends Controller
 	{    	 
          if(is_null($id)){
              $model=new Producto;
+             $model->productoNuevo=1;
           
          }
          else{
              $model=Producto::model()->findByPk($id);
+             $model->productoNuevo=0;
          }
 
          if(isset($_POST['padre']))
@@ -187,7 +189,6 @@ class ProductoController extends Controller
                 //$model->padre->nombre;
             }  
             
-		
 		// Uncomment the following line if AJAX validation is needed
 		  $this->performAjaxValidation($model);	 
 		if(isset($_POST['Producto']))
@@ -222,6 +223,19 @@ class ProductoController extends Controller
 			if($model->save())
 			{
 				 $model->refresh();
+				if(Yii::app()->user->isAdmin())
+				{
+				 	$log=new Log;
+					$log->id_producto=$model->id;
+					$log->fecha=date('Y-m-d G:i:s');
+					$log->id_admin=Yii::app()->user->id;
+				 	if($model->productoNuevo==1)
+						 $log->accion=23; //creo un nuevo producto
+				    else
+						$log->accion=24; //modifico un producto    
+				    $log->save();
+				}
+
 				 $contador=$model->id+1;
 				 $model->tlt_codigo=$model->buscarPadre($cate->id).$cate->nomenclatura.$nombreCategoria.'-'.$contador;
 				 $model->save();
@@ -358,6 +372,15 @@ class ProductoController extends Controller
 		
 			if($model->save()) // lo ultimo es guardar
 			{
+				 if(Yii::app()->user->isAdmin())
+				 {
+				 	$log=new Log;
+					$log->id_producto=$model->id;
+					$log->fecha=date('Y-m-d G:i:s');
+					$log->id_admin=Yii::app()->user->id;
+					$log->accion=25; //valido el  producto    
+				    $log->save();
+				 }
 				 $this->redirect(Yii::app()->baseUrl.'/producto/imagenes/'.$model->id);     
 
 			}
@@ -3228,7 +3251,16 @@ class ProductoController extends Controller
 		$id=$_POST['id'];
         $model = Producto::model()->findByPk($id);
         $model->aprobado=2;
-        $model->save();
+        if($model->save())
+        {
+			$log=new Log;
+			$log->id_producto=$model->id;
+			$log->fecha=date('Y-m-d G:i:s');
+			$log->id_admin=Yii::app()->user->id;
+			$log->accion=26; //rechazo  producto    
+		    $log->save();
+        }
+
         echo $model->aprobado;
 	}
     

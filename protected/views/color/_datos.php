@@ -5,6 +5,18 @@ $ima ='';
 echo"<tr>";
    	
    	echo "<td>".$data->nombre."</td>";
+   	
+   	if($data->activo==1)
+	{
+		$status="Desactivar";
+		echo "<td> Activo </td>";	
+	}
+	else
+	{
+		$status="activar";
+		echo "<td> Desactivo </td>";
+	}
+
 
 	echo '<td>
 
@@ -15,7 +27,7 @@ echo"<tr>";
 	 
 		<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
 			<li><a tabindex="-1" href="'.Yii::app()->createUrl('/color/update',array('id'=>$data->id)).'" ><i class="glyphicon glyphicon-cog"></i> Editar </a></li>
-			<li><a tabindex="-1" href="'.Yii::app()->createUrl('/color/borrar',array('id'=>$data->id)).'" ><i class="glyphicon glyphicon-trash"></i> Eliminar </a></li>
+			<li><a tabindex="-1" href="'.Yii::app()->createUrl('/color/borrar',array('id'=>$data->id)).'" ><i class="glyphicon glyphicon-pencil"></i>' .$status.'</a></li>
 		</ul>
         </div></td>
         

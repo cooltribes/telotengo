@@ -120,7 +120,8 @@ class Log extends CActiveRecord
     }
 
     public function retornarAcciones($id_user=NULL, $id_orden=NULL, $id_empresa=NULL, $id_producto=NULL, $id_email_invitacion=NULL,
-     $id_masterData=NULL, $id_inbound=NULL, $id_almacen=NULL, $fecha=NULL, $accion=NULL)
+     $id_masterData=NULL, $id_inbound=NULL, $id_almacen=NULL, $fecha=NULL, $accion=NULL, $id_admin=NULL, $id_producto_padre=NULL,
+     $id_marca=NULL, $id_color=NULL, $id_unidad=NULL, $id_atributo=NULL, $id_categoria=NULL)
     {
         switch ($accion)
         {
@@ -166,6 +167,102 @@ class Log extends CActiveRecord
             break;
         case 15:
             $mensaje="Has modificado el almacen <b>".Almacen::model()->findByPk($id_almacen)->alias."</b>";
+            break;
+        case 16:
+            $mensaje="Has modificado la informacion de la empresa <b>".Empresas::model()->findByPk($id_empresa)->razon_social."</b>";
+            break;
+        case 18:
+            $mensaje="Has modificado la informacion del usuario <b>".Profile::model()->retornarNombreCompleto($id_user)."</b>";
+            break;
+        case 21:
+            $mensaje="Has modificado el almacen <b>".Almacen::model()->findByPk($id_almacen)->alias."</b> de la Empresa <b>".Almacen::model()->findByPk($id_almacen)->empresas->razon_social."</b>";
+            break;
+        case 22:
+            $mensaje="Has creado un nuevo producto padre con el nombre <b>".ProductoPadre::model()->findByPk($id_producto_padre)->nombre."</b>";
+            break;
+        case 23:
+            $mensaje="Has creado una nueva variación con el nombre <b>".Producto::model()->findByPk($id_producto)->nombre."</b>";
+            break;
+        case 24:
+            $mensaje="Has modificado la variación <b>".Producto::model()->findByPk($id_producto)->nombre."</b>";
+            break;
+        case 25:
+            $mensaje="Has aprobado la creación de la variación <b>".Producto::model()->findByPk($id_producto)->nombre."</b>";
+            break;
+        case 26:
+            $mensaje="Has rechazado la creacion de la variación <b>".Producto::model()->findByPk($id_producto)->nombre."</b>";
+            break;
+        case 27:
+            $mensaje="Has modificado el producto padre <b>".ProductoPadre::model()->findByPk($id_producto_padre)->nombre."</b>";
+            break;
+        case 28:
+            $mensaje="Has creado la marca <b>".Marca::model()->findByPk($id_marca)->nombre."</b>";
+            break;
+        case 29:
+            $mensaje="Has modificado la marca <b>".Marca::model()->findByPk($id_marca)->nombre."</b>";
+            break;
+        case 30:
+            $mensaje="Has desactivado la marca <b>".Marca::model()->findByPk($id_marca)->nombre."</b>";
+            break;
+        case 31:
+            $mensaje="Has activado la marca <b>".Marca::model()->findByPk($id_marca)->nombre."</b>";
+            break;
+        case 32:
+            $mensaje="Has creado el color <b>".Color::model()->findByPk($id_color)->nombre."</b>";
+            break;
+        case 33:
+            $mensaje="Has modificado el color <b>".Color::model()->findByPk($id_color)->nombre."</b>";
+            break; 
+        case 34:
+            $mensaje="Has desactivado el color <b>".Color::model()->findByPk($id_color)->nombre."</b>";
+            break;
+        case 35:
+            $mensaje="Has activado el color <b>".Color::model()->findByPk($id_color)->nombre."</b>";
+            break;
+        case 36:
+            $mensaje="Has creado la unidad <b>".Unidad::model()->findByPk($id_unidad)->nombre."</b>";
+            break;
+        case 37:
+            $mensaje="Has modificado la unidad <b>".Unidad::model()->findByPk($id_unidad)->nombre."</b>";
+            break;
+        case 38:
+            $mensaje="Has desactivado la unidad <b>".Unidad::model()->findByPk($id_unidad)->nombre."</b>";
+            break;
+        case 39:
+            $mensaje="Has activado la unidad <b>".Unidad::model()->findByPk($id_unidad)->nombre."</b>";
+            break;
+        case 40:
+            $mensaje="Has creado el atributo <b>".Atributo::model()->findByPk($id_atributo)->nombre."</b>";
+            break;
+        case 41:
+            $mensaje="Has modificado el atributo <b>".Atributo::model()->findByPk($id_atributo)->nombre."</b>";
+            break;
+        case 42:
+            $mensaje="Has desactivado el atributo <b>".Atributo::model()->findByPk($id_atributo)->nombre."</b>";
+            break;
+        case 43:
+            $mensaje="Has activado el atributo <b>".Atributo::model()->findByPk($id_atributo)->nombre."</b>";
+            break;
+        case 44:
+            $mensaje="Has cambiado una imagen del storefront de la categoria <b>".Categoria::model()->findByPk($id_categoria)->nombre."</b>";
+            break;
+        case 45:
+            $mensaje="Has creado la categoria <b>".Categoria::model()->findByPk($id_categoria)->nombre."</b>";
+            break;
+        case 46:
+            $mensaje="Has modificado la categoria <b>".Categoria::model()->findByPk($id_categoria)->nombre."</b>";
+            break;
+        case 47:
+            $mensaje="Has destacado la categoria <b>".Categoria::model()->findByPk($id_categoria)->nombre."</b>";
+            break;
+        case 48:
+            $mensaje="Le has quitado el destacado a la categoria <b>".Categoria::model()->findByPk($id_categoria)->nombre."</b>";
+            break;
+        case 49:
+            $mensaje="Has desactivado la categoria <b>".Categoria::model()->findByPk($id_categoria)->nombre."</b>";
+            break;
+        case 50:
+            $mensaje="Has activado la categoria <b>".Categoria::model()->findByPk($id_categoria)->nombre."</b>";
             break;
         }
         return $mensaje;   
