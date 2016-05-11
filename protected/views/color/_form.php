@@ -76,7 +76,9 @@ $(document).ready(function() {
 					}
 					else
 					{
-						window.location.href = '../color/admin/';
+						//window.location.href = '../color/admin/';
+						window.location.href = '<?php echo Yii::app()->createUrl('color/admin');?>';
+
 					}
 		       	}
 		       })

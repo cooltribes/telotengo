@@ -1,3 +1,8 @@
+<style>
+          .admini{
+             padding-top:21px;
+          }
+</style>
 <?php $this->breadcrumbs=array('Mi Perfil'); ?> 
 
 <div class="col-md-3 profile-leftBar">
@@ -13,8 +18,20 @@
      
      echo "');</script>"; 
      endif;  
-?>
-   <div class="col-md-9 profile-center">
+     if(!Yii::app()->user->isAdmin())
+     { ///cambio la manera como se muestra para el admin y para el usuario 
+    ?>
+        <div class="col-md-9 profile-center">
+<?php
+    }else
+    {?>
+        <div class="col-md-9 profile-center">
+            <h1>Ultimas Acciones</h1>
+        <div class="admini">
+    <?php
+    }?>
+    
+
 <?php if($entro==0): ?>
     <h1>Panel de Control</h1>
     <h3>Ordenes</h3>
@@ -70,21 +87,23 @@
           </div> 
        </div>
    </div>
-   <?php endif; ?>
-    <h3>Ultimas Acciones</h3>
+   <?php endif; 
+   if(!Yii::app()->user->isAdmin()):?>
+    <h1>Ultimas Acciones</h1>
+<?php endif;?>
     <table class="table table-striped" width="100%">
         <thead>
             <tr>
-                <th>Fecha</th>
-                <th>Hora</th>
-                <th>Acción</th>
+                <th class="col-md-2">Fecha</th>
+                <th class="col-md-2">Hora</th>
+                <th class="col-md-9">Acción</th>
             </tr>
         </thead>
         <tbody>
         <?php foreach($ultimosLog as $ult):?>
              <tr>
              <?php $fecha=explode(" ", Funciones::invertirFecha($ult->fecha));?>
-                <td><?php echo $fecha[0];?></td>
+                <td ><?php echo $fecha[0];?></td>
                 <td><?php echo $fecha[1];?></td>
                 <td><?php echo Log::model()->retornarAcciones($ult->id_user,$ult->id_orden, $ult->id_empresa, $ult->id_producto, 
                 $ult->id_email_invitacion, $ult->id_masterData, $ult->id_inbound, $ult->id_almacen, $ult->fecha, $ult->accion, 
@@ -96,7 +115,10 @@
         
     </table>
 </div>
-
+<?php 
+if(Yii::app()->user->isAdmin()):?>
+    </div>
+<?php endif;?>
 <script>
     
     function showInfo(id){
