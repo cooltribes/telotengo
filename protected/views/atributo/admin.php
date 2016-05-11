@@ -101,6 +101,7 @@ $this->breadcrumbs=array(
 	        <thead>
 	        <tr>
 	            <th scope="col">Nombre</th>
+	            <th scope="col">Status</th>
 	            <th scope="col">Editar</th>
 	        </tr>
 	        </thead>

@@ -72,6 +72,7 @@ class ColorController extends Controller
 				print_r($model->getError());
 			}
 			else {
+				Yii::app()->user->setFlash('success',"Color creado correctamente.");
 				$this->redirect(array('admin'));
 				
 			}
@@ -238,13 +239,28 @@ class ColorController extends Controller
 			$color = new Color; 
 			$color->nombre=$nombre;
 			$color->save();
+			$color->refresh();
+			Yii::app()->user->setFlash('success',"Color creado correctamente.");
+			$log=new Log;
+			$log->id_color=$color->id;
+			$log->fecha=date('Y-m-d G:i:s');
+			$log->id_admin=Yii::app()->user->id;
+			$log->accion=32; //has creado un color
 		}
 		if($guardar==2)
 		{
 			$model=Color::model()->findByPk($idAct);
 			$model->nombre=$nombre;
 			$model->save();
+			$model->refresh();
+			Yii::app()->user->setFlash('success',"Color modificado correctamente.");
+			$log=new Log;
+			$log->id_color=$model->id;
+			$log->fecha=date('Y-m-d G:i:s');
+			$log->id_admin=Yii::app()->user->id;
+			$log->accion=33; //has modificado un color
 		}
+		$log->save();
 		
 		
 	
@@ -253,9 +269,27 @@ class ColorController extends Controller
 	public function actionBorrar($id)
 	{
 	
-		$this->loadModel($id)->delete();
+		$model=$this->loadModel($id);
+		$model->activo=1-$model->activo;
+		$model->save();
+		$model->refresh();
+	    $log=new Log;
+		$log->id_color=$model->id;
+		$log->fecha=date('Y-m-d G:i:s');
+		$log->id_admin=Yii::app()->user->id;
+		if($model->activo==0)
+		{
+			$log->accion=34; //desactivo el color
+			$mensaje="Color desactivado correctamente."; 
+		}
+        else
+        {
+            $log->accion=35; //activo el color
+            $mensaje="Color activado correctamente."; 
+        }
+        $log->save();
 		
-		Yii::app()->user->setFlash('success',"Color eliminado correctamente.");
+		Yii::app()->user->setFlash('success',$mensaje);
 		
 		$this->redirect(array('admin'));
 	}

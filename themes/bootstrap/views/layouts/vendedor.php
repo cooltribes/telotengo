@@ -86,7 +86,7 @@ $assetUrl=Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('applicatio
                                                                  
                                                             </div>
                                                             <div class="col-md-9 col-sm-9 col-xs-9 no_right_padding title">
-                                                                 <div class="text user"><?php if(isset($empresas))echo $empresas->empresas->razon_social; else echo $usuario->empresa->razon_social?></div>
+                                                                 <div class="text user"><?php echo Profile::model()->retornarNombreCompleto(Yii::app()->user->id);?></div>
                                                                  <span class="caret user"></span>
                                                             </div>
                                                             

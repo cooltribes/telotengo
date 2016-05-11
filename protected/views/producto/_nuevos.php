@@ -38,7 +38,7 @@ echo '<tr id="'.$data->id.'">';
                 
                
                 <li><a class="pointer"href="<?php echo Yii::app()->createUrl('producto/modificarProducto', array('id'=>$data->id))?>"><i class="glyphicon glyphicon-cog"></i> Verificar</a></li>
-                 <li><a class="pointer"  onclick="rechazar(<?php echo $data->id;?>)"><i class='glyphicon glyphicon-remove'></i> Eliminar Producto</a></li>
+                 <li><a class="pointer"  onclick="rechazar(<?php echo $data->id;?>)"><i class='glyphicon glyphicon-remove'></i> Rechazar</a></li>
                 
                 
      <?php  echo '  

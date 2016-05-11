@@ -220,4 +220,10 @@ class Profile extends UActiveRecord
 		}
 	}
 
+	public function retornarNombreCompleto($id)
+	{
+		$model=Profile::model()->findByPk($id);
+		return $model->first_name." ".$model->last_name;
+	}
+
 }

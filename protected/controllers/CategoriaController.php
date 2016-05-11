@@ -31,7 +31,7 @@ class CategoriaController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete','create','update','upload','listimages', 'menu', 'categoriaRelacionada', 'catRela', 'crearAvanzar', 'categoriaAtributo', 'catAtrib','categoriaSeo', 'activarDesactivar','storefrontConf','formConfImage','setSeoAll'),
+				'actions'=>array('admin','delete','create','update','upload','listimages', 'menu', 'categoriaRelacionada', 'catRela', 'crearAvanzar', 'categoriaAtributo', 'catAtrib','categoriaSeo', 'activarDesactivar','storefrontConf','formConfImage','setSeoAll', 'activarDesactivarCategoria'),
 				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -133,29 +133,34 @@ class CategoriaController extends Controller
     	if(!is_null($id)) // si viene por get
             {
                 $categoria = Categoria::model()->findByPk($id);
+                $categoria->nuevo=0;
             }
         else{	    
 		
     		if(!isset($_POST['Categoria'])) // si es primera vez que entra
     		{
     			$categoria = new Categoria;
+    			$categoria->nuevo=1;
     		}else{
 			
 			
 			   if($_POST['Categoria']['oculta']=="") // si nunca se ha creado y se va a crear
 				{
 					$categoria = new Categoria;
+					$categoria->nuevo=1;
 				}
 				else 
 				{
 					$categoria = Categoria::model()->findByPk($_POST['Categoria']['oculta']); //si ya lo ha creado y sobrescribe
+					$categoria->nuevo=0;
 				}
             } 
         }
 		
         $this->performAjaxValidation($categoria);
         
-		if(isset($_POST['Categoria'])){   ///falta la imagen
+		if(isset($_POST['Categoria']))
+		{   ///falta la imagen
 
 			$categoria->attributes = $_POST['Categoria'];
 			$categoria->nomenclatura = $_POST['Categoria']['nomenclatura'];
@@ -230,6 +235,17 @@ class CategoriaController extends Controller
 		        	Yii::app()->user->setFlash('error',"Categoria no pudo ser guardada.");
 		        }
 			
+			$categoria->refresh();
+			$log=new Log;
+			$log->id_categoria=$categoria->id;
+			$log->fecha=date('Y-m-d G:i:s');
+			$log->id_admin=Yii::app()->user->id;
+			if($categoria->nuevo==1)
+				$log->accion=45; //creo la categoria
+	        else
+	            $log->accion=46; //modifico la categoria
+
+			$log->save();
 		}
 		
 		$this->render('create',array('model'=>$categoria));
@@ -597,7 +613,43 @@ class CategoriaController extends Controller
         if($model->destacado==1)
             $model->fecha_destacado=date("Y-m-d h:i:s");
         $model->save();
+        $model->refresh();                     
+    	$log=new Log;
+		$log->id_categoria=$model->id;
+		$log->fecha=date('Y-m-d G:i:s');
+		$log->id_admin=Yii::app()->user->id;
+		if($model->destacado==1)
+			$log->accion=47; //destaco
+		else
+			$log->accion=48; //quito destacado
+		$log->save();
         echo $model->destacado;
+	}
+	public function actionActivarDesactivarCategoria($id)
+	{
+		$model = Categoria::model()->findByPk($id);
+		$model->activo=1-$model->activo;
+		$model->save();
+		$model->refresh();
+		$log=new Log;
+		$log->id_categoria=$model->id;
+		$log->fecha=date('Y-m-d G:i:s');
+		$log->id_admin=Yii::app()->user->id;
+		if($model->activo==0)
+		{
+			$log->accion=49; //desactivo la categoria
+			$mensaje="Categoria desactivada correctamente."; 
+		}
+        else
+        {
+            $log->accion=50; //activo la categoria
+            $mensaje="Categoria activada correctamente."; 
+        }
+		$log->save();
+		Yii::app()->user->setFlash('success',$mensaje);
+		
+		$this->redirect(array('admin'));
+				echo $model->activo;
 	}
     
     public function actionStorefrontConf($id, $_=null, $index=null){ 
@@ -647,6 +699,12 @@ class CategoriaController extends Controller
                         $model->path=$url. $extension;
                        
                         if($model->save()){
+                        	$log=new Log;
+							$log->id_categoria=$model->categoria_id;
+							$log->fecha=date('Y-m-d G:i:s');
+							$log->id_admin=Yii::app()->user->id;
+							$log->accion=44;
+							$log->save();
                             if(!is_null($previa))    
                                 $previa->delete();
                             $this->redirect(array('categoria/storefrontConf', 'id'=>$model->categoria_id, '_'=>rand(0, 100)));

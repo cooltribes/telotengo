@@ -367,10 +367,20 @@ class EmpresasController extends Controller
 			{
 				Yii::app()->user->setFlash('success', 'Datos modificados correctamente.');
 				
-				if(Yii::app()->user->id == 1)
+				if(Yii::app()->user->isAdmin())
+				{
+					$log=new Log;
+					$log->id_admin=Yii::app()->user->id;
+					$log->id_empresa=$id;
+					$log->fecha=date('Y-m-d G:i:s');
+					$log->accion=16; //modifico a una empresa
+					$log->save();
 					$this->redirect(array('admin'));
+				}
 				else
+				{
 					$this->redirect(array('listado'));
+				}
 			}
 				
 		}

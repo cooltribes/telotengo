@@ -105,6 +105,12 @@ class UnidadController extends Controller
 			}
 			$model->rango=$cadena;
 			$model->save();
+			$log=new Log;
+			$log->id_unidad=$model->id;
+			$log->fecha=date('Y-m-d G:i:s');
+			$log->id_admin=Yii::app()->user->id;
+			$log->accion=36; //has creado una unidad
+			$log->save();
 		
 	}
 	public function actionActualizacion()
@@ -136,6 +142,13 @@ class UnidadController extends Controller
 			}
 			$model->rango=$cadena;
 			$model->save();
+			$model->refresh();
+			$log=new Log;
+			$log->id_unidad=$model->id;
+			$log->fecha=date('Y-m-d G:i:s');
+			$log->id_admin=Yii::app()->user->id;
+			$log->accion=37; //has modificado una unidad
+			$log->save();
 	}
 
 	/**
@@ -282,6 +295,22 @@ class UnidadController extends Controller
 		$model = Unidad::model()->findByPk($id);
 		$model->activo=1-$model->activo;
 		$model->save();
+		$model->refresh();
+		$log=new Log;
+		$log->id_unidad=$model->id;
+		$log->fecha=date('Y-m-d G:i:s');
+		$log->id_admin=Yii::app()->user->id;
+		if($model->activo==0)
+		{
+			$log->accion=38; //desactivo la unidad
+			$mensaje="Unidad desactivada correctamente."; 
+		}
+        else
+        {
+            $log->accion=39; //activo la unidad
+            $mensaje="Unidad activada correctamente."; 
+        }
+		$log->save();
 		echo $model->activo;
 		
 	}

@@ -46,6 +46,7 @@ class Producto extends CActiveRecord
 {
 	public $categoria_id=""; 
 	public $caracteristica1,$caracteristica2,$caracteristica3,$caracteristica4,$caracteristica5;
+	public $productoNuevo="";
 	
 	/**
 	 * Returns the static model of the specified AR class.

@@ -128,11 +128,19 @@ class AlmacenController extends Controller
 			if($model->save()){
 				$model->refresh();
 				$log=new Log;
-                $log->id_user=Yii::app()->user->id;
-                $log->id_almacen=$model->id;
-                $log->fecha=date('Y-m-d G:i:s');
-                $log->accion=15; //ha modificado un almacen
-                $log->save();
+				$log->id_almacen=$model->id;
+				$log->fecha=date('Y-m-d G:i:s');
+				if(!Yii::app()->user->isAdmin())
+				{ 
+	                $log->id_user=Yii::app()->user->id;
+	                $log->accion=15; //ha modificado un almacen
+            	}
+            	else
+            	{
+					$log->id_admin=Yii::app()->user->id;
+					$log->accion=21; //modifico un almacen de un usuario
+            	}
+            	$log->save();
 				Yii::app()->user->setFlash('success',"Almacen modificado con éxito");
 			}else{
 				Yii::app()->user->setFlash('error',"Error al modificar el Almacen");

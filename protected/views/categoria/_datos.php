@@ -25,6 +25,17 @@ echo"<tr>";
 		echo "<td id='pal".$data->id."'> Destacado </td>";
 	else
 		echo "<td id='pal".$data->id."'> No Destacado </td>";
+
+	if($data->activo==1)
+	{
+		$status="Desactivar";
+		echo "<td> Activo </td>";	
+	}
+	else
+	{
+		$status="activar";
+		echo "<td> Desactivo </td>";
+	}
 	
 	echo '<td>
 
@@ -50,7 +61,7 @@ echo"<tr>";
             }
         
 		echo	'<li><a tabindex="-1" href="'.Yii::app()->createUrl('/categoria/create',array('id'=>$data->id)).'" ><i class="glyphicon glyphicon-cog"></i> Editar </a></li>
-			<li><a tabindex="-1" href="'.Yii::app()->createUrl('/categoria/delete',array('id'=>$data->id)).'" ><i class="glyphicon glyphicon-trash"></i> Eliminar </a></li>
+			<li><a tabindex="-1" href="'.Yii::app()->createUrl('/categoria/activarDesactivarCategoria',array('id'=>$data->id)).'" ><i class="glyphicon glyphicon-pencil"></i> '.$status.' </a></li>
 			';
 			
 			

@@ -374,7 +374,8 @@ class ProfileController extends Controller
 		
 		}
          else{
-                $this->render('index',array('model'=>$model , 'avatar'=>$avatar, 'entro'=>$entro, 'identificador'=>$identificador,));
+				$ultimosLog=Log::model()->findAllByAttributes(array('id_admin'=>Yii::app()->user->id), array('order'=>'fecha desc', 'limit'=>13));
+                $this->render('index',array('ultimosLog'=>$ultimosLog,'model'=>$model , 'avatar'=>$avatar, 'entro'=>$entro, 'identificador'=>$identificador,));
             }
     }
 

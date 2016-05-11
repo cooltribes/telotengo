@@ -81,7 +81,7 @@
                 <th scope="col">Modelo</th>
                 <th scope="col">Padre</th>
                 <th scope="col">Color</th>
-                <th scope="col">Aprobado</th>
+                <th scope="col">Estatus</th>
                 <th scope="col">Activo</th>
                 <th scope="col">Acciones</th>
             </tr>
@@ -113,6 +113,24 @@
 </div>
 <script>
 
+    function alerta()
+    {
+        alert('No puede realizar acciones ya que el producto esta rechazado, diríjase al administrador de variaciones');
+    }
+    function rechazar(id)
+    {
+            
+            $.ajax({
+             url: "<?php echo Yii::app()->createUrl('producto/rechazarProducto') ?>",
+             type: 'POST',
+             data:{
+                    id:id,
+                   },
+            success: function (data) {
+                    location.reload();
+            }
+           });
+    }
     function desactivarActivar(id)
     {
             
