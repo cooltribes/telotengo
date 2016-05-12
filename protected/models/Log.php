@@ -264,6 +264,21 @@ class Log extends CActiveRecord
         case 50:
             $mensaje="Has activado la categoria <b>".Categoria::model()->findByPk($id_categoria)->nombre."</b>";
             break;
+        case 51:
+            $mensaje="Has cambiado tu nombre a <b>".Profile::model()->retornarNombreCompleto($id_user)."</b>";
+            break;
+        case 52:
+            $mensaje="Has modificado tu cargo a <b>".EmpresasHasUsers::model()->findByAttributes(array('users_id'=>$id_user))->rol."</b>";
+            break;
+        case 53:
+            $mensaje="Has modificado tu número de teléfono a <b>".Profile::model()->findByPk($id_user)->telefono."</b>";
+            break;
+        case 54:
+            $mensaje="<b>Has cambiado tu contraseña</b>";
+            break;
+        case 55:
+            $mensaje="<b>Has cambiado tu foto de perfil</b>";
+            break;
         }
         return $mensaje;   
     }
