@@ -3,11 +3,11 @@
 
 <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 	'id'=>'almacen-form',
-	'enableAjaxValidation'=>true,
-	'enableClientValidation'=>false,
+	'enableAjaxValidation'=>false,
+	'enableClientValidation'=>true,
 	'type'=>'horizontal',
 	'clientOptions'=>array(
-		'validateOnSubmit'=>false,  
+		'validateOnSubmit'=>true,  
 	),
 	'htmlOptions' => array(
         'enctype' => 'multipart/form-data',

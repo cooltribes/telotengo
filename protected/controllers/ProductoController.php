@@ -2046,6 +2046,20 @@ class ProductoController extends Controller
         $model = Producto::model()->findByPk($id);
         $model->estado=1-$model->estado;
         $model->save();
+        $model->refresh();
+        $log=new Log;
+		$log->id_producto=$model->id;
+		$log->fecha=date('Y-m-d G:i:s');
+		$log->id_admin=Yii::app()->user->id;
+		if($model->estado==0)
+		{
+			$log->accion=56; //desactivo la variacion
+		}
+        else
+        {
+            $log->accion=57; //activo la variacion
+        }
+        $log->save();
         echo $model->estado;
         
     }
@@ -2111,6 +2125,19 @@ class ProductoController extends Controller
         $model = Producto::model()->findByPk($id);
         $model->destacado=1-$model->destacado;
         $model->save();
+        $log=new Log;
+		$log->id_producto=$model->id;
+		$log->fecha=date('Y-m-d G:i:s');
+		$log->id_admin=Yii::app()->user->id;
+		if($model->destacado==0)
+		{
+			$log->accion=59; //quito destacado
+		}
+        else
+        {
+            $log->accion=58; //puso destacado
+        }
+        $log->save();
         echo $model->destacado;
 	}
 	

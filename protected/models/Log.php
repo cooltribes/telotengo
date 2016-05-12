@@ -279,6 +279,18 @@ class Log extends CActiveRecord
         case 55:
             $mensaje="<b>Has cambiado tu foto de perfil</b>";
             break;
+        case 56:
+            $mensaje="Has desactivado la variación <b>".Producto::model()->findByPk($id_producto)->nombre."</b>";
+            break;
+        case 57:
+            $mensaje="Has activado la variación <b>".Producto::model()->findByPk($id_producto)->nombre."</b>";
+            break;
+        case 58:
+            $mensaje="Has destacado la variación <b>".Producto::model()->findByPk($id_producto)->nombre."</b>";
+            break;
+        case 59:
+            $mensaje="Le has quitado el destacado a la variación <b>".Producto::model()->findByPk($id_producto)->nombre."</b>";
+            break;
         }
         return $mensaje;   
     }
