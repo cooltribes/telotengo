@@ -203,6 +203,7 @@
                                 success: function (data2) {
                                     
                                         $('#pa'+id).html(data2.html);
+                                        location.reload();
                                     
                                     
                               } });

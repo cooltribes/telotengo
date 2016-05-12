@@ -308,6 +308,7 @@ class MasterdataController extends Controller
             $producto->padre_id=$padre->id;
             if($producto->save()){
                     $producto->refresh();
+                    Yii::app()->user->setFlash('success',"Producto Padre asignado correctamente, ya puede verificar la información de la variación.");
                    $result['status']="ok";
                     $result['html']=$producto->padre->nombre;
             }else{

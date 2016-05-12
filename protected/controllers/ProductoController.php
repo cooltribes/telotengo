@@ -3260,7 +3260,7 @@ class ProductoController extends Controller
 			$log->accion=26; //rechazo  producto    
 		    $log->save();
         }
-
+       Yii::app()->user->setFlash('success',"Ha rechazado el producto ".$model->nombre); 
         echo $model->aprobado;
 	}
     
