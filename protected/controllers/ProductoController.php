@@ -917,7 +917,8 @@ class ProductoController extends Controller
 		if(!isset($_GET['id'])){
 			$this->redirect(array('producto/imagenes'));
 		}
-		else {
+		else 
+		{
 				$id = $_GET['id'];
 			
 			// make the directory to store the pic:
@@ -928,8 +929,11 @@ class ProductoController extends Controller
 				
 	        	$images = CUploadedFile::getInstancesByName('url');
 
-		        if (isset($images) && count($images) > 0) {
-		            foreach ($images as $image => $pic) {
+		        if (isset($images) && count($images) > 0) 
+		        {
+		         $guardar=false;   
+		            foreach ($images as $image => $pic) 
+		            {
 												
 						$imagen = new Imagenes;
 		                $imagen->producto_id = $_GET['id'];
@@ -940,77 +944,89 @@ class ProductoController extends Controller
 		                
 		               	if($imagen->save())
 						{
-													
-		                $nombre = Yii::getPathOfAlias('webroot').'/images/producto/'. $id .'/'. $imagen->id;
-		                $extension_ori = ".jpg";
-						$extension = '.'.$pic->extensionName;
-						//$pic->resize(600, 600);
-						
-		                if ($pic->saveAs($nombre . $extension)) {
-		
-		                    $imagen->url = '/images/producto/'. $id .'/'. $imagen->id .$extension;
-		                    $imagen->save();
+														
+			                $nombre = Yii::getPathOfAlias('webroot').'/images/producto/'. $id .'/'. $imagen->id;
+			                $extension_ori = ".jpg";
+							$extension = '.'.$pic->extensionName;
+							//$pic->resize(600, 600);
 							
-							Yii::app()->user->updateSession();
-							Yii::app()->user->setFlash('success',UserModule::t("La imágen ha sido cargada exitosamente."));
-			
-							$image = Yii::app()->image->load($nombre . $extension);
-		                    $image->save($nombre . "_orig".$extension); 
+			                if ($pic->saveAs($nombre . $extension))
+			                {
+								if($guardar==false)
+								{
+									$log=new Log;
+									$log->id_producto=$id;
+									$log->fecha=date('Y-m-d G:i:s');
+									$log->id_admin=Yii::app()->user->id;
+									$log->accion=60; //ha subido una imagen al producto
+									$log->save();
+									$guardar=true; 
+								}
+			                    $imagen->url = '/images/producto/'. $id .'/'. $imagen->id .$extension;
+			                    $imagen->save();
+								
+								Yii::app()->user->updateSession();
+								Yii::app()->user->setFlash('success',UserModule::t("La imágen ha sido cargada exitosamente."));
+				
+								$image = Yii::app()->image->load($nombre . $extension);
+			                    $image->save($nombre . "_orig".$extension); 
+								
+								if ($extension == '.png')
+									$image->save($nombre ."_orig". $extension_ori);
+								
+								/* thumb */
+								$image = Yii::app()->image->load($nombre . $extension);
+			                    $image->resize(300, 240);
+			                    $image->save($nombre . "_thumb".$extension);
+								
+								if ($extension == '.png'){
+									$image->resize(300, 240)->quality(95);	
+									//$image->super_crop(300,240,"top","left");
+									$image->save($nombre .  "_thumb".$extension_ori);	
+								}	
+								
+								/* productos thumb */
+								$image = Yii::app()->image->load($nombre . $extension);
+			                    $image->resize(90, 90);
+			                    $image->save($nombre . "_x90".$extension);
+								
+								if ($extension == '.png'){
+									$image->resize(90, 90)->quality(95);	
+									//$image->super_crop(90,90,"top","left");
+									$image->save($nombre .  "_x90".$extension_ori);	
+								}
+								
+								/* productos thumb retina */
+								$image = Yii::app()->image->load($nombre . $extension);
+			                    $image->resize(180, 180);
+			                    $image->save($nombre . "_x180".$extension);
+								
+								if ($extension == '.png'){
+									$image->resize(180, 180)->quality(95);	
+									//$image->super_crop(180,180,"top","left");
+									$image->save($nombre .  "_x180".$extension_ori);	
+								}		
+								
+								/* imagen principal del producto */
+								$image = Yii::app()->image->load($nombre . $extension); 
+			                    $image->resize(566, 566);
+			                    $image->save($nombre . $extension);
+								
+								if ($extension == '.png'){
+									$image->resize(566, 566)->quality(95);	
+									//$image->super_crop(566,566,"top","left");
+									$image->save($nombre . $extension_ori);		
+								}
+																		
+			                } 
+			                else 
+			                {
+			                	
+								echo "error: ";
+								
+			                    $imagen->delete();
+			                }
 							
-							if ($extension == '.png')
-								$image->save($nombre ."_orig". $extension_ori);
-							
-							/* thumb */
-							$image = Yii::app()->image->load($nombre . $extension);
-		                    $image->resize(300, 240);
-		                    $image->save($nombre . "_thumb".$extension);
-							
-							if ($extension == '.png'){
-								$image->resize(300, 240)->quality(95);	
-								//$image->super_crop(300,240,"top","left");
-								$image->save($nombre .  "_thumb".$extension_ori);	
-							}	
-							
-							/* productos thumb */
-							$image = Yii::app()->image->load($nombre . $extension);
-		                    $image->resize(90, 90);
-		                    $image->save($nombre . "_x90".$extension);
-							
-							if ($extension == '.png'){
-								$image->resize(90, 90)->quality(95);	
-								//$image->super_crop(90,90,"top","left");
-								$image->save($nombre .  "_x90".$extension_ori);	
-							}
-							
-							/* productos thumb retina */
-							$image = Yii::app()->image->load($nombre . $extension);
-		                    $image->resize(180, 180);
-		                    $image->save($nombre . "_x180".$extension);
-							
-							if ($extension == '.png'){
-								$image->resize(180, 180)->quality(95);	
-								//$image->super_crop(180,180,"top","left");
-								$image->save($nombre .  "_x180".$extension_ori);	
-							}		
-							
-							/* imagen principal del producto */
-							$image = Yii::app()->image->load($nombre . $extension); 
-		                    $image->resize(566, 566);
-		                    $image->save($nombre . $extension);
-							
-							if ($extension == '.png'){
-								$image->resize(566, 566)->quality(95);	
-								//$image->super_crop(566,566,"top","left");
-								$image->save($nombre . $extension_ori);		
-							}
-																	
-		                } else {
-		                	
-							echo "error: ";
-							
-		                    $imagen->delete();
-		                }
-						
 		                }
 		                else
 						{
@@ -1280,12 +1296,18 @@ class ProductoController extends Controller
 		    $model=Producto::model()->findByPk($id);
             if(is_null($model->seo))
             {
-               	 $seo=new Seo;
-           		 $seo->amigable=Funciones::cleanUrlSeo($model->nombre); 
-           		 $seo->save();
-           		 $seo->refresh();          
-           		 $model->id_seo =$seo->id;
-            	 $model->save(); 
+               	$seo=new Seo;
+           		$seo->amigable=Funciones::cleanUrlSeo($model->nombre); 
+           		$seo->save();
+           		$seo->refresh();          
+           		$model->id_seo =$seo->id;
+            	$model->save();
+            	$log=new Log;
+				$log->id_producto=$id;
+				$log->fecha=date('Y-m-d G:i:s');
+				$log->id_admin=Yii::app()->user->id;
+				$log->accion=61; //ha modificado el seo
+				$log->save(); 
             }
             else
             {
@@ -1305,8 +1327,14 @@ class ProductoController extends Controller
 
 			
 			if($seo->save()){
-			     Yii::app()->user->setFlash('success',"Datos guardados exitosamente.");
-                 $this->redirect(Yii::app()->baseUrl.'/producto/caracteristicas/'.$model->id);     
+			    Yii::app()->user->setFlash('success',"Datos guardados exitosamente.");
+			    $log=new Log;
+				$log->id_producto=$id;
+				$log->fecha=date('Y-m-d G:i:s');
+				$log->id_admin=Yii::app()->user->id;
+				$log->accion=61; //ha modificado el seo
+				$log->save(); 
+                $this->redirect(Yii::app()->baseUrl.'/producto/caracteristicas/'.$model->id);     
             }
 			
 					
@@ -1355,9 +1383,19 @@ class ProductoController extends Controller
                 $model->descripcion=$_POST['Producto']['descripcion'];
 				$model->caracteristicas=$var;
 				if($model->save())
+				{
+                    $log=new Log;
+					$log->id_producto=$id;
+					$log->fecha=date('Y-m-d G:i:s');
+					$log->id_admin=Yii::app()->user->id;
+					$log->accion=62; //ha modificado las caracteristicas del producto
+					$log->save(); 
                     $this->redirect(Yii::app()->baseUrl.'/producto/details/'.$model->id);
+				}
                 else
+                {
                 	print_r($model->getErrors());     
+                }
 				//HACER ALGO IR ALGUN LADO
 			
 					
@@ -1996,10 +2034,17 @@ class ProductoController extends Controller
 			//var_dump($existente); 
 			//var_dump($data);
 			//$this->render('admin');
-			if(Yii::app()->user->isAdmin()){
+			if(Yii::app()->user->isAdmin())
+			{
 			    $producto=Producto::model()->findByPk($id);
 			    $producto->aprobado=1;
 				$producto->save();
+			    $log=new Log;
+				$log->id_producto=$id;
+				$log->fecha=date('Y-m-d G:i:s');
+				$log->id_admin=Yii::app()->user->id;
+				$log->accion=63; //Has modificado los detalles de la variación
+				$log->save(); 
                /* if($producto){
                     if($producto->aprobado==0)
                         $this->redirect(array('revisionNuevos'));

@@ -11,15 +11,15 @@ $this->breadcrumbs=array(
 ?>
 
 <div class="container">
-
-    	<!-- COLUMNA PRINCIPAL DERECHA ON // OJO: esta de primera para mejorar el SEO sin embargo por CSS se ubica visualmente a la derecha -->
-		<h1 class="col-md-10">Administrar Atributos</h1>
-        <div class="col-md-2 margin_top_medium">
-                <?php
-         echo CHtml::link('Nuevo Atributo', $this->createUrl('create'), array('class'=>'btn form-control btn-success', 'role'=>'button'));
-                ?>
+		<div class="row-fluid">
+	    	<!-- COLUMNA PRINCIPAL DERECHA ON // OJO: esta de primera para mejorar el SEO sin embargo por CSS se ubica visualmente a la derecha -->
+			<h1 class="col-md-10">Administrar Atributos</h1>
+	        <div class="col-md-2 margin_top_medium">
+	                <?php
+	         echo CHtml::link('Nuevo Atributo', $this->createUrl('create'), array('class'=>'btn form-control btn-success', 'role'=>'button'));
+	                ?>
+        	</div>
         </div>
-
 		<hr/>
 
 				<?php if(Yii::app()->user->hasFlash('success')){?>

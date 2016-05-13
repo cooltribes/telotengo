@@ -94,7 +94,13 @@ class CategoriaController extends Controller
                 if(!$relacionada->save()){
                     print_r($relacionada->errors);
                     $bool=false;
-                }                
+                }        
+                $log=new Log;
+				$log->id_categoria=$_POST['categoria'];
+				$log->fecha=date('Y-m-d G:i:s');
+				$log->id_admin=Yii::app()->user->id;
+				$log->accion=64; //relaciono categorias
+				$log->save();        
                   
 			}
             Yii::app()->user->setFlash('success','Categorias relacionadas actualizadas');
@@ -290,6 +296,12 @@ class CategoriaController extends Controller
         {
             $seo->attributes=$_POST['Seo'];
             $seo->save();
+            $log=new Log;
+			$log->id_categoria=$id;
+			$log->fecha=date('Y-m-d G:i:s');
+			$log->id_admin=Yii::app()->user->id;
+			$log->accion=66; //le modifico el seo
+			$log->save(); 
                 
         }
 
@@ -601,6 +613,13 @@ class CategoriaController extends Controller
 				$categoriaAtributo->save();	
 			}
 		}
+
+        $log=new Log;
+		$log->id_categoria=$idAct;
+		$log->fecha=date('Y-m-d G:i:s');
+		$log->id_admin=Yii::app()->user->id;
+		$log->accion=65; //relaciono atributos
+		$log->save(); 
 
 		
 	}
