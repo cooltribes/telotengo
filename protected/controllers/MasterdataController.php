@@ -49,14 +49,17 @@ class MasterdataController extends Controller
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
 	 */
-	public function actionUpload(){
+	public function actionUpload()
+    {
          $producto = new Producto;
          $summary=0;
          $tags=$producto->getFileTags("all");
          $resumen=null;
                       
-         if(isset($_FILES["validar"])){
-            if(is_file($_FILES["validar"]["tmp_name"])){ 
+         if(isset($_FILES["validar"]))
+         {
+            if(is_file($_FILES["validar"]["tmp_name"]))
+            { 
                 $resumen=$this->validarMasterData(Yii::app()->yexcel->readActiveSheet($_FILES["validar"]["tmp_name"]));
                 if($resumen['errores']>0)
                     Yii::app()->user->setFlash('error',$resumen['resumen']);
@@ -72,8 +75,10 @@ class MasterdataController extends Controller
          }
          
           
-        if(isset($_FILES["cargar"])){
-            if(is_file($_FILES["cargar"]["tmp_name"])){
+        if(isset($_FILES["cargar"]))
+        {
+            if(is_file($_FILES["cargar"]["tmp_name"]))
+            {
                 $tempSheet=Yii::app()->yexcel->readActiveSheet($_FILES["cargar"]["tmp_name"]);
                 $resumen=$this->validarMasterData($tempSheet,true);
                 if($resumen['errores']==0)// no hay errores
@@ -86,7 +91,8 @@ class MasterdataController extends Controller
                     $master->uploaded_at=date("Y-m-d H:i:s");
                     $master->uploaded_by=Yii::app()->user->id;
                     $master->errors=$resumen['errores'];
-                    if($master->save()){
+                    if($master->save())
+                    {
                         $master->refresh();
                         $log=new Log;
                         $log->id_user=Yii::app()->user->id;
@@ -97,13 +103,16 @@ class MasterdataController extends Controller
                         $path="/docs/xlsMasterData/".$master->id.".".$ext;
                         $target_file = Yii::getPathOfAlias('webroot').$path;
                         Yii::app()->user->setFlash('success',$resumen['resumen']);
-                        if(move_uploaded_file($_FILES["cargar"]["tmp_name"], $target_file)){
+                        if(move_uploaded_file($_FILES["cargar"]["tmp_name"], $target_file))
+                        {
                             $master->path=$path;
-                            if($master->save()){
+                            if($master->save())
+                            {
                                 if(count($resumen["saved"])>0)
                                     Producto::model()->updateAll(array('masterdata_id'=>$master->id),"id IN (".implode(",",$resumen["saved"]).")");
                             }                                   
                         }
+                    $this->redirect(array('misMasterdata'));
                     }
                 }
                 else

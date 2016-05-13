@@ -268,7 +268,8 @@ $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
                             	if(Yii::app()->authManager->checkAccess("comprador", Yii::app()->user->id) || Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id)): 
                   					 ?>
                             	<div class="text-right">	<a href="detalle?producto_id=<?php echo $data->producto_id?>&almacen_id=<?php echo $data->almacen_id;?>" class="btn btn-small btn-unfilled ordenarIndividual" id="<?php echo $data->id;?>">Ver producto</a>  </div>
-                            	<?php endif; ?>                   
+                             
+                              <?php endif; ?>                   
                         </div>
                         <?php if($key<count($otros)-1): ?>
                          <div class="plainSeparator"></div> 
