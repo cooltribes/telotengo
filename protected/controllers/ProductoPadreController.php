@@ -236,13 +236,16 @@ class ProductoPadreController extends Controller
             $productoPadre->id_marca=$marca;
             $productoPadre->id_categoria=$categoria;
             $productoPadre->activo=$activo;
-            if($productoPadre->save()){
+            if($productoPadre->save())
+            {
             	$padre_id=$productoPadre->id;
-                if(isset($_GET['son'])){
+                if(isset($_GET['son']))
+                {
                     $son=Producto::model()->findbyPk($_GET['son']);
                     if($son){
                         $son->padre_id=$productoPadre->id;
                         $son->save();
+                        Yii::app()->user->setFlash('success',"Producto Padre asignado correctamente, ya puede verificar la información de la variación");
                         $result['status']="2";
                         $result['masterData']=$son->masterdata_id;                        
                     }                    
