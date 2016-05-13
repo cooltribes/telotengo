@@ -184,7 +184,7 @@ class Log extends CActiveRecord
             $mensaje="Has creado una nueva variación con el nombre <b>".Producto::model()->findByPk($id_producto)->nombre."</b>";
             break;
         case 24:
-            $mensaje="Has modificado la variación <b>".Producto::model()->findByPk($id_producto)->nombre."</b>";
+            $mensaje="Has modificado la información vital de la variación <b>".Producto::model()->findByPk($id_producto)->nombre."</b>";
             break;
         case 25:
             $mensaje="Has aprobado la creación de la variación <b>".Producto::model()->findByPk($id_producto)->nombre."</b>";
@@ -250,7 +250,7 @@ class Log extends CActiveRecord
             $mensaje="Has creado la categoria <b>".Categoria::model()->findByPk($id_categoria)->nombre."</b>";
             break;
         case 46:
-            $mensaje="Has modificado la categoria <b>".Categoria::model()->findByPk($id_categoria)->nombre."</b>";
+            $mensaje="Has modificado la información general de la categoria <b>".Categoria::model()->findByPk($id_categoria)->nombre."</b>";
             break;
         case 47:
             $mensaje="Has destacado la categoria <b>".Categoria::model()->findByPk($id_categoria)->nombre."</b>";
@@ -290,6 +290,27 @@ class Log extends CActiveRecord
             break;
         case 59:
             $mensaje="Le has quitado el destacado a la variación <b>".Producto::model()->findByPk($id_producto)->nombre."</b>";
+            break;
+        case 60:
+            $mensaje="Has modificado las imágenes de la variación <b>".Producto::model()->findByPk($id_producto)->nombre."</b>";
+            break;
+        case 61:
+            $mensaje="Has modificado el SEO de la variación <b>".Producto::model()->findByPk($id_producto)->nombre."</b>";
+            break;
+        case 62:
+            $mensaje="Has modificado las características de la variación <b>".Producto::model()->findByPk($id_producto)->nombre."</b>";
+            break;
+        case 63:
+            $mensaje="Has modificado los detalles de la variación <b>".Producto::model()->findByPk($id_producto)->nombre."</b>";
+            break;
+        case 64:
+            $mensaje="Has modificado las categorías relacionadas a la categoría <b>".Categoria::model()->findByPk($id_categoria)->nombre."</b>";
+            break;
+        case 65:
+            $mensaje="Has modificado los atributos de la categoría <b>".Categoria::model()->findByPk($id_categoria)->nombre."</b>";
+            break;
+        case 66:
+            $mensaje="Has modificado el SEO de la categoría <b>".Categoria::model()->findByPk($id_categoria)->nombre."</b>";
             break;
         }
         return $mensaje;   
