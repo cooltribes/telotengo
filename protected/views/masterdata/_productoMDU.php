@@ -12,6 +12,7 @@
      }else{ echo "N / D"; } ?><br/><small><b>Tono: </b><?php echo $data->color ?></small></td>
 <td scope="col" id="ap<?php echo $data->id;?>"><?php echo $data->aprobado?"Si":"No";?></td>
 <td scope="col" id="ac<?php echo $data->id;?>"><?php echo $data->estado?"Si":"No";?></td>
+<?php /*
 <!--<td scope="col">
     <div class="dropdown">
     <a class="dropdown-toggle btn" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="#">
@@ -26,4 +27,4 @@
      </ul>
      </div>
 </td>-->
-</tr>
+</tr> */?>

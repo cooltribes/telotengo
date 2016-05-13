@@ -43,6 +43,16 @@
 
 
 <h1>Detalle de Masterdata #<?php echo $model->id;?></h1>
+        <?php if(Yii::app()->user->hasFlash('success')){?>
+        <div class="alert in alert-block fade alert-success text_align_center">
+            <?php echo Yii::app()->user->getFlash('success'); ?>
+        </div>
+    <?php } ?>
+    <?php if(Yii::app()->user->hasFlash('error')){?>
+        <div class="alert in alert-block fade alert-danger text_align_center">
+            <?php echo Yii::app()->user->getFlash('error'); ?>
+        </div>
+    <?php } ?>
 <table id="resumen" class="margin_top" width="100%;">
     <thead>
         <tr>
@@ -230,6 +240,7 @@
                                     
                                         $('#pa'+id).html(data2.html);
                                         $('#pa'+id).attr("align","left");
+                                        location.reload();
                                     
                                     
                               } });

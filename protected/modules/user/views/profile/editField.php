@@ -53,11 +53,12 @@
         <?php echo $vars ?>
         editMode=true;
         $('#save-btn').attr('disabled','disabled');
+        var opcion='<?php echo $field;?>';
         $.ajax({
                   url: "editField",
                   type: "post",
                   dataType:'json',
-                  data: {  <?php echo $post ?>, editMode:editMode },
+                  data: {  <?php echo $post ?>, editMode:editMode, opcion:opcion },
                   success: function(data){
                       if(data.status=="ok"){
                           $('#changeField').modal('toggle');

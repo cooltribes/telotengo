@@ -296,7 +296,12 @@ class ProfileController extends Controller
 						$image = Yii::app()->image->load($nombre.$extension);
 						$image->resize(270, 270);
 						$image->save($nombre.'_thumb'.$extension);
-                        $avatar=true;				
+                        $avatar=true;
+                        $log=new Log;
+						$log->id_user=Yii::app()->user->id;
+						$log->fecha=date('Y-m-d G:i:s');
+						$log->accion=55;
+						$log->save();				
 					}
 				/*echo "s;kdfklsdf";
 				Yii::app()->end();*/
@@ -381,7 +386,8 @@ class ProfileController extends Controller
 
 public function actionEditField(){
      $data=array();
-     if(isset($_POST['editMode'])){
+    if(isset($_POST['editMode']))
+    {
        $save=false;
    
         $profile=Profile::model()->findByPk(Yii::app()->user->id);    
@@ -427,8 +433,28 @@ public function actionEditField(){
         } 
 
         if($save){
-          $data['status']="ok";
-            echo json_encode($data);
+          	$log=new Log;
+			$log->fecha=date('Y-m-d G:i:s');
+			$log->id_user=Yii::app()->user->id;
+			$log->fecha=date('Y-m-d G:i:s');
+			switch ($_POST['opcion'])
+        	{
+	       		case 1:
+	            	$log->accion=51;
+	            	break;
+	           	case 2:
+	            	$log->accion=52;
+	            	break;
+	            case 4:
+	            	$log->accion=53;
+	            	break;
+	            case 6:
+	            	$log->accion=54;
+	            	break;
+        	}
+        	$log->save();
+         	$data['status']="ok";
+          	echo json_encode($data);
         }else{
 
             $data['error']="";

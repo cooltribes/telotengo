@@ -57,7 +57,11 @@ class MasterdataController extends Controller
                       
          if(isset($_FILES["validar"])){
             if(is_file($_FILES["validar"]["tmp_name"])){ 
-                $resumen=$this->validarMasterData(Yii::app()->yexcel->readActiveSheet($_FILES["validar"]["tmp_name"]));             
+                $resumen=$this->validarMasterData(Yii::app()->yexcel->readActiveSheet($_FILES["validar"]["tmp_name"]));
+                if($resumen['errores']>0)
+                    Yii::app()->user->setFlash('error',$resumen['resumen']);
+                else
+                     Yii::app()->user->setFlash('success',$resumen['resumen']);          
             }
             else{
                 Yii::app()->user->updateSession();
@@ -72,7 +76,9 @@ class MasterdataController extends Controller
             if(is_file($_FILES["cargar"]["tmp_name"])){
                 $tempSheet=Yii::app()->yexcel->readActiveSheet($_FILES["cargar"]["tmp_name"]);
                 $resumen=$this->validarMasterData($tempSheet,true);
-                if(!$resumen["unproccesed"]){
+                if($resumen['errores']==0)// no hay errores
+                {
+                    
                     $inicial = basename($_FILES["cargar"]["name"]);        
                     $ext = pathinfo($inicial,PATHINFO_EXTENSION);
                     $master= new Masterdata;                    
@@ -90,6 +96,7 @@ class MasterdataController extends Controller
                         $log->save();
                         $path="/docs/xlsMasterData/".$master->id.".".$ext;
                         $target_file = Yii::getPathOfAlias('webroot').$path;
+                        Yii::app()->user->setFlash('success',$resumen['resumen']);
                         if(move_uploaded_file($_FILES["cargar"]["tmp_name"], $target_file)){
                             $master->path=$path;
                             if($master->save()){
@@ -98,6 +105,10 @@ class MasterdataController extends Controller
                             }                                   
                         }
                     }
+                }
+                else
+                {
+                    Yii::app()->user->setFlash('error',$resumen['resumen']);
                 }
                                
                 
@@ -297,6 +308,7 @@ class MasterdataController extends Controller
             $producto->padre_id=$padre->id;
             if($producto->save()){
                     $producto->refresh();
+                    Yii::app()->user->setFlash('success',"Producto Padre asignado correctamente, ya puede verificar la información de la variación.");
                    $result['status']="ok";
                     $result['html']=$producto->padre->nombre;
             }else{
