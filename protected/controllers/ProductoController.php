@@ -1449,8 +1449,9 @@ class ProductoController extends Controller
 	/* inventario */
 	public function actionInventario()
 	{
-		if(isset($_GET['id'])){
-			unset(Yii::app()->session['almacen_id']); 
+		if(isset($_GET['id']))
+		{
+			//unset(Yii::app()->session['almacen_id']); 
 			$id = $_GET['id'];
 			$producto = Producto::model()->findByPk($id);
             
@@ -1462,7 +1463,8 @@ class ProductoController extends Controller
 			}
 			else 
 			{
-				Yii::app()->session['almacen_id']=$almacen_id;	
+				
+				//Yii::app()->session['almacen_id']=$almacen_id;	
 				$inventario = Inventario::model()->findByAttributes(array('producto_id'=>$id, 'almacen_id'=>$almacen_id));
 			}
 
@@ -1471,34 +1473,22 @@ class ProductoController extends Controller
 			$inventario = new Inventario;
 			$id="";
 			$producto = new Producto;
-		}
+		} 
 
-		if(isset($_POST['Inventario'])){
-			//echo ($_POST['Inventario']['precio']*Yii::app()->params['IVA']['value'])+$_POST['Inventario']['precio'];
-			//Yii::app()->end();
+		if(isset($_POST['Inventario']))
+		{
+			//echo ($_POST['Inventario']['precio']*Yii::app()->params['IVA']['value'])+$_POST['Inventario']['precio'];	
+			if(Inventario::model()->findByAttributes(array('producto_id'=>$_POST['Inventario']['producto_id'], 'almacen_id'=>$_POST['Inventario']['almacen_id']))) // si existe el registro
+				$inventario=Inventario::model()->findByAttributes(array('producto_id'=>$_POST['Inventario']['producto_id'], 'almacen_id'=>$_POST['Inventario']['almacen_id']));
+			else 
+				$inventario = new Inventario;
+			
+			$inventario->almacen_id = $_POST['Inventario']['almacen_id'];
+			$inventario->iva=Yii::app()->params['IVA']['porcentaje'];
 			$inventario->almacen_id = $_POST['Inventario']['almacen_id'];
 			$inventario->producto_id = $_POST['Inventario']['producto_id'];
-            $inventario->iva = Yii::app()->params['IVA']['porcentaje'];
             $inventario->precio_iva = (Yii::app()->params['IVA']['value']*$_POST['Inventario']['precio'])+$_POST['Inventario']['precio'];
 			$inventario->fecha_act=	 date('Y-m-d G:i:s');
-
-			if(isset(Yii::app()->session['almacen_id']))
-			{
-				/*echo $inventario->almacen_id."///";
-				echo Yii::app()->session['almacen_id'];
-				Yii::app()->end();*/
-				
-				if($inventario->almacen_id!=Yii::app()->session['almacen_id']) // si elegio guardar la informacion en otro almacen
-				{	
-					if(Inventario::model()->findByAttributes(array('producto_id'=>$_POST['Inventario']['producto_id'], 'almacen_id'=>$_POST['Inventario']['almacen_id']))) // si existe el registro
-						$inventario=Inventario::model()->findByAttributes(array('producto_id'=>$_POST['Inventario']['producto_id'], 'almacen_id'=>$_POST['Inventario']['almacen_id']));
-					else 
-						$inventario = new Inventario;
-					
-					$inventario->almacen_id = $_POST['Inventario']['almacen_id'];
-					$inventario->producto_id = $_POST['Inventario']['producto_id'];
-				}
-			}
 			
 			$inventario->attributes = $_POST['Inventario'];
 			$inventario->sku = $_POST['Inventario']['sku'];

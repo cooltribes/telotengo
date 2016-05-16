@@ -23,7 +23,7 @@ echo '<tr id="'.$data->id.'">';
     	$padreCat=$data->padre->idCategoria->name(Categoria::model()->getDosPrimeras($data->padre->id_categoria));	 
     	echo "<td>".$data->nombre."<br/>".$data->modelo;
         ?>       
-            <span id="ap<?php echo $data->id?>" class="<?php echo $data->aprobado?"green-text":"red-text";?>"><?php echo $data->aprobado?"Aprobado":"Rechazado";?></span>
+            <span id="ap<?php echo $data->id?>" class="<?php echo $data->aprobado?"green-text":"red-text";?>"><?php if($data->aprobado==1)echo "Aprobado"; if($data->aprobado==0) echo "Pendiente";?></span>
             <span id="ac<?php echo $data->id?>" class="<?php echo $data->estado?"green-text":"red-text";?>"><?php echo $data->estado?"Activo":"Inactivo";?></span>
         <?php
     	echo "</td>";
