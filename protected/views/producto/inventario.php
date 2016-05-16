@@ -80,7 +80,7 @@ $this->breadcrumbs=array(
                                     <div style="position: absolute; right: 10px; top: 6px">%</div>
                                 </div>
                                 
-                                <?php echo $form->error($model,'iva');  ?>
+                                <?php //echo $form->error($model,'iva');  ?>
                                 
                             </div>
                             <div class="form-group"> 
@@ -88,7 +88,7 @@ $this->breadcrumbs=array(
                                 
                                 <?php echo $form->textField($model,'precio_iva',array('class'=>'form-control','id'=>'precio_iva','maxlength'=>150, 'disabled'=>'disabled', 'placeholder'=>'Precio para la venta (con IVA)')); ?>
                                 <?php echo $form->error($model,'precio_iva');  ?>
-                                   <?php //echo $form->hiddenField($model,'precio_iva'); ?>
+                                   <?php echo $form->hiddenField($model,'precio_iva'); ?>
                             </div>
 													
 							
