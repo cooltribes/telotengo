@@ -65,19 +65,33 @@ class ProductoController extends Controller
 	// seleccion entre crear o buscar
 	public function actionSeleccion() 
 	{
-		    
-		if(isset($_POST['busqueda'])||isset($_GET['query'])){
+		$producto = new Producto;
+        $producto->unsetAttributes();
+        $dataProvider = $producto->busquedaSeleccion();	     
+
+		if(isset($_POST['busqueda'])||isset($_GET['query']))
+		{
 			$query=isset($_POST['busqueda'])?$_POST['busqueda']:$_GET['query'];    
-			Yii::app()->session['busquedaPalabra']="";
-		    $producto = new Producto;
-            $producto->unsetAttributes();     
-            $producto->nombre = $query;        
-            $dataProvider = $producto->busquedaSeleccion();
+			$producto->nombre = $query;        
+        	$dataProvider = $producto->busquedaSeleccion();	
             Yii::app()->session['busquedaPalabra']=$query;      
             $this->render('seleccion',array('dataProvider'=>$dataProvider));
 		}
 		else
-			$this->render('seleccion');
+		{
+			if(isset($_GET['ajax']))
+			{
+				$producto->nombre = Yii::app()->session['busquedaPalabra'];      
+        		$dataProvider = $producto->busquedaSeleccion();	
+        		$this->render('seleccion',array('dataProvider'=>$dataProvider));
+			}
+			else
+			{
+				Yii::app()->session['busquedaPalabra']="";
+				$this->render('seleccion');
+			}
+		}
+
 	}
 	
 	public function actionClasificar()
