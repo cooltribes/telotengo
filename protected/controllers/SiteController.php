@@ -483,8 +483,9 @@ class SiteController extends Controller
 		//$this->layout='//layouts/start';
 		$empresas = EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id));		
         $model=Bolsa::model()->findByAttributes(array('empresas_id'=>$empresas->empresas_id));
-	    $bolsaInventario=BolsaHasInventario::model()->findAllByAttributes(array('bolsa_id'=>$model->id), array('order'=>'almacen_id asc'));
-        $this->render('carrito', array('model'=>$model, 'bolsaInventario'=>$bolsaInventario));
+	    $bolsaInventario=BolsaHasInventario::model()->findAllByAttributes(array('bolsa_id'=>$model->id), array('order'=>'fecha desc'));
+        $cambios=BolsaHasInventario::model()->findAllByAttributes(array('bolsa_id'=>$model->id, 'cambio'=>1));
+        $this->render('carrito', array('model'=>$model, 'bolsaInventario'=>$bolsaInventario, 'cambios'=>$cambios));
 	}
 
 	public function actionFormuPregunta()
