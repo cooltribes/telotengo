@@ -1179,6 +1179,7 @@ class BolsaController extends Controller
 			$bolsaInventario->cantidad+=$cantidad;
 
 		}
+		$bolsaInventario->fecha=date('Y-m-d G:i:s');
 		$bolsaInventario->almacen_id=$inventarios->almacen_id;		
 		$bolsaInventario->save();
 
@@ -1211,6 +1212,8 @@ class BolsaController extends Controller
 		if($opcion==1)
 		{
 			$bolsa->cantidad=$cantidad;
+			$bolsa->cambio=0;
+			$bolsa->fecha=date('Y-m-d G:i:s');
 			$bolsa->save();
 			$log=new Log;
 			$log->id_user=Yii::app()->user->id;

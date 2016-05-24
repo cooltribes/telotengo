@@ -29,12 +29,15 @@
 $diferente=0;
 $primera=0;
 $total=0;
+$superAlma=array();
 foreach($bolsaInventario as $key=>$carrito)
 {
-	if($diferente!=$carrito->almacen_id)
+	if(!in_array($carrito->almacen_id,$superAlma))
+	//if($diferente!=$carrito->almacen_id)
 	{
+		array_push($superAlma, $carrito->almacen_id);
 		$suma=0;	
-		$diferente=$carrito->almacen_id;	
+		//$diferente=$carrito->almacen_id;	
 		?>
 
 
@@ -71,6 +74,13 @@ foreach($bolsaInventario as $key=>$carrito)
                             foreach($bolsita as $bolsa) 
                             {
                             	$imagenPrincipal=Imagenes::model()->findByAttributes(array('producto_id'=>$bolsa->inventario->producto->id, 'orden'=>1));
+                            	if($bolsa->inventario->cantidad<$bolsa->cantidad)
+                                {
+                                	$bolsa->cantidad=$bolsa->inventario->cantidad;
+                                	$bolsa->cambio=1;
+                                	$bolsa->save();
+                                	$bolsa->refresh();
+                                }
                             	?>
                                 <tr>
                                 <td class="img"><img width="100%" src="<?php echo Yii::app()->getBaseUrl(true).$imagenPrincipal->url;?>"/></td>
@@ -210,7 +220,7 @@ Yii::app()->session['suma']=$total;
 			var maximo=$('#maximo'+id).val();
 			cantidad=parseInt(cantidad);
 			maximo=parseInt(maximo);
-			if(cantidad>=maximo)
+			if(cantidad>maximo)
 				return false;	
 			
 			$.ajax({

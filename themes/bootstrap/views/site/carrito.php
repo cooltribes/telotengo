@@ -1,4 +1,13 @@
-<?php $this->breadcrumbs=array('Carrito'); ?> 
+<style>
+.alert{padding:.75rem 1rem .75rem 3rem;border:1px solid #e8e8e8;background:#fff;color:#555459;border-left-width:5px;margin:0 auto 1rem;border-radius:.25rem;}
+.alert.alert_warning{border-left-color:#ff5b0b}
+.glyphicon-warning-sign:before{color: #ff5b0b;font-size:2.0rem;font-style:normal;}
+.modificaciones {padding-top: 12px;}
+.glyphicon:empty { width: 2em;
+}
+</style>
+<?php $this->breadcrumbs=array('Carrito'); 
+?> 
 <div class="col-md-12 margin_top_small">
     <h1 class="dark no_margin">INTENCIONES DE COMPRA</h1>
 </div>
@@ -22,6 +31,19 @@
             <div class="text-center mutedLink">
                 <a class="muted" href="#">Ver políticas de envíos y devoluciones</a>
             </div>
+            <?php 
+            if($cambios)
+            {
+                 ?>
+                <div class="modificaciones">
+                <p id="search_results_message_limit"  class="alert alert_warning">
+                    <i class="glyphicon glyphicon-warning-sign"></i>
+                    Algunos productos han cambiado debido a modificaciones en el inventario. <a href="/pricing" target="new" class="bold blueLink">Ver detalle</a>
+                </p>
+                </div>
+               <?php 
+            }
+            ?>
             <div class="orderedContainer margin_top_small" id="orderedContainer">
                 <div class="ordered">
                     

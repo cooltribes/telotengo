@@ -1084,6 +1084,7 @@ class OrdenController extends Controller
 			
 			$ordenInventario= new OrdenHasInventario;
 			$ordenInventario->cantidad=$bolsaRecorrido->cantidad;
+			$ordenInventario->monto=$bolsaRecorrido->inventario->precio;
 			$ordenInventario->inventario_id=$bolsaRecorrido->inventario_id;
 			$ordenInventario->almacen_id=$bolsaRecorrido->almacen_id;
 			$ordenInventario->orden_id=$orden->id;
@@ -1208,6 +1209,7 @@ class OrdenController extends Controller
 			$ordenInventario->inventario_id=$bolsaRecorrido->inventario_id;
 			$ordenInventario->almacen_id=$bolsaRecorrido->almacen_id;
 			$ordenInventario->orden_id=$orden->id;
+			$ordenInventario->monto=$bolsaRecorrido->inventario->precio;
 			$monto=$monto+$bolsaRecorrido->inventario->precio*$bolsaRecorrido->cantidad;
 			$ordenInventario->save();
 		}

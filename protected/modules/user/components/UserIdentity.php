@@ -46,6 +46,13 @@ class UserIdentity extends CUserIdentity
 			$user->ingresos+=1;
 			$user->lastvisit_at=date("Y-m-d H:i:s");
 			$user->save();
+			$user->refresh();
+
+			$historial= new HistorialVisitas;
+			$historial->id_user=$user->id;
+			$historial->fecha=date("Y-m-d H:i:s");
+			$historial->save();
+
 		}
 		return !$this->errorCode;
 	}

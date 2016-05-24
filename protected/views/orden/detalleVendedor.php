@@ -48,7 +48,7 @@
                                 <td class="name"> <?php echo $proc->inventario->producto->nombre;?></td>
                                 <td class="number"><?php echo $proc->inventario->producto->tlt_codigo;?></td>
                                 <td class="number"><?php echo $cantidad=$proc->cantidad;?></td>
-                                <td class="number"><?php echo $precio=$proc->inventario->precio;?> Bs</td>
+                                <td class="number"><?php echo $precio=$proc->monto;?> Bs</td>
                                 <td class="number highlighted"><?php echo $sub=$precio*$cantidad; ?>Bs</td>
                                 <td class="number highlighted"><?php echo $iva=$precio*$cantidad*0.12;?> Bs</td>
                                 <td class="number highlighted"><?php echo $tota=$sub+$iva;?> Bs</td>

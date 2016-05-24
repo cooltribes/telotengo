@@ -98,6 +98,7 @@ class BolsaHasInventario extends CActiveRecord
     
         protected function afterSave()
     {
+        HistorialBolsa::model()->updateAll(array('ultimo'=>0),'bolsa_has_inventario_id=:uid',array(':uid'=>$this->id));  
         $historial= new HistorialBolsa;
         $historial->users_id= Yii::app()->user->id;
         $historial->bolsa_has_inventario_id=$this->id;
@@ -114,7 +115,8 @@ class BolsaHasInventario extends CActiveRecord
     
     public function beforeSave() 
     {
-        #BeforeSave porque necesito la cantidad anterior    
+        #BeforeSave porque necesito la cantidad anterior
+        HistorialBolsa::model()->updateAll(array('ultimo'=>0),'bolsa_has_inventario_id=:uid',array(':uid'=>$this->id));  
         $historial= new HistorialBolsa;
         $historial->users_id= Yii::app()->user->id;
         $historial->bolsa_has_inventario_id=$this->id;
@@ -139,6 +141,7 @@ class BolsaHasInventario extends CActiveRecord
     
     public function beforeDelete()
     {
+      HistorialBolsa::model()->updateAll(array('ultimo'=>0),'bolsa_has_inventario_id=:uid',array(':uid'=>$this->id));  
       $historial= new HistorialBolsa;
       $historial->users_id= Yii::app()->user->id;
       $historial->bolsa_has_inventario_id=$this->id;
