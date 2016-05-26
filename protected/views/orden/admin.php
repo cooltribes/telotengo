@@ -193,7 +193,8 @@ $this->breadcrumbs=array(
 	            <th scope="col">Usuario Vendedor</th>
 	            <th scope="col">Empresa Compradora</th>
                 <th scope="col">Usuario Comprador</th>
-	            <th scope="col">Monto</th>
+	            <th scope="col">Monto sin IVA</th>
+	            <th scope="col">Monto con IVA</th>
 	            <th scope="col">Estado</th>
 	            <th scope="col">Acciones</th>
 	        </tr>

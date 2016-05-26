@@ -165,6 +165,7 @@ const SECTOR_EDUCACION = 16;
 			'documentoses' => array(self::HAS_MANY, 'Documentos', 'empresas_id'),
 			'empresasHasTblUsers' => array(self::HAS_MANY, 'EmpresasHasTblUsers', 'empresas_id'),
 			'bolsa' => array(self::HAS_ONE, 'Bolsa', 'empresas_id'),
+			'city' => array(self::BELONGS_TO, 'Ciudad', 'ciudad'),
 		);
 	}
 

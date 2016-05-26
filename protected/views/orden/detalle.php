@@ -1,3 +1,6 @@
+<style>
+.reducirNombre{font-size:20px;}
+</style>
 <?php $this->breadcrumbs=array('Mis Compras'=>Yii::app()->createUrl('orden/misCompras'),'Orden #'.$model->id); ?> 
 <div id="orderDetail" class="row-fluid margin_top">
     <h2>INTENCION DE COMPRA</h2>
@@ -6,10 +9,10 @@
 
     <div class="col-md-8 cart no_horizontal_padding margin_top_small">
         <div class="orderContainer margin_bottom">
-                <div class="title clearfix">
+                <div class="title clearfix"> 
                    <div class="row-fluid">
-                      <div class="col-md-6 no_horizontal_padding">ORDEN #<?php echo $model->id;?></div>
-                       <div class="col-md-6 no_horizontal_padding text-right"><?php echo $model->almacen->empresas->razon_social;?></div>
+                      <div class="col-md-10 no_horizontal_padding reducirNombre"><?php echo $model->almacen->empresas->razon_social;?></div>
+                      <div class="col-md-2 no_horizontal_padding text-right">ORDEN #<?php echo $model->id;?></div>
                    </div>
                 </div>
                 <div class="detail padding_left_small padding_right_small">
@@ -106,52 +109,110 @@
                     <h3>Información del Vendedor</h3>
           
                <ul>
+               <?php 
+                  if(!Yii::app()->user->isAdmin()): ?>
+                     <li>
+                              <span class="name">Fecha de Emisión:</span>
+                              <span class="value"><?php $date = date_create($model->fecha);echo date_format($date, 'd/m/Y H:i:s');?></span>
+                     </li>
+                  <?php
+                  endif; ?> 
                    <li>
-        
-                            <span class="name">N° de Orden:</span>
-                            <span class="value"><?php echo $model->id;?></span>
-                
-                   </li>
-            
-                   <li>
-                  
-                            <span class="name">Fecha de Emisión:</span>
-                            <span class="value"><?php $date = date_create($model->fecha);echo date_format($date, 'd/m/Y H:i:s');?></span>
-              
-                       
-                   </li>
-                   <li>
-                
                             <span class="name">Empresa:</span>
                             <span class="value"><?php echo $model->almacen->empresas->razon_social;?></span>
-                 
                    </li>
                    <li>
-                    
+                            <span class="name">Almacen:</span>
+                            <span class="value"><?php echo $model->almacen->alias;?></span>
+                   </li>
+                  <li>
+                            <span class="name">Estado:</span>
+                            <span class="value"><?php echo $model->almacen->provincia->nombre;?></span>
+                   </li>
+                  <li>
+                            <span class="name">Ciudad:</span>
+                            <span class="value"><?php echo $model->almacen->ciudad->nombre;?></span>
+                   </li>
+                   <li>
+                            <span class="name">Direccion:</span>
+                            <span class="value"><?php echo $model->almacen->ubicacion;?></span>
+                   </li>
+                   <li>
                             <span class="name">RIF:</span>
-                            <span class="value"><?php echo $model->almacen->empresas->rif;?></span>
-                   
+                            <span class="value"><?php echo $model->almacen->empresas->rif;?></span>                   
                    </li>
                    <li>
-               
                             <span class="name">Teléfono:</span>
-                            <span class="value"><?php echo $model->almacen->empresas->telefono;?></span>
-                      
-                       
+                            <span class="value"><?php echo $model->almacen->empresas->telefono;?></span>                       
                    </li>
-                   <li>
-                     
-                            <span class="name">Correo Electrónico:</span>
-                            <span class="value"><?php //echo $model->almacen->users->email;?></span>
-                       
-                   </li>
-                   
+                   <?php 
+                   if(!$model->estado==0):
+                   ?>
+                       <li>
+                               <span class="name"><?php if($model->estado==1)echo"Aprobado por:";else echo"Rechazado por:"?></span>
+                               <span class="value"><?php echo Profile::model()->retornarNombreCompleto($model->vendedor->id);?></span>  
+                       </li>
+
+                      <li>
+                               <span class="name">Correo Electrónico:</span>
+                               <span class="value"><?php echo $model->vendedor->email;?></span>
+                       </li>
+                   <?php 
+                   endif;
+                   ?>
                    
                </ul>
-                
-               
-                
-                
+              <?php 
+                if(Yii::app()->user->isAdmin()): ?>
+                    <br>
+                      <h3>Información del Comprador</h3>
+            
+                 <ul>
+
+                     <li>
+                              <span class="name">Fecha de Emisión:</span>
+                              <span class="value"><?php $date = date_create($model->fecha);echo date_format($date, 'd/m/Y H:i:s');?></span>  
+                     </li>
+                     <li>
+                              <span class="name">Empresa:</span>
+                              <span class="value"><?php echo $model->empresa->razon_social;?></span>
+                     </li>
+                     <li>
+                              <span class="name">Estado:</span>
+                              <span class="value"><?php echo $model->empresa->city->provincia->nombre;?></span>
+                     </li>
+                    <li>
+                              <span class="name">Ciudad:</span>
+                              <span class="value"><?php echo $model->empresa->city->nombre;?></span>
+                     </li>
+                     <li>
+                              <span class="name">Direccion:</span>
+                              <span class="value"><?php echo $model->empresa->direccion;?></span>
+                     </li>
+                     <li>
+                              <span class="name">RIF:</span>
+                              <span class="value"><?php echo $model->empresa->rif;?></span>
+                     </li>
+                     <li>
+                              <span class="name">Teléfono:</span>
+                              <span class="value"><?php echo $model->empresa->telefono;?></span> 
+                     </li>
+                     <li>
+                              <span class="name">Generado por</span>
+                              <span class="value"><?php echo Profile::model()->retornarNombreCompleto($model->users->id);?></span>  
+                     </li>
+                      <li>
+                            <span class="name">Correo Electrónico:</span>
+                            <span class="value"><?php echo $model->users->email;?></span>  
+                   </li>
+                     
+                     
+                 </ul>
+
+
+                <?php
+                endif; ?>
+
                <!-- <p>
                     <span class="name">Dirección de Envío:</span>
                     <span class="value">Edif. Los Mirtos, Piso 3 Oficina 3 San Cristóbal Edo. Táchira</span>

@@ -46,7 +46,7 @@ foreach($bolsaInventario as $key=>$carrito)
     
                       <a href="#" class="close" onclick='modalConfirm(<?php echo $carrito->almacen_id;?>,<?php echo $carrito->bolsa_id;?>)'><span class="glyphicon glyphicon-remove"></span></a>
                       <div class="col-md-6 no_horizontal_padding"></div>
-                      <div class="col-md-6 no_horizontal_padding text-right"><?php echo $carrito->almacen->empresas->razon_social;?></div>
+                      <div class="col-md-6 no_horizontal_padding text-right"><?php echo $carrito->almacen->empresas->razon_social." (".$carrito->almacen->nombre.")";?></div>
 
                 </div>
                 <div class="detail">

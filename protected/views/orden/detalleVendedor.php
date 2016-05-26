@@ -1,15 +1,36 @@
+<style>
+.reducirNombre{font-size:20px;}
+</style>
 <?php $this->breadcrumbs=array('Mis Ventas'=>Yii::app()->createUrl('orden/misVentas'),'Orden #'.$model->id); ?> 
 <div id="orderDetail" class="row-fluid margin_top">
-    <h2>SOLICITUD DE VENTA</h2>
-    
-    
+   
 
+        <?php 
+        if(!empty($model->disponibilidadInventario($model->id)))
+        {?>
+          <div class="alert in alert-block fade alert-danger text_align_left">
+          Los Siguientes Items no tienen inventario <br>
+          <ul>
+          <?php
+          foreach($model->disponibilidadInventario($model->id) as $noDisponible)
+          {
+              $modelado=inventario::model()->FindByPk($noDisponible);
+              echo "<li>* ".$modelado->producto->nombre; echo " solo dispone de ".$modelado->cantidad." unidades </li>";
+          }
+          ?>
+          </ul>  
+        </div>
+    <?php
+        } ?>
+    
+    <h2>SOLICITUD DE VENTA</h2>
     <div class="col-md-8 cart no_horizontal_padding margin_top_small">
         <div class="orderContainer margin_bottom">
                 <div class="title clearfix">
                    <div class="row-fluid">
-                      <div class="col-md-6 no_horizontal_padding">ORDEN #<?php echo $model->id;?></div>
-                       <div class="col-md-6 no_horizontal_padding text-right"><?php echo $model->empresa->razon_social;?></div>
+                      <div class="col-md-10 no_horizontal_padding reducirNombre">Almacen: <?php echo $model->almacen->alias;?></div>
+                      <div class="col-md-2 no_horizontal_padding text-right">ORDEN #<?php echo $model->id;?></div>
+                  
                    </div>
                 </div>
                 <div class="detail padding_left_small padding_right_small">
@@ -48,10 +69,10 @@
                                 <td class="name"> <?php echo $proc->inventario->producto->nombre;?></td>
                                 <td class="number"><?php echo $proc->inventario->producto->tlt_codigo;?></td>
                                 <td class="number"><?php echo $cantidad=$proc->cantidad;?></td>
-                                <td class="number"><?php echo $precio=$proc->monto;?> Bs</td>
-                                <td class="number highlighted"><?php echo $sub=$precio*$cantidad; ?>Bs</td>
-                                <td class="number highlighted"><?php echo $iva=$precio*$cantidad*0.12;?> Bs</td>
-                                <td class="number highlighted"><?php echo $tota=$sub+$iva;?> Bs</td>
+                                <td class="number"><?php $precio=$proc->monto; echo Funciones::formatPrecio($precio);?></td>
+                                <td class="number highlighted"><?php $sub=$precio*$cantidad; echo Funciones::formatPrecio($sub); ?></td>
+                                <td class="number highlighted"><?php $iva=$precio*$cantidad*Yii::app()->params['IVA']['value']; echo Funciones::formatPrecio($iva);?></td>
+                                <td class="number highlighted"><?php $tota=$sub+$iva; echo Funciones::formatPrecio($tota);?></td>
                                  <?php $acumulado+=$tota; ?>
                                 
                             </tr>
@@ -84,7 +105,16 @@
                
                    <p class="estadoOrden"><span id="estado" class="yellow-text"><?php echo $model->estados($model->estado);?></span></p> 
                    <div class="padding_bottom">
-           <?php    echo CHtml::submitButton('Aceptar', array('id'=>'aceptar','name'=>$model->id,'class'=>'btn-orange btn orange_border margin_left white')); 
+                   <?php 
+                   if($model->disponibilidadInventario()==true)
+                   { 
+                   ?>
+                      <a href="#" class="btn-orange btn orange_border margin_left white" data-toggle="tooltip"  title="Uno de los Items de la orden, no tiene suficiente inventario">Aceptar</a>
+           <?php   }
+                    else
+                    {
+                      echo CHtml::submitButton('Aceptar', array('id'=>'aceptar','name'=>$model->id,'class'=>'btn-orange btn orange_border margin_left white')); 
+                    } 
                     echo CHtml::submitButton('Cancelar', array('id'=>'cancelar','name'=>$model->id,'class'=>'btn btn-darkgray margin_left')); ?> 
                 </div>
                     
@@ -109,43 +139,44 @@
           
                <ul>
                    <li>
-        
                             <span class="name">N° de Orden:</span>
                             <span class="value"><?php echo $model->id;?></span>
-                
                    </li>
-            
                    <li>
-                  
                             <span class="name">Fecha de Emisión:</span>
-                            <span class="value"><?php $date = date_create($model->fecha);echo date_format($date, 'd/m/Y H:i:s');?></span>
-              
-                       
+                            <span class="value"><?php $date = date_create($model->fecha);echo date_format($date, 'd/m/Y H:i:s');?></span>  
                    </li>
                    <li>
-                
                             <span class="name">Empresa:</span>
                             <span class="value"><?php echo $model->empresa->razon_social;?></span>
-                 
                    </li>
                    <li>
-                    
+                            <span class="name">Estado:</span>
+                            <span class="value"><?php echo $model->empresa->city->provincia->nombre;?></span>
+                   </li>
+                  <li>
+                            <span class="name">Ciudad:</span>
+                            <span class="value"><?php echo $model->empresa->city->nombre;?></span>
+                   </li>
+                   <li>
+                            <span class="name">Direccion:</span>
+                            <span class="value"><?php echo $model->empresa->direccion;?></span>
+                   </li>
+                   <li>
                             <span class="name">RIF:</span>
                             <span class="value"><?php echo $model->empresa->rif;?></span>
-                   
                    </li>
                    <li>
-               
                             <span class="name">Teléfono:</span>
-                            <span class="value"><?php echo $model->empresa->telefono;?></span>
-                      
-                       
+                            <span class="value"><?php echo $model->empresa->telefono;?></span> 
                    </li>
                    <li>
-                     
+                              <span class="name">Generado por</span>
+                              <span class="value"><?php echo Profile::model()->retornarNombreCompleto($model->users->id);?></span>  
+                    </li>
+                      <li>
                             <span class="name">Correo Electrónico:</span>
-                            <span class="value"><?php echo $model->users->email;?></span>
-                       
+                            <span class="value"><?php echo $model->users->email;?></span>  
                    </li>
                    
                    
@@ -201,6 +232,7 @@
 </div>
 <script>
 		$(document).ready(function() {
+      $('[data-toggle="tooltip"]').tooltip(); 
 			$('#aceptar').click(function() {
                 $('#aceptar').prop( "disabled", true );
                 $('#cancelar').prop( "disabled", true );
