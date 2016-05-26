@@ -1273,6 +1273,7 @@ class OrdenController extends Controller
 		$estado=$_POST['estado'];
 		$model=Orden::model()->findByPk($id);
 		$model->estado=$estado;
+		$model->id_vendedor=Yii::app()->user->id;
 		$model->save();
 		
 		$model->refresh();

@@ -98,6 +98,7 @@ class Orden extends CActiveRecord
 			'almacen'=> array(self::BELONGS_TO, 'Almacen', 'almacen_id'),
 			'tipoPago' => array(self::BELONGS_TO, 'TipoPago', 'tipo_pago_id'),
 			'users' => array(self::BELONGS_TO, 'User', 'users_id'),
+			'vendedor' => array(self::BELONGS_TO, 'User', 'id_vendedor'),
 			'direccionEnvio' => array(self::BELONGS_TO, 'DireccionEnvio','direccionEnvio_id'),
 			'ordenHasInventarios' => array(self::HAS_MANY, 'OrdenHasInventario', 'orden_id'),
 			'totalpagado' => array(self::STAT, 'DetalleOrden', 'orden_id',
@@ -518,6 +519,34 @@ class Orden extends CActiveRecord
         }else
             return $this->search();
         
+    }
+
+    public function disponibilidadInventario($id=NULL) // si le paso parametros busca los elementos, si no retorna un true o false
+    {
+    	$cadaInventario=OrdenHasInventario::model()->findAllByAttributes(array('orden_id'=>$this->id));
+    	if($id==NULL)
+    	{
+	    	foreach($cadaInventario as $single)
+	    	{
+	    		if($single->cantidad>$single->inventario->cantidad)
+	    		{
+	    			return true;
+	    		}
+	    	}
+	    	return false;
+    	}
+    	else
+    	{
+    		$vector=array();
+	    	foreach($cadaInventario as $single)
+	    	{
+	    		if($single->cantidad>$single->inventario->cantidad)
+	    		{
+	    			array_push($vector, $single->inventario_id);
+	    		}
+	    	}
+	    	return $vector;
+    	}
     }
     
     

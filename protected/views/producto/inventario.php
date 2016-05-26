@@ -51,7 +51,7 @@ $this->breadcrumbs=array(
 							</div> */?>
 							
 							<div class="form-group"> 
-								<label>Condicion *</label>
+								<label>Condicion <span class="required">*</span></label>
 								 <?php echo $form->dropDownList($model,'condicion',array('nuevo'=>'Nuevo', 'usado'=>'Usado', 'reformado'=>'Reformado'),array('id'=>'condicion','class'=>'form-control','empty'=>'Seleccione condicion')); ?>
 								<?php echo $form->error($model,'condicion');  ?>
 							</div>
@@ -69,7 +69,7 @@ $this->breadcrumbs=array(
 							</div>
 							
 							<div class="form-group"> 
-								<label>Precio *</label>
+								<label>Precio <span class="required">*</span></label>
 								<?php echo $form->textField($model,'precio',array('class'=>'form-control','id'=>'precio','maxlength'=>150, 'placeholder'=>'Precio para la venta (sin IVA)')); ?>
 								<?php echo $form->error($model,'precio');  ?>
 							</div>
@@ -84,7 +84,7 @@ $this->breadcrumbs=array(
                                 
                             </div>
                             <div class="form-group"> 
-                                <label>Precio con IVA *</label>
+                                <label>Precio con IVA <span class="required">*</span></label>
                                 
                                 <?php echo $form->textField($model,'precio_iva',array('class'=>'form-control','id'=>'precio_iva','maxlength'=>150, 'disabled'=>'disabled', 'placeholder'=>'Precio para la venta (con IVA)')); ?>
                                 <?php echo $form->error($model,'precio_iva');  ?>
@@ -93,7 +93,7 @@ $this->breadcrumbs=array(
 													
 							
 							<div class="form-group">
-								<label>Cantidad a Vender *</label>
+								<label>Cantidad a Vender <span class="required">*</span></label>
 								<?php echo $form->textField($model,'cantidad',array('class'=>'form-control','maxlength'=>50)); ?>
 								<?php echo $form->error($model,'cantidad'); ?>
 							</div> 
@@ -132,6 +132,7 @@ $this->breadcrumbs=array(
 								}
 
 								//echo $form->error($model,'almacen_id'); ?>
+								
 							</div> 
 							
 						

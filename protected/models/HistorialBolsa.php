@@ -57,7 +57,7 @@ class HistorialBolsa extends CActiveRecord
 			'bolsa_has_inventario_id' => 'Bolsa Has Inventario',
 			'users_id' => 'Users',
 			'tipo' => 'Tipo',
-			'descripcion' => 'Descripcion',
+			'descripcion' => 'Descripción',
 		);
 	}
 

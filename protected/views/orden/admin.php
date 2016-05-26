@@ -66,7 +66,7 @@ $this->breadcrumbs=array(
              -->
 		 </div>   
 		 <hr/>    
-		    <div class="margin_top margin_bottom_small">Filtrar</div>
+		 <!--   <div class="margin_top margin_bottom_small">Filtrar</div> -->
 	   <form class="margin_bottom form-search no_horizontal_padding row-fluid clearfix">
                          <div class="col-md-3 no_horizontal_padding">
                              <input class="form-control no_radius" id="query" name="query" type="text" placeholder="N° o nombre de empresa">                   
@@ -193,7 +193,8 @@ $this->breadcrumbs=array(
 	            <th scope="col">Usuario Vendedor</th>
 	            <th scope="col">Empresa Compradora</th>
                 <th scope="col">Usuario Comprador</th>
-	            <th scope="col">Monto</th>
+	            <th scope="col">Monto sin IVA</th>
+	            <th scope="col">Monto con IVA</th>
 	            <th scope="col">Estado</th>
 	            <th scope="col">Acciones</th>
 	        </tr>
