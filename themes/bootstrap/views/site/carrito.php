@@ -3,8 +3,8 @@
 .alert.alert_warning{border-left-color:#ff5b0b}
 .glyphicon-warning-sign:before{color: #ff5b0b;font-size:2.0rem;font-style:normal;}
 .modificaciones {padding-top: 12px;}
-.glyphicon:empty { width: 2em;
-}
+.glyphicon:empty { width: 2em;}
+.glyphicon:empty.off  { width: 1em;}
 </style>
 <?php $this->breadcrumbs=array('Carrito'); 
 ?> 

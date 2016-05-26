@@ -73,7 +73,7 @@ if(Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id)):
             -->
 		 </div>   
 		 <hr/>    
-		    <div class="margin_top margin_bottom_small">Filtrar</div>
+		    <!--<div class="margin_top margin_bottom_small">Filtrar</div>-->
 	   <form class="margin_bottom form-search no_horizontal_padding row-fluid clearfix">
                          <div class="col-md-4 no_horizontal_padding">
                              <input class="form-control no_radius" id="query" name="query" type="text" placeholder="Número de Orden o Empresa Vendedora">                   

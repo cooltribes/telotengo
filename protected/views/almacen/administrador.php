@@ -28,7 +28,7 @@ $this->breadcrumbs=array(
 		    </div>
 		<?php } 		
 		   ?>
-		         <div>Buscar</div>
+		        <!-- <div>Buscar</div> -->
 
 
 	         <form class="margin_bottom form-search row-fluid">
