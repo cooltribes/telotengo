@@ -58,7 +58,7 @@ class Seo extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'descripcion' => 'Descripcion',
+			'descripcion' => 'Descripción',
 			'tags' => 'Tags',
 			'amigable' => 'URL Amigable',
  		);

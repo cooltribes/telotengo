@@ -214,7 +214,7 @@ $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
 									}
 									else
 									{?>
-										<td class="option">A traves del servicio de TELOTENGO</td>
+										<td class="option">A través del servicio del vendedor</td>
 									<?php	
 									}
                                 	?>

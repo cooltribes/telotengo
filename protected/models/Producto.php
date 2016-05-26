@@ -126,7 +126,7 @@ class Producto extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'nombre' => 'Nombre',
-			'descripcion' => 'Descripcion',
+			'descripcion' => 'Descripción',
 			'destacado' => 'Destacado',
 			'modelo' => 'Modelo',
 			'estado' => 'Estado',
