@@ -1,5 +1,6 @@
 <style>
 .reducirNombre{font-size:20px;}
+.bold{ font-weight: bold;};
 </style>
 <?php $this->breadcrumbs=array('Mis Ventas'=>Yii::app()->createUrl('orden/misVentas'),'Orden #'.$model->id); ?> 
 <div id="orderDetail" class="row-fluid margin_top">
@@ -8,7 +9,8 @@
         <?php 
         if(!empty($model->disponibilidadInventario($model->id)))
         {?>
-          <div class="alert in alert-block fade alert-danger text_align_left">
+
+          <div class="alert in alert-block fade alert-danger text_align_left bold">
           Los Siguientes Items no tienen inventario <br>
           <ul>
           <?php
@@ -85,7 +87,7 @@
 
                 <div class="summary text-right">
                     
-                    <span id="total">Total: Bs. <?php echo $acumulado;?></span>
+                    <span id="total">Total: <?php echo Funciones::formatPrecio($acumulado);?></span>
                    
                 </div>
             </div>

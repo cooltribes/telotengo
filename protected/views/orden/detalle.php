@@ -51,10 +51,10 @@
                                 <td class="name"> <?php echo $proc->inventario->producto->nombre;?></td>
                                 <td class="number"><?php echo $proc->inventario->producto->tlt_codigo;?></td>
                                 <td class="number"><?php echo $cantidad=$proc->cantidad;?></td>
-                                <td class="number"><?php echo $precio=$proc->monto;?> Bs</td>
-                                <td class="number highlighted"><?php echo $sub=$precio*$cantidad; ?>Bs</td>
-                                <td class="number highlighted"><?php echo $iva=$precio*$cantidad*0.12;?> Bs</td>
-                                <td class="number highlighted"><?php echo $tota=$sub+$iva;?> Bs</td>
+                                <td class="number"><?php $precio=$proc->monto; echo Funciones::formatPrecio($precio);?></td>
+                                <td class="number highlighted"><?php $sub=$precio*$cantidad; echo Funciones::formatPrecio($sub); ?></td>
+                                <td class="number highlighted"><?php $iva=$precio*$cantidad*Yii::app()->params['IVA']['value']; echo Funciones::formatPrecio($iva);?></td>
+                                <td class="number highlighted"><?php $tota=$sub+$iva; echo Funciones::formatPrecio($tota);?></td>
                                  <?php $acumulado+=$tota; ?>
                                 
                             </tr>

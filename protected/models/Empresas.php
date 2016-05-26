@@ -337,9 +337,9 @@ const SECTOR_EDUCACION = 16;
         return array('total'=>$contador['contador'],'pendiente'=>$pendiente['contador'],'rechazado'=>$rechazado['contador'],'aprobado'=>$aprobado['contador']);
     }
     
-    public function getEditoresCarrito($idProveedor=0,$all=false){
+    public function getEditoresCarrito($idProveedor=0,$all=false, $almacen_id){
         $array=array();
-        $sql="select h.users_id, h.id from tbl_historial_bolsa h JOIN tbl_bolsa_has_tbl_inventario bhi ON h.bolsa_has_inventario_id=bhi.id JOIN tbl_bolsa b ON b.id=bhi.bolsa_id JOIN tbl_almacen a ON a.id=bhi.almacen_id JOIN tbl_empresas e ON e.id=a.empresas_id WHERE a.empresas_id =".$idProveedor." AND b.empresas_id =".$this->id." order by h.fecha desc";
+        $sql="select h.users_id, h.id from tbl_historial_bolsa h JOIN tbl_bolsa_has_tbl_inventario bhi ON h.bolsa_has_inventario_id=bhi.id JOIN tbl_bolsa b ON b.id=bhi.bolsa_id JOIN tbl_almacen a ON a.id=bhi.almacen_id JOIN tbl_empresas e ON e.id=a.empresas_id WHERE a.empresas_id =".$idProveedor." AND b.empresas_id =".$this->id." and bhi.almacen_id=".$almacen_id." order by h.fecha desc";
         $pairs=Yii::app()->db->createCommand($sql)->queryAll();
         if($all){
             foreach($pairs as $key=>$pair){
