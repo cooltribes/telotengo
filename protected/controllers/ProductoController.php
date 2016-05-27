@@ -2637,6 +2637,7 @@ class ProductoController extends Controller
             $erroresCosto = "";
             $erroresPrecio = "";
             $erroresColumnasVacias = "";
+            $errorArchivoVacio="";
             $erroresSku = "";
 			$erroresSkuTodaAplicacion = "";
             $erroresSkuRepetidos= "";
@@ -2951,9 +2952,12 @@ class ProductoController extends Controller
 
                 $linea++;
             }
-            
 
             //Si hubo errores en marcas, cat, tallas, colores
+            if($lineaProducto == 0){
+                $errorArchivoVacio = "El archivo esta vacio<br><ul>
+                                 </ul><br>";
+            }        
             if($erroresColumnasVacias != ""){
                 $erroresColumnasVacias = "Las siguientes Columnas están vacías:<br><ul>
                                  {$erroresColumnasVacias}
@@ -3094,7 +3098,7 @@ class ProductoController extends Controller
                     $erroresCatRepetidas. $erroresCategorias . $erroresCatVacias.
                     $erroresPrecio . $erroresCosto . $erroresPeso .
                     $erroresColumnasVacias . $erroresSku . $erroresSkuRepetidos. $erroresSkuTodaAplicacion. $erroresTallaColorRepetidos. 
-					$erroresTipoCodigo. $erroresCodigo.$erroresCondicion. $erroresCantidadVender.$erroresAlmacen.$erroresSkuLocal;
+					$erroresTipoCodigo. $erroresCodigo.$erroresCondicion. $erroresCantidadVender.$erroresAlmacen.$erroresSkuLocal.$errorArchivoVacio;
             
             if($errores != ""){
                 
