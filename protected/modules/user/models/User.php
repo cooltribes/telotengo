@@ -626,6 +626,7 @@ class User extends CActiveRecord
             $criteria=new CDbCriteria;            
             
             $criteria->addCondition('type IN (1,2,3)');
+            $criteria->order='id desc';
     
             return new CActiveDataProvider(get_class($this), array(
                 'criteria'=>$criteria,
