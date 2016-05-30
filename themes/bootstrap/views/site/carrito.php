@@ -5,9 +5,46 @@
 .modificaciones {padding-top: 12px;}
 .glyphicon:empty { width: 2em;}
 .glyphicon:empty.off  { width: 1em;}
+.oscuro{font-size: 14px;}
+.modal2{overflow-y: auto; height:596px;}
+.colorPrecioModal{color:#ff5b0b;}
+
+
+
 </style>
 <?php $this->breadcrumbs=array('Carrito'); 
+if($cambios):
 ?> 
+<div id="myModal2" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg"> 
+
+    <!-- Modal content-->
+    <div class="modal-content modal2">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h3 class="modal-title colorPrecioModal" style="text-align-last: center;font-weight: bold;">Productos que han cambiado</h3>
+      </div>
+      <div class="modal-body oscuro">
+        <p>Los Siguientes productos han cambiado debido a modificaciones realizadas en el inventario por parte de las 
+        empresas vendedoras</p>
+        <ul>
+            <?php foreach($cambios as $row):?>
+                <li><b>* Producto: </b><?php echo $row->inventario->producto->nombre;?></li>
+                <ul>
+                    <li><b> Cantidad Disponible: </b><?php echo $row->inventario->cantidad;?></li>
+                    <li><b> Precio: </b> <em class="colorPrecioModal"><?php echo Funciones::formatPrecio($row->inventario->precio);?></em></li>
+                    <li><b> Empresa: </b><?php echo $row->inventario->almacen->empresas->razon_social;?></li>
+                    <li><b> Almacen: </b><?php echo $row->inventario->almacen->nombre;?></li>
+                </ul>
+                <br>
+            <?php endforeach;?>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+<?php endif;?>
 <div class="col-md-12 margin_top_small">
     <h1 class="dark no_margin">INTENCIONES DE COMPRA</h1>
 </div>
@@ -38,7 +75,8 @@
                 <div class="modificaciones">
                 <p id="search_results_message_limit"  class="alert alert_warning">
                     <i class="glyphicon glyphicon-warning-sign"></i>
-                    Algunos productos han cambiado debido a modificaciones en el inventario. <a href="/pricing" target="new" class="bold blueLink">Ver detalle</a>
+                    Algunos productos han cambiado debido a modificaciones en el inventario. <a data-toggle="modal" data-target="#myModal2" class="bold blueLink">Ver detalle</a>
+                    
                 </p>
                 </div>
                <?php 
