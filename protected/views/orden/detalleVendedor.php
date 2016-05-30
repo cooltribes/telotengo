@@ -7,10 +7,10 @@
    
 
         <?php 
-        if(!empty($model->disponibilidadInventario($model->id)))
+        if($model->estado ==0 && !empty($model->disponibilidadInventario($model->id)))
         {?>
 
-          <div class="alert in alert-block fade alert-danger text_align_left bold">
+          <div class="alert in alert-block fade alert-danger text_align_left bold existencia">
           Los Siguientes Items no tienen inventario <br>
           <ul>
           <?php
@@ -35,7 +35,7 @@
                   
                    </div>
                 </div>
-                <div class="detail padding_left_small padding_right_small">
+                <div class="detail padding_left_xsmall padding_right_xsmall">
                     <table width="100%">
                         <colgroup>
                         <col width="10%">
@@ -73,7 +73,7 @@
                                 <td class="number"><?php echo $cantidad=$proc->cantidad;?></td>
                                 <td class="number"><?php $precio=$proc->monto; echo Funciones::formatPrecio($precio);?></td>
                                 <td class="number highlighted"><?php $sub=$precio*$cantidad; echo Funciones::formatPrecio($sub); ?></td>
-                                <td class="number highlighted"><?php $iva=$precio*$cantidad*Yii::app()->params['IVA']['value']; echo Funciones::formatPrecio($iva);?></td>
+                                <td class="number"><?php $iva=$precio*$cantidad*Yii::app()->params['IVA']['value']; echo Funciones::formatPrecio($iva);?></td>
                                 <td class="number highlighted"><?php $tota=$sub+$iva; echo Funciones::formatPrecio($tota);?></td>
                                  <?php $acumulado+=$tota; ?>
                                 
@@ -280,6 +280,7 @@
 				        	$('#estado').html('Rechazada');
 				        	var variable="Rechazada";
 			        	}
+                $('.existencia').hide();
 						$('#tabla').append('<tr> <td> '+variable+' </td> <td>'+user+' </td> <td>'+fecha+' </td> </tr>');
 
 			       	}

@@ -15,7 +15,7 @@
                       <div class="col-md-2 no_horizontal_padding text-right">ORDEN #<?php echo $model->id;?></div>
                    </div>
                 </div>
-                <div class="detail padding_left_small padding_right_small">
+                <div class="detail padding_left_xsmall padding_right_xsmall">
                     <table width="100%">
                         <colgroup>
                         <col width="10%">
@@ -53,7 +53,7 @@
                                 <td class="number"><?php echo $cantidad=$proc->cantidad;?></td>
                                 <td class="number"><?php $precio=$proc->monto; echo Funciones::formatPrecio($precio);?></td>
                                 <td class="number highlighted"><?php $sub=$precio*$cantidad; echo Funciones::formatPrecio($sub); ?></td>
-                                <td class="number highlighted"><?php $iva=$precio*$cantidad*Yii::app()->params['IVA']['value']; echo Funciones::formatPrecio($iva);?></td>
+                                <td class="number"><?php $iva=$precio*$cantidad*Yii::app()->params['IVA']['value']; echo Funciones::formatPrecio($iva);?></td>
                                 <td class="number highlighted"><?php $tota=$sub+$iva; echo Funciones::formatPrecio($tota);?></td>
                                  <?php $acumulado+=$tota; ?>
                                 
@@ -67,7 +67,7 @@
 
                 <div class="summary text-right">
                     
-                    <span id="total">Total: Bs. <?php echo $acumulado;?></span>
+                    <span id="total">Total: <?php echo Funciones::formatPrecio($acumulado);?></span>
                    
                 </div>
             </div>

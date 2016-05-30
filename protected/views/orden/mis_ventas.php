@@ -1,3 +1,6 @@
+<style>
+.centrar{text-align: center;}
+</style>
 <?php
 /* @var $this FlashsaleController */
 /* @var $model Flashsale */
@@ -193,16 +196,25 @@ if(Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id)):
 	$template = '{summary}
 	    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-hover table-striped margin_top">
 	      <thead>
-            <tr>
-	            <th scope="col">N°</th>
-	            <th scope="col">Fecha de emisión</th>
-	            <th scope="col">Fecha última acción</th>
-	             <th scope="col">Estado</th>
-	             <th scope="col">Empresa Compradora</th>
-	            <th scope="col">Usuario Comprador</th> 
-	            <th scope="col">Monto sin IVA</th>
-	            <th scope="col">Monto con IVA</th>	            	           
-	            <th scope="col">Acciones</th>
+             <tr>
+            	<th scope="col" rowspan="2">N°</th>
+            	<th scope="col" rowspan="2">Fecha de emisión</th>
+
+            	<th colspan="2" class="centrar">Comprador</th>
+
+	            <th colspan="2" class="centrar">Montos</th>
+
+	             <th scope="col" rowspan="2">Última acción</th>
+
+	            <th scope="col" rowspan="2">Estado</th>
+	            <th scope="col" rowspan="2">Acciones</th>
+	        </tr>
+	        <tr>
+	        	<th class="centrar">Empresa</th>
+	            <th class="centrar">Usuario</th>
+
+	            <th class="centrar">Sin IVA</th>
+	            <th class="centrar">Con IVA</th>
 	        </tr>
 	       </thead>
 	    {items}

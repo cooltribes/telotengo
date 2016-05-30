@@ -34,6 +34,7 @@
     
     <td class="text-right padding_right"><?php echo Funciones::formatPrecio($data->monto); ?></td>
     <td class="text-right padding_right"><?php echo Funciones::formatPrecio(($data->monto*Yii::app()->params['IVA']['value'])+$data->monto); ?></td>  
+    <td><?php echo $data->ultima_fecha('d/m/Y'); ?></td>
     <td class="<?php echo $data->estados($data->estado, true); ?>"><?php echo $data->estados($data->estado); ?></td> 
     <td><a href="<?php echo Yii::app()->createUrl('orden/detalle', array('id'=>$data->id));?>">Ver detalles </a></td>
     
