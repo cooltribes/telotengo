@@ -1,3 +1,17 @@
+<style>
+.centrar{text-align: center;}
+
+    .table-striped > thead > tr > th{
+        border-left: solid 1px white;
+        border-top: solid 1px white;
+        border-right: 0px;
+        border-bottom: 0px;
+        color: white;
+        background: black;
+        vertical-align: top;
+    }
+
+</style>
 <?php
 /* @var $this FlashsaleController */
 /* @var $model Flashsale */
@@ -200,11 +214,20 @@ $this->breadcrumbs=array(
         <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-hover table-striped margin_top">
           <thead>
             <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Nombre y Apellido</th>
-                <th scope="col">E-mail</th>
-                <th scope="col">Empresa</th>
-                <th scope="col">Invitado por</th>
+                
+                <th scope="col" rowspan="2">ID</th>
+                <th scope="col" rowspan="2">Fecha</th>
+                <th colspan="2" class="centrar">Invitado</th>
+                <th colspan="3" class="centrar">Invitado Por</th>
+            </tr>
+            <tr>
+                <th class="centrar">Nombre</th>
+                <th class="centrar">E-mail</th>
+
+                <th class="centrar">Empresa</th>
+                <th class="centrar">Nombre</th>
+                <th class="centrar">E-mail</th>
+
             </tr>
            </thead>
         {items}

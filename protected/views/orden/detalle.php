@@ -1,7 +1,12 @@
 <style>
 .reducirNombre{font-size:20px;}
 </style>
-<?php $this->breadcrumbs=array('Mis Compras'=>Yii::app()->createUrl('orden/misCompras'),'Orden #'.$model->id); ?> 
+<?php 
+if(!Yii::app()->user->isAdmin())
+  $this->breadcrumbs=array('Mis Compras'=>Yii::app()->createUrl('orden/misCompras'),'Orden #'.$model->id); 
+else
+  $this->breadcrumbs=array('Ordenes'=>Yii::app()->createUrl('orden/admin'),'Orden #'.$model->id);   
+?> 
 <div id="orderDetail" class="row-fluid margin_top">
     <h2>INTENCION DE COMPRA</h2>
     
