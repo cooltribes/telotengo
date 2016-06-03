@@ -157,9 +157,9 @@ $subtotal = 0;
                              <?php echo date('d/m/Y', strtotime('+1 day'));?>  - <?php echo date('d/m/Y', strtotime('+1 week')); ?>
                           </p>
                         </div>
-                        <div class="text-center">
+                        <!--<div class="text-center">
                             <small><a href="#">Ver Políticias de Envíos y Devoluciones</a></small>
-                        </div>
+                        </div>-->
                     </div>
                             
                             <?php

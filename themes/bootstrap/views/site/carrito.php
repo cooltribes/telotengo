@@ -65,9 +65,9 @@ if($cambios):
             <div class="text-center margin_top_xsmall">
                 <a class="blueLink" href=" <?php echo Yii::app()->baseUrl; ?>/tienda">Seguir Comprando</a>
             </div>
-            <div class="text-center mutedLink">
+            <!--<div class="text-center mutedLink">
                 <a class="muted" href="#">Ver políticas de envíos y devoluciones</a>
-            </div>
+            </div>-->
             <?php 
             if($cambios)
             {

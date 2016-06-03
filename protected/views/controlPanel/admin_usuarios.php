@@ -90,26 +90,61 @@ $this->breadcrumbs=array(
     <hr>
     <h3 class="bolder">Usuarios registrados</h3>    
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-11 col-md-offset-1">
 ​         <div id="usuarios"  style="width: 1000px;"></div>
       </div>      
     </div>
     <hr>
     <h3 class="bolder">Login de Usuarios</h3>    
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-11 col-md-offset-1">
 ​         <div id="login"  style="width: 1000px;"></div>
       </div>          
     </div>
     
     <hr>
-    <h3 class="bolder">Tasa de retorno</h3>    
+    
     <div class="row">
       <div class="col-md-6 chart_status col-md-offset3 ">
+        <h3 class="bolder">Tasa de retorno</h3>   
 ​         <div id="tasaDeRetorno" style="margin-top:-31px;"></div>
       </div>      
       <div class="col-md-6">
-​           tabla
+          <h3 class="bolder col-md-6 chart_status col-md-offset3">Estadisticas</h3> 
+​        <table class="table" width="100%" style="margin-top:69px;">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Comprador</th>
+            <th>Compra/Venta</th>
+            <th>Vendedor</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Activos</td>
+            <td><?php echo $usuariosCompradoresActivos;?></td>
+            <td><?php echo $usuariosVendedoresActivos;?></td>
+            <td><?php echo $usuariosCompraVentaActivos;?></td>
+            <td><?php echo $totaUsuariosActivos;?></td>
+          </tr>
+          <tr>
+            <td>Inactivos</td>
+            <td><?php echo $usuariosCompradoresInactivos;?></td>
+            <td><?php echo $usuariosVendedoresInactivos;?></td>
+            <td><?php echo $usuariosCompraVentaInactivos;?></td>
+            <td><?php echo $usuariosCompradoresInactivos+$usuariosVendedoresInactivos+$usuariosCompraVentaInactivos;?></td>
+          </tr>
+          <tr>
+            <td>Numero de login</td>
+            <td><?php echo $sumatoriaLoginCompradores;?></td>
+            <td><?php echo $sumatoriaLoginVendedores;?></td>
+            <td><?php echo $sumatoriaLoginCompraVenta;?></td>
+            <td><?php echo $sumatoriaLoginCompradores+$sumatoriaLoginVendedores+$sumatoriaLoginCompraVenta;?></td>
+          </tr>
+        </tbody>
+      </table>
       </div>      
     </div>
 ​

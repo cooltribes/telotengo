@@ -133,10 +133,10 @@ $this->breadcrumbs=array(
           </tr>
           <tr>
             <td>Almacenes</td>
-            <td><?php echo $totalEmpresasCompradoras;?></td>
-            <td><?php echo $totalEmpresasCompraVenta;?></td>
-            <td><?php echo $totalEmpresasVendedoras;?></td>
-            <td><?php echo $sumatoria;?></td>
+            <td><?php echo $totalAlmacenComprador;?></td>
+            <td><?php echo $totalAlmacenVendedor;?></td>
+            <td><?php echo $totalAlmacenCompraVenta;?></td>
+            <td><?php echo $totalAlmacenCompraVenta+$totalAlmacenVendedor+$totalAlmacenComprador;?></td>
           </tr>
         </tbody>
       </table>

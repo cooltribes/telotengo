@@ -99,10 +99,36 @@ class ControlPanelController extends Controller
 		////////////////////////////////////////////////////////Usuarios con menos o igual a tres visitas/////////////
 		$sql="select * from tbl_users u join tbl_authAssignment asi on  u.id= asi.userid where u.ingresos<=3 and asi.itemname<>'admin'";
 		$usuarioMenosIgualTresVisitas=count(Yii::app()->db->createCommand($sql)->queryAll());
-		
-
-
-
+		////////////////////////////////////////////////////////usuarios compradores activos/////////////////////////////
+		$sql='select * from tbl_users u join tbl_authAssignment aut on aut.userid=u.id where u.status =1 and aut.itemname="comprador"';
+		$usuariosCompradoresActivos=count(Yii::app()->db->createCommand($sql)->queryAll());
+		////////////////////////////////////////////////////////usuarios vendedores activos/////////////////////////////
+		$sql='select * from tbl_users u join tbl_authAssignment aut on aut.userid=u.id where u.status =1 and aut.itemname="vendedor"';
+		$usuariosVendedoresActivos=count(Yii::app()->db->createCommand($sql)->queryAll());
+		////////////////////////////////////////////////////////usuarios compra-venta activos/////////////////////////////
+		$sql='select * from tbl_users u join tbl_authAssignment aut on aut.userid=u.id where u.status =1 and aut.itemname="compraVenta"';
+		$usuariosCompraVentaActivos=count(Yii::app()->db->createCommand($sql)->queryAll());
+		////////////////////////////////////////////////////////usuarios compradores inactivos/////////////////////////////
+		$sql='select * from tbl_users u join tbl_authAssignment aut on aut.userid=u.id where u.status =0 and aut.itemname="comprador"';
+		$usuariosCompradoresInactivos=count(Yii::app()->db->createCommand($sql)->queryAll());
+		////////////////////////////////////////////////////////usuarios vendedores inactivos/////////////////////////////
+		$sql='select * from tbl_users u join tbl_authAssignment aut on aut.userid=u.id where u.status =0 and aut.itemname="vendedor"';
+		$usuariosVendedoresInactivos=count(Yii::app()->db->createCommand($sql)->queryAll());
+		////////////////////////////////////////////////////////usuarios compra-venta inactivos/////////////////////////////
+		$sql='select * from tbl_users u join tbl_authAssignment aut on aut.userid=u.id where u.status =0 and aut.itemname="compraVenta"';
+		$usuariosCompraVentaInactivos=count(Yii::app()->db->createCommand($sql)->queryAll());
+		//////////////////////////////////////////////sumatoria de login de usuarios compradores//////////////////////////////////
+		$sql='select sum(u.ingresos) as ing from tbl_users u join tbl_authAssignment aut on aut.userid=u.id where aut.itemname="comprador"';
+		$sumatoriaLoginCompradores=Yii::app()->db->createCommand($sql)->queryRow();
+		$sumatoriaLoginCompradores=$sumatoriaLoginCompradores['ing'];
+		//////////////////////////////////////////////sumatoria de login de usuarios vendedores//////////////////////////////////
+		$sql='select sum(u.ingresos) as ing from tbl_users u join tbl_authAssignment aut on aut.userid=u.id where aut.itemname="vendedor"';
+		$sumatoriaLoginVendedores=Yii::app()->db->createCommand($sql)->queryRow();
+		$sumatoriaLoginVendedores=$sumatoriaLoginVendedores['ing'];
+		//////////////////////////////////////////////sumatoria de login de usuarios compra-venta//////////////////////////////////
+		$sql='select sum(u.ingresos) as ing from tbl_users u join tbl_authAssignment aut on aut.userid=u.id where aut.itemname="compraVenta"';
+		$sumatoriaLoginCompraVenta=Yii::app()->db->createCommand($sql)->queryRow();
+		$sumatoriaLoginCompraVenta=$sumatoriaLoginCompraVenta['ing'];
 
 		//////////////////////////////////////////////////////USUARIOS////////////////////////////////////////////////////
 		$sql='select  * from tbl_users where pendiente=0 and status=1 and type not in(0) and create_at between "'.$fechaIni.'" and "'.$fechaFinal.'" order by create_at asc';
@@ -195,6 +221,15 @@ class ControlPanelController extends Controller
 									 'usuarioMenosIgualTresVisitas'=>$usuarioMenosIgualTresVisitas,
 									 'todosUsers'=>$todosUsers,
 									 'totaUsuariosActivos'=>$totaUsuariosActivos,
+									 'usuariosCompradoresActivos'=>$usuariosCompradoresActivos,
+									 'usuariosVendedoresActivos'=>$usuariosVendedoresActivos,
+									 'usuariosCompraVentaActivos'=>$usuariosCompraVentaActivos,
+									 'usuariosCompradoresInactivos'=>$usuariosCompradoresInactivos,
+									 'usuariosVendedoresInactivos'=>$usuariosVendedoresInactivos,
+									 'usuariosCompraVentaInactivos'=>$usuariosCompraVentaInactivos,
+									 'sumatoriaLoginCompradores'=>$sumatoriaLoginCompradores,
+									 'sumatoriaLoginVendedores'=>$sumatoriaLoginVendedores,
+									 'sumatoriaLoginCompraVenta'=>$sumatoriaLoginCompraVenta,
 									 'fechaFinal'=>$fechaFinal,
 									 'fechaIni'=>$fechaIni, 
 									 ));
@@ -233,8 +268,11 @@ class ControlPanelController extends Controller
 		///////////////////////////////////////////Almacenes comprador////////////////////////////////////////////////
 		$sql="select * from tbl_almacen where empresas_id in (select id from tbl_empresas where rol='comprador')";
 		$totalAlmacenComprador=count(Empresas::model()->findAllBysql($sql));
-				///////////////////////////////////////////Almacenes vendedor//////////////////////////////////////////
+		///////////////////////////////////////////Almacenes vendedor//////////////////////////////////////////
 		$sql="select * from tbl_almacen where empresas_id in (select id from tbl_empresas where rol='vendedor')";
+		$totalAlmacenVendedor=count(Empresas::model()->findAllBysql($sql));
+		///////////////////////////////////////////Almacenes compra-venta//////////////////////////////////////////
+		$sql="select * from tbl_almacen where empresas_id in (select id from tbl_empresas where rol='compraVenta')";
 		$totalAlmacenCompraVenta=count(Empresas::model()->findAllBysql($sql));
 
 		/////////////////////////////////////////////Empresas////////////////////////////////////////////////////////////////
@@ -286,6 +324,9 @@ class ControlPanelController extends Controller
 									 'totalEmpresasCompraVenta'=>$totalEmpresasCompraVenta,
 									 'totalEmpresasCompradoras'=>$totalEmpresasCompradoras,
 									 'totalEmpresasVendedoras'=>$totalEmpresasVendedoras,
+									 'totalAlmacenComprador'=>$totalAlmacenComprador,
+									 'totalAlmacenVendedor'=>$totalAlmacenVendedor,
+									 'totalAlmacenCompraVenta'=>$totalAlmacenCompraVenta,
 									 'fechaFinal'=>$fechaFinal,
 									 'fechaIni'=>$fechaIni, 
 									 ));
