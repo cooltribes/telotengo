@@ -14,18 +14,23 @@ $this->breadcrumbs=array(
 <div class="container-fluid">   
   <div class="row">
     <div class="clearfix stats">
-             <div class="col-xs-2 stat">
-                 <span class="value"><?php echo count(Empresas::model()->findAll());?></span>
-                 <span class="legend">Total de empresas registradas</span>
+             <div class="col-xs-1 stat">
+                 <span class="value"><?php echo $sumatoria?></span>
+                 <span class="legend">Registradas</span>
              </div>
-             <div class="col-xs-2 stat">
-                 <span class="value"><?php echo User::model()->countByAttributes(array('status'=>1, 'pendiente'=>0));?></span>
-                 <span class="legend">Total de usuarios activos</span>
+             <div class="col-xs-1 stat">
+                 <span class="value"><?php echo Empresas::model()->countByAttributes(array('rol'=>'compraVenta'));?></span>
+                 <span class="legend">Compra-venta</span>
              </div>
-             <div class="col-xs-3 stat">
-                 <span class="value"><?php echo $sumatoria;?></span>
-                 <span class="legend">Total de ingresos a la plataforma</span>
+              <div class="col-xs-1 stat">
+                 <span class="value"><?php echo Empresas::model()->countByAttributes(array('rol'=>'vendedor'));?></span>
+                 <span class="legend">Vendedoras</span>
              </div>
+             <div class="col-xs-1 stat">
+                 <span class="value"><?php echo Empresas::model()->countByAttributes(array('rol'=>'comprador'));?></span>
+                 <span class="legend">Compradoras</span>
+             </div>
+
     </div>
 
   
@@ -57,9 +62,9 @@ $this->breadcrumbs=array(
     
   <div class="charts-region">
     <hr>
-    <h3 class="bolder">Empresas registradas</h3>  
+    <h3 class="bolder">Registradas</h3>  
     <div class="row">
-      <div class="col-md-12 ">
+      <div class="col-md-11 col-md-offset-1">
 ​        <div id="empresas"  style="width: 1000px;"></div>
         <!--
         <div class="row margin_top_small">
@@ -88,6 +93,7 @@ $this->breadcrumbs=array(
       </div>
            
     </div>
+    <!--
     <hr>
     <h3 class="bolder">Usuarios registrados</h3>    
     <div class="row">
@@ -102,18 +108,44 @@ $this->breadcrumbs=array(
 ​         <div id="login"  style="width: 1000px;"></div>
       </div>          
     </div>
-    
-    <h4>Status</h4>    
+     -->
     <hr>
+   <h3 class="bolder">Estadisticas</h3>    
     <div class="row">
       <div class="col-md-6 chart_status">
-​
+​        <table class="table" width="100%">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Compradora</th>
+            <th>Compra/Venta</th>
+            <th>Vendedora</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Empresas</td>
+            <td><?php echo $totalEmpresasCompradoras;?></td>
+            <td><?php echo $totalEmpresasCompraVenta;?></td>
+            <td><?php echo $totalEmpresasVendedoras;?></td>
+            <td><?php echo $sumatoria;?></td>
+          </tr>
+          <tr>
+            <td>Almacenes</td>
+            <td><?php echo $totalEmpresasCompradoras;?></td>
+            <td><?php echo $totalEmpresasCompraVenta;?></td>
+            <td><?php echo $totalEmpresasVendedoras;?></td>
+            <td><?php echo $sumatoria;?></td>
+          </tr>
+        </tbody>
+      </table>
       </div>      
       <div class="col-md-6">
 ​
       </div>      
     </div>
-​
+​    
     
   </div>
 </div>
@@ -125,44 +157,8 @@ $this->breadcrumbs=array(
 
     google.charts.load('current', {'packages':['corechart']});
 
-    google.charts.setOnLoadCallback(usuarios);
     google.charts.setOnLoadCallback(empresas);
-    google.charts.setOnLoadCallback(login);
 
-  
-
-    function usuarios() 
-    {
-            var vectorUsuarioCompraVenta=<?php echo json_encode($vectorUsuarioCompraVenta);?>;
-            var vectorUsuarioVendedor=<?php echo json_encode($vectorUsuarioVendedor);?>;
-            var vectorUsuarioComprador=<?php echo json_encode($vectorUsuarioComprador);?>;
-            var vectorFecha=<?php echo json_encode($vectorFecha);?>;
-            var maxNumb=<?php echo $maxNumb;?>;
-
-            var data = new google.visualization.DataTable();
-        //data.addColumn('number', 'Usuarios');
-        data.addColumn('string', 'Fecha');
-        data.addColumn('number', 'Compra/Venta');
-        data.addColumn('number', 'Vendedor');
-        data.addColumn('number', 'Comprador');
-
-        for(i = 0; i < vectorFecha.length; i++)
-          data.addRow([vectorFecha[i],vectorUsuarioCompraVenta[i],vectorUsuarioVendedor[i],vectorUsuarioComprador[i]]);
-
-        if(maxNumb<4) // 4 es el numero minimo para que la grafica se vea bien
-          maxNumb=4;
-
-        var options = {
-         // title: 'Usuarios',
-          hAxis: {title: 'Fecha',  titleTextStyle: {color: '#333'}},
-          vAxis: {title: 'Usuarios', minValue: 0, maxValue:maxNumb, format:'0'},
-          legend: {position: 'top', alignment: 'center'},
-
-        };
-
-        var chart = new google.visualization.AreaChart(document.getElementById('usuarios'));
-        chart.draw(data, options);
-      }
 
       function empresas() 
       {
@@ -194,39 +190,6 @@ $this->breadcrumbs=array(
         };
 
         var chart = new google.visualization.AreaChart(document.getElementById('empresas'));
-        chart.draw(data, options);
-      }
-
-      function login() 
-      {
-            var vectorLoginCompraVenta=<?php echo json_encode($vectorLoginCompraVenta);?>;
-            var vectorLoginVendedor=<?php echo json_encode($vectorLoginVendedor);?>;
-            var vectorLoginComprador=<?php echo json_encode($vectorLoginComprador);?>;
-            var vectorFechaLogin=<?php echo json_encode($vectorFechaLogin);?>;
-            var maxNumbLogin=<?php echo $maxNumbLogin;?>;
-
-            var data = new google.visualization.DataTable();
-        //data.addColumn('number', 'Usuarios');
-        data.addColumn('string', 'Fecha');
-        data.addColumn('number', 'Compra/Venta');
-        data.addColumn('number', 'Vendedor');
-        data.addColumn('number', 'Comprador');
-
-        for(i = 0; i < vectorFechaLogin.length; i++)
-          data.addRow([vectorFechaLogin[i],vectorLoginCompraVenta[i],vectorLoginVendedor[i],vectorLoginComprador[i]]);
-
-        if(maxNumbLogin<4) // 4 es el numero minimo para que la grafica se vea bien
-          maxNumbLogin=4;
-
-        var options = {
-         // title: 'Usuarios',
-          hAxis: {title: 'Fecha',  titleTextStyle: {color: '#333'}},
-          vAxis: {title: 'Login', minValue: 0, maxValue:maxNumbLogin, format:'0'},
-          legend: {position: 'top', alignment: 'center'},
-
-        };
-
-        var chart = new google.visualization.AreaChart(document.getElementById('login'));
         chart.draw(data, options);
       }
 
