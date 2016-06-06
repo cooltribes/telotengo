@@ -114,12 +114,21 @@ class Funciones {
         
     }
 
-    public static function invertirFecha($fecha)
+    public static function invertirFecha($fecha, $formatosinTiempo=false)
     {
-        $parte1 = explode(" ",$fecha);
-        $invert = explode("-",$parte1[0]); 
-        $fecha_invert = $invert[2]."-".$invert[1]."-".$invert[0]; 
-        return $fecha_invert." ".$parte1[1]; 
+        if($formatosinTiempo==true)
+        {
+            $invert = explode("-",$fecha); 
+            $fecha_invert = $invert[2]."-".$invert[1]."-".$invert[0]; 
+            return $fecha_invert; 
+        }
+        else
+        {
+            $parte1 = explode(" ",$fecha);
+            $invert = explode("-",$parte1[0]); 
+            $fecha_invert = $invert[2]."-".$invert[1]."-".$invert[0]; 
+            return $fecha_invert." ".$parte1[1]; 
+        }
     }
 
     public static function convertirVectoraCadena($vec)

@@ -829,6 +829,7 @@ class UserController extends Controller
 			$model->registro_password=1;
 			$model->newPassword($id, $rol);
 			$model->pendiente=0;
+			$model->create_at=date('Y-m-d G:i:s');
 			//$model->
 		}
 		

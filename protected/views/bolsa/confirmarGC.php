@@ -164,7 +164,7 @@ if (!Yii::app()->user->isGuest) { // que este logueado
                     <?php echo 'Fecha estimada de entrega' ?>:<br/><?php echo date('d/m/Y', strtotime('+1 day'));?>  - <?php echo date('d/m/Y', strtotime('+1 week'));  ?> </p>
             </div>
                 <p><a href="<?php echo Yii::app()->getBaseUrl(); ?>/site/politicas_de_devoluciones" title="Políticas de Envios y Devoluciones" target="_blank">
-                    <?php echo 'Ver politicas de envíos y devoluciones'; ?>
+                    <?php //echo 'Ver politicas de envíos y devoluciones'; ?>
                     </a>
                 </p>
                 <p class="muted"><i class="icon-comment"></i>
