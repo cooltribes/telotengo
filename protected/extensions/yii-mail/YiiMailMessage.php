@@ -158,8 +158,10 @@ class YiiMailMessage extends CComponent {
         
         public function activarPlantillaMandrill($plantilla = null){
             
+         // si se quiere enviar todo el correo sin uso de plantillas, no se le manda headers
+
             if($plantilla == null){
-                $plantilla = "plantilla-correos-transaccionales";
+                $plantilla = "correos";
             }
             $headers = $this->getHeaders();            
             $headers->addTextHeader('X-MC-Template', "$plantilla|main");

@@ -35,7 +35,7 @@ class ControlPanelController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin', 'adminUsuarios'),
+				'actions'=>array('admin', 'adminUsuarios', 'adminOrdenes'),
 				'users'=>array('admin'), 
 			),
 			array('deny',  // deny all users
@@ -66,6 +66,142 @@ class ControlPanelController extends Controller
 			
 		$this->render('admin',array('empresas'=>$empresas,'mensaje'=>$mensaje));
 	}*/
+
+	public function actionAdminOrdenes()
+	{
+		$fechaIni="";
+		$fechaFinal="";
+		if($_GET)
+		{
+			$fechaFinal=$_GET['fechaFinal'];
+			$fechaIni=$_GET['fechaIni'];
+		}
+		else
+		{
+			$fechaFinal=date('Y-m-d');
+			$fechaIni=date('Y-m-d', strtotime('-1 month'));
+		}
+		/////////////////////////////////////////////////////ORDENES//////////////////////////////////////////////////////
+		$sql='select  * from tbl_orden where fecha between "'.$fechaIni.'" and "'.$fechaFinal.'" order by fecha asc';
+		$todasOrdenes=Orden::model()->findAllBysql($sql);	
+		$maxNumb=0;
+		$ordenDate="";
+		$vectorOrdenAceptada=array();
+		$vectorOrdenPendiente=array();
+		$vectorOrdenCancelada=array();
+		$vectorFecha=array();
+		foreach($todasOrdenes as $each)
+		{
+			$fecha=date('Y-m-d',strtotime($each->fecha));
+			if($fecha!=$ordenDate)
+			{
+				$ordenDate=$fecha;
+				array_push($vectorFecha, Funciones::invertirFecha($fecha, true));
+
+				$sql="select * from tbl_orden where estado=1 and cast(fecha as DATE)='".$fecha."'";
+				$ordenAceptada=Orden::model()->findAllBySql($sql);
+				array_push($vectorOrdenAceptada, count($ordenAceptada));
+				if($maxNumb<count($ordenAceptada))
+					$maxNumb=count($ordenAceptada);
+
+				$sql="select * from tbl_orden where estado=0 and cast(fecha as DATE)='".$fecha."'";
+				$ordenPendiente=Orden::model()->findAllBySql($sql);
+				array_push($vectorOrdenPendiente, count($ordenPendiente));
+				if($maxNumb<count($ordenPendiente))
+					$maxNumb=count($ordenPendiente);
+
+				$sql="select * from tbl_orden where estado=2 and cast(fecha as DATE)='".$fecha."'";
+				$ordenRechazada=Orden::model()->findAllBySql($sql);
+				array_push($vectorOrdenCancelada, count($ordenRechazada));
+				if($maxNumb<count($ordenRechazada))
+					$maxNumb=count($ordenRechazada);
+			}
+		
+		}
+
+		//////////////////////////////////////ORDENES GENERADAS POR ROLES//////////////////////////////////////////////////////
+		$maxNumbPorRol=0;
+		$ordenDate="";
+		$vectorOrdenCompraVenta=array();
+		$vectorOrdenComprador=array();
+		foreach($todasOrdenes as $each)
+		{
+			$fecha=date('Y-m-d',strtotime($each->fecha));
+			if($fecha!=$ordenDate)
+			{
+				$ordenDate=$fecha;
+				$sql="select * from tbl_orden where users_id in (select userid  from tbl_authAssignment where itemname='compraVenta') and cast(fecha as DATE)='".$fecha."'";
+				$ordenCompraVenta=Orden::model()->findAllBySql($sql);
+				array_push($vectorOrdenCompraVenta, count($ordenCompraVenta));
+				if($maxNumbPorRol<count($ordenCompraVenta))
+					$maxNumbPorRol=count($ordenCompraVenta);
+
+				$sql="select * from tbl_orden where users_id in (select userid  from tbl_authAssignment where itemname='comprador')and cast(fecha as DATE)='".$fecha."'";
+				$ordenCOmprador=Orden::model()->findAllBySql($sql);
+				array_push($vectorOrdenComprador, count($ordenCOmprador));
+				if($maxNumbPorRol<count($ordenCOmprador))
+					$maxNumbPorRol=count($ordenCOmprador);
+
+			}
+		
+		}
+		/////////////////////////////////////////////////TASA DE ABANDONO////////////////////////////////////////////////////////////
+  		$intencionCompraAbandonada=HistorialBolsa::model()->countBySql('select count(distinct(h.bolsa_has_inventario_id)) from tbl_historial_bolsa h JOIN tbl_bolsa_has_tbl_inventario bhi ON h.bolsa_has_inventario_id=bhi.id JOIN tbl_bolsa b ON b.id=bhi.bolsa_id JOIN tbl_almacen a ON a.id=bhi.almacen_id JOIN tbl_empresas e ON e.id=a.empresas_id  WHERE ultimo=1 and TIMESTAMPDIFF(WEEK,h.fecha,now()) order by h.fecha desc');
+  		$intencionCompraTotal=HistorialBolsa::model()->countBySql('select count(*) from tbl_historial_bolsa h JOIN tbl_bolsa_has_tbl_inventario bhi ON h.bolsa_has_inventario_id=bhi.id JOIN tbl_bolsa b ON b.id=bhi.bolsa_id JOIN tbl_almacen a ON a.id=bhi.almacen_id JOIN tbl_empresas e ON e.id=a.empresas_id  WHERE ultimo=1 order by h.fecha desc');;
+ 		if($intencionCompraTotal>0)
+ 			$tasaAbandonoIntencionCompra=round($intencionCompraAbandonada*100/$intencionCompraTotal,2);
+ 		else
+ 			$tasaAbandonoIntencionCompra=0;
+		///////////////////////////////////////////Promedio de productos por orden///////////////////////////////////////////
+		$todasOrdenes=count(Orden::model()->findAll());
+		$sql="select sum(cantidad) as sumatoria from tbl_orden_has_inventario";
+		$sumatoria=Yii::app()->db->createCommand($sql)->queryRow();
+		$sumatoria=$sumatoria['sumatoria'];
+		////////////////////////////////////Valor medio de una orden////////////////////////////////////////////////////// 
+		$sql="select sum(monto) as montos from tbl_orden";
+		$sumatoriaMontos=Yii::app()->db->createCommand($sql)->queryRow();
+		$sumatoriaMontos=$sumatoriaMontos['montos'];
+		//////////////////////////////////Monto total de órdenes aprobadas////////////////////////////////////////////////
+		$sql="select sum(monto) as montos from tbl_orden where estado=1";
+		$sumatoriaMontosAprobados=Yii::app()->db->createCommand($sql)->queryRow();
+		$sumatoriaMontosAprobados=$sumatoriaMontosAprobados['montos'];
+		//////////////////////////////////Monto total de órdenes rechazadas////////////////////////////////////////////////
+		$sql="select sum(monto) as montos from tbl_orden where estado=2";
+		$sumatoriaMontosRechazados=Yii::app()->db->createCommand($sql)->queryRow();
+		$sumatoriaMontosRechazados=$sumatoriaMontosRechazados['montos'];
+		//////////////////////////////////Monto total de órdenes pendientes////////////////////////////////////////////////
+		$sql="select sum(monto) as montos from tbl_orden where estado=0";
+		$sumatoriaMontosPendientes=Yii::app()->db->createCommand($sql)->queryRow();
+		$sumatoriaMontosPendientes=$sumatoriaMontosPendientes['montos'];
+		//////////////////////////////////Tasa de conversion////////////////////////////////////////////////////////////
+		$sql='select sum(ingresos) as tota from tbl_users where id in (select userid from tbl_authAssignment where itemname="comprador" or itemname="compraVenta")';
+		$totaVisitaCompradorVendedor_Comprador=Yii::app()->db->createCommand($sql)->queryRow();
+		$totaVisitaCompradorVendedor_Comprador=$totaVisitaCompradorVendedor_Comprador['tota'];
+
+		$this->render('admin_ordenes', array(									 
+									 'fechaFinal'=>$fechaFinal,
+									 'fechaIni'=>$fechaIni,
+									 'maxNumb'=>$maxNumb,
+									 'vectorOrdenAceptada'=>$vectorOrdenAceptada,
+									 'vectorOrdenPendiente'=>$vectorOrdenPendiente,
+									 'vectorOrdenCancelada'=>$vectorOrdenCancelada,
+									 'vectorFecha'=>$vectorFecha,
+									 'maxNumbPorRol'=>$maxNumbPorRol,
+									 'vectorOrdenCompraVenta'=>$vectorOrdenCompraVenta,
+									 'vectorOrdenComprador'=>$vectorOrdenComprador,
+									 'maxNumbPorRol'=>$maxNumbPorRol,
+									 'tasaAbandonoIntencionCompra'=>$tasaAbandonoIntencionCompra,
+									 'intencionCompraTotal'=>$intencionCompraTotal,
+									 'intencionCompraAbandonada'=>$intencionCompraAbandonada,
+									 'todasOrdenes'=>$todasOrdenes,
+									 'sumatoria'=>$sumatoria,
+									 'sumatoriaMontos'=>$sumatoriaMontos,
+									 'sumatoriaMontosAprobados'=>$sumatoriaMontosAprobados,
+									 'sumatoriaMontosRechazados'=>$sumatoriaMontosRechazados,
+									 'sumatoriaMontosPendientes'=>$sumatoriaMontosPendientes,
+									 'totaVisitaCompradorVendedor_Comprador'=>$totaVisitaCompradorVendedor_Comprador,
+									 ));
+	}
 
 	public function actionAdminUsuarios()
 	{

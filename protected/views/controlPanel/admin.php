@@ -112,7 +112,7 @@ $this->breadcrumbs=array(
     <hr>
    <h3 class="bolder">Estadisticas</h3>    
     <div class="row">
-      <div class="col-md-6 chart_status">
+      <div class="col-md-6 chart_status col-md-offset-3">
 ​        <table class="table" width="100%">
         <thead>
           <tr>

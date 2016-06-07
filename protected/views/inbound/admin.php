@@ -1,3 +1,6 @@
+<style>
+.summary{padding-top:17px;}
+</style>
 <?php
 /* @var $this UnidadController */
 /* @var $model Unidad */

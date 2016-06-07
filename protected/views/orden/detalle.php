@@ -229,7 +229,7 @@ else
         <div class="separator margin_top_small margin_bottom_small"></div>
         
         <div class=" orderActions no_horizontal_padding margin_top_small">
-            <h4 class="margin_top_small">Acciones pendientes</h4>
+            <h4 class="margin_top_small">Acciones</h4>
             <table width="100%" class="table-striped" id="tabla">
                 <col width="30%">
                 <col width="40%">
