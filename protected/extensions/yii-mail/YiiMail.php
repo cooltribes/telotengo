@@ -245,15 +245,15 @@ class YiiMail extends CApplicationComponent
      * plataforma
     */
     public function activarMandrill() {
-    	/*$this->transportType = "smtp";
+    	$this->transportType = "smtp";
         
     	$this->transportOptions = array(
             "host" => "smtp.mandrillapp.com",
             "port" => 587,
-            "username" => "info@telotengo.com",
+            "username" => "Te lo Tengo",
             "password" => "1GOkG9_dtKzZivouvSRCqA",          
             
-        );*/
+        );
     }
     /**
     * Setear las opciones de Mandrill

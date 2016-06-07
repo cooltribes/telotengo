@@ -102,7 +102,7 @@
                  <th scope="col">Imagen</th>
                 <th scope="col">Producto</th>
                 <th scope="col">Producto Padre</th>
-                <th scope="col">Creación</th>
+                <th scope="col">Solicitado por</th>
                 <th scope="col">Acciones</th>
             </tr>
           </thead>

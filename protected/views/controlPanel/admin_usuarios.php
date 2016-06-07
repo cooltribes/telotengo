@@ -240,7 +240,7 @@ $this->breadcrumbs=array(
         data.addColumn('number', 'Slices');
         data.addRows([
           ['Mas de tres visitas', <?php echo $usuarioMasTresVisitas;?>],
-          ['Menos o igual a tres visitas', <?php echo $usuarioMenosIgualTresVisitas;?>],
+          ['Tres visitas o menos', <?php echo $usuarioMenosIgualTresVisitas;?>],
         ]);
 
         // Set chart options
