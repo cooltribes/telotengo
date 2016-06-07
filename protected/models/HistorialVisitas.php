@@ -27,7 +27,7 @@ class HistorialVisitas extends CActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('id_user, fecha', 'required'),
+            array( 'fecha', 'required'),
             array('id_user', 'numerical', 'integerOnly'=>true),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.

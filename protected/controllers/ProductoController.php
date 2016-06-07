@@ -622,6 +622,16 @@ class ProductoController extends Controller
             $otros = Inventario::model()->findAllBySql("select * from tbl_inventario where producto_id=".$producto_id." and almacen_id!=".$almacen_id." and almacen_id not in(select id from tbl_almacen where empresas_id=".$empresaPropia->id.")");
         else // si es admin
             $otros = Inventario::model()->findAllBySql("select * from tbl_inventario where producto_id=".$producto_id." and almacen_id!=".$almacen_id." and almacen_id not in(select id from tbl_almacen where empresas_id=".$empresa->id.")");
+        
+		if(!Yii::app()->user->isAdmin())
+		{
+			$historial= new HistorialVisitas;
+			$historial->producto_id=$producto_id;
+			$historial->fecha=date("Y-m-d H:i:s");
+			$historial->save();
+		}
+
+
         $this->render('detalle2', array('model'=>$model, 'inventario'=>$inventario, 'imagen'=>$imagen, 'imagenPrincipal'=>$imagenPrincipal, 'busqueda'=>$busqueda, 'empresa'=>$empresa, 'almacen'=>$almacen, 
        'otros'=>$otros, 'similares'=>$similares, 'subCategoria'=>$subCategoria, 'categoria'=>$categoria));
     }

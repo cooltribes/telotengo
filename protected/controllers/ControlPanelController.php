@@ -35,7 +35,7 @@ class ControlPanelController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin', 'adminUsuarios', 'adminOrdenes'),
+				'actions'=>array('admin', 'adminUsuarios', 'adminOrdenes', 'adminProductos'),
 				'users'=>array('admin'), 
 			),
 			array('deny',  // deny all users
@@ -66,6 +66,62 @@ class ControlPanelController extends Controller
 			
 		$this->render('admin',array('empresas'=>$empresas,'mensaje'=>$mensaje));
 	}*/
+	public function retornarProducto($id)
+	{
+		$sql='select sum(cantidad) as sumatoria from tbl_orden_has_inventario where orden_id in (select id from tbl_orden where estado=1) and inventario_id in (select id from tbl_inventario where producto_id="'.$id.'")';
+		$sumatoriaMontosPendientes=Yii::app()->db->createCommand($sql)->queryRow();
+		if($sumatoriaMontosPendientes['sumatoria']=="")
+			return '0';
+		else
+			return $sumatoriaMontosPendientes['sumatoria'];
+	}
+	public function actionAdminProductos()
+	{
+		$fechaIni="";
+		$fechaFinal="";
+		if($_GET)
+		{
+			$fechaFinal=$_GET['fechaFinal'];
+			$fechaIni=$_GET['fechaIni'];
+		}
+		else
+		{
+			$fechaFinal=date('Y-m-d');
+			$fechaIni=date('Y-m-d', strtotime('-1 month'));
+		}
+
+
+		/////////////////////////////////Total de productos padres//////////////////////////////////////////////////////////
+		$todosPadres=count(ProductoPadre::model()->findAll());
+		/////////////////////////////////Total de productos padres activos//////////////////////////////////////////////////////////
+		$todosPadresActivos=ProductoPadre::model()->countByAttributes(array('activo'=>1));
+		/////////////////////////////////Total de productos padres Inactivos//////////////////////////////////////////////////////////
+		$todosPadresInactivos=ProductoPadre::model()->countByAttributes(array('activo'=>0));
+		/////////////////////////////////Total de variaciones//////////////////////////////////////////////////////////
+		$variaciones=count(Producto::model()->findAll());
+		/////////////////////////////////Total de variaciones activos//////////////////////////////////////////////////////////
+		$variacionesActivas=Producto::model()->countByAttributes(array('aprobado'=>1));
+		/////////////////////////////////Total de variaciones inactivos//////////////////////////////////////////////////////////
+		$variacionesInactivas=Producto::model()->countByAttributes(array('aprobado'=>2));
+		/////////////////////////////////Total de variaciones pendientes//////////////////////////////////////////////////////////
+		$variacionesPendientes=Producto::model()->countByAttributes(array('aprobado'=>0));
+		/////////////////////////////Visitas de un producto//////////////////////////////////////////////////
+		$sql='select distinct(count(producto_id)) as cantidad, producto_id from tbl_historial_visitas where producto_id<>"" group by producto_id';
+		$productosVisitas=Yii::app()->db->createCommand($sql)->queryAll();
+
+		$this->render('admin_productos', array(
+									   'fechaFinal'=>$fechaFinal,
+									   'fechaIni'=>$fechaIni,
+									   'todosPadres'=>$todosPadres,
+									   'todosPadresActivos'=>$todosPadresActivos,
+									   'todosPadresInactivos'=>$todosPadresInactivos,
+									   'variaciones'=>$variaciones,
+									   'variacionesActivas'=>$variacionesActivas,
+									   'variacionesInactivas'=>$variacionesInactivas,
+									   'variacionesPendientes'=>$variacionesPendientes,
+									   'productosVisitas'=>$productosVisitas,
+									   ));
+	}
 
 	public function actionAdminOrdenes()
 	{
@@ -304,7 +360,7 @@ class ControlPanelController extends Controller
 		
 		}
 		/////////////////////////////Login de usuarios por rol(solo cuenta un solo login por dia)//////////////////////////////////////////////////
-		$sql='select distinct(cast(fecha as DATE)) as dates from tbl_historial_visitas where fecha between "'.$fechaIni.'" and "'.$fechaFinal.'"';
+		$sql='select distinct(cast(fecha as DATE)) as dates from tbl_historial_visitas where id_user<>"" and fecha between "'.$fechaIni.'" and "'.$fechaFinal.'"';
 		$todosLogin=Yii::app()->db->createCommand($sql)->queryAll();
 		$maxNumbLogin=0;
 		$loginDate="";
