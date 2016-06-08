@@ -1142,7 +1142,7 @@ class OrdenController extends Controller
 		     $body=$this->renderPartial("detalleMail", array('model'=>$orden, 'productoOrden'=>$productoOrden, 'infoFrom'=>"Vendedor"), true); 
 		
 			
-			$message->subject="Haz hecho una compra en Telotengo";
+			$message->subject="Has hecho una compra en Telotengo";
 			$message->setBody($body,'text/html');
 		
 			$message->addTo(User::model()->findByPk(Yii::app()->user->id)->email);
@@ -1166,7 +1166,7 @@ class OrdenController extends Controller
         
         
             
-            $message->subject="Haz registrado una solicitud en Telotengo";
+            $message->subject="Has registrado una solicitud en Telotengo";
             $message->setBody($body,'text/html');
         
             $message->addTo('cruiz@upsidecorp.ch');
@@ -1236,7 +1236,7 @@ class OrdenController extends Controller
 	   	$ordenEstado=OrdenEstado::model()->findAllByAttributes(array('orden_id'=>$orden->id), array ('order'=>'orden_id desc'));
         
 		$body=$this->renderPartial("detalleMail", array('model'=>$orden, 'productoOrden'=>$productoOrden, 'infoFrom'=>"Vendedor"),true);
-		$message->subject="Haz hecho una compra en Telotengo";
+		$message->subject="Has hecho una compra en Telotengo";
 		$message->setBody($body,'text/html');
 		
 		$message->addTo(User::model()->findByPk(Yii::app()->user->id)->email);
@@ -1257,7 +1257,7 @@ class OrdenController extends Controller
 			$body=$this->renderPartial("detalleMail", array('model'=>$orden, 'productoOrden'=>$productoOrden, 'infoFrom'=>"Comprador"),true);
 			
 			#$body="haz vendido en telotengo blablabla aqui deberia ir el body"; ////// aqui se debe enviar
-			$message->subject="Haz vendido en Telotengo";
+			$message->subject="Has vendido en Telotengo";
 			$message->setBody($body,'text/html');
 		
 			$message->addTo(User::model()->findByPk($local->users_id)->email);
@@ -1297,12 +1297,13 @@ class OrdenController extends Controller
 						$inventario->cantidad-=$cadaUno->cantidad;
 						$inventario->save();
 					}
-                    $subject="TU INTENCIÓN DE COMPRA HA SIDO APROBADA";
+                    $subject="Tu intención de compra ha sido aprobada";
+                    $subject2="Has aprobado una intención de compra";
                     
 				}
                 else {
-                    $subject="TU INTENCIÓN DE COMPRA HA SIDO RECHAZADA";
-                     
+                    $subject="Tu intención de compra ha sido rechazada";
+                    $subject2="Has rechazado una intención de compra"; 
                 }
 
              
@@ -1326,6 +1327,7 @@ class OrdenController extends Controller
 				$log2->accion=9; //notificar al vendedor (el mismo usuario) que ha rechazado una intencion de compra
 			$log2->save();
 
+		 //////////////////////////////Envio de correos para el cliente///////////////////////////////////////////////////
 		 $message= new YiiMailMessage;
        
          $message->activarPlantillaMandrill();
@@ -1335,7 +1337,20 @@ class OrdenController extends Controller
          $message->setBody($this->renderPartial("../mail/mail_orden_status", array('orden'=>$model,'destinatario'=>$model->users),true), 'text/html');                
          $message->addTo($model->users->email);
          Yii::app()->mail->send($message);
-         
+         ///////////////////////////////Envio de correos para el vendedor/////////////////////////////////////////////////
+         $UsuarioVendedor=User::model()->findByPk(Yii::app()->user->id);
+         $message= new YiiMailMessage;
+       
+         $message->activarPlantillaMandrill();
+ 
+     
+         $message->subject    = $subject2;
+         $message->setBody($this->renderPartial("../mail/mail_orden_status_vendedor", array('orden'=>$model,'destinatario'=>$UsuarioVendedor),true), 'text/html');                
+         $message->addTo($UsuarioVendedor->email);
+         Yii::app()->mail->send($message);
+        
+
+
         echo $estado;
 		
 	}

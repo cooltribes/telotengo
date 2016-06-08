@@ -196,7 +196,7 @@ $(document).ready(function() {
 		var primeraLetra=palabra.charAt(0);
 		if(letras.indexOf(primeraLetra)==-1)
 		{
-			alert('Iniciales de Rifs son J, V, E, G');
+			alert('Iniciales de Rif son V, E, P, J, G y C');
 			soloLetra=primeraLetra;
 			$("#"+id).val('');
 		}
@@ -208,7 +208,7 @@ $(document).ready(function() {
 		 	//alert(separar);
 			if(numeros.indexOf(separar)==-1)
 			{
-				alert('Solo se permiten numeros');
+				alert('Solo se permiten numeros  después de la letra.');
 				$("#"+id).val(completo);
 			}	
 		 }

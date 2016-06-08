@@ -564,11 +564,11 @@ class User extends CActiveRecord
 		public function setSubject($rol)
 		{
 			if($rol=="vendedor")
-				return "APROBADO COMO VENDEDOR";
+				return "Aprobado como vendedor";
 			if($rol=="comprador")
-				return "APROBADO COMO COMPRADOR";
+				return "Aprobado como comprador";
 			if($rol=="compraVenta")
-				return "APROBADO COMO COMPRADOR Y VENDEDOR";
+				return "Aprobado como compra/venta";
 
 		}
 		

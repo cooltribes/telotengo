@@ -178,7 +178,7 @@ class EmpresasController extends Controller
 				$message = new YiiMailMessage;
 				$message->activarPlantillaMandrill();					
 				$body=Yii::app()->controller->renderPartial('//mail/solicitudRecibida', array( '$user'=>$user ),true);				
-				$message->subject= "SOLICITUD RECIBIDA";
+				$message->subject= "Solicitud recibida";
 				$message->setBody($body,'text/html');
 								
 				$message->addTo($email);
