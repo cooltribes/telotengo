@@ -6,7 +6,7 @@
                          <hr style="margin-top:0px; border-top:#DDD;"/> 
                          
                          <div style="width:100%; margin-top:35px; font-size:14px">
-                          Has solicitado recuperar tu contraseña en Sigma Tiendas. <br/><br/>Por favor haz click <b><a href="<?php echo $activation_url; ?>">aquí</a></b> para seguir con el proceso de recuperación.
+                          Has solicitado recuperar tu contraseña en TeloTengo. <br/><br/>Por favor haz click <b><a href="<?php echo $activation_url; ?>">aquí</a></b> para seguir con el proceso de recuperación.
                          </div>
                          
                          <div style="margin-top:30px; margin-bottom:20px; border-top: solid 1px #333"></div>
