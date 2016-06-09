@@ -75,9 +75,14 @@ echo "<tr>";
         }
     echo "</td>";*/
     echo "<td>".$data->ingresos."</td>"; 
-   
-    $fecha= date("d-m-Y", strtotime($data->lastvisit_at));
-    echo "<td>".$fecha."</td>"; 
+    if($data->lastvisit_at=="0000-00-00 00:00:00")
+        echo "<td>-</td>";
+    else
+    {
+        $fecha= date("d-m-Y", strtotime($data->lastvisit_at));
+        echo "<td>".$fecha."</td>";   
+    }
+
     if($data->status==1)
     {
         echo "<td> <div id='".$data->id."s"."'> Activo </div></td>";

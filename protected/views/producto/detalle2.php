@@ -263,7 +263,7 @@ $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
                             <span class="name"><b><?php echo $data->almacen->empresas->razon_social;?></b></span>
                             <span class="location"><?php echo $data->almacen->ciudad->nombre; ?></span>
                             <span><b><?php echo $data->formatPrecio;?></b> 
-                            <span><small>Envío <?php if($inventario->metodoEnvio==1) echo "acordado con el cliente"; else echo "a través del servicio de TELOTENGO"; ?></span></small></span>
+                            <span><small>Envío <?php if($inventario->metodoEnvio==1) echo "acordado con el cliente"; else echo "a través del servicio del vendedor"; ?></span></small></span>
                             	<?php
                             	if(Yii::app()->authManager->checkAccess("comprador", Yii::app()->user->id) || Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id)): 
                   					 ?>
