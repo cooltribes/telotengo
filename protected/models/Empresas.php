@@ -377,5 +377,13 @@ const SECTOR_EDUCACION = 16;
                else
                    return $ids;
            }
+
+    public function etiqueta()
+    {
+      if($this->isNewRecord)
+      	return "Enviar Datos";
+      else
+      	return "Guardar";
+    }
     
 }

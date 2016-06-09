@@ -455,7 +455,7 @@ class User extends CActiveRecord
 		
 		$body=Yii::app()->controller->renderPartial('//mail/registroEmpresaInvitado', array( 'activation_url'=>$activation_url, 'empresa_id'=>$empresa_id ),true);
 		
-		$message->subject="INVITADO COMO MIEMBRO DE EMPRESA";
+		$message->subject="Invitado como miembro de empresa";
 		$message->setBody($body,'text/html');
 		
 		
@@ -481,7 +481,7 @@ class User extends CActiveRecord
 		
 		$body=Yii::app()->controller->renderPartial('//mail/registroClienteInvitado', array( 'activation_url'=>$activation_url ),true);
 		
-		$message->subject="INVITADO COMO EMPRESA";
+		$message->subject="Invitado como empresa";
 		$message->setBody($body,'text/html');
 		
 		$message->addTo($user->email);

@@ -35,15 +35,15 @@ $this->breadcrumbs=array(
 		     </div>
 		     <div class="col-md-1 stat">
                  <span class="value"><?php echo Orden::model()->countByAttributes(array('estado'=>0))?></span>
-                 <span class="legend">Pendiente</span>
+                 <span class="legend">Pendientes</span>
              </div>
 		     <div class="col-md-1 stat">
                  <span class="value"><?php echo Orden::model()->countByAttributes(array('estado'=>2))?></span>
-                 <span class="legend">Rechazados</span>
+                 <span class="legend">Rechazadas</span>
              </div>
              <div class="col-md-1 stat">
                  <span class="value"><?php echo Orden::model()->countByAttributes(array('estado'=>1))?></span>
-                 <span class="legend">Aprobados</span>
+                 <span class="legend">Aprobadas</span>
              </div>
              <!--
              <div class="col-md-1 stat">

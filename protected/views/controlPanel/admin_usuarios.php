@@ -139,8 +139,8 @@ $this->breadcrumbs=array(
           <tr>
             <td>Numero de login</td>
             <td><?php echo $sumatoriaLoginCompradores;?></td>
-            <td><?php echo $sumatoriaLoginVendedores;?></td>
             <td><?php echo $sumatoriaLoginCompraVenta;?></td>
+            <td><?php echo $sumatoriaLoginVendedores;?></td>
             <td><?php echo $sumatoriaLoginCompradores+$sumatoriaLoginVendedores+$sumatoriaLoginCompraVenta;?></td>
           </tr>
         </tbody>

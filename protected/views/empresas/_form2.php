@@ -148,7 +148,7 @@
         <?php $this->widget('bootstrap.widgets.TbButton', array(
             'buttonType'=>'submit',
             'type'=>'primary',
-            'label'=>"Enviar datos",
+            'label'=>$model->etiqueta(),
             'htmlOptions'=>array('class'=>'btn-black btn btn-danger btn-large botone'),
         )); ?>
         <?php $this->endWidget(); ?>
