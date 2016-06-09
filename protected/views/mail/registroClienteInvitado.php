@@ -2,7 +2,7 @@
 
                
                          <h1 style="margin-bottom: 1px; margin-left:1%; margin-top:35px">
-                            ¡Bienvenido a Telotengo <?php echo Yii::app()->session['email']; ?>
+                            ¡Bienvenido a Telotengo <?php echo Yii::app()->session['email']; ?>!
                          </h1>
                          <hr style="margin-top:0px; border-top:#DDD;"/> 
                          
