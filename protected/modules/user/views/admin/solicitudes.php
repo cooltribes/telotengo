@@ -1,3 +1,17 @@
+<style>
+.centrar{text-align: center;}
+
+    .table-striped > thead > tr > th{
+        border-left: solid 1px white;
+        border-top: solid 1px white;
+        border-right: 0px;
+        border-bottom: 0px;
+        color: white;
+        background: black;
+        vertical-align: top;
+    }
+
+</style>
 <?php
 $this->breadcrumbs=array(
 	"Administrar Usuarios",
@@ -84,7 +98,7 @@ $this->breadcrumbs=array(
 	           
 	    <?php
 		$template = '{summary}
-	    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-bordered table-hover table-striped">
+	     <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-hover table-striped margin_top">
 	        <thead>
 		        <tr>
 		            <th scope="col "width="8%">Fecha</th> 

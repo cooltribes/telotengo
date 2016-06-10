@@ -80,9 +80,9 @@
 		<div class="form-actions col-sm-offset-2 col-sm-10 no_margin botone">
 			<?php $this->widget('bootstrap.widgets.TbButton', array(
 				'buttonType'=>'submit',
-				'type'=>'primary',
+				//'type'=>'primary',
 				'label'=> 'Invitar',
-				'htmlOptions'=>array('id'=>'guardar', 'disabled'=>'disabled')
+				'htmlOptions'=>array('id'=>'guardar', 'disabled'=>'disabled', 'class'=>'btn-orange orange_border white')
 			)); ?>
 		</div> 
 
