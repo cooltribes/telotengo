@@ -127,12 +127,14 @@ class BolsaHasInventario extends CActiveRecord
             $diff=$this->cantidad-$this->findByPk($this->id)->cantidad;
             if($diff<0){
                 $historial->descripcion="Disminución de cantidad en ".abs($diff)." unds.";
-                $historial->tipo=2;                
+                $historial->tipo=2; 
+
             }
             else{
                 $historial->descripcion="Aumento de cantidad en ".$diff." unds.";
                 $historial->tipo=3;                
-            }            
+            }
+            $historial->ultimo=1;            
         }
         if($diff!=0)
             $historial->save();

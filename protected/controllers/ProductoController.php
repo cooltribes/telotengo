@@ -618,10 +618,16 @@ class ProductoController extends Controller
         else
             $similares=NULL;
         //var_dump($data);
-        if(!Yii::app()->user->isAdmin()) // si no es admin
-            $otros = Inventario::model()->findAllBySql("select * from tbl_inventario where producto_id=".$producto_id." and almacen_id!=".$almacen_id." and almacen_id not in(select id from tbl_almacen where empresas_id=".$empresaPropia->id.")");
-        else // si es admin
-            $otros = Inventario::model()->findAllBySql("select * from tbl_inventario where producto_id=".$producto_id." and almacen_id!=".$almacen_id." and almacen_id not in(select id from tbl_almacen where empresas_id=".$empresa->id.")");
+        if(!Yii::app()->user->isAdmin())// si no es admin 
+        {
+        	//$otros = Inventario::model()->findAllBySql("select * from tbl_inventario where producto_id=".$producto_id." and almacen_id!=".$almacen_id." and almacen_id not in(select id from tbl_almacen where empresas_id=".$empresaPropia->id.")");
+        	$otros = Inventario::model()->findAllBySql("select * from tbl_inventario where producto_id=".$producto_id." and almacen_id!=".$almacen_id.""); 
+        }    
+        else// si es admin
+        {
+        	 $otros = Inventario::model()->findAllBySql("select * from tbl_inventario where producto_id=".$producto_id." and almacen_id!=".$almacen_id." and almacen_id not in(select id from tbl_almacen where empresas_id=".$empresa->id.")");
+        } 
+           
         
 		if(!Yii::app()->user->isAdmin())
 		{

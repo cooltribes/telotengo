@@ -234,7 +234,16 @@ $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
   
                             	 if(!Yii::app()->user->isAdmin()  && $inventario->almacen->empresas->id!=$empre->id)
                                 	if(!Yii::app()->authManager->checkAccess("vendedor", Yii::app()->user->id))
-                                		echo CHtml::submitButton('ORDENAR', array('id'=>'ordenar','class'=>'btn-orange margin_bottom_small white form-control'));          		
+                                    if($inventario->cantidad>0)
+                                    {
+                                      echo CHtml::submitButton('ORDENAR', array('id'=>'ordenar','class'=>'btn-orange margin_bottom_small white form-control'));               
+                                    }
+                                    else
+                                    {?>
+                                      <a href="#" class="btn-orange margin_bottom_small btn btn-danger btn-large orange_border form-control" data-toggle="tooltip"  title="No puede ordenar este producto porque no posee inventario">Ordenar</
+                                    <?php
+                                    }
+                                		
                            		if(Yii::app()->authManager->checkAccess("vendedor", Yii::app()->user->id)):?>
 									<a href="#" class="btn-orange margin_bottom_small btn btn-danger btn-large orange_border form-control" data-toggle="tooltip"  title="No puede comprar ya que es un usuario Vendedor">Ordenar</
                            		<?php endif;?>

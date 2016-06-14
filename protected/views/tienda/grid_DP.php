@@ -51,7 +51,9 @@ $inventario=Inventario::model()->findByAttributes(array('producto_id'=>$data->id
                    <ul> 
                   
                    		
-                   				<li><span>Unidades: <?php echo $inventario->cantidad;?></span></li>
+                   				<li><span>Unidades:                              <?php 
+                                  $sql='select sum(cantidad) as cant from tbl_inventario where producto_id="'.$inventario->producto_id.'"';
+                                 $sumatoria=Yii::app()->db->createCommand($sql)->queryRow(); echo $sumatoria=$sumatoria['cant'];?></span></li>
                    		
 				
 					<li><span>Proveedores: <?php echo $contador;?></span></li>

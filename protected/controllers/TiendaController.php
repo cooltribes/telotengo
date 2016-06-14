@@ -217,7 +217,6 @@ class TiendaController extends Controller
                  $filter['categoria']='';
             }
             if($r1){
-               
                 $sql="select producto.id from tbl_producto producto JOIN tbl_producto_padre padre ON padre.id=producto.padre_id JOIN tbl_marca marca ON marca.id=padre.id_marca JOIN tbl_categoria categoria ON categoria.id=padre.id_categoria WHERE producto.aprobado = 1 AND producto.estado = 1 AND(".$query.") ";  
                 $r1=Yii::app()->db->createCommand($sql)->queryColumn();           
                
@@ -323,7 +322,6 @@ class TiendaController extends Controller
             $criteria->group="t.id"; 
             $criteria->together;
         }
-         
         $dataProvider= new CActiveDataProvider("Producto", array(
         'criteria'=>$criteria,
         'pagination'=>array('pageSize'=>9),
