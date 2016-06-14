@@ -10,7 +10,7 @@
 	</td>
 	   <td>
         <h5 class="no_margin_bottom">  <strong>Nombre</strong>:<?php echo $data->profile->first_name.' '.$data->profile->last_name; ?></h5>
-        <small><strong>Cedula</strong>: <?php echo $data->profile->cedula; ?><br/>
+        <small><strong>Cedula</strong>: <?php echo Funciones::formatPrecio($data->profile->cedula, false); ?><br/>
         	<strong>Genero</strong>: <?php echo $data->buscarSexo($data->profile->sexo); ?><br/>
         	<!-- <span class="label label-warning">Nuevo Usuario</span> -->
 		</small>
