@@ -4,7 +4,7 @@
    
     <div style=" margin-top: 4px;">Has aprobado la intención de compra <b>#<?php echo $orden->id;?></b>.</div>
     <?php echo $this->renderPartial("detalleMail", array('model'=>$orden, 'productoOrden'=>OrdenHasInventario::model()->findAllByAttributes(array('orden_id'=>$orden->id)), 'infoFrom'=>"Comprador"),true);?>
-    <div style="text-align: center; margin-top: 15px;">¡Gracias por comprar en Telotengo!</div>
+    <div style="text-align: center; margin-top: 15px;">¡Gracias por vender en Telotengo!</div>
 <? else: ?>
 
     <div style=" margin-top: 4px;">Has rechazado la intención de compra <b>#<?php echo $orden->id;?></b>.</div>
