@@ -50,13 +50,15 @@ foreach($result as $resultado)
 	 $bolsa_has_inventario = $result2->fetch_assoc();
 	 ///comparo fechas para ver si la compra esta abandonada
 	 $fecha1 = new DateTime($bolsa_has_inventario['fecha']);
-	 $semana_antes=date("Y-m-d H:i:s", strtotime('-1 week')); 
-	 $fecha2 = new DateTime($semana_antes);
+	 $hoy=date("Y-m-d H:i:s"); 
+	 $fecha2 = new DateTime($hoy);
 	 $diferencia = $fecha1->diff($fecha2);
-	 $daysbetween = $diferencia->format('%d');
-	 if($daysbetween<=0) /////////////////////// en 0 para 7 dias//////////////////////////////////////////
-	 {
+ 	 $bolsa_has_inventario['fecha'];
+ 	 $daysbetween = $diferencia->format('%d');
 
+
+	 if($daysbetween>=7) ///////////////////////7 dias//////////////////////////////////////////
+	 {
 	 	////////////////////busco el ultimo que modifico el carrito//////////////////////////////////////////////////////////
 	 	$sql="select * from tbl_historial_bolsa where bolsa_has_inventario_id='".$bolsa_has_inventario['id']."' order by fecha desc limit 1";
 	 	$result2 = mysqli_query($link,$sql) or die('Consulta fallida: ' . mysql_error());
@@ -71,11 +73,11 @@ foreach($result as $resultado)
 	 	$sql="select * from tbl_users where id='".$creador['users_id']."'";
 	 	$result2 = mysqli_query($link,$sql) or die('Consulta fallida: ' . mysql_error());
 	 	$usuario = $result2->fetch_assoc();
-	 	///////////////////////////////busco el id de la empresa///////////////////////////////////////////////
+	 	///////////////////////////////busco el id de la empresa creadora///////////////////////////////////////////////
 	 	$sql="select * from tbl_empresas_has_tbl_users where users_id='".$creador['users_id']."'";
 	 	$result2 = mysqli_query($link,$sql) or die('Consulta fallida: ' . mysql_error());
 	 	$empresa = $result2->fetch_assoc();
-	 	///////////////////////////////busco el nombre de la empresa///////////////////////////////////////////////
+	 	///////////////////////////////busco el nombre de la empresa creador///////////////////////////////////////////////
 	 	$sql="select * from tbl_empresas where id='".$empresa['empresas_id']."'";
 	 	$result2 = mysqli_query($link,$sql) or die('Consulta fallida: ' . mysql_error());
 	 	$empresa = $result2->fetch_assoc();
@@ -86,7 +88,7 @@ foreach($result as $resultado)
 		 	$usuario['email']  => $usuario['email'], // el segundo campo deberia ir el nombre
 			);
 
-			//echo "se lo envie a".$usuario['email'];
+			echo "se lo envie a".$usuario['email'];
 	 	}
 	 	else
 	 	{
@@ -99,11 +101,19 @@ foreach($result as $resultado)
 		 	$usuario['email']  => $usuario['email'], // el segundo campo deberia ir el nombre
 		 	$usuario2['email']  => $usuario2['email'], // el segundo campo deberia ir el nombre
 			);
-		 	//echo "se lo envie a".$usuario['email']." y a ".$usuario2['email'];
+		 	echo "se lo envie a".$usuario['email']." y a ".$usuario2['email'];
 	 	}
 	 	//enviar el correo
 	 	$subject = 'Tu carrito de compras';
 		$from = array('info@telotengo.com' =>'Telotengo');
+		////////////se tiene el almacen de la empresa vendedora///////////////////////////////
+		$sql="select * from tbl_almacen where id='".$resultado['almacen_id']."'";
+		$result2 = mysqli_query($link,$sql) or die('Consulta fallida: ' . mysql_error());
+		$almacen = $result2->fetch_assoc();
+		////////////se tiene la empresa vendedora///////////////////////////////
+		$sql="select * from tbl_empresas where id='".$almacen['empresas_id']."'";
+		$result2 = mysqli_query($link,$sql) or die('Consulta fallida: ' . mysql_error());
+		$empresaVendedora = $result2->fetch_assoc();
 		$up='
 
 <div>
@@ -124,7 +134,7 @@ Hemos observado que recientemente has añadido ítems a tu carrito. Si requieres
         <div class="orderContainer" style="margin-top: 4.68em!important; margin-bottom: 2.18em!important;">
                 <div style="border: solid 1px #666; font-size: 21px; padding: 10px 5%">
                    <div style="width:100%; height:30px; line-height:30px; vertical-align:middle">
-                      <div style="width:100%; float:left; text-align:right">'.$empresa['razon_social'].'</div>
+                      <div style="width:100%; float:left; text-align:right">'.$empresaVendedora['razon_social'].'</div>
                    </div>
                 </div>
                 <div style="border-left: solid 1px #666; border-right: solid 1px #666; padding: 10px 5%;">
