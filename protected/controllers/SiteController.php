@@ -306,8 +306,8 @@ class SiteController extends Controller
 	public function actionInhome2(){
        //$this->layout='//layouts/start';
 	   $model = Categoria::model()->findAllBySql("select * from tbl_categoria where id_padre = 0  order by destacado desc, fecha_destacado desc  limit 6") ;
-       $ultimos = Producto::model()->findAllBySql("select * from tbl_producto where id in (select producto_id from tbl_inventario) order by id desc limit 15");
-	   $destacados = Producto::model()->findAllBySql("select * from tbl_producto where id in (select producto_id from tbl_inventario) order by destacado desc limit 15");
+       $ultimos = Producto::model()->findAllBySql("select * from tbl_producto where estado=1 and id in (select producto_id from tbl_inventario) order by id desc limit 15");
+	   $destacados = Producto::model()->findAllBySql("select * from tbl_producto where estado=1 and id in (select producto_id from tbl_inventario) order by destacado desc limit 15");
 	   Yii::app()->session['banner']=true;     
        $this->render('inhome2', array('model'=>$model, 'ultimos'=>$ultimos, 'destacados'=>$destacados));
     }

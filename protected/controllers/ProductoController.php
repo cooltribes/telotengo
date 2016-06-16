@@ -32,7 +32,7 @@ class ProductoController extends Controller
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
 				'actions'=>array('seleccion','busqueda','create','hijos','imagenes','seo','create','agregarCaracteristica','eliminarCaracteristica','agregarInventario',
-								 'agregarInventarioAjax','eliminarInventario','multi','orden', 'clasificar', 'niveles', 'nivelPartial', 'crearProducto', 'autoComplete','verificarPadre', 'verificarNombre', 'autoCompleteVer', 'autoCompleteModelo', 'modificarProducto', 'ultimasCategorias', 'verificarTodaInformacion', 'detalle'),
+								 'agregarInventarioAjax','eliminarInventario','multi','orden', 'clasificar', 'niveles', 'nivelPartial', 'crearProducto', 'autoComplete','verificarPadre', 'verificarNombre', 'autoCompleteVer', 'autoCompleteModelo', 'modificarProducto', 'ultimasCategorias', 'verificarTodaInformacion', 'detalle', 'verificarCampos', 'verificarSkuCadaEmpresa'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -3358,6 +3358,38 @@ class ProductoController extends Controller
         }
        Yii::app()->user->setFlash('success',"Ha rechazado el producto ".$model->nombre); 
         echo $model->aprobado;
+	}
+
+	public function actionVerificarCampos()
+	{
+	    $almacen_id=$_POST['almacen_id']; 
+	    $producto_id=$_POST['producto_id']; 
+	    $model=Inventario::model()->findByAttributes(array('producto_id'=>$producto_id, 'almacen_id'=>$almacen_id));
+	    if($model=="")
+	    {
+	    		    	$return=array('sku'=>'','condicion'=>'', 'costo'=>'',
+	    				 'precio'=>'', 'precio_iva'=>'',
+	    				 'cantidad'=>'','garantia'=>'');
+	    }
+	    else
+	    {
+	    	$return=array('sku'=>$model->sku,'condicion'=>$model->condicion, 'costo'=>$model->costo,
+	    				 'precio'=>$model->precio,'precio_iva'=>$model->precio_iva,
+	    				 'cantidad'=>$model->cantidad,'garantia'=>$model->garantia);
+	    }
+	    
+        echo json_encode($return);
+	}
+
+	public function actionVerificarSkuCadaEmpresa()
+	/*los sku interno de cada empresa son permitidos siempre y cuando sean del mismo producto,
+	(la empresa a y la empresa b pueden tener skus internos repetidos mientras cumplan la condicion de arriba)*/
+	{
+		$empresa=Empresas::model()->findByPk((EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id))->empresas_id));
+		$sku=$_POST['sku']; 
+		$producto_id=$_POST['producto_id'];
+		$sql='select * from tbl_inventario where sku="'.$sku.'" and almacen_id in (select id from tbl_almacen where empresas_id="'.$empresa->id.'") and producto_id<>"'.$producto_id.'"'; 
+		echo count(Inventario::model()->findAllBySql($sql)); // si retorna 0 esta bien, si retorna otro numero hay sku con ese nombre en esa empresa
 	}
     
 }
