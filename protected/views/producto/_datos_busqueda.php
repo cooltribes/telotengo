@@ -28,8 +28,15 @@
     if($data->aprobado&&$data->estado)
     echo'<a href="'.Yii::app()->baseUrl.'/producto/inventario/'.$data->id.'" class="margin_top btn btn-orange white"><span class="glyphicon glyphicon-plus"></span> Cargar/Actualizar inventario</a>'; 
     else{
-        echo !$data->aprobado?"No aprobado<br/>":"";
-        echo !$data->aprobado?"Inactivo":"";
+        if($data->aprobado==0)
+            echo "<p style='color:#f4a611; font-weight:900'>Pendiente</p>";
+        if($data->aprobado==2)
+            echo "<p style='color:#ea2424; font-weight:900'>Rechazado</p>";
+
+        if($data->estado==0)
+            echo "<p style='font-weight:bolder'>Inactivo</p>";
+        if($data->estado==1)
+            echo "Activo<br>";
     }
     echo'</td>';
 

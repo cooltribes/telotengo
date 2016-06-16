@@ -36,7 +36,7 @@ echo '<tr id="'.$data->id.'">';
         </a>
             <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">'; ?>
                 
-               <li><a tabindex="-1" href="<?php echo Yii::app()->createUrl('/productoPadre/update',array('id'=>$data->id));?>" ><i class="glyphicon glyphicon-cog"></i> Editar Padre </a></li>
+               <li><a tabindex="-1" href="<?php echo Yii::app()->createUrl('/productoPadre/update',array('id'=>$data->padre_id));?>" ><i class="glyphicon glyphicon-cog"></i> Editar Padre </a></li>
                 <li><a class="pointer"href="<?php echo Yii::app()->createUrl('producto/modificarProducto', array('id'=>$data->id))?>"><i class="glyphicon glyphicon-cog"></i> Verificar</a></li>
                  <li><a class="pointer"  onclick="rechazar(<?php echo $data->id;?>)"><i class='glyphicon glyphicon-remove'></i> Rechazar</a></li>
                 
