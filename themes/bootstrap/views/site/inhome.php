@@ -1,4 +1,4 @@
-<img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/banner.jpg" width="100%"/>
+<a href="<?php echo Funciones::getBanner(1,1);?>"><img src="<?php echo Funciones::getBanner(1,2);?>" width="100%"/></a>
 <div class="col-md-8 col-md-offset-2">
         <div class="row-fluid margin_top">           
            <div class="col-md-9 mainHome">

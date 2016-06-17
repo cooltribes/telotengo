@@ -34,9 +34,9 @@ class SiteController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin'),
-				//'users'=>array('admin'),
-				'expression' => 'UserModule::isAdmin()',
+				'actions'=>array('admin', 'storefrontConf', 'formConfImage'),
+				'users'=>array('admin'),
+				//'expression' => 'UserModule::isAdmin()',
 			),
 			array('allow', // COMPRADORESVENDEDORES Y VENDEDORES
 				'actions'=>array('carrito'),
@@ -527,6 +527,113 @@ class SiteController extends Controller
             }
             
     
+    }
+
+   public function actionStorefrontConf(){ 
+
+      $this->render('storefrontConf',array('imConf'=>new ConfImage));
+    }
+    public function actionFormConfImage() 
+    { 
+                                
+        
+            if(isset($_POST['Banner']))
+            {  
+             	/*var_dump($_POST['Banner']);
+             	Yii::app()->end();*/
+             	$model= new Banner;
+                $model->attributes=$_POST['Banner'];
+                $model->tipo_banner=$_POST['Banner']['index'];
+                $model->activo=1;
+                $model->fecha=date('Y-m-d G:i:s');
+                $conta=count(Banner::model()->findAll())+1;
+                echo $conta;
+               // $previa=ConfImage::model()->findByAttributes(array('categoria_id'=>$_POST['ConfImage']['categoria_id'],'name'=>$_POST['ConfImage']['name'],'index'=>$_POST['ConfImage']['index']));
+                    
+                    $rnd = rand(0,9999);  
+                    
+                    $images=CUploadedFile::getInstanceByName('Banner[ruta_imagen]');
+        
+                    if (isset($images) && count($images) > 0) {
+                     
+                     
+                        $model->ruta_imagen = "{$rnd}-{$images}";
+                      
+                        $dir = Yii::getPathOfAlias('webroot').'/images/home/'.$_POST['Banner']['index'];
+                        $nombre = $dir.'/'.$conta; 
+                        $url=Yii::app()->getBaseUrl(true).'/images/home/'.$_POST['Banner']['index'].'/'.$conta;  
+ 
+                        if(!is_dir($dir))
+                        {
+                            mkdir($dir,0777,true);
+                        }
+                        $imgAttr=getimagesize(CUploadedFile::getInstanceByName('Banner[ruta_imagen]')->getTempName());
+
+                       if(($_POST['Banner']['index']==1&&($imgAttr[0]!=1903||$imgAttr[1]!=381))  ||   ($_POST['Banner']['index']==2 &&($imgAttr[0]!=294||$imgAttr[1]!=318))  ||   ($_POST['Banner']['index']==3 &&($imgAttr[0]!=294||$imgAttr[1]!=513))  )
+                        {
+                            echo "mostrar error";
+                            $this->render('storefrontConf');
+                        }
+                        else
+                        {
+                        	//si paso la validacion
+                        	Banner::model()->updateAll(array('activo'=>0),'tipo_banner=:uid',array(':uid'=>$_POST['Banner']['index'])); 
+                        }      
+                        $extension_ori = ".png";
+                        $extension = '.'.$images->extensionName;
+                        /*if(is_file($nombre.$extension)&&!is_null($previa)){
+                            rename($nombre.$extension,$nombre."OLD".$previa->id.$extension);
+                        } */                      
+                        $images->saveAs($nombre . $extension);  
+                        $model->ruta_imagen=$url. $extension;
+                       
+                        if($model->save()){
+                        	/*$log=new Log;
+							$log->id_categoria=$model->categoria_id;
+							$log->fecha=date('Y-m-d G:i:s');
+							$log->id_admin=Yii::app()->user->id;
+							$log->accion=44;
+							$log->save();*/
+                           /* if(!is_null($previa))    
+                                $previa->delete();*/
+                            echo "no hubo errores";
+                            $this->render('storefrontConf');
+                        }else{
+                            print_r($model->errors);
+                            break; 
+                        }
+                   
+                
+                    }
+                    else{
+                      echo "NANE";
+                        break;
+                    }
+                    
+                
+                
+            }else{
+
+                $response=array();
+                //$model=ConfImage::model()->findByAttributes(array('name'=>$_POST['name'],'index'=>$_POST['index'],'categoria_id'=>$_POST['categoria_id']));
+                $model= new Banner;
+                $response['confirm']=false; 
+               /* $response['confirm']=true;
+                if(is_null($model)){
+                    $model=new ConfImage;
+                    $response['confirm']=false;                    
+                }*/
+                //print_r($response['confirm']); 
+
+                /*$response['form']= $this->renderPartial('confImagesform', array(
+                    'model'=>$model,'name'=>$_POST['name'],'index'=>$_POST['index'],'group'=>$_POST['group'],'type'=>$_POST['type'], 'categoria_id'=>$_POST['categoria_id'], 'dimError'=> $_POST['confirm'] ),true)
+                ; */
+                 $response['form']= $this->renderPartial('confImagesform', array(
+                    'model'=>$model,'index'=>$_POST['index'], 'dimError'=> $_POST['confirm'] ),true)
+                ;              
+                 echo CJSON::encode($response); 
+            }
+            
     }
     
    
