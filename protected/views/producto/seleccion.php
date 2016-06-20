@@ -44,7 +44,7 @@
                
 
                   <div role="tabpanel" class="tab-pane active in padding_top padding_bottom row-fluid clearfix" id="specifications" aria-labelledby="specifications-tab">
-                     <h4 class=" margin_top">Introduzca el nombre del producto que desea buscar</h4>
+                     <h4 class=" margin_top">Introduzca el nombre del producto al que desea cargar/actualizar inventario</h4>
                     <hr class="dark no_margin_top"/>
                     <div class="col-md-10 well no_radius margin_top">
                         <div class="row-fluid">
@@ -67,7 +67,7 @@
                         'source'=>$this->createUrl('Producto/autocomplete'),
                         'htmlOptions'=>array(
                               'size'=>50,
-                              'placeholder'=>'Introduzca el nombre del producto que desea buscar',
+                              'placeholder'=>'Introduzca el nombre del producto al que desea cargar/actualizar inventario',
                               'class'=>'form-control no_radius_right no_padding_right',
                               //'maxlength'=>45,
                             ),

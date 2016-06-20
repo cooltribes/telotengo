@@ -82,7 +82,7 @@
 				'buttonType'=>'submit',
 				//'type'=>'primary',
 				'label'=> 'Invitar',
-				'htmlOptions'=>array('id'=>'guardar', 'disabled'=>'disabled', 'class'=>'btn-orange orange_border white')
+				'htmlOptions'=>array('id'=>'guardar', 'class'=>'btn-orange orange_border white')
 			)); ?>
 		</div> 
 

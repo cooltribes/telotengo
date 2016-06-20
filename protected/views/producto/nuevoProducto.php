@@ -50,7 +50,7 @@ $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
     ),
  
 ));?>
-<h1 class="margin_top margin_bottom">Carga de Productos</h1>
+<h1 class="margin_top margin_bottom">Solicitud de productos</h1>
   <ul id="myTabs" class="nav nav-tabs" role="tablist">
               <li  class="active"><a >CARGA INDIVIDUAL</a></li>
               <li >  <a  id="massive-tab"  aria-controls="home"  href="../masterdata/upload"  >CARGA MASIVA </a></li>
@@ -287,17 +287,22 @@ $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
     });
 
     $('#padre_name').blur(function(){ 
-        var nombre= $(this).val();
-        if(nombre=="")
+        validarNombre($(this).val());
+
+    });
+
+    function validarNombre(nombre, opcion=0)
+    {
+         if(nombre=="")
         {
+            $('#padre_name'+'_em').html('Debe escribir un nombre o elegir una sugerencia');
             $('#padre_name').addClass('error');
             $('#padre_name'+'_em').removeClass('hide');
+            if(opcion==1)
+              return false;
         }
         else
-        {
-            $('#padre_name').removeClass('error');
-            $('#padre_name'+'_em').addClass('hide');
-        }
+        {  
         $.ajax({
                  url: "<?php echo Yii::app()->createUrl('producto/verificarPadre') ?>",
                  type: 'POST',
@@ -310,14 +315,22 @@ $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
                     console.log(data);
                     if(data.status=='1')
                     {
-                          $('#padre_id').val(data.id);
+                        $('#padre_name'+'_em').html('Producto con nombre existente');
+                        $('#padre_name').addClass('error');
+                        $('#padre_name'+'_em').removeClass('hide');
+                        if(opcion==1)
+                          return false;
                     }
                     else{
-                        $('#padre_id').val('');
+                          $('#padre_name').removeClass('error');
+                          $('#padre_name'+'_em').addClass('hide');
+                          if(opcion==1)
+                            return true;
                     }
                 }
                })
-    });
+        }
+    }
 
     
     function submitForm(){
@@ -352,9 +365,15 @@ $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
             $(field).removeClass('error');
             if(!$(field+'_em').hasClass('hide')){
                 $(field+'_em').addClass('hide');
-            }
+            }  
+          if(field=='#padre_name')
+          {
+            submit=validarNombre($(field).val(), 1);
+          }
             field="";
         }
+        
+
         return [submit,field];
     }
     
