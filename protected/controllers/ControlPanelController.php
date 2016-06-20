@@ -79,7 +79,7 @@ class ControlPanelController extends Controller
 	{
 		$fechaIni="";
 		$fechaFinal="";
-		if($_GET)
+		if(isset($_GET['fechaFinal']))
 		{
 			$fechaFinal=$_GET['fechaFinal'];
 			$fechaIni=$_GET['fechaIni'];
@@ -106,8 +106,22 @@ class ControlPanelController extends Controller
 		/////////////////////////////////Total de variaciones pendientes//////////////////////////////////////////////////////////
 		$variacionesPendientes=Producto::model()->countByAttributes(array('aprobado'=>0));
 		/////////////////////////////Visitas de un producto//////////////////////////////////////////////////
-		$sql='select distinct(count(producto_id)) as cantidad, producto_id from tbl_historial_visitas where producto_id<>"" group by producto_id';
-		$productosVisitas=Yii::app()->db->createCommand($sql)->queryAll();
+		$HistorialVisitas = new HistorialVisitas; 
+		$HistorialVisitas->unsetAttributes();
+		$bandera=false;
+		$dataProvider = $HistorialVisitas->historialVendidoVisita();
+
+		/* Para mantener la paginacion en las busquedas */
+		if(isset($_GET['ajax']) && isset($_SESSION['searchVisitas']) && !isset($_POST['query'])){
+			$_POST['query'] = $_SESSION['searchVisitas'];
+			$bandera=true;
+		}
+
+        if($bandera==FALSE){
+			unset($_SESSION['searchVisitas']);
+        }
+		/*$sql='select distinct(count(producto_id)) as cantidad, producto_id from tbl_historial_visitas where producto_id<>"" group by producto_id';
+		$productosVisitas=Yii::app()->db->createCommand($sql)->queryAll();*/
 
 		$this->render('admin_productos', array(
 									   'fechaFinal'=>$fechaFinal,
@@ -119,7 +133,8 @@ class ControlPanelController extends Controller
 									   'variacionesActivas'=>$variacionesActivas,
 									   'variacionesInactivas'=>$variacionesInactivas,
 									   'variacionesPendientes'=>$variacionesPendientes,
-									   'productosVisitas'=>$productosVisitas,
+									   //'productosVisitas'=>$productosVisitas,
+									   'dataProvider'=>$dataProvider,
 									   ));
 	}
 
