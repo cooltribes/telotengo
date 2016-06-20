@@ -1034,7 +1034,9 @@ class OrdenController extends Controller
 	{
 		$bolsa_id=$_POST['bolsa_id'];
 		$empresas_id=$_POST['empresas_id'];
-		$bolsaInventario=BolsaHasInventario::model()->findAllByAttributes(array('bolsa_id'=>$bolsa_id), array('order'=>'almacen_id asc')); // todos los que contengan esta bolsa
+		$sql="select * from tbl_bolsa_has_tbl_inventario where bolsa_id='".$bolsa_id."' and cantidad>0 order by almacen_id asc";
+		$bolsaInventario=BolsaHasInventario::model()->findAllBySql($sql);
+		#$bolsaInventario=BolsaHasInventario::model()->findAllByAttributes(array('bolsa_id'=>$bolsa_id), array('order'=>'almacen_id asc')); // todos los que contengan esta bolsa
 		$almacenTransitorio="";
 		$pila=array();
 		$monto=0;
@@ -1180,7 +1182,9 @@ class OrdenController extends Controller
 		$empresas_id=$_POST['empresas_id'];
 		$almacen_id=$_POST['almacen_id'];
 		$monto=0;
-		$bolsaInventario=BolsaHasInventario::model()->findAllByAttributes(array('bolsa_id'=>$bolsa_id, 'almacen_id'=>$almacen_id)); // todos los que contengan esta bolsa
+		$sql="select * from tbl_bolsa_has_tbl_inventario where almacen_id='".$almacen_id."' and bolsa_id='".$bolsa_id."' and cantidad>0"; 
+        $bolsaInventario=BolsaHasInventario::model()->findAllBySql($sql);
+		#$bolsaInventario=BolsaHasInventario::model()->findAllByAttributes(array('bolsa_id'=>$bolsa_id, 'almacen_id'=>$almacen_id)); // todos los que contengan esta bolsa
 				$orden=new Orden;
 				$orden->empresa_id=$empresas_id;
 				$orden->almacen_id=$almacen_id;

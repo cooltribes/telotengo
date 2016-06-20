@@ -69,8 +69,10 @@ foreach($bolsaInventario as $key=>$carrito)
                         </thead>
                         
                         <tbody>
-                            <?php 
-                            $bolsita=BolsaHasInventario::model()->findAllByAttributes(array('almacen_id'=>$carrito->almacen_id, 'bolsa_id'=>$model->id));
+                            <?php
+                            $sql="select * from tbl_bolsa_has_tbl_inventario where almacen_id='".$carrito->almacen_id."' and bolsa_id='".$model->id."' and cantidad>0"; 
+                            $bolsita=BolsaHasInventario::model()->findAllBySql($sql);
+                            #$bolsita=BolsaHasInventario::model()->findAllByAttributes(array('almacen_id'=>$carrito->almacen_id, 'bolsa_id'=>$model->id, 'cantidad<>'=>0));
                             foreach($bolsita as $bolsa) 
                             {
                             	$imagenPrincipal=Imagenes::model()->findByAttributes(array('producto_id'=>$bolsa->inventario->producto->id, 'orden'=>1));

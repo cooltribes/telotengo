@@ -572,7 +572,7 @@ class SiteController extends Controller
                        if(($_POST['Banner']['index']==1&&($imgAttr[0]!=1903||$imgAttr[1]!=381))  ||   ($_POST['Banner']['index']==2 &&($imgAttr[0]!=294||$imgAttr[1]!=318))  ||   ($_POST['Banner']['index']==3 &&($imgAttr[0]!=294||$imgAttr[1]!=513))  )
                         {
                             echo "mostrar error";
-                            $this->render('storefrontConf');
+                            $this->redirect('storefrontConf', array('id'=>140));
                         }
                         else
                         {
@@ -597,7 +597,7 @@ class SiteController extends Controller
                            /* if(!is_null($previa))    
                                 $previa->delete();*/
                             echo "no hubo errores";
-                            $this->render('storefrontConf');
+                            $this->render('storefrontConf', array('id'=>140));
                         }else{
                             print_r($model->errors);
                             break; 

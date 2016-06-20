@@ -63,6 +63,7 @@ $assetUrl=Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('applicatio
                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/unidad/admin">Unidades</a></li>
                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/atributo/admin">Atributos</a></li>
                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/categoria/admin">Categorías</a></li>
+                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/site/storefrontConf/140">Banner Principal</a></li>
                              
 
                 </ul>
