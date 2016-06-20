@@ -76,6 +76,43 @@ $this->breadcrumbs=array(
   <div class="charts-region">
     <div class="row">
       <div class="col-md-12">
+
+              <?php
+    $template = '{summary}
+      <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-bordered table-hover table-striped">
+          <thead>
+          <tr>
+              <th scope="col">Codigo TLT</th>
+              <th scope="col">Nombre del producto</th>
+              <th scope="col">Numero de Visitas</th>
+              <th scope="col">Cantidad Vendida</th>
+          </tr>
+          </thead>
+      {items}
+      </table>
+      {pager} 
+    ';
+
+      $this->widget('zii.widgets.CListView', array(
+       // 'id'=>'list-auth-marcas',
+        'dataProvider'=>$dataProvider,
+        'itemView'=>'_datos_productos',
+        'template'=>$template,
+        'enableSorting'=>'true',
+        'afterAjaxUpdate'=>" function(id, data) {
+                 
+                } ",
+      'pager'=>array(
+        'header'=>'',
+        'htmlOptions'=>array(
+        'class'=>'pagination pagination-right',
+      )
+      ),          
+    ));  
+    
+    ?>
+
+<?php /*
 ​       <table class="table" width="100%" style="margin-top:37px;">
         <thead>
           <tr>
@@ -97,7 +134,7 @@ $this->breadcrumbs=array(
           </tr>
         <?php endforeach;?>
         </tbody>
-      </table>
+      </table> */ ?>
       </div>      
     </div>
     <!--

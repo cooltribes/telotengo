@@ -11,6 +11,7 @@
  */
 class HistorialVisitas extends CActiveRecord
 {
+    public $cantidad;
     /**
      * @return string the associated database table name
      */
@@ -94,5 +95,19 @@ class HistorialVisitas extends CActiveRecord
     public static function model($className=__CLASS__)
     {
         return parent::model($className);
+    }
+
+    public function historialVendidoVisita()
+    {
+        $criteria=new CDbCriteria;
+       #$sql='select distinct(count(producto_id)) as cantidad, producto_id from tbl_historial_visitas where producto_id<>"" group by producto_id';
+        $criteria->select = 'distinct(count(producto_id)) as cantidad, producto_id'; 
+        $criteria->condition = "producto_id<>''";
+        $criteria->group="producto_id";      
+            
+        return new CActiveDataProvider($this, array(
+            'criteria'=>$criteria,
+            'pagination'=>array('pageSize'=>12,),
+        ));
     }
 }
