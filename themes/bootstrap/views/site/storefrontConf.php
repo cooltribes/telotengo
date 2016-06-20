@@ -15,8 +15,7 @@ $this->breadcrumbs=array(
             </div>
              <div onclick="js:modal(1,false);">
                               
-                              <?php #echo CHtml::image(Funciones::getBanner(1,2), 'asd',array('width'=>'1200','height'=>'300'));?>
-                              <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/banner.jpg" width="100%"/>
+                              <?php echo CHtml::image(Funciones::getBanner(1,2), 'asd',array('width'=>'1200','height'=>'300'));?>
                              <!-- <span class="imgNumber">1</span>-->
              </div>
              <br>
@@ -27,9 +26,8 @@ $this->breadcrumbs=array(
             </div>
                 <div class="col-md-12 col-md-offset-4" onclick="js:modal(2,false);">
                               
-                              <?php #echo CHtml::image(Funciones::getBanner(2,2), 'asd',array('width'=>'294','height'=>'318'));?>
+                              <?php echo CHtml::image(Funciones::getBanner(2,2), 'asd',array('width'=>'294','height'=>'318'));?>
                                 <!-- <span class="imgNumber">1</span>-->
-                                 <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/banner.jpg" width="100%"/>
                 </div>
              <br>
               <div class="row-fluid title clearfix margin_bottom_small">
@@ -39,9 +37,8 @@ $this->breadcrumbs=array(
               </div>
                   <div class="col-md-12 col-md-offset-4" onclick="js:modal(3,false);">
                               
-                              <?php #echo CHtml::image(Funciones::getBanner(3,2), 'asd',array('width'=>'294','height'=>'318'));?>
+                              <?php echo CHtml::image(Funciones::getBanner(3,2), 'asd',array('width'=>'294','height'=>'318'));?>
                               <!-- <span class="imgNumber">1</span>-->
-                               <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/banner.jpg" width="100%"/>
                   </div>   
         </div>
 
