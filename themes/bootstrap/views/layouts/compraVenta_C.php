@@ -273,8 +273,10 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
         </div>
 </div>
 <?php
-if(isset(Yii::app()->session['banner'])){?>
-    <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/banner.jpg" width="100%"/>
+if(isset(Yii::app()->session['banner'])){
+    ?>
+
+   <a href="<?php echo Funciones::getBanner(1,1);?>"><img src="<?php echo Funciones::getBanner(1,2);?>" width="100%"/></a>
 <?php 
     unset(Yii::app()->session['banner']);
     }

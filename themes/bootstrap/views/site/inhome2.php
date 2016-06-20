@@ -62,10 +62,10 @@
            <div class="col-md-3">
                 <div class="row-fluid">
                     <div>
-                       <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/right1.png" width="100%"/>
+                       <a href="<?php echo Funciones::getBanner(2,1);?>"><img src="<?php echo Funciones::getBanner(2,2);?>" width="100%"/></a>
                     </div>
                     <div class="margin_top">
-                        <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/right2.png" width="100%"/>
+                        <a href="<?php echo Funciones::getBanner(3,1);?>"><img src="<?php echo Funciones::getBanner(3,2);?>" width="100%"/></a>
                     </div>           
                 </div>
            </div>

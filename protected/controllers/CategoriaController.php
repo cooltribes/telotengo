@@ -405,7 +405,7 @@ class CategoriaController extends Controller
 		    $cadena=Funciones::convertirVectoraCadena($vec);
 
 		    $sql="select distinct(marca.id), marca.nombre from tbl_inventario inven join tbl_producto producto on inven.producto_id=producto.id join tbl_producto_padre padre on producto.padre_id=padre.id join tbl_marca marca on padre.id_marca=marca.id join tbl_categoria categoria on padre.id_categoria=categoria.id  
-		    where inven.cantidad>0 and categoria.id in(".$cadena.")";
+		    where inven.cantidad>0 and producto.estado=1 and categoria.id in(".$cadena.")";
 		    $marcas=Marca::model()->findAllBySql($sql);  
             
             if($categoria)

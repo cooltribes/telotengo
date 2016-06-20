@@ -146,6 +146,15 @@ class Funciones {
         }
         return $cadena;
     }
+
+    public static function getBanner($tipo, $opcion)
+    {
+        $model=Banner::model()->findByAttributes(array('activo'=>1, 'tipo_banner'=>$tipo));
+        if($opcion==1)
+            return $model->ruta;
+        else
+            return $model->ruta_imagen;
+    }
     
  
     

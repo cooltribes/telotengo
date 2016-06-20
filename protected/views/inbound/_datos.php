@@ -11,7 +11,7 @@ echo"<tr>";
 
 	echo "<td>".$data->user->profile->first_name." ".$data->user->profile->last_name."</td>";
   
-	echo "<td>".$data->fecha_carga."</td>";
+	echo "<td>".Funciones::invertirFecha($data->fecha_carga)."</td>";
 	echo "<td>".$data->total_productos."</td>";
 	echo "<td>".$data->total_cantidad."</td>";
 	

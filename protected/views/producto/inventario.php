@@ -281,7 +281,7 @@ $this->breadcrumbs=array(
                        if(data.precio=="")
                        {
                        		$('#precio').val('');
-                       		$('#precio').focus();
+                       		//$('#precio').focus();
                        }
                        	precio_iva();
                        $('#Inventario_cantidad').val(data.cantidad);
