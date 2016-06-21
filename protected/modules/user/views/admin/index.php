@@ -103,41 +103,7 @@ $this->breadcrumbs=array(
 	
 	
 	<div class="row-fluid clearfix margin_bottom hide" id="nuevaBusqueda">
-	    <div class="col-md-12 no_horizontal_padding">
-	       <h4 class="no_margin_bottom margin_top_small">Nueva búsqueda avanzada</h4>
-	       <hr class="no_margin_top"/>
-	    </div>
-	    <div class="col-md-8 no_horizontal_padding">
-	       <div class="row-fluid">
-	           <div class="col-md-5 no_padding_left">
-	               <select class="form-control">
-	                   <option>-- Seleccione --</option>
-	               </select>
-	           </div>
-	           <div class="col-md-3">
-                   <select class="form-control">
-                       <option>-- Operador --</option>
-                   </select>
-               </div>
-               <div class="col-md-3 no_padding_right">
-                   <input class="form-control no_radius"/>
-               </div>
-               <div class="col-md-1 no_padding_left">
-                   <a class="btn btn-black" style="color:white; border:solid 1px black">Buscar</a>
-               </div>
-	       </div>
-	    </div>
-	    
-	    <div class="col-md-4 no_padding_right">
-	        <div class="row-fluid">
-	            <div class="col-md-8 text-center">
-	                <a class="btn btn-gray">Buscar y Guardar</a>
-	            </div>
-	            <div class="col-md-4 text-rightno_padding_right">
-                    <a class="btn btn-gray">Borrar Filtro</a>
-                </div>
-	        </div>
-	    </div>
+	     <?php  $this->renderPartial("_filters"); ?>
 	   </div> 
 	   
 	    
@@ -232,7 +198,7 @@ $this->breadcrumbs=array(
 		';
 
 			$this->widget('zii.widgets.CListView', array(
-		    'id'=>'list-auth-categorias',
+		    'id'=>'list-auth-items',
 		    'dataProvider'=>$dataProvider,
 		    'itemView'=>'_view_user',
 		    'template'=>$template,
