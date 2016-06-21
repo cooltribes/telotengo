@@ -141,7 +141,7 @@
 							<div class="form-group">
 								<div class="col-sm-12">
 									<?php echo $form->labelEx($empresas,'direccion'); ?>
-									<?php echo $form->textField($empresas,'direccion',array('size'=>60,'maxlength'=>128, 'class'=>'form-control', 'disabled'=>'disabled')); ?>
+									<?php echo $form->textArea($empresas,'direccion',array('size'=>60,'maxlength'=>128, 'class'=>'form-control', 'disabled'=>'disabled')); ?>
 									<?php echo $form->error($empresas,'direccion'); ?>
 								</div>
 							</div>
