@@ -21,7 +21,7 @@
                                                        'vendedor' => 'Vendedor',
                                                        'compraVenta' => 'Comprador y vendedor',
                                                        ),
-                            array('style' => 'display:none'));    
+                            array('class'=>'form-control','style' => 'display:none'));    
     
     echo CHtml::dropDownList('fuenteR', '', array('face' => 'Facebook',                                                       
                                                   'user' => 'Registro Normal',
@@ -153,15 +153,15 @@
                                 'first_name' => 'Nombre',
                                 'last_name' => 'Apellido',
                                 'telefono' => 'Teléfono',
-                                'email' => 'Correo',
-                                'status' => 'Estado',
+                                'email' => 'Correo Electronico',
+                                //'status' => 'Estado',
                                // 'balance' => 'Saldo Disponible',
                                // 'ciudad' => 'Ciudad',
                                 //'fuenteR' => 'Fuente de registro',
                                // 'invitaciones' => 'Invitaciones enviadas',
                                 'visit' => 'Número de ingresos al portal',
                                 'lastvisit_at' => 'Fecha de última visita',
-                                //'create_at' => 'Fecha de registro',
+                                'create_at' => 'Fecha de registro',
                                 'monto' => 'Monto comprado',
                                 'lastorder_at' => 'Fecha de última compra',                                
                                 /*'looks' => 'Cantidad de looks comprados',                                
@@ -181,32 +181,49 @@
                                 'sex' => 'Género',                                 
                                 'compras' => 'Compras hechas',                                 
                                 'prendas' => 'Prendas compradas',  
-                                'zoho_id' => 'Zoho ID',*/
+                                'zoho_id' => 'Zoho ID',
                                 'birthday' => 'Fecha de nacimiento',
-                                'interno' => 'Interno',
+                                'interno' => 'Interno',*/
+                                'ordenAprobada'=>'Cantidad de ordenes aprobadas por usuario',
+                                'ordenCancelada'=>'Cantidad de ordenes canceladas por usuario',
+                                'ordenGeneradaPendiente'=>'Cantidad de ordenes generadas por usuario (pendientes)',
+                                'ordenGeneradaAprobada'=>'Cantidad de ordenes generadas por usuario (Aprobadas)',
+                                'ordenGeneradaCancelada'=>'Cantidad de ordenes generadas por usuario (Canceladas)',
+                                'fechaOrdenAprobada'=>'Fecha de ordenes aprobadas por usuario',
+                                'fechaOrdenCancelada'=>'Fecha de ordenes canceladas por usuario',
+                                'fechaOrdenGeneradaPendiente'=>'Fecha de ordenes generadas por usuario (pendientes)',
+                                'fechaOrdenGeneradaAprobada'=>'Fecha de ordenes generadas por usuario (aprobadas)',
+                                'fechaOrdenGeneradaCancelada'=>'Fecha de ordenes generadas por usuario (canceladas)',
+                                'ordenMontoAprobada'=>'Monto de ordenes aprobadas por usuario',
+                                'ordenMontoCancelada'=>'Monto de ordenes canceladas por usuario',
+                                'ordenMontoGeneradaPendiente'=>'Monto de ordenes generadas por usuario (pendientes)',
+                                'ordenMontoGeneradaAprobada'=>'Monto de ordenes generadas por usuario (aprobadas)',
+                                'ordenMontoGeneradaCancelada'=>'Monto de ordenes generadas por usuario (canceladas)',
+                                'Ingresos'=>'ingresos',
+                                'cantItemComprado'=>'Cantidad de Items comprados',
                                  );
                                  asort($opcionesFiltros);
                                  
                             echo Chtml::dropDownList('dropdown_filter[]', '', $opcionesFiltros,
-                            array('empty' => '-- Seleccione --', 'class' => 'dropdown_filter span3')); ?> 
+                            array('empty' => '-- Seleccione --', 'class' => 'dropdown_filter form-control')); ?> 
                         </div>
                         <div class="span2" >
                             <?php echo Chtml::dropDownList('dropdown_operator[]', '', array('>' => '>', '>=' => '>=',
                             '=' => '=', '<' => '<', '<=' => '<=', '<>' => '<>'), 
-                                array('empty' => 'Operador', 'class' => 'dropdown_operator span2')); ?>
+                                array('empty' => 'Operador', 'class' => 'dropdown_operator form-control')); ?>
                         </div>
                         <div class="span2" >
-                            <?php echo Chtml::textField('textfield_value[]', '', array('class' => 'textfield_value span2')); ?>  
+                            <?php echo Chtml::textField('textfield_value[]', '', array('class' => 'textfield_value form-control no_radius')); ?>  
                         </div>
                         <div class="span2" >
                            <?php
                         echo Chtml::dropDownList('dropdown_relation[]', '', array('AND' => 'Y', 'OR' => 'O'),
-                                array('class' => 'dropdown_relation span2', 'style' => 'display:none'));
+                                array('class' => 'dropdown_relation form-control', 'style' => 'display:none'));
                         ?> 
                         </div>
                         
-                            <a href="#" class="btn span_add" style="float: right" title="Agregar nuevo campo"> + </a>
-                            <a href="#" class="btn btn-danger span_delete" style="display:none; float: right" title="Eliminar campo"> - </a> 
+                            <a href="#" class="btn span_add form-control" style="float: right" title="Agregar nuevo campo"> + </a>
+                            <a href="#" class="btn btn-danger span_delete form-control" style="display:none; float: right" title="Eliminar campo"> - </a> 
                         
                         
                         

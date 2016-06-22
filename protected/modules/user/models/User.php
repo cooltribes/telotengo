@@ -748,12 +748,112 @@ class User extends CActiveRecord
                 
                 $value = ($comparator == '=') ? "= '".$value."'" : "LIKE '%".$value."%'";
 
-                $criteria->addCondition('(tlf_casa '.$value.' OR tlf_celular '.$value.')', $logicOp);
+                $criteria->addCondition('telefono '.$value, $logicOp);
 
                 continue;
             }
             
-            if($column === 'tipoUsuario')
+            if($column === 'ordenAprobada') 
+            {
+            	
+            	$criteria->addCondition('id in (select id_vendedor from tbl_orden where estado=1 group by id_vendedor having count(id_vendedor)'.$comparator.$value.')', $logicOp);   
+                continue;
+                
+            }
+            if($column === 'ordenCancelada') 
+            {
+            	
+            	$criteria->addCondition('id in (select id_vendedor from tbl_orden where estado=2 group by id_vendedor having count(id_vendedor)'.$comparator.$value.')', $logicOp);   
+                continue;
+                
+            }
+            if($column === 'ordenGeneradaPendiente') 
+            {
+            	
+            	$criteria->addCondition('id in (select users_id from tbl_orden where estado=0 group by users_id having count(users_id)'.$comparator.$value.')', $logicOp);   
+                continue;
+                
+            }
+            if($column === 'ordenGeneradaAprobada') 
+            {
+            	
+            	$criteria->addCondition('id in (select users_id from tbl_orden where estado=1 group by users_id having count(users_id)'.$comparator.$value.')', $logicOp);   
+                continue;
+                
+            }
+            if($column === 'ordenGeneradaCancelada') 
+            {
+            	
+            	$criteria->addCondition('id in (select users_id from tbl_orden where estado=2 group by users_id having count(users_id)'.$comparator.$value.')', $logicOp);   
+                continue;
+                
+            }
+
+            if($column === 'ordenMontoAprobada') 
+            {
+            	
+            	$criteria->addCondition('id in (select id_vendedor from tbl_orden where estado=1 group by id_vendedor having sum(monto)'.$comparator.$value.')', $logicOp);   
+                continue;
+                
+            }
+            if($column === 'ordenMontoCancelada') 
+            {
+            	
+            	$criteria->addCondition('id in (select id_vendedor from tbl_orden where estado=2 group by id_vendedor having sum(monto)'.$comparator.$value.')', $logicOp);   
+                continue;
+                
+            }
+             if($column === 'ordenMontoGeneradaPendiente') 
+            {
+            	
+            	$criteria->addCondition('id in (select users_id from tbl_orden where estado=0 group by users_id having sum(monto)'.$comparator.$value.')', $logicOp);   
+                continue;
+                
+            }
+            if($column === 'ordenMontoGeneradaAprobada') 
+            {
+            	
+            	$criteria->addCondition('id in (select users_id from tbl_orden where estado=1 group by users_id having sum(monto)'.$comparator.$value.')', $logicOp);   
+                continue;
+                
+            }
+            if($column === 'ordenMontoGeneradaCancelada') 
+            {
+            	
+            	$criteria->addCondition('id in (select users_id from tbl_orden where estado=2 group by users_id having sum(monto)'.$comparator.$value.')', $logicOp);   
+                continue;
+                
+            }
+             if($column === 'cantItemComprado') 
+            {
+            	
+            	$criteria->addCondition('id in (select users_id from tbl_orden where id in (select orden_id from tbl_orden_has_inventario group by orden_id having sum(cantidad)'.$comparator.$value.'))', $logicOp);   
+                continue;
+                
+            }
+            
+     
+            
+
+            /*if($column === 'status')
+            {
+                if($value === '1')
+                {
+                    $criteria->compare("status", $comparator.'1', false, $logicOp);
+
+                }else if($value === 'comprador') 
+                {
+                    $criteria->compare("status", $comparator.'0', false, $logicOp);
+   
+                }
+                
+                continue;
+                
+            }*/
+
+
+
+             if($column === 'tipoUsuario')
             {
                 if($value === 'admin')
                 {
@@ -966,10 +1066,60 @@ class User extends CActiveRecord
             
             if ($column == 'lastvisit_at' || $column == 'create_at' || $column == 'birthday')
             {
+               
                 $value = strtotime($value);
                 $value = date('Y-m-d H:i:s', $value);
+                $criteria->addCondition('date('.$column.')'.$comparator.'"'.$value.'"', $logicOp);
+
+                continue;
             }
-            
+
+             if ($column == 'fechaOrdenAprobada')
+            {
+               
+                $value = strtotime($value);
+                $value = date('Y-m-d H:i:s', $value);
+                $criteria->addCondition('id in (select id_vendedor from tbl_orden where estado=1 and date(fecha)'.$comparator.'"'.$value.'")', $logicOp);
+
+                continue;
+            }
+             if ($column == 'fechaOrdenCancelada')
+            {
+               
+                $value = strtotime($value);
+                $value = date('Y-m-d H:i:s', $value);
+                $criteria->addCondition('id in (select id_vendedor from tbl_orden where estado=2 and date(fecha)'.$comparator.'"'.$value.'")', $logicOp);
+
+                continue;
+            }
+            if ($column == 'fechaOrdenGeneradaPendiente')
+            {
+               
+                $value = strtotime($value);
+                $value = date('Y-m-d H:i:s', $value);
+                $criteria->addCondition('id in (select users_id from tbl_orden where estado=0 and date(fecha)'.$comparator.'"'.$value.'")', $logicOp);
+
+                continue;
+            }
+             if ($column == 'fechaOrdenGeneradaAprobada')
+            {
+               
+                $value = strtotime($value);
+                $value = date('Y-m-d H:i:s', $value);
+                $criteria->addCondition('id in (select users_id from tbl_orden where estado=1 and date(fecha)'.$comparator.'"'.$value.'")', $logicOp);
+
+                continue;
+            }
+            if ($column == 'fechaOrdenGeneradaCancelada')
+            {
+               
+                $value = strtotime($value);
+                $value = date('Y-m-d H:i:s', $value);
+                $criteria->addCondition('id in (select users_id from tbl_orden where estado=2 and date(fecha)'.$comparator.'"'.$value.'")', $logicOp);
+
+                continue;
+            }
+
             /*Compras realizadas*/
             if($column == 'compras')
             { 
