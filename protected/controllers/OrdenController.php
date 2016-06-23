@@ -1224,6 +1224,18 @@ class OrdenController extends Controller
 		
 		BolsaHasInventario::model()->deleteAllByAttributes(array('bolsa_id'=>$bolsa_id, 'almacen_id'=>$almacen_id)); // los borra todos	
 		
+		////busco el nuevo monto de la orden, solo con la bolsa, para fijar el nuevo monto
+		$subtotal=0;
+		$bolsaSumatoriaNueva=BolsaHasInventario::model()->findAllByAttributes(array('bolsa_id'=>$bolsa_id));
+		foreach($bolsaSumatoriaNueva as $nueva):
+			$subtotal+=$nueva->inventario->precio*$nueva->cantidad;
+		endforeach;
+		$total=Funciones::formatPrecio(($subtotal*Yii::app()->params['IVA']['value'])+$subtotal);
+		$iva=Funciones::formatPrecio($subtotal*Yii::app()->params['IVA']['value']);
+		$subtotal=Funciones::formatPrecio($subtotal);
+		
+
+
 		$log=new Log;
 		$log->id_user=Yii::app()->user->id;
 		$log->id_orden=$orden->id;
@@ -1273,7 +1285,7 @@ class OrdenController extends Controller
 			$message->addTo($usuario->email);
 			Yii::app()->mail->send($message);
 		}
-        $return=array('status'=>'ok','html'=>$this->renderPartial("orderSummary", array('orden'=>$orden), true));
+        $return=array('status'=>'ok','html'=>$this->renderPartial("orderSummary", array('orden'=>$orden), true), 'subtotal'=>$subtotal, 'iva'=>$iva, 'total'=>$total);
 		echo json_encode($return);
 	}
 

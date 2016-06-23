@@ -82,7 +82,7 @@ $this->breadcrumbs=array(
 							</div> 
 						<div id="contenido" class="hide">
 							<div class="form-group">
-								<label>SKU</label>
+								<label for="Inventario_sku" class="required">SKU <span class="required">*</span></label>
 								<?php echo $form->textField($model,'sku',array('class'=>'form-control','maxlength'=>150)); ?>
 								<?php echo $form->error($model,'sku'); ?>
 							<span class="help-block text_align_left padding_right" >

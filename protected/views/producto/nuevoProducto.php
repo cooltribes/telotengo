@@ -177,7 +177,7 @@ $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
                             </div>
                             
                             <div class="margin_top_small">
-                                <label>Color</label>
+                                <label for="Producto_modelo" class="required">Color <span class="required">*</span></label>
                                 <div class="row-fluid clearfix">
                                     <div class="col-md-6">
 
