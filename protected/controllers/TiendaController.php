@@ -177,10 +177,20 @@ class TiendaController extends Controller
             unset(Yii::app()->session['store_condition']);
             if(isset($_GET['producto']))
             {
+                $validacion=Funciones::verificarCadena($_GET['producto']);
+
                /* $condition['productos']=Funciones::long_query($_GET['producto'],"padre.nombre")." OR ";
                 $condition['productos'].=Funciones::long_query($_GET['producto'],"marca.nombre")." OR ";  
                 $condition['productos'].=Funciones::long_query($_GET['producto'],"producto.nombre"); */
-                $condition['productos']="producto.nombre like '%".$_GET['producto']."%' ";
+                if($validacion==false)
+                {
+                    $condition['productos']="producto.nombre like '%".$_GET['producto']."%' ";
+                }
+                else
+                {
+                    $variables=explode("++", $validacion);
+                    $condition['productos']="producto.nombre like '%".$variables[0]."%' or padre.nombre like '%".$variables[1]."%'";
+                }
                 $query=$query.$condition['productos'];
                 $r1=true;
             }

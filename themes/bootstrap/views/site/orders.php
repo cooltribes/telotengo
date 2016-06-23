@@ -41,7 +41,7 @@ foreach($bolsaInventario as $key=>$carrito)
 		?>
 
 
-<div class="orderContainer margin_top_small margin_bottom" id="preorder<?php echo $key?>">
+<div class="orderContainer margin_top_small margin_bottom" id="preorder<?php echo $carrito->almacen_id;?>">
                 <div class="title clearfix row-fluid" style="position: relative">
     
                       <a href="#" class="close" onclick='modalConfirm(<?php echo $carrito->almacen_id;?>,<?php echo $carrito->bolsa_id;?>)'><span class="glyphicon glyphicon-remove off"></span></a>
@@ -180,8 +180,11 @@ Yii::app()->session['suma']=$total;
 		
 		
 		$('.cadaOrden').click(function() {
-		    var hidden = $(this).next().val();
+		    
+
 			var oid = $(this).attr("id");
+			var res = oid.split("boton");
+			var hidden = res[0];
 			$('.todosBotones').prop( "disabled", true );
 			var res = oid.split("b"); //por el comienzo de la palabra boton
 			var almacen_id=res[0];
@@ -203,6 +206,10 @@ Yii::app()->session['suma']=$total;
 			                 $('#orderedContainer').fadeIn();
 			                 $('#preorder'+hidden).fadeOut();
 			                 $('#preorder'+hidden).remove();
+			                 $('#subtotalOrden').html('Subtotal: '+data.subtotal);
+			                 $('#ivaOrden').html('Iva: '+data.iva);
+			                 $('.todaOrden').html('Total: '+data.total);
+
 			            }
 			            
 			        	

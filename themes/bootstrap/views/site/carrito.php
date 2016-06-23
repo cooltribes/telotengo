@@ -55,9 +55,9 @@ if($cambios):
         </div>        
         <div class="col-md-3">
             <div class="orderAll margin_top_small">
-                Subtotal:<?php echo Funciones::formatPrecio($sub=Yii::app()->session['suma']);?><br/>
-                IVA: <?php echo Funciones::formatPrecio($iva=Yii::app()->session['suma']*0.12);?> <br/>
-                <span class="total">
+                <div id="subtotalOrden">Subtotal:<?php echo Funciones::formatPrecio($sub=Yii::app()->session['suma']);?> </div>
+                <div id="ivaOrden">IVA: <?php echo Funciones::formatPrecio($iva=Yii::app()->session['suma']*Yii::app()->params['IVA']['value']);?> </div>
+                <span class="total todaOrden">
                     Total: <?php echo Funciones::formatPrecio(Yii::app()->session['suma']+$iva);  unset(Yii::app()->session['suma']);?>
                 </span>
                 <input class="btn-green btn btn-danger margin_top_small todosBotones" type="submit" id="procesarTodo" name="yt0" value="Procesar todas las órdenes">

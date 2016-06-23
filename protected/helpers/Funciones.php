@@ -155,6 +155,30 @@ class Funciones {
         else
             return $model->ruta_imagen;
     }
+
+    public static function verificarCadena($cadena)
+    {
+        $var=explode("(", $cadena);
+        $cadena_formateada = trim($var[0]);
+        $findme   = ')';
+        if(array_key_exists(1, $var))
+        {
+            $verificar=strpos($var[1], $findme);
+            if($verificar==true)
+                $papa=rtrim($var[1], ")");
+            else
+                return false;
+            return $cadena_formateada."++".$papa;
+        }
+        else
+        {
+            return false;
+        }
+
+        
+
+
+    }
     
  
     
