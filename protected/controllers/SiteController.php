@@ -480,7 +480,16 @@ class SiteController extends Controller
 	
 	public function actionCarrito()
 	{
-		//$this->layout='//layouts/start';
+		//$this->layout='//layouts/start'; tengo que colocar los alias en los modelos 
+		$sql="select bolsaInven.id as identificador, bolsaInven.cantidad as cantidadPedida, inven.cantidad as cantidadDisponible, cambio   from tbl_bolsa_has_tbl_inventario bolsaInven join tbl_inventario inven on bolsaInven.inventario_id=inven.id where bolsaInven.cantidad>inven.cantidad";
+		$modelado=Yii::app()->db->createCommand($sql)->queryAll();
+		foreach($modelado as $mode)
+		{
+			$nuevoModel=BolsaHasInventario::model()->findByPk($mode['identificador']);
+			$nuevoModel->cantidad=$mode['cantidadDisponible'];
+			$nuevoModel->cambio=1;
+			$nuevoModel->save();
+		}
 		$empresas = EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id));		
         $model=Bolsa::model()->findByAttributes(array('empresas_id'=>$empresas->empresas_id));
 	    $bolsaInventario=BolsaHasInventario::model()->findAllByAttributes(array('bolsa_id'=>$model->id), array('order'=>'fecha desc'));
