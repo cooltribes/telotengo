@@ -221,7 +221,8 @@ $(document).ready(function() {
 	        	
 	        	//alert (data);
       			//window.location.href = '../categoria/categoriaRelacionada/'+data+'';
-      			window.location.href = '../admin/';
+      			//window.location.href = '../admin/';
+      			window.location.href = '<?php echo Yii::app()->createUrl("Atributo/admin");?>';
 	       	}
 	       })
 		//alert('bien');

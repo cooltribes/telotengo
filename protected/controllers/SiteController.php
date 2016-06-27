@@ -492,7 +492,8 @@ class SiteController extends Controller
 		}
 		$empresas = EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id));		
         $model=Bolsa::model()->findByAttributes(array('empresas_id'=>$empresas->empresas_id));
-	    $bolsaInventario=BolsaHasInventario::model()->findAllByAttributes(array('bolsa_id'=>$model->id), array('order'=>'fecha desc'));
+	    #$bolsaInventario=BolsaHasInventario::model()->findAllByAttributes(array('bolsa_id'=>$model->id), array('order'=>'fecha desc'));
+        $bolsaInventario=BolsaHasInventario::model()->findAllBySql('select * from tbl_bolsa_has_tbl_inventario where cantidad<>0 and bolsa_id="'.$model->id.'" order by fecha desc');
         $cambios=BolsaHasInventario::model()->findAllByAttributes(array('bolsa_id'=>$model->id, 'cambio'=>1));
         $this->render('carrito', array('model'=>$model, 'bolsaInventario'=>$bolsaInventario, 'cambios'=>$cambios));
 	}
