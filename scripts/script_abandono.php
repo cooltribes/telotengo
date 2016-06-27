@@ -166,7 +166,7 @@ Hemos observado que recientemente has añadido ítems a tu carrito. Si requieres
                         	';
 
                         $sql="select * from  tbl_bolsa_has_tbl_inventario where almacen_id='".$resultado['almacen_id']."'
-	 and bolsa_id='".$resultado['bolsa_id']."'";
+	 and cantidad<>0 and bolsa_id='".$resultado['bolsa_id']."'";
 	 					$each = mysqli_query($link,$sql) or die('Consulta fallida: ' . mysql_error());
 	 					$foreach='';
 	 					$sumas=0;
