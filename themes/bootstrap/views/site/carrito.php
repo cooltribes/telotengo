@@ -28,15 +28,20 @@ if($cambios):
         <p>Los Siguientes productos han cambiado debido a modificaciones realizadas en el inventario por parte de las 
         empresas vendedoras</p>
         <ul>
-            <?php foreach($cambios as $row):?>
+            <?php foreach($cambios as $row):
+            $id_notificacion=$row->id."id";
+            ?>
+            <div id="<?php echo $id_notificacion;?>">
                 <li><b>* Producto: </b><?php echo $row->inventario->producto->nombre;?></li>
                 <ul>
                     <li><b> Cantidad Disponible: </b><?php echo $row->inventario->cantidad;?></li>
                     <li><b> Precio: </b> <em class="colorPrecioModal"><?php echo Funciones::formatPrecio($row->inventario->precio);?></em></li>
                     <li><b> Empresa: </b><?php echo $row->inventario->almacen->empresas->razon_social;?></li>
                     <li><b> Almacen: </b><?php echo $row->inventario->almacen->nombre;?></li>
+                    <li> <a id="<?php echo $row->id;?>" class="eliminarNotificacion" href="#">Eliminar notificacion</a></li>
                 </ul>
                 <br>
+            </div>
             <?php endforeach;?>
         </ul>
       </div>
@@ -132,6 +137,28 @@ if($cambios):
                     }
 			    })
 		});
+
+       $('.eliminarNotificacion').click(function() {
+        var id = $(this).attr("id");
+        $.ajax({
+                     url: "<?php echo Yii::app()->createUrl('Orden/eliminarNotificacion') ?>",
+                     type: 'POST',
+                     dataType:'json', 
+                     data:{
+                            id:id,
+                           },
+                    success: function (data) {
+                       $('#'+id+"id").hide(); 
+                       if(data==0)
+                       {
+                           $('.modificaciones').hide(); 
+                           $('#myModal2').modal('toggle'); 
+                       }
+
+                    }
+                })
+
+       });   
 	});	
 </script>
 

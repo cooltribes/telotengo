@@ -400,11 +400,11 @@ $this->breadcrumbs=array(
                 }
                 if(isNaN(price)){
                     $('#precio').val('');
-                    $('#precio').focus();
+                    //$('#precio').focus();
                 } 
                 if(isNaN(iva)){
                     $('#iva').val('');
-                    $('#iva').focus();
+                    //$('#iva').focus();
                 } 
                  $('#Inventario_precio_iva').val( $('#precio_iva'));
              

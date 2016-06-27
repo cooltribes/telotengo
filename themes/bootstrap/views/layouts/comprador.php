@@ -185,7 +185,8 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
                                                              if(Bolsa::model()->findByAttributes(array('empresas_id'=>$empresas->empresas_id)))
                                                              {
                                                                  $bolsa=Bolsa::model()->findByAttributes(array('empresas_id'=>$empresas->empresas_id)); 
-                                                                 echo BolsaHasInventario::model()->countByAttributes(array('bolsa_id'=>$bolsa->id));
+                                                                 #echo BolsaHasInventario::model()->countByAttributes(array('bolsa_id'=>$bolsa->id));
+                                                                 echo count(BolsaHasInventario::model()->findAllBySql('select * from  tbl_bolsa_has_tbl_inventario where cantidad<>0 and bolsa_id="'.$bolsa->id.'"'));
                                                              }
                                                              else
                                                              {

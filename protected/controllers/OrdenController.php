@@ -32,7 +32,7 @@ class OrdenController extends Controller
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
 				'actions'=>array('cancelar','listado','detalleusuario','ventas','calificarVendedor','reclamo','responderReclamo'
 
-					,'devolucion','procesarDevolucion', 'procesarTodo', 'procesarSimple', 'cambiarEstado','misPedidos'), //TODO lista de control de accesos con los roles nuevos... procesarTodo, procesarSimple
+					,'devolucion','procesarDevolucion', 'procesarTodo', 'procesarSimple', 'cambiarEstado','misPedidos', 'eliminarNotificacion'), //TODO lista de control de accesos con los roles nuevos... procesarTodo, procesarSimple
 
 				'users'=>array('@'),
 			),
@@ -1374,6 +1374,29 @@ class OrdenController extends Controller
 
         echo $estado;
 		
+	}
+
+	public function actionEliminarNotificacion()
+	{
+		$id=$_POST['id'];
+		$bolsainventario=BolsaHasInventario::model()->findByPK($id);
+		$otraBolsaInventario=count(BolsaHasInventario::model()->findAllBySql('select * from  tbl_bolsa_has_tbl_inventario where bolsa_id="'.$bolsainventario->bolsa_id.'" and cambio=1 and id<>"'.$id.'"'));
+
+		if($bolsainventario->cantidad>0)
+		{
+			$bolsainventario->cambio=0;
+			$bolsainventario->save();
+		}
+		else
+		{
+			BolsaHasInventario::model()->deleteByPk($id);
+		}
+
+		if($otraBolsaInventario>0)
+			echo "1";
+		else
+			echo "0";
+		Yii::app()->end();
 	}
 
     
