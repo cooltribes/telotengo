@@ -38,7 +38,7 @@ $link = mysqli_connect('telotengo.com', 'telotengo', 'SFGth$$%67')
 mysqli_select_db($link,$baseDatos);
 mysqli_set_charset($link,"utf8");
 
-$sql="select * from  tbl_bolsa_has_tbl_inventario group by bolsa_id,almacen_id";
+$sql="select * from  tbl_bolsa_has_tbl_inventario where cantidad<>0 group by bolsa_id,almacen_id";
 $result = mysqli_query($link,$sql) or die('Consulta fallida: ' . mysql_error());
 foreach($result as $resultado)
 {
