@@ -14,6 +14,16 @@ $this->breadcrumbs=array(
         background: black;
         vertical-align: top;
     }
+    .negro{
+        background-color: black;
+        color: #fff;
+        border:0;
+    }
+    .negro:hover {
+        color: #fff;
+        background-color: black;
+        border:0;
+    }
 
 </style>
 
