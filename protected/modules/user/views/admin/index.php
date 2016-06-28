@@ -141,7 +141,7 @@ $this->breadcrumbs=array(
 				
 				ajaxUpdateTimeout = setTimeout(function () {
 					$.fn.yiiListView.update(
-					'list-auth-categorias',
+					'list-auth-items',
 					{
 					type: 'POST',	
 					url: '" . CController::createUrl('admin') . "',
@@ -165,7 +165,7 @@ $this->breadcrumbs=array(
 					
 					ajaxUpdateTimeout = setTimeout(function () {
 						$.fn.yiiListView.update(
-						'list-auth-categorias',
+						'list-auth-items',
 						{
 						type: 'POST',	
 						url: '" . CController::createUrl('admin/admin') . "',
