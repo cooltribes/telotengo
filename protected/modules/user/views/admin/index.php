@@ -24,6 +24,16 @@ $this->breadcrumbs=array(
         background-color: black;
         border:0;
     }
+        .negro:active {
+        color: #fff;
+        background-color: black;
+        border:0;
+    }
+           .negro:visited {
+        color: #fff;
+        background-color: black;
+        border:0;
+    }
 
 </style>
 
