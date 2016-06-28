@@ -297,7 +297,7 @@ function listFilter(column, selectId){
     var value = operator.next();
 
     value.empty().append( 
-           $('<select />').html($("#"+selectId).html()).addClass('textfield_value span2')   
+           $('<select />').html($("#"+selectId).html()).addClass('textfield_value form-control no_radius')   
            .attr('name','textfield_value[]')
            .attr('id', 'textfield_value')
         );
@@ -319,7 +319,7 @@ function textFilter(column){
     var operator = column.parent('div').next();
     var value = operator.next();
     
-    value.empty().append($('<input />').attr('type', 'text').addClass('textfield_value span2')   
+    value.empty().append($('<input />').attr('type', 'text').addClass('textfield_value form-control no_radius')   
         .attr('name','textfield_value[]')
         .attr('id', 'textfield_value')        
        );
@@ -341,7 +341,7 @@ function valueFilter(column){
     var operator = column.parent('div').next();
     var value = operator.next();
     
-    value.empty().append($('<input />').attr('type', 'text').addClass('textfield_value span2')   
+    value.empty().append($('<input />').attr('type', 'text').addClass('textfield_value form-control no_radius')   
         .attr('name','textfield_value[]')
         .attr('id', 'textfield_value')        
        );
@@ -353,7 +353,7 @@ function dateFilter(column){
     var operator = column.parent('div').next();
     var value = operator.next();
     
-    value.empty().append($('<input />').attr('type', 'text').addClass('textfield_value span2')   
+    value.empty().append($('<input />').attr('type', 'text').addClass('textfield_value form-control no_radius')   
         .attr('name','textfield_value[]')
         .attr('id', 'textfield_value'+(idDateField++))
         .datepicker({
