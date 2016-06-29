@@ -446,7 +446,7 @@ class AdminController extends Controller
 					Yii::app()->user->setFlash('success',"Usuario invitado correctamente");
 				}
 				if(Yii::app()->user->isAdmin())
-					$this->redirect(array('admin'));
+					$this->redirect(Yii::app()->createUrl('user/admin/adminInvite'));
 				else 
 					$this->redirect(Yii::app()->createUrl('user/profile/index'));
 				
