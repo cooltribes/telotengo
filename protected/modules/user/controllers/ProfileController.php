@@ -222,12 +222,14 @@ class ProfileController extends Controller
 			{
 				$model=User::model()->findByPk($ide);
 				$identificador=	$ide;
+				$way=1;
 			}
 					
 			else
 			{
 				$model=User::model()->findByPk(Yii::app()->user->id);
 				$identificador=	Yii::app()->user->id;
+				$way=2;
 			}
 				
 				
@@ -355,7 +357,7 @@ class ProfileController extends Controller
 				$producInventario=$variable['sumatoria'];
 				
 			}
-			$ultimosLog=Log::model()->findAllByAttributes(array('id_user'=>Yii::app()->user->id), array('order'=>'fecha desc', 'limit'=>10));
+			$ultimosLog=Log::model()->findAllByAttributes(array('id_user'=>$identificador), array('order'=>'fecha desc', 'limit'=>10));
 	
 	        $this->render('index',array(
 		        'model'=>$model,

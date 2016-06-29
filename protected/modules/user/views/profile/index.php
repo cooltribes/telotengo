@@ -18,7 +18,7 @@
      
      echo "');</script>"; 
      endif;  
-     if(!Yii::app()->user->isAdmin())
+     if(!Yii::app()->authManager->checkAccess("admin", $identificador))
      { ///cambio la manera como se muestra para el admin y para el usuario 
     ?>
         <div class="col-md-9 profile-center">
@@ -88,7 +88,7 @@
        </div>
    </div>
    <?php endif; 
-   if(!Yii::app()->user->isAdmin()):?>
+   if(!Yii::app()->authManager->checkAccess("admin", $identificador)):?>
     <h1>Ultimas Acciones</h1>
 <?php endif;?>
     <table class="table table-striped" width="100%">
@@ -116,7 +116,7 @@
     </table>
 </div>
 <?php 
-if(Yii::app()->user->isAdmin()):?>
+if(!Yii::app()->authManager->checkAccess("admin", $identificador)):?>
     </div>
 <?php endif;?>
 <script>
