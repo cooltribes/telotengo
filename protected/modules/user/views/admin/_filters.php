@@ -160,7 +160,7 @@
                                // 'ciudad' => 'Ciudad',
                                 //'fuenteR' => 'Fuente de registro',
                                // 'invitaciones' => 'Invitaciones enviadas',
-                                'visit' => 'Número de ingresos al portal',
+                                'ingresos' => 'Número de ingresos al portal',
                                 'lastvisit_at' => 'Fecha de última visita',
                                 'create_at' => 'Fecha de registro',
                                 'monto' => 'Monto comprado',
