@@ -1,4 +1,16 @@
 <!-- CONTENIDO ON -->
+<style>
+    .negro{
+        background-color: black;
+        color: #fff;
+        border:0;
+    }
+    .negro:hover, .negro:active, .negro:visited   {
+        color: #fff;
+        background-color: black;
+        border:0;
+    }
+</style>
 <div class="container">
 	<?php
 		$this->breadcrumbs=array(
@@ -38,7 +50,7 @@
                  <div>Buscar</div>
 
 
-             <form class="margin_bottom form-search row-fluid">
+             <form>
                  <div class="col-md-3 no_horizontal_padding">
                     <input class="form-control no_radius_right" id="query" name="query" type="text" placeholder="Criterio de búsqueda">              
                  </div>
@@ -46,7 +58,23 @@
                      <a href="#" class="btn form-control btn-darkgray white" id="btn_search_event">Buscar</a>
                  </div>   
              </form>
+             <div class="col-md-8 no_horizontal_padding">
+           <div class="row-fluid">
+               <div class="col-md-4">
+                     <select class="form-control">
+                       <option>-- Búsquedas avanzadas --</option>
+                   </select>
+               </div>
+               <div class="col-md-3 col-md-offset-1">
+                     <a class="btn btn-gray margin_left_minus" onclick="show('#nuevaBusqueda')">Crear búsqueda avanzada</a>
+               </div>
+           </div>
+        </div>
             </div> 
+
+       <div class="row-fluid clearfix margin_bottom hide" id="nuevaBusqueda">
+	     <?php  $this->renderPartial("_filters"); ?>
+	   </div> 
              
              
              	       
@@ -61,7 +89,7 @@
 				
 				ajaxUpdateTimeout = setTimeout(function () {
 					$.fn.yiiListView.update(
-					'list-auth-categorias',
+					'list-auth-items',
 					{
 					type: 'POST',	
 					url: '" . CController::createUrl('producto/admin') . "',
@@ -86,7 +114,7 @@
 					
 					ajaxUpdateTimeout = setTimeout(function () {
 						$.fn.yiiListView.update(
-						'list-auth-categorias',
+						'list-auth-items',
 						{
 						type: 'POST',	
 						url: '" . CController::createUrl('producto/admin') . "',
@@ -125,7 +153,7 @@
 		';
 
 			$this->widget('zii.widgets.CListView', array(
-		    'id'=>'list-auth-categorias',
+		    'id'=>'list-auth-items',
 		    'dataProvider'=>$dataProvider,
 		    'itemView'=>'_prod',
 		    'template'=>$template,
@@ -145,4 +173,13 @@
 		?>
 		</div>
 	</div>
-</div>    
+</div>  
+
+<script>
+    function show(id){
+        if($(id).hasClass('hide'))
+            $(id).removeClass('hide');
+        else
+            $(id).addClass('hide');
+    }
+</script>  
