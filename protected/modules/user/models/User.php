@@ -725,8 +725,7 @@ class User extends CActiveRecord
             }
 
             /* Usuarios */
-            if ($column == 'first_name' || $column == 'last_name'
-               || $column == 'email' || $column == 'ciudad')
+            if ($column == 'email' || $column == 'ciudad' || $column == 'first_name' || $column == 'last_name')
             {
                 
                 $value = ($comparator == '=') ? "=" . $value . "" : $value;
@@ -879,190 +878,13 @@ class User extends CActiveRecord
                 
             }
             
-            if($column === 'fuenteR'){   
-                if($value === 'face')
-                {
-                   $comparator = $comparator === '=' ? 'NOT ' : '';                   
-
-                }else if($value === 'user')
-                {
-                    $comparator = $comparator === '=' ? '' : 'NOT ';
-                }
-                
-                $criteria->addCondition('facebook_id IS '.$comparator.'NULL', $logicOp);
-                
-                continue;
-                
-            }
 
             if($column === 'interno'){
                 $criteria->compare("interno", $comparator.$value, false, $logicOp);
                 continue;
             }
 
-            if($column == 'monto')
-            { 
-                 $criteria->addCondition('(IFNULL((select SUM(orden.total) 
-            		from tbl_orden orden 
-            		where orden.user_id = user.id 
-            			AND 
-            		(orden.estado = 3 OR orden.estado = 4 OR orden.estado = 8)), 0))  '
-                                                    . $comparator . ' ' . $value . '', $logicOp);                        
-                continue;
-            }
-            /*Saldo disponible*/
-            if($column == 'balance')
-            { 
-                
-                 $criteria->addCondition('(IFNULL(
-                     (
-                        SELECT SUM(total) as total FROM tbl_balance WHERE user_id = user.id 
-                               
-                      ), 0))  '
-                                        . $comparator . ' ' . $value . '', $logicOp);
-                        
-                continue;
-            }
-            
-            /*Invitaciones*/
-            if($column == 'invitaciones')
-            { 
-                
-                 $criteria->addCondition('(IFNULL(
-                     (
-                        (SELECT count(*) as total FROM tbl_email_invite WHERE user_id=user.id) 
-                        + 
-                        (SELECT count(*) as total FROM tbl_facebook_invite WHERE user_id=user.id)
-                               
-                      ), 0))  '
-                     . $comparator . ' ' . $value . '', $logicOp);
-                        
-                continue;
-            }
-
-            if($column == 'looks')
-            { 
-                
-                $criteria->with['ordenes'] = array(
-                    'select'=> false,
-                    'joinType'=>'INNER JOIN',
-                    'condition'=>'(ordenes.estado = 3 OR ordenes.estado = 4 OR ordenes.estado = 8)',                        
-
-                );
-
-                $criteria->with['ordenes.productos'] = array(
-                'select' => false,
-                'joinType' => 'INNER JOIN',
-//                   'condition' => '(ordenes.estado = 3 OR ordenes.estado = 4 OR ordenes.estado = 8)',
-                  'group' => 'user.id'  
-                );                   
-
-                $criteria->with['ordenes.productos']['group'] = 'user.id';
-                                
-                
-                if(!strpos($criteria->condition, 'productos_productos.look_id > 0')){
-                   $criteria->addCondition('productos_productos.look_id > 0'); 
-                }
-                
-                if(!strlen($criteria->having)){
-                    $logicOp = '';
-                }
-                $criteria->having .= $logicOp.' SUM(productos_productos.cantidad) '. $comparator . ' ' . $value.' ';
-                        
-                continue;
-            }
-            
-            if($column == 'looks_ps')
-            {    
-                
-                $criteria->with['ordenes'] = array(
-                    'select'=> false,
-                    'joinType'=>'INNER JOIN',
-                    'condition'=>'(ordenes.estado = 3 OR ordenes.estado = 4 OR ordenes.estado = 8)',                        
-
-                );
-
-                $criteria->with['ordenes.looks'] = array(
-                    'select'=> false,
-                    'joinType'=>'INNER JOIN',
-                );
-                 
-                
-                $criteria->addCondition('looks.user_id  '
-                                        . $comparator . ' ' . $value . '', $logicOp);
-               
-                continue;
-            }
-              
-            if($column == 'prods_marca')
-            {    
-                
-                $criteria->with['ordenes'] = array(
-                    'select'=> false,
-                    'joinType'=>'INNER JOIN',
-                    'condition'=>'(ordenes.estado = 3 OR ordenes.estado = 4 OR ordenes.estado = 8)',                        
-
-                );
-
-                $criteria->with['ordenes.productos'] = array(
-                    'select'=> false,
-                    'joinType'=>'INNER JOIN',
-                );
-                
-                $criteria->with['ordenes.productos.producto'] = array(
-                    'select'=> false,
-                    'joinType'=>'INNER JOIN',
-                );
-                 
-                
-                $criteria->addCondition('producto.marca_id  '
-                                        . $comparator . ' ' . $value . '', $logicOp);
-               
-                continue;
-            }
-            
-            
-            if ($column == 'lastorder_at')
-            {
-                $value = strtotime($value);
-                $value = date('Y-m-d H:i:s', $value);                
-                
-                //$criteria->compare('ordenes.' . $column, $comparator . " " . $value, false, $logicOp);
-
-                if (!in_array('ordenes', $criteria->with)) {
-                    $criteria->with['ordenes'] = array(
-                        'select'=> false,
-                        'joinType'=>'INNER JOIN',
-                        'condition'=>'(ordenes.estado = 3 OR ordenes.estado = 4 OR ordenes.estado = 8)',                        
-                    );
-                }
-                               
-                 $criteria->addCondition('(SELECT IFNULL(max(ordenes.fecha), 0) from tbl_orden ordenes
-                                        WHERE ((ordenes.estado = 3 OR ordenes.estado = 4 OR ordenes.estado = 8) AND (ordenes.user_id=user.id))) '
-                                        .$comparator.' \''.$value.'\'');                 
-                
-                continue;
-            }                       
-
-            /*Looks vendidos por PS*/
-            if($column == 'looks_vendidos')
-            {
-                
-            }
-
-            /*Saldo ganado por comisiones*/
-            if($column == 'saldoComisiones')
-            {                 
-                 $criteria->addCondition('(IFNULL(
-                     (
-                        SELECT SUM(total) as total FROM tbl_balance WHERE user_id = user.id
-                        AND tipo = 5
-
-                      ), 0))  '
-                    . $comparator . ' ' . $value . '', $logicOp);
-                        
-                continue;
-            }
+         
             
             if ($column == 'lastvisit_at' || $column == 'create_at' || $column == 'birthday')
             {
@@ -1120,51 +942,13 @@ class User extends CActiveRecord
                 continue;
             }
 
-            /*Compras realizadas*/
-            if($column == 'compras')
-            { 
-                
-                 $criteria->addCondition('(IFNULL(
-                     (
-                        (SELECT count(*) as total FROM tbl_orden WHERE user_id=user.id)                         
-                               
-                      ), 0))  '
-                     . $comparator . ' ' . $value . '', $logicOp);
-                        
-                continue;
-            }
-			
-			/* Para Saber que Personal Shopper han creado Looks*/
-			if($column == 'ps_creado')
+           /* if($column == 'first_name' || $column == 'last_name')
             {
-            	
-                if(($comparator=="=" && $value==1) || ($comparator=="<>" && $value==0))
-					$criteria->addCondition('id in (select distinct user_id from tbl_look ) ');
-				else 
-					$criteria->addCondition('id not in (select distinct user_id from tbl_look ) ');
-				
-				
-                        
-                    continue;
- 
-            }
-                    
-            /*Prendas compradas*/
-            if($column == 'prendas')
-            { 
-                
-                 $criteria->addCondition('(IFNULL(
-                     (
-                        (SELECT SUM(oh.cantidadActualizada)
-                         FROM tbl_orden_has_productotallacolor oh
-                         JOIN tbl_orden o ON o.id = oh.tbl_orden_id
-                         WHERE o.user_id=user.id)                         
-                               
-                      ), 0))  '
-                     . $comparator . ' ' . $value . '', $logicOp);
-                        
-                continue;
-            }
+            	$consulta=$this->buscarNombreApellido($value, $comparator, $column);
+                $criteria->addCondition($consulta, $logicOp);
+            	continue;
+            }*/
+
             
             
             //Comparar normal
@@ -1183,6 +967,22 @@ class User extends CActiveRecord
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
         ));
+    }
+
+    public function buscarNombreApellido($value, $comparator, $column) // es diferente  a la otra funcion existente en el modelo de orden
+    {
+        $consulta="";
+    	$var=explode(" ", $value);
+    	if(count($var)==2)
+    	{
+    		$dosResultados=$var[0]." ".$var[1];
+    		$consulta=$column.$comparator."'".$var[0]."' or ".$column.$comparator."'".$dosResultados."'";
+    	}
+    	else
+    	{
+    		$consulta=$column.$comparator."'".$var[0]."'";
+    	}
+		return $consulta;
     }
         
         
