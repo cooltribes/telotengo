@@ -111,16 +111,16 @@
    <?php $this->endWidget(); ?>
 
     <div class="span2 pull-right">
-        <a href="#" id="filter-remove" class="btn btn-gray " title="Borrar Filtro">Borrar Filtro</a>
+        <!--<a href="#" id="filter-remove" class="btn btn-gray " title="Borrar Filtro">Borrar Filtro</a>-->
     </div>
     <div class="span2 pull-right">
-        <a href="#" id="filter-save" class="btn btn-gray" title="Buscar con el filtro actual y guardarlo">Buscar y Guardar</a> 
+       <!-- <a href="#" id="filter-save" class="btn btn-gray" title="Buscar con el filtro actual y guardarlo">Buscar y Guardar</a> -->
     </div>
     <div class="span2 pull-right" style="display: none">
-        <a href="#" id="filter-save2" class="btn" title="Guardar filtro actual">Guardar Filtro</a> 
+       <!-- <a href="#" id="filter-save2" class="btn" title="Guardar filtro actual">Guardar Filtro</a> -->
     </div>
-    <div class="span1 pull-right">
-        <a href="#" id="filter-search" class="btn negro" title="Buscar con el filtro actual">Buscar</a>  
+    <div class="span1 pull-right"> <!-- Quitar la clase mientras cuando se descomente los filtros de arriba-->
+        <a href="#" id="filter-search" class="btn negro mientras" title="Buscar con el filtro actual">Buscar</a>  
     </div>
     
     
