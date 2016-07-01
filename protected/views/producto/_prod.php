@@ -25,7 +25,7 @@ echo"<tr>";
 	}
 	else 
 	{
-		echo "<td> <div id='".$data->id."s"."'> Desactivo </div></td>";
+		echo "<td> <div id='".$data->id."s"."'> Inactivo </div></td>";
 	}
 	
 	if($data->destacado == 1)

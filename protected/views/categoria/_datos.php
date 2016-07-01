@@ -34,7 +34,7 @@ echo"<tr>";
 	else
 	{
 		$status="activar";
-		echo "<td> Desactivo </td>";
+		echo "<td> Inactivo </td>";
 	}
 	
 	echo '<td>
