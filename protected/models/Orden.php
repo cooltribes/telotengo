@@ -548,6 +548,130 @@ class Orden extends CActiveRecord
 	    	return $vector;
     	}
     }
+
+            public function buscarPorFiltros($filters) {
+
+            $criteria = new CDbCriteria;
+
+            for ($i = 0; $i < count($filters['fields']); $i++) {
+                
+                $column = $filters['fields'][$i];
+                $value = $filters['vals'][$i];
+                $comparator = $filters['ops'][$i];
+                
+                if($i == 0){
+                   $logicOp = 'AND'; 
+                }else{                
+                    $logicOp = $filters['rels'][$i-1];                
+                }                
+                
+                if($column == 'fechaEmision')
+                {
+                    $value = strtotime($value);
+                    $value = date('Y-m-d H:i:s', $value);
+                    $criteria->addCondition('date(fecha)'.$comparator.'"'.$value.'"', $logicOp);
+                    continue;
+                }
+                 if($column == 'fechaUltimaAccion')
+                {
+                    $value = strtotime($value);
+                    $value = date('Y-m-d H:i:s', $value);
+                    $model=OrdenEstado::model()->findAllBySql('select * from tbl_orden_estado n where fecha= (select max(fecha) from tbl_orden_estado group by orden_id having orden_id=n.orden_id) and date(fecha)'.$comparator.'"'.$value.'"');
+					$vec=ARRAY();
+					foreach($model as $modelado):
+						$vec[]=$modelado->orden_id;
+					endforeach;
+                    $criteria->addCondition('id in('.implode(',', $vec).')', $logicOp);
+                    continue;
+                }
+                if($column == 'empresaVendedora') 
+                {
+                    $criteria->addCondition('id_vendedor in (select users_id from tbl_empresas_has_tbl_users where empresas_id in (select id from tbl_empresas where razon_social'.$comparator.'"'.$value.'"))', $logicOp);
+                    continue;
+                }                
+
+                if($column == 'empresaCompradora') 
+                {
+                    $criteria->addCondition('users_id in (select users_id from tbl_empresas_has_tbl_users where empresas_id in (select id from tbl_empresas where razon_social'.$comparator.'"'.$value.'"))', $logicOp);
+                    continue;
+                }
+
+                if($column == 'usuarioVendedor')
+                {
+                	$consulta=$this->buscarNombres($value, $comparator);
+                    $criteria->addCondition('id_vendedor in (select user_id from tbl_profiles where '.$consulta.')', $logicOp);
+                   	continue;
+                }
+
+                if($column == 'usuarioComprador')
+                {
+                	$consulta=$this->buscarNombres($value, $comparator);
+                    $criteria->addCondition('users_id in (select user_id from tbl_profiles where '.$consulta.')', $logicOp);
+                   	continue;
+                }
+                if($column == 'montoSinIva')
+                {
+                    $value=str_replace('.', '',$value);
+                    $criteria->addCondition('monto'.$comparator.'"'.$value.'"', $logicOp);
+                   	continue;
+                }
+                if($column == 'montoConIva')
+                {
+                    $value=str_replace('.', '',$value);
+                    $montoSinIva=$value/(1+Yii::app()->params['IVA']['value']);
+                    $criteria->addCondition('monto'.$comparator.'"'.$montoSinIva.'"', $logicOp);
+                   	continue;
+                }
+                
+                
+                //Para las finalizadas
+
+                
+                $criteria->compare('t.'.$column, $comparator." ".$value,
+                        false, $logicOp);
+                
+            }
+                                   
+            
+            $criteria->select = 't.*';
+                        
+        
+
+            return new CActiveDataProvider($this, array(
+                'criteria' => $criteria,
+            ));
+       }
+
+    public function buscarNombres($value, $comparator)
+    {
+        $consulta="";
+    	$var=explode(" ", $value);
+    	//echo count($var);
+    	if(count($var)==2)
+    	{
+    		//caso 1 coloco un nombre y un apellido
+    		$consulta="(first_name".$comparator."'".$var[0]."' and last_name".$comparator."'".$var[1]."')";
+    	}
+    	if(count($var)==3) // coloco 3 campos, dos nombres, un apellido o un nombre y dos apellidos
+    	{
+    		$dosNombres=$var[0]." ".$var[1];
+    		$dosApellidos=$var[1]." ".$var[2];
+    		$consulta="(
+    			(first_name".$comparator."'".$var[0]."' or first_name".$comparator."'".$dosNombres."') and 
+    			(last_name".$comparator."'".$var[2]."' or last_name".$comparator."'".$dosApellidos."')
+    			)";
+    	}
+    	if(count($var)==4) // dos nombres, dos apellidos
+    	{
+    		$dosNombres=$var[0]." ".$var[1];
+    		$dosApellidos=$var[2]." ".$var[4];
+    		$consulta="(first_name".$comparator."'".$dosNombres."' and last_name".$comparator."'".$dosApellidos."')";
+    	}
+		return $consulta;
+    }
+
+
+
     
     
     
