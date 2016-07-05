@@ -1523,8 +1523,28 @@ class OrdenController extends Controller
          Yii::app()->mail->send($message);
         
 
+         $iva=$model->monto*Yii::app()->params['IVA']['value'];
 
-        echo $estado;
+         $eachOrden=OrdenHasInventario::model()->findAllByAttributes(array('orden_id'=>$model->id));
+         foreach($eachOrden as $cadaOrden)
+         {
+            $arr[] = array('sku'=>$cadaOrden->inventario->producto->tlt_codigo, 
+                          'name'=>$cadaOrden->inventario->producto->nombre,
+                          'category'=>$cadaOrden->inventario->producto->padre->idCategoria->nombre,
+                          'price'=>$cadaOrden->inventario->precio, 
+                          'quantity'=>$cadaOrden->cantidad);
+         }
+
+
+        if($estado==1)
+        {
+        	$return=array('estado'=>$estado,'orden_id'=>$model->id, 'monto'=>$model->monto+$iva, 
+        		'empresa_nombre'=>$model->almacen->empresas->razon_social, 'iva'=>$iva,
+        		'arrayProductos'=>$arr);
+        }
+		else
+			$return=array('estado'=>$estado);
+		echo json_encode($return);
 		
 	}
 
