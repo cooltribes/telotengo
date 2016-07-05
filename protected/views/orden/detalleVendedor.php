@@ -258,6 +258,7 @@
 					$.ajax({
 			         url: "<?php echo Yii::app()->createUrl('Orden/cambiarEstado') ?>",
 		             type: 'POST',
+                 dataType:'json',
 			         data:{
 		                    id:id, estado:estado
 		                   },
@@ -267,13 +268,36 @@
 			        	$('#cancelar').hide();
 			        	var user="<?php echo User::model()->FindByPk(Yii::app()->user->id)->profile->first_name." ".User::model()->FindByPk(Yii::app()->user->id)->profile->last_name;?>";     	 
 			        	var fecha="<?php $date = date_create(date("Y-m-d H:i:s"));echo date_format($date, 'd/m/Y H:i:s');?>" ; 
-			        	if(data==1)
+                if(data.estado==1)
 			        	{
 			        		$('#estado').addClass('aceptado');
 			        		$('#estado').html('Aceptada');
 			        		var variable="Aprobada";
+                   ga('require', 'ecommerce');
 
-			        			
+                  ga('ecommerce:addTransaction', {
+                      'id': data.orden_id,                     // id de la orden
+                      'affiliation': data.empresa_nombre,   // nombre de la empresa
+                      'revenue': data.monto,               //  monto sin Iva
+                      'tax': data.iva                   // el iva del producto
+                    });
+
+                  jQuery.each( data.arrayProductos, function( i, val ) {
+
+                    //alert(val['sku']);
+                    ga('ecommerce:addItem', {
+                          'id': data.orden_id,            // id de la orden
+                          'name': val['name'],            // nombre del producto
+                          'sku': val['sku'],              // Codigo telotengo
+                          'category': val['category'],    // Categoria del producto
+                          'price': val['price'],          // precio unitario de cada producto
+                          'quantity': val['quantity'],    // cantidad por cada producto
+                        });
+
+                  });
+
+                  ga('ecommerce:send');
+
 			        	}else
 			        	{
 				        	$('#estado').addClass('rechazado');
