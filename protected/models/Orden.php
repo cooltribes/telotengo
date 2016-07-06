@@ -581,7 +581,10 @@ class Orden extends CActiveRecord
 					foreach($model as $modelado):
 						$vec[]=$modelado->orden_id;
 					endforeach;
-                    $criteria->addCondition('id in('.implode(',', $vec).')', $logicOp);
+					if(empty($vec))
+						$criteria->addCondition('id in(0)', $logicOp);
+					else
+                    	$criteria->addCondition('id in('.implode(',', $vec).')', $logicOp);
                     continue;
                 }
                 if($column == 'empresaVendedora') 
