@@ -298,8 +298,6 @@ $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
             $('#padre_name'+'_em').html('Debe escribir un nombre o elegir una sugerencia');
             $('#padre_name').addClass('error');
             $('#padre_name'+'_em').removeClass('hide');
-            if(opcion==1)
-              return false;
         }
         else
         {  
@@ -313,27 +311,34 @@ $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
                 success: function (data) {
                     console.log(data.status);
                     console.log(data);
+                   // alert(data.status);
                     if(data.status=='1')
                     {
                         $('#padre_name'+'_em').html('Producto con nombre existente');
                         $('#padre_name').addClass('error');
                         $('#padre_name'+'_em').removeClass('hide');
-                        if(opcion==1)
-                          return false;
+
                     }
                     else{
                           $('#padre_name').removeClass('error');
                           $('#padre_name'+'_em').addClass('hide');
-                          if(opcion==1)
-                            return true;
                     }
                 }
                })
         }
     }
 
+    function beforeSubmit()
+    {
+      if($('#padre_name').hasClass('error'))
+        return false;
+      else
+        return true;
+    }
+
     
     function submitForm(){
+        var respuesta=0;
         var resp;  
         var submit = true;
         var field = "";      
@@ -342,17 +347,17 @@ $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
         for(i=0; i<array.length; i++){
             resp=validate(array[i]);
             submit = resp[0];
+            if(submit==false)
+              respuesta=1;
             if(resp[1]!='')
                 field = resp[1];
         }    
-        if(field==""){
+        if(respuesta==0){
             $('#producto-padre-form').submit();
         }            
         else{
             $(window).scrollTop($(field).position().top-100);    
         }
-        
-        
     }
     function validate(id){
         var submit = true;
@@ -361,15 +366,20 @@ $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
             submit=false;
             $(field).addClass('error');
             $(field+'_em').removeClass('hide');
-        }else{
-            $(field).removeClass('error');
-            if(!$(field+'_em').hasClass('hide')){
-                $(field+'_em').addClass('hide');
-            }  
-          if(field=='#padre_name')
-          {
-            submit=validarNombre($(field).val(), 1);
-          }
+        }else
+        {
+            if(field=='#padre_name')
+            {
+              submit=beforeSubmit();
+            }
+            else
+            {
+              $(field).removeClass('error');
+              if(!$(field+'_em').hasClass('hide'))
+              {
+                  $(field+'_em').addClass('hide');
+              }  
+            }
             field="";
         }
         
