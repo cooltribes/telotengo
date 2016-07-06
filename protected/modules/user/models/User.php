@@ -791,35 +791,35 @@ class User extends CActiveRecord
             if($column === 'ordenMontoAprobada') 
             {
             	
-            	$criteria->addCondition('id in (select id_vendedor from tbl_orden where estado=1 group by id_vendedor having sum(monto)'.$comparator.$value.')', $logicOp);   
+            	$criteria->addCondition('id in (select id_vendedor from tbl_orden where estado=1 and monto'.$comparator.$value.')', $logicOp);   
                 continue;
                 
             }
             if($column === 'ordenMontoCancelada') 
             {
             	
-            	$criteria->addCondition('id in (select id_vendedor from tbl_orden where estado=2 group by id_vendedor having sum(monto)'.$comparator.$value.')', $logicOp);   
+            	$criteria->addCondition('id in (select id_vendedor from tbl_orden where estado=2 and monto'.$comparator.$value.')', $logicOp);   
                 continue;
                 
             }
              if($column === 'ordenMontoGeneradaPendiente') 
             {
             	
-            	$criteria->addCondition('id in (select users_id from tbl_orden where estado=0 group by users_id having sum(monto)'.$comparator.$value.')', $logicOp);   
+            	$criteria->addCondition('id in (select users_id from tbl_orden where estado=0 and monto'.$comparator.$value.')', $logicOp);   
                 continue;
                 
             }
             if($column === 'ordenMontoGeneradaAprobada') 
             {
             	
-            	$criteria->addCondition('id in (select users_id from tbl_orden where estado=1 group by users_id having sum(monto)'.$comparator.$value.')', $logicOp);   
+            	$criteria->addCondition('id in (select users_id from tbl_orden where estado=1 and monto'.$comparator.$value.')', $logicOp);   
                 continue;
                 
             }
             if($column === 'ordenMontoGeneradaCancelada') 
             {
             	
-            	$criteria->addCondition('id in (select users_id from tbl_orden where estado=2 group by users_id having sum(monto)'.$comparator.$value.')', $logicOp);   
+            	$criteria->addCondition('id in (select users_id from tbl_orden where estado=2 and monto'.$comparator.$value.')', $logicOp);   
                 continue;
                 
             }
@@ -896,24 +896,41 @@ class User extends CActiveRecord
                 continue;
             }
 
-             if ($column == 'fechaOrdenAprobada')
+             if ($column == 'fechaOrdenAprobada' || $column == 'fechaOrdenCancelada')
             {
-               
+                if($column == 'fechaOrdenAprobada')
+                	$estado=1;
+                if($column == 'fechaOrdenCancelada')
+                	$estado=2;
+                echo $estado;
                 $value = strtotime($value);
                 $value = date('Y-m-d H:i:s', $value);
-                $criteria->addCondition('id in (select id_vendedor from tbl_orden where estado=1 and date(fecha)'.$comparator.'"'.$value.'")', $logicOp);
+
+                $model=OrdenEstado::model()->findAllBySql('select * from tbl_orden_estado n where fecha= (select max(fecha) from tbl_orden_estado where estado='.$estado.' group by orden_id having orden_id=n.orden_id) and date(fecha)'.$comparator.'"'.$value.'"');
+            	$vec=ARRAY();
+				foreach($model as $modelado):
+					$vec[]=$modelado->orden_id;
+				endforeach;
+				if(!empty($vec))
+				{
+					$model2=Orden::model()->findAllBySql('select * from tbl_orden where id in('.implode(',', $vec).')');
+					$vec2=ARRAY();
+					foreach($model2 as $modelado2):
+						$vec2[]=$modelado2->id_vendedor;
+					endforeach;
+					if(!empty($vec2))
+						$criteria->addCondition('id in('.implode(',', $vec2).')', $logicOp);
+					else
+						$criteria->addCondition('id in(0)', $logicOp);
+	               
+	                #$criteria->addCondition('id in (select id_vendedor from tbl_orden where estado=1 and date(fecha)'.$comparator.'"'.$value.'")', $logicOp);
+				}
+				else
+					$criteria->addCondition('id in(0)', $logicOp);
 
                 continue;
             }
-             if ($column == 'fechaOrdenCancelada')
-            {
-               
-                $value = strtotime($value);
-                $value = date('Y-m-d H:i:s', $value);
-                $criteria->addCondition('id in (select id_vendedor from tbl_orden where estado=2 and date(fecha)'.$comparator.'"'.$value.'")', $logicOp);
 
-                continue;
-            }
             if ($column == 'fechaOrdenGeneradaPendiente')
             {
                
