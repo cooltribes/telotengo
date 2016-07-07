@@ -8,12 +8,13 @@ $this->breadcrumbs=array(
   'Panel de Control',
 );
 ?>
-<h1 class="orderTitle">Panel de control de Ordenes</h1>
-<hr>
+
 
 <div class="container-fluid">   
-  <div class="row">
-     <div class="row-fluid clearfix stats">
+  <div>
+  <h1 class="orderTitle">Panel de control de Ordenes</h1>
+  <hr>
+     <div class="clearfix stats">
          <div class="col-md-1 stat"> <!-- col-xs-1 stat -->
              <span class="value"><?php echo $todasOrdenes;?></span>
              <span class="legend">Totales</span>
@@ -111,7 +112,7 @@ $this->breadcrumbs=array(
     
     <div class="row">
       <div class="col-md-6 chart_status col-md-offset3 ">
-        <h3 class="bolder">Tasa de abandono</h3>   
+        <h3 class="bolder" style="margin-left: 16px;">Tasa de abandono</h3>   
 ​         <div id="tasaAbandonoIntencionCompra" style="margin-top:-31px;"></div>
       </div>      
       <div class="col-md-6">

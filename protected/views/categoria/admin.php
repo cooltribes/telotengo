@@ -8,7 +8,7 @@ $this->breadcrumbs=array(
     <h1 class="col-md-10">Administrar Categorías</h1>
         <div class="col-md-2 margin_top_medium">
                 <?php
-         echo CHtml::link('Crear Categoría', $this->createUrl('create'), array('class'=>'btn form-control btn-success', 'role'=>'button'));
+         echo CHtml::link('Crear Categoría', $this->createUrl('create'), array('class'=>'btn form-control btn-orange orange_border white', 'role'=>'button'));
                 ?>
         </div></div>
     
@@ -31,7 +31,7 @@ $this->breadcrumbs=array(
 				<input class="form-control no_radius_right" id="query" name="query" type="text" placeholder="Escribe tu criterio de búsqueda">                   
 			</div>
 			<div class="col-md-1 no_padding_left">
-				<a href="#" class="btn form-control btn-sigmablue no_radius_left" id="btn_search_event">Buscar</a>
+				<a href="#" class="btn form-control btn-darkgray white" id="btn_search_event">Buscar</a>
 			</div>             
         </form>
 
