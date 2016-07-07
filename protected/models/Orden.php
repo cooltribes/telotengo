@@ -589,13 +589,15 @@ class Orden extends CActiveRecord
                 }
                 if($column == 'empresaVendedora') 
                 {
-                    $criteria->addCondition('id_vendedor in (select users_id from tbl_empresas_has_tbl_users where empresas_id in (select id from tbl_empresas where razon_social'.$comparator.'"'.$value.'"))', $logicOp);
+                    $value = ($comparator == '=') ? "= '".$value."'" : "LIKE '%".$value."%'";
+                    $criteria->addCondition('id_vendedor in (select users_id from tbl_empresas_has_tbl_users where empresas_id in (select id from tbl_empresas where razon_social '.$value.'))', $logicOp);
                     continue;
                 }                
 
                 if($column == 'empresaCompradora') 
                 {
-                    $criteria->addCondition('users_id in (select users_id from tbl_empresas_has_tbl_users where empresas_id in (select id from tbl_empresas where razon_social'.$comparator.'"'.$value.'"))', $logicOp);
+                    $value = ($comparator == '=') ? "= '".$value."'" : "LIKE '%".$value."%'";
+                    $criteria->addCondition('users_id in (select users_id from tbl_empresas_has_tbl_users where empresas_id in (select id from tbl_empresas where razon_social '.$value.'))', $logicOp);
                     continue;
                 }
 
@@ -608,6 +610,7 @@ class Orden extends CActiveRecord
 
                 if($column == 'usuarioComprador')
                 {
+ 
                 	$consulta=$this->buscarNombres($value, $comparator);
                     $criteria->addCondition('users_id in (select user_id from tbl_profiles where '.$consulta.')', $logicOp);
                    	continue;
@@ -650,25 +653,44 @@ class Orden extends CActiveRecord
         $consulta="";
     	$var=explode(" ", $value);
     	//echo count($var);
+		if(count($var)==1)
+		{
+    		$var[0] = ($comparator == '=') ? "= '".$var[0]."'" : "LIKE '%".$var[0]."%'";
+    		$consulta="(first_name ".$var[0]." or last_name ".$var[0].")";
+		}
     	if(count($var)==2)
     	{
     		//caso 1 coloco un nombre y un apellido
-    		$consulta="(first_name".$comparator."'".$var[0]."' and last_name".$comparator."'".$var[1]."')";
+    		$var[0] = ($comparator == '=') ? "= '".$var[0]."'" : "LIKE '%".$var[0]."%'";
+    		$var[1] = ($comparator == '=') ? "= '".$var[1]."'" : "LIKE '%".$var[1]."%'";
+    		$consulta="(first_name ".$var[0]." and last_name ".$var[1].")";
     	}
     	if(count($var)==3) // coloco 3 campos, dos nombres, un apellido o un nombre y dos apellidos
     	{
     		$dosNombres=$var[0]." ".$var[1];
+    		$dosNombres = ($comparator == '=') ? "= '".$dosNombres."'" : "LIKE '%".$dosNombres."%'";
+
     		$dosApellidos=$var[1]." ".$var[2];
+    		$dosApellidos = ($comparator == '=') ? "= '".$dosApellidos."'" : "LIKE '%".$dosApellidos."%'";
+
+    		$var[0] = ($comparator == '=') ? "= '".$var[0]."'" : "LIKE '%".$var[0]."%'";
+    		$var[1] = ($comparator == '=') ? "= '".$var[1]."'" : "LIKE '%".$var[1]."%'";
+    		$var[2] = ($comparator == '=') ? "= '".$var[2]."'" : "LIKE '%".$var[2]."%'";
+
     		$consulta="(
-    			(first_name".$comparator."'".$var[0]."' or first_name".$comparator."'".$dosNombres."') and 
-    			(last_name".$comparator."'".$var[2]."' or last_name".$comparator."'".$dosApellidos."')
+    			(first_name ".$var[0]." or first_name ".$dosNombres.") and 
+    			(last_name ".$var[2]." or last_name ".$dosApellidos.")
     			)";
     	}
     	if(count($var)==4) // dos nombres, dos apellidos
     	{
     		$dosNombres=$var[0]." ".$var[1];
     		$dosApellidos=$var[2]." ".$var[4];
-    		$consulta="(first_name".$comparator."'".$dosNombres."' and last_name".$comparator."'".$dosApellidos."')";
+
+    		$dosNombres = ($comparator == '=') ? "= '".$dosNombres."'" : "LIKE '%".$dosNombres."%'";
+    		$dosApellidos = ($comparator == '=') ? "= '".$dosApellidos."'" : "LIKE '%".$dosApellidos."%'";
+
+    		$consulta="(first_name ".$dosNombres." and last_name ".$dosApellidos.")";
     	}
 		return $consulta;
     }

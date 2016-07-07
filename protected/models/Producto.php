@@ -636,17 +636,18 @@ class Producto extends CActiveRecord
                 }else{                
                     $logicOp = $filters['rels'][$i-1];                
                 }                
-                
+                $condicionExtra='aprobado=1 and ';
                 if($column == 'tlt_codigo' || $column == 'nombre' ) 
                 {
-                    $criteria->addCondition($column.$comparator.'"'.$value.'"', $logicOp);
+                    $value = ($comparator == '=') ? "= '".$value."'" : "LIKE '%".$value."%'";
+                    $criteria->addCondition($condicionExtra.$column.' '.$value, $logicOp);
                     continue;
                 }                
                 
                 //Para las finalizadas
 
                 
-                $criteria->compare('t.'.$column, $comparator." ".$value,
+                $criteria->compare($condicionExtra.'t.'.$column, $comparator." ".$value,
                         false, $logicOp);
                 
             }
