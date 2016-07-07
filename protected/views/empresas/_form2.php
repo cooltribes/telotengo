@@ -47,7 +47,7 @@
         <?php echo $form->error($model,'razon_social'); ?>
     </div>
     
-    <div class="form-group row-fluid">
+    <div class="form-group">
  
             <?php echo $form->textField($model,'rif', array('class'=>'form-control rifs', 'placeholder'=>'RIF (Letra y número sin espacios ni guiones)', 'maxlength'=>45)); ?>
 
@@ -57,7 +57,7 @@
         
     </div>
     
-        <div class="form-group row-fluid">
+        <div class="form-group">
  
             <?php //echo $form->textField($model,'tipo_contribuyente', array('class'=>'form-control', 'placeholder'=>'Tipo de contribuyente', 'maxlength'=>45)); ?>
 			 <?php echo $form->dropDownList($model,'tipo_contribuyente',array('0'=>'Contribuyente Ordinario', '1'=>'Contribuyente Especial', '2'=>'Contribuyente Formal'),array('class'=>'form-control','empty'=>'Seleccione un tipo de contribuyente')); ?>
@@ -99,7 +99,7 @@
         </div>
 
 
-        <div class="form-group row-fluid ciudades2">
+        <div class="form-group ciudades2">
            <?php echo $form->dropDownList($model,'ciudad2', CHtml::listData(Ciudad::model()->findAllByAttributes(array('provincia_id'=>$model->provincia),array('order'=>'nombre asc')),'id', 'nombre'), 
             array(
             'class'=>'form-control cu2',
@@ -108,7 +108,7 @@
         </div>
 
     
-    <div class="form-group row-fluid">
+    <div class="form-group">
             <?php echo $form->textField($model,'zip', array('id'=>'zip','class'=>'form-control', 'placeholder'=>'Código Postal (numeros enteros)', 'maxlength'=>50)); ?>
 
             <?php echo $form->error($model,'zip'); ?>            

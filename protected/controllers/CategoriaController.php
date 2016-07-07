@@ -302,7 +302,7 @@ class CategoriaController extends Controller
 			$log->id_admin=Yii::app()->user->id;
 			$log->accion=66; //le modifico el seo
 			$log->save(); 
-                
+            $this->redirect(array('categoria/admin'));
         }
 
         $this->render('categoriaSeo',array(

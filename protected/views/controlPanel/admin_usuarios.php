@@ -8,11 +8,12 @@ $this->breadcrumbs=array(
   'Panel de Control',
 );
 ?>
-<h1 class="orderTitle">Panel de control de usuarios</h1>
-<hr>
+
 
 <div class="container-fluid">   
-  <div class="row">
+  <div>
+  <h1 class="orderTitle">Panel de control de usuarios</h1>
+  <hr>
     <div class="clearfix stats">
              <div class="col-xs-1 stat">
                  <span class="value"><?php echo $todosUsers;?></span>
@@ -106,7 +107,7 @@ $this->breadcrumbs=array(
     
     <div class="row">
       <div class="col-md-6 chart_status col-md-offset3 ">
-        <h3 class="bolder">Tasa de retorno</h3>   
+        <h3 class="bolder" style="margin-left: 16px;">Tasa de retorno</h3>   
 ​         <div id="tasaDeRetorno" style="margin-top:-31px;"></div>
       </div>      
       <div class="col-md-6">

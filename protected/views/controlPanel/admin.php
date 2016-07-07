@@ -8,11 +8,12 @@ $this->breadcrumbs=array(
   'Panel de Control',
 );
 ?>
-<h1 class="orderTitle">Panel de control de empresas</h1>
-<hr>
 
-<div class="container-fluid">   
-  <div class="row">
+
+<div class="container-fluid"> 
+  <div>
+  <h1 class="orderTitle">Panel de control de empresas</h1>
+<hr>  
     <div class="clearfix stats">
              <div class="col-xs-1 stat">
                  <span class="value"><?php echo $sumatoria?></span>
