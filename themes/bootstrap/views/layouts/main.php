@@ -55,6 +55,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/dropdown_men
 <body>
    
 <?php
+$noFooter=0;
 if(!isset(Yii::app()->session['seller']))
     Yii::app()->session['seller']=false;       
 if(Yii::app()->user->isAdmin()): 
@@ -76,7 +77,12 @@ if(Yii::app()->user->isAdmin()):
                     
                 endif;
             else:                  
-                include 'b2b.php';
+                include 'b2b.php'; $noFooter=1;
             endif;    
         endif;     ?>
+
+<?php 
+if($noFooter==0)
+  include 'footer.php';
+?>
 </body>           
