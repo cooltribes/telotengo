@@ -1,5 +1,19 @@
 <style>
 .centrar{text-align: center;}
+    .negro{
+        background-color: black;
+        color: #fff;
+        border:0;
+    }
+    .negro:hover, .negro:active, .negro:visited   {
+        color: #fff;
+        background-color: black;
+        border:0;
+    }
+        .mientras {    
+    margin-top: -53px;
+    margin-left: 33px;
+    }
 </style>
 <?php
 /* @var $this FlashsaleController */
@@ -70,7 +84,9 @@ $this->breadcrumbs=array(
 		 </div>   
 		 <hr/>    
 		 <!--   <div class="margin_top margin_bottom_small">Filtrar</div> -->
-	   <form class="margin_bottom form-search no_horizontal_padding row-fluid clearfix">
+
+	<div class="row-fluid clearfix margin_top margin_bottom">
+		<form >
                          <div class="col-md-3 no_horizontal_padding">
                              <input class="form-control no_radius" id="query" name="query" type="text" placeholder="N° o nombre de empresa">                   
                          </div>
@@ -80,6 +96,29 @@ $this->breadcrumbs=array(
                          <div class="col-md-offset-8"></div>
                                 
         </form>
+         <div class="col-md-8 no_horizontal_padding">
+           <div class="row-fluid">
+               <!--<div class="col-md-4">
+                     <select class="form-control">
+                       <option>-- Búsquedas avanzadas --</option>
+                   </select>
+               </div> -->
+               <div class="col-md-3 col-md-offset-1">
+                     <a class="btn btn-gray margin_left_minus" onclick="show('#nuevaBusqueda')">Crear búsqueda avanzada</a>
+               </div>
+           </div>
+        </div>
+        
+        </div>
+	
+	
+	
+	<div class="row-fluid clearfix margin_bottom hide" id="nuevaBusqueda">
+	     <?php  $this->renderPartial("_filters"); ?>
+	   </div> 
+
+
+
 	   </div>
 		<?php
 		Yii::app()->clientScript->registerScript('query1',
@@ -91,7 +130,7 @@ $this->breadcrumbs=array(
 				
 				ajaxUpdateTimeout = setTimeout(function () {
 					$.fn.yiiListView.update(
-					'list-auth-categorias',
+					'list-auth-items',
 					{
 					type: 'POST',	
 					url: '" . CController::createUrl('orden/admin') . "',
@@ -116,7 +155,7 @@ $this->breadcrumbs=array(
 					
 					ajaxUpdateTimeout = setTimeout(function () {
 						$.fn.yiiListView.update(
-						'list-auth-categorias',
+						'list-auth-items',
 						{
 						type: 'POST',	
 						url: '" . CController::createUrl('orden/admin') . "',
@@ -143,7 +182,7 @@ $this->breadcrumbs=array(
 				
 				ajaxUpdateTimeout = setTimeout(function () {
 					$.fn.yiiListView.update(
-					'list-auth-ordenes',
+					'list-auth-items',
 					{
 					type: 'POST',	
 					url: '" . CController::createUrl('orden/admin') . "',
@@ -168,7 +207,7 @@ $this->breadcrumbs=array(
 					
 					ajaxUpdateTimeout = setTimeout(function () {
 						$.fn.yiiListView.update(
-						'list-auth-ordenes',
+						'list-auth-items',
 						{
 						type: 'POST',	
 						url: '" . CController::createUrl('orden/admin') . "',
@@ -222,7 +261,7 @@ $this->breadcrumbs=array(
 		';
 
 			$this->widget('zii.widgets.CListView', array(
-		    'id'=>'list-auth-ordenes',
+		    'id'=>'list-auth-items',
 		    'dataProvider'=>$dataProvider,
 		    'itemView'=>'_datos',
 		    'template'=>$template,
@@ -257,4 +296,10 @@ function modal(id){
         'cache' :false}); 
 
 }
+    function show(id){
+        if($(id).hasClass('hide'))
+            $(id).removeClass('hide');
+        else
+            $(id).addClass('hide');
+    }
 </script>

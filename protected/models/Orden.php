@@ -548,6 +548,155 @@ class Orden extends CActiveRecord
 	    	return $vector;
     	}
     }
+
+            public function buscarPorFiltros($filters) {
+
+            $criteria = new CDbCriteria;
+
+            for ($i = 0; $i < count($filters['fields']); $i++) {
+                
+                $column = $filters['fields'][$i];
+                $value = $filters['vals'][$i];
+                $comparator = $filters['ops'][$i];
+                
+                if($i == 0){
+                   $logicOp = 'AND'; 
+                }else{                
+                    $logicOp = $filters['rels'][$i-1];                
+                }                
+                
+                if($column == 'fechaEmision')
+                {
+                    $value = strtotime($value);
+                    $value = date('Y-m-d H:i:s', $value);
+                    $criteria->addCondition('date(fecha)'.$comparator.'"'.$value.'"', $logicOp);
+                    continue;
+                }
+                 if($column == 'fechaUltimaAccion')
+                {
+                    $value = strtotime($value);
+                    $value = date('Y-m-d H:i:s', $value);
+                    $model=OrdenEstado::model()->findAllBySql('select * from tbl_orden_estado n where fecha= (select max(fecha) from tbl_orden_estado group by orden_id having orden_id=n.orden_id) and date(fecha)'.$comparator.'"'.$value.'"');
+					$vec=ARRAY();
+					foreach($model as $modelado):
+						$vec[]=$modelado->orden_id;
+					endforeach;
+					if(empty($vec))
+						$criteria->addCondition('id in(0)', $logicOp);
+					else
+                    	$criteria->addCondition('id in('.implode(',', $vec).')', $logicOp);
+                    continue;
+                }
+                if($column == 'empresaVendedora') 
+                {
+                    $value = ($comparator == '=') ? "= '".$value."'" : "LIKE '%".$value."%'";
+                    $criteria->addCondition('id_vendedor in (select users_id from tbl_empresas_has_tbl_users where empresas_id in (select id from tbl_empresas where razon_social '.$value.'))', $logicOp);
+                    continue;
+                }                
+
+                if($column == 'empresaCompradora') 
+                {
+                    $value = ($comparator == '=') ? "= '".$value."'" : "LIKE '%".$value."%'";
+                    $criteria->addCondition('users_id in (select users_id from tbl_empresas_has_tbl_users where empresas_id in (select id from tbl_empresas where razon_social '.$value.'))', $logicOp);
+                    continue;
+                }
+
+                if($column == 'usuarioVendedor')
+                {
+                	$consulta=$this->buscarNombres($value, $comparator);
+                    $criteria->addCondition('id_vendedor in (select user_id from tbl_profiles where '.$consulta.')', $logicOp);
+                   	continue;
+                }
+
+                if($column == 'usuarioComprador')
+                {
+ 
+                	$consulta=$this->buscarNombres($value, $comparator);
+                    $criteria->addCondition('users_id in (select user_id from tbl_profiles where '.$consulta.')', $logicOp);
+                   	continue;
+                }
+                if($column == 'montoSinIva')
+                {
+                    $value=str_replace('.', '',$value);
+                    $criteria->addCondition('monto'.$comparator.'"'.$value.'"', $logicOp);
+                   	continue;
+                }
+                if($column == 'montoConIva')
+                {
+                    $value=str_replace('.', '',$value);
+                    $montoSinIva=$value/(1+Yii::app()->params['IVA']['value']);
+                    $criteria->addCondition('monto'.$comparator.'"'.$montoSinIva.'"', $logicOp);
+                   	continue;
+                }
+                
+                
+                //Para las finalizadas
+
+                
+                $criteria->compare('t.'.$column, $comparator." ".$value,
+                        false, $logicOp);
+                
+            }
+                                   
+            
+            $criteria->select = 't.*';
+                        
+        
+
+            return new CActiveDataProvider($this, array(
+                'criteria' => $criteria,
+            ));
+       }
+
+    public function buscarNombres($value, $comparator)
+    {
+        $consulta="";
+    	$var=explode(" ", $value);
+    	//echo count($var);
+		if(count($var)==1)
+		{
+    		$var[0] = ($comparator == '=') ? "= '".$var[0]."'" : "LIKE '%".$var[0]."%'";
+    		$consulta="(first_name ".$var[0]." or last_name ".$var[0].")";
+		}
+    	if(count($var)==2)
+    	{
+    		//caso 1 coloco un nombre y un apellido
+    		$var[0] = ($comparator == '=') ? "= '".$var[0]."'" : "LIKE '%".$var[0]."%'";
+    		$var[1] = ($comparator == '=') ? "= '".$var[1]."'" : "LIKE '%".$var[1]."%'";
+    		$consulta="(first_name ".$var[0]." and last_name ".$var[1].")";
+    	}
+    	if(count($var)==3) // coloco 3 campos, dos nombres, un apellido o un nombre y dos apellidos
+    	{
+    		$dosNombres=$var[0]." ".$var[1];
+    		$dosNombres = ($comparator == '=') ? "= '".$dosNombres."'" : "LIKE '%".$dosNombres."%'";
+
+    		$dosApellidos=$var[1]." ".$var[2];
+    		$dosApellidos = ($comparator == '=') ? "= '".$dosApellidos."'" : "LIKE '%".$dosApellidos."%'";
+
+    		$var[0] = ($comparator == '=') ? "= '".$var[0]."'" : "LIKE '%".$var[0]."%'";
+    		$var[1] = ($comparator == '=') ? "= '".$var[1]."'" : "LIKE '%".$var[1]."%'";
+    		$var[2] = ($comparator == '=') ? "= '".$var[2]."'" : "LIKE '%".$var[2]."%'";
+
+    		$consulta="(
+    			(first_name ".$var[0]." or first_name ".$dosNombres.") and 
+    			(last_name ".$var[2]." or last_name ".$dosApellidos.")
+    			)";
+    	}
+    	if(count($var)==4) // dos nombres, dos apellidos
+    	{
+    		$dosNombres=$var[0]." ".$var[1];
+    		$dosApellidos=$var[2]." ".$var[4];
+
+    		$dosNombres = ($comparator == '=') ? "= '".$dosNombres."'" : "LIKE '%".$dosNombres."%'";
+    		$dosApellidos = ($comparator == '=') ? "= '".$dosApellidos."'" : "LIKE '%".$dosApellidos."%'";
+
+    		$consulta="(first_name ".$dosNombres." and last_name ".$dosApellidos.")";
+    	}
+		return $consulta;
+    }
+
+
+
     
     
     

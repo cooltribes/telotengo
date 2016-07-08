@@ -60,7 +60,7 @@ echo"</tr>";
 				if(data==0)//lo contrario
 				{
 					$('#'+id).html('<i class="glyphicon glyphicon-ok"></i> Activar');
-					$('#'+id+'s').html('Desactivo')
+					$('#'+id+'s').html('Inactivo')
 				}
 				else
 				{

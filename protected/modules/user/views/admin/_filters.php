@@ -160,7 +160,7 @@
                                // 'ciudad' => 'Ciudad',
                                 //'fuenteR' => 'Fuente de registro',
                                // 'invitaciones' => 'Invitaciones enviadas',
-                                'visit' => 'Número de ingresos al portal',
+                                'ingresos' => 'Número de ingresos al portal',
                                 'lastvisit_at' => 'Fecha de última visita',
                                 'create_at' => 'Fecha de registro',
                                 'monto' => 'Monto comprado',
@@ -201,7 +201,7 @@
                                 'ordenMontoGeneradaAprobada'=>'Monto de ordenes generadas por usuario (aprobadas)',
                                 'ordenMontoGeneradaCancelada'=>'Monto de ordenes generadas por usuario (canceladas)',
                                 'Ingresos'=>'ingresos',
-                                'cantItemComprado'=>'Cantidad de Items comprados',
+                                'cantItemComprado'=>'Cantidad de Items comprados por orden',
                                  );
                                  asort($opcionesFiltros);
                                  
@@ -241,15 +241,15 @@
    <?php $this->endWidget(); ?>
 
     <div class="span2 pull-right">
-        <a href="#" id="filter-remove" class="btn btn-gray " title="Borrar Filtro">Borrar Filtro</a>
+        <!--<a href="#" id="filter-remove" class="btn btn-gray " title="Borrar Filtro">Borrar Filtro</a>-->
     </div>
     <div class="span2 pull-right">
-        <a href="#" id="filter-save" class="btn btn-gray" title="Buscar con el filtro actual y guardarlo">Buscar y Guardar</a> 
+       <!-- <a href="#" id="filter-save" class="btn btn-gray" title="Buscar con el filtro actual y guardarlo">Buscar y Guardar</a> -->
     </div>
     <div class="span2 pull-right" style="display: none">
-        <a href="#" id="filter-save2" class="btn" title="Guardar filtro actual">Guardar Filtro</a> 
+       <!-- <a href="#" id="filter-save2" class="btn" title="Guardar filtro actual">Guardar Filtro</a> -->
     </div>
-    <div class="span1 pull-right">
+    <div class="span1 pull-right"> <!-- Quitar la clase mientras cuando se descomente los filtros de arriba-->
         <a href="#" id="filter-search" class="btn negro" title="Buscar con el filtro actual">Buscar</a>  
     </div>
     

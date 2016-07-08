@@ -24,6 +24,10 @@ $this->breadcrumbs=array(
         background-color: black;
         border:0;
     }
+    .mientras {    
+    margin-top: -53px;
+    margin-left: 33px;
+    }
 
 
 </style>
@@ -92,11 +96,11 @@ $this->breadcrumbs=array(
         </div>
          <div class="col-md-8 no_horizontal_padding">
            <div class="row-fluid">
-               <div class="col-md-4">
+               <!--<div class="col-md-4">
                      <select class="form-control">
                        <option>-- Búsquedas avanzadas --</option>
                    </select>
-               </div>
+               </div> -->
                <div class="col-md-3 col-md-offset-1">
                      <a class="btn btn-gray margin_left_minus" onclick="show('#nuevaBusqueda')">Crear búsqueda avanzada</a>
                </div>
@@ -296,7 +300,7 @@ $this->breadcrumbs=array(
                 if(data==0)//lo contrario
                 {
                     $('#'+id).html('<i class="glyphicon glyphicon-ok"></i> Activar');
-                    $('#'+id+'s').html('Desactivo')
+                    $('#'+id+'s').html('Inactivo')
                 }
                 else
                 {

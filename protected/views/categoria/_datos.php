@@ -19,7 +19,7 @@ echo"<tr>";
    			echo "<td><img src='http://placehold.it/150x150'></td>";
 		
    	echo "<td>".$data->nombre."</td>";
-	echo "<td>".$data->url_amigable."</td>";
+	echo "<td>".$data->seo->amigable."</td>";
 	
 	if($data->destacado == 1)
 		echo "<td id='pal".$data->id."'> Destacado </td>";
@@ -34,7 +34,7 @@ echo"<tr>";
 	else
 	{
 		$status="activar";
-		echo "<td> Desactivo </td>";
+		echo "<td> Inactivo </td>";
 	}
 	
 	echo '<td>

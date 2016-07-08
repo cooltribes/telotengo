@@ -11,7 +11,7 @@ echo"<tr>";
 	}
 	else 
 	{
-		echo "<td> <div id='".$data->id."s"."'> Desactivo </div></td>";
+		echo "<td> <div id='".$data->id."s"."'> Inactivo </div></td>";
 	}
 	echo '<td>
 
@@ -53,7 +53,7 @@ echo"</tr>";
 				if(data==0)//lo contrario
 				{
 					$('#'+id).html('<i class="glyphicon glyphicon-ok"></i> Activar');
-					$('#'+id+'s').html('Desactivo')
+					$('#'+id+'s').html('Inactivo')
 				}
 				else
 				{

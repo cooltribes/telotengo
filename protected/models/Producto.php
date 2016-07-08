@@ -619,6 +619,48 @@ class Producto extends CActiveRecord
             'pagination'=>array('pageSize'=>15,),
         ));
     }
+
+    public function buscarPorFiltros($filters) 
+    {
+
+            $criteria = new CDbCriteria;
+
+            for ($i = 0; $i < count($filters['fields']); $i++) {
+                
+                $column = $filters['fields'][$i];
+                $value = $filters['vals'][$i];
+                $comparator = $filters['ops'][$i];
+                
+                if($i == 0){
+                   $logicOp = 'AND'; 
+                }else{                
+                    $logicOp = $filters['rels'][$i-1];                
+                }                
+                $condicionExtra='aprobado=1 and ';
+                if($column == 'tlt_codigo' || $column == 'nombre' ) 
+                {
+                    $value = ($comparator == '=') ? "= '".$value."'" : "LIKE '%".$value."%'";
+                    $criteria->addCondition($condicionExtra.$column.' '.$value, $logicOp);
+                    continue;
+                }                
+                
+                //Para las finalizadas
+
+                
+                $criteria->compare($condicionExtra.'t.'.$column, $comparator." ".$value,
+                        false, $logicOp);
+                
+            }
+                                   
+            
+            $criteria->select = 't.*';
+                        
+        
+
+            return new CActiveDataProvider($this, array(
+                'criteria' => $criteria,
+            ));
+       }
     
 	
 }
