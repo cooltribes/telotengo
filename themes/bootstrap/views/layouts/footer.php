@@ -29,8 +29,8 @@
                       <div class="col-md-4 padding_left padding_right">
                           <div style="width:100%;" class="padding_right padding_left">
                               <h4 style="color: black; font-weight: bolder;font-size: larger;"> REDES SOCIALES</h4>
-                              <img height="41px" src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/facebook2.png" alt="Facebook">
-                              <img height="41px" src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/twitter2.png" alt="Twitter" style="margin-left: 8px;">
+                              <img height="41px" src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/FB-icon.png" alt="Facebook">
+                              <img height="41px" src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/TW-icon.png" alt="Twitter" style="margin-left: 8px;">
                           </div>
                       </div>
                   </div>
