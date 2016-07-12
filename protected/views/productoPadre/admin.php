@@ -31,11 +31,15 @@ $this->breadcrumbs=array(
 		<?php } ?>
 
 		    <div class="row-fluid margin_top margin_bottom_small ">
+		       <div class="col-md-3 col-md-offset-9"> 
+                <?php
+                    echo CHtml::link('Crear Producto Padre', Yii::app()->baseUrl."/producto/clasificar", array('class'=>'btn form-control btn-orange orange_border white', 'role'=>'button')); ?>
+                </div>
 	          <div class="margin_top col-md-12 no_horizontal_padding">
                  <div>Buscar</div>
+                 
 
-
-             <form class="margin_bottom form-search row-fluid">
+             <form class="form-search row-fluid" style="margin-top: -31px;">
                  <div class="col-md-3 no_horizontal_padding">
                     <input class="form-control no_radius_right" id="query" name="query" type="text" placeholder="Criterio de búsqueda">              
                  </div>
@@ -45,7 +49,7 @@ $this->breadcrumbs=array(
                  
                  <div class="col-md-3 col-md-offset-3 "> 
                 <?php
-                    echo CHtml::link('Crear Producto Padre', Yii::app()->baseUrl."/producto/clasificar", array('class'=>'btn form-control btn-orange orange_border white', 'role'=>'button')); ?>
+                    #echo CHtml::link('Crear Producto Padre', Yii::app()->baseUrl."/producto/clasificar", array('class'=>'btn form-control btn-orange orange_border white', 'role'=>'button')); ?>
                 </div>
                 
                 <div class="col-md-2"> 

@@ -76,7 +76,7 @@
 								}
 							?>	
 							<div class="col-md-3 col-md-offset-5 padding_right">
-								<a href="#" id="siguiente" class="btn btn-primary" id="btn_search_event">Siguiente</a>
+								<a href="#" id="siguiente" class="btn form-control btn-orange orange_border white" id="btn_search_event">Siguiente</a>
 							</div>
 
 							<div class="form-group">
