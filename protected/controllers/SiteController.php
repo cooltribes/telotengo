@@ -25,7 +25,7 @@ class SiteController extends Controller
 			array('allow',  // allow all users to perform 'index' and 'view' actions
 				'actions'=>array('index','error','contact','login','logout','captcha','busqueda','tiendas','info','soporte','garantia','convenios','request','request2',
 								'corporativo','licencias','ofertas','home','store','detalle', 'autoComplete', 'filtroBusqueda', 'category', 'formuPregunta',
-								'detalleOrden','mailtest','descargaPlantilla'), 
+								'detalleOrden','mailtest','descargaPlantilla', 'quienesSomos', 'trabajaNosotros', 'terminosUso', 'propiedadIntelectual', 'preguntasFrecuentes', 'contactanos', 'formasPago'), 
 
 				'users'=>array('*'),
 			),
@@ -647,6 +647,39 @@ class SiteController extends Controller
             
     }
     
-   
+   public function actionQuienesSomos()
+   {
+   	$this->render('quienes_somos');
+   }
+    public function actionTrabajaNosotros()
+   {
+   	$model= new Empleo;
+   	if(isset($_POST['Empleo']))
+   	{
+   		echo "asdlsdgfsfg";
+   	}
+   	$this->render('trabaja_nosotros', array('model'=>$model));
+   }
+
+   public function actionTerminosUso()
+   {
+   	$this->render('terminos_uso');
+   }
+   public function actionPropiedadIntelectual()
+   {
+   	$this->render('propiedad_intelectual');
+   }
+   public function actionPreguntasFrecuentes()
+   {
+   	$this->render('preguntas_frecuentes');
+   }
+   public function actionContactanos()
+   {
+   	$this->render('contactanos');
+   }
+   public function actionFormasPago()
+   {
+   	$this->render('formas_pago');
+   }
 
 } 

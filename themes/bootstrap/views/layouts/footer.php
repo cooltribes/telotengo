@@ -5,12 +5,12 @@
                           <div style="width:100%;" class="padding_right padding_left">
                               <h4 style="color: black; font-weight: bolder;font-size: larger;"> ACERCA DE TLT </h4>
                                         <ul class="foot-list" style="line-height: 1.9em;">
-                                            <li><a href="/sigmatiendas/site/info" title="Quienes somos">¿Quiénes Somos?</a></li>
-                                            <li><a href="/sigmatiendas/site/info" title="Trabaja con Nosotros">Trabaja con Nosotros</a></li>
-                                            <li><a href="#" title="Términos de Uso">Términos de Uso</a></li>
-                                            <li><a href="#" title="Protección de Propiedad Intelectual">Protección de Propiedad Intelectual</a></li>
+                                            <li><a href="<?php echo Yii::app()->createUrl('site/quienesSomos');?>" title="Quienes somos">¿Quiénes Somos?</a></li>
+                                            <li><a href="<?php echo Yii::app()->createUrl('site/trabajaNosotros');?>" title="Trabaja con Nosotros">Trabaja con Nosotros</a></li>
+                                            <li><a href="<?php echo Yii::app()->createUrl('site/terminosUso');?>" title="Términos de Uso">Términos de Uso</a></li>
+                                            <li><a href="<?php echo Yii::app()->createUrl('site/propiedadIntelectual');?>" title="Protección de Propiedad Intelectual">Protección de Propiedad Intelectual</a></li>
                                             <li><a href="#" title="Directorio o Mapa del Sitio">Directorio o Mapa del Sitio</a></li>
-                                            <li><a href="/sigmatiendas/site/contact">Login</a></li>
+                                            <li><a href="<?php echo Yii::app()->createUrl('user/registration');?>">Login</a></li>
                                         </ul>
                           </div>
                       </div>
@@ -18,9 +18,9 @@
                           <div style="width:100%;" class="padding_right padding_left">
                               <h4 style="color: black; font-weight: bolder;font-size: larger;"> SERVICIO AL CLIENTE</h4>
                                             <ul class="foot-list" style="line-height: 1.9em;">
-                                                <li><a href="#" title="Preguntas Frecuentes">Preguntas Frecuentes</a></li>
-                                                <li><a href="#" title="Contacto">Contacto</a></li>
-                                                <li><a href="#" title="Formas de Pago">Formas de Pago</a></li>
+                                                <li><a href="<?php echo Yii::app()->createUrl('site/preguntasFrecuentes');?>"  title="Preguntas Frecuentes">Preguntas Frecuentes</a></li>
+                                                <li><a href="<?php echo Yii::app()->createUrl('site/contactanos');?>" title="Contacto">Contacto</a></li>
+                                                <li><a href="<?php echo Yii::app()->createUrl('site/formasPago');?>" title="Formas de Pago">Formas de Pago</a></li>
                                                 <li><a href="#" title="Políticas de Devoluciones y Reembolsos">Políticas de Devoluciones y Reembolsos</a></li>
                                                 <li><a href="#" title="Políticas de productos internacionales">Políticas de productos internacionales</a></li>
                                           </ul> 
