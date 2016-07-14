@@ -25,7 +25,7 @@ class SiteController extends Controller
 			array('allow',  // allow all users to perform 'index' and 'view' actions
 				'actions'=>array('index','error','contact','login','logout','captcha','busqueda','tiendas','info','soporte','garantia','convenios','request','request2',
 								'corporativo','licencias','ofertas','home','store','detalle', 'autoComplete', 'filtroBusqueda', 'category', 'formuPregunta',
-								'detalleOrden','mailtest','descargaPlantilla', 'quienesSomos', 'trabajaNosotros', 'terminosUso', 'propiedadIntelectual', 'preguntasFrecuentes', 'contactanos', 'formasPago'), 
+								'detalleOrden','mailtest','descargaPlantilla', 'quienesSomos', 'trabajaNosotros', 'terminosUso', 'propiedadIntelectual', 'preguntasFrecuentes', 'contactanos', 'formasPago', 'siteMap'), 
 
 				'users'=>array('*'),
 			),
@@ -667,7 +667,7 @@ class SiteController extends Controller
 		$contar=count(Empleo::model()->findAll())+1;
 		$fichero_subido = $dir ."/".$contar."-".basename($_FILES['fichero_usuario']['name']);
 		$var=explode(".", $fichero_subido);
-		if($var[1]=="pdf" || $var[1]=="doc")
+		if($var[1]=="pdf" || $var[1]=="doc" || $var[1]=="txt" || $var[1]=="jpg")
 		{
 			if (move_uploaded_file($_FILES['fichero_usuario']['tmp_name'], $fichero_subido)) {
 			$model->cv=$fichero_subido;
@@ -711,6 +711,10 @@ class SiteController extends Controller
    public function actionFormasPago()
    {
    	$this->render('formas_pago');
+   }
+   public function actionSiteMap()
+   {
+   	$this->render('siteMap');
    }
 
 } 
