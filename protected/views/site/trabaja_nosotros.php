@@ -1,10 +1,22 @@
 <div><strong><h3 style="font-weight: bold;">Trabaja con Nosotros</h3> </strong></div>
 <hr class="no_margin_top">
+<?php
+	 if(Yii::app()->user->hasFlash('success')){?>
+	    <div class="alert in alert-block fade alert-success text_align_center">
+	        <?php echo Yii::app()->user->getFlash('success'); ?>
+	    </div>
+	<?php } ?>
+	<?php if(Yii::app()->user->hasFlash('error')){?>
+	    <div class="alert in alert-block fade alert-danger text_align_center">
+	        <?php echo Yii::app()->user->getFlash('error'); ?>
+	    </div>
+	<?php } 
+if(!isset($copy))
+{ 
+?>
 <p style="text-align: justify;line-height: 23px;">
 Telotengo ha sido creada por emprendedores venezolanos para crear una solución a las comunicaciones corporativas de las empresas en las acciones de compra venta de mercancía.
 Si deseas unirte al equipo de Telotengo llena el siguiente formulario </p>
-
-//
 
 <p class="note alert">Todos los Campos son Requeridos.</p>
 
@@ -21,7 +33,7 @@ Si deseas unirte al equipo de Telotengo llena el siguiente formulario </p>
     ),
 )); ?>
 	 
-	<?php  #echo $form->errorSummary($model); ?>
+	<?php  #echo $form->errorSummary($model);?>
 	 
 
 	<div class="col-md-12 margin_top_small">
@@ -30,14 +42,10 @@ Si deseas unirte al equipo de Telotengo llena el siguiente formulario </p>
 
 	</div>
 	
-	<div class="col-md-6 margin_top_small">
-		<?php echo $form->textFieldRow($model,'edad',array('class'=>'form-control','maxlength'=>80, 'id'=>'edad')); ?>
-		<?php echo $form->error($model,'edad'); ?>
-
-	</div>
 
 	<div class="col-md-6 margin_top_small">
-		<?php echo $form->textFieldRow($model,'sexo',array('class'=>'form-control','maxlength'=>80, 'id'=>'sexo')); ?>
+		<?php #echo $form->textFieldRow($model,'sexo',array('class'=>'form-control','maxlength'=>80, 'id'=>'sexo')); ?>
+		        	<?php echo $form->dropDownListRow($model,'sexo', array("1" => "Masculino", "2" => "Femenino"), array('empty' => 'Seleccione sexo', 'class'=>'form-control','id'=>'sexo'));?> 
 		<?php echo $form->error($model,'sexo'); ?>
 
 	</div>
@@ -55,14 +63,26 @@ Si deseas unirte al equipo de Telotengo llena el siguiente formulario </p>
 	</div>
 
 	<div class="col-md-6 margin_top_small">
-		<?php echo $form->textFieldRow($model,'fecha_nacimiento',array('class'=>'form-control','maxlength'=>80, 'id'=>'fecha_nacimiento')); ?>
-		<?php echo $form->error($model,'fecha_nacimiento'); ?>
+		<?php #echo $form->textFieldRow($model,'fecha_nacimiento',array('class'=>'form-control','maxlength'=>80, 'id'=>'fecha_nacimiento')); ?>
+		<label class="control-label">Fecha de nacimiento</label><span class="required">*</span>
+		<input type="date" class="form-control" name="fecha_nacimiento" id="fecha_nacimiento">
+		<?php #echo $form->error($model,'fecha_nacimiento'); ?>
+		 <span class="help-inline error hide" id="fecha_nacimiento_em">Debe elegir la fecha de nacimiento</span>
 
 	</div>
 
 	<div class="col-md-6 margin_top_small">
 		<?php echo $form->textFieldRow($model,'lugar_nacimiento',array('class'=>'form-control','maxlength'=>80, 'id'=>'lugar_nacimiento')); ?>
 		<?php echo $form->error($model,'lugar_nacimiento'); ?>
+
+	</div>
+
+	<div class="col-md-6 margin_top_small">
+		<?php #echo $form->textFieldRow($model,'fecha_nacimiento',array('class'=>'form-control','maxlength'=>80, 'id'=>'fecha_nacimiento')); ?>
+		<label class="control-label">CV</label><span class="required">*</span>
+		<input name="fichero_usuario" type="file" id="cv"/>
+		<?php #echo $form->error($model,'fecha_nacimiento'); ?>
+		 <span class="help-inline error hide" id="cv_em">Debe elegir la fecha de nacimiento</span>
 
 	</div>
 	
@@ -101,7 +121,7 @@ $(document).ready(function(){
         var resp;  
         var submit = true;
         var field = "";      
-        var array =new Array('#nombre','#edad','#id_marca','#subcategoria','#categoria','#padre_name');
+        var array =new Array('#nombre','#cv','#sexo','#direccion','#email','#fecha_nacimiento', '#lugar_nacimiento');
         for(i=0; i<array.length; i++){
             resp=validate(array[i]);
             submit = resp[0];
@@ -111,7 +131,7 @@ $(document).ready(function(){
                 field = resp[1];
         }    
         if(respuesta==0){
-            $('#producto-padre-form').submit();
+            $('#empleo-form').submit();
         }            
         else{
             $(window).scrollTop($(field).position().top-100);    
@@ -141,3 +161,8 @@ $(document).ready(function(){
     }
 
 </script>
+
+
+<?php 
+}
+?>

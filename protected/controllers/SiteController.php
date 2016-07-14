@@ -656,7 +656,38 @@ class SiteController extends Controller
    	$model= new Empleo;
    	if(isset($_POST['Empleo']))
    	{
-   		echo "asdlsdgfsfg";
+   		$dir = Yii::getPathOfAlias('webroot').'/docs/cv';
+		$model->attributes=$_POST['Empleo'];
+   		$model->fecha_nacimiento=$_POST['fecha_nacimiento'];
+
+		if(!is_dir($dir))
+		{
+		    mkdir($dir,0777,true);
+		}
+		$contar=count(Empleo::model()->findAll())+1;
+		$fichero_subido = $dir ."/".$contar."-".basename($_FILES['fichero_usuario']['name']);
+		$var=explode(".", $fichero_subido);
+		if($var[1]=="pdf" || $var[1]=="doc")
+		{
+			if (move_uploaded_file($_FILES['fichero_usuario']['tmp_name'], $fichero_subido)) {
+			$model->cv=$fichero_subido;
+    		//echo "El fichero es válido y se subió con éxito.\n";
+    		Yii::app()->user->setFlash('success',"Tus datos han sido enviados.Pronto nos pondremos en contacto contigo.");
+    		if(!$model->save())
+ 			{
+				print_r($model->getError());
+			}
+    		$this->render('trabaja_nosotros', array('model'=>$model, 'copy'=>1));
+			} else {
+			    echo "¡Posible ataque de subida de ficheros!\n";
+			}
+		}
+		else
+		{
+			Yii::app()->user->setFlash('error',"Formato no Valido de archivo.");
+			$this->render('trabaja_nosotros', array('model'=>$model));
+		}
+
    	}
    	$this->render('trabaja_nosotros', array('model'=>$model));
    }
