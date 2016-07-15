@@ -3,8 +3,11 @@
 <hr class="no_margin_top">
 <p>
 <h4 style="font-weight: bolder;">TRANSFERENCIA O DEPÓSITO BANCARIO</h4>
-Al momento de finalizar tu compra selecciona el método de pago depósito o transferencia bancaria. Una vez finalizada tu orden tendrás un (01) día hábil para hacer el pago o de lo contrario, tu orden será cancelada automáticamente por el sistema. <br>
+Al momento de aprobar tu pedido, te llegará un email con los datos para realizar el pago de la mercancía seleccionada. Una vez finalizada tu orden tendrás un (01) día hábil para hacer el pago o de lo contrario, tu orden será cancelada automáticamente por el sistema.<br>
 
-Una vez hecho el pago, entra a tu cuenta en <a href="http://www.telotengo.com">WWW.LINIO.COM.VE </a> en la sección “MIS PEDIDOS" aparecerá la orden pendiente, ingresa la información del depósito y haz click en enviar. Nuestro equipo de Administración se encargará de validar tu pago y confirmará tu compra a través de correo electrónico. A partir de la confirmación, empezarán a contar los días hábiles para el envío de la orden.
+Una vez hecho el pago, entra a tu cuenta en <a href="http://www.telotengo.com">WWW.TELOTENGO.COM</a> en la sección “MIS PEDIDOS" aparecerá la orden Aprobada pendiente por pago, ingresa la información del depósito y haz click en enviar. La información la recibirá para el proveedor que se encargará de validar tu pago y confirmara tu compra a través de correo electrónico. A partir de la confirmación, empezarán a contar los días hábiles para el envío.
 </p>
 </div>
+
+
+

@@ -706,7 +706,26 @@ class SiteController extends Controller
    }
    public function actionContactanos()
    {
-   	$this->render('contactanos');
+   	$model=new ContactForm;
+   	if(isset($_POST['ContactForm']))
+   	{
+   		$model->attributes=$_POST['ContactForm'];
+   		if($model->validate())
+   		{
+   				$name='=?UTF-8?B?'.base64_encode($model->name).'?=';
+				$subject='=?UTF-8?B?'.base64_encode($model->subject).'?=';
+				$headers="From: $name <{$model->email}>\r\n".
+					"Reply-To: {$model->email}\r\n".
+					"MIME-Version: 1.0\r\n".
+					"Content-type: text/plain; charset=UTF-8";
+
+				mail('wmontilla@upsidecorp.ch',$subject,"Este mensaje ha sido enviado desde el formulario de contacto de telotengo: ".$model->body,$headers);
+				Yii::app()->user->setFlash('success','Gracias por escribirnos. Tu pregunta es importante para nosotros y te contestaremos cuanto antes.');
+				$this->render('contactanos', array('model'=>$model, 'hide'=>1));
+				Yii::app()->end();
+   		}
+   	}
+   	$this->render('contactanos', array('model'=>$model));
    }
    public function actionFormasPago()
    {

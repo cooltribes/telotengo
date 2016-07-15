@@ -79,7 +79,7 @@ Si deseas unirte al equipo de Telotengo llena el siguiente formulario </p>
 
 	<div class="col-md-6 margin_top_small">
 		<?php #echo $form->textFieldRow($model,'fecha_nacimiento',array('class'=>'form-control','maxlength'=>80, 'id'=>'fecha_nacimiento')); ?>
-		<label class="control-label">CV</label><span class="required">*</span>
+		<label class="control-label">CV</label> <span class="required">*</span>
 		<input name="fichero_usuario" type="file" id="cv"/>
 		<?php #echo $form->error($model,'fecha_nacimiento'); ?>
 		 <span class="help-inline error hide" id="cv_em">Debe elegir la fecha de nacimiento</span>
@@ -90,7 +90,7 @@ Si deseas unirte al equipo de Telotengo llena el siguiente formulario </p>
 		<?php $this->widget('bootstrap.widgets.TbButton', array(
 			'buttonType'=>'submit',
 			'type'=>'primary',
-			'label'=>$model->isNewRecord ? 'Crear' : 'Guardar',
+			'label'=>$model->isNewRecord ? 'Enviar' : 'Enviar',
 			'htmlOptions'=>array('class'=>'btn-block btn-orange btn btn-danger btn','id'=>'guardar')
 		)); ?>
  
