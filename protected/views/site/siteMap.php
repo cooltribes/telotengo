@@ -30,7 +30,7 @@
 		<ul><?php echo Funciones::retornarUrl('Cables e interconexiones');?></ul>
 		<ul><?php echo Funciones::retornarUrl('USB Flash Drives, Memorias y CD vírgenes');?></ul>
 		<ul><?php echo Funciones::retornarUrl('Altavoces, auriculares y micrófonos');?></ul>
-		<ul><?php echo Funciones::retornarUrl('Cámaras Web<');?>/ul>
+		<ul><?php echo Funciones::retornarUrl('Cámaras Web');?></ul>
 		<ul><?php echo Funciones::retornarUrl('Mouse y Teclados');?></ul>
 		<ul><?php echo Funciones::retornarUrl('Regletas, Reguladores de voltaje y UPS');?></ul>
 		<ul><?php echo Funciones::retornarUrl('Otros accesorios de computación');?></ul>
