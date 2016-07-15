@@ -152,8 +152,8 @@
 <ul>
 	<ul><?php echo Funciones::retornarUrl('Proyectores de video');?></ul>
 	<ul><?php echo Funciones::retornarUrl('Reproductores de video');?></ul>	
-	<ul><?php echo Funciones::retornarUrl('Dispositivos de seguridad y vigilanci');?>a</ul>
-	<ul><?php echo Funciones::retornarUrl('Accesorios de video<');?>/ul>	
+	<ul><?php echo Funciones::retornarUrl('Dispositivos de seguridad y vigilanci');?></ul>
+	<ul><?php echo Funciones::retornarUrl('Accesorios de video<');?> </ul>	
 	<ul>
 		<ul><?php echo Funciones::retornarUrl('Cables de video');?></ul>
 		<ul><?php echo Funciones::retornarUrl('Soportes y estuches para video');?></ul>
