@@ -25,7 +25,7 @@ class SiteController extends Controller
 			array('allow',  // allow all users to perform 'index' and 'view' actions
 				'actions'=>array('index','error','contact','login','logout','captcha','busqueda','tiendas','info','soporte','garantia','convenios','request','request2',
 								'corporativo','licencias','ofertas','home','store','detalle', 'autoComplete', 'filtroBusqueda', 'category', 'formuPregunta',
-								'detalleOrden','mailtest','descargaPlantilla'), 
+								'detalleOrden','mailtest','descargaPlantilla', 'quienesSomos', 'trabajaNosotros', 'terminosUso', 'propiedadIntelectual', 'preguntasFrecuentes', 'contactanos', 'formasPago', 'siteMap'), 
 
 				'users'=>array('*'),
 			),
@@ -647,6 +647,93 @@ class SiteController extends Controller
             
     }
     
-   
+   public function actionQuienesSomos()
+   {
+   	$this->render('quienes_somos');
+   }
+    public function actionTrabajaNosotros()
+   {
+   	$model= new Empleo;
+   	if(isset($_POST['Empleo']))
+   	{
+   		$dir = Yii::getPathOfAlias('webroot').'/docs/cv';
+		$model->attributes=$_POST['Empleo'];
+   		$model->fecha_nacimiento=$_POST['fecha_nacimiento'];
+
+		if(!is_dir($dir))
+		{
+		    mkdir($dir,0777,true);
+		}
+		$contar=count(Empleo::model()->findAll())+1;
+		$fichero_subido = $dir ."/".$contar."-".basename($_FILES['fichero_usuario']['name']);
+		$var=explode(".", $fichero_subido);
+		if($var[1]=="pdf" || $var[1]=="doc" || $var[1]=="txt" || $var[1]=="jpg")
+		{
+			if (move_uploaded_file($_FILES['fichero_usuario']['tmp_name'], $fichero_subido)) {
+			$model->cv=$fichero_subido;
+    		//echo "El fichero es válido y se subió con éxito.\n";
+    		Yii::app()->user->setFlash('success',"Tus datos han sido enviados.Pronto nos pondremos en contacto contigo.");
+    		if(!$model->save())
+ 			{
+				print_r($model->getError());
+			}
+    		$this->render('trabaja_nosotros', array('model'=>$model, 'copy'=>1));
+			} else {
+			    echo "¡Posible ataque de subida de ficheros!\n";
+			}
+		}
+		else
+		{
+			Yii::app()->user->setFlash('error',"Formato no Valido de archivo.");
+			$this->render('trabaja_nosotros', array('model'=>$model));
+		}
+
+   	}
+   	$this->render('trabaja_nosotros', array('model'=>$model));
+   }
+
+   public function actionTerminosUso()
+   {
+   	$this->render('terminos_uso');
+   }
+   public function actionPropiedadIntelectual()
+   {
+   	$this->render('propiedad_intelectual');
+   }
+   public function actionPreguntasFrecuentes()
+   {
+   	$this->render('preguntas_frecuentes');
+   }
+   public function actionContactanos()
+   {
+   	$model=new ContactForm;
+   	if(isset($_POST['ContactForm']))
+   	{
+   		$model->attributes=$_POST['ContactForm'];
+   		if($model->validate())
+   		{
+   				$name='=?UTF-8?B?'.base64_encode($model->name).'?=';
+				$subject='=?UTF-8?B?'.base64_encode($model->subject).'?=';
+				$headers="From: $name <{$model->email}>\r\n".
+					"Reply-To: {$model->email}\r\n".
+					"MIME-Version: 1.0\r\n".
+					"Content-type: text/plain; charset=UTF-8";
+
+				mail('wmontilla@upsidecorp.ch',$subject,"Este mensaje ha sido enviado desde el formulario de contacto de telotengo: ".$model->body,$headers);
+				Yii::app()->user->setFlash('success','Gracias por escribirnos. Tu pregunta es importante para nosotros y te contestaremos cuanto antes.');
+				$this->render('contactanos', array('model'=>$model, 'hide'=>1));
+				Yii::app()->end();
+   		}
+   	}
+   	$this->render('contactanos', array('model'=>$model));
+   }
+   public function actionFormasPago()
+   {
+   	$this->render('formas_pago');
+   }
+   public function actionSiteMap()
+   {
+   	$this->render('siteMap');
+   }
 
 } 
