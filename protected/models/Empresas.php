@@ -278,7 +278,7 @@ const SECTOR_EDUCACION = 16;
 			'Sector' => array(
 				self::SECTOR_ALIMENTOS => 'Alimentos y Bebidas',
 				self::SECTOR_MAYOR => 'Comercio al Mayor',
-				self::SECTOR_MENOR => 'Comercio al Menor',
+				self::SECTOR_MENOR => 'Comercio al Detal',
 				self::SECTOR_INDUSTRIAL => 'Industrial',
 				self::SECTOR_CONSTRUCCION => 'Construcción y Bienes Raíces',
 				self::SECTOR_ENTRETENIMIENTO => 'Entretenimiento',
@@ -294,6 +294,7 @@ const SECTOR_EDUCACION = 16;
 				self::SECTOR_OTRO => 'Otro',
 			),
 			'Cargo' => array(
+				'Presidente o Socio' => 'Presidente o Socio',
 				'Dueño o Socio' => 'Dueño o Socio',
 				'Junta Directiva' => 'Junta Directiva',
 				'Gerente' => 'Gerente',

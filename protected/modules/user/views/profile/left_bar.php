@@ -1,4 +1,4 @@
-<h1>Perfil</h1>
+<h1>Mi Cuenta</h1>
     <div class="avatar margin_top">
         <div class="image text-center">
             <?php 

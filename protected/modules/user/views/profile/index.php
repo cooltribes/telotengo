@@ -3,7 +3,7 @@
              padding-top:21px;
           }
 </style>
-<?php $this->breadcrumbs=array('Mi Perfil'); ?> 
+<?php $this->breadcrumbs=array('Mi Cuenta'); ?> 
 
 <div class="col-md-3 profile-leftBar">
     <?php $this->renderPartial('left_bar',array('model'=>$model, 'identificador'=>$identificador)); ?> 
