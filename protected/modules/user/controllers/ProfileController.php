@@ -355,6 +355,10 @@ class ProfileController extends Controller
 				$sql="select sum(cantidad) as sumatoria from tbl_inventario where almacen_id in(select id from tbl_almacen where empresas_id='".$empresas_id."')";
 				$variable = Yii::app()->db->createCommand($sql)->queryRow();
 				$producInventario=$variable['sumatoria'];
+
+				$sql="select count(distinct(producto_id)) as conta from tbl_inventario where almacen_id in(select id from tbl_almacen where empresas_id='".$empresas_id."')";
+				$variable = Yii::app()->db->createCommand($sql)->queryRow();
+				$totalProduc=$variable['conta'];
 				
 			}
 			$ultimosLog=Log::model()->findAllByAttributes(array('id_user'=>$identificador), array('order'=>'fecha desc', 'limit'=>10));
@@ -375,6 +379,7 @@ class ProfileController extends Controller
 				'entro'=>$entro,
 				'identificador'=>$identificador,
 				'ultimosLog'=>$ultimosLog,
+				'totalProduc'=>$totalProduc,
 				
 			
 			));

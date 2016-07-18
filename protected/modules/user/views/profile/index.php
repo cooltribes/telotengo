@@ -46,6 +46,7 @@
 			'totaAprobadaVendidas'=>$totaAprobadaVendidas,
 			'producComprados'=>$producComprados,
 			'producInventario'=>$producInventario,
+            'totalProduc'=>$totalProduc,
 			'entro'=>$entro,
 			'identificador'=>$identificador,
 	
