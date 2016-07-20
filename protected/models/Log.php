@@ -126,35 +126,43 @@ class Log extends CActiveRecord
         switch ($accion)
         {
         case 1:
-            $mensaje="Has añadido el producto <b>".Producto::model()->findByPk($id_producto)->nombre."</b> a tu carrito";
+            $enlace=Yii::app()->createUrl('tienda/index?producto='.Producto::model()->findByPk($id_producto)->nombre);
+            $mensaje="Has añadido el producto <a href=".$enlace."><b>".Producto::model()->findByPk($id_producto)->nombre."</b></a> a tu carrito ";
             break;
         case 2:
-            $mensaje="Has eliminado el producto <b>".Producto::model()->findByPk($id_producto)->nombre."</b>  de tu carrito";
+            $enlace=Yii::app()->createUrl('tienda/index?producto='.Producto::model()->findByPk($id_producto)->nombre);
+            $mensaje="Has eliminado el producto <a href=".$enlace."><b>".Producto::model()->findByPk($id_producto)->nombre."</b></a> de tu carrito ";
             break;
         case 3:
-            $mensaje="Has modificado el producto <b>".Producto::model()->findByPk($id_producto)->nombre."</b> en tu carrito";
+            $enlace=Yii::app()->createUrl('tienda/index?producto='.Producto::model()->findByPk($id_producto)->nombre);
+            $mensaje="Has modificado el producto <a href=".$enlace."><b>".Producto::model()->findByPk($id_producto)->nombre."</b></a> de tu carrito ";
             break;
         case 4:
-            $mensaje="Has generado la intención de compra <b>#".$id_orden."</b>";
+            $enlace=Yii::app()->createUrl('orden/detalle', array('id'=>$id_orden));
+            $mensaje="Has generado la intención de compra <a href=".$enlace."><b>#".$id_orden."</b></a>";
             break;
         case 5:
-            $mensaje="Te han aprobado la intención de compra <b>#".$id_orden."</b>";
+            $enlace=Yii::app()->createUrl('orden/detalle', array('id'=>$id_orden));
+            $mensaje="Te han aprobado la intención de compra <a href=".$enlace."><b>#".$id_orden."</b></a>";
             break;
         case 6:
-            $mensaje="Te han rechazado la intención de compra <b>#".$id_orden."</b>";
+            $enlace=Yii::app()->createUrl('orden/detalle', array('id'=>$id_orden));
+            $mensaje="Te han rechazado la intención de compra <a href=".$enlace."><b>#".$id_orden."</b></a>";
             break;
         case 8:
-            $mensaje="Has aprobado la intención de compra <b>#".$id_orden."</b>";
+            $enlace=Yii::app()->createUrl('orden/detalleVendedor', array('id'=>$id_orden));
+            $mensaje="Has aprobado la intención de compra <a href=".$enlace."><b>#".$id_orden."</b></a>";
             break;
         case 9:
-            $mensaje="Has rechazado la intención de compra <b>#".$id_orden."</b>";
+            $enlace=Yii::app()->createUrl('orden/detalleVendedor', array('id'=>$id_orden));
+            $mensaje="Has rechazado la intención de compra <a href=".$enlace."><b>#".$id_orden."</b></a>";
             break;
         case 10:
             $mensaje="Has solicitado la creación del producto <b>".Producto::model()->findByPk($id_producto)->nombre."</b>";
             break;
         case 11:
-            $mensaje="Le has cargado inventario al producto <b>".Producto::model()->findByPk($id_producto)->nombre.
-            "</b> en el almacen <b>".Almacen::model()->findByPk($id_almacen)->alias."</b>";
+            $enlace=Yii::app()->createUrl('producto/detalle?producto='.$id_producto.'&almacen_id='.$id_almacen);
+            $mensaje="Le has cargado inventario al producto <a href=".$enlace."><b>".Producto::model()->findByPk($id_producto)->nombre."</a></b> en el almacen <b>".Almacen::model()->findByPk($id_almacen)->alias."</b>";
             break;
         case 12:
             $mensaje="Has subido el inbound #<b>".$id_inbound."</b>";
@@ -163,106 +171,140 @@ class Log extends CActiveRecord
             $mensaje="Has subido el masterdata  #<b>".$id_masterData."</b>";
             break;
         case 14:
-            $mensaje="Has creado el almacen <b>".Almacen::model()->findByPk($id_almacen)->alias."</b>";
+            $enlace=Yii::app()->createUrl('almacen/update', array('id'=>$id_almacen));
+            $mensaje="Has creado el almacen <a href=".$enlace."><b>".Almacen::model()->findByPk($id_almacen)->alias."</b> </a>";
             break;
         case 15:
-            $mensaje="Has modificado el almacen <b>".Almacen::model()->findByPk($id_almacen)->alias."</b>";
+            $enlace=Yii::app()->createUrl('almacen/update', array('id'=>$id_almacen));
+            $mensaje="Has modificado el almacen <a href=".$enlace."><b>".Almacen::model()->findByPk($id_almacen)->alias."</b> </a>";
             break;
         case 16:
-            $mensaje="Has modificado la informacion de la empresa <b>".Empresas::model()->findByPk($id_empresa)->razon_social."</b>";
+            $enlace=Yii::app()->createUrl('empresas/verEmpresa', array('id'=>$id_empresa));
+            $mensaje="Has modificado la informacion de la empresa <a href=".$enlace."><b>".Empresas::model()->findByPk($id_empresa)->razon_social."</b></a>";
             break;
         case 18:
-            $mensaje="Has modificado la informacion del usuario <b>".Profile::model()->retornarNombreCompleto($id_user)."</b>";
+            $enlace=Yii::app()->createUrl('user/profile/index/ide/'.$id_user);
+            $mensaje="Has modificado la informacion del usuario <a href=".$enlace."><b>".Profile::model()->retornarNombreCompleto($id_user)."</b></a>";
             break;
         case 21:
-            $mensaje="Has modificado el almacen <b>".Almacen::model()->findByPk($id_almacen)->alias."</b> de la Empresa <b>".Almacen::model()->findByPk($id_almacen)->empresas->razon_social."</b>";
+            $enlace=Yii::app()->createUrl('almacen/update', array('id'=>$id_almacen));
+            $mensaje="Has modificado el almacen <a href=".$enlace."><b>".Almacen::model()->findByPk($id_almacen)->alias."</b> de la Empresa <b>".Almacen::model()->findByPk($id_almacen)->empresas->razon_social."</b></a>";
             break;
         case 22:
-            $mensaje="Has creado un nuevo producto padre con el nombre <b>".ProductoPadre::model()->findByPk($id_producto_padre)->nombre."</b>";
+            $enlace=Yii::app()->createUrl('productoPadre/update', array('id'=>$id_producto_padre));
+            $mensaje="Has creado un nuevo producto padre con el nombre <a href=".$enlace."><b>".ProductoPadre::model()->findByPk($id_producto_padre)->nombre."</b></a>";
             break;
         case 23:
-            $mensaje="Has creado una nueva variación con el nombre <b>".Producto::model()->findByPk($id_producto)->nombre."</b>";
+            $enlace=Yii::app()->createUrl('producto/modificarProducto', array('id'=>$id_producto));
+            $mensaje="Has creado una nueva variación con el nombre <a href=".$enlace."><b>".Producto::model()->findByPk($id_producto)->nombre."</b></a>";
             break;
         case 24:
-            $mensaje="Has modificado la información vital de la variación <b>".Producto::model()->findByPk($id_producto)->nombre."</b>";
+            $enlace=Yii::app()->createUrl('producto/modificarProducto', array('id'=>$id_producto));
+            $mensaje="Has modificado la información vital de la variación <a href=".$enlance."><b>".Producto::model()->findByPk($id_producto)->nombre."</b></a>";
             break;
         case 25:
-            $mensaje="Has aprobado la creación de la variación <b>".Producto::model()->findByPk($id_producto)->nombre."</b>";
+            $enlace=Yii::app()->createUrl('producto/modificarProducto', array('id'=>$id_producto));
+            $mensaje="Has aprobado la creación de la variación <a href=".$enlace."><b>".Producto::model()->findByPk($id_producto)->nombre."</b></a>";
             break;
         case 26:
-            $mensaje="Has rechazado la creacion de la variación <b>".Producto::model()->findByPk($id_producto)->nombre."</b>";
+            $enlace=Yii::app()->createUrl('producto/modificarProducto', array('id'=>$id_producto));
+            $mensaje="Has rechazado la creacion de la variación <a href=".$enlace."><b>".Producto::model()->findByPk($id_producto)->nombre."</b></a>";
             break;
         case 27:
-            $mensaje="Has modificado el producto padre <b>".ProductoPadre::model()->findByPk($id_producto_padre)->nombre."</b>";
+            $enlace=Yii::app()->createUrl('productoPadre/update', array('id'=>$id_producto_padre));
+            $mensaje="Has modificado el producto padre <a href=".$enlace."><b>".ProductoPadre::model()->findByPk($id_producto_padre)->nombre."</b></a>";
             break;
         case 28:
-            $mensaje="Has creado la marca <b>".Marca::model()->findByPk($id_marca)->nombre."</b>";
+            $enlace=Yii::app()->createUrl('marca/create', array('id'=>$id_marca));
+            $mensaje="Has creado la marca <a href=".$enlace."><b>".Marca::model()->findByPk($id_marca)->nombre."</b></a>";
             break;
         case 29:
-            $mensaje="Has modificado la marca <b>".Marca::model()->findByPk($id_marca)->nombre."</b>";
+            $enlace=Yii::app()->createUrl('marca/create', array('id'=>$id_marca));
+            $mensaje="Has modificado la marca <a href=".$enlace."><b>".Marca::model()->findByPk($id_marca)->nombre."</b></a>";
             break;
         case 30:
-            $mensaje="Has desactivado la marca <b>".Marca::model()->findByPk($id_marca)->nombre."</b>";
+            $enlace=Yii::app()->createUrl('marca/create', array('id'=>$id_marca));
+            $mensaje="Has desactivado la marca <a href=".$enlace."><b>".Marca::model()->findByPk($id_marca)->nombre."</b></a>";
             break;
         case 31:
-            $mensaje="Has activado la marca <b>".Marca::model()->findByPk($id_marca)->nombre."</b>";
+            $enlace=Yii::app()->createUrl('marca/create', array('id'=>$id_marca));
+            $mensaje="Has activado la marca <a href=".$enlace."><b>".Marca::model()->findByPk($id_marca)->nombre."</b></a>";
             break;
         case 32:
-            $mensaje="Has creado el color <b>".Color::model()->findByPk($id_color)->nombre."</b>";
+            $enlace=Yii::app()->createUrl('color/update', array('id'=>$id_color));
+            $mensaje="Has creado el color <a href=".$enlace."><b>".Color::model()->findByPk($id_color)->nombre."</b></a>";
             break;
         case 33:
-            $mensaje="Has modificado el color <b>".Color::model()->findByPk($id_color)->nombre."</b>";
+            $enlace=Yii::app()->createUrl('color/update', array('id'=>$id_color));
+            $mensaje="Has modificado el color <a href=".$enlace."><b>".Color::model()->findByPk($id_color)->nombre."</b></a>";
             break; 
         case 34:
-            $mensaje="Has desactivado el color <b>".Color::model()->findByPk($id_color)->nombre."</b>";
+            $enlace=Yii::app()->createUrl('color/update', array('id'=>$id_color));
+            $mensaje="Has desactivado el color <a href=".$enlace."><b>".Color::model()->findByPk($id_color)->nombre."</b></a>";
             break;
         case 35:
-            $mensaje="Has activado el color <b>".Color::model()->findByPk($id_color)->nombre."</b>";
+            $enlace=Yii::app()->createUrl('color/update', array('id'=>$id_color));
+            $mensaje="Has activado el color <a href=".$enlace."><b>".Color::model()->findByPk($id_color)->nombre."</b></a>";
             break;
         case 36:
-            $mensaje="Has creado la unidad <b>".Unidad::model()->findByPk($id_unidad)->nombre."</b>";
+            $enlace=Yii::app()->createUrl('unidad/update', array('id'=>$id_unidad));
+            $mensaje="Has creado la unidad <a href=".$enlace."><b>".Unidad::model()->findByPk($id_unidad)->nombre."</b></a>";
             break;
         case 37:
-            $mensaje="Has modificado la unidad <b>".Unidad::model()->findByPk($id_unidad)->nombre."</b>";
+            $enlace=Yii::app()->createUrl('unidad/update', array('id'=>$id_unidad));
+            $mensaje="Has modificado la unidad <a href=".$enlace."><b>".Unidad::model()->findByPk($id_unidad)->nombre."</b></a>";
             break;
         case 38:
-            $mensaje="Has desactivado la unidad <b>".Unidad::model()->findByPk($id_unidad)->nombre."</b>";
+            $enlace=Yii::app()->createUrl('unidad/update', array('id'=>$id_unidad));
+            $mensaje="Has desactivado la unidad <a href=".$enlace."><b>".Unidad::model()->findByPk($id_unidad)->nombre."</b></a>";
             break;
         case 39:
-            $mensaje="Has activado la unidad <b>".Unidad::model()->findByPk($id_unidad)->nombre."</b>";
+            $enlace=Yii::app()->createUrl('unidad/update', array('id'=>$id_unidad));
+            $mensaje="Has activado la unidad <a href=".$enlace."><b>".Unidad::model()->findByPk($id_unidad)->nombre."</b></a>";
             break;
         case 40:
+            $enlace=Yii::app()->createUrl('atributo/update', array('id'=>$id_atributo));
             $mensaje="Has creado el atributo <b>".Atributo::model()->findByPk($id_atributo)->nombre."</b>";
             break;
         case 41:
+            $enlace=Yii::app()->createUrl('atributo/update', array('id'=>$id_atributo));
             $mensaje="Has modificado el atributo <b>".Atributo::model()->findByPk($id_atributo)->nombre."</b>";
             break;
         case 42:
+            $enlace=Yii::app()->createUrl('atributo/update', array('id'=>$id_atributo));
             $mensaje="Has desactivado el atributo <b>".Atributo::model()->findByPk($id_atributo)->nombre."</b>";
             break;
         case 43:
+            $enlace=Yii::app()->createUrl('atributo/update', array('id'=>$id_atributo));
             $mensaje="Has activado el atributo <b>".Atributo::model()->findByPk($id_atributo)->nombre."</b>";
             break;
         case 44:
-            $mensaje="Has cambiado una imagen del storefront de la categoria <b>".Categoria::model()->findByPk($id_categoria)->nombre."</b>";
+            $enlace=Yii::app()->createUrl('categoria/storefrontConf', array('id'=>$id_categoria));
+            $mensaje="Has cambiado una imagen del storefront de la categoria <a href=".$enlace."><b>".Categoria::model()->findByPk($id_categoria)->nombre."</b></a>";
             break;
         case 45:
-            $mensaje="Has creado la categoria <b>".Categoria::model()->findByPk($id_categoria)->nombre."</b>";
+            $enlace=Yii::app()->createUrl('categoria/create', array('id'=>$id_categoria));
+            $mensaje="Has creado la categoria <a href=".$enlace."><b>".Categoria::model()->findByPk($id_categoria)->nombre."</b></a>";
             break;
         case 46:
-            $mensaje="Has modificado la información general de la categoria <b>".Categoria::model()->findByPk($id_categoria)->nombre."</b>";
+            $enlace=Yii::app()->createUrl('categoria/create', array('id'=>$id_categoria));
+            $mensaje="Has modificado la información general de la categoria <a href=".$enlace."><b>".Categoria::model()->findByPk($id_categoria)->nombre."</b></a>";
             break;
         case 47:
-            $mensaje="Has destacado la categoria <b>".Categoria::model()->findByPk($id_categoria)->nombre."</b>";
+            $enlace=Yii::app()->createUrl('categoria/create', array('id'=>$id_categoria));
+            $mensaje="Has destacado la categoria <a href=".$enlace."><b>".Categoria::model()->findByPk($id_categoria)->nombre."</b></a>";
             break;
         case 48:
-            $mensaje="Le has quitado el destacado a la categoria <b>".Categoria::model()->findByPk($id_categoria)->nombre."</b>";
+            $enlace=Yii::app()->createUrl('categoria/create', array('id'=>$id_categoria));
+            $mensaje="Le has quitado el destacado a la categoria <a href=".$enlace."><b>".Categoria::model()->findByPk($id_categoria)->nombre."</b></a>";
             break;
         case 49:
-            $mensaje="Has desactivado la categoria <b>".Categoria::model()->findByPk($id_categoria)->nombre."</b>";
+            $enlace=Yii::app()->createUrl('categoria/create', array('id'=>$id_categoria));
+            $mensaje="Has desactivado la categoria <a href=".$enlace."><b>".Categoria::model()->findByPk($id_categoria)->nombre."</b></a>";
             break;
         case 50:
-            $mensaje="Has activado la categoria <b>".Categoria::model()->findByPk($id_categoria)->nombre."</b>";
+            $enlace=Yii::app()->createUrl('categoria/create', array('id'=>$id_categoria));
+            $mensaje="Has activado la categoria <a href=".$enlace."><b>".Categoria::model()->findByPk($id_categoria)->nombre."</b></a>";
             break;
         case 51:
             $mensaje="Has cambiado tu nombre a <b>".Profile::model()->retornarNombreCompleto($id_user)."</b>";
@@ -280,36 +322,47 @@ class Log extends CActiveRecord
             $mensaje="<b>Has cambiado tu foto de perfil</b>";
             break;
         case 56:
-            $mensaje="Has desactivado la variación <b>".Producto::model()->findByPk($id_producto)->nombre."</b>";
+            $enlace=Yii::app()->createUrl('producto/modificarProducto', array('id'=>$id_producto));
+            $mensaje="Has desactivado la variación <a href=".$enlace."><b>".Producto::model()->findByPk($id_producto)->nombre."</b></a>";
             break;
         case 57:
-            $mensaje="Has activado la variación <b>".Producto::model()->findByPk($id_producto)->nombre."</b>";
+            $enlace=Yii::app()->createUrl('producto/modificarProducto', array('id'=>$id_producto));
+            $mensaje="Has activado la variación <a href=".$enlace."><b>".Producto::model()->findByPk($id_producto)->nombre."</b></a>";
             break;
         case 58:
-            $mensaje="Has destacado la variación <b>".Producto::model()->findByPk($id_producto)->nombre."</b>";
+            $enlace=Yii::app()->createUrl('producto/modificarProducto', array('id'=>$id_producto));
+            $mensaje="Has destacado la variación <a href=".$enlace."><b>".Producto::model()->findByPk($id_producto)->nombre."</b></a>";
             break;
         case 59:
-            $mensaje="Le has quitado el destacado a la variación <b>".Producto::model()->findByPk($id_producto)->nombre."</b>";
+            $enlace=Yii::app()->createUrl('producto/modificarProducto', array('id'=>$id_producto));
+            $mensaje="Le has quitado el destacado a la variación <a href=".$enlace."><b>".Producto::model()->findByPk($id_producto)->nombre."</b></a>";
             break;
         case 60:
-            $mensaje="Has modificado las imágenes de la variación <b>".Producto::model()->findByPk($id_producto)->nombre."</b>";
+            $enlace=Yii::app()->createUrl('producto/imagenes', array('id'=>$id_producto));
+            $mensaje="Has modificado las imágenes de la variación <a href=".$enlace."><b>".Producto::model()->findByPk($id_producto)->nombre."</b></a>";
             break;
         case 61:
-            $mensaje="Has modificado el SEO de la variación <b>".Producto::model()->findByPk($id_producto)->nombre."</b>";
+            $enlace=Yii::app()->createUrl('producto/seo', array('id'=>$id_producto));
+            $mensaje="Has modificado el SEO de la variación <a href=".$enlace."><b>".Producto::model()->findByPk($id_producto)->nombre."</b></a>";
             break;
         case 62:
-            $mensaje="Has modificado las características de la variación <b>".Producto::model()->findByPk($id_producto)->nombre."</b>";
+            $enlace=Yii::app()->createUrl('producto/características', array('id'=>$id_producto));
+            $mensaje="Has modificado las características de la variación <a href=".$enlace."><b>".Producto::model()->findByPk($id_producto)->nombre."</b></a>";
             break;
         case 63:
-            $mensaje="Has modificado los detalles de la variación <b>".Producto::model()->findByPk($id_producto)->nombre."</b>";
+            $enlace=Yii::app()->createUrl('producto/details', array('id'=>$id_producto));
+            $mensaje="Has modificado los detalles de la variación <a href=".$enlace."><b>".Producto::model()->findByPk($id_producto)->nombre."</b></a>";
             break;
         case 64:
+            $enlace=Yii::app()->createUrl('categoria/categoriaRelacionada', array('id'=>$id_categoria));
             $mensaje="Has modificado las categorías relacionadas a la categoría <b>".Categoria::model()->findByPk($id_categoria)->nombre."</b>";
             break;
         case 65:
+            $enlace=Yii::app()->createUrl('categoria/categoriaAtributo', array('id'=>$id_categoria));
             $mensaje="Has modificado los atributos de la categoría <b>".Categoria::model()->findByPk($id_categoria)->nombre."</b>";
             break;
         case 66:
+            $enlace=Yii::app()->createUrl('categoria/categoriaSeo', array('id'=>$id_categoria));
             $mensaje="Has modificado el SEO de la categoría <b>".Categoria::model()->findByPk($id_categoria)->nombre."</b>";
             break;
         }

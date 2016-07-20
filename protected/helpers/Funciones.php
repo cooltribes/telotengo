@@ -179,6 +179,22 @@ class Funciones {
 
 
     }
+
+    public static function retornarUrl($cadena)
+    {
+        if(Categoria::model()->findByAttributes(array('nombre'=>$cadena)))
+        {
+            $model=Categoria::model()->findByAttributes(array('nombre'=>$cadena));
+            return '<a href='.Yii::app()->createUrl('tienda/index?categoria='.$model->seo->amigable).'>'.$cadena.'</a>';
+        }
+        else
+        {
+            return '<a href='.$cadena.'>'.$cadena.'</a>';
+        }
+
+
+        #return Yii::app()->createUrl('tienda/index?categoria='.$model->seo->amigable);
+    }
     
  
     

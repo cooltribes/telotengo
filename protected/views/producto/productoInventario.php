@@ -108,6 +108,7 @@
 	            <th scope="col">Cantidad</th>
 	            <th scope="col" align="center">Precio</th>
 	            <th scope="col">Almacen</th>
+	            <th scope="col">Accion</th>
  
 
 	        </tr>

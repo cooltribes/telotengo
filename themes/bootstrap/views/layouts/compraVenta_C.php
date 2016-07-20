@@ -2,6 +2,7 @@
 echo CHtml::hiddenField('name' , '', array('id' => 'oculto')); 
 // $model = Categoria::model()->findAllBySql("select * from tbl_categoria where id_padre in (select id from tbl_categoria where id_padre=0)  order by nombre asc");
  $model=Categoria::model()->findAllByAttributes(array('id_padre'=>0), array('order'=>' id asc'));
+ $models=Categoria::model()->findAllByAttributes(array('destacado'=>1), array('order'=>' id asc'));
 ?>
 <div class="navbar row-fluid b2b clearfix no_margin_bottom" >
     <div class="col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 col-xs-8 col-xs-offset-2 no_horizontal_padding" id="headerContainer">
@@ -22,7 +23,7 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
                                   <select class="btn btn-default form-control no_radius dropdown-toggle orange_border_left"  id="categorySearch" >
                                     <option value="" selected>Todas las categorias</option>
                                  <?php 
-                                 foreach($model as $modelado)
+                                 foreach($models as $modelado)
                                  {?>
                                   <option value="<?php echo $modelado->id?>"><?php echo $modelado->nombre;?></option>
                                  <?php  
@@ -38,7 +39,7 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
                                 </ul> -->
                                 </div> 
                             </div> 
-                            <div class="col-md-7 col-sm-7 col-xs-7 no_horizontal_padding">
+                            <div class="col-md-6 col-sm-7 col-xs-7 no_horizontal_padding">
                                <!-- <input class="form-control no_radius orange_border_middle" placeholder:"incluye palabras clave..."/> -->
                                <?php
                                     $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
@@ -64,6 +65,9 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
                                 <?php 
                                 $usuario=User::model()->findByPk(Yii::app()->user->id);
                                 echo CHtml::submitButton('Buscar', array('id'=>'botonBusqueda','class'=>'btn-orange btn btn-danger orange_border')); ?>
+                            </div>
+                            <div class="col-md-1 col-sm-2 col-xs-2 no_horizontal_padding highlighted" style="padding-top: 7px;">
+                            Comprar
                             </div>
                         </div>
                     </div> 
@@ -115,7 +119,7 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
                                               </a>
                                               
                                               <ul class="dropdown-menu right" aria-labelledby="dropdownMenu1">
-                                                  <li><a href="<?php echo Yii::app()->baseUrl.'/user/profile/index';?>">Mi Perfil</a></li>
+                                                  <li><a href="<?php echo Yii::app()->baseUrl.'/user/profile/index';?>">Mi Cuenta</a></li>
                                                   <li><a href="<?php echo Yii::app()->baseUrl; ?>/user/admin/invitarUsuario";>Invitaciones</a></li>
                                                   <li><a href="<?php echo Yii::app()->baseUrl; ?>/almacen/administrador";>Ver Almacenes</a></li>
                                                   <li><a href="<?php echo Yii::app()->baseUrl; ?>/site/changeMode";>Vender</a></li>
@@ -246,7 +250,8 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
                                     <span class="mainText">Categorías</span><span class="caret"></span> <span class="searchby">Buscar por:</span>                                 
                                   </a>
                                   <ul class="dropdown-menu arrow_box" aria-labelledby="dropdownMenu1" id="categories">
-                                    <?php foreach($model as $modelado)
+                                    <?php 
+                                    foreach($models as $modelado)
                                     {?>
                                         <li>
                                             <a href='<?php echo Yii::app()->createUrl('tienda/index', array('categoria'=>$modelado->url_amigable))?>'>

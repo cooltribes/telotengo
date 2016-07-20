@@ -28,4 +28,18 @@ echo"<tr>";
 	echo "<td align='right' class='padding_right_small'>".Funciones::formatPrecio($data['precio'])."</td>";
 	
 	echo "<td>".Almacen::model()->findByPk($data['almacen_id'])->alias."</td>";
+
+	echo '<td>
+
+	<div class="dropdown">
+	<a class="dropdown-toggle btn" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="admin_pedidos_detalles.php">
+	<i class="icon-cog"></i> <b class="caret"></b>
+	</a> 
+	 
+		<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+			<li><a tabindex="-1" href="'.Yii::app()->createUrl('/producto/inventario',array('id'=>$data['id'])).'" ><i class="glyphicon glyphicon-th-large"></i> Actualizar Inventario</a></li>
+		</ul>
+        </div>
+   	</td>	
+			';
 	?>

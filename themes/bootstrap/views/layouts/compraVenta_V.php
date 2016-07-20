@@ -43,7 +43,7 @@ $assetUrl=Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('applicatio
                                 </ul> -->
                                 </div> 
                             </div> 
-                            <div class="col-md-7 col-sm-7 col-xs-7 no_horizontal_padding">
+                            <div class="col-md-6 col-sm-7 col-xs-7 no_horizontal_padding">
                                <input class="form-control no_radius orange_border_middle" id="querySeller" placeholder:"Nombres o números de registro"/>
                               
                             </div>
@@ -51,6 +51,9 @@ $assetUrl=Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('applicatio
                                 <?php 
                                 $usuario=User::model()->findByPk(Yii::app()->user->id);
                                 echo CHtml::submitButton('Buscar', array('id'=>'btn-sellerLayout','class'=>'btn-orange btn btn-danger orange_border')); ?>
+                            </div>
+                            <div class="col-md-1 title text" style="color: white;">
+                            Vender
                             </div>
                         </div>
               </div>
@@ -94,7 +97,7 @@ $assetUrl=Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('applicatio
                                                       </a>
                                                       
                                                       <ul class="dropdown-menu right" aria-labelledby="dropdownMenu1">
-                                                          <li><a href="<?php echo Yii::app()->baseUrl.'/user/profile/index';?>">Mi perfil</a></li>
+                                                          <li><a href="<?php echo Yii::app()->baseUrl.'/user/profile/index';?>">Mi Cuenta</a></li>
                                                           <li><a href="<?php echo Yii::app()->baseUrl; ?>/user/admin/invitarUsuario";>Invitaciones</a></li>
                                                           <li><a href="<?php echo Yii::app()->baseUrl; ?>/almacen/administrador";>Ver Almacenes</a></li>
                                                           <li><a href="<?php echo Yii::app()->baseUrl; ?>/site/changeMode";>Comprar</a></li>
@@ -124,10 +127,9 @@ $assetUrl=Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('applicatio
                                                       
                                                       <ul class="dropdown-menu right" aria-labelledby="dropdownMenu2">
                                                           
-                                                        <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/productoInventario";>Ver</a></li>
-                                                         <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/seleccion";>Cargar/Actualizar</a></li>
-                                                         <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/nuevoProducto";>Agregar producto nuevo</a></li>
-                                                        
+                                                        <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/productoInventario";>Ver/Actualizar</a></li>
+                                                         <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/seleccion";>Cargar</a></li>
+                                                         <li><a href="<?php echo Yii::app()->baseUrl; ?>/producto/nuevoProducto";>Agregar producto nuevo</a></li>                                                      
                                                          <li class="separator"></li>
                                                          <li><a href="<?php echo Yii::app()->baseUrl; ?>/inbound/administrador";>Inbound</a></li>
                                                          <li><a href="<?php echo Yii::app()->baseUrl; ?>/masterdata/misMasterdata";>Masterdata</a></li>
