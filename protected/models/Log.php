@@ -196,7 +196,7 @@ class Log extends CActiveRecord
             break;
         case 23:
             $enlace=Yii::app()->createUrl('producto/modificarProducto', array('id'=>$id_producto));
-            $mensaje="Has creado una nueva variación con el nombre <a href=".$enlance."><b>".Producto::model()->findByPk($id_producto)->nombre."</b></a>";
+            $mensaje="Has creado una nueva variación con el nombre <a href=".$enlace."><b>".Producto::model()->findByPk($id_producto)->nombre."</b></a>";
             break;
         case 24:
             $enlace=Yii::app()->createUrl('producto/modificarProducto', array('id'=>$id_producto));
