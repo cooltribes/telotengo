@@ -31,7 +31,7 @@
 				</ul>
 		</div>
 		<div class="col-md-4 padding_left padding_right">
-				<ul><?php echo Funciones::retornarUrl('Computación de escritorio');?></ul>
+				<ul><?php echo Funciones::retornarUrl('Computadoras de escritorio');?></ul>
 				<ul><?php echo Funciones::retornarUrl('Accesorios de computación');?></ul>
 				<ul>
 					<ul><?php echo Funciones::retornarUrl('Cables e interconexiones');?></ul>
@@ -198,8 +198,8 @@
 				<p style="font-weight: bold;"><?php echo Funciones::retornarUrl('Video');?></p>
 					<ul><?php echo Funciones::retornarUrl('Proyectores de video');?></ul>
 					<ul><?php echo Funciones::retornarUrl('Reproductores de video');?></ul>	
-					<ul><?php echo Funciones::retornarUrl('Dispositivos de seguridad y vigilanci');?></ul>
-					<ul><?php echo Funciones::retornarUrl('Accesorios de video<');?> </ul>	
+					<ul><?php echo Funciones::retornarUrl('Dispositivos de seguridad y vigilancia');?></ul>
+					<ul><?php echo Funciones::retornarUrl('Accesorios de video');?> </ul>	
 					<ul>
 						<ul><?php echo Funciones::retornarUrl('Cables de video');?></ul>
 						<ul><?php echo Funciones::retornarUrl('Soportes y estuches para video');?></ul>
