@@ -119,7 +119,7 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
                                               </a>
                                               
                                               <ul class="dropdown-menu right" aria-labelledby="dropdownMenu1">
-                                                  <li><a href="<?php echo Yii::app()->baseUrl.'/user/profile/index';?>">Mi Perfil</a></li>
+                                                  <li><a href="<?php echo Yii::app()->baseUrl.'/user/profile/index';?>">Mi Cuenta</a></li>
                                                   <li><a href="<?php echo Yii::app()->baseUrl; ?>/user/admin/invitarUsuario";>Invitaciones</a></li>
                                                   <li><a href="<?php echo Yii::app()->baseUrl; ?>/almacen/administrador";>Ver Almacenes</a></li>
                                                   <li><a href="<?php echo Yii::app()->baseUrl; ?>/site/changeMode";>Vender</a></li>
