@@ -25,7 +25,7 @@ class SiteController extends Controller
 			array('allow',  // allow all users to perform 'index' and 'view' actions
 				'actions'=>array('index','error','contact','login','logout','captcha','busqueda','tiendas','info','soporte','garantia','convenios','request','request2',
 								'corporativo','licencias','ofertas','home','store','detalle', 'autoComplete', 'filtroBusqueda', 'category', 'formuPregunta',
-								'detalleOrden','mailtest','descargaPlantilla', 'quienesSomos', 'trabajaNosotros', 'terminosUso', 'propiedadIntelectual', 'preguntasFrecuentes', 'contactanos', 'formasPago', 'siteMap'), 
+								'detalleOrden','mailtest','descargaPlantilla', 'quienesSomos', 'trabajaNosotros', 'terminosUso', 'propiedadIntelectual', 'preguntasFrecuentes', 'contactanos', 'formasPago', 'siteMap', 'politicasExteriores'), 
 
 				'users'=>array('*'),
 			),
@@ -749,6 +749,10 @@ class SiteController extends Controller
    public function actionSiteMap()
    {
    	$this->render('siteMap');
+   }
+   public function actionPoliticasExteriores()
+   {
+   	$this->render('politicasExteriores');
    }
 
 } 
