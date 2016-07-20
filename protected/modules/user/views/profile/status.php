@@ -1,3 +1,14 @@
+<style>
+.btn-separator:after {
+    content: ' ';
+    display: block;
+    float: left;
+    background: #ff5b0b!important;
+    margin: 0 10px;
+    height: 86px;
+    width: 1px;
+}
+</style>
 <div class="row-fluid clearfix stats">
    <?php if(Yii::app()->authManager->checkAccess("vendedor", $identificador) || Yii::app()->authManager->checkAccess("comprador", $identificador)):?>
 
@@ -46,7 +57,7 @@
       <?php endif;?> 
 
       <?php if(Yii::app()->authManager->checkAccess("compraVenta", $identificador)): ?>
-        <div class="col-md-8 no_right_padding">
+        <div class="col-md-9 no_right_padding">
         	  <div class="row-fluid clearfix stats"> 
 		         <div class="col-md-2 stat no_left_padding">
 		            <span class="value"><?php echo $totaAprobadaVendidas;?></span>
@@ -60,7 +71,8 @@
 		            <span class="value"><?php echo $totaPendienteVendidas;?></span>
 		            <span class="legend"> Ordenes Pendientes para la Venta</span>            
 		        </div>
-		        
+		        <span class="btn-separator"></span>
+
 		         <div class="col-md-2 stat no_left_padding">
 		            <span class="value"><?php echo $totaAprobadaCompra;?></span>
 		            <span class="legend"> Ordenes Aprobadas para la Compra</span>            
@@ -69,7 +81,7 @@
 		            <span class="value"><?php echo $totaRechazadasCompra;?></span>
 		            <span class="legend"> Ordenes Rechazadas para la Compra</span>            
 		        </div>
-		        <div class="col-md-2 stat no_left_padding">
+		        <div class="col-md-1 stat no_left_padding">
 		            <span class="value"><?php echo $totaPendienteCompra;?></span>
 		            <span class="legend"> Ordenes Pendientes para la Compra</span>            
 		        </div>
@@ -87,8 +99,14 @@
       
        <?php if(Yii::app()->authManager->checkAccess("vendedor", $identificador) || Yii::app()->authManager->checkAccess("compraVenta", $identificador)):?>
       	<div class="col-md-1 stat">
-            <span class="value"><?php if($producInventario=="")echo "0"; else echo $producInventario;?></span>
+            <span class="value"><?php if($totalProduc=="")echo "0"; else echo $totalProduc;?></span>
             <span class="legend">Productos en Inventario</span>            
+        </div>
+      <?php endif;?>  
+             <?php if(Yii::app()->authManager->checkAccess("vendedor", $identificador) || Yii::app()->authManager->checkAccess("compraVenta", $identificador)):?>
+        <div class="col-md-1 stat">
+            <span class="value"><?php if($producInventario=="")echo "0"; else echo $producInventario;?></span>
+            <span class="legend">Unidades en Inventario</span>            
         </div>
       <?php endif;?>     
       

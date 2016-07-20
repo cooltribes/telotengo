@@ -188,6 +188,9 @@ $this->breadcrumbs=array(
 								'label'=>$model->isNewRecord ? 'Agregar' : 'Guardar',
 							)); ?>
                             </div> 
+                             <div class="form-group text_align_center">
+                             <button class="btn btn-orange white margin_top_small" type="button" onclick="window.history.back()">Atras</button>
+                            </div> 
 						<?php $this->endWidget(); ?>
 					</div> 
 
@@ -392,11 +395,13 @@ $this->breadcrumbs=array(
         });
 		
 		function precio_iva(){
-		    price=parseFloat($('#precio').val().replace(',','.'));        
+		    price=parseFloat($('#precio').val().replace(',','.'));      
             iva=parseFloat($('#iva').val().replace(',','.'));
             if(price!=''&&iva!=''){
                 if(!isNaN(price)&&!isNaN(iva)){
-                     $('#precio_iva').val((price*iva/100)+price);
+                	var valor=(price*iva/100)+price;
+                	valor=Math.round(valor * 100) / 100;
+                     $('#precio_iva').val(valor);
                 }
                 if(isNaN(price)){
                     $('#precio').val('');
@@ -405,15 +410,12 @@ $this->breadcrumbs=array(
                 if(isNaN(iva)){
                     $('#iva').val('');
                     //$('#iva').focus();
-                } 
+                }  
                  $('#Inventario_precio_iva').val( $('#precio_iva'));
              
             }
             
 		}
-		
-		
-			
 });	
 	
 </script>

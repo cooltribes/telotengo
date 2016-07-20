@@ -3,6 +3,9 @@
        height: 51px;
        margin-bottom:10px;
     }
+        .button-form{
+        width:100%; 
+    }
 </style>
 
 <div class="row-fluid">
@@ -74,7 +77,7 @@
     
         
     <div class="form-group">
-            <?php echo $form->textField($model,'telefono', array('id'=>'telefono', 'class'=>'form-control', 'placeholder'=>'Teléfono (código y número sin espacios ni guiones)', 'maxlength'=>11)); ?>
+            <?php echo $form->textField($model,'telefono', array('id'=>'telefono', 'class'=>'form-control', 'placeholder'=>'Teléfono fijo (código y número sin espacios ni guiones)', 'maxlength'=>11)); ?>
 
 
         <?php echo $form->error($model,'telefono'); ?>
@@ -167,7 +170,7 @@
             'buttonType'=>'submit',
             'type'=>'primary',
             'label'=>"Enviar datos",
-            'htmlOptions'=>array('class'=>'btn-black btn btn-danger btn-large botone'),
+            'htmlOptions'=>array('class'=>'btn-black btn btn-danger btn-large botone button-form'),
         )); ?>
     </div>
 

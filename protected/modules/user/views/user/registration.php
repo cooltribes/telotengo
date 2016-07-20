@@ -1,14 +1,14 @@
     <div class="encabezado">
         <h1>Tienda Online B2B</h1>
-        <h2>De Empresas para empresas</h2>
-       <div class="stripe">El primer market place donde las Empresas se compran y se venden entre ellas. 
+        <h2>De Empresas para Empresas</h2>
+       <div class="stripe">El primer marketplace donde las Empresas se compran y se venden entre ellas. 
            
        </div>    
     </div>    
     
     <div class="row-fluid margin_top">
         <div class="col-md-5 col-sm-5">
-             <h4 class="text_align_left no_margin_top">Si has recibido una invitación o quieres recibir una incluye tu correo electrónico</h4>
+             <h4 class="text_align_right">Si quieres recibir una invitación incluye tu correo electrónico</h4>
         </div>
         
         <?php $form=$this->beginWidget('UActiveForm', array(

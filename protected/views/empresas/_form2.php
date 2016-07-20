@@ -69,7 +69,7 @@
     
         
     <div class="form-group">
-            <?php echo $form->textField($model,'telefono', array('id'=>'telefono', 'class'=>'form-control', 'placeholder'=>'Teléfono (código y número sin espacios ni guiones)', 'maxlength'=>11)); ?>
+            <?php echo $form->textField($model,'telefono', array('id'=>'telefono', 'class'=>'form-control', 'placeholder'=>'Teléfono fijo (código y número sin espacios ni guiones)', 'maxlength'=>11)); ?>
 
 
         <?php echo $form->error($model,'telefono'); ?>
