@@ -66,8 +66,16 @@
 			</ul>	
 		</ul>
 		</div>
+	</div>
+</div>
+
+<hr class="no_margin_top" style="border-top: 1px solid #e64d00">
+<div class="container">
+	<div class="row-fluid">
+		<div class="col-md-2 padding_left padding_right">
+			<p style="font-weight: bold;"><?php echo Funciones::retornarUrl('Redes');?></p>
+		</div>
 		<div class="col-md-4 padding_left padding_right">
-		<p style="font-weight: bold;"><?php echo Funciones::retornarUrl('Redes');?></p>
 		<ul>
 			<ul><?php echo Funciones::retornarUrl('Servidores');?></ul>
 			<ul><?php echo Funciones::retornarUrl('Modems y Routers');?></ul>
@@ -78,9 +86,7 @@
 		</div>
 	</div>
 </div>
-
 <hr class="no_margin_top" style="border-top: 1px solid #e64d00">
-
 <div class="container">
 	<div class="row-fluid">
 		<div class="col-md-2 padding_left padding_right">
@@ -132,9 +138,15 @@
 				<ul><?php echo Funciones::retornarUrl('Otros accesorios para TV');?></ul>
 			</ul>
 		</div>
-
+	</div>
+</div>
+<hr class="no_margin_top" style="border-top: 1px solid #e64d00">
+<div class="container">
+	<div class="row-fluid">
+		<div class="col-md-2 padding_left padding_right">
+			<p style="font-weight: bold;"><?php echo Funciones::retornarUrl('Cámaras');?></p>
+		</div>
 		<div class="col-md-4 padding_left padding_right">
-		<p style="font-weight: bold;"><?php echo Funciones::retornarUrl('Cámaras');?></p>
 			<ul><?php echo Funciones::retornarUrl('Cámaras fotográficas');?></ul>
 			<ul><?php echo Funciones::retornarUrl('Videocámaras');?></ul>
 			<ul><?php echo Funciones::retornarUrl('Accesorios para cámaras');?></ul>	
@@ -162,8 +174,16 @@
 					<ul><?php echo Funciones::retornarUrl('Otros accesorios para GPS');?></ul>
 				</ul>	
 			</div>
+	</div>
+</div>
+<hr class="no_margin_top" style="border-top: 1px solid #e64d00">
+<div class="container">
+	<div class="row-fluid">
+		<div class="col-md-2 padding_left padding_right">
+			<p style="font-weight: bold;"><?php echo Funciones::retornarUrl('Artículos para la oficina');?></p>
+		</div>
 			<div class="col-md-4 padding_left padding_right">
-				<p style="font-weight: bold;"><?php echo Funciones::retornarUrl('Artículos para la oficina');?></p>
+
 					<ul><?php echo Funciones::retornarUrl('Calculadoras');?></ul>
 					<ul><?php echo Funciones::retornarUrl('Fax');?></ul>	
 					<ul><?php echo Funciones::retornarUrl('Mobiliario');?></ul>
@@ -194,8 +214,15 @@
 				</ul>
 				<ul><?php echo Funciones::retornarUrl('Otros dispositivos de audio');?></ul>
 			</div>
-			<div class="col-md-4 padding_left padding_right">
+	</div>
+</div>
+<hr class="no_margin_top" style="border-top: 1px solid #e64d00">
+<div class="container">
+	<div class="row-fluid">
+			<div class="col-md-2 padding_left padding_right">
 				<p style="font-weight: bold;"><?php echo Funciones::retornarUrl('Video');?></p>
+			</div>
+			<div class="col-md-4 padding_left padding_right">
 					<ul><?php echo Funciones::retornarUrl('Proyectores de video');?></ul>
 					<ul><?php echo Funciones::retornarUrl('Reproductores de video');?></ul>	
 					<ul><?php echo Funciones::retornarUrl('Dispositivos de seguridad y vigilancia');?></ul>
