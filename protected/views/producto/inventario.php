@@ -399,6 +399,7 @@ $this->breadcrumbs=array(
             iva=parseFloat($('#iva').val().replace(',','.'));
             if(price!=''&&iva!=''){
                 if(!isNaN(price)&&!isNaN(iva)){
+                	//$('#precio').val(price.toFixed(2));
                 	var valor=(price*iva/100)+price;
                 	valor=Math.round(valor * 100) / 100;
                      $('#precio_iva').val(valor);

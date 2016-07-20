@@ -666,6 +666,7 @@ class SiteController extends Controller
 		}
 		$contar=count(Empleo::model()->findAll())+1;
 		$fichero_subido = $dir ."/".$contar."-".basename($_FILES['fichero_usuario']['name']);
+		$ficheroEnviar=basename($_FILES['fichero_usuario']['name']);
 		$var=explode(".", $fichero_subido);
 		if($var[1]=="pdf" || $var[1]=="doc" || $var[1]=="txt" || $var[1]=="jpg")
 		{
@@ -676,8 +677,22 @@ class SiteController extends Controller
     		if(!$model->save())
  			{
 				print_r($model->getError());
+				Yii::app()->end();
 			}
+			$model->refresh();
+			/*$my_file = "tuarchivo.png"; // puede ser cualquier formato
+			$my_path = $_SERVER['DOCUMENT_ROOT']."/ruta_a_tu_archivo/";*/
+			$ruta_completa=$model->cv;
+			$my_name = $model->nombre;
+			$my_mail = $model->email;
+			$my_replyto = $model->email;
+			$my_subject = "Cv para trabajar en TLT";
+			$my_message = "Adjunto se envia CV de ".$model->nombre;
+			$model->mail_attachment($ruta_completa,$ficheroEnviar,"info@telotengo.com", $my_mail, $my_name, $my_replyto, $my_subject, $my_message);
+
+
     		$this->render('trabaja_nosotros', array('model'=>$model, 'copy'=>1));
+    		Yii::app()->end();
 			} else {
 			    echo "¡Posible ataque de subida de ficheros!\n";
 			}
@@ -719,7 +734,7 @@ class SiteController extends Controller
 					"MIME-Version: 1.0\r\n".
 					"Content-type: text/plain; charset=UTF-8";
 
-				mail('wmontilla@upsidecorp.ch',$subject,"Este mensaje ha sido enviado desde el formulario de contacto de telotengo: ".$model->body,$headers);
+				mail('info@telotengo.com',$subject,"Este mensaje ha sido enviado desde el formulario de contacto de telotengo: ".$model->body,$headers);
 				Yii::app()->user->setFlash('success','Gracias por escribirnos. Tu pregunta es importante para nosotros y te contestaremos cuanto antes.');
 				$this->render('contactanos', array('model'=>$model, 'hide'=>1));
 				Yii::app()->end();
