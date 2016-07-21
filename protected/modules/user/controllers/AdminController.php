@@ -442,7 +442,6 @@ class AdminController extends Controller
 						}*/	
 						$model->emailClienteInvitado($model->id, Yii::app()->user->id);
 					}
-					echo "paso por aqui";
 					Yii::app()->user->setFlash('success',"Usuario invitado correctamente");
 				}
 				if(Yii::app()->user->isAdmin())
