@@ -316,6 +316,7 @@ class ProfileController extends Controller
 		$totaPendienteVendidas="";
 		$totaRechazadasVendidas="";
 		$totaAprobadaVendidas="";
+		$totalProduc="";
 		$producComprados=0;
 		$producInventario=0;
 		if($entro==0)
