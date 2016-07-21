@@ -28,9 +28,20 @@
 
 	<div class="form-group">
 		<div class="col-sm-12">
-			<?php echo $form->labelEx($model,'type'); ?>
-			<?php echo $form->dropDownList($model,'type',User::itemAlias('UserType'),array('id'=>'User_type','class'=>'form-control','empty' => 'Seleccione una opción')); ?>
-			<?php echo $form->error($model,'type'); ?>
+<?php 	if($opcion==1):?>
+			<select id="User_type" class="form-control" name="User[type]">
+			<option value="">Seleccione una opción</option>
+			<option value="2">Invitar como miembro de empresa</option>
+			<option selected="selected" value="3">Invitar como nueva empresa</option>
+			</select>
+		<?php endif;?>
+		<?php 	if($opcion==2):?>
+			<select id="User_type" class="form-control" name="User[type]">
+			<option value="">Seleccione una opción</option>
+			<option selected="selected" value="2">Invitar como miembro de empresa</option>
+			<option value="3">Invitar como nueva empresa</option>
+			</select>
+		<?php endif;?>	
 		</div>
 	</div>
 
@@ -49,26 +60,54 @@
 		$list = CHtml::listData($models, 'id', 'razon_social'); 
 
 
-	?>
+	 if($opcion==2)
+	{?>
+		<div id="miembroEmpresa">
+		<?php
+	}
+	else
+	{?>
+		<div id="miembroEmpresa" class="hide">	
+		<?php
+	}?>
 	
-	<div id="miembroEmpresa" class="hide">
 		<h3>Solo para el caso de invitar como miembro de empresa</h3>
 		<div class="form-group">
 		<div class="col-sm-12">
 			<label>Empresa</label>
-			<?php echo CHtml::dropDownList('empresas','',$list,array('id'=>'empresas','class'=>'form-control','disabled'=>'disabled')); ?>
+			<?php 
+			if($opcion==2){
+				echo CHtml::dropDownList('empresas','',$list,array('id'=>'empresas','class'=>'form-control')); 
+			}
+			else
+			{
+				echo CHtml::dropDownList('empresas','',$list,array('id'=>'empresas','class'=>'form-control','disabled'=>'disabled')); 
+			}?>
 		</div>
 	</div>
 
 	<div class="form-group">
 		<div class="col-sm-12">
 			<label>Cargo</label>
-			<?php echo CHtml::dropDownList('cargo','',
+			<?php
+						if($opcion==2){
+				echo CHtml::dropDownList('cargo','',
 				array(	'Dueño o Socio' => 'Dueño o Socio',
 						'Junta Directiva' => 'Junta Directiva',
 						'Gerente' => 'Gerente',
 						'Empleado' => 'Empleado'),
-				array('id'=>'cargo','class'=>'form-control','disabled'=>'disabled')); ?>
+				array('id'=>'cargo','class'=>'form-control')); 
+			}
+			else
+			{
+				echo CHtml::dropDownList('cargo','',
+				array(	'Dueño o Socio' => 'Dueño o Socio',
+						'Junta Directiva' => 'Junta Directiva',
+						'Gerente' => 'Gerente',
+						'Empleado' => 'Empleado'),
+				array('id'=>'cargo','class'=>'form-control','disabled'=>'disabled'));
+			}?>
+			<?php  ?>
 		</div>
 	</div>
 		
@@ -126,7 +165,6 @@ if(!Yii::app()->user->isAdmin()) /// si no es usuario haga las validaciones, por
 		$(document).ready(function() {
 			$("#guardar").removeClass('disabled');
 			$(".emails").on("focus blur release change focusout keyup", function(){
-			//$('.emails').blur(function(){ 
 				var email= $('.emails').val();
 				if(email=="")
 				{
@@ -169,6 +207,7 @@ if(!Yii::app()->user->isAdmin()) /// si no es usuario haga las validaciones, por
 				       })
 			});
 			$('.botone').click(function(event){ 
+				event.preventDefault();
 				var email= $('.emails').val();
 				var usuario=$('#User_type').val();
 				if(email=="")

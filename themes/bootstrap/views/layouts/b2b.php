@@ -68,7 +68,8 @@
                                     <span class="help-block muted text_align_right padding_right">
                                     
                         </div>
-                         <div class="col-md-12 text-center loginError margin_top_xsmall">
+                         <!--<div class="col-md-12 text-center loginError margin_top_xsmall">-->
+                         <div class="col-md-12 text-center margin_top_xsmall">
                             <?php echo $form->error($loginLayoutModel,'username'); ?>
                             <?php echo $form->error($loginLayoutModel,'password'); ?>
                     

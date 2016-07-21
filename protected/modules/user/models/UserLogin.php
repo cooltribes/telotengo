@@ -60,10 +60,10 @@ class UserLogin extends CFormModel
 					Yii::app()->user->login($identity,$duration);
 					break;
 				case UserIdentity::ERROR_EMAIL_INVALID:
-					$this->addError("username",UserModule::t("Email incorrecto"));
+					$this->addError("username",UserModule::t("Email o Contraseña incorrecta"));
 					break;
 				case UserIdentity::ERROR_USERNAME_INVALID:
-					$this->addError("username",UserModule::t("Email incorrecto"));
+					$this->addError("username",UserModule::t("Email o Contraseña incorrecta"));
 					break;
 				case UserIdentity::ERROR_STATUS_NOTACTIV:
 					$this->addError("status",UserModule::t("Debe validar su cuenta para continuar"));
@@ -72,7 +72,7 @@ class UserLogin extends CFormModel
 					$this->addError("status",UserModule::t("Su cuenta ha sido bloqueada"));
 					break;
 				case UserIdentity::ERROR_PASSWORD_INVALID:
-					$this->addError("password",UserModule::t("Usuario o Contraseña incorrecta"));
+					$this->addError("password",UserModule::t("Email o Contraseña incorrecta"));
 					break;
 			}
 		}else{
