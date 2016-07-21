@@ -121,7 +121,7 @@
 				'buttonType'=>'submit',
 				//'type'=>'primary',
 				'label'=> 'Invitar',
-				'htmlOptions'=>array('id'=>'guardar', 'class'=>'btn-orange orange_border white')
+				'htmlOptions'=>array('id'=>'guardar', 'class'=>'btn-orange orange_border white disabled')
 			)); ?>
 		</div> 
 
@@ -163,6 +163,7 @@ if(!Yii::app()->user->isAdmin()) /// si no es usuario haga las validaciones, por
 	<script>
 	
 		$(document).ready(function() {
+			$("#guardar").removeClass('disabled');
 			$(".emails").on("focus blur release change focusout keyup", function(){
 				var email= $('.emails').val();
 				if(email=="")
@@ -205,7 +206,7 @@ if(!Yii::app()->user->isAdmin()) /// si no es usuario haga las validaciones, por
 				       	}
 				       })
 			});
-			$(".botone" ).submit(function( event ) {
+			$('.botone').click(function(event){ 
 				event.preventDefault();
 				var email= $('.emails').val();
 				var usuario=$('#User_type').val();
