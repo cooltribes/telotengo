@@ -1,3 +1,8 @@
+<style>
+    .button-form{
+        width:100%; 
+    }
+</style>
 <h1>Mi Cuenta</h1>
     <div class="avatar margin_top">
         <div class="image text-center">
@@ -137,7 +142,8 @@
         </div>-->
        
     </div>
-    
+     <a href="<?php echo Yii::app()->createUrl('user/admin/invitarUsuario', array("opcion"=>1));?>"><input class="btn-black btn btn-danger btn-large button-form" type="submit" name="yt0" value="Invita a tus clientes"></a>   
+      <a href="<?php echo Yii::app()->createUrl('user/admin/invitarUsuario', array("opcion"=>2));?>"><input class="btn-black btn btn-danger btn-large button-form" type="submit" name="yt0" value="Miembros de tu empresa"> </a> 
     <div id="changeAvatar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none; min-height: 550px;">
         <?php echo $this->renderPartial('avatar', array( 'model'=>$model ),true); ?>
     </div>

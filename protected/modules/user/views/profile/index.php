@@ -3,7 +3,17 @@
              padding-top:21px;
           }
 </style>
-<?php $this->breadcrumbs=array('Mi Cuenta'); ?> 
+<?php $this->breadcrumbs=array('Mi Cuenta'); ?>
+    <?php if(Yii::app()->user->hasFlash('success')){?>
+    <div class="alert in alert-block fade alert-success text_align_center">
+        <?php echo Yii::app()->user->getFlash('success'); ?>
+    </div>
+<?php } ?>
+<?php if(Yii::app()->user->hasFlash('error')){?>
+    <div class="alert in alert-block fade alert-danger text_align_center">
+        <?php echo Yii::app()->user->getFlash('error'); ?>
+    </div>
+<?php } ?> 
 
 <div class="col-md-3 profile-leftBar">
     <?php $this->renderPartial('left_bar',array('model'=>$model, 'identificador'=>$identificador)); ?> 
