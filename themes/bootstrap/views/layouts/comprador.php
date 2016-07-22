@@ -278,8 +278,43 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
         </div>
 </div>
 <?php
-if(isset(Yii::app()->session['banner'])){?>
-   <a href="<?php echo Funciones::getBanner(1,1);?>"><img src="<?php echo Funciones::getBanner(1,2);?>" width="100%"/></a>
+if(isset(Yii::app()->session['banner'])){
+   /*<a href="<?php echo Funciones::getBanner(1,1);?>"><img src="<?php echo Funciones::getBanner(1,2);?>" width="100%"/></a>
+*/ ?>
+
+   <div id="myCarousel" class="carousel slide" data-ride="carousel">
+  <!-- Indicators -->
+  <ol class="carousel-indicators">
+    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+    <li data-target="#myCarousel" data-slide-to="1"></li>
+    <li data-target="#myCarousel" data-slide-to="2"></li>
+  </ol>
+
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner" role="listbox">
+    <div class="item active">
+    <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/comprador1.png?>">  
+    </div>
+
+    <div class="item">
+      <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/comprador2.png?>">
+    </div>
+
+    <div class="item">
+      <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/comprador3.png?>">
+    </div>
+  </div>
+
+  <!-- Left and right controls -->
+  <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+    <span class="sr-only">Antes</span>
+  </a>
+  <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+    <span class="sr-only">Despues</span>
+  </a>
+</div>
 <?php 
     unset(Yii::app()->session['banner']);
     }
