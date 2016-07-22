@@ -1,8 +1,7 @@
     <div class="encabezado">
         <h1>Tienda Online B2B</h1>
         <h2>De Empresas para Empresas</h2>
-       <div class="stripe">El primer marketplace donde las Empresas se compran y se venden entre ellas. 
-           
+       <div class="stripe">El primer marketplace exclusivo entre empresas.            
        </div>    
     </div>    
     
