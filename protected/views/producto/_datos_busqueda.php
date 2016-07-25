@@ -13,16 +13,12 @@
 	{
 		$im= '<img src="http://placehold.it/65x65" height="65px">';
 	} 
-    	
-    echo " <td>".$data->tlt_codigo."</td>"; 							  
+    								  
     echo " <td>".$im."</td>"; 
-    
+    echo " <td>".$data->tlt_codigo."</td>"; 
 		
-	echo "<td><p><strong>".$data->nombre."</strong></p>
-
-			<p>Descripción del producto: ".$data->descripcion."
-			</p>
-		</td>";								
+	echo "<td><strong>".$data->nombre."</strong></td>";
+    echo "<td><span class='hide' id='texto".$data->id."'>".$data->descripcion."</span><a class='leerMas' id='".$data->id."' href='#'><span>Leer descripcion</span><a/></td>";							
 								
     echo ' <td class="text_align_center">';
     if($data->aprobado&&$data->estado)
@@ -44,3 +40,30 @@
 ?>   
     							
 </tr>
+
+<script>
+$(document).ready(function() {
+    $(".leerMas").on("click", function(event){
+       /* event.preventDefault();
+        event.stopPropagation();
+        var id=$(this).attr('id');
+       alert($("#"+id).text());
+        if($("#"+id).text()=="Leer descripcion")
+        {
+            $("#texto"+id).removeClass('hide');
+            $("#"+id).text('No leer descripcion');
+
+        }
+        else
+        {
+            $("#texto"+id).addClass('hide');
+            $("#"+id).text('Leer descripcion');
+        }
+        return false;*/
+        var id=$(this).attr('id');
+        $("#texto"+id).removeClass('hide');
+        $("#"+id).text('No leer descripcion');
+    })
+
+});
+</script>

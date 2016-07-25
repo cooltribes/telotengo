@@ -236,6 +236,8 @@ if(!Yii::app()->user->isAdmin()) /// si no es usuario haga las validaciones, por
 							{
 								  $('#esconder').hide();
 			       				  $('#guardar').attr('disabled',false);
+			       				  $('#user-form').submit();
+
 							}
 							else
 							{
