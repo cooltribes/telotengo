@@ -19,13 +19,15 @@
 	    		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-bordered table-hover table-striped">
 			      
 			        <col width="10%">
-			         <col width="10%">
-			          <col width="65%">
+			         <col width="8%">
+			         <col width="12%">
+			          <col width="55%">
 			           <col width="15%">
 			           <thead>
 			        <tr>
-			            <th scope="col">Codigo TLT</th>
 			            <th scope="col">Imágen</th>
+			            <th scope="col">Codigo TLT</th>
+			            <th scope="col">Nombre</th>
 			            <th scope="col">Referencia</th>
 			            <th scope="col">Acciones</th>
 			        </tr>
