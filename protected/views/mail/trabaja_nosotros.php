@@ -1,0 +1,1 @@
+Adjunto se envia CV de  <?php echo $model->nombre; ?> para responder al correo <?php echo $model->email;?>

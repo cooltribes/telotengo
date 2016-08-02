@@ -682,14 +682,24 @@ class SiteController extends Controller
 			$model->refresh();
 			/*$my_file = "tuarchivo.png"; // puede ser cualquier formato
 			$my_path = $_SERVER['DOCUMENT_ROOT']."/ruta_a_tu_archivo/";*/
-			$ruta_completa=$model->cv;
+
+			/*$ruta_completa=$model->cv;
 			$my_name = $model->nombre;
 			$my_mail = $model->email;
 			$my_replyto = $model->email;
 			$my_subject = "Cv para trabajar en TLT";
 			$my_message = "Adjunto se envia CV de ".$model->nombre;
-			$model->mail_attachment($ruta_completa,$ficheroEnviar,"info@telotengo.com", $my_mail, $my_name, $my_replyto, $my_subject, $my_message);
+			$model->mail_attachment($ruta_completa,$ficheroEnviar,"info@telotengo.com", $my_mail, $my_name, $my_replyto, $my_subject, $my_message);*/
 
+				$message = new YiiMailMessage;
+				$message->activarPlantillaMandrill();					
+				$body=Yii::app()->controller->renderPartial('//mail/trabaja_nosotros', array('model'=>$model),true);		
+				$message->subject= "Cv para trabajar en TLT";
+				$message->setBody($body,'text/html');
+				$swiftAttachment = Swift_Attachment::fromPath($model->cv); 
+				$message->attach($swiftAttachment);				
+				$message->addTo("contacto@telotengo.com");
+				Yii::app()->mail->send($message);
 
     		$this->render('trabaja_nosotros', array('model'=>$model, 'copy'=>1));
     		Yii::app()->end();
@@ -727,14 +737,22 @@ class SiteController extends Controller
    		$model->attributes=$_POST['ContactForm'];
    		if($model->validate())
    		{
-   				$name='=?UTF-8?B?'.base64_encode($model->name).'?=';
+   				/*$name='=?UTF-8?B?'.base64_encode($model->name).'?=';
 				$subject='=?UTF-8?B?'.base64_encode($model->subject).'?=';
 				$headers="From: $name <{$model->email}>\r\n".
 					"Reply-To: {$model->email}\r\n".
 					"MIME-Version: 1.0\r\n".
 					"Content-type: text/plain; charset=UTF-8";
 
-				mail('info@telotengo.com',$subject,"Este mensaje ha sido enviado desde el formulario de contacto de telotengo: ".$model->body,$headers);
+				mail('info@telotengo.com',$subject,"Este mensaje ha sido enviado desde el formulario de contacto de telotengo: ".$model->body,$headers);*/
+				$message = new YiiMailMessage;
+				$message->activarPlantillaMandrill();					
+				$body=Yii::app()->controller->renderPartial('//mail/contactanos', array('model'=>$model),true);				
+				$message->subject= $model->subject;
+				$message->setBody($body,'text/html');
+								
+				$message->addTo("contacto@telotengo.com");
+				Yii::app()->mail->send($message);
 				Yii::app()->user->setFlash('success','Gracias por escribirnos. Tu pregunta es importante para nosotros y te contestaremos cuanto antes.');
 				$this->render('contactanos', array('model'=>$model, 'hide'=>1));
 				Yii::app()->end();
