@@ -99,8 +99,8 @@
                                 <th style="background-color: #000; color: #FFF; padding-top: 12px; padding-bottom: 12px; text-align:center" class="text-center">Cantidad</th>
                                 <th style="background-color: #000; color: #FFF; padding-top: 12px; padding-bottom: 12px; text-align:center" class="text-center">Precio Unt.</th>
                                 <th style="background-color: #000; color: #FFF; padding-top: 12px; padding-bottom: 12px; text-align:center" class="text-center">Sub Total</th>
-                                 <th style="background-color: #000; color: #FFF; padding-top: 12px; padding-bottom: 12px; text-align:center" class="text-center">I. V. A.</th>
-                                  <th style="background-color: #000; color: #FFF; padding-top: 12px; padding-bottom: 12px; text-align:center" class="text-center">Precio Total</th>
+                               <!--  <th style="background-color: #000; color: #FFF; padding-top: 12px; padding-bottom: 12px; text-align:center" class="text-center">I. V. A.</th>
+                                  <th style="background-color: #000; color: #FFF; padding-top: 12px; padding-bottom: 12px; text-align:center" class="text-center">Precio Total</th> -->
                                
                             </tr>
                         </thead>
@@ -119,9 +119,11 @@
                                 <td style="text-align: center; font-weight: bolder; padding-top: 12px; padding-bottom: 12px;"><?php echo $cantidad=$proc->cantidad;?></td>
                                 <td style="text-align: center; font-weight: bolder; padding-top: 12px; padding-bottom: 12px;"><?php echo Funciones::formatPrecio($precio=$proc->inventario->precio);?></td>
                                 <td style="text-align: center; font-weight: bolder; padding-top: 12px; padding-bottom: 12px; color: #ec1f24;"><?php echo Funciones::formatPrecio($sub=$precio*$cantidad); ?></td>
+                                <?php /*
                                 <td style="text-align: center; font-weight: bolder; padding-top: 12px; padding-bottom: 12px; color: #ec1f24;"><?php echo Funciones::formatPrecio($iva=$precio*$cantidad*0.12);?></td>
                                 <td style="text-align: center; font-weight: bolder; padding-top: 12px; padding-bottom: 12px; color: #ec1f24;"><?php echo Funciones::formatPrecio($tota=$sub+$iva);?></td>
-                                 <?php $acumulado+=$tota; ?>
+                                 <?php $acumulado+=$tota; */
+                                        $acumulado+=$sub;?>
                                 
                             </tr>
                             <?php endforeach;  ?>
@@ -133,7 +135,9 @@
 
                 <div class="summary text-right" style="text-align: right; border: solid 1px #666; height:30px; line-height:30px; vertical-align:middle; padding: 10px 5%">
                     
-                    <span id="total" style="font-size: 20px; font-weight: bolder;">Total: <?php echo Funciones::formatPrecio($acumulado);?></span>
+                    <span id="total" style="font-size: 20px; font-weight: bolder;">SubTotal: <?php echo Funciones::formatPrecio($acumulado);?></span><br>
+                    <span id="total" style="font-size: 20px; font-weight: bolder;">IVA: <?php $iva=$acumulado*Yii::app()->params['IVA']['value']; echo Funciones::formatPrecio($iva);?></span><br>
+                    <span id="total" style="font-size: 20px; font-weight: bolder;">Total: <?php echo Funciones::formatPrecio($acumulado+$iva);?></span>
                    
                 </div>
             </div>

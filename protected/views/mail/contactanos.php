@@ -1,0 +1,1 @@
+Este correo ha sido enviado a traves de <?php echo $model->email."<br>"; echo $model->body;?>
