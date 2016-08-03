@@ -250,4 +250,5 @@ Hemos observado que recientemente has añadido ítems a tu carrito. Si requieres
 }
 // Cerrar la conexión
 mysqli_close($link);
+header('Location: http://telotengo.com/'.$entorno);
 ?>
