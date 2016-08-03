@@ -16,6 +16,8 @@
     								  
     echo " <td>".$im."</td>"; 
     echo " <td>".$data->tlt_codigo."</td>"; 
+    echo " <td>".$data->upc."</td>"; 
+    echo " <td>".$data->nparte."</td>"; 
 		
 	echo "<td><strong>".$data->nombre."</strong></td>";
     echo "<td><span class='hide' id='texto".$data->id."'>".$data->descripcion."</span><a class='leerMas' id='".$data->id."' href='#'><span>Leer descripcion</span><a/></td>";							

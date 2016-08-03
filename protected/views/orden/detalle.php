@@ -38,8 +38,8 @@ else
                                 <th class="text-center">Cantidad</th>
                                 <th class="text-center">Precio Unt.</th>
                                 <th class="text-center">Sub Total</th>
-                                 <th class="text-center">I. V. A.</th>
-                                  <th class="text-center">Precio Total</th>
+                              <!--   <th class="text-center">I. V. A.</th>
+                                  <th class="text-center">Precio Total</th> -->
                                
                             </tr>
                         </thead>
@@ -58,9 +58,13 @@ else
                                 <td class="number"><?php echo $cantidad=$proc->cantidad;?></td>
                                 <td class="number"><?php $precio=$proc->monto; echo Funciones::formatPrecio($precio);?></td>
                                 <td class="number highlighted"><?php $sub=$precio*$cantidad; echo Funciones::formatPrecio($sub); ?></td>
+                                <?php /*
                                 <td class="number"><?php $iva=$precio*$cantidad*Yii::app()->params['IVA']['value']; echo Funciones::formatPrecio($iva);?></td>
-                                <td class="number highlighted"><?php $tota=$sub+$iva; echo Funciones::formatPrecio($tota);?></td>
-                                 <?php $acumulado+=$tota; ?>
+                                <td class="number highlighted"><?php $tota=$sub+$iva; echo Funciones::formatPrecio($tota);?></td> 
+                                 $iva=$precio*$cantidad*Yii::app()->params['IVA']['value'];
+                                 $tota=$sub+$iva;
+                                 $acumulado+=$tota; */
+                                 $acumulado+=$sub; ?>
                                 
                             </tr>
                             <?php endforeach;  ?>
@@ -72,7 +76,9 @@ else
 
                 <div class="summary text-right">
                     
-                    <span id="total">Total: <?php echo Funciones::formatPrecio($acumulado);?></span>
+                    <span id="SubTotal">SubTotal: <?php echo Funciones::formatPrecio($acumulado);?></span><br>
+                    <span id="total">IVA: <?php $iva=$acumulado*Yii::app()->params['IVA']['value']; echo Funciones::formatPrecio($iva);?></span><br>
+                    <span id="total">Total: <?php echo Funciones::formatPrecio($acumulado+$iva);?></span>
                    
                 </div>
             </div>

@@ -21,12 +21,14 @@
 			        <col width="10%">
 			         <col width="8%">
 			         <col width="12%">
-			          <col width="55%">
-			           <col width="15%">
+			          <col width="15%">
+			           <col width="55%">
 			           <thead>
 			        <tr>
 			            <th scope="col">Imágen</th>
 			            <th scope="col">Codigo TLT</th>
+			            <th scope="col">UPC</th>
+			            <th scope="col">Numero de parte</th>
 			            <th scope="col">Nombre</th>
 			            <th scope="col">Referencia</th>
 			            <th scope="col">Acciones</th>
