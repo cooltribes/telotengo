@@ -35,7 +35,7 @@ class ControlPanelController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin', 'adminUsuarios', 'adminOrdenes', 'adminProductos'),
+				'actions'=>array('admin', 'adminUsuarios', 'adminOrdenes', 'adminProductos', 'scriptAbandono'),
 				'users'=>array('admin'), 
 			),
 			array('deny',  // deny all users
@@ -538,7 +538,25 @@ class ControlPanelController extends Controller
 									 'fechaIni'=>$fechaIni, 
 									 ));
 	}
-
+	public function actionScriptAbandono()
+	{
+		if (strpos(getcwd(),'new')>0)
+		{
+		 	$entorno="new/";
+		}
+		else
+		{
+			if (strpos(getcwd(),'staging')>0)
+			{
+				 $entorno="staging/";
+			}
+			else
+			{
+				$entorno="production/";
+			}
+		}
+		header('Location: http://telotengo.com/'.$entorno.'scripts/script_abandono.php');
+	}
 	// Uncomment the following methods and override them if needed
 	/*
 	public function filters()

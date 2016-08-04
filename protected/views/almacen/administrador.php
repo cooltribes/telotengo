@@ -100,11 +100,11 @@ $this->breadcrumbs=array(
 	    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-hover table-striped">
 	        <thead>
 	        <tr>
-	            <th scope="col">Nombre</th>
-	            <th scope="col">Ubicacion</th>
-	            <th scope="col">Alias</th>
-	            <th scope="col">Empresa</th>
-	            <th scope="col"></th>
+	            <th scope="col">Razón social</th>
+	            <th scope="col">Nombre comercial</th>
+	            <th scope="col">Sucursal</th>
+	           	<th scope="col">Ubicacion</th>
+	            <th scope="col">Acción</th>
 	        </tr>
 	        </thead>
 	    {items}

@@ -10,7 +10,7 @@ En nuestro compromiso por el respeto y protección de los derechos de propiedad 
 <p>
 <h4 style="font-weight: bolder;">¿CUÁL ES EL OBJETIVO?</h4>
 
-Esta iniciativa tiene por objeto permitir a los titulares de derechos de propiedad intelectual (derechos de autor, marcas, patentes, entre otros) que notifiquen a Linio si creen que sus derechos están siendo vulnerados por la venta de algún o algunos de los productos que se ofrecen en el portal.
+TelotengoEsta iniciativa tiene por objeto permitir a los titulares de derechos de propiedad intelectual (derechos de autor, marcas, patentes, entre otros) que notifiquen a Telotengo si creen que sus derechos están siendo vulnerados por la venta de algún o algunos de los productos que se ofrecen en el portal.
 De este modo, TELOTENGO.COM procederá a estudiar cada caso para determinar si los productos deben ser bajados del portal por no contar con las autorizaciones que se requieren, o si por el contrario no se están infringiendo derechos de terceros.
 </p>
 
@@ -26,14 +26,14 @@ En el caso de personas jurídicas, este reclamo deberá ser presentado por su re
 <p>
 <h4 style="font-weight: bolder;">¿CÓMO SE REALIZA EL RECLAMO?</h4>
 
-Para poder realizar el reclamo, se deberá acreditar ante Linio la titularidad de los Derechos de Propiedad Intelectual que se presumen vulnerados.
+Para poder realizar el reclamo, se deberá acreditar ante Telotengo la titularidad de los Derechos de Propiedad Intelectual que se presumen vulnerados.
 Con el fin de corroborar lo anterior, se deberá enviar una copia de los siguientes documentos al correo: operaciones@telotengo.com
 Formulario de reclamo, debidamente diligenciado y firmado por el titular de los Derechos de Propiedad Intelectual o por su representante legal. Para el diligenciamiento del formulario, se deberá enunciar cuáles son los productos o publicaciones que presuntamente vulneran los derechos.
 Autorización del titular de los derechos, en caso que la persona que interponga el reclamo no sea el titular.
 Documentos que acrediten la titularidad de los Derechos de Propiedad Intelectual, que hayan sido registrados en el país en el cual se presente la supuesta infracción.
 No se tendrán en cuenta constancias de trámites de inscripción en curso.
 Una vez recibamos la reclamación, procederemos a dar trámite a la investigación Revisaremos los documentos aportados y solicitaremos a quien comercializa los productos objeto de la presunta infracción, que nos aporte las pruebas pertinentes para comprobar que no se están violando los derechos de propiedad Intelectual de terceros.
-En caso de no ser procedente la reclamación, se enviará una carta al correo electrónico, informando los motivos de esta decisión. Si por el contrario, Linio logra verificar que los productos y publicaciones infringen derechos de terceros, los eliminaremos de nuestra página.
+En caso de no ser procedente la reclamación, se enviará una carta al correo electrónico, informando los motivos de esta decisión. Si por el contrario, Telotengo logra verificar que los productos y publicaciones infringen derechos de terceros, los eliminaremos de nuestra página.
 </p>
 
 <br>

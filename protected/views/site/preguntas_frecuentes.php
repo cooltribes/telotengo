@@ -10,8 +10,8 @@ Haz clic en el botón “Ordenar” para agregar el producto a tu carrito de com
 Para finalizar la compra haz clic en el botón “Generar Orden al proveedor”. <br>
 ¡Felicidades! Has terminado exitosamente tu pedido en Telotengo.com. Tu orden ha sido registrada en el sistema. Una vez que tu pedido sea validado, recibirás un correo electrónico con la confirmación de tu compra.<br>
 
-¿Resolvimos tu duda? <br>
-Si No
+<!--¿Resolvimos tu duda? <br>
+Si No-->
 </p>
 <br>
 <p>
@@ -21,8 +21,8 @@ En la esquina superior derecha de nuestra página web, haz clic en el botón “
 Una vez dentro de tu carrito de compras, ubica el producto que deseas eliminar y haz clic en la “X” que aparece a un costado del subtotal.<br>
 
 ¡Listo! Aparecerá una leyenda confirmando que el producto ha sido eliminado del carrito de compras.<br>
-¿Resolvimos tu duda? <br>
-Si No
+<!--¿Resolvimos tu duda? <br>
+Si No-->
 </p>
 <br>
 <p>
@@ -35,8 +35,8 @@ Aprobado Pago Pendiente: Tu pedido ha sido confirmado y está a la espera de tu 
 Negociado: El proveedor te sugiere un cambio en los productos (EN CONSTRUCCIÓN)<br>
 Despacho: Tu pedido ha sido confirmado y está siendo procesado para ser enviado lo más pronto posible. Cuando sea despachado, recibirás una notificación por correo electrónico con más detalles sobre el envío.<br>
 
-¿Resolvimos tu duda? <br>
-Si No
+<!--¿Resolvimos tu duda? <br>
+Si No-->
 </p>
 <br>
 <p>
@@ -54,8 +54,8 @@ Sí, puedes realizar la cancelación sin ningún problema. Para ello, es necesar
 SI RECIBISTE UN CORREO CONFIRMANDO EL ENVÍO<br>
 Lamentablemente no podremos realizar la cancelación pues tu pedido ya está en camino del proveedor.<br>
 
-¿Resolvimos tu duda? <br>
-Si No
+<!--¿Resolvimos tu duda? <br>
+Si No-->
 </p>
 <br>
 <p>
@@ -75,8 +75,8 @@ Si aún deseas el producto que fue rechazado deberás realizar un nuevo pedido. 
 
 Sí, Cuando compras un producto de Marketplace, el proveedor puede demorar hasta 15 días hábiles para generar la copia de tu factura. Lo más probable es que te haga llegar una copia a tu email. <br>
 
-¿Resolvimos tu duda? <br>
-Si No
+<!--¿Resolvimos tu duda? <br>
+Si No-->
 </p>
 <br>
 <p>
@@ -105,9 +105,9 @@ Sí, los precios publicados de los productos ya incluyen IVA. Sin embargo, deber
 <p>
 <h4 style="font-weight: bolder;">¿POR QUÉ CAMBIÓ EL PRECIO DE MI PRODUCTO?</h4>
 En Telotengo, ofrecen distintas promociones y descuentos sobre determinados productos durante períodos de tiempo limitados. Por esta razón, se puede cambiar los precios sin previo aviso.<br>
-Así que, si encuentras algún precio atractivo o una buena promoción, ¡te recomendamos que aproveches el descuento y realices tu compra en ese momento! Una vez que finalices tu pedido, el precio que debes pagar no cambiará.<br>
+Así que, si encuentras algún precio atractivo o una buena promoción, ¡te recomendamos que aproveches el descuento y realices tu compra en ese momento! Una vez que finalices tu pedido, el precio que debes pagar no cambiará.<br><!--
 ¿Resolvimos tu duda? <br>
-Si No
+Si No-->
 </p>
 <br>
 <p>
@@ -127,8 +127,8 @@ En la sección "Clientes registrados", haz clic en "¿Olvidaste tu Contraseña?"
 Escribe tu correo electrónico y haz clic en “Enviar”.<br>
 En pocos minutos recibirás un correo con un link personalizado para que puedas restablecerla.<br>
 Recuerda que puedes cambiar tu contraseña en cualquier momento y el número de veces que quieras.<br>
-¿Resolvimos tu duda? <br>
-Si No
+<!--¿Resolvimos tu duda? <br>
+Si No-->
 </p>
 <br>
 <p>
@@ -163,9 +163,9 @@ Puedes pagar tus productos Marketplace con transferencia electronica o deposito 
 <p>
 <h4 style="font-weight: bolder;">¿QUÉ HAGO SI TENGO UN INCONVENIENTE CON EL VENDEDOR?</h4>
 
-Por favor, presenta una queja enviándonos un correo a contacto@telotengo.com. Te agradecemos por habernos notificado este inconveniente; en breve te ayudaremos con esta situación y daremos seguimiento al caso.<br>
+Por favor, presenta una queja enviándonos un correo a contacto@telotengo.com. Te agradecemos por habernos notificado este inconveniente; en breve te ayudaremos con esta situación y daremos seguimiento al caso.<br><!--
 ¿Resolvimos tu duda? <br>
-Si No
+Si No-->
 </p>
 <br>
 <p>
@@ -176,8 +176,8 @@ Si No
 Ser parte de este gran Marketplace te da la oportunidad de ofrecer tus productos a diferentes empresas sin pagar por publicación.<br>
 Además, al unirte a nuestra plataforma tendrás el control absoluto de tu catálogo e inventario: tú decides el precio, ofertas, tiempo de envío y promociones especiales.  En Telotengo.com, ¡solo pagas cuando vendes! Los primeros 6 meses son gratis.<br>
 
-¿Resolvimos tu duda? <br>
-Si No
+<!--¿Resolvimos tu duda? <br>
+Si No-->
 </p>
 <br>
 <p>
@@ -191,8 +191,8 @@ Capacidad de enviar los productos vendidos.<br>
 Solicitar la inscripción de la empresa como vendedor<br>
 Si cumples con estos requisitos, entonces puedes formar parte de Telotengo.com y vender en la marketplace más grande de Venezuela!<br>
 
-¿Resolvimos tu duda? <br>
-Si No
+<!--¿Resolvimos tu duda? <br>
+Si No-->
 </p>
 <br>
 <p>

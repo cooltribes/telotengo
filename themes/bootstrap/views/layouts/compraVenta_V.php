@@ -255,7 +255,7 @@ if(isset(Yii::app()->session['banner'])){
         <?php echo $content; ?>
     </div>
 </div>
-
+<div class="col-md-12 margin_top_large margin_bottom_large"></div>
 <script>
     $('#btn-sellerLayout').click(function(e){
         e.preventDefault();

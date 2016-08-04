@@ -63,7 +63,7 @@ class ProductoController extends Controller
 	}
 	 
 	// seleccion entre crear o buscar
-	public function actionSeleccion() 
+	public function actionSeleccion()  
 	{
 		$producto = new Producto;
         $producto->unsetAttributes();
@@ -2301,7 +2301,7 @@ class ProductoController extends Controller
 	    	$res =array();
 	    	if (isset($_GET['term'])) 
 			{
-				$qtxt ="SELECT nombre FROM tbl_producto WHERE nombre LIKE :nombre and estado=1";
+				$qtxt ="SELECT nombre FROM tbl_producto WHERE nombre LIKE :nombre or upc LIKE :nombre or nparte LIKE :nombre   and estado=1";
 				$command =Yii::app()->db->createCommand($qtxt);
 				$command->bindValue(":nombre", '%'.$_GET['term'].'%', PDO::PARAM_STR);
 				$res =$command->queryColumn();

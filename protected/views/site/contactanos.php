@@ -14,7 +14,7 @@
 if(!isset($hide)):
 ?>
 <p style="text-align: justify;line-height: 23px;">
-Es posible que lo que quieras preguntar esté en nuestro apartado de Preguntas frecuentes. Si no está allí lo que buscas, llena este formulario y te contactaremos lo más pronto posible. ¡Gracias!</p>
+Es posible que lo que quieras preguntar esté en nuestro apartado de <a href="<?php echo Yii::app()->createUrl('site/preguntasFrecuentes');?>">Preguntas frecuentes</a>. Si no está allí lo que buscas, llena este formulario y te contactaremos lo más pronto posible. ¡Gracias!</p>
 
 
 <?php 
@@ -40,16 +40,17 @@ $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 	<?php echo $form->textFieldRow($model,'email', array('class'=>'form-control')); ?>
 
 	</div>
-
 	<div class="col-md-4 col-md-offset-4 margin_top_small">
 			<?php echo $form->dropDownListRow($model, 'motivo', array(
-			    'Solicitud de información'=>'Solicitud de información',
-			    'Seguimiento del envío'=>'Seguimiento del envío',
-			    'Información de pagos'=>'Información de pagos',
-			    'Problemas con la mercancía'=>'Problemas con la mercancía',
-			    'Devoluciones'=>'Devoluciones',
-			    'Falla Técnica'=>'Falla Técnica',
-			    'Asesoría de imagen' => 'Asesoría de imagen', 
+			    'Información sobre mi cuenta'=>'Información sobre mi cuenta',
+			    'Invitaciones realizadas'=>'Invitaciones realizadas',
+			    'Mis almacenes'=>'Mis almacenes',
+			    'Dudas acerca de productos'=>'Dudas acerca de productos',
+			    'Gestión de inventario'=>'Gestión de inventario',
+			    'Inconvenientes con el carrito de compras'=>'Inconvenientes con el carrito de compras',
+			    'Generación de intenciones de compra' => 'Generación de intenciones de compra', 
+			    'Seguimiento de pedidos' => 'Seguimiento de pedidos', 
+			    'Quejas o sugerencias' => 'Quejas o sugerencias', 
 			    'Otro'=>'Otro',
 			), array(
 			    'empty' => 'Seleccione',
