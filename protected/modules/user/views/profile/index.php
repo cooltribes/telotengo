@@ -81,7 +81,7 @@
        </div>
        <div class="col-md-6 no_padding_right">
           <div class="card row-fluid clearfix">
-             <span class="title col-md-7">Almacenes</span>
+             <span class="title col-md-7"><a href="<?php echo Yii::app()->createUrl('almacen/administrador');?>">Almacenes</a></span>
              <span class="col-md-7"><?php echo count($almacen);?></span>
              <span class="col-md-5 text-right">
                  <a class="showInfo" onclick="showInfo('#info2')" id="info2-show">Mostrar Información</a>

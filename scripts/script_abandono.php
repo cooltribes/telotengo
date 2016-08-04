@@ -17,9 +17,9 @@ else
 	}
 	else
 	{
-		$entorno="";
-		$entorno2="";
-		$baseDatos="FALTA DEFINIR";  //falta definir
+		$entorno="production/";
+		$entorno2="production";
+		$baseDatos="db_telotengoPRODUCTION";  //falta definir
 
 
 	}
@@ -156,8 +156,7 @@ Hemos observado que recientemente has añadido ítems a tu carrito. Si requieres
                                 <th style="background-color: #000; color: #FFF; padding-top: 12px; padding-bottom: 12px; text-align:center" class="text-center">Cantidad</th>
                                 <th style="background-color: #000; color: #FFF; padding-top: 12px; padding-bottom: 12px; text-align:center" class="text-center">Precio Unt.</th>
                                 <th style="background-color: #000; color: #FFF; padding-top: 12px; padding-bottom: 12px; text-align:center" class="text-center">Sub Total</th>
-                                 <th style="background-color: #000; color: #FFF; padding-top: 12px; padding-bottom: 12px; text-align:center" class="text-center">I. V. A.</th>
-                                  <th style="background-color: #000; color: #FFF; padding-top: 12px; padding-bottom: 12px; text-align:center" class="text-center">Precio Total</th>
+                                
                                
                             </tr>
                         </thead>
@@ -196,9 +195,8 @@ Hemos observado que recientemente has añadido ítems a tu carrito. Si requieres
                                 <td style="text-align: center; font-weight: bolder; padding-top: 12px; padding-bottom: 12px;">'.$producto["tlt_codigo"].'</td>
                                 <td style="text-align: center; font-weight: bolder; padding-top: 12px; padding-bottom: 12px;">'.$cadaUno["cantidad"].'</td>
                                 <td style="text-align: center; font-weight: bolder; padding-top: 12px; padding-bottom: 12px;">Bs '.number_format($inventario["precio"],0,",",".").'</td>
-                                <td style="text-align: center; font-weight: bolder; padding-top: 12px; padding-bottom: 12px; color: #ec1f24;">Bs '.number_format($inventario["precio"]*$cadaUno["cantidad"],0,",",".").'</td>
-                                <td style="text-align: center; font-weight: bolder; padding-top: 12px; padding-bottom: 12px; color: #ec1f24;">Bs '.number_format($inventario["precio"]*$cadaUno["cantidad"]*$iva,0,",",".").'</td>
-                                <td style="text-align: center; font-weight: bolder; padding-top: 12px; padding-bottom: 12px; color: #ec1f24;">Bs '.number_format($sumas=$inventario["precio"]*$cadaUno["cantidad"]*$sumIva,0,",",".").'</td>
+                                <td style="text-align: center; font-weight: bolder; padding-top: 12px; padding-bottom: 12px; color: #ec1f24;">Bs '.number_format($sumas=$inventario["precio"]*$cadaUno["cantidad"],0,",",".").'</td>
+
                                 
                                 
                             </tr>
@@ -214,8 +212,9 @@ Hemos observado que recientemente has añadido ítems a tu carrito. Si requieres
 
                 <div class="summary text-right" style="text-align: right; border: solid 1px #666; height:30px; line-height:30px; vertical-align:middle; padding: 10px 5%">
                     
-                    <span id="total" style="font-size: 20px; font-weight: bolder;">Total: Bs '.number_format($acumulado,0,",",".").'</span>
-                   
+                    <span id="total" style="font-size: 20px; font-weight: bolder;">SubTotal: Bs '.number_format($acumulado,0,",",".").'</span> <br>
+                    <span id="total" style="font-size: 20px; font-weight: bolder;">IVA: Bs '.number_format($totaIVA=$acumulado*$iva,0,",",".").'</span> <br>
+                    <span id="total" style="font-size: 20px; font-weight: bolder;">Total: Bs '.number_format($acumulado+$totaIVA,0,",",".").'</span>    
                 </div>
             </div>
     </div>
@@ -251,4 +250,5 @@ Hemos observado que recientemente has añadido ítems a tu carrito. Si requieres
 }
 // Cerrar la conexión
 mysqli_close($link);
+header('Location: http://telotengo.com/'.$entorno);
 ?>
