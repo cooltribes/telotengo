@@ -152,7 +152,7 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
                                                          </span>
                                                     </div>
                                                     <div class="col-md-9 col-sm-9 col-xs-9 no_horizontal_padding title">
-                                                         <span class="text">Ordenes</span>
+                                                         <span class="text">Pedidos</span>
                                                    
                                                         <span class="caret no_margin_left"></span>
                                                     </div>
@@ -167,7 +167,7 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
                                                         break;
                                                   endforeach; ?> 
                                                 <li class="separator"></li>
-                                                <li><a href="<?php echo Yii::app()->createUrl('orden/misCompras');?>">Ver todas las ordenes</a></li>
+                                                <li><a href="<?php echo Yii::app()->createUrl('orden/misCompras');?>">Ver todos los pedidos</a></li>
                                               </ul>
                                             </div>
                                         </div>

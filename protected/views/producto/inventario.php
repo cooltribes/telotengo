@@ -71,7 +71,7 @@ $this->breadcrumbs=array(
 									);*/
 								$modelado=Almacen::model()->findAllByAttributes(array('empresas_id'=>$empresas_id));
 								?>
-								<label for="Inventario_almacen_id" class="required">Almacen <span class="required">*</span></label>
+								<label for="Inventario_almacen_id" class="required">Sucursal <span class="required">*</span></label>
 								<select id="Inventario_almacen_id" class="form-control" name="Inventario[almacen_id]">
 								 <option value="">Seleccione un almacen</option>
 								 <?php foreach($modelado as $mode): ?>
