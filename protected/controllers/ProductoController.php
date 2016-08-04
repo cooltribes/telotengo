@@ -63,7 +63,7 @@ class ProductoController extends Controller
 	}
 	 
 	// seleccion entre crear o buscar
-	public function actionSeleccion() 
+	public function actionSeleccion()  
 	{
 		$producto = new Producto;
         $producto->unsetAttributes();
