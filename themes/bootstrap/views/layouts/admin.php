@@ -20,16 +20,22 @@ $assetUrl=Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('applicatio
 
                <a class="" href="<?php echo Yii::app()->getBaseUrl(true);?>"><img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/whitelogo.png" width="20%"/></a>
             <ul class="nav navbar-nav navbar-right">
-              <li><a href="<?php echo Yii::app()->baseUrl; ?>/tienda">Tienda</a></li>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Panel de control<span class="caret"></span></a>
                 <ul class="dropdown-menu">
                            
                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/controlPanel/scriptAbandono">Script Carrito</a></li>  
-                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/controlPanel/admin">Empresas</a></li> 
-                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/controlPanel/adminUsuarios">Usuarios</a></li>     
+                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/controlPanel/admin">Empresas</a></li>   
                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/controlPanel/adminOrdenes">Ordenes</a></li>     
                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/controlPanel/adminProductos">Productos</a></li>     
+                </ul>
+              </li>
+               <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Usuarios<span class="caret"></span></a>
+                <ul class="dropdown-menu">  
+                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/user/admin/solicitudes">Solicitudes</a></li>     
+                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/user/admin/adminInvite">Invitaciones</a></li>
+                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/user/admin">Usuarios</a></li>
                 </ul>
               </li>
               <li class="dropdown">
@@ -37,9 +43,6 @@ $assetUrl=Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('applicatio
                 <ul class="dropdown-menu">
                            
                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/empresas/admin">Admin</a></li> 
-                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/user/admin/solicitudes">Solicitudes</a></li>     
-                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/user/admin">Usuarios</a></li>
-                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/user/admin/adminInvite">Invitaciones</a></li>
                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/almacen/admin">Almacenes</a> </li>
                 </ul>
               </li>
@@ -57,7 +60,7 @@ $assetUrl=Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('applicatio
               </li>
               <li><a href="<?php echo Yii::app()->baseUrl; ?>/orden/admin">Ordenes</a></li>
               <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administración <span class="caret"></span></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin <span class="caret"></span></a>
                 <ul class="dropdown-menu">
                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/marca/admin">Marcas</a></li>
                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/color/admin">Colores</a></li>
@@ -72,6 +75,7 @@ $assetUrl=Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('applicatio
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Cuenta <span class="caret"></span></a>
                 <ul class="dropdown-menu">
+                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/tienda">Tienda</a></li>
                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/user/profile/index">Perfil</a></li>
                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/site/logout">Cerrar sesión</a></li>                            
 

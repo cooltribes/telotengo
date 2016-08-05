@@ -20,7 +20,7 @@
     echo " <td>".$data->nparte."</td>"; 
 		
 	echo "<td><strong>".$data->nombre."</strong></td>";
-    echo "<td><span class='hide' id='texto".$data->id."'>".$data->descripcion."</span><a class='leerMas' id='".$data->id."' href='#'><span>Leer descripcion</span><a/></td>";							
+    /*echo "<td><span class='hide' id='texto".$data->id."'>".$data->descripcion."</span><a class='leerMas' id='".$data->id."' href='#'><span>Leer descripcion</span><a/></td>";	*/						
 								
     echo ' <td class="text_align_center">';
     if($data->aprobado&&$data->estado)
