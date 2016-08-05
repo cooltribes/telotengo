@@ -25,6 +25,7 @@ $assetUrl=Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('applicatio
                 <ul class="dropdown-menu">
                            
                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/controlPanel/scriptAbandono">Script Carrito</a></li>  
+                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/controlPanel/adminUsuarios">Usuarios</a></li>   
                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/controlPanel/admin">Empresas</a></li>   
                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/controlPanel/adminOrdenes">Ordenes</a></li>     
                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/controlPanel/adminProductos">Productos</a></li>     
