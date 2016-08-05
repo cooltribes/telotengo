@@ -2971,7 +2971,7 @@ class ProductoController extends Controller
 								 $erroresTipoCodigo.= "<li> Tipo de Codigo - <b> Vacio </b>, en la línea <b>" . $linea."</b></li>";
 								 if($errorLocal==0)
 								 {
-								 	$erroresSkuLocal.= "<li> Sku  - <b> no existe debe crear codigo y tipo de codigo existentes </b>, en la línea <b>" . $linea."</b></li>";
+								 	$erroresSkuLocal.= "<li> Sku  - <b> no existe, indique un código y tipo de código existente </b>, en la línea <b>" . $linea."</b></li>";
 									$errorLocal++;
 								 }
 								 	
@@ -2983,7 +2983,7 @@ class ProductoController extends Controller
 									$erroresTipoCodigo.= "<li> Tipo de Codigo - <b> No corresponde a las opciones establecidas </b>, en la línea <b>" . $linea."</b></li>";
 									if($errorLocal==0)
 									 {
-								 		$erroresSkuLocal.= "<li> Sku  - <b> no existe debe crear codigo y tipo de codigo existentes </b>, en la línea <b>" . $linea."</b></li>";
+								 		$erroresSkuLocal.= "<li> Sku  - <b> no existe, indique un código y tipo de código existente </b>, en la línea <b>" . $linea."</b></li>";
 										$errorLocal++;
 								 	}
 								}
@@ -2994,7 +2994,7 @@ class ProductoController extends Controller
 								$erroresCodigo.= "<li> Codigo - <b> Vacio </b>, en la línea <b>" . $linea."</b></li>";
 								if($errorLocal==0)
 								 {
-								 	$erroresSkuLocal.= "<li> Sku  - <b> no existe debe crear codigo y tipo de codigo existentes </b>, en la línea <b>" . $linea."</b></li>";
+								 	$erroresSkuLocal.= "<li> Sku  - <b> no existe, indique un código y tipo de código existente </b>, en la línea <b>" . $linea."</b></li>";
 									$errorLocal++;
 								 }	
 							}
@@ -3221,13 +3221,13 @@ class ProductoController extends Controller
                                  </ul><br>";
             }
             if($erroresAlmacen != ""){
-                $erroresAlmacen = "Las Siguientes Sucursales no existen o estan mal escritos:<br><ul>
+                $erroresAlmacen = "Las Siguientes Sucursales no existen o están mal escritas:<br><ul>
                                  {$erroresAlmacen}
                                  </ul><br>";
             }
 			
 			 if($erroresSkuLocal != ""){
-                $erroresSkuLocal = "Los siguientes sku no existen y se debe indicar un codigo y un Tipo de codigo:<br><ul>
+                $erroresSkuLocal = "Los siguientes SKU no existen, debe indicar un Código y un Tipo de código:<br><ul>
                                  {$erroresSkuLocal}
                                  </ul><br>";
             }
@@ -3262,11 +3262,11 @@ class ProductoController extends Controller
 			
 			//////////////////////////////////////////////////////hasta aqui////////////////////////////////////////////////////////////
                 
-            $errores = $erroresTallas .$erroresColores . $erroresMarcas .
+            $errores = $erroresSkuLocal.$erroresTallas .$erroresColores . $erroresMarcas .
                     $erroresCatRepetidas. $erroresCategorias . $erroresCatVacias.
                     $erroresPrecio . $erroresCosto . $erroresPeso .
                     $erroresColumnasVacias . $erroresSku . $erroresSkuRepetidos. $erroresSkuTodaAplicacion. $erroresTallaColorRepetidos. 
-					$erroresTipoCodigo. $erroresCodigo.$erroresCondicion. $erroresCantidadVender.$erroresAlmacen.$erroresSkuLocal.$errorArchivoVacio;
+					$erroresTipoCodigo. $erroresCodigo.$erroresCondicion. $erroresCantidadVender.$erroresAlmacen.$errorArchivoVacio;
             
             if($errores != ""){
                 
