@@ -2301,7 +2301,7 @@ class ProductoController extends Controller
 	    	$res =array();
 	    	if (isset($_GET['term'])) 
 			{
-				$qtxt ="SELECT nombre FROM tbl_producto WHERE nombre LIKE :nombre or upc LIKE :nombre or nparte LIKE :nombre   and estado=1";
+				$qtxt ="SELECT nombre FROM tbl_producto WHERE nombre LIKE :nombre or upc LIKE :nombre or nparte LIKE :nombre   /*and estado=1*/";
 				$command =Yii::app()->db->createCommand($qtxt);
 				$command->bindValue(":nombre", '%'.$_GET['term'].'%', PDO::PARAM_STR);
 				$res =$command->queryColumn();
@@ -2895,12 +2895,12 @@ class ProductoController extends Controller
 						}
 						if(isset($row['G']))
 						{
-							if($row['G'] != "Almacen" )
-								$falla = "Almacen";
+							if($row['G'] != "Sucursal" )
+								$falla = "Sucursal";
 						}
 						else
 						{
-							$falla = "Almacen";
+							$falla = "Sucursal";
 						}
 						if(isset($row['H']))
 							{
@@ -3108,7 +3108,7 @@ class ProductoController extends Controller
 							{
 								if(!Almacen::model()->findByAttributes(array('alias'=>$row['G'], 'empresas_id'=>$empresa_id)))
 								{
-									$erroresAlmacen.="<li> Almacen- <b>".$row['G']."</b>, en la línea <b>" . $linea."</b></li>";
+									$erroresAlmacen.="<li> Sucursal- <b>".$row['G']."</b>, en la línea <b>" . $linea."</b></li>";
 								}
 							}
 							
@@ -3185,7 +3185,7 @@ class ProductoController extends Controller
                                  </ul><br>";
             }
             if($erroresSkuRepetidos != ""){
-                $erroresSkuRepetidos = "Los siguientes SKU Y Almacenes estan repetidos:<br><ul>
+                $erroresSkuRepetidos = "El (los) siguiente(s) SKU(s)  se encuentra(n) repetido(s) en una misma Sucursal:<br><ul>
                                  {$erroresSkuRepetidos}
                                  </ul><br>";
             }
@@ -3221,7 +3221,7 @@ class ProductoController extends Controller
                                  </ul><br>";
             }
             if($erroresAlmacen != ""){
-                $erroresAlmacen = "Los Siguientes Almacenes no existen o estan mal escritos:<br><ul>
+                $erroresAlmacen = "Las Siguientes Sucursales no existen o estan mal escritos:<br><ul>
                                  {$erroresAlmacen}
                                  </ul><br>";
             }

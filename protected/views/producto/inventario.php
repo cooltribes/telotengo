@@ -188,9 +188,9 @@ $this->breadcrumbs=array(
 								'label'=>$model->isNewRecord ? 'Agregar' : 'Guardar',
 							)); ?>
                             </div> 
-                             <div class="form-group text_align_center">
+                             <!--<div class="form-group text_align_center">
                              <button class="btn btn-orange white margin_top_small" type="button" onclick="window.history.back()">Atras</button>
-                            </div> 
+                            </div> -->
 						<?php $this->endWidget(); ?>
 					</div> 
 

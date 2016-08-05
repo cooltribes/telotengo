@@ -19,10 +19,11 @@
 	    		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-bordered table-hover table-striped">
 			      
 			        <col width="10%">
-			         <col width="8%">
 			         <col width="12%">
-			          <col width="15%">
-			           <col width="55%">
+			         <col width="10%">
+			          <col width="12%">
+			           <col width="40%">
+			           <col width="16%">
 			           <thead>
 			        <tr>
 			            <th scope="col">Imágen</th>
@@ -30,7 +31,6 @@
 			            <th scope="col">UPC</th>
 			            <th scope="col">Numero de parte</th>
 			            <th scope="col">Nombre</th>
-			            <th scope="col">Referencia</th>
 			            <th scope="col">Acciones</th>
 			        </tr>
 			        </thead>

@@ -1830,7 +1830,7 @@ a:focus {
 }
 #categories {
   top: 90%;
-  left: -35%;
+  /*left: -35%;*/
   border-radius: 2px;
 }
 #categories li.separator {
