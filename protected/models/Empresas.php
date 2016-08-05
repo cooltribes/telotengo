@@ -386,5 +386,82 @@ const SECTOR_EDUCACION = 16;
       else
       	return "Guardar";
     }
+    public function buscarPorFiltros($filters) {
+
+            $criteria = new CDbCriteria;
+
+            for ($i = 0; $i < count($filters['fields']); $i++) {
+                
+                $column = $filters['fields'][$i];
+                $value = $filters['vals'][$i];
+                $comparator = $filters['ops'][$i];
+                
+                if($i == 0){
+                   $logicOp = 'AND'; 
+                }else{                
+                    $logicOp = $filters['rels'][$i-1];                
+                }                
+                
+                if($column == 'razon_social' || $column == 'rif' || $column == 'direccion' || $column == 'telefono') 
+                {
+                    $value = ($comparator == '=') ? "= '".$value."'" : "LIKE '%".$value."%'";
+                    $criteria->addCondition($column.' '.$value, $logicOp);
+                    continue;
+                }                                
+                //Para las finalizadas
+                if($column=="sector") // cuando crearon la bd, no los colocaron como int
+                {
+                	/*$criteria->compare($column, $comparator." '".$value."'",
+                        false, $logicOp);*/
+
+                	$criteria->addCondition($column.$comparator.$value, $logicOp);
+                	continue;
+                }
+
+                if($column == 'rol')
+                {
+                	/*$criteria->compare($column, $comparator." '".$value."'",
+                        false, $logicOp);*/
+
+                	$criteria->addCondition($column.$comparator."'".$value."'", $logicOp);
+                	continue;
+                }
+
+                 if($column == 'estado')
+                {
+                	$value = ($comparator == '=') ? "= '".$value."'" : "LIKE '%".$value."%'";
+                	$model=Provincia::model()->findAllBySql('select id from tbl_provincia where nombre '.$value);
+                	$vec=ARRAY();
+					foreach($model as $modelado):
+						$vec[]=$modelado->id;
+					endforeach;
+
+					if(empty($vec))
+						$criteria->addCondition('ciudad in (select id from tbl_ciudad where provincia_id in(0))', $logicOp);
+					else
+                    	$criteria->addCondition('ciudad in (select id from tbl_ciudad where provincia_id in('.implode(',', $vec).'))', $logicOp);
+                    continue;
+
+                }
+                if($column == 'ciudad')
+                {
+                	$value = ($comparator == '=') ? "= '".$value."'" : "LIKE '%".$value."%'";
+                	$criteria->addCondition('ciudad in (select id from tbl_ciudad where nombre '.$value.')', $logicOp);
+                   	continue;
+                }
+                #echo 't.'.$column, $comparator." ".$value;
+                $criteria->compare('t.'.$column, $comparator." ".$value,
+                        false, $logicOp);  
+            }
+                                   
+            
+            $criteria->select = 't.*';
+                        
+        
+
+            return new CActiveDataProvider($this, array(
+                'criteria' => $criteria,
+            ));
+       }
     
 }

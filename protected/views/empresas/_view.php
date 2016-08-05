@@ -4,6 +4,7 @@ $empresa_user = EmpresasHasUsers::model()->findByAttributes(array('empresas_id'=
 
 
 echo"<tr>";
+	echo '<td>'.$data->id.'</td>';
 	echo '<td>'.$data->razon_social.'</td>';
 	echo "<td>".$data->rif."</td>";
 	echo '<td>'.$data->direccion.'</td>'; 
