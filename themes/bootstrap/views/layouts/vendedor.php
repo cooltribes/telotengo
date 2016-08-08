@@ -43,7 +43,7 @@ $assetUrl=Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('applicatio
                                 </ul> -->
                                 </div> 
                             </div> 
-                            <div class="col-md-6 col-sm-7 col-xs-7 no_horizontal_padding">
+                            <div class="col-md-7 col-sm-7 col-xs-7 no_horizontal_padding">
                                <input class="form-control no_radius orange_border_middle" id="querySeller" placeholder:"Nombres o números de registro"/>
                               
                             </div>
@@ -52,18 +52,15 @@ $assetUrl=Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('applicatio
                                 $usuario=User::model()->findByPk(Yii::app()->user->id);
                                 echo CHtml::submitButton('Buscar', array('id'=>'btn-sellerLayout','class'=>'btn-orange btn btn-danger orange_border')); ?>
                             </div>
-                            <div class="col-md-1 title text" style="color: white;">
-                            Vender
-                            </div>
                         </div>
               </div>
               <div class="col-md-5 col-sm-12 col-xs-12 no_right_padding">
                   <div class="row-fluid">
-                      <div class="col-md-5 col-sm-5 col-xs-5 no_right_padding">
+                      <div class="col-md-6 col-sm-5 col-xs-5 no_right_padding">
                           <div class="dropdown drophover">
                                                       <a class="form-control text-left dropdown-toggle no_padding no_border" id="userButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                                         <div class="row-fluid">
-                                                            <div class="col-md-3 col-sm-3 col-xs-3 image">
+                                                            <div class="col-md-2 col-sm-3 col-xs-3 image">
                                                                 <div class="imgContainer">
                                                             
                                                                     <?php 
@@ -88,7 +85,7 @@ $assetUrl=Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('applicatio
                                                                 </div>
                                                                  
                                                             </div>
-                                                            <div class="col-md-9 col-sm-9 col-xs-9 no_right_padding title">
+                                                            <div class="col-md-10 col-sm-9 col-xs-9 no_right_padding title">
                                                                  <div class="text user"><?php echo Profile::model()->retornarNombreCompleto(Yii::app()->user->id);?></div>
                                                                  <span class="caret user"></span>
                                                             </div>
@@ -109,7 +106,7 @@ $assetUrl=Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('applicatio
                                                     </div>
                       </div>
                       
-              <div class="col-md-7 col-sm-7 col-xs-7 no_horizontal_padding">
+              <div class="col-md-6 col-sm-7 col-xs-7 no_horizontal_padding">
                   <div class="row-fluid">
                       
               <div class="col-md-6 col-sm-6 col-xs-6 no_right_padding">
