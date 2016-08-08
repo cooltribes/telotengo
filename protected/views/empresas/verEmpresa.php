@@ -89,7 +89,7 @@
 
 							<div>
 								<div class="col-md-3 col-md-offset-5 padding_right">
-									<a href="<?php echo Yii::app()->createUrl('empresas/admin')?>" id="admin" class="btn btn-primary" id="btn_search_event">Volver</a>
+									<a href="<?php echo Yii::app()->createUrl('empresas/admin')?>" id="admin" class="btn-orange btn btn-danger orange_border" id="btn_search_event">Volver</a>
 								</div>
 
 						<?php $this->endWidget(); ?>

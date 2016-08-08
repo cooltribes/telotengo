@@ -186,10 +186,10 @@
 
 							<div>
 								<div class="col-md-3 col-md-offset-0 padding_right">
-									<a href="#" id="anterior" class="btn btn-primary" id="btn_search_event">anterior</a>
+									<a href="#" id="anterior" class="btn-orange btn btn-danger orange_border" id="btn_search_event">anterior</a>
 								</div>
 								<div class="col-md-3 col-md-offset-5 padding_right">
-									<a href="#" id="aprobar" class="btn btn-primary" id="btn_search_event">Aprobar</a>
+									<a href="#" id="aprobar" class="btn-orange btn btn-danger orange_border" id="btn_search_event">Aprobar</a>
 								</div>
 							</div>
 

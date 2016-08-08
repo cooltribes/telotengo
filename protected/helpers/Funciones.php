@@ -195,6 +195,26 @@ class Funciones {
 
         #return Yii::app()->createUrl('tienda/index?categoria='.$model->seo->amigable);
     }
+
+    public static function retornarNombreEntorno($nombre, $entorno)
+    {
+        $var=explode(" ", $nombre);
+        if(array_key_exists(1, $var))
+        {
+            if($entorno==1) //comprador
+                echo $var[0]." (Comprando)";
+            else
+                echo $var[0]." (Vendedor)";
+        }
+        else
+        {
+            if($entorno==1) //comprador
+                echo $nombre." (Comprando)";
+            else
+                echo $nombre." (Vendedor)";
+        }
+
+    }
     
  
     

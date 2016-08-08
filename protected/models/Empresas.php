@@ -401,7 +401,7 @@ const SECTOR_EDUCACION = 16;
                 }else{                
                     $logicOp = $filters['rels'][$i-1];                
                 }                
-                
+                $criteria->addCondition(" id in (select empresas_id from tbl_bolsa)");
                 if($column == 'razon_social' || $column == 'rif' || $column == 'direccion' || $column == 'telefono') 
                 {
                     $value = ($comparator == '=') ? "= '".$value."'" : "LIKE '%".$value."%'";
