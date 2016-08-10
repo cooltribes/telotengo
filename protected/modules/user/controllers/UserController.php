@@ -30,7 +30,7 @@ class UserController extends Controller
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
 				'actions'=>array('tucuenta','favoritos','quitarfav','usuariostienda','createuser','deleteuser','editrol','avatar',
-								'agregarsocial','deletesocial','privacidad','notificaciones','enviarbolsa', 'activarDesactivar'),
+								'agregarsocial','deletesocial','privacidad','notificaciones','enviarbolsa', 'activarDesactivar', 'solicitarDocumentos'),
 				'users'=>array('@'),
 			),
 			array('deny',  // deny all users
@@ -864,5 +864,22 @@ class UserController extends Controller
         }*/
         echo json_decode(array('status'=>'error'));
     }
+
+    public function actionSolicitarDocumentos()
+    {
+    	$id=$_POST['id'];
+    	$user = User::model()->findByPk($id);
+    	$empresas=Empresas::model()->findByPk((EmpresasHasUsers::model()->findByAttributes(array('users_id'=>$user->id))->empresas_id));
+		$message = new YiiMailMessage;
+		$message->activarPlantillaMandrill();					
+		$body=Yii::app()->controller->renderPartial('//mail/adjuntarDocumentos', array( 'user'=>$user, 'empresas'=>$empresas ),true);				
+		$message->subject= "Has olvidado adjuntar los documentos de tu empresa";
+		$message->setBody($body,'text/html');
+						
+		$message->addTo($user->email);
+		Yii::app()->mail->send($message);
+		#Yii::app()->user->setFlash('success',"Correo electronico enviado satisfactoriamente");
+    }
+
 
 }

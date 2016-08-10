@@ -25,6 +25,10 @@ $this->breadcrumbs=array(
 	
 	<hr class="no_margin_top"/>
 
+		<div class="alert in alert-block fade alert-success text_align_center hide" id="emailSent">
+		        Correo enviado satisfactoriamente
+		    </div>
+
 		<?php if(Yii::app()->user->hasFlash('success')){?>
 		    <div class="alert in alert-block fade alert-success text_align_center">
 		        <?php echo Yii::app()->user->getFlash('success'); ?>
