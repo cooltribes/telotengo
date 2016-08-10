@@ -114,10 +114,16 @@ $('#User_type').on('change', function() {
 
 
 </script>
-
-
 <?php 
+if(Yii::app()->user->isAdmin()): ?> 
+			<script>
+			$(document).ready(function() {
+			$("#guardar").removeClass('disabled');
 
+			});
+			</script>
+<?php 
+endif;
 if(!Yii::app()->user->isAdmin()) /// si no es usuario haga las validaciones, porque no estan funcionando con este layout
 	{?>
 		

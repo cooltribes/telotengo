@@ -27,7 +27,7 @@ class EmpresasController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users
-				'actions'=>array('index','view','create','solicitudFinalizada', 'selectdos'),
+				'actions'=>array('index','view','create','solicitudFinalizada', 'selectdos', 'uploadFiles'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -184,24 +184,30 @@ class EmpresasController extends Controller
 				$message->addTo($email);
 				Yii::app()->mail->send($message);
 				
+				
+				
+
 				if(Yii::app()->session['tipo']=="") // en caso de ser una peticion normal
 				{
 					$user->pendiente=1;
 					$user->save();	
-					$this->redirect(array('solicitudFinalizada'));
+					//$this->redirect(array('solicitudFinalizada'));
 				}
 				if(Yii::app()->session['username']!="admin" && Yii::app()->session['username']!="" && Yii::app()->session['cliente']!="") // para el caso de que la invitacion sea para crear una empresa, hecha por otra empresa
 				{
 					$user->pendiente=1;
 					$user->save();	
-					$this->redirect(array('solicitudFinalizada'));
+					//$this->redirect(array('solicitudFinalizada'));
 				}
 				
 				if(isset(Yii::app()->session['cliente'])) ///LLEVAR HACER LA CONTRASENA CUANDO SE ESTE invitando desde el admin como empresa
 				{
-					$this->redirect(Yii::app()->session['url_act']);
+					//$this->redirect(Yii::app()->session['url_act']);
 				}
-				$this->redirect(array('solicitudFinalizada'));
+				$this->redirect(array('uploadFiles'));
+				#$this->redirect(array('solicitudFinalizada'));
+
+
 			}
 		}
 		
@@ -895,5 +901,67 @@ class EmpresasController extends Controller
 			'provincia_id'=>$provincia_id,
 			));
 
+        }
+
+        public function actionUploadFiles()
+        {
+        	if(isset($_GET['id'])) // si viene algo por get
+        	{
+        		$model=Empresas::model()->findByPk($_GET['id']);
+        	}
+        	else
+        	{
+        		$user = User::model()->findByAttributes(array('email'=>Yii::app()->session["usuarionuevo"]));
+        		$model=Empresas::model()->findByPk((EmpresasHasUsers::model()->findByAttributes(array('users_id'=>$user->id))->empresas_id));
+        	}
+    	    if(isset($_POST['Empresas']))
+    		{
+    			$dir = Yii::getPathOfAlias('webroot').'/docs/documentosEmpresas/'.$model->id;
+    			if(!is_dir($dir))
+				{
+				    mkdir($dir,0777,true);
+				}
+				
+				$var=explode(".", basename($_FILES['fichero_rif']['name']));
+				$fichero_rif = $dir."/rif.".$var[1]; 
+				$var=explode(".", basename($_FILES['fichero_registro_mercantil']['name']));
+				$fichero_registro_mercantil = $dir."/registro_mercantil.".$var[1];
+
+				if (move_uploaded_file($_FILES['fichero_rif']['tmp_name'], $fichero_rif) &&
+					move_uploaded_file($_FILES['fichero_registro_mercantil']['tmp_name'], $fichero_registro_mercantil) ) 
+				{
+					$documentos= new Documentos;
+					$documentos->empresas_id=$model->id;
+
+					$documentos->rif_ruta=$fichero_rif;
+					$documentos->mercantil_ruta=$fichero_registro_mercantil;
+					$documentos->save();
+					if(isset($_GET['id'])) // si viene algo por get
+					{
+						$this->redirect(array('solicitudFinalizada')); /// NUEVA VISTA OJO
+					}
+
+					if(Yii::app()->session['tipo']=="") // en caso de ser una peticion normal
+					{
+						$user->pendiente=1;
+						$user->save();	
+						$this->redirect(array('solicitudFinalizada'));
+					}
+					if(Yii::app()->session['username']!="admin" && Yii::app()->session['username']!="" && Yii::app()->session['cliente']!="") // para el caso de que la invitacion sea para crear una empresa, hecha por otra empresa
+					{
+						$user->pendiente=1;
+						$user->save();	
+						$this->redirect(array('solicitudFinalizada'));
+					}
+					
+					if(isset(Yii::app()->session['cliente'])) ///LLEVAR HACER LA CONTRASENA CUANDO SE ESTE invitando desde el admin como empresa
+					{
+						$this->redirect(Yii::app()->session['url_act']);
+					}
+				
+				}
+    		}
+    		$this->render('uploadFiles',array('model'=>$model));
+        	
         }
 }
