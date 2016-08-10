@@ -98,7 +98,7 @@ const SECTOR_EDUCACION = 16;
 	
 	public $tipoEmpresa, $provincia, $ciudad, $ciudad2;
 	
-	public $otraOpcion;
+	public $otraOpcion, $oculta;
 	
 	/**
 	 * Returns the static model of the specified AR class.
@@ -134,6 +134,7 @@ const SECTOR_EDUCACION = 16;
 			array('razon_social', 'length', 'max'=>205),
 			array('ciudad', 'length', 'max'=>150),
 			array('rif', 'length', 'max'=>45),
+			array('rif_url, mercantil_url', 'required','on'=>'documentos'),
 			/*array('rif', 'match',
 				'pattern' => '/^[JGVE][-][0-9]{7,10}$/', // ^[JGVE]{1}[-][0-9]{7,10}$ Vieja: ^[JGVE]{1}[-][0-9]\d{8}$
             	'message' => 'Formato no valido para el rif.',

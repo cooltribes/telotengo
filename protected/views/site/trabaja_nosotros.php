@@ -15,8 +15,7 @@ if(!isset($copy))
 { 
 ?>
 <p style="text-align: justify;line-height: 23px;">
-Telotengo ha sido creada por emprendedores venezolanos para crear una solución a las comunicaciones corporativas de las empresas en las acciones de compra venta de mercancía.
-Si deseas unirte al equipo de Telotengo llena el siguiente formulario </p>
+Telotengo ha sido creado por emprendedores venezolanos como una solución a las comunicaciones corporativas de las empresas en las acciones de compra y venta de mercancía. Si deseas unirte nuestro equipo, llena el siguiente formulario.</p>
 
 <p class="note alert">Todos los Campos son Requeridos.</p>
 

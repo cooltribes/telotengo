@@ -86,7 +86,7 @@
                         'htmlOptions'=>array('class'=>'btn-block btn-orange', 'id'=>'btn-login-b2b'),
                     )); ?>
                     <div style="height:25px; ">
-                         <?php echo CHtml::link("Recuperar contraseña",Yii::app()->getModule('user')->recoveryUrl,array("class"=>"white-link")); ?>
+                         <?php echo CHtml::link("Recuperar contraseña",Yii::app()->getModule('user')->recoveryUrl,array("class"=>"white-link", 'id'=>'recuperarPassword')); ?>
                     </div>
                 </div>
                

@@ -1,3 +1,9 @@
+<style>
+    #UserLogin_username,#UserLogin_password,#btn-login-b2b,#recuperarPassword
+    {
+        display:none;
+    }
+</style>
 <div class="row-fluid">
     <h5 class="col-md-8 col-md-offset-2 text-center">
             <?php /*if(isset(Yii::app()->session['quieninvita'])) 

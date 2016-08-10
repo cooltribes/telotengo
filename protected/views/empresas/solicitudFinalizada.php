@@ -1,3 +1,9 @@
+<style>
+	#UserLogin_username,#UserLogin_password,#btn-login-b2b,#recuperarPassword
+    {
+        display:none;
+    }
+</style>
 <div class="container">
 	<div class="row-fluid">
 		<h1>Telotengo.com <small>Solicitud</small></h1>

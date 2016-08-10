@@ -67,6 +67,7 @@
       </td>
       
 	<?php
+	$documentos="";
 
 
 	echo '<td>
@@ -76,11 +77,27 @@
 	</a> 
 
 		<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-			';
+			';?>
+			<li><a href="<?php echo Yii::app()->createUrl("user/admin/detalle", array("id"=>$data->id))?>" class="pointer" id=<?php echo $data->id;?>  tabindex="-1" ><i class="glyphicon glyphicon-eye-open"></i> Ver detalle </a></li>
+			<?php
+			if(Documentos::model()->findByAttributes(array('empresas_id'=>$modelado->empresas->id)))
+			{
+				$documentos=Documentos::model()->findByAttributes(array('empresas_id'=>$modelado->empresas->id));
+				$enlace=str_replace ( "/home/telotengo/public_html", "http://telotengo.com" , $documentos->rif_ruta );
+				$enlace2=str_replace ( "/home/telotengo/public_html", "http://telotengo.com" , $documentos->mercantil_ruta );
+				?>
+				<li><a href="<?php echo $enlace;?>" class="pointer" download> <i class="glyphicon glyphicon-download"></i> Descargar RIF</a></li>
+				<li><a href="<?php echo $enlace2; ?>" class="pointer" download> <i class="glyphicon glyphicon-download-alt"></i> Descargar Registro mercantil</a></li>
+			<?php
+			}
+			else
+			{?>
+				<li><a class="pointer" id=<?php echo $data->id;?>  tabindex="-1" onclick="solicitarDocumentos(<?php echo $data->id;?>)"><i class="glyphicon glyphicon-file"></i> Solicitar documentos </a></li>
+			<?php
+			}
 			?>
 				<!--<li><a class="pointer" id=<?php echo $data->id;?> tabindex="-1" onclick="desactivarActivar(<?php echo $data->id;?>)"><i class="glyphicon glyphicon-remove"></i> Desaprobar </a></li> --><?php 
 			?><li><a class="pointer" id=<?php echo $data->id;?>  tabindex="-1" onclick="desactivarActivar(<?php echo $data->id;?>)"><i class="glyphicon glyphicon-ok"></i> Aprobar </a></li>
-			<li><a href="<?php echo Yii::app()->createUrl("user/admin/detalle", array("id"=>$data->id))?>" class="pointer" id=<?php echo $data->id;?>  tabindex="-1" ><i class="glyphicon glyphicon-eye-open"></i> Ver detalle </a></li>
 			<?php 
 			echo '
 		</ul>
@@ -122,6 +139,19 @@ echo"</tr>";
 	       	}
 	       })
 		
+	}
+	function solicitarDocumentos(id)
+	{
+			$.ajax({
+	         url: "<?php echo Yii::app()->createUrl('user/user/solicitarDocumentos') ?>",
+             type: 'POST',
+	         data:{
+                    id:id,
+                   },
+	        success: function (data) {
+	        	$('#emailSent').removeClass('hide');
+	       	}
+	       })
 	}
 
 </script>
