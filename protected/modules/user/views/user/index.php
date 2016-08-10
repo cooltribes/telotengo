@@ -1,4 +1,6 @@
-<?php
+<?php  
+$this->redirect(Yii::app()->createUrl('user/registration'));
+/* 
 $this->breadcrumbs=array(
 	UserModule::t("Users"),
 );
@@ -24,4 +26,4 @@ if(UserModule::isAdmin()) {
 		'create_at',
 		'lastvisit_at',
 	),
-)); ?>
+)); */ ?>
