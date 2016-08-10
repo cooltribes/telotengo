@@ -175,17 +175,17 @@ class EmpresasController extends Controller
 				$almacen->nombre=$model->razon_social.' - principal';
 				$almacen->save();
 
-				$message = new YiiMailMessage;
-				$message->activarPlantillaMandrill();					
-				$body=Yii::app()->controller->renderPartial('//mail/solicitudRecibida', array( '$user'=>$user ),true);				
-				$message->subject= "Solicitud recibida";
-				$message->setBody($body,'text/html');
-								
-				$message->addTo($email);
-				Yii::app()->mail->send($message);
-				
-				
-				
+				if($user->quien_invita!=1)
+				{
+					$message = new YiiMailMessage;
+					$message->activarPlantillaMandrill();					
+					$body=Yii::app()->controller->renderPartial('//mail/solicitudRecibida', array( '$user'=>$user ),true);				
+					$message->subject= "Solicitud recibida";
+					$message->setBody($body,'text/html');
+									
+					$message->addTo($email);
+					Yii::app()->mail->send($message);
+				}
 
 				if(Yii::app()->session['tipo']=="") // en caso de ser una peticion normal
 				{
@@ -911,7 +911,13 @@ class EmpresasController extends Controller
         	}
         	else
         	{
-        		$user = User::model()->findByAttributes(array('email'=>Yii::app()->session["usuarionuevo"]));
+        		if(isset(Yii::app()->session["usuarionuevo"])){
+					$user = User::model()->findByAttributes(array('email'=>Yii::app()->session["usuarionuevo"]));
+				}
+				elseif(isset(Yii::app()->session['cliente'])){
+					$user = User::model()->findByPk(Yii::app()->session['cliente']);
+				}
+        		
         		$model=Empresas::model()->findByPk((EmpresasHasUsers::model()->findByAttributes(array('users_id'=>$user->id))->empresas_id));
         	}
     	    if(isset($_POST['Empresas']))

@@ -5,6 +5,10 @@
     .button-form{
         width:100%; 
     }
+    #UserLogin_username,#UserLogin_password,#btn-login-b2b,#recuperarPassword
+    {
+        display:none;
+    }
 </style>
 <div class="row-fluid">
 
@@ -12,7 +16,17 @@
       <h3 class="justified">  <?php
          if($get!="")
             {
-                echo "El usuario ".$_GET['u']." te ha invitado a formar parte de Telotengo, una tienda online creada únicamente para Empresas.";
+                if($_GET['u']=="admin")
+                {
+                    echo "El administrador de Telotengo te ha invitado a participar en esta plataforma creada exclusivamente para Empresas.";
+                }
+                else
+                {
+                    $user = User::model()->findByAttributes(array('username'=>$_GET['u']));
+                    $empresas=Empresas::model()->findByPk((EmpresasHasUsers::model()->findByAttributes(array('users_id'=>$user->id))->empresas_id));
+                    echo "La empresa ".$empresas->razon_social." te ha invitado a formar parte de Telotengo, una tienda online creada exclusivamente para Empresas.";   
+                }
+ 
             }
             else
             {

@@ -12,6 +12,10 @@
     a.blueLink {
     color: white;
 }
+    #UserLogin_username,#UserLogin_password,#btn-login-b2b,#recuperarPassword
+    {
+        display:none;
+    }
 </style>
 <div class="row-fluid">
     <h5 class="col-md-8 col-md-offset-2 text-center">
@@ -66,11 +70,11 @@
         <?php $this->widget('bootstrap.widgets.TbButton', array(
             'buttonType'=>'submit',
             'type'=>'primary',
-            'label'=>'Enviar solicitud',
+            'label'=>'Enviar documentos',
             'htmlOptions'=>array('class'=>'btn-black btn btn-danger btn-large botone button-form btn btn-primary','id'=>'guardar')
         )); ?>
         <div class="col-md-5 col-md-offset-4"> 
-             <a class="blueLink" href="solicitudFinalizada">Enviar solicitud sin documentos</a> 
+             <a class="blueLink" href="solicitudFinalizada">Enviar luego los documentos</a> 
         </div>            
     </div>
 
