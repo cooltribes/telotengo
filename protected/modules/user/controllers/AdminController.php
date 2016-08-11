@@ -386,6 +386,7 @@ class AdminController extends Controller
 	{
 		$model = new User;
 		$profile = new Profile;
+		$accion="";
 
 		$this->performAjaxValidation(array($model));
 		
@@ -431,6 +432,7 @@ class AdminController extends Controller
 						$nuevo->rol = $cargo;
 						$nuevo->save();
 						$model->emailEmpresaInvitado($empresa_id, $cargo, $model->id, Yii::app()->user->id);
+						$accion=19;
 					}
 					
 					if($model->type == 3) // invitar como cliente
@@ -441,22 +443,27 @@ class AdminController extends Controller
 							$model->save();
 						}*/	
 						$model->emailClienteInvitado($model->id, Yii::app()->user->id);
+						$accion=20;
 					}
 
 					Yii::app()->user->setFlash('success',"Usuario invitado correctamente");
 
-					/*$log=new Log;
+					$log=new Log;
+					$log->id_email_invitacion=$model->id;
+					$log->fecha=date('Y-m-d G:i:s');
 					if(Yii::app()->user->isAdmin())
 					{
 						$log->id_admin=Yii::app()->user->id;
+						/*if($accion==19)
+							$log->id_empresa=$empresa_id // para el caso de que sea miembro de una empresa*/
+						$log->accion=$accion; 
 					}
 					else
 					{
 						$log->id_user=Yii::app()->user->id;
-						$log->id_email_invitacion=Yii::app()->user->id;
 						$log->accion=7; // para usuarios normales
 					}
-					$log->save();*/
+					$log->save();
 					#$model->email
 				}
 				if(Yii::app()->user->isAdmin())

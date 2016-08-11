@@ -839,6 +839,13 @@ class UserController extends Controller
 		$bolsa= new Bolsa;
 		$bolsa->empresas_id=$empresas_id;
 		$bolsa->save();
+
+		$log=new Log;
+		$log->id_admin=Yii::app()->user->id;
+		$log->fecha=date('Y-m-d G:i:s');
+		$log->id_empresa=$empresas_id;
+		$log->accion=17;
+		$log->save();
         echo $model->status;
 		
         

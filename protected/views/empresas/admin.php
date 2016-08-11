@@ -26,6 +26,9 @@ $this->breadcrumbs=array(
 
 	<h1>Administrar Empresas</h1>
 	<hr/>
+			<div class="alert in alert-block fade alert-success text_align_center hide" id="emailSent">
+		        Correo enviado satisfactoriamente
+		    </div>
 		<?php if(Yii::app()->user->hasFlash('success')){?>
 		    <div class="alert in alert-block fade alert-success text_align_center">
 		        <?php echo Yii::app()->user->getFlash('success'); ?>
