@@ -590,8 +590,8 @@ class UserController extends Controller
 		));
 
 		$this->render('index',array(
-			'dataProvider'=>$dataProvider,*/
-		));
+			'dataProvider'=>$dataProvider,
+		));*/
 	}
 
 	/**
