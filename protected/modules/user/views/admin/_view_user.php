@@ -35,7 +35,7 @@ echo "<tr>";
         $modelado=EmpresasHasUsers::model()->findByAttributes(array('users_id'=>$data->id));
         if($modelado):
          echo "<td>".$modelado->empresas->razon_social."</td>";
-         echo "<td>".$modelado->empresas->rol."</td>";
+         echo "<td>".$modelado->rol."</td>";
         else:
           echo "<td>N/D</td><td>N/D</td>";  
         endif;
