@@ -442,7 +442,22 @@ class AdminController extends Controller
 						}*/	
 						$model->emailClienteInvitado($model->id, Yii::app()->user->id);
 					}
+
 					Yii::app()->user->setFlash('success',"Usuario invitado correctamente");
+
+					/*$log=new Log;
+					if(Yii::app()->user->isAdmin())
+					{
+						$log->id_admin=Yii::app()->user->id;
+					}
+					else
+					{
+						$log->id_user=Yii::app()->user->id;
+						$log->id_email_invitacion=Yii::app()->user->id;
+						$log->accion=7; // para usuarios normales
+					}
+					$log->save();*/
+					#$model->email
 				}
 				if(Yii::app()->user->isAdmin())
 					$this->redirect(Yii::app()->createUrl('user/admin/adminInvite'));

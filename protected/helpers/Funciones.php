@@ -204,14 +204,14 @@ class Funciones {
             if($entorno==1) //comprador
                 echo $var[0]." (Comprando)";
             else
-                echo $var[0]." (Vendedor)";
+                echo $var[0]." (Vendiendo)";
         }
         else
         {
             if($entorno==1) //comprador
                 echo $nombre." (Comprando)";
             else
-                echo $nombre." (Vendedor)";
+                echo $nombre." (Vendiendo)";
         }
 
     }
