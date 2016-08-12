@@ -507,10 +507,11 @@ class EmpresasController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Empresas');
+		/*$dataProvider=new CActiveDataProvider('Empresas');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
-		));
+		));*/
+		$this->redirect('admin');
 	}
 	
 	/**

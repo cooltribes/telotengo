@@ -194,10 +194,11 @@ class UnidadController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Unidad');
+		/*$dataProvider=new CActiveDataProvider('Unidad');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
-		));
+		));*/
+		$this->redirect('admin');
 	}
 
 	/**
