@@ -56,6 +56,9 @@ if($cambios):
 <div class="col-md-12 no_horizontal_padding cart">
     <div class="row-fluid">
         <div class="col-md-9">
+        <div id="emptyShoppingCart" class="orderContainer margin_top_small margin_bottom hide">
+              <?php $this->renderPartial('emptyShoppingCart'); ?>
+        </div>
             <?php $this->renderPartial('orders',array('orders'=>NULL,'model'=>$model, 'bolsaInventario'=>$bolsaInventario)); ?>
         </div>        
         <div class="col-md-3">

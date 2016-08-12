@@ -122,10 +122,11 @@ class InboundController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Inbound');
+		/*$dataProvider=new CActiveDataProvider('Inbound');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
-		));
+		));*/
+		$this->redirect('admin');
 	}
 
 	/**

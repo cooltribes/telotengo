@@ -1678,10 +1678,11 @@ class ProductoController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Producto');
+		/*$dataProvider=new CActiveDataProvider('Producto');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
-		));
+		));*/
+		$this->redirect('admin');
 	}
 
 	/**

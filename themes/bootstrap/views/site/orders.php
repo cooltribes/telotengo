@@ -210,6 +210,16 @@ Yii::app()->session['suma']=$total;
 			                 $('#ivaOrden').html('Iva: '+data.iva);
 			                 $('.todaOrden').html('Total: '+data.total);
 
+			                 var tota = data.total.split(" ");
+			                 //alert(tota[0]);
+			                 if(tota[1]=="0")
+			                 {
+			                 	$('#textoVacio').html(data.texto);
+			                 	$('#emptyShoppingCart').removeClass('hide');
+			                 	$('#procesarTodo').addClass('disabled');
+			                 }
+
+
 			            }
 			            
 			        	
