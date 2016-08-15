@@ -148,19 +148,6 @@ $('#User_type').on('change', function() {
   }
 
 });
-
-
-
-
-</script>
-
-
-<?php 
-
-if(!Yii::app()->user->isAdmin()) /// si no es usuario haga las validaciones, porque no estan funcionando con este layout
-	{?>
-		
-	<script>
 	
 		$(document).ready(function() {
 			$("#guardar").removeClass('disabled');
@@ -201,7 +188,7 @@ if(!Yii::app()->user->isAdmin()) /// si no es usuario haga las validaciones, por
 								 }
 								 
 								 $('#guardar').attr('disabled',true);
-			        			 $('#esconder').show();
+			        			 //$('#esconder').show();
 							}
 				       	}
 				       })
@@ -214,7 +201,7 @@ if(!Yii::app()->user->isAdmin()) /// si no es usuario haga las validaciones, por
 				{
 					$('#esconder').empty();
 					$('#esconder').append("Correo electronico vacio");
-					 $('#esconder').show();	
+					// $('#esconder').show();	
 					 $('#guardar').attr('disabled',true);
 					 return false;
 				}
@@ -252,7 +239,7 @@ if(!Yii::app()->user->isAdmin()) /// si no es usuario haga las validaciones, por
 								 }
 								 
 								 $('#guardar').attr('disabled',true);
-			        			 $('#esconder').show();
+			        			 //$('#esconder').show();
 							}
 				       	}
 				       })
@@ -265,8 +252,4 @@ if(!Yii::app()->user->isAdmin()) /// si no es usuario haga las validaciones, por
 		});
 		
 	</script>
-<?php		
-	}
 
-
-?>
