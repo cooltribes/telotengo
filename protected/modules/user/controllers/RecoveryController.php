@@ -44,7 +44,7 @@ class RecoveryController extends Controller
 								$model->username=$find->username;
 								$model->password=$form2->password;
 								if($model->validate()) 
-									$this->redirect('site/inhome2');
+									header('Location: '.Yii::app()->getBaseUrl(true));
 							}
 						} 
 						$this->render('changepassword',array('form'=>$form2));
