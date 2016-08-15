@@ -16,7 +16,8 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
                             
                             
                             
-                    <div class="col-md-6 col-sm-6 col-xs-6 no_horizontal_padding" id="searchSet">
+                    <!--<div class="col-md-6 col-sm-6 col-xs-6 no_horizontal_padding" id="searchSet">-->
+                    <div class="col-md-6 col-sm-6 col-xs-6" id="searchSet">
                         <div class="row-fluid searchBar">
                             <div class="col-md-3 col-sm-3 col-xs-3 no_horizontal_padding">
                                 <div class="dropdown">
@@ -39,7 +40,7 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
                                 </ul> -->
                                 </div> 
                             </div> 
-                            <div class="col-md-6 col-sm-7 col-xs-7 no_horizontal_padding">
+                            <div class="col-md-7 col-sm-7 col-xs-7 no_horizontal_padding">
                                <!-- <input class="form-control no_radius orange_border_middle" placeholder:"incluye palabras clave..."/> -->
                                <?php
                                     $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
@@ -66,9 +67,9 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
                                 $usuario=User::model()->findByPk(Yii::app()->user->id);
                                 echo CHtml::submitButton('Buscar', array('id'=>'botonBusqueda','class'=>'btn-orange btn btn-danger orange_border')); ?>
                             </div>
-                            <div class="col-md-1 col-sm-2 col-xs-2 no_horizontal_padding highlighted" style="padding-top: 7px;">
+                            <!--<div class="col-md-1 col-sm-2 col-xs-2 no_horizontal_padding highlighted" style="padding-top: 7px;">
                             Comprar
-                            </div>
+                            </div>-->
                         </div>
                     </div> 
                             
@@ -86,7 +87,7 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
                                             <div class="dropdown drophover">
                                               <a class="form-control text-left dropdown-toggle no_padding no_border" id="userButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                                 <div class="row-fluid">
-                                                    <div class="col-md-3 col-sm-3 col-xs-3 no_horizontal_padding image">
+                                                    <div class="col-md-2 col-sm-3 col-xs-3 no_horizontal_padding image">
                                                         <div class="imgContainer">
                                                     
                                                             <?php 
@@ -110,7 +111,7 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
                                                         </div>
                                                          
                                                     </div>
-                                                    <div class="col-md-9 col-sm-9 col-xs-9 no_horizontal_padding title">
+                                                    <div class="col-md-10 col-sm-9 col-xs-9 no_horizontal_padding title">
                                                          <div class="text user"><?php echo Profile::model()->retornarNombreCompleto(Yii::app()->user->id);?></div>
                                                          <span class="caret user"></span>
                                                     </div>
@@ -151,7 +152,7 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
                                                          </span>
                                                     </div>
                                                     <div class="col-md-9 col-sm-9 col-xs-9 no_horizontal_padding title">
-                                                         <span class="text">Ordenes</span>
+                                                         <span class="text">Pedidos</span>
                                                    
                                                         <span class="caret no_margin_left"></span>
                                                     </div>
@@ -166,7 +167,7 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
                                                         break;
                                                   endforeach; ?> 
                                                 <li class="separator"></li>
-                                                <li><a href="<?php echo Yii::app()->createUrl('orden/misCompras');?>">Ver todas las ordenes</a></li>
+                                                <li><a href="<?php echo Yii::app()->createUrl('orden/misCompras');?>">Ver todos los pedidos</a></li>
                                               </ul>
                                             </div>
                                         </div>

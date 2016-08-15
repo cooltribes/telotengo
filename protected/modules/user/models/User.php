@@ -958,6 +958,12 @@ class User extends CActiveRecord
 
                 continue;
             }
+             if ($column == 'empresa')
+            {
+                $value = ($comparator == '=') ? "= '".$value."'" : "LIKE '%".$value."%'";
+                $criteria->addCondition('id in(select users_id from tbl_empresas_has_tbl_users where empresas_id in (select id from tbl_empresas where razon_social '.$value.'))');
+                continue;
+            }
 
            /* if($column == 'first_name' || $column == 'last_name')
             {

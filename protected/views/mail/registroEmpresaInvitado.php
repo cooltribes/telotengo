@@ -11,16 +11,17 @@
                          <?php
                          if(Yii::app()->user->isAdmin())
 						 {?>
-						 	
-							Has sido invitado a formar parte de Telotengo a través de <?php echo Empresas::model()->findByPk($empresa_id)->razon_social; ?>. Telotengo es una tienda online creada únicamente para empresas.
+						 	<p>
+							Has sido invitado a participar en Telotengo, formando parte de  <?php echo Empresas::model()->findByPk($empresa_id)->razon_social; ?>. Telotengo es una tienda online creada exclusivamente para Empresas.</p>
 							Haz clic <b><a href="<?php echo $activation_url; ?>">aquí</a></b> si deseas registrarte y disfrutar de nuestros servicios.
 							
 						<?php
 						 }
 						 else 
-						 {
-							    echo Yii::app()->session['quienInvita'];?> te ha invitado a formar parte de Telotengo, a través de la empresa <?php echo Empresas::model()->findByPk($empresa_id)->razon_social; ?>.
-								Telotengo es una tienda online creada únicamente para empresas.
+						 {		
+							    $user=User::model()->findByAttributes(array('email'=>Yii::app()->session['quienInvita']));
+							    echo Profile::model()->retornarNombreCompleto($user->id);?> te ha invitado a participar en Telotengo formando parte de <?php echo Empresas::model()->findByPk($empresa_id)->razon_social; ?>.
+								 Telotengo es una tienda online creada exclusivamente para Empresas.
 								<br><br>
 								Haz clic <b><a href="<?php echo $activation_url; ?>">aquí</a></b> si deseas registrarte y disfrutar de nuestros servicios.
 								<?php

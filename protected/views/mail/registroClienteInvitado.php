@@ -21,9 +21,12 @@
 						 }
 						else
 						{
-							echo Yii::app()->session['quienInvita'];?> te ha invitado a formar parte de Telotengo, una tienda online creada únicamente para empresas. Donde podrás participar como vendedor, comprador o de ambas formas.
+							echo "<p>";
+							$user=User::model()->findByAttributes(array('email'=>Yii::app()->session['quienInvita']));  
+							 echo Profile::model()->retornarNombreCompleto($user->id);?> te ha invitado a formar parte de Telotengo, una tienda online creada únicamente para Empresas. Donde podrás participar como vendedor, comprador o de ambas formas. </p>
 
 Como vendedor tendrás las opciones de: controlar tu inventario, mostrar tus productos y venderlos, verificar todas tus órdenes de compra, además de atender los requerimientos de tus clientes. Y como comprador podrás: buscar los productos que necesites, comparar los precios por proveedor, tener tus productos en un carrito y generar las órdenes de compras que requieras.
+
 
 <br><br>
 Haz clic <b><a href="<?php echo $activation_url; ?>">aquí</a></b> si deseas registrarte.

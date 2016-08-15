@@ -202,6 +202,7 @@
                                 'ordenMontoGeneradaCancelada'=>'Monto de ordenes generadas por usuario (canceladas)',
                                 'Ingresos'=>'ingresos',
                                 'cantItemComprado'=>'Cantidad de Items comprados por orden',
+                                'empresa'=>'Empresa',
                                  );
                                  asort($opcionesFiltros);
                                  

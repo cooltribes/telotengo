@@ -71,7 +71,7 @@ $this->breadcrumbs=array(
 									);*/
 								$modelado=Almacen::model()->findAllByAttributes(array('empresas_id'=>$empresas_id));
 								?>
-								<label for="Inventario_almacen_id" class="required">Almacen <span class="required">*</span></label>
+								<label for="Inventario_almacen_id" class="required">Sucursal <span class="required">*</span></label>
 								<select id="Inventario_almacen_id" class="form-control" name="Inventario[almacen_id]">
 								 <option value="">Seleccione un almacen</option>
 								 <?php foreach($modelado as $mode): ?>
@@ -188,9 +188,9 @@ $this->breadcrumbs=array(
 								'label'=>$model->isNewRecord ? 'Agregar' : 'Guardar',
 							)); ?>
                             </div> 
-                             <div class="form-group text_align_center">
+                             <!--<div class="form-group text_align_center">
                              <button class="btn btn-orange white margin_top_small" type="button" onclick="window.history.back()">Atras</button>
-                            </div> 
+                            </div> -->
 						<?php $this->endWidget(); ?>
 					</div> 
 

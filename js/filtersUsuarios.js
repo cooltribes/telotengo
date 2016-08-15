@@ -25,7 +25,7 @@ function changeFilter(e){
                     'sex', 
                     'interno',
                ];
-   var texto = ['first_name', 'first_name_2', 'last_name', 'last_name_2', 'email', 'email_2', 'telefono', 'ciudad'];
+   var texto = ['first_name', 'first_name_2', 'last_name', 'last_name_2', 'email', 'email_2', 'telefono', 'ciudad', 'empresa'];
     
        
    //si es fecha

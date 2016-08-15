@@ -35,7 +35,7 @@ echo "<tr>";
         $modelado=EmpresasHasUsers::model()->findByAttributes(array('users_id'=>$data->id));
         if($modelado):
          echo "<td>".$modelado->empresas->razon_social."</td>";
-         echo "<td>".$modelado->empresas->rol."</td>";
+         echo "<td>".$modelado->rol."</td>";
         else:
           echo "<td>N/D</td><td>N/D</td>";  
         endif;
@@ -102,8 +102,8 @@ echo "<tr>";
     </a> 
 
         <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-            <li><a tabindex="-1" href="'.Yii::app()->createUrl('/user/profile/index',array('ide'=>$data->id)).'">Ver Usuario </a></li>
-            <li><a tabindex="-1" href="'.Yii::app()->createUrl('/user/admin/create',array('id'=>$data->id)).'">Editar </a></li>';
+            <li><a tabindex="-1" href="'.Yii::app()->createUrl('/user/profile/index',array('ide'=>$data->id)).'"><i class="glyphicon glyphicon-eye-open"></i> Ver Perfil </a></li>
+            <li><a tabindex="-1" href="'.Yii::app()->createUrl('/user/admin/create',array('id'=>$data->id)).'"><i class="glyphicon glyphicon-edit"></i> Editar </a></li>';
             /*if($data->status==1){?>
                 <li><a class="pointer" id=<?php echo $data->id;?> tabindex="-1" onclick="desactivarActivar(<?php echo $data->id;?>)"><i class="glyphicon glyphicon-remove"></i> Desactivar </a></li><?php }
             else{?><li><a class="pointer" id=<?php echo $data->id;?>  tabindex="-1" onclick="desactivarActivar(<?php echo $data->id;?>)"><i class="glyphicon glyphicon-ok"></i> Activar </a></li><?php } 

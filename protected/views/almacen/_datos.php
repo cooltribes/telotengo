@@ -3,12 +3,11 @@
 $ima ='';
 
 echo"<tr>";
-   	
+
+   	echo "<td>".$data->empresas->razon_social."</td>";
 	echo "<td>".$data->nombre."</td>";
-   	echo "<td>".$data->ubicacion."</td>";
 	echo "<td>".$data->alias."</td>";
-	echo "<td>".$data->empresas->razon_social."</td>";
-	
+   	echo "<td>".$data->ubicacion."</td>";
 
 	echo '<td>
 

@@ -668,12 +668,12 @@ class SiteController extends Controller
 		$fichero_subido = $dir ."/".$contar."-".basename($_FILES['fichero_usuario']['name']);
 		$ficheroEnviar=basename($_FILES['fichero_usuario']['name']);
 		$var=explode(".", $fichero_subido);
-		if($var[1]=="pdf" || $var[1]=="doc" || $var[1]=="txt" || $var[1]=="jpg")
+		if($var[1]=="pdf" || $var[1]=="doc" || $var[1]=="txt" || $var[1]=="jpg" || $var[1]=="docx" )
 		{
 			if (move_uploaded_file($_FILES['fichero_usuario']['tmp_name'], $fichero_subido)) {
 			$model->cv=$fichero_subido;
     		//echo "El fichero es válido y se subió con éxito.\n";
-    		Yii::app()->user->setFlash('success',"Tus datos han sido enviados.Pronto nos pondremos en contacto contigo.");
+    		Yii::app()->user->setFlash('success',"Tus datos han sido enviados. Pronto nos pondremos en contacto contigo.");
     		if(!$model->save())
  			{
 				print_r($model->getError());
@@ -687,14 +687,14 @@ class SiteController extends Controller
 			$my_name = $model->nombre;
 			$my_mail = $model->email;
 			$my_replyto = $model->email;
-			$my_subject = "Cv para trabajar en TLT";
+			$my_subject = "Deseo trabajar en Telotengo";
 			$my_message = "Adjunto se envia CV de ".$model->nombre;
 			$model->mail_attachment($ruta_completa,$ficheroEnviar,"info@telotengo.com", $my_mail, $my_name, $my_replyto, $my_subject, $my_message);*/
 
 				$message = new YiiMailMessage;
 				$message->activarPlantillaMandrill();					
 				$body=Yii::app()->controller->renderPartial('//mail/trabaja_nosotros', array('model'=>$model),true);		
-				$message->subject= "Cv para trabajar en TLT";
+				$message->subject= "Deseo trabajar en Telotengo";
 				$message->setBody($body,'text/html');
 				$swiftAttachment = Swift_Attachment::fromPath($model->cv); 
 				$message->attach($swiftAttachment);				
@@ -748,7 +748,7 @@ class SiteController extends Controller
 				$message = new YiiMailMessage;
 				$message->activarPlantillaMandrill();					
 				$body=Yii::app()->controller->renderPartial('//mail/contactanos', array('model'=>$model),true);				
-				$message->subject= $model->subject;
+				$message->subject= $model->motivo;
 				$message->setBody($body,'text/html');
 								
 				$message->addTo("contacto@telotengo.com");

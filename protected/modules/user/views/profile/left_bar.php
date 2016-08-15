@@ -142,8 +142,8 @@
         </div>-->
        
     </div>
-     <a href="<?php echo Yii::app()->createUrl('user/admin/invitarUsuario', array("opcion"=>1));?>"><input class="btn-black btn btn-danger btn-large button-form" type="submit" name="yt0" value="Invita a tus clientes"></a>   
-      <a href="<?php echo Yii::app()->createUrl('user/admin/invitarUsuario', array("opcion"=>2));?>"><input class="btn-black btn btn-danger btn-large button-form" type="submit" name="yt0" value="Miembros de tu empresa"> </a> 
+     <a href="<?php echo Yii::app()->createUrl('user/admin/invitarUsuario', array("opcion"=>1));?>"><input class="btn-black btn btn-danger btn-large button-form" type="submit" name="yt0" value="<?php if(Yii::app()->user->isAdmin()) echo 'Invita a una empresa';else echo 'Invita a tus clientes';?>"></a>   
+      <a href="<?php echo Yii::app()->createUrl('user/admin/invitarUsuario', array("opcion"=>2));?>"><input class="btn-black btn btn-danger btn-large button-form" type="submit" name="yt0" value="<?php if(Yii::app()->user->isAdmin()) echo 'Invita a un miembro';else echo 'Miembros de tu empresas';?>"> </a> 
     <div id="changeAvatar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none; min-height: 550px;">
         <?php echo $this->renderPartial('avatar', array( 'model'=>$model ),true); ?>
     </div>

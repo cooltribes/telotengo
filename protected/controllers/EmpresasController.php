@@ -27,7 +27,7 @@ class EmpresasController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users
-				'actions'=>array('index','view','create','solicitudFinalizada', 'selectdos'),
+				'actions'=>array('index','view','create','solicitudFinalizada', 'selectdos', 'uploadFiles'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -175,33 +175,39 @@ class EmpresasController extends Controller
 				$almacen->nombre=$model->razon_social.' - principal';
 				$almacen->save();
 
-				$message = new YiiMailMessage;
-				$message->activarPlantillaMandrill();					
-				$body=Yii::app()->controller->renderPartial('//mail/solicitudRecibida', array( '$user'=>$user ),true);				
-				$message->subject= "Solicitud recibida";
-				$message->setBody($body,'text/html');
-								
-				$message->addTo($email);
-				Yii::app()->mail->send($message);
-				
+				if($user->quien_invita!=1)
+				{
+					$message = new YiiMailMessage;
+					$message->activarPlantillaMandrill();					
+					$body=Yii::app()->controller->renderPartial('//mail/solicitudRecibida', array( '$user'=>$user ),true);				
+					$message->subject= "Solicitud recibida";
+					$message->setBody($body,'text/html');
+									
+					$message->addTo($email);
+					Yii::app()->mail->send($message);
+				}
+
 				if(Yii::app()->session['tipo']=="") // en caso de ser una peticion normal
 				{
 					$user->pendiente=1;
 					$user->save();	
-					$this->redirect(array('solicitudFinalizada'));
+					//$this->redirect(array('solicitudFinalizada'));
 				}
 				if(Yii::app()->session['username']!="admin" && Yii::app()->session['username']!="" && Yii::app()->session['cliente']!="") // para el caso de que la invitacion sea para crear una empresa, hecha por otra empresa
 				{
 					$user->pendiente=1;
 					$user->save();	
-					$this->redirect(array('solicitudFinalizada'));
+					//$this->redirect(array('solicitudFinalizada'));
 				}
 				
 				if(isset(Yii::app()->session['cliente'])) ///LLEVAR HACER LA CONTRASENA CUANDO SE ESTE invitando desde el admin como empresa
 				{
-					$this->redirect(Yii::app()->session['url_act']);
+					//$this->redirect(Yii::app()->session['url_act']);
 				}
-				$this->redirect(array('solicitudFinalizada'));
+				$this->redirect(array('uploadFiles'));
+				#$this->redirect(array('solicitudFinalizada'));
+
+
 			}
 		}
 		
@@ -501,10 +507,11 @@ class EmpresasController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Empresas');
+		/*$dataProvider=new CActiveDataProvider('Empresas');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
-		));
+		));*/
+		$this->redirect('admin');
 	}
 	
 	/**
@@ -682,6 +689,158 @@ class EmpresasController extends Controller
 		if(isset($_GET['Empresas']))
 			$model->attributes=$_GET['Empresas'];
 
+		        /*********************** Para los filtros *********************/
+             if((isset($_SESSION['todoPost']) && !isset($_GET['ajax'])))
+            {
+                unset($_SESSION['todoPost']);
+            }
+            //Filtros personalizados
+            $filters = array();
+            
+            //Para guardar el filtro
+            $filter = new Filter;            
+            
+            if(isset($_GET['ajax']) && !isset($_POST['dropdown_filter']) && isset($_SESSION['todoPost'])
+               && !isset($_POST['nombre'])){
+              $_POST = $_SESSION['todoPost'];
+              
+            }            
+            
+            if(isset($_POST['dropdown_filter'])){  
+                                
+                $_SESSION['todoPost'] = $_POST;           
+                
+                //Validar y tomar sólo los filtros válidos
+                for($i=0; $i < count($_POST['dropdown_filter']); $i++){
+                    if($_POST['dropdown_filter'][$i] && $_POST['dropdown_operator'][$i]
+                            && trim($_POST['textfield_value'][$i]) != '' && $_POST['dropdown_relation'][$i]){
+
+                        $filters['fields'][] = $_POST['dropdown_filter'][$i];
+                        $filters['ops'][] = $_POST['dropdown_operator'][$i];
+                        $filters['vals'][] = $_POST['textfield_value'][$i];
+                        $filters['rels'][] = $_POST['dropdown_relation'][$i];                    
+
+                    }
+                }     
+                //Respuesta ajax
+                $response = array();
+                
+                if (isset($filters['fields'])) {      
+                    
+                    $dataProvider = $model->buscarPorFiltros($filters);                    
+                    
+                     //si va a guardar
+                     if (isset($_POST['save'])){                        
+                         
+                         //si es nuevo
+                         if (isset($_POST['name'])){
+                            
+                            $filter = Filter::model()->findByAttributes(
+                                    array('name' => $_POST['name'], 'type' => '3') 
+                                    ); 
+                            if (!$filter) {
+                                $filter = new Filter;
+                                $filter->name = $_POST['name'];
+                                $filter->type = 3;
+                                
+                                if ($filter->save()) {
+                                    for ($i = 0; $i < count($filters['fields']); $i++) {
+
+                                        $filterDetails[] = new FilterDetail();
+                                        $filterDetails[$i]->id_filter = $filter->id_filter;
+                                        $filterDetails[$i]->column = $filters['fields'][$i];
+                                        $filterDetails[$i]->operator = $filters['ops'][$i];
+                                        $filterDetails[$i]->value = $filters['vals'][$i];
+                                        $filterDetails[$i]->relation = $filters['rels'][$i];
+                                        $filterDetails[$i]->save();
+                                    }
+                                    
+                                    $response['status'] = 'success';
+                                    $response['message'] = 'Filtro <b>'.$filter->name.'</b> guardado con éxito';
+                                    $response['idFilter'] = $filter->id_filter;                                    
+                                    
+                                }
+                                
+                            //si ya existe
+                            } else {
+                                $response['status'] = 'error';
+                                $response['message'] = 'No se pudo guardar el filtro, el nombre <b>"'.
+                                        $filter->name.'"</b> ya existe'; 
+                            }
+
+                          /* si esta guardadndo uno existente */
+                         }else if(isset($_POST['id'])){
+                            
+                            $filter = Filter::model()->findByPk($_POST['id']); 
+
+                            if ($filter) {
+                                
+                                //borrar los existentes
+                                foreach ($filter->filterDetails as $detail){
+                                    $detail->delete();
+                                }
+                                
+                                for ($i = 0; $i < count($filters['fields']); $i++) {
+
+                                    $filterDetails[] = new FilterDetail();
+                                    $filterDetails[$i]->id_filter = $filter->id_filter;
+                                    $filterDetails[$i]->column = $filters['fields'][$i];
+                                    $filterDetails[$i]->operator = $filters['ops'][$i];
+                                    $filterDetails[$i]->value = $filters['vals'][$i];
+                                    $filterDetails[$i]->relation = $filters['rels'][$i];
+                                    $filterDetails[$i]->save();
+                                }
+
+                                $response['status'] = 'success';
+                                $response['message'] = 'Filtro <b>'.$filter->name.'</b> guardado con éxito';                                
+                            //si NO existe el ID
+                            } else {
+                                $response['status'] = 'error';
+                                $response['message'] = 'El filtro no existe'; 
+                            }
+                             
+                         }
+                        
+                         echo CJSON::encode($response); 
+                         Yii::app()->end();
+                         
+                     }//fin si esta guardando
+
+                //si no hay filtros válidos    
+                }else if (isset($_POST['save'])){
+                    $response['status'] = 'error';
+                    $response['message'] = 'No has seleccionado ningún criterio para filtrar'; 
+                    echo CJSON::encode($response); 
+                    Yii::app()->end();
+                }
+            }
+            
+            if (isset($_GET['nombre'])) {
+               # echo $_GET['nombre'];
+				#break;
+				$palabras=explode( ' ',$_GET['nombre']);
+                unset($_SESSION["todoPost"]);
+                $criteria->alias = 'User';
+				if (!isset($palabras[1]))
+				{
+					$criteria->join = 'JOIN tbl_profiles p ON User.id = p.user_id AND (p.first_name LIKE "%' . $_GET['nombre'] . '%" OR p.last_name LIKE "%' . $_GET['nombre'] . '%" OR User.email LIKE "%' . $_GET['nombre'] . '%")';
+				}
+				else {																					  
+					$criteria->join = 'JOIN tbl_profiles p ON User.id = p.user_id AND ((p.first_name LIKE "%' . $palabras[0] . '%" AND p.last_name LIKE "%' . $palabras[1] . '%" ) OR
+																 					   (p.first_name LIKE "%' . $palabras[1] . '%" AND p.last_name LIKE "%' . $palabras[0] . '%" ))';
+					}
+                
+                
+                $dataProvider = new CActiveDataProvider('User', array(
+                    'criteria' => $criteria,
+                    'pagination' => array(
+                        'pageSize' => Yii::app()->getModule('user')->user_page_size,
+                    ),
+                ));
+            }
+
+            	Yii::app()->session['userCriteria']=$dataProvider->criteria;
+
 		$this->render('admin',array(
 			'model'=>$model,
 			'dataProvider' => $dataProvider,
@@ -743,5 +902,73 @@ class EmpresasController extends Controller
 			'provincia_id'=>$provincia_id,
 			));
 
+        }
+
+        public function actionUploadFiles()
+        {
+        	if(isset($_GET['id'])) // si viene algo por get
+        	{
+        		$model=Empresas::model()->findByPk($_GET['id']);
+        	}
+        	else
+        	{
+        		if(isset(Yii::app()->session["usuarionuevo"])){
+					$user = User::model()->findByAttributes(array('email'=>Yii::app()->session["usuarionuevo"]));
+				}
+				elseif(isset(Yii::app()->session['cliente'])){
+					$user = User::model()->findByPk(Yii::app()->session['cliente']);
+				}
+        		
+        		$model=Empresas::model()->findByPk((EmpresasHasUsers::model()->findByAttributes(array('users_id'=>$user->id))->empresas_id));
+        	}
+    	    if(isset($_POST['Empresas']))
+    		{
+    			$dir = Yii::getPathOfAlias('webroot').'/docs/documentosEmpresas/'.$model->id;
+    			if(!is_dir($dir))
+				{
+				    mkdir($dir,0777,true);
+				}
+				
+				$var=explode(".", basename($_FILES['fichero_rif']['name']));
+				$fichero_rif = $dir."/rif.".$var[1]; 
+				$var=explode(".", basename($_FILES['fichero_registro_mercantil']['name']));
+				$fichero_registro_mercantil = $dir."/registro_mercantil.".$var[1];
+
+				if (move_uploaded_file($_FILES['fichero_rif']['tmp_name'], $fichero_rif) &&
+					move_uploaded_file($_FILES['fichero_registro_mercantil']['tmp_name'], $fichero_registro_mercantil) ) 
+				{
+					$documentos= new Documentos;
+					$documentos->empresas_id=$model->id;
+
+					$documentos->rif_ruta=$fichero_rif;
+					$documentos->mercantil_ruta=$fichero_registro_mercantil;
+					$documentos->save();
+					if(isset($_GET['id'])) // si viene algo por get
+					{
+						$this->redirect(array('solicitudFinalizada')); /// NUEVA VISTA OJO
+					}
+
+					if(Yii::app()->session['tipo']=="") // en caso de ser una peticion normal
+					{
+						$user->pendiente=1;
+						$user->save();	
+						$this->redirect(array('solicitudFinalizada'));
+					}
+					if(Yii::app()->session['username']!="admin" && Yii::app()->session['username']!="" && Yii::app()->session['cliente']!="") // para el caso de que la invitacion sea para crear una empresa, hecha por otra empresa
+					{
+						$user->pendiente=1;
+						$user->save();	
+						$this->redirect(array('solicitudFinalizada'));
+					}
+					
+					if(isset(Yii::app()->session['cliente'])) ///LLEVAR HACER LA CONTRASENA CUANDO SE ESTE invitando desde el admin como empresa
+					{
+						$this->redirect(Yii::app()->session['url_act']);
+					}
+				
+				}
+    		}
+    		$this->render('uploadFiles',array('model'=>$model));
+        	
         }
 }

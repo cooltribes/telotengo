@@ -25,12 +25,12 @@ class UserController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','datos','respuesta', 'setPassword', 'borrar','emailExists'),
+				'actions'=>array('view','datos','respuesta', 'setPassword', 'borrar','emailExists'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
 				'actions'=>array('tucuenta','favoritos','quitarfav','usuariostienda','createuser','deleteuser','editrol','avatar',
-								'agregarsocial','deletesocial','privacidad','notificaciones','enviarbolsa', 'activarDesactivar'),
+								'agregarsocial','deletesocial','privacidad','notificaciones','enviarbolsa', 'activarDesactivar', 'solicitarDocumentos'),
 				'users'=>array('@'),
 			),
 			array('deny',  // deny all users
@@ -579,7 +579,7 @@ class UserController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('User', array(
+		/*$dataProvider=new CActiveDataProvider('User', array(
 			'criteria'=>array(
 		        'condition'=>'status>'.User::STATUS_BANNED,
 		    ),
@@ -591,7 +591,7 @@ class UserController extends Controller
 
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
-		));
+		));*/
 	}
 
 	/**
@@ -839,6 +839,13 @@ class UserController extends Controller
 		$bolsa= new Bolsa;
 		$bolsa->empresas_id=$empresas_id;
 		$bolsa->save();
+
+		$log=new Log;
+		$log->id_admin=Yii::app()->user->id;
+		$log->fecha=date('Y-m-d G:i:s');
+		$log->id_empresa=$empresas_id;
+		$log->accion=17;
+		$log->save();
         echo $model->status;
 		
         
@@ -864,5 +871,22 @@ class UserController extends Controller
         }*/
         echo json_decode(array('status'=>'error'));
     }
+
+    public function actionSolicitarDocumentos()
+    {
+    	$id=$_POST['id'];
+    	$user = User::model()->findByPk($id);
+    	$empresas=Empresas::model()->findByPk((EmpresasHasUsers::model()->findByAttributes(array('users_id'=>$user->id))->empresas_id));
+		$message = new YiiMailMessage;
+		$message->activarPlantillaMandrill();					
+		$body=Yii::app()->controller->renderPartial('//mail/adjuntarDocumentos', array( 'user'=>$user, 'empresas'=>$empresas ),true);				
+		$message->subject= "Has olvidado adjuntar los documentos de tu empresa";
+		$message->setBody($body,'text/html');
+						
+		$message->addTo($user->email);
+		Yii::app()->mail->send($message);
+		#Yii::app()->user->setFlash('success',"Correo electronico enviado satisfactoriamente");
+    }
+
 
 }

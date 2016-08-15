@@ -149,6 +149,10 @@ class Log extends CActiveRecord
             $enlace=Yii::app()->createUrl('orden/detalle', array('id'=>$id_orden));
             $mensaje="Te han rechazado la intención de compra <a href=".$enlace."><b>#".$id_orden."</b></a>";
             break;
+        case 7:
+            $user = User::model()->findByPk($id_email_invitacion)->email;
+            $mensaje="Has invitado a ".$user. " a participar en Telotengo";
+            break;
         case 8:
             $enlace=Yii::app()->createUrl('orden/detalleVendedor', array('id'=>$id_orden));
             $mensaje="Has aprobado la intención de compra <a href=".$enlace."><b>#".$id_orden."</b></a>";
@@ -182,9 +186,22 @@ class Log extends CActiveRecord
             $enlace=Yii::app()->createUrl('empresas/verEmpresa', array('id'=>$id_empresa));
             $mensaje="Has modificado la informacion de la empresa <a href=".$enlace."><b>".Empresas::model()->findByPk($id_empresa)->razon_social."</b></a>";
             break;
+        case 17:
+            $enlace=Yii::app()->createUrl('empresas/verEmpresa', array('id'=>$id_empresa));
+            $mensaje="Has aprobado a la empresa <a href=".$enlace."><b>".Empresas::model()->findByPk($id_empresa)->razon_social."</b></a> para que participe en telotengo";
+            break;
         case 18:
             $enlace=Yii::app()->createUrl('user/profile/index/ide/'.$id_user);
             $mensaje="Has modificado la informacion del usuario <a href=".$enlace."><b>".Profile::model()->retornarNombreCompleto($id_user)."</b></a>";
+            break;
+        case 19:
+            $user=User::model()->findByPk($id_email_invitacion);
+            $empresa=Empresas::model()->findByPk((EmpresasHasUsers::model()->findByAttributes(array('users_id'=>$user->id))->empresas_id));
+            $mensaje="Has invitado al usuario ".$user->email." como miembro de la empresa ".$empresa->razon_social;
+            break;
+        case 20:
+            $user=User::model()->findByPk($id_email_invitacion)->email;   
+            $mensaje="Has invitado al usuario ".$user." como nueva empresa";
             break;
         case 21:
             $enlace=Yii::app()->createUrl('almacen/update', array('id'=>$id_almacen));

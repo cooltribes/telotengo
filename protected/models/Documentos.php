@@ -1,111 +1,105 @@
 <?php
 
 /**
- * This is the model class for table "tbl_documentos".
+ * This is the model class for table "{{documentos}}".
  *
- * The followings are the available columns in table 'tbl_documentos':
+ * The followings are the available columns in table '{{documentos}}':
  * @property integer $id
- * @property string $nombre
- * @property string $ruta
+ * @property string $rif_ruta
+ * @property string $mercantil_ruta
  * @property integer $empresas_id
  *
  * The followings are the available model relations:
  * @property Empresas $empresas
  */
-
-
-/**
-* Tipo:
-* 1 - RIF
-* 2 - Registro de comercio
-* 3 - Última declaración ISLR
-* 4 - Referencia bancaria
-* 9 - Otro
-*/
-
 class Documentos extends CActiveRecord
 {
-	/**
-	 * Returns the static model of the specified AR class.
-	 * @param string $className active record class name.
-	 * @return Documentos the static model class
-	 */
-	public static function model($className=__CLASS__)
-	{
-		return parent::model($className);
-	}
+    /**
+     * @return string the associated database table name
+     */
+    public function tableName()
+    {
+        return '{{documentos}}';
+    }
 
-	/**
-	 * @return string the associated database table name
-	 */
-	public function tableName()
-	{
-		return 'tbl_documentos';
-	}
+    /**
+     * @return array validation rules for model attributes.
+     */
+    public function rules()
+    {
+        // NOTE: you should only define rules for those attributes that
+        // will receive user inputs.
+        return array(
+            array('empresas_id', 'required'),
+            array('empresas_id', 'numerical', 'integerOnly'=>true),
+            array('rif_ruta, mercantil_ruta', 'length', 'max'=>250),
+            // The following rule is used by search().
+            // @todo Please remove those attributes that should not be searched.
+            array('id, rif_ruta, mercantil_ruta, empresas_id', 'safe', 'on'=>'search'),
+        );
+    }
 
-	/**
-	 * @return array validation rules for model attributes.
-	 */
-	public function rules()
-	{
-		// NOTE: you should only define rules for those attributes that
-		// will receive user inputs.
-		return array(
-			array('ruta, empresas_id, tipo', 'required'),
-			array('empresas_id, tipo', 'numerical', 'integerOnly'=>true),
-			array('nombre, ruta', 'length', 'max'=>200),
-			//array('ruta', 'file', 'types'=>'jpg, gif, png, pdf, doc, docx'),
-			// The following rule is used by search().
-			// Please remove those attributes that should not be searched.
-			array('id, nombre, ruta, empresas_id, tipo', 'safe', 'on'=>'search'),
-		);
-	}
+    /**
+     * @return array relational rules.
+     */
+    public function relations()
+    {
+        // NOTE: you may need to adjust the relation name and the related
+        // class name for the relations automatically generated below.
+        return array(
+            'empresas' => array(self::BELONGS_TO, 'Empresas', 'empresas_id'),
+        );
+    }
 
-	/**
-	 * @return array relational rules.
-	 */
-	public function relations()
-	{
-		// NOTE: you may need to adjust the relation name and the related
-		// class name for the relations automatically generated below.
-		return array(
-			'empresas' => array(self::BELONGS_TO, 'Empresas', 'empresas_id'),
-		);
-	}
+    /**
+     * @return array customized attribute labels (name=>label)
+     */
+    public function attributeLabels()
+    {
+        return array(
+            'id' => 'ID',
+            'rif_ruta' => 'Rif Ruta',
+            'mercantil_ruta' => 'Mercantil Ruta',
+            'empresas_id' => 'Empresas',
+        );
+    }
 
-	/**
-	 * @return array customized attribute labels (name=>label)
-	 */
-	public function attributeLabels()
-	{
-		return array(
-			'id' => 'ID',
-			'nombre' => 'Nombre',
-			'ruta' => 'Ruta',
-			'empresas_id' => 'Empresas',
-			'tipo' => 'Tipo',
-		);
-	}
+    /**
+     * Retrieves a list of models based on the current search/filter conditions.
+     *
+     * Typical usecase:
+     * - Initialize the model fields with values from filter form.
+     * - Execute this method to get CActiveDataProvider instance which will filter
+     * models according to data in model fields.
+     * - Pass data provider to CGridView, CListView or any similar widget.
+     *
+     * @return CActiveDataProvider the data provider that can return the models
+     * based on the search/filter conditions.
+     */
+    public function search()
+    {
+        // @todo Please modify the following code to remove attributes that should not be searched.
 
-	/**
-	 * Retrieves a list of models based on the current search/filter conditions.
-	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
-	 */
-	public function search()
-	{
-		// Warning: Please modify the following code to remove attributes that
-		// should not be searched.
+        $criteria=new CDbCriteria;
 
-		$criteria=new CDbCriteria;
+        $criteria->compare('id',$this->id);
+        $criteria->compare('rif_ruta',$this->rif_ruta,true);
+        $criteria->compare('mercantil_ruta',$this->mercantil_ruta,true);
+        $criteria->compare('empresas_id',$this->empresas_id);
 
-		$criteria->compare('id',$this->id);
-		$criteria->compare('nombre',$this->nombre,true);
-		$criteria->compare('ruta',$this->ruta,true);
-		$criteria->compare('empresas_id',$this->empresas_id);
-		$criteria->compare('tipo',$this->tipo);
+        return new CActiveDataProvider($this, array(
+            'criteria'=>$criteria,
+        ));
+    }
 
-		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
-		));
-	}
+    /**
+     * Returns the static model of the specified AR class.
+     * Please note that you should have this exact method in all your CActiveRecord descendants!
+     * @param string $className active record class name.
+     * @return Documentos the static model class
+     */
+    public static function model($className=__CLASS__)
+    {
+        return parent::model($className);
+    }
 }

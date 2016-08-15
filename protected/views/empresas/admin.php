@@ -1,3 +1,20 @@
+<style>
+.centrar{text-align: center;}
+    .negro{
+        background-color: black;
+        color: #fff;
+        border:0;
+    }
+    .negro:hover, .negro:active, .negro:visited   {
+        color: #fff;
+        background-color: black;
+        border:0;
+    }
+        .mientras {    
+    margin-top: -53px;
+    margin-left: 33px;
+    }
+</style>
 <?php
 $this->breadcrumbs=array(
 	'Administrar',
@@ -9,6 +26,9 @@ $this->breadcrumbs=array(
 
 	<h1>Administrar Empresas</h1>
 	<hr/>
+			<div class="alert in alert-block fade alert-success text_align_center hide" id="emailSent">
+		        Correo enviado satisfactoriamente
+		    </div>
 		<?php if(Yii::app()->user->hasFlash('success')){?>
 		    <div class="alert in alert-block fade alert-success text_align_center">
 		        <?php echo Yii::app()->user->getFlash('success'); ?>
@@ -20,18 +40,46 @@ $this->breadcrumbs=array(
 		    </div>
 		<?php } ?>
 
-            <div class="margin_top col-md-12 no_horizontal_padding">
+		<div>
+ 
+		 <hr/>    
+		 <!--   <div class="margin_top margin_bottom_small">Filtrar</div> -->
 
-             <form class="margin_bottom form-search row-fluid">
-                 <div class="col-md-3 col-md-offset-8 no_padding_right">
-                    <input class="form-control no_radius_right" id="query" name="query" type="text" placeholder="Criterio de búsqueda">              
-                 </div>
-                 <div class="col-md-1 no_padding_left">
-                     <a href="#" class="btn form-control btn-darkgray white" id="btn_search_event">Buscar</a>
-                 </div>   
-             </form>
-            </div> 
-	    <hr/>
+	<div class="row-fluid clearfix margin_top margin_bottom">
+		<form >
+                         <div class="col-md-3 no_horizontal_padding">
+                             <input class="form-control no_radius" id="query" name="query" type="text" placeholder="N° o nombre de empresa">                   
+                         </div>
+                         <div class="col-md-1 no_padding_left">
+                             <a href="#" class="btn form-control btn-darkgray white" id="btn_search_event">Buscar</a>
+                         </div>
+                         <div class="col-md-offset-8"></div>
+                                
+        </form>
+         <div class="col-md-8 no_horizontal_padding">
+           <div class="row-fluid">
+               <!--<div class="col-md-4">
+                     <select class="form-control">
+                       <option>-- Búsquedas avanzadas --</option>
+                   </select>
+               </div> -->
+               <div class="col-md-3 col-md-offset-1">
+                     <a class="btn btn-gray margin_left_minus" onclick="show('#nuevaBusqueda')">Crear búsqueda avanzada</a>
+               </div>
+           </div>
+        </div>
+        
+        </div>
+	
+	
+	
+	<div class="row-fluid clearfix margin_bottom hide" id="nuevaBusqueda">
+	     <?php  $this->renderPartial("_filters"); ?>
+	   </div> 
+
+
+
+	   </div>
 
 
 
@@ -45,7 +93,7 @@ $this->breadcrumbs=array(
 				
 				ajaxUpdateTimeout = setTimeout(function () {
 					$.fn.yiiListView.update(
-					'list-auth-categorias',
+					'list-auth-items',
 					{
 					type: 'POST',	
 					url: '" . CController::createUrl('empresas/admin') . "',
@@ -70,7 +118,7 @@ $this->breadcrumbs=array(
 					
 					ajaxUpdateTimeout = setTimeout(function () {
 						$.fn.yiiListView.update(
-						'list-auth-categorias',
+						'list-auth-items',
 						{
 						type: 'POST',	
 						url: '" . CController::createUrl('empresas/admin') . "',
@@ -91,6 +139,7 @@ $this->breadcrumbs=array(
 	    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-bordered table-hover table-striped">
 	       <thead>
 	        <tr>
+	            <th scope="col">ID</th>
 	            <th  width="30%" scope="col">Razón Social</th>
 	            <th scope="col">RIF</th>
 	            <th  width="35%" scope="col">Direccion fiscal</th>
@@ -106,7 +155,7 @@ $this->breadcrumbs=array(
 		';
 
 			$this->widget('zii.widgets.CListView', array(
-		    'id'=>'list-auth-categorias',
+		    'id'=>'list-auth-items',
 		    'dataProvider'=>$dataProvider,
 		    'itemView'=>'_view',
 		    'template'=>$template,
@@ -124,4 +173,11 @@ $this->breadcrumbs=array(
 		
 		?>
 </div>
-    
+    <script>
+    function show(id){
+        if($(id).hasClass('hide'))
+            $(id).removeClass('hide');
+        else
+            $(id).addClass('hide');
+    }
+</script>
