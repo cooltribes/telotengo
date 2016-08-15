@@ -73,8 +73,19 @@
             'label'=>'Enviar documentos',
             'htmlOptions'=>array('class'=>'btn-black btn btn-danger btn-large botone button-form btn btn-primary','id'=>'guardar')
         )); ?>
-        <div class="col-md-5 col-md-offset-4"> 
-             <a class="blueLink" href="solicitudFinalizada">Enviar luego los documentos</a> 
+        <div class="col-md-5 col-md-offset-4"> <?php
+
+            if(isset(Yii::app()->session['cliente'])) ///LLEVAR HACER LA CONTRASENA CUANDO SE ESTE invitando desde el admin como empresa
+                    {?>
+                     <a class="blueLink" href="<?php echo Yii::app()->session['url_act'];?>">Enviar luego los documentos</a> 
+                    <?php
+                    }
+                    else{?>
+                        <a class="blueLink" href="solicitudFinalizada">Enviar luego los documentos</a> 
+                    <?php
+                    }?>
+
+             
         </div>            
     </div>
 
