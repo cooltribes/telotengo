@@ -540,22 +540,8 @@ class ControlPanelController extends Controller
 	}
 	public function actionScriptAbandono()
 	{
-		if (strpos(getcwd(),'new')>0)
-		{
-		 	$entorno="new/";
-		}
-		else
-		{
-			if (strpos(getcwd(),'staging')>0)
-			{
-				 $entorno="staging/";
-			}
-			else
-			{
-				$entorno="production/";
-			}
-		}
-		header('Location: http://telotengo.com/'.$entorno.'scripts/script_abandono.php');
+	 // http://telotengo.com/new
+		header('Location: '.Yii::app()->getBaseUrl(true).'/scripts/script_abandono.php');
 	}
 	// Uncomment the following methods and override them if needed
 	/*

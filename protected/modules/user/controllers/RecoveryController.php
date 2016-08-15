@@ -38,8 +38,13 @@ class RecoveryController extends Controller
 									$bolsa->save();
 								}
 
-								Yii::app()->user->setFlash('success','Nueva contraseña guardada');
-								$this->redirect('login');
+								/*Yii::app()->user->setFlash('success','Nueva contraseña guardada');
+								$this->redirect('login');*/
+								$model=new UserLogin;
+								$model->username=$find->username;
+								$model->password=$form2->password;
+								if($model->validate()) 
+									header('Location: '.Yii::app()->getBaseUrl(true));
 							}
 						} 
 						$this->render('changepassword',array('form'=>$form2));

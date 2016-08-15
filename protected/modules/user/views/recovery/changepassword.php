@@ -1,3 +1,9 @@
+ <style>
+    #UserLogin_username,#UserLogin_password,#btn-login-b2b,#recuperarPassword
+    {
+        display:none;
+    }
+</style>
 <?php /*$this->pageTitle=Yii::app()->name . ' - '.UserModule::t("Change Password");
 	
 	if($_GET['solicitud']=="nueva")
