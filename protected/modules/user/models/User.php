@@ -1007,6 +1007,16 @@ class User extends CActiveRecord
     	}
 		return $consulta;
     }
+
+    public function otroAdmin($id) { // para saber si el id que estamos buscando es admin
         
+		$user = User::model()->findByPk($id);
+		
+		if($user->superuser==1)
+			return true;
+		else
+			return false;
+		
+    }
         
 }

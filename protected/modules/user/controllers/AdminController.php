@@ -437,11 +437,11 @@ class AdminController extends Controller
 					
 					if($model->type == 3) // invitar como cliente
 					{
-						/*if(!Yii::app()->user->isAdmin())
+						if(!Yii::app()->user->isAdmin())
 						{
 							$model->pendiente=1;
 							$model->save();
-						}*/	
+						}
 						$model->emailClienteInvitado($model->id, Yii::app()->user->id);
 						$accion=20;
 					}
