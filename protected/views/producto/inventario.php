@@ -307,7 +307,8 @@ $this->breadcrumbs=array(
             precio_iva();
         });
         $('#precio').on('keyup', function(event) {        
-            precio_iva();
+            //precio_iva();
+            calculo();
         });
         $('#Inventario_sku').on('change', function(event) {        
          
@@ -399,10 +400,12 @@ $this->breadcrumbs=array(
             iva=parseFloat($('#iva').val().replace(',','.'));
             if(price!=''&&iva!=''){
                 if(!isNaN(price)&&!isNaN(iva)){
-                	//$('#precio').val(price.toFixed(2));
+                	$('#precio').val(price.toFixed(2));
                 	var valor=(price*iva/100)+price;
                 	valor=Math.round(valor * 100) / 100;
+                	//var precio=Math.round(price * 100) / 100;
                      $('#precio_iva').val(valor);
+                    // $('#precio').val(precio);
                 }
                 if(isNaN(price)){
                     $('#precio').val('');
@@ -416,6 +419,32 @@ $this->breadcrumbs=array(
              
             }
             
+		}
+
+		function calculo()
+		{
+			price=parseFloat($('#precio').val().replace(',','.'));      
+            iva=parseFloat($('#iva').val().replace(',','.'));
+            if(price!=''&&iva!=''){
+                if(!isNaN(price)&&!isNaN(iva)){
+                	//$('#precio').val(price.toFixed(2));
+                	var valor=(price*iva/100)+price;
+                	valor=Math.round(valor * 100) / 100;
+                	//var precio=Math.round(price * 100) / 100;
+                     $('#precio_iva').val(valor);
+                    // $('#precio').val(precio);
+                }
+                if(isNaN(price)){
+                    $('#precio').val('');
+                    //$('#precio').focus();
+                } 
+                if(isNaN(iva)){
+                    $('#iva').val('');
+                    //$('#iva').focus();
+                }  
+                 $('#Inventario_precio_iva').val( $('#precio_iva'));
+             
+            }
 		}
 });	
 	

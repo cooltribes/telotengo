@@ -961,9 +961,17 @@ class EmpresasController extends Controller
 						$this->redirect(array('solicitudFinalizada'));
 					}
 					
-					if(isset(Yii::app()->session['cliente'])) ///LLEVAR HACER LA CONTRASENA CUANDO SE ESTE invitando desde el admin como empresa
+					if(isset(Yii::app()->session['cliente']) && User::model()->otroAdmin($user->quien_invita)==true) ///LLEVAR HACER LA CONTRASENA CUANDO SE ESTE invitando desde el admin como empresa
 					{
+						$user->registro_password=1;
+						$user->save();	
 						$this->redirect(Yii::app()->session['url_act']);
+					}
+					else
+					{
+						$user->pendiente=1;
+						$user->save();	
+						$this->redirect(array('solicitudFinalizada'));
 					}
 				
 				}

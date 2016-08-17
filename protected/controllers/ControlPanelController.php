@@ -35,7 +35,7 @@ class ControlPanelController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin', 'adminUsuarios', 'adminOrdenes', 'adminProductos', 'scriptAbandono'),
+				'actions'=>array('admin', 'adminUsuarios', 'adminOrdenes', 'adminProductos', 'scriptAbandono', 'scriptPassword'),
 				'users'=>array('admin'), 
 			),
 			array('deny',  // deny all users
@@ -542,6 +542,10 @@ class ControlPanelController extends Controller
 	{
 	 // http://telotengo.com/new
 		header('Location: '.Yii::app()->getBaseUrl(true).'/scripts/script_abandono.php');
+	}
+	public function actionScriptPassword()
+	{
+		header('Location: '.Yii::app()->getBaseUrl(true).'/scripts/script_RememberPassword.php');
 	}
 	// Uncomment the following methods and override them if needed
 	/*

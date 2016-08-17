@@ -37,7 +37,6 @@ class RecoveryController extends Controller
 									$bolsa->empresas_id=$empresas_id;
 									$bolsa->save();
 								}
-
 								/*Yii::app()->user->setFlash('success','Nueva contraseña guardada');
 								$this->redirect('login');*/
 								$model=new UserLogin;

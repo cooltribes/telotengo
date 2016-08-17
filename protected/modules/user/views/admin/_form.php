@@ -97,11 +97,12 @@
 
 	<div class="form-group">
 	
-		<div class="form-actions col-sm-offset-2 col-sm-10 no_margin">
+		<div class="form-actions col-sm-offset-2 col-sm-3 no_margin ">
 			<?php $this->widget('bootstrap.widgets.TbButton', array(
 				'buttonType'=>'submit',
 				'type'=>'primary',
 				'label'=>$model->isNewRecord ? 'Crear' : 'Guardar',
+				'htmlOptions' => array('class'=>'btn form-control btn-orange orange_border white'), 
 			)); ?>
 		</div> 
 

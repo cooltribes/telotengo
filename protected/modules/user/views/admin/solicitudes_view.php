@@ -136,6 +136,8 @@ echo"</tr>";
 					//$('#'+id+'s').html('Activo')
 					$('#'+id).hide();
 				}
+	       		$('#emailSent').html('Solicitud aprobada satisfactoriamente');
+	        	$('#emailSent').removeClass('hide');
 	       	}
 	       })
 		
@@ -149,6 +151,7 @@ echo"</tr>";
                     id:id,
                    },
 	        success: function (data) {
+	        	$('#emailSent').html('Correo enviado satisfactoriamente');
 	        	$('#emailSent').removeClass('hide');
 	       	}
 	       })

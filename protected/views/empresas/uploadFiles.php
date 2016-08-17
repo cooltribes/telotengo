@@ -75,15 +75,34 @@
         )); ?>
         <div class="col-md-5 col-md-offset-4"> <?php
 
-            if(isset(Yii::app()->session['cliente'])) ///LLEVAR HACER LA CONTRASENA CUANDO SE ESTE invitando desde el admin como empresa
+                    if(isset($_GET['id'])) // si viene algo por get
                     {?>
-                     <a class="blueLink" href="<?php echo Yii::app()->session['url_act'];?>">Enviar luego los documentos</a> 
-                    <?php
+                        <a class="blueLink" href="solicitudFinalizada">Enviar luego los documentos</a>  <?php
                     }
-                    else{?>
-                        <a class="blueLink" href="solicitudFinalizada">Enviar luego los documentos</a> 
-                    <?php
-                    }?>
+                    else
+                    {
+                        if(isset(Yii::app()->session["usuarionuevo"])){
+                            $user = User::model()->findByAttributes(array('email'=>Yii::app()->session["usuarionuevo"]));
+                        }
+                        elseif(isset(Yii::app()->session['cliente'])){
+                            $user = User::model()->findByPk(Yii::app()->session['cliente']);
+                        }
+                        if((Yii::app()->session['tipo']=="") || (Yii::app()->session['username']!="admin" && Yii::app()->session['username']!="" && Yii::app()->session['cliente']!="")) // en caso de ser una peticion normal
+                        {
+                            $user->pendiente=1;
+                            $user->save();  ?>
+                           <a class="blueLink" href="solicitudFinalizada">Enviar luego los documentos</a>  <?php
+                        }
+                        
+                        if(isset(Yii::app()->session['cliente']) && User::model()->otroAdmin($user->quien_invita)==true) ///LLEVAR HACER LA CONTRASENA CUANDO SE ESTE invitando desde el admin como empresa
+                        {
+                            $user->registro_password=1;
+                            $user->save();  ?>
+                            <a class="blueLink" href="<?php echo Yii::app()->session['url_act'];?>">Enviar luego los documentos</a> <?php
+                        }
+                    }
+                    ?>
+
 
              
         </div>            
