@@ -1437,7 +1437,7 @@ class OrdenController extends Controller
 			$message->addTo($usuario->email);
 			Yii::app()->mail->send($message);
 		}
-
+		////////////////////////////////////////////////////////////en caso de que no posea mas compras/////////////////////
 		$texto="Se ha generado satisfactoriamente tu intención de compra #".$orden->id." para ".Empresas::model()->findByPk($almacen->empresas_id)->razon_social." Ya no posees más productos en tu carrito pero hay una amplia variedad de artículos esperando por ti.";
 
         $return=array('status'=>'ok','html'=>$this->renderPartial("orderSummary", array('orden'=>$orden), true), 'subtotal'=>$subtotal, 'iva'=>$iva, 'total'=>$total, 'texto'=>$texto);
