@@ -2302,7 +2302,7 @@ class ProductoController extends Controller
 	    	$res =array();
 	    	if (isset($_GET['term'])) 
 			{
-				$qtxt ="SELECT nombre FROM tbl_producto WHERE nombre LIKE :nombre or upc LIKE :nombre or nparte LIKE :nombre   /*and estado=1*/";
+				$qtxt ="SELECT nombre FROM tbl_producto WHERE nombre LIKE :nombre or upc LIKE :nombre or nparte LIKE :nombre or tlt_codigo LIKE :nombre  /*and estado=1*/";
 				$command =Yii::app()->db->createCommand($qtxt);
 				$command->bindValue(":nombre", '%'.$_GET['term'].'%', PDO::PARAM_STR);
 				$res =$command->queryColumn();

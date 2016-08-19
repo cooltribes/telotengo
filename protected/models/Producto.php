@@ -248,7 +248,7 @@ class Producto extends CActiveRecord
 
 		/*$criteria->compare('id',$this->id);
 		$criteria->compare('nombre',$this->nombre,true);*/
-		$criteria->addCondition('nombre like "%'.$this->nombre.'%" or upc like "%'.$this->nombre.'%" or nparte like "%'.$this->nombre.'%"');
+		$criteria->addCondition('nombre like "%'.$this->nombre.'%" or upc like "%'.$this->nombre.'%" or nparte like "%'.$this->nombre.'%" or tlt_codigo like "%'.$this->nombre.'%"');
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 			'pagination'=>array('pageSize'=>12,),
