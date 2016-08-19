@@ -266,12 +266,31 @@ Yii::app()->session['suma']=$total;
 				$.ajax({
 			         url: "<?php echo Yii::app()->createUrl('Bolsa/eliminarOrdenes') ?>",
 		             type: 'POST',
+		             dataType:'json',
 			         data:{
 		                    almacen_id:almacen_id, bolsa_id:bolsa_id
 		                   },
 			        success: function (data) {
 			        	
-						location.reload();
+						if(data.status=='ok')
+						{
+			                 $('#myModal').modal('hide');
+			                 $('#preorder'+almacen_id).fadeOut();
+			                 $('#preorder'+almacen_id).remove();
+			                 $('#subtotalOrden').html('Subtotal: '+data.subtotal);
+			                 $('#ivaOrden').html('Iva: '+data.iva);
+			                 $('.todaOrden').html('Total: '+data.total);
+
+			                 if(data.total=="0")
+			                 {
+			                 	$('#textoVacio').html(data.texto);
+			                 	$('#emptyShoppingCart').removeClass('hide');
+			                 	$('#procesarTodo').addClass('disabled');
+			                 }
+
+
+			            }
+						//location.reload();
 			       	}
 			    })
 		}
