@@ -382,6 +382,31 @@ class Log extends CActiveRecord
             $enlace=Yii::app()->createUrl('categoria/categoriaSeo', array('id'=>$id_categoria));
             $mensaje="Has modificado el SEO de la categoría <b>".Categoria::model()->findByPk($id_categoria)->nombre."</b>";
             break;
+        case 67:
+            $mensaje="Has cambiado la foto de perfil de tu empresa";
+            break;
+        case 68:
+            $mensaje="Has cambiado el telefono de tu empresa";
+            break;
+        case 69:
+            $mensaje="Has cambiado el nombre de la pagina web de tu empresa";
+            break;
+        case 70:
+            $mensaje="Has editado la descripción de tu empresa";
+            break;
+        case 71:
+            $mensaje="Has editado las políticas de tu empresa";
+            break;
+        case 72:
+            $mensaje="Has editado la información de los pagos de tu empresa";
+            break;
+        case 73:
+            $mensaje="Has editado la información de los envíos de tu empresa";
+            break;
+        case 74:
+            $mensaje="Has editado la información de las devoluciones de tu empresa";
+            break;
+
         }
         return $mensaje;   
     }
