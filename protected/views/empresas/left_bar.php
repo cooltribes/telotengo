@@ -61,7 +61,7 @@
                 </span>
                 
                 <span class="col-md-11 no_horizontal_padding value">
-                    <?php echo $model->city->nombre." ".$model->city->provincia->nombre." ".$model->zip; ?>
+                    <?php echo $model->city->nombre.", ".$model->city->provincia->nombre.", ".$model->zip; ?>
                 </span>
             </div>
              <!-- -->
@@ -81,7 +81,8 @@
 
                 </span>  
             </div>
-            <?php if($model->web!=""): ?>
+            <?php if($model->web!="")
+            {?>
             <div class="row-fluid item clearfix margin_top_small">
                 <span class="col-md-1 no_horizontal_padding icon">
                     <span class="glyphicon glyphicon-globe"></span>
@@ -98,7 +99,23 @@
 
                 </span>  
             </div>
-        <?php endif;?>
+        <?php
+            }else
+            {
+               if($empresaPropia==1)
+               {?>
+                <div class="row-fluid item clearfix margin_top_small">
+                    <span class="col-md-1 no_horizontal_padding icon">
+                        <span class="glyphicon glyphicon-globe"></span>
+                    </span>
+                    
+                    <span class="col-md-6 no_horizontal_padding value">
+                        <a onclick="editField(5,'web', <?php echo $model->id ?>)">Añadir página web</a>
+                    </span>
+                </div>
+                <?php
+               } 
+            }?>
 
             
        

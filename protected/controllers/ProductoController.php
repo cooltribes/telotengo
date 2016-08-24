@@ -1531,6 +1531,8 @@ class ProductoController extends Controller
 			
 			$inventario->costo = $_POST['Inventario']['costo'];
 			$inventario->cantidad = $_POST['Inventario']['cantidad'];
+			if($_POST['Inventario']['cantidad'])// si coloco el inventario en 0 entonces no lo muestro en la tienda
+				$inventario->mostrar=0;
 			$inventario->garantia = $_POST['Inventario']['garantia'];
 			//$inventario->metodoEnvio = $_POST['Inventario']['metodoEnvio'];
 			

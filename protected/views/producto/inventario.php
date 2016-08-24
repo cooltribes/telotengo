@@ -153,7 +153,7 @@ $this->breadcrumbs=array(
 								<?php echo $form->textField($model,'cantidad',array('class'=>'form-control','maxlength'=>50)); ?>
 								<?php echo $form->error($model,'cantidad'); ?>
 								<span class="help-block text_align_left padding_right" >
-		                    			<span class="help-block error" id="cantidadError" style="display: none;">Cantidad a vender no puede ser 0 u vacio
+		                    			<span class="help-block error" id="cantidadError" style="display: none;">Cantidad a vender no puede ser vacio
 		                    			</span>
                     				</span>	
 							</div> 
@@ -351,7 +351,7 @@ $this->breadcrumbs=array(
             if(sku=="")
             	repetido=0;
 
-		   if($('#Inventario_cantidad').val()<=0)
+		   if($('#Inventario_cantidad').val()<0)
 		   {
 		   	 $('#cantidadError').show();
 		   	 retornar=1;
@@ -359,7 +359,7 @@ $this->breadcrumbs=array(
 		   else
 		   	 $('#cantidadError').hide();
 
-		   if($('#precio').val()<=0 || $('#precio').val()==null)
+		   if($('#precio').val()<0 || $('#precio').val()==null)
 		   {
 		   	 $('#precioError').show();
 		   	 retornar=1;

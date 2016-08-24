@@ -43,46 +43,52 @@ function texto(vista)
 {
 	var empresaPropia="<?php if($empresaPropia==1)echo '1';else echo'0';?>";
 	$('.nav').removeClass('active');
+	
     switch(vista) 
     {
 	    case 1:
 	    	var link="<a onclick='editField(6,6,<?php echo $model->id; ?>)'>Editar</a>";
+	    	var textoEscape="<?php echo addslashes($model->descripcion);?>";
 	    	if(empresaPropia==1)
-	        	$('#texto').html("<?php echo $model->descripcion;?> "+link);
+	        	$('#texto').html(textoEscape+" "+link);
 	        else
-	        	$('#texto').html("<?php echo $model->descripcion;?> ");
+	        	$('#texto').html(textoEscape);
 	        $('#descripcionNav').addClass('active');
 	        break;
 	    case 2:
 	    	var link="<a onclick='editField(7,7,<?php echo $model->id; ?>)'>Editar</a>";
+	    	var textoEscape="<?php echo addslashes($model->politicas);?>";
 	    	if(empresaPropia==1)
-	        	$('#texto').html("<?php echo $model->politicas;?> "+link);
+	      		$('#texto').html(textoEscape+" "+link);
 	        else
-	        	$('#texto').html("<?php echo $model->politicas;?> ");
+	        	$('#texto').html(textoEscape);
 	        $('#politicasNav').addClass('active');
 	        break;
 	    case 3:
 	    	var link="<a onclick='editField(8,8,<?php echo $model->id; ?>)'>Editar</a>";
+	    	var textoEscape="<?php echo addslashes($model->pagos);?>";
 	        if(empresaPropia==1)
-	        	$('#texto').html("<?php echo $model->pagos;?> "+link);
+	  			$('#texto').html(textoEscape+" "+link);
 	        else
-	        	$('#texto').html("<?php echo $model->pagos;?> ");
+	        	$('#texto').html(textoEscape);
 	        $('#pagosNav').addClass('active');
 	        break;
 	    case 4:
 	        var link="<a onclick='editField(9,9,<?php echo $model->id; ?>)'>Editar</a>";
+	        var textoEscape="<?php echo addslashes($model->envios);?>";
 	        if(empresaPropia==1)
-	        	$('#texto').html("<?php echo $model->envios;?> "+link);
+	   			$('#texto').html(textoEscape+" "+link);
 	        else
-	        	$('#texto').html("<?php echo $model->envios;?> ");
+	        	$('#texto').html(textoEscape);
 	        $('#enviosNav').addClass('active');
 	        break;
 	    case 5:
 	        var link="<a onclick='editField(10,10,<?php echo $model->id; ?>)'>Editar</a>";
+	        var textoEscape="<?php echo addslashes($model->devoluciones);?>";
 	        if(empresaPropia==1)
-	       		$('#texto').html("<?php echo $model->devoluciones;?> "+link);
+	       		$('#texto').html(textoEscape+" "+link);
 	       	else
-	       		$('#texto').html("<?php echo $model->devoluciones;?> ");
+	       		$('#texto').html(textoEscape);
 	        $('#devolucionesNav').addClass('active');
 	        break;
 	}          
