@@ -101,6 +101,7 @@
 	       <thead>
 	        <tr>
 	           	<th scope="col">Fecha de actualizacion</th>
+	           	<th scope="col">N parte</th>
 	           	<th scope="col">SKU</th>
 	            <th scope="col">Codigo TLT</th>
 	            <th scope="col">Imagen</th>

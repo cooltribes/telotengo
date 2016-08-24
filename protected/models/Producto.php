@@ -179,11 +179,11 @@ class Producto extends CActiveRecord
 	public function busquedaInventario($var="")
 	{
 		$empresas_id=EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id))->empresas_id; // id del que esta intentado entrar
-		$sql='select p.id as id, i.sku, p.tlt_codigo, p.nombre, i.cantidad, i.precio, i.almacen_id, i.fecha_act from tbl_producto p join tbl_inventario i on p.id=i.producto_id join tbl_almacen a on i.almacen_id=a.id where a.empresas_id="'.$empresas_id.'"
-		 and (p.nombre like "%'.$var.'%" or p.tlt_codigo like "%'.$var.'%" or i.sku like "%'.$var.'%")  order by i.fecha_act desc';
+		$sql='select p.id as id, i.sku, p.tlt_codigo, p.nparte, p.nombre, i.cantidad, i.precio, i.almacen_id, i.fecha_act from tbl_producto p join tbl_inventario i on p.id=i.producto_id join tbl_almacen a on i.almacen_id=a.id where a.empresas_id="'.$empresas_id.'"
+		 and (p.nombre like "%'.$var.'%" or p.tlt_codigo like "%'.$var.'%" or i.sku like "%'.$var.'%" or p.nparte like "%'.$var.'%")  order by i.fecha_act desc';
 		 
 		$count='select count(*) from tbl_producto p join tbl_inventario i on p.id=i.producto_id join tbl_almacen a on i.almacen_id=a.id where a.empresas_id="'.$empresas_id.'"
-		 and (p.nombre like "%'.$var.'%" or p.tlt_codigo like "%'.$var.'%" or i.sku like "%'.$var.'%")  order by i.fecha_act desc';
+		 and (p.nombre like "%'.$var.'%" or p.tlt_codigo like "%'.$var.'%" or i.sku like "%'.$var.'%" or p.nparte like "%'.$var.'%")  order by i.fecha_act desc';
 		$count=Yii::app()->db->createCommand($count)->queryScalar();
 			
 		return new CSqlDataProvider($sql, array(
