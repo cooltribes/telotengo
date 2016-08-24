@@ -65,7 +65,7 @@
    <div class="row-fluid clearfix cards margin_top">
        <div class="col-md-6 no_padding_left">
           <div class="card row-fluid clearfix">
-             <span class="title col-md-7"> <?php echo $empresa->razon_social;?></span>
+             <a href="<?php echo Yii::app()->createUrl('empresas/perfilVendedor')?>"><span class="title col-md-7"> <?php echo $empresa->razon_social;?></span> </a>
               <span class="col-md-7"><?php echo $empresa->rif;?></span>
              <span class="col-md-5 text-right">
                  <a class="showInfo"  onclick="showInfo('#info1')" id="info1-show">Mostrar Información</a> 

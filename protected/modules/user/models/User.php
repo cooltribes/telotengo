@@ -725,6 +725,7 @@ class User extends CActiveRecord
                 $logicOp = $filters['rels'][$i - 1];
             }
 
+            $criteria->addCondition('(type=4 and pendiente=0) or (type=3 and pendiente=0 and registro_password=1) or (type=2 and  id not in (select user_id from tbl_profiles where first_name="Usuario" and last_name="Invitado" and cedula="10111222"))');
             /* Usuarios */
             if ($column == 'email' || $column == 'ciudad' || $column == 'first_name' || $column == 'last_name')
             {
@@ -974,7 +975,7 @@ class User extends CActiveRecord
             }*/
 
             
-            $criteria->addCondition('(type=4 and pendiente=0) or (type=3 and pendiente=0 and registro_password=1) or (type=2 and  id not in (select user_id from tbl_profiles where first_name="Usuario" and last_name="Invitado" and cedula="10111222"))');
+
             //Comparar normal
             $criteria->compare($column, $comparator . " " . $value, false, $logicOp);
         }

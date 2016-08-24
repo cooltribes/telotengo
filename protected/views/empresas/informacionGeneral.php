@@ -3,9 +3,11 @@
 	<ul id="myTabs" class="nav nav-tabs" role="tablist">
 		<li id="descripcionNav" class="nav active"><a onclick="texto(1)" href="#"  aria-expanded="false">Descripcion</a></li>
 		<li id="politicasNav" class="nav"><a onclick="texto(2)" href="#" aria-controls="home" aria-expanded="true">Politicas</a></li>
-		<li id="pagosNav" class="nav"><a onclick="texto(3)" href="#"  aria-controls="home" aria-expanded="true">Pagos</a></li>
-		<li id="enviosNav" class="nav"><a onclick="texto(4)" href="#"  aria-controls="home" aria-expanded="true">Envios</a></li>
-		<li id="devolucionesNav" class="nav"><a onclick="texto(5)" href="#" aria-controls="home" aria-expanded="true">Devoluciones</a></li>
+		<?php if(($empresaPropia==1 && !Yii::app()->authManager->checkAccess("comprador", Yii::app()->user->id)) || ($empresaPropia==0 && $model->rol!="comprador")):?>
+			<li id="pagosNav" class="nav"><a onclick="texto(3)" href="#"  aria-controls="home" aria-expanded="true">Pagos</a></li>
+			<li id="enviosNav" class="nav"><a onclick="texto(4)" href="#"  aria-controls="home" aria-expanded="true">Envios</a></li>
+			<li id="devolucionesNav" class="nav"><a onclick="texto(5)" href="#" aria-controls="home" aria-expanded="true">Devoluciones</a></li>
+		<?php endif;?>
 	              
 	</ul>
 	<div class="margin_top">
