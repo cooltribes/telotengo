@@ -95,12 +95,13 @@ $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
                         </h1>
                      <small>Marca:&nbsp;<?php echo $model->padre->idMarca->nombre; ?></small> 
                         <div class="separator"></div>
-                        <table width="40%" class="priceTable">
-                            <col width="50%">
-                            <col width="50%"> 
+                        <table width="100%" class="priceTable">
+                            
                             <tr>
                                 <td class="title">Precio en tienda</td>
                                 <td><?php echo $inventario->formatPrecio;?></td>
+                                <td class="title">N parte</td>
+                                <td><?php if($inventario->producto->nparte!="")echo $inventario->producto->nparte; else echo "N/D";?></td>
                             </tr>
                             <tr>  
                                 
@@ -117,7 +118,8 @@ $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
 								}	
                                 ?>
                                 	 
-                                                   
+                                <td class="title">UPC</td>
+                                <td><?php if($inventario->producto->upc!="")echo $inventario->producto->upc; else "N/D";?></td>                    
                             </tr>
                             <?php 
                             if($inventario->cantidad>0)
@@ -253,7 +255,7 @@ $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
                     <div class="plainSeparator"></div>
                     <div class="sellerInfo">
                         <span class="title">Vendido y enviado por:</span>
-                        <span class="name"><?php echo $empresa->razon_social;?></span>
+                       <a href="<?php echo Yii::app()->createUrl('empresas/perfilVendedor', array('id'=>$empresa->id));?>"><span class="name"><?php echo $empresa->razon_social;?></span> </a>
                         <span class="location"><?php echo $almacen->ciudad->nombre;?></span>
                         <!--<span>610 Transacciones</span>
                         <span>98% Feedbacks positivos</span> -->
@@ -269,7 +271,7 @@ $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
                        <?php foreach($otros as $key=>$data)
                        {?>
                        	  <div class="sellerInfo">
-                            <span class="name"><b><?php echo $data->almacen->empresas->razon_social;?></b></span>
+                            <a href="<?php echo Yii::app()->createUrl('empresas/perfilVendedor', array('id'=>$data->almacen->empresas->id));?>"><span class="name"><b><?php echo $data->almacen->empresas->razon_social;?></b></span></a>
                             <span class="location"><?php echo $data->almacen->ciudad->nombre; ?></span>
                             <span><b><?php echo $data->formatPrecio;?></b> 
                             <span><small>Envío <?php if($inventario->metodoEnvio==1) echo "acordado con el cliente"; else echo "a través del servicio del vendedor"; ?></span></small></span>
