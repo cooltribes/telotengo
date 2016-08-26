@@ -12,11 +12,11 @@ class UserChangePassword extends CFormModel {
 	public function rules() {
 		return Yii::app()->controller->id == 'recovery' ? array(
 			array('password, verifyPassword', 'required'),
-			array('password, verifyPassword', 'length', 'max'=>128, 'min' => 4,'message' => 'La contraseña debe tener al menos 4 caracteres'),
+			array('verifyPassword', 'length', 'max'=>128, 'min' => 6,'message' => 'La contraseña debe tener al menos 6 caracteres'),
 			array('verifyPassword', 'compare', 'compareAttribute'=>'password', 'message' => 'Las contraseñas no coinciden'),
 		) : array(
 			array('oldPassword, password, verifyPassword', 'required'),
-			array('oldPassword, password, verifyPassword', 'length', 'max'=>128, 'min' => 4,'message' => 'La contraseña debe tener al menos 4 caracteres'),
+			array('oldPassword, password, verifyPassword', 'length', 'max'=>128, 'min' => 6,'message' => 'La contraseña debe tener al menos 6 caracteres'),
 			array('verifyPassword', 'compare', 'compareAttribute'=>'password', 'message' => 'Las contraseñas no coinciden'),
 			array('oldPassword', 'verifyOldPassword'),
 		);
