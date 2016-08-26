@@ -119,7 +119,7 @@ $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
                                 ?>
                                 	 
                                 <td class="title">UPC</td>
-                                <td><?php if($inventario->producto->upc!="")echo $inventario->producto->upc; else "N/D";?></td>                    
+                                <td><?php if($inventario->producto->upc!="")echo $inventario->producto->upc; else echo "N/D";?></td>                    
                             </tr>
                             <?php 
                             if($inventario->cantidad>0)
