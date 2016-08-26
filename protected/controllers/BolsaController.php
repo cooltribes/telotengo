@@ -1291,11 +1291,34 @@ class BolsaController extends Controller
 	{
 		$almacen_id=$_POST['almacen_id'];
 		$bolsa_id=$_POST['bolsa_id'];
+		$texto="";
 		$model=BolsaHasInventario::model()->findAllByAttributes(array('bolsa_id'=>$bolsa_id, 'almacen_id'=>$almacen_id));
+		$subtotal=0;
+		$iva=0;
+		$total=0;
 		foreach($model as $modelado)
 		{
 			$modelado->delete();
 		}
+		if(BolsaHasInventario::model()->findByAttributes(array('bolsa_id'=>$bolsa_id)))
+		{
+			$bolsa=BolsaHasInventario::model()->findAllByAttributes(array('bolsa_id'=>$bolsa_id));
+			foreach($bolsa as $bolsaInventario)
+			{
+				$subtotal+=$bolsaInventario->cantidad*$bolsaInventario->inventario->precio;
+			}
+			$total=Funciones::formatPrecio(($subtotal*Yii::app()->params['IVA']['value'])+$subtotal);
+			$iva=Funciones::formatPrecio($subtotal*Yii::app()->params['IVA']['value']);
+			$subtotal=Funciones::formatPrecio($subtotal);
+
+		}
+		else
+		{
+			$texto="Haz eliminado tu intención de compra. Ya no posees más productos en tu carrito pero hay una amplia variedad de artículos esperando por ti.";
+		}
+
+		$return=array('status'=>'ok', 'subtotal'=>$subtotal, 'iva'=>$iva, 'total'=>$total, 'texto'=>$texto);
+		echo json_encode($return);
 				
 	}
 }

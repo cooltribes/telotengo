@@ -202,7 +202,7 @@ class User extends CActiveRecord
         //$criteria->compare('username',$this->username,true);
         $criteria->addCondition("username LIKE '%".$this->username."%'",'OR');
         $criteria->addCondition("email LIKE '%".$this->email."%'",'OR');
-		$criteria->addCondition("status = '1'",'AND');
+		//$criteria->addCondition("status = '1'",'AND');
         $criteria->compare('password',$this->password);
         //$criteria->compare('email',$this->email,true);
         $criteria->compare('activkey',$this->activkey);
@@ -215,6 +215,7 @@ class User extends CActiveRecord
 		$criteria->compare('facebook_id',$this->facebook_id);
 		$criteria->compare('avatar_url',$this->avatar_url);
 		#$criteria->addCondition('type <> 3');
+		$criteria->addCondition('(type=4 and pendiente=0) or (type=3 and pendiente=0 and registro_password=1) or (type=2 and  id not in (select user_id from tbl_profiles where first_name="Usuario" and last_name="Invitado" and cedula="10111222"))');
 
         return new CActiveDataProvider(get_class($this), array(
             'criteria'=>$criteria,
@@ -724,6 +725,7 @@ class User extends CActiveRecord
                 $logicOp = $filters['rels'][$i - 1];
             }
 
+            $criteria->addCondition('(type=4 and pendiente=0) or (type=3 and pendiente=0 and registro_password=1) or (type=2 and  id not in (select user_id from tbl_profiles where first_name="Usuario" and last_name="Invitado" and cedula="10111222"))');
             /* Usuarios */
             if ($column == 'email' || $column == 'ciudad' || $column == 'first_name' || $column == 'last_name')
             {
@@ -973,7 +975,7 @@ class User extends CActiveRecord
             }*/
 
             
-            
+
             //Comparar normal
             $criteria->compare($column, $comparator . " " . $value, false, $logicOp);
         }
@@ -1007,6 +1009,16 @@ class User extends CActiveRecord
     	}
 		return $consulta;
     }
+
+    public function otroAdmin($id) { // para saber si el id que estamos buscando es admin
         
+		$user = User::model()->findByPk($id);
+		
+		if($user->superuser==1)
+			return true;
+		else
+			return false;
+		
+    }
         
 }

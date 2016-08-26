@@ -153,7 +153,7 @@ $this->breadcrumbs=array(
 								<?php echo $form->textField($model,'cantidad',array('class'=>'form-control','maxlength'=>50)); ?>
 								<?php echo $form->error($model,'cantidad'); ?>
 								<span class="help-block text_align_left padding_right" >
-		                    			<span class="help-block error" id="cantidadError" style="display: none;">Cantidad a vender no puede ser 0 u vacio
+		                    			<span class="help-block error" id="cantidadError" style="display: none;">Cantidad a vender no puede ser vacio
 		                    			</span>
                     				</span>	
 							</div> 
@@ -307,7 +307,8 @@ $this->breadcrumbs=array(
             precio_iva();
         });
         $('#precio').on('keyup', function(event) {        
-            precio_iva();
+            //precio_iva();
+            calculo();
         });
         $('#Inventario_sku').on('change', function(event) {        
          
@@ -350,7 +351,7 @@ $this->breadcrumbs=array(
             if(sku=="")
             	repetido=0;
 
-		   if($('#Inventario_cantidad').val()<=0)
+		   if($('#Inventario_cantidad').val()<0)
 		   {
 		   	 $('#cantidadError').show();
 		   	 retornar=1;
@@ -358,7 +359,7 @@ $this->breadcrumbs=array(
 		   else
 		   	 $('#cantidadError').hide();
 
-		   if($('#precio').val()<=0 || $('#precio').val()==null)
+		   if($('#precio').val()<0 || $('#precio').val()==null)
 		   {
 		   	 $('#precioError').show();
 		   	 retornar=1;
@@ -399,10 +400,12 @@ $this->breadcrumbs=array(
             iva=parseFloat($('#iva').val().replace(',','.'));
             if(price!=''&&iva!=''){
                 if(!isNaN(price)&&!isNaN(iva)){
-                	//$('#precio').val(price.toFixed(2));
+                	$('#precio').val(price.toFixed(2));
                 	var valor=(price*iva/100)+price;
                 	valor=Math.round(valor * 100) / 100;
+                	//var precio=Math.round(price * 100) / 100;
                      $('#precio_iva').val(valor);
+                    // $('#precio').val(precio);
                 }
                 if(isNaN(price)){
                     $('#precio').val('');
@@ -416,6 +419,32 @@ $this->breadcrumbs=array(
              
             }
             
+		}
+
+		function calculo()
+		{
+			price=parseFloat($('#precio').val().replace(',','.'));      
+            iva=parseFloat($('#iva').val().replace(',','.'));
+            if(price!=''&&iva!=''){
+                if(!isNaN(price)&&!isNaN(iva)){
+                	//$('#precio').val(price.toFixed(2));
+                	var valor=(price*iva/100)+price;
+                	valor=Math.round(valor * 100) / 100;
+                	//var precio=Math.round(price * 100) / 100;
+                     $('#precio_iva').val(valor);
+                    // $('#precio').val(precio);
+                }
+                if(isNaN(price)){
+                    $('#precio').val('');
+                    //$('#precio').focus();
+                } 
+                if(isNaN(iva)){
+                    $('#iva').val('');
+                    //$('#iva').focus();
+                }  
+                 $('#Inventario_precio_iva').val( $('#precio_iva'));
+             
+            }
 		}
 });	
 	

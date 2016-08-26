@@ -31,7 +31,7 @@ class EmpresasController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('update','listado','cancelar', 'complete', 'agregarDocumento', 'eliminarDocumento', 'agregarDato', 'eliminarDato','getAlmacenes','inventarios','ventas'),
+				'actions'=>array('update','listado','cancelar', 'complete', 'agregarDocumento', 'eliminarDocumento', 'agregarDato', 'eliminarDato','getAlmacenes','inventarios','ventas', 'perfilVendedor', 'editField'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -961,9 +961,17 @@ class EmpresasController extends Controller
 						$this->redirect(array('solicitudFinalizada'));
 					}
 					
-					if(isset(Yii::app()->session['cliente'])) ///LLEVAR HACER LA CONTRASENA CUANDO SE ESTE invitando desde el admin como empresa
+					if(isset(Yii::app()->session['cliente']) && User::model()->otroAdmin($user->quien_invita)==true) ///LLEVAR HACER LA CONTRASENA CUANDO SE ESTE invitando desde el admin como empresa
 					{
+						$user->registro_password=1;
+						$user->save();	
 						$this->redirect(Yii::app()->session['url_act']);
+					}
+					else
+					{
+						$user->pendiente=1;
+						$user->save();	
+						$this->redirect(array('solicitudFinalizada'));
 					}
 				
 				}
@@ -971,4 +979,156 @@ class EmpresasController extends Controller
     		$this->render('uploadFiles',array('model'=>$model));
         	
         }
+
+        public function actionPerfilVendedor($id=NULL)
+        {
+        	$avatar=false;
+        	if($id==NULL)
+        	{
+        		$model=Empresas::model()->findByPk((EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id))->empresas_id));
+        		$empresaPropia=1;
+        	}
+        	else
+        	{
+        		$model=Empresas::model()->findByPk($id);
+        		$empresaPropia=0;
+
+        	}
+        	if(isset($_POST['imagen']))
+			{
+				if(!is_dir(Yii::getPathOfAlias('webroot').'/images/empresas/'))
+				{
+		   			mkdir(Yii::getPathOfAlias('webroot').'/images/empresas/',0777,true);
+		 		}	
+			 	$rnd = rand(0,9999);  	
+				$images=CUploadedFile::getInstanceByName('imagen');
+				if (isset($images) && count($images) > 0)
+				{
+					$model->avatar_url = "{$rnd}-{$images}";
+					$model->save();
+					$nombre = Yii::getPathOfAlias('webroot').'/images/empresas/'.$model->id;
+				    $extension_ori = ".jpg";
+					$extension = '.'.$images->extensionName;
+					if ($images->saveAs($nombre . $extension)) {
+				
+				       		#$model->avatar_url = '/images/empresas/'.$model->id .$extension;
+				            $model->saveAttributes(array('avatar_url' => '/images/empresas/'.$model->id .$extension));
+											
+							Yii::app()->user->setFlash('success',"Avatar modificado exitosamente.");
+		
+							$image = Yii::app()->image->load($nombre.$extension);
+							$image->resize(270, 270);
+							$image->save($nombre.'_thumb'.$extension);
+	                        $avatar=true;
+	                        $log=new Log;
+							$log->id_user=Yii::app()->user->id;
+							$log->fecha=date('Y-m-d G:i:s');
+							$log->accion=67;
+							$log->save();				
+						}
+					
+				}
+			} 
+        	$this->render('perfilVendedor', array('model'=>$model, 'empresaPropia'=>$empresaPropia, 'avatar'=>$avatar));
+        }
+
+    public function actionEditField()
+    {
+	     $data=array();
+	    if(isset($_POST['editMode']))
+	    {
+	       $save=false;
+	       $model=Empresas::model()->findByPk($_POST['id_empresa']);
+   
+	        if(isset ($_POST['web']))
+	        {
+	        	if($model->saveAttributes(array('web'=>$_POST['web'])))
+	        		$save=true;
+	        }
+	        if(isset ($_POST['telefono']))
+	        {
+	        	if($model->saveAttributes(array('telefono'=>$_POST['telefono'])))
+	        		$save=true;
+	        }
+
+	        if(isset ($_POST['descripcion']))
+	        {
+	        	if($model->saveAttributes(array('descripcion'=>$_POST['descripcion'])))
+	        		$save=true;
+	        }
+
+	        if(isset ($_POST['politicas']))
+	        {
+	        	if($model->saveAttributes(array('politicas'=>$_POST['politicas'])))
+	        		$save=true;
+	        }
+	        
+	        if(isset ($_POST['pagos']))
+	        {
+	        	if($model->saveAttributes(array('pagos'=>$_POST['pagos'])))
+	        		$save=true;
+	        }
+	        
+	        if(isset ($_POST['devoluciones']))
+	        {
+	        	if($model->saveAttributes(array('devoluciones'=>$_POST['devoluciones'])))
+	        		$save=true;
+	        }
+	        
+	        if(isset ($_POST['envios']))
+	        {
+	        	if($model->saveAttributes(array('envios'=>$_POST['envios'])))
+	        		$save=true;
+	        }
+
+
+	        if($save){
+	          	$log=new Log;
+				$log->fecha=date('Y-m-d G:i:s');
+				$log->id_user=Yii::app()->user->id;
+				$log->fecha=date('Y-m-d G:i:s');
+				switch ($_POST['opcion'])
+	        	{
+		            case 4:
+		            	$log->accion=68;
+		            	break;
+		            case 5:
+		            	$log->accion=69;
+		            	break;
+		            case 6:
+		            	$log->accion=70;
+		            	break;
+		            case 7:
+		            	$log->accion=71;
+		            	break;
+		            case 8:
+		            	$log->accion=72;
+		            	break;
+		            case 9:
+		            	$log->accion=73;
+		            	break;
+		            case 10:
+		            	$log->accion=74;
+		            	break;
+	        	}
+	        	$log->save();
+	         	$data['status']="ok";
+	          	echo json_encode($data);
+	        }else{
+
+	            /*$data['error']="";
+	             foreach($errors as $key=>$error){ 
+	                 $data['error'].=ucwords($key).": ".implode(', ',$error);      
+	         
+	             }  
+	            echo json_encode($data);*/
+	        }
+	    } else
+	    {
+	        
+	       $data['status']="ok";
+	        $data['content']=$this->renderPartial('editField',array( 'fname'=>$_POST['fname'], 'field'=>$_POST['field'], 'empresas'=>Empresas::model()->findByPk($_POST['id_empresa']),'rol'=>EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id))),true);   
+	        echo json_encode($data);
+	    }
+  	}
 }

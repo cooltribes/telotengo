@@ -20,6 +20,9 @@ class RegistrationController extends Controller
 	 * Registration user
 	 */
 	public function actionRegistration(){
+           	unset(Yii::app()->session['cliente']);
+			unset(Yii::app()->session['username']);
+			unset(Yii::app()->session['tipo']);
             $model = new RegistrationForm;
             $profile = new Profile;
             $profile->regMode = true;

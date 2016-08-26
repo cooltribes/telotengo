@@ -1531,6 +1531,8 @@ class ProductoController extends Controller
 			
 			$inventario->costo = $_POST['Inventario']['costo'];
 			$inventario->cantidad = $_POST['Inventario']['cantidad'];
+			if($_POST['Inventario']['cantidad'])// si coloco el inventario en 0 entonces no lo muestro en la tienda
+				$inventario->mostrar=0;
 			$inventario->garantia = $_POST['Inventario']['garantia'];
 			//$inventario->metodoEnvio = $_POST['Inventario']['metodoEnvio'];
 			
@@ -2302,7 +2304,7 @@ class ProductoController extends Controller
 	    	$res =array();
 	    	if (isset($_GET['term'])) 
 			{
-				$qtxt ="SELECT nombre FROM tbl_producto WHERE nombre LIKE :nombre or upc LIKE :nombre or nparte LIKE :nombre   /*and estado=1*/";
+				$qtxt ="SELECT nombre FROM tbl_producto WHERE nombre LIKE :nombre or upc LIKE :nombre or nparte LIKE :nombre or tlt_codigo LIKE :nombre  /*and estado=1*/";
 				$command =Yii::app()->db->createCommand($qtxt);
 				$command->bindValue(":nombre", '%'.$_GET['term'].'%', PDO::PARAM_STR);
 				$res =$command->queryColumn();

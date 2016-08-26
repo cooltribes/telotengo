@@ -5,6 +5,8 @@ echo"<tr>";
 		echo "<td>".Funciones::invertirFecha($data['fecha_act'])."</td>";
 	else
 		echo "<td>".$data['fecha_act']."</td>";
+
+	echo "<td>".$data['nparte']."</td>";
 	echo "<td>".$data['sku']."</td>";
 	echo "<td>".$data['tlt_codigo']."</td>";
 	$imagen = Imagenes::model()->findByAttributes(array('producto_id'=>$data['id'],'orden'=>'1'));

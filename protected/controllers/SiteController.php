@@ -305,7 +305,7 @@ class SiteController extends Controller
     
 	public function actionInhome2(){
        //$this->layout='//layouts/start';
-	   $model = Categoria::model()->findAllBySql("select * from tbl_categoria where id_padre = 0  order by destacado desc, fecha_destacado desc  limit 3") ;
+	   $model = Categoria::model()->findAllBySql("select * from tbl_categoria where id_padre = 0  order by destacado desc, fecha_destacado desc  limit 6") ;
        $ultimos = Producto::model()->findAllBySql("select * from tbl_producto where estado=1 and id in (select producto_id from tbl_inventario) order by id desc limit 15");
 	   $destacados = Producto::model()->findAllBySql("select * from tbl_producto where estado=1 and id in (select producto_id from tbl_inventario) order by destacado desc limit 15");
 	   Yii::app()->session['banner']=true;     
@@ -413,7 +413,7 @@ class SiteController extends Controller
 	    	if (isset($_GET['term']) && Yii::app()->session['menu']=="")
 			{
 				#$qtxt ="SELECT  distinct(CONCAT (p.nombre, ' (',c.nombre,')')) FROM tbl_producto_padre p JOIN tbl_categoria c on p.id_categoria=c.id JOIN tbl_producto  po on p.id=po.padre_id JOIN tbl_inventario i on i.producto_id=po.id    WHERE p.nombre LIKE :nombre and i.cantidad>0 limit 3";
-				$qtxt ="SELECT  distinct(CONCAT (p.nombre, ' (',c.nombre,')')) FROM tbl_producto_padre p JOIN tbl_categoria c on p.id_categoria=c.id JOIN tbl_producto  po on p.id=po.padre_id JOIN tbl_inventario i on i.producto_id=po.id JOIN tbl_almacen a on i.almacen_id=a.id JOIN tbl_empresas em on a.empresas_id=em.id   WHERE p.nombre LIKE :nombre and i.cantidad>0
+				$qtxt ="SELECT  distinct(CONCAT (p.nombre, ' (',c.nombre,')')) FROM tbl_producto_padre p JOIN tbl_categoria c on p.id_categoria=c.id JOIN tbl_producto  po on p.id=po.padre_id JOIN tbl_inventario i on i.producto_id=po.id JOIN tbl_almacen a on i.almacen_id=a.id JOIN tbl_empresas em on a.empresas_id=em.id   WHERE p.nombre LIKE :nombre or upc LIKE :nombre or nparte LIKE :nombre or tlt_codigo LIKE :nombre  and i.cantidad>0
 				 and em.id<>'".$empresas_id."'  and po.estado=1 limit 3";
 				$command =Yii::app()->db->createCommand($qtxt);
 				$command->bindValue(":nombre", '%'.$_GET['term'].'%', PDO::PARAM_STR);
