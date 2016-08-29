@@ -1,7 +1,7 @@
 
 <?php 
-$inventario=Inventario::model()->findByAttributes(array('producto_id'=>$data->id, 'precio'=>$data->minPrice));
-                $contador=Inventario::model()->countByAttributes(array('producto_id'=>$data->id)); ?>
+$inventario=Inventario::model()->findByAttributes(array('producto_id'=>$data->id, 'precio'=>$data->minPrice, 'mostrar'=>'1'));
+                $contador=Inventario::model()->countByAttributes(array('producto_id'=>$data->id, 'mostrar'=>'1')); ?>
 
 
 
