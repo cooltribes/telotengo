@@ -69,7 +69,7 @@ class EmpresasController extends Controller
 		$rol='';
 
 		if(isset(Yii::app()->session["usuarionuevo"])){
-			//$user = User::model()->findByAttributes(array('email'=>Yii::app()->session["usuarionuevo"]));
+			#$user = User::model()->findByAttributes(array('email'=>Yii::app()->session["usuarionuevo"]));
 		}
 		elseif(isset(Yii::app()->session['cliente'])){
 			$user = User::model()->findByPk(Yii::app()->session['cliente']);
@@ -224,6 +224,9 @@ class EmpresasController extends Controller
 	public function actionSolicitudFinalizada()
 	{
 		//$this->layout='//layouts/b2b';
+		if(isset($_GET['caducado']))
+			Yii::app()->user->setFlash('success', 'Estimado Cliente,<br> el enlace ha caducado debido a que tus datos fueron registrados previamente en nuestro sistema.');
+		else
 		Yii::app()->user->setFlash('success', 'Solicitud realizada con éxito. Pronto estaremos en contacto contigo.');
 
 		$this->render('solicitudFinalizada');

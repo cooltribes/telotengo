@@ -613,19 +613,19 @@ class ProductoController extends Controller
          //$empresa_id=$almacen->empresas->id;
         // $empresa_nombre=$almacen->empresas->nombre;
         //var_dump($busqueda); 
-        if(Inventario::model()->findAllByAttributes(array('producto_id'=>$producto_id), array('condition'=>'almacen_id<>'.$almacen_id)))
-            $similares=Inventario::model()->findAllByAttributes(array('producto_id'=>$producto_id), array('condition'=>'almacen_id<>'.$almacen_id)); // buscar otros
+        if(Inventario::model()->findAllByAttributes(array('producto_id'=>$producto_id, 'mostrar'=>1), array('condition'=>'almacen_id<>'.$almacen_id)))
+            $similares=Inventario::model()->findAllByAttributes(array('producto_id'=>$producto_id, 'mostrar'=>1), array('condition'=>'almacen_id<>'.$almacen_id)); // buscar otros
         else
             $similares=NULL;
         //var_dump($data);
         if(!Yii::app()->user->isAdmin())// si no es admin 
         {
         	//$otros = Inventario::model()->findAllBySql("select * from tbl_inventario where producto_id=".$producto_id." and almacen_id!=".$almacen_id." and almacen_id not in(select id from tbl_almacen where empresas_id=".$empresaPropia->id.")");
-        	$otros = Inventario::model()->findAllBySql("select * from tbl_inventario where producto_id=".$producto_id." and almacen_id!=".$almacen_id.""); 
+        	$otros = Inventario::model()->findAllBySql("select * from tbl_inventario where mostrar=1 and producto_id=".$producto_id." and almacen_id!=".$almacen_id.""); 
         }    
         else// si es admin
         {
-        	 $otros = Inventario::model()->findAllBySql("select * from tbl_inventario where producto_id=".$producto_id." and almacen_id!=".$almacen_id." and almacen_id not in(select id from tbl_almacen where empresas_id=".$empresa->id.")");
+        	 $otros = Inventario::model()->findAllBySql("select * from tbl_inventario where producto_id=".$producto_id." and almacen_id!=".$almacen_id." and mostrar=1 and almacen_id not in(select id from tbl_almacen where empresas_id=".$empresa->id.")");
         } 
            
         
@@ -1531,8 +1531,10 @@ class ProductoController extends Controller
 			
 			$inventario->costo = $_POST['Inventario']['costo'];
 			$inventario->cantidad = $_POST['Inventario']['cantidad'];
-			if($_POST['Inventario']['cantidad'])// si coloco el inventario en 0 entonces no lo muestro en la tienda
+			if($_POST['Inventario']['cantidad']==0)// si coloco el inventario en 0 entonces no lo muestro en la tienda
 				$inventario->mostrar=0;
+			else
+				$inventario->mostrar=1;
 			$inventario->garantia = $_POST['Inventario']['garantia'];
 			//$inventario->metodoEnvio = $_POST['Inventario']['metodoEnvio'];
 			

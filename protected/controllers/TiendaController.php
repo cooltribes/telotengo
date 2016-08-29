@@ -273,9 +273,9 @@ class TiendaController extends Controller
                 $vec=explode(",", $result);
                 if(count($vec)>1)
                 {
-                    foreach($vec as $vecs)
+                    foreach($vec as $vecs) //mostrar =1, para mostrar los que tienen inventario o se acabo el inventario por ventas
                     {
-                        $sqls="select min(precio) as minimo from tbl_inventario where producto_id=".$vecs;
+                        $sqls="select min(precio) as minimo from tbl_inventario where mostrar=1 and producto_id=".$vecs;
                         $consulta=Yii::app()->db->createCommand($sqls)->queryRow();
                         if($minPrice==0)
                         {
@@ -304,10 +304,10 @@ class TiendaController extends Controller
                 }
                 else
                 {
-                    if($result!="")
+                    if($result!="") //mostrar =1, para mostrar los que tienen inventario o se acabo el inventario por ventas
                     {
                         $minPrice=0;
-                        $sqls="select min(precio) as minimo from tbl_inventario where producto_id=".$result;
+                        $sqls="select min(precio) as minimo from tbl_inventario where mostrar=1 and producto_id=".$result;
                         $consulta=Yii::app()->db->createCommand($sqls)->queryRow();
                         $maxPrice=$consulta['minimo'];  
                     }
