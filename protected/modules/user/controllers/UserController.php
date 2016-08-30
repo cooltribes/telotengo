@@ -649,6 +649,16 @@ class UserController extends Controller
 		 
 		 if(isset($_GET['u']))
 		 {
+		 	 if($_GET['tipo']=="empresa" || $_GET['tipo']=="cliente") // para las invitaciones como miembro de una empresa
+		 	 {
+		 	 	$user = User::model()->findByAttributes(array('email'=>$_GET['email']));
+				$profile = $user->profile;
+				if(!($profile->first_name=="Usuario" && $profile->last_name=="Invitado" && $profile->cedula=="10111222"))
+				{
+					$this->redirect(array('/empresas/solicitudFinalizada/caducado/1'));
+				}
+		 	 }
+
 		 	 Yii::app()->session['username']=$_GET['u']; // si viene algo por get guarda el tipo de username puede ser admin o el correo de otra persona
 		 }
 

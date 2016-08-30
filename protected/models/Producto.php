@@ -544,9 +544,9 @@ class Producto extends CActiveRecord
          
     } 
     
-    public function getMinPrice(){
+    public function getMinPrice(){ // nueva validacion de que se muestre si tiene inventario o se vacio de manera natural
           
-            return Yii::app()->db->createCommand("select min(precio) from tbl_inventario where producto_id = ".$this->id)->queryScalar();
+            return Yii::app()->db->createCommand("select min(precio) from tbl_inventario where mostrar=1 and producto_id = ".$this->id)->queryScalar();
     }
     
     public function getFileTags($key = "noIndex", $index = null){
