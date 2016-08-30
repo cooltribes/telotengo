@@ -30,7 +30,7 @@ class AdminController extends Controller
 				'users'=>UserModule::getAdmins(),
 			),
 			array('allow', 
-				'actions'=>array('invitarUsuario', 'validarEmail'),
+				'actions'=>array('invitarUsuario', 'validarEmail', 'administrador'),
 				'users'=>array('@'),
 			),
 			array('deny',  // deny all users
@@ -709,6 +709,52 @@ class AdminController extends Controller
 				echo "2";
 			}
 		}
+	}
+		public function actionAdministrador()
+	{
+		$empresaUsuario=EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id));
+		if($empresaUsuario->admin==0)
+			throw new CHttpException(403,'No esta autorizado a visualizar este contenido');
+		$model = new User();
+		$model->unsetAttributes();  // clear any default values
+        $bandera=false;
+		$dataProvider = $model->busqueda($empresaUsuario->empresas_id);
+
+		/* Para mantener la paginacion en las busquedas */
+		if(isset($_GET['ajax']) && isset($_SESSION['searchBox']) && !isset($_POST['query'])){
+			$_POST['query'] = $_SESSION['searchBox'];
+			$bandera=true;
+		}
+        
+        
+		/* Para buscar desde el campo de texto */
+		if (isset($_POST['query'])){
+		  
+			$bandera=true;
+			unset($_SESSION['searchBox']);
+			$_SESSION['searchBox'] = $_POST['query'];
+            $model->email = $_POST["query"];
+            $model->username = $_POST["query"];
+            $dataProvider = $model->busqueda($empresaUsuario->empresas_id);
+        }	
+
+        if($bandera==FALSE){
+			unset($_SESSION['searchBox']);
+        }
+
+        if(isset($_GET['User']))
+            $model->attributes=$_GET['User'];
+        $sql="select * from tbl_users u join tbl_empresas_has_tbl_users em on u.id=em.users_id where em.empresas_id=121 and em.admin=0 and ((u.type=4 and u.pendiente=0) or (u.type=3 and u.pendiente=0 and u.registro_password=1) or (u.type=2 and  u.id not in (select user_id from tbl_profiles where first_name='Usuario' and last_name='Invitado' and cedula='10111222')))";
+        $manager=count(EmpresasHasUsers::model()->findAllBySql($sql));
+        $administradores=EmpresasHasUsers::model()->countByAttributes(array('admin'=>1,'empresas_id'=>$empresaUsuario->empresas_id));
+
+        $this->render('administrador',array(
+            'model'=>$model,
+            'dataProvider' => $dataProvider,
+            'empresas_id'=>$empresaUsuario->empresas_id,
+            'manager'=>$manager,
+            'administradores'=>$administradores,
+        ));
 	}
     
     

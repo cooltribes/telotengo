@@ -1020,5 +1020,40 @@ class User extends CActiveRecord
 			return false;
 		
     }
+     public function busqueda($empresas_id)
+    {
+        // Warning: Please modify the following code to remove attributes that
+        // should not be searched.
+
+        $criteria=new CDbCriteria;
+        
+        $criteria->compare('id',$this->id);
+        //$criteria->compare('username',$this->username,true);
+        $criteria->addCondition("username LIKE '%".$this->username."%'",'OR');
+        $criteria->addCondition("email LIKE '%".$this->email."%'",'OR');
+		//$criteria->addCondition("status = '1'",'AND');
+        $criteria->compare('password',$this->password);
+        //$criteria->compare('email',$this->email,true);
+        $criteria->compare('activkey',$this->activkey);
+        $criteria->compare('create_at',$this->create_at);
+        $criteria->compare('lastvisit_at',$this->lastvisit_at);
+        $criteria->compare('superuser',$this->superuser);
+        $criteria->compare('status',$this->status);
+        $criteria->compare('type',$this->type);
+        $criteria->compare('newsletter',$this->newsletter);
+		$criteria->compare('facebook_id',$this->facebook_id);
+		$criteria->compare('avatar_url',$this->avatar_url);
+		$criteria->alias = 'u';
+		$criteria->join="join tbl_empresas_has_tbl_users em on u.id=em.users_id";
+		$criteria->addCondition('em.empresas_id='.$empresas_id);
+		$criteria->addCondition('(u.type=4 and u.pendiente=0) or (u.type=3 and u.pendiente=0 and u.registro_password=1) or (u.type=2 and  u.id not in (select user_id from tbl_profiles where first_name="Usuario" and last_name="Invitado" and cedula="10111222"))');
+
+        return new CActiveDataProvider(get_class($this), array(
+            'criteria'=>$criteria,
+        	'pagination'=>array(
+				'pageSize'=>Yii::app()->getModule('user')->user_page_size,
+			),
+        ));
+    }
         
 }
