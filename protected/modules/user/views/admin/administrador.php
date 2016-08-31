@@ -33,7 +33,7 @@ $this->breadcrumbs=array(
 </style>
 
 <div class="container">
-    <h1>Panel de usuarios</h1>
+    <h1 class="margin_bottom_medium">Panel de usuarios</h1>
     <!--<hr/>-->
     <ul id="myTabs" class="nav nav-tabs margin_bottom" role="tablist">
       <li role="presentation" class="active"><a href="#">Miembros</a></li>

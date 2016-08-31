@@ -3,7 +3,7 @@ $assetUrl=Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('applicatio
         Yii::app()->getClientScript()->registerCssFile($assetUrl.'/css/redmond/jquery-ui.css');
         Yii::app()->getClientScript()->registerScriptFile($assetUrl.'/js/jquery-ui.min.js');
                                         $usuario=User::model()->findByPk(Yii::app()->user->id);
-
+$userAdmin=EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id))->admin;
 ?>
 <nav class="navbar navbar-default row-fluid seller" id="adminNav">
         <div class="container-fluid col-md-8 col-md-offset-2 no_horizontal_padding">
@@ -98,9 +98,9 @@ $assetUrl=Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('applicatio
                                                       <ul class="dropdown-menu right" aria-labelledby="dropdownMenu1">
                                                           <li><a href="<?php echo Yii::app()->baseUrl.'/user/profile/index';?>">Mi Cuenta</a></li>
                                                           <li><a href="<?php echo Yii::app()->baseUrl.'/empresas/perfilVendedor';?>">Mi Empresa</a></li>
-                                                          <?php if(EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id))):?>
-                                                              <li><a href="<?php echo Yii::app()->baseUrl; ?>/user/admin/administrador";>Panel de Usuarios</a></li>
-                                                        <?php endif;?>
+                                                         <?php if($userAdmin==1):?>
+                                                              <li><a href="<?php echo Yii::app()->baseUrl; ?>/user/admin/administrador";>Panel de control</a></li>
+                                                         <?php endif;?>
                                                           <li><a href="<?php echo Yii::app()->baseUrl; ?>/user/admin/invitarUsuario";>Invitaciones</a></li>
                                                           <li><a href="<?php echo Yii::app()->baseUrl; ?>/almacen/administrador";>Ver Almacenes</a></li>
                                                           <li><a href="<?php echo Yii::app()->baseUrl; ?>/site/changeMode";>Comprar</a></li>
