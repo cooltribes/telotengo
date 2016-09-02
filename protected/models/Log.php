@@ -121,7 +121,7 @@ class Log extends CActiveRecord
 
     public function retornarAcciones($id_user=NULL, $id_orden=NULL, $id_empresa=NULL, $id_producto=NULL, $id_email_invitacion=NULL,
      $id_masterData=NULL, $id_inbound=NULL, $id_almacen=NULL, $fecha=NULL, $accion=NULL, $id_admin=NULL, $id_producto_padre=NULL,
-     $id_marca=NULL, $id_color=NULL, $id_unidad=NULL, $id_atributo=NULL, $id_categoria=NULL)
+     $id_marca=NULL, $id_color=NULL, $id_unidad=NULL, $id_atributo=NULL, $id_categoria=NULL, $id_user_cambio=NULL)
     {
         switch ($accion)
         {
@@ -405,6 +405,10 @@ class Log extends CActiveRecord
             break;
         case 74:
             $mensaje="Has editado la información de las devoluciones de tu empresa";
+            break;
+        case 75:
+            $user = Profile::model()->findByPk($id_user_cambio);
+            $mensaje="Has cambiado el rol de ".Profile::model()->retornarNombreCompleto($user->user_id);
             break;
 
         }

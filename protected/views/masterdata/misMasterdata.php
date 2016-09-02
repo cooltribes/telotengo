@@ -61,7 +61,7 @@ $this->breadcrumbs=array(
                              <input class="form-control no_radius" id="query" name="query" type="text" placeholder="ID o nombre de usuario">                   
                          </div>
                          <div class="col-md-1 no_padding_left">
-                             <a href="#" class="btn form-control btn-darkgray white" id="btn_search_event">Buscar</a>
+                             <a href="#" class="btn form-control btn-darkgray white" id="btn_search_event"><span class="glyphicon glyphicon-search margin_left_minus"></span></a>
                          </div>
                          <div class="col-md-offset-8"></div>
                                 
