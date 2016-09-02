@@ -283,6 +283,7 @@ class ProductoController extends Controller
 			$model->nparte=$_POST['Producto']['nparte'];
 			$model->color=$_POST['Producto']['color'];
 			$model->color_id=$_POST['Producto']['color_id'];
+			$aprobado=$model->aprobado; 
 			$model->aprobado=1;
 			$contador=$model->id+1;
 			$cate=Categoria::model()->findByPk($model->padre->idCategoria->id_padre);
@@ -386,6 +387,18 @@ class ProductoController extends Controller
 		
 			if($model->save()) // lo ultimo es guardar
 			{
+				 if($aprobado==0)
+				 {
+				 	$model->refresh();
+				 	$message = new YiiMailMessage;
+					$message->activarPlantillaMandrill();					
+					$body=Yii::app()->controller->renderPartial('//mail/aprobacionProducto', array( 'model'=>$model, 'user'=>$model->creador, 'aprobar'=>1 ),true);				
+					$message->subject= "Hemos aprobado tu solicitud para la creación de un nuevo producto";
+					$message->setBody($body,'text/html');
+									
+					$message->addTo($model->creador->email);
+					Yii::app()->mail->send($message);
+				 }
 				 if(Yii::app()->user->isAdmin())
 				 {
 				 	$log=new Log;
@@ -3512,6 +3525,15 @@ class ProductoController extends Controller
 			$log->id_admin=Yii::app()->user->id;
 			$log->accion=26; //rechazo  producto    
 		    $log->save();
+
+		    $message = new YiiMailMessage;
+			$message->activarPlantillaMandrill();					
+			$body=Yii::app()->controller->renderPartial('//mail/aprobacionProducto', array( 'model'=>$model, 'user'=>$model->creador, 'aprobar'=>0 ),true);				
+			$message->subject= "Hemos rechazado tu solicitud para la creación de un nuevo producto";
+			$message->setBody($body,'text/html');
+							
+			$message->addTo($model->creador->email);
+			Yii::app()->mail->send($message);
         }
        Yii::app()->user->setFlash('success',"Ha rechazado el producto ".$model->nombre); 
         echo $model->aprobado;
