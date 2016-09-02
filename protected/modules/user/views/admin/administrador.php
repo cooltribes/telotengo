@@ -68,9 +68,9 @@ $this->breadcrumbs=array(
                         </div>
                                 
                 </form>
-                               <div class="col-md-3 col-md-offset-4 no_padding_right">
+                               <div class="col-md-2 col-md-offset-5 no_padding_right">
                      <?php
-         echo CHtml::link('Invitar usuario', $this->createUrl('invitarUsuario'), array('class'=>'btn form-control btn-orange orange_border white', 'role'=>'button'));
+         echo CHtml::link('Invitar un miembro', $this->createUrl('admin/invitarUsuario/opcion/2'), array('class'=>'btn form-control btn-orange orange_border white', 'role'=>'button'));
                 ?>
                </div>
         </div>

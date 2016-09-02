@@ -1044,8 +1044,10 @@ class User extends CActiveRecord
 		$criteria->compare('facebook_id',$this->facebook_id);
 		$criteria->compare('avatar_url',$this->avatar_url);
 		$criteria->alias = 'u';
-		$criteria->join="join tbl_empresas_has_tbl_users em on u.id=em.users_id";
-		$criteria->addCondition('em.empresas_id='.$empresas_id);
+		$criteria->join="join tbl_empresas_has_tbl_users em on u.id=em.users_id join tbl_profiles p on p.user_id=u.id";
+		$criteria->addCondition("p.first_name LIKE '%".$this->username."%'",'OR');
+		$criteria->addCondition("p.last_name LIKE '%".$this->username."%'",'OR');
+		$criteria->addCondition('em.empresas_id='.$empresas_id, 'AND');
 		$criteria->addCondition('(u.type=4 and u.pendiente=0) or (u.type=3 and u.pendiente=0 and u.registro_password=1) or (u.type=2 and  u.id not in (select user_id from tbl_profiles where first_name="Usuario" and last_name="Invitado" and cedula="10111222"))');
 
         return new CActiveDataProvider(get_class($this), array(

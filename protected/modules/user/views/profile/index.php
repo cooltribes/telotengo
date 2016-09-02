@@ -36,15 +36,14 @@
     }else
     {?>
         <div class="col-md-9 profile-center">
-            <h1>Ultimas Acciones</h1>
+            <h1 class="margin_top_small">Ultimas Acciones</h1>
         <div class="admini">
     <?php
     }?>
     
 
 <?php if($entro==0): ?>
-    <h1>Panel de Control</h1>
-    <h3>Ordenes</h3>
+    <h1 class="margin_top_small">Órdenes de la Empresa</h1>
     
     <?php $this->renderPartial('status', array(
     	    'model'=>$model,

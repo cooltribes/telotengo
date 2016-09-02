@@ -744,7 +744,7 @@ class AdminController extends Controller
 
         if(isset($_GET['User']))
             $model->attributes=$_GET['User'];
-        $sql="select * from tbl_users u join tbl_empresas_has_tbl_users em on u.id=em.users_id where em.empresas_id=121 and em.admin=0 and ((u.type=4 and u.pendiente=0) or (u.type=3 and u.pendiente=0 and u.registro_password=1) or (u.type=2 and  u.id not in (select user_id from tbl_profiles where first_name='Usuario' and last_name='Invitado' and cedula='10111222')))";
+        $sql="select * from tbl_users u join tbl_empresas_has_tbl_users em on u.id=em.users_id where em.empresas_id=".$empresaUsuario->empresas_id." and em.admin=0 and ((u.type=4 and u.pendiente=0) or (u.type=3 and u.pendiente=0 and u.registro_password=1) or (u.type=2 and  u.id not in (select user_id from tbl_profiles where first_name='Usuario' and last_name='Invitado' and cedula='10111222')))";
         $manager=count(EmpresasHasUsers::model()->findAllBySql($sql));
         $administradores=EmpresasHasUsers::model()->countByAttributes(array('admin'=>1,'empresas_id'=>$empresaUsuario->empresas_id));
 

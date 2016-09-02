@@ -23,7 +23,7 @@ echo "<tr>";
      }
 	 echo "</td>";   
     #echo '<td><img width:"60px" src="http://placehold.it/60x60"/></td>';   
-    echo "<td><b>".$data->profile->first_name.' '.$data->profile->last_name."</b><br/><b>ID:</b>".$data->id."</td>"; 
+    echo "<td><b>".$data->profile->first_name.' '.$data->profile->last_name."</b><br/></td>"; 
     echo "<td>".$data->email."<br/><b>Telf:</b>".$data->profile->telefono."</td>";
     
    $modelado=EmpresasHasUsers::model()->findByAttributes(array('users_id'=>$data->id));
@@ -51,7 +51,7 @@ echo "<tr>";
             ';
             if($modelado->admin==0)
             {?>
-                <li><a class="pointer" id=<?php echo $data->id;?>  tabindex="-1" onclick="activarAdministrador(<?php echo $data->id;?>)"><i class="glyphicon glyphicon-ok"></i> Activar administrador </a></li>
+                <li><a class="pointer" id=<?php echo $data->id;?>  tabindex="-1" onclick="activarAdministrador(<?php echo $data->id;?>)"><i class="glyphicon glyphicon-ok"></i> Hacer administrador </a></li>
 
                 <?php
             }
