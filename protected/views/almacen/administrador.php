@@ -13,7 +13,14 @@ $this->breadcrumbs=array(
 		<h1 class="col-md-10 no_padding_left">Administrar Almacenes de la Empresa <?php echo $empresa->razon_social?></h1>
         <div class="col-md-2 margin_top_medium text-right no_padding_right">
                 <?php
-        echo CHtml::link('<span class="glyphicon glyphicon-plus"></span> Crear almacen', Yii::app()->baseUrl."/almacen/create", array('class'=>'btn btn-orange white', 'role'=>'button'));
+         if($empresaUsuario->admin==1)
+         {
+         	echo CHtml::link('<span class="glyphicon glyphicon-plus"></span> Crear almacen', Yii::app()->baseUrl."/almacen/create", array('class'=>'btn btn-orange white', 'role'=>'button'));
+         	$columnaExtra='<th scope="col">Acción</th>';
+         }
+         else
+         	$columnaExtra='';
+
                 ?>
         </div>
 		     <div class="margin_top col-md-12 no_horizontal_padding">
@@ -104,7 +111,7 @@ $this->breadcrumbs=array(
 	            <th scope="col">Nombre comercial</th>
 	            <th scope="col">Sucursal</th>
 	           	<th scope="col">Ubicacion</th>
-	            <th scope="col">Acción</th>
+	            '.$columnaExtra.'
 	        </tr>
 	        </thead>
 	    {items}

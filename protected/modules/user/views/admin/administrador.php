@@ -1,6 +1,6 @@
 <?php
 $this->breadcrumbs=array(
-	"Administrar Usuarios",
+	"Panel de control",
 );
 ?>
 

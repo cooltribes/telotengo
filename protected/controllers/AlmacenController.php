@@ -274,6 +274,7 @@ class AlmacenController extends Controller
 		$almacen = new Almacen; 
 		$almacen->unsetAttributes();
 		$bandera=false;
+		$empresaUsuario=EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id));
 		$empresa=Empresas::model()->findByPk((EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id))->empresas_id));
 		$dataProvider = $almacen->searchPropio($empresa->id);
 
@@ -304,6 +305,7 @@ class AlmacenController extends Controller
 			array('model'=>$almacen,
 			'dataProvider'=>$dataProvider,
 			'empresa'=>$empresa,
+			'empresaUsuario'=>$empresaUsuario,
 		));
 	}
 }
