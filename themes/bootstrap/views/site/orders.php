@@ -86,7 +86,7 @@ foreach($bolsaInventario as $key=>$carrito)
                             	?>
                                 <tr>
                                 <td class="img"><img width="100%" src="<?php echo Yii::app()->getBaseUrl(true).$imagenPrincipal->url;?>"/></td>
-                                <td class="name"> <?php echo $bolsa->inventario->producto->nombre;?></td>
+                                <td class="name"> <a href="<?php echo Yii::app()->getBaseUrl(true);?>/producto/detalle?producto_id=<?php echo $bolsa->inventario->producto->id;?>&almacen_id=<?php echo $carrito->almacen_id;?>"><?php echo $bolsa->inventario->producto->nombre;?></a></td>
                                 <input type="hidden" id="maximo<?php echo $bolsa->id?>" value="<?php echo  $bolsa->inventario->cantidad;?>">
                                 <td class="number"><input class="cadaUno" id="<?php echo $bolsa->id;?>cantidad" value="<?php echo $bolsa->cantidad;?>" type="number">
                                <a id="<?php echo $bolsa->id;?>" onclick="actualizar(<?php echo $bolsa->id;?>, 1)" style="" class="blueLink pointer"><small>Actualizar</small></a></td>
