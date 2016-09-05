@@ -5,7 +5,7 @@
 /* @var $this FlashsaleController */
 /* @var $model Flashsale */
 $this->breadcrumbs=array(
-	'Administrar',
+	'Mis Ventas',
 );
 
 if(Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id)):
@@ -42,15 +42,15 @@ if(Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id)):
 		     </div>
 		     <div class="col-md-1 stat">
                  <span class="value"><?php echo $pendiente;?></span>
-                 <span class="legend">Pendiente</span>
+                 <span class="legend">Pendientes</span>
              </div>
 		     <div class="col-md-1 stat">
                   <span class="value"><?php echo $rechazado;?></span>
-                 <span class="legend">Rechazados</span>
+                 <span class="legend">Rechazadas</span>
              </div>
              <div class="col-md-1 stat">
                   <span class="value"><?php echo $aprobado;?></span>
-                 <span class="legend">Aprobados</span>
+                 <span class="legend">Aprobadas</span>
              </div>
              <!--
              <div class="col-md-1 stat">

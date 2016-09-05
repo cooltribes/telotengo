@@ -37,8 +37,12 @@ $this->breadcrumbs=array(
     <!--<hr/>-->
     <ul id="myTabs" class="nav nav-tabs margin_bottom" role="tablist">
       <li role="presentation" class="active"><a href="#">Miembros</a></li>
-      <li role="presentation" class=""><a href="misVentas">Ordenes</a></li>
-
+     <?php if(Yii::app()->authManager->checkAccess("comprador", Yii::app()->user->id) || Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id)): ?>
+      <li role="presentation" class=""><a href="<?php echo Yii::app()->baseUrl; ?>/controlPanel/compras">Compras</a></li>
+  <?php endif;?>
+    <?php if(Yii::app()->authManager->checkAccess("vendedor", Yii::app()->user->id) || Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id)): ?>
+      <li role="presentation" class=""><a href="<?php echo Yii::app()->baseUrl; ?>/controlPanel/ventas">Ventas</a></li>
+  <?php endif;?>
     </ul>
 
 	 <div class="row-fluid clearfix stats">

@@ -188,7 +188,7 @@ $this->breadcrumbs=array(
         data.addColumn('string', 'Fecha');
         data.addColumn('number', 'Aceptada');
         data.addColumn('number', 'Pendiente');
-        data.addColumn('number', 'Cancelada');
+        data.addColumn('number', 'Rechazada');
 
         for(i = 0; i < vectorFecha.length; i++)
           data.addRow([vectorFecha[i],vectorOrdenAceptada[i],vectorOrdenPendiente[i],vectorOrdenCancelada[i]]);

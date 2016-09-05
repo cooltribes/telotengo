@@ -120,7 +120,7 @@
                     {
                       echo CHtml::submitButton('Aceptar', array('id'=>'aceptar','name'=>$model->id,'class'=>'btn-orange btn orange_border margin_left white')); 
                     } 
-                    echo CHtml::submitButton('Cancelar', array('id'=>'cancelar','name'=>$model->id,'class'=>'btn btn-darkgray margin_left')); ?> 
+                    echo CHtml::submitButton('Rechazar', array('id'=>'cancelar','name'=>$model->id,'class'=>'btn btn-darkgray margin_left')); ?> 
                 </div>
                     
             <?php   
