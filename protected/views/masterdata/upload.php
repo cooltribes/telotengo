@@ -1,6 +1,6 @@
 <?php
 $this->breadcrumbs = array(
-    'Carga Inventario',
+    'Solicitud masiva de productos',
 );
 ?>
 <!-- FLASH ON --> 

@@ -21,7 +21,7 @@
 </script>
 
 
-<?php $this->breadcrumbs=array("Inventario"=>array("producto/productoInventario"),'Nuevo Producto'); ?> 
+<?php $this->breadcrumbs=array('Nuevo Producto'); ?> 
 
 <?php
 
