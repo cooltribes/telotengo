@@ -12,28 +12,36 @@ $this->breadcrumbs=array(
 
 <div class="container-fluid">   
   <div>
-  <h1 class="orderTitle">Panel de control de Ordenes</h1>
-  <hr>
+  <h1 class="margin_bottom_medium">Panel de control de Ordenes</h1>
+  <ul id="myTabs" class="nav nav-tabs margin_bottom" role="tablist">
+      <li role="presentation" class=""><a href="<?php echo Yii::app()->baseUrl; ?>/user/admin/administrador">Miembros</a></li>
+     <?php if(Yii::app()->authManager->checkAccess("comprador", Yii::app()->user->id) || Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id)): ?>
+      <li role="presentation" class=""><a href="<?php echo Yii::app()->baseUrl; ?>/controlPanel/compras">Compras</a></li>
+  <?php endif;?>
+    <?php if(Yii::app()->authManager->checkAccess("vendedor", Yii::app()->user->id) || Yii::app()->authManager->checkAccess("compraVenta", Yii::app()->user->id)): ?>
+      <li role="presentation" class="active"><a href="<?php echo Yii::app()->baseUrl; ?>/controlPanel/ventas">Ventas</a></li>
+  <?php endif;?>
+    </ul>
      <div class="clearfix stats">
          <div class="col-md-1 stat"> <!-- col-xs-1 stat -->
              <span class="value"><?php echo $todasOrdenes;?></span>
              <span class="legend">Totales</span>
          </div>
          <div class="col-md-1 stat">
-                 <span class="value"><?php echo Orden::model()->countByAttributes(array('estado'=>0))?></span>
+                 <span class="value"><?php echo $todasOrdenesPendientes;?></span>
                  <span class="legend">Pendientes</span>
              </div>
          <div class="col-md-1 stat">
-                 <span class="value"><?php echo Orden::model()->countByAttributes(array('estado'=>2))?></span>
+                 <span class="value"><?php echo $todasOrdenesRechazadas;?></span>
                  <span class="legend">Rechazadas</span>
              </div>
              <div class="col-md-1 stat">
-                 <span class="value"><?php echo Orden::model()->countByAttributes(array('estado'=>1))?></span>
+                 <span class="value"><?php echo $todasOrdenesAprobadas;?></span>
                  <span class="legend">Aprobadas</span>
              </div>
 
      </div>  
-
+ <hr>
   
   </div>
   
@@ -62,38 +70,7 @@ $this->breadcrumbs=array(
     
     
   <div class="charts-region">
-    <!--<hr>
-    <h3 class="bolder">Empresas registradas</h3>  
-    <div class="row">
-      <div class="col-md-12 ">
-​        <div id="empresas"  style="width: 1000px;"></div>
-        <div class="row margin_top_small">
-              <div class="col-md-2 col-md-offset-3">
-                <label class="control-label">Interval</label>    
-
-              </div>
-              <div class="col-md-6 text-rigth">
-                
-
-                <div class="btn-group" data-toggle="buttons">
-                  <label class="btn btn-default ">
-                    <input type="radio" name="interval" id="option1" value="years" autocomplete="off"> Año
-                  </label>
-                  <label class="btn btn-default ">
-                    <input type="radio" name="interval" id="option2" value="months" autocomplete="off"> Mes
-                  </label> 
-                  <label class="btn btn-default active">
-                    <input type="radio" name="interval" id="option2" value="days" autocomplete="off" checked=""> Dia
-                  </label>          
-                </div>
-
-              </div>
-        </div>
-
-      </div>
-           
-    </div>-->
-    <hr>
+   
     <h3 class="bolder">Ordenes registradas</h3>    
     <div class="row">
       <div class="col-md-11 col-md-offset-1">
@@ -101,21 +78,9 @@ $this->breadcrumbs=array(
       </div>      
     </div>
     <hr>
-    <h3 class="bolder">Ordenes Generadas por tipo de usuario</h3>    
-    <div class="row">
-      <div class="col-md-11 col-md-offset-1">
-​         <div id="ordenesUsuarios"  style="width: 1000px;"></div>
-      </div>          
-    </div>
     
-    <hr>
-    
-    <div class="row">
-      <div class="col-md-6 chart_status col-md-offset3 ">
-        <h3 class="bolder" style="margin-left: 16px;">Tasa de abandono</h3>   
-​         <div id="tasaAbandonoIntencionCompra" style="margin-top:-31px;"></div>
-      </div>      
-      <div class="col-md-6">
+    <div class="row">    
+      <div class="col-md-12">
           <h3 class="bolder col-md-6 chart_status col-md-offset3">Estadisticas</h3> 
 ​        <table class="table" width="100%" style="margin-top:69px;">
         <thead>
@@ -126,7 +91,7 @@ $this->breadcrumbs=array(
         </thead>
         <tbody>
           <tr>
-            <td>Órdenes generadas</td>
+            <td>Órdenes</td>
             <td><?php echo $todasOrdenes;?></td>
           </tr>
           <tr>
@@ -149,10 +114,6 @@ $this->breadcrumbs=array(
             <td>Monto total de órdenes pendientes</td>
             <td><?php echo Funciones::formatPrecio($sumatoriaMontosPendientes, false); echo " Bs"?></td>
           </tr>
-          <tr>
-            <td>Tasa de conversión</td>
-            <td><?php echo round($todasOrdenes*100/$totaVisitaCompradorVendedor_Comprador,2); echo " %";?></td>
-          </tr>
         </tbody>
       </table>
       </div>      
@@ -170,10 +131,7 @@ $this->breadcrumbs=array(
     google.charts.load('current', {'packages':['corechart']});
 
     google.charts.setOnLoadCallback(ordenes);
-    google.charts.setOnLoadCallback(ordenesUsuarios);
-    google.charts.setOnLoadCallback(tasaAbandonoIntencionCompra);
 
-  
 
     function ordenes() 
     {
@@ -207,63 +165,6 @@ $this->breadcrumbs=array(
         var chart = new google.visualization.AreaChart(document.getElementById('ordenes'));
         chart.draw(data, options);
     }
-
-    function ordenesUsuarios() 
-    {
-            var vectorOrdenCompraVenta=<?php echo json_encode($vectorOrdenCompraVenta);?>;
-            var vectorOrdenComprador=<?php echo json_encode($vectorOrdenComprador);?>;
-            var vectorFecha=<?php echo json_encode($vectorFecha);?>;
-            var maxNumbPorRol=<?php echo $maxNumbPorRol;?>;
-
-            var data = new google.visualization.DataTable();
-        //data.addColumn('number', 'Usuarios');
-        data.addColumn('string', 'Fecha');
-        data.addColumn('number', 'CompraVenta');
-        data.addColumn('number', 'Comprador');
-
-        for(i = 0; i < vectorFecha.length; i++)
-          data.addRow([vectorFecha[i],vectorOrdenCompraVenta[i],vectorOrdenComprador[i]]);
-
-        if(maxNumbPorRol<4) // 4 es el numero minimo para que la grafica se vea bien
-          maxNumbPorRol=4;
-
-        var options = {
-         // title: 'Usuarios',
-          hAxis: {title: 'Fecha',  titleTextStyle: {color: '#333'}},
-          vAxis: {title: 'Ordenes', minValue: 0, maxValue:maxNumbPorRol, format:'0'},
-          legend: {position: 'top', alignment: 'center'},
-
-        };
-        var chart = new google.visualization.AreaChart(document.getElementById('ordenesUsuarios'));
-        chart.draw(data, options);
-    }
-
-        function tasaAbandonoIntencionCompra() 
-      {
-
-        // Create the data table.
-        var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Topping');
-        data.addColumn('number', 'Slices');
-        data.addRows([
-          ['Intencion de compras abandonadas', <?php echo $intencionCompraAbandonada;?>],
-          ['Intenciones de compra no abandonadas', <?php echo $intencionCompraTotal-$intencionCompraAbandonada;?>],
-        ]);
-
-        // Set chart options
-var options = {
-                       'width':400,
-                       'height':400,'is3D':true,'legend':'right','chartArea': {'position':'top','width': '70%', 'height': '70%'}};
-
-
-        // Instantiate and draw our chart, passing in some options.
-        var chart = new google.visualization.PieChart(document.getElementById('tasaAbandonoIntencionCompra'));
-        chart.draw(data, options);
-      }
-
-
-
-
 
 </script>
 

@@ -996,6 +996,7 @@ class EmpresasController extends Controller
         	{
         		$model=Empresas::model()->findByPk($id);
         		$empresaPropia=0;
+        		$admin=EmpresasHasUsers::model()->findByAttributes(array('empresas_id'=>$model->id))->admin;
 
         	}
         	if(isset($_POST['imagen']))

@@ -40,7 +40,9 @@ class Almacen extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('ubicacion, alias, ciudad_id, provincia_id, nombre', 'required'),
+			array('ubicacion , ciudad_id, provincia_id', 'required'),
+			array('alias', 'required','message'=>'Sucursal no puede ser nulo.'),
+			array('nombre', 'required','message'=>'Nombre comercial no puede ser nulo.'),
 			array('empresas_id, ciudad_id, provincia_id', 'numerical', 'integerOnly'=>true),
 			array('ubicacion', 'length', 'max'=>245),
 			array('alias', 'length', 'max'=>100),
