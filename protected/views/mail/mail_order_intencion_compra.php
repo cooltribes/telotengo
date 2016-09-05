@@ -4,7 +4,7 @@
     <br>
     <?php echo $this->renderPartial("detalleMail", array('model'=>$orden, 'productoOrden'=>OrdenHasInventario::model()->findAllByAttributes(array('orden_id'=>$orden->id)), 'infoFrom'=>"Comprador"),true);?>
    <div style="margin-top: 15px;"> 
-  	 Para verificarla dirígete a tu administrador de órdenes. <br><br>
+  	 Para verificarla dirígete a tu administrador de <a href="<?php echo Yii::app()->getBaseUrl(true);?>/orden/misVentas">órdenes.</a><br><br>
   	 ¡Gracias por vender en Telotengo!
    </div>
 

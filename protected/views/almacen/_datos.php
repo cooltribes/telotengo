@@ -1,14 +1,17 @@
 <?php
 
 $ima ='';
-$empresaUsuario=EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id));
+if(Yii::app()->user->isAdmin())
+	$admin=1;
+else
+	$admin=EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id))->admin;
 	echo"<tr>";
 
 	   	echo "<td>".$data->empresas->razon_social."</td>";
 		echo "<td>".$data->nombre."</td>";
 		echo "<td>".$data->alias."</td>";
 	   	echo "<td>".$data->ubicacion."</td>";
-		if($empresaUsuario->admin==1):
+		if($admin==1):
 			echo '<td>
 
 			<div class="dropdown">
