@@ -990,11 +990,13 @@ class EmpresasController extends Controller
         	{
         		$model=Empresas::model()->findByPk((EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id))->empresas_id));
         		$empresaPropia=1;
+        		$admin=EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id))->admin;
         	}
         	else
         	{
         		$model=Empresas::model()->findByPk($id);
         		$empresaPropia=0;
+        		$admin=EmpresasHasUsers::model()->findByAttributes(array('empresas_id'=>$model->id))->admin;
 
         	}
         	if(isset($_POST['imagen']))
@@ -1032,7 +1034,9 @@ class EmpresasController extends Controller
 					
 				}
 			} 
-        	$this->render('perfilVendedor', array('model'=>$model, 'empresaPropia'=>$empresaPropia, 'avatar'=>$avatar));
+        	$this->render('perfilVendedor', array(
+        									'model'=>$model, 'empresaPropia'=>$empresaPropia, 
+        									'avatar'=>$avatar, 'admin'=>$admin));
         }
 
     public function actionEditField()

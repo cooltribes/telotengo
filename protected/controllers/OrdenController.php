@@ -1268,7 +1268,7 @@ class OrdenController extends Controller
 		{
 			$orden=Orden::model()->findByPk($stack);
 			$store=Almacen::model()->findByPk($orden->almacen_id);
-			$vendedoraEmp=EmpresasHasUsers::model()->findAllByAttributes(array('empresas_id'=>$store->empresas_id));
+			$vendedoraEmp=EmpresasHasUsers::model()->findAllByAttributes(array('empresas_id'=>$store->empresas_id, 'admin'=>1));
 			foreach($vendedoraEmp as $local)
 			{
 				$message = new YiiMailMessage;
@@ -1415,7 +1415,7 @@ class OrdenController extends Controller
 		//enviar correo para el usuario vendedor
 		
 		$almacen=Almacen::model()->findByPk($almacen_id); /// empresa de quien esta vendiendo
-		$vendedoraEmp=EmpresasHasUsers::model()->findAllByAttributes(array('empresas_id'=>$almacen->empresas_id));
+		$vendedoraEmp=EmpresasHasUsers::model()->findAllByAttributes(array('empresas_id'=>$almacen->empresas_id, 'admin'=>1));
 		foreach($vendedoraEmp as $local)
 		{
 			$message = new YiiMailMessage;

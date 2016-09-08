@@ -36,15 +36,14 @@
     }else
     {?>
         <div class="col-md-9 profile-center">
-            <h1>Ultimas Acciones</h1>
+            <h1 class="margin_top_small">Ultimas Acciones</h1>
         <div class="admini">
     <?php
     }?>
     
 
 <?php if($entro==0): ?>
-    <h1>Panel de Control</h1>
-    <h3>Ordenes</h3>
+    <h1 class="margin_top_small">Órdenes de la Empresa</h1>
     
     <?php $this->renderPartial('status', array(
     	    'model'=>$model,
@@ -119,7 +118,7 @@
                 <td><?php echo Log::model()->retornarAcciones($ult->id_user,$ult->id_orden, $ult->id_empresa, $ult->id_producto, 
                 $ult->id_email_invitacion, $ult->id_masterData, $ult->id_inbound, $ult->id_almacen, $ult->fecha, $ult->accion, 
                 $ult->id_admin, $ult->id_producto_padre, $ult->id_marca, $ult->id_color, $ult->id_unidad, $ult->id_atributo, 
-                $ult->id_categoria);?></td>
+                $ult->id_categoria, $ult->id_user_cambio);?></td>
             </tr>
         <?php endforeach;?>
         </tbody>

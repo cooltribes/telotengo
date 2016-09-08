@@ -30,7 +30,7 @@ class UserController extends Controller
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
 				'actions'=>array('tucuenta','favoritos','quitarfav','usuariostienda','createuser','deleteuser','editrol','avatar',
-								'agregarsocial','deletesocial','privacidad','notificaciones','enviarbolsa', 'activarDesactivar', 'solicitarDocumentos'),
+								'agregarsocial','deletesocial','privacidad','notificaciones','enviarbolsa', 'activarDesactivar', 'solicitarDocumentos', 'activarAdministrador'),
 				'users'=>array('@'),
 			),
 			array('deny',  // deny all users
@@ -896,6 +896,24 @@ class UserController extends Controller
 		$message->addTo($user->email);
 		Yii::app()->mail->send($message);
 		#Yii::app()->user->setFlash('success',"Correo electronico enviado satisfactoriamente");
+    }
+
+     public function actionActivarAdministrador()
+    {
+        $id=$_POST['id'];
+        $model=EmpresasHasUsers::model()->findByAttributes(array('users_id'=>$id));
+        $model->admin=1;
+        $model->save();
+		$model->refresh();
+
+		$log=new Log;
+		$log->id_user=Yii::app()->user->id;
+		$log->fecha=date('Y-m-d G:i:s');
+		$log->id_user_cambio=$id;
+		$log->accion=75;
+		$log->save();
+		
+        
     }
 
 

@@ -3,7 +3,7 @@
         width:100%; 
     }
 </style>
-<h1>Mi Cuenta</h1>
+<!--<h1>Mi Cuenta</h1>-->
     <div class="avatar margin_top">
         <div class="image text-center">
             <?php 
@@ -107,6 +107,7 @@
                 <?php endif;?>
                 </span> 
             </div> -->
+    <?php if(Yii::app()->user->id==$identificador):?>        
             <div class="separator"></div>
              <!-- -->
             <div class="row-fluid item clearfix margin_top_small">
@@ -140,17 +141,18 @@
                 <?php endif;?>
                 </span> 
         </div>-->
-       
+    <?php endif;?>
     </div>
+    <?php if(Yii::app()->user->id==$identificador):?> 
      <a href="<?php echo Yii::app()->createUrl('user/admin/invitarUsuario', array("opcion"=>1));?>"><input class="btn-black btn btn-danger btn-large button-form" type="submit" name="yt0" value="<?php if(Yii::app()->user->isAdmin()) echo 'Invita a una empresa';else echo 'Invita a tus clientes';?>"></a>   
-      <a href="<?php echo Yii::app()->createUrl('user/admin/invitarUsuario', array("opcion"=>2));?>"><input class="btn-black btn btn-danger btn-large button-form" type="submit" name="yt0" value="<?php if(Yii::app()->user->isAdmin()) echo 'Invita a un miembro';else echo 'Miembros de tu empresas';?>"> </a> 
+      <a href="<?php echo Yii::app()->createUrl('user/admin/invitarUsuario', array("opcion"=>2));?>"><input class="btn-black btn btn-danger btn-large button-form" type="submit" name="yt0" value="<?php if(Yii::app()->user->isAdmin()) echo 'Invita a un miembro';else echo 'Miembros de tu empresa';?>"> </a> 
     <div id="changeAvatar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none; min-height: 550px;">
         <?php echo $this->renderPartial('avatar', array( 'model'=>$model ),true); ?>
     </div>
     <div id="changeField" class="modal fade miniModal " tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;" >
         
     </div>
-    
+    <?php endif;?>
     <script>
       function  editField(field,fname){
  

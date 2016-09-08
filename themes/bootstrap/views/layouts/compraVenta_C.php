@@ -3,6 +3,7 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
 // $model = Categoria::model()->findAllBySql("select * from tbl_categoria where id_padre in (select id from tbl_categoria where id_padre=0)  order by nombre asc");
  $model=Categoria::model()->findAllByAttributes(array('id_padre'=>0), array('order'=>' id asc'));
  $models=Categoria::model()->findAllByAttributes(array('destacado'=>1), array('order'=>' id asc'));
+ $userAdmin=EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id))->admin;
 ?>
 <div class="navbar row-fluid b2b clearfix no_margin_bottom" >
     <div class="col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 col-xs-8 col-xs-offset-2 no_horizontal_padding" id="headerContainer">
@@ -123,6 +124,9 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
                                               <ul class="dropdown-menu right" aria-labelledby="dropdownMenu1">
                                                   <li><a href="<?php echo Yii::app()->baseUrl.'/user/profile/index';?>">Mi Cuenta</a></li>
                                                    <li><a href="<?php echo Yii::app()->baseUrl.'/empresas/perfilVendedor';?>">Mi Empresa</a></li>
+                                                   <?php if($userAdmin==1):?>
+                                                        <li><a href="<?php echo Yii::app()->baseUrl; ?>/user/admin/administrador";>Panel de control</a></li>
+                                                   <?php endif;?>
                                                   <li><a href="<?php echo Yii::app()->baseUrl; ?>/user/admin/invitarUsuario";>Invitaciones</a></li>
                                                   <li><a href="<?php echo Yii::app()->baseUrl; ?>/almacen/administrador";>Ver Almacenes</a></li>
                                                   <li><a href="<?php echo Yii::app()->baseUrl; ?>/site/changeMode";>Vender</a></li>

@@ -14,7 +14,7 @@
                         }
              ?>
         </div>
-        <?php if($empresaPropia==1): // si es igual edite, del resto no?>
+        <?php if($empresaPropia==1 && $admin==1): // si es igual edite, del resto no?>
         	<div class="change"> 
                 	<a onclick="$('#changeAvatar').modal()">Cambiar foto</a>
        		 </div>
@@ -75,7 +75,7 @@
                 </span>
                 
                 <span class="col-md-3 text-center no_horizontal_padding edit">
-                <?php if($empresaPropia==1): // si es igual edite, del resto no?>
+                <?php if($empresaPropia==1 && $admin==1): // si es igual edite, del resto no?>
                 	<a onclick="editField(4,'Teléfono',<?php echo $model->id; ?>)">Editar</a>
                 <?php endif;?>
 
@@ -93,7 +93,7 @@
                 </span>
                 
                 <span class="col-md-3 text-center no_horizontal_padding edit">
-                <?php if($empresaPropia==1): // si es igual edite, del resto no?>
+                <?php if($empresaPropia==1 && $admin==1): // si es igual edite, del resto no?>
                     <a onclick="editField(5,'web', <?php echo $model->id ?>)">Editar</a>
                 <?php endif;?>
 
@@ -102,7 +102,7 @@
         <?php
             }else
             {
-               if($empresaPropia==1)
+               if($empresaPropia==1 && $admin==1)
                {?>
                 <div class="row-fluid item clearfix margin_top_small">
                     <span class="col-md-1 no_horizontal_padding icon">

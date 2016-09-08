@@ -41,12 +41,12 @@
 		</div>
 		
         <div class="form-group">
-            <?php echo $form->textField($model,'nombre',array('class'=>'form-control','placeholder'=>'Indique el nombre de este almacén')); ?>
+            <?php echo $form->textField($model,'nombre',array('class'=>'form-control','placeholder'=>' Indique el nombre comercial de este almacén')); ?>
             <?php echo $form->error($model,'nombre'); ?>
         </div>
 
 		<div class="form-group">
-			<?php echo $form->textField($model,'alias',array('class'=>'form-control','placeholder'=>'Establezca un alias para este almacén')); ?>
+			<?php echo $form->textField($model,'alias',array('class'=>'form-control','placeholder'=>'Establezca un nombre alternativo para este almacén (Sucursal)')); ?>
 			<?php echo $form->error($model,'alias'); ?>
 		</div>
 				

@@ -16,7 +16,7 @@
 <?php } ?> 
 
 <div class="col-md-3 profile-leftBar">
-    <?php $this->renderPartial('left_bar',array('model'=>$model, 'empresaPropia'=>$empresaPropia)); ?> 
+    <?php $this->renderPartial('left_bar',array('model'=>$model, 'empresaPropia'=>$empresaPropia, 'admin'=>$admin)); ?> 
 </div>
 <?php if($avatar===true):
     echo "<script>$('#layout-avatar').attr('src','".Yii::app()->getBaseUrl(true);
@@ -31,7 +31,7 @@
      ?>
         <div class="col-md-9 profile-center margin_top_large">
 
-    <?php $this->renderPartial('informacionGeneral',array('model'=>$model, 'empresaPropia'=>$empresaPropia)); ?> 
+    <?php $this->renderPartial('informacionGeneral',array('model'=>$model, 'empresaPropia'=>$empresaPropia, 'admin'=>$admin)); ?> 
     </div>
 <script>
     

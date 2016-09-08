@@ -164,7 +164,7 @@ const SECTOR_EDUCACION = 16;
 			'almacens' => array(self::HAS_MANY, 'Almacen', 'empresas_id'),
 			'calificacionEmpresas' => array(self::HAS_MANY, 'CalificacionEmpresa', 'empresas_id'),
 			'documentoses' => array(self::HAS_MANY, 'Documentos', 'empresas_id'),
-			'empresasHasTblUsers' => array(self::HAS_MANY, 'EmpresasHasTblUsers', 'empresas_id'),
+			'empresasHasTblUsers' => array(self::HAS_MANY, 'EmpresasHasUsers', 'empresas_id'),
 			'bolsa' => array(self::HAS_ONE, 'Bolsa', 'empresas_id'),
 			'city' => array(self::BELONGS_TO, 'Ciudad', 'ciudad'),
 		);

@@ -77,7 +77,7 @@
                 <div style="border: solid 1px #666; font-size: 21px; padding: 10px 5%">
                    <div style="width:100%; height:30px; line-height:30px; vertical-align:middle">
                       <div style="width:50%; float:left">ORDEN #<?php echo $model->id;?></div>
-                      <div style="width:50%; float:left; text-align:right"><?php echo $model->almacen->empresas->razon_social;?></div>
+                      <div style="width:50%; float:left; text-align:right"><?php echo $model->almacen->empresas->razon_social; if($infoFrom=="Comprador")echo " (".$model->almacen->alias.")";?></div>
                    </div>
                 </div>
                 <div style="border-left: solid 1px #666; border-right: solid 1px #666; padding: 10px 5%;">

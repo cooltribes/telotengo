@@ -223,13 +223,29 @@ class ProfileController extends Controller
 				$model=User::model()->findByPk($ide);
 				$identificador=	$ide;
 				$way=1;
-			}
-					
+			}		
 			else
 			{
-				$model=User::model()->findByPk(Yii::app()->user->id);
-				$identificador=	Yii::app()->user->id;
-				$way=2;
+				if($_GET)
+				{
+					$miEmpresa=EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id));
+					$otraEmpresa=EmpresasHasUsers::model()->findByAttributes(array('users_id'=>$ide));
+					if($miEmpresa->empresas_id==$otraEmpresa->empresas_id && $miEmpresa->admin==1)
+					{
+						$model=User::model()->findByPk($ide);
+						$identificador=	$ide;
+					}
+					else
+						throw new CHttpException(403,'No esta autorizado a visualizar este contenido');
+
+				}
+				else
+				{
+					$model=User::model()->findByPk(Yii::app()->user->id);
+					$identificador=	Yii::app()->user->id;
+					$way=2;
+				}
+
 			}
 				
 				
