@@ -31,12 +31,12 @@ class ProductoController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('seleccion','busqueda','create','hijos','imagenes','seo','create','agregarCaracteristica','eliminarCaracteristica','agregarInventario',
+				'actions'=>array('seleccion','busqueda','hijos','imagenes','agregarCaracteristica','eliminarCaracteristica','agregarInventario',
 								 'agregarInventarioAjax','eliminarInventario','multi','orden', 'clasificar', 'niveles', 'nivelPartial', 'crearProducto', 'autoComplete','verificarPadre', 'verificarNombre', 'autoCompleteVer', 'autoCompleteModelo', 'ultimasCategorias', 'verificarTodaInformacion', 'detalle', 'verificarCampos', 'verificarSkuCadaEmpresa'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete','update','eliminar','orden','aprobar','rechazar','poraprobar','calificaciones','eliminarCalificacion','importar', 'details', 'caracteristicas','activarDesactivar', 'activarDesactivarDestacado', 'verDisponibilidad','revisionNuevos','aprobarNuevo', 'rechazarProducto', 'modificarProducto'),
+				'actions'=>array('admin','delete','update','eliminar','orden','aprobar','rechazar','poraprobar','calificaciones','eliminarCalificacion','importar', 'details', 'caracteristicas','activarDesactivar', 'activarDesactivarDestacado', 'verDisponibilidad','revisionNuevos','aprobarNuevo', 'rechazarProducto', 'modificarProducto', 'create', 'seo'),
 				#'users'=>array('admin'),
 				'roles'=>array('admin'),
 			),
@@ -2246,7 +2246,7 @@ class ProductoController extends Controller
 			} 
             else
             {
-                Yii::app()->user->setFlash('success', 'Se han cargado los datos con exito, el producto debe ser aprobado para visualizarlo.');
+                Yii::app()->user->setFlash('success', 'La solicitud fue enviada exitosamente. Debes esperar a que el producto sea aprobado para visualizarlo y cargarle inventario.');
                 $this->redirect(array('productoInventario')); 
             }
             

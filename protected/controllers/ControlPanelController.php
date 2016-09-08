@@ -709,7 +709,7 @@ class ControlPanelController extends Controller
 		$todasOrdenesPendientes=count(Orden::model()->findAllBySql($sql));
 		$sql="select  * from tbl_orden where estado=1 and empresa_id=".$empresa->id;
 		$todasOrdenesAprobadas=count(Orden::model()->findAllBySql($sql));
-		$$sql="select  * from tbl_orden where estado=2 and empresa_id=".$empresa->id;
+		$sql="select  * from tbl_orden where estado=2 and empresa_id=".$empresa->id;
 		$todasOrdenesRechazadas=count(Orden::model()->findAllBySql($sql));
 
 
