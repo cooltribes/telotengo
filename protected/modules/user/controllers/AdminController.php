@@ -714,7 +714,7 @@ class AdminController extends Controller
 	{
 		$empresaUsuario=EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id));
 		if($empresaUsuario->admin==0)
-			throw new CHttpException(403,'No esta autorizado a visualizar este contenido');
+			throw new CHttpException(403,'No está autorizado a visualizar este contenido');
 		$model = new User();
 		$model->unsetAttributes();  // clear any default values
         $bandera=false;

@@ -34,14 +34,18 @@ echo "<tr>";
     {
         $modelado=EmpresasHasUsers::model()->findByAttributes(array('users_id'=>$data->id));
         if($modelado):
+            if($modelado->admin==1)
+                $cargo="Administrador de la empresa";
+            else
+                $cargo="Manager";
          echo "<td>".$modelado->empresas->razon_social."</td>";
-         echo "<td>".$modelado->rol."</td>";
+         echo "<td>".$cargo."</td>";
         else:
           echo "<td>N/D</td><td>N/D</td>";  
         endif;
        
     }
-    
+    echo "<td>".$modelado->rol."</td>";
     
    /*  echo "<td>";
         switch ($data->type) {
@@ -83,14 +87,6 @@ echo "<tr>";
         echo "<td>".$fecha."</td>";   
     }
 
-    if($data->status==1)
-    {
-        echo "<td> <div id='".$data->id."s"."'> Activo </div></td>";
-    }
-    else 
-    {
-        echo "<td> <div id='".$data->id."s"."'> Inactivo </div></td>";
-    }
 
     if($data->superuser!=1)
     {   

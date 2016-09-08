@@ -16,7 +16,7 @@ $this->breadcrumbs=array(
       transform: rotate(90deg);
       height: 100%;
       width: 100%;
-      color: #0071b9;
+      color: black;
     }
 </style>
 <div class="row-fluid clearfix">
@@ -32,7 +32,7 @@ $this->breadcrumbs=array(
    	<?php
 	 if($code=="403")
 	{?>
-		No esta autorizado a visualizar este contenido
+		No está autorizado a visualizar este contenido
 	<?php
 	}
 	else

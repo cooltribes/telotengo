@@ -165,7 +165,7 @@ class TiendaController extends Controller
 
 	public function actionIndex(){
         if(!Yii::app()->user->id)
-             throw new CHttpException(403,'No esta autorizado a visualizar este contenido');
+             throw new CHttpException(403,'No está autorizado a visualizar este contenido');
         $filter=$_GET;
         $condition = array();
         $r1=false;
