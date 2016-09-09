@@ -84,15 +84,15 @@ foreach($bolsaInventario as $key=>$carrito)
                                 	$bolsa->refresh();
                                 }
                             	?>
-                                <tr>
+                                <tr id="bolsas<?php echo $bolsa->id?>">
                                 <td class="img"><img width="100%" src="<?php echo Yii::app()->getBaseUrl(true).$imagenPrincipal->url;?>"/></td>
                                 <td class="name"> <a href="<?php echo Yii::app()->getBaseUrl(true);?>/producto/detalle?producto_id=<?php echo $bolsa->inventario->producto->id;?>&almacen_id=<?php echo $carrito->almacen_id;?>"><?php echo $bolsa->inventario->producto->nombre;?></a></td>
                                 <input type="hidden" id="maximo<?php echo $bolsa->id?>" value="<?php echo  $bolsa->inventario->cantidad;?>">
                                 <td class="number"><input class="cadaUno" id="<?php echo $bolsa->id;?>cantidad" value="<?php echo $bolsa->cantidad;?>" type="number">
-                               <a id="<?php echo $bolsa->id;?>" onclick="actualizar(<?php echo $bolsa->id;?>, 1)" style="" class="blueLink pointer"><small>Actualizar</small></a></td>
+                               <a id="<?php echo $bolsa->id;?>" onclick="actualizar(<?php echo $bolsa->id;?>, 1, <?php echo $bolsa->almacen_id;?>)" style="" class="blueLink pointer"><small>Actualizar</small></a></td>
                                 <td class="number" id="unitario<?php echo $bolsa->id;?>"><?php echo $bolsa->inventario->formatPrecio;?></td></td>
                                 <td class="number highlighted" id="subtotal<?php echo $bolsa->id;?>"> <?php echo Funciones::formatPrecio($bolsa->inventario->precio*$bolsa->cantidad); ?></td>
-                                <td class="link"><a onclick="actualizar(<?php echo $bolsa->id;?>, 2)">Eliminar</a></td>
+                                <td class="link"><a onclick="actualizar(<?php echo $bolsa->id;?>, 2, <?php echo $bolsa->almacen_id;?>)">Eliminar</a></td>
                                 
                                 <?php $suma+=$bolsa->inventario->precio*$bolsa->cantidad;?>
                             </tr>
@@ -105,7 +105,7 @@ foreach($bolsaInventario as $key=>$carrito)
 
                 <div class="summary">
                     <div class="row-fluid clearfix">
-                        <div class="col-md-6">
+                        <div class="col-md-6" id="summary<?php echo $carrito->almacen_id;?>">
                             <?php
                                 foreach($carrito->bolsa->empresas->getEditoresCarrito($carrito->almacen->empresas->id,false,$carrito->almacen_id) as $key=>$editor){
                                     if($key==0):?>
@@ -121,7 +121,7 @@ foreach($bolsaInventario as $key=>$carrito)
            
                         </div>
                         <div class="col-md-6 text-right">
-                            <span id="total">Total: <?php echo Funciones::formatPrecio($suma);  $total+=$suma;?></span>
+                            <span id="total<?php echo $carrito->almacen_id;?>">Total: <?php echo Funciones::formatPrecio($suma);  $total+=$suma;?></span>
                             <?php echo CHtml::submitButton('Generar orden por proveedor', array('id'=>$carrito->almacen_id."boton".$carrito->bolsa_id,'class'=>'btn-orange btn btn-danger orange_border margin_left cadaOrden todosBotones')); ?>
                             <input type="hidden" value="<?php echo $key?>"/>
                              
@@ -232,7 +232,7 @@ Yii::app()->session['suma']=$total;
 	});
 	
 		
-		function actualizar(id, opcion)
+		function actualizar(id, opcion, almacen_id)
 		{
 			//opcion 1 es actualizar, 2 eliminar el registro completo
 			var cantidad=$('#'+id+'cantidad').val(); // la cantidad
@@ -245,12 +245,39 @@ Yii::app()->session['suma']=$total;
 			$.ajax({
 			         url: "<?php echo Yii::app()->createUrl('Bolsa/actualizarInventario') ?>",
 		             type: 'POST',
+		             dataType:'json',
 			         data:{
-		                    id:id, opcion:opcion, cantidad:cantidad
+		                    id:id, opcion:opcion, cantidad:cantidad, almacen_id:almacen_id,
 		                   },
 			        success: function (data) {
 			        	
-						location.reload();
+						//location.reload();
+						if(data.opcion==1)
+						{
+							$('#unitario'+id).html(data.unitario);
+							$('#subtotal'+id).html(data.subtotalIndividual);
+						}
+						else
+						{
+							$('#bolsas'+id).empty();
+							if(data.borrarDiv==1)
+								$('#preorder'+almacen_id).empty();
+							if(data.bolsaVacia==1)
+							{
+								$('#textoVacio').html(data.mensajeAlt);
+			                 	$('#emptyShoppingCart').removeClass('hide');
+			                 	$('#procesarTodo').addClass('disabled');
+							}
+
+						}
+
+						$('#total'+almacen_id).html('Total: '+data.subtotalInterno);
+
+						$('#subtotalOrden').html('Subtotal:'+data.subtotal);
+			            $('#ivaOrden').html('IVA: '+data.iva);
+			            $('.todaOrden').html('Total: '+data.total);
+
+			            $('#summary'+almacen_id).html(data.mensaje);
 			       	}
 			    })
 			
