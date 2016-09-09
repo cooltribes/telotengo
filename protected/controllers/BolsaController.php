@@ -1206,6 +1206,7 @@ class BolsaController extends Controller
 		$cantidad=$_POST['cantidad'];
 		$opcion=$_POST['opcion'];
 		$id=$_POST['id'];
+		$almacen_id=$_POST['almacen_id'];
 		
 		$bolsa=BolsaHasInventario::model()->findByPk($id);
 		$producto_id=$bolsa->inventario->producto_id;
@@ -1221,10 +1222,52 @@ class BolsaController extends Controller
 			$log->fecha=date('Y-m-d G:i:s');
 			$log->accion=3; //actualizar
 			$log->save();
-			
+
+			$subtotalInterno=0;
+			$subtotal=0;
+			//////////////los precios individuales a modificar////////////////////////////////////
+			$subtotalIndividual=Funciones::formatPrecio($bolsa->inventario->precio*$cantidad);
+			$unitario=Funciones::formatPrecio($bolsa->inventario->precio);
+
+			///////////////////busco todo lo perteneciente a este almacen ////////////////////
+			$bolsita=BolsaHasInventario::model()->findAllByAttributes(array('bolsa_id'=>$bolsa->bolsa_id, 'almacen_id'=>$almacen_id)); 
+			foreach($bolsita as $bolsaInventario)
+			{
+				$subtotalInterno+=$bolsaInventario->cantidad*$bolsaInventario->inventario->precio;
+			}
+			$subtotalInterno=Funciones::formatPrecio($subtotalInterno);
+
+			////////////////////////busco toda la bolsa/////////////////////////////
+			$superBolsita=BolsaHasInventario::model()->findAllByAttributes(array('bolsa_id'=>$bolsa->bolsa_id)); 
+			foreach($superBolsita as $bolsaInventario)
+			{
+				$subtotal+=$bolsaInventario->cantidad*$bolsaInventario->inventario->precio;
+			}
+			$total=Funciones::formatPrecio(($subtotal*Yii::app()->params['IVA']['value'])+$subtotal);
+			$iva=Funciones::formatPrecio($subtotal*Yii::app()->params['IVA']['value']);
+			$subtotal=Funciones::formatPrecio($subtotal);
+
+			$mensaje="";
+			///////////////////////////////busco la bolsa con este almacen//////////////////////
+			$bolsaAlmacen=BolsaHasInventario::model()->findByAttributes(array('bolsa_id'=>$bolsa->bolsa_id, 'almacen_id'=>$almacen_id)); 
+            foreach($bolsaAlmacen->bolsa->empresas->getEditoresCarrito($bolsaAlmacen->almacen->empresas->id,false,$bolsaAlmacen->almacen_id) as $key=>$editor){
+                if($key==0)
+                {
+                    $mensaje.="Creado por: ".$editor['user']->profile->first_name." ".$editor['user']->profile->last_name."<br>"; 
+                    $mensaje.="Fecha: ".date('d/m/y',strtotime($editor['accion']->fecha)). " Hora: ".date('h:i:s',strtotime($editor['accion']->fecha));
+                }else
+                { 
+                    $mensaje.="<br/> Ultima edición realizada por: ".$editor['user']->profile->first_name." ".$editor['user']->profile->last_name."<br/>";
+                    $mensaje.="Fecha: ".date('d/m/y',strtotime($editor['accion']->fecha)). " Hora: ".date('h:i:s',strtotime($editor['accion']->fecha));
+                }                     
+            }
+
+			$return=array('subtotalIndividual'=>$subtotalIndividual,'unitario'=>$unitario,'subtotalInterno'=>$subtotalInterno, 'subtotal'=>$subtotal, 'iva'=>$iva, 'total'=>$total, 'mensaje'=>$mensaje, 'opcion'=>1);
+			echo json_encode($return);
 		}
 		if($opcion==2)
 		{
+			$bolsaRespaldo=$bolsa;
 			$bolsa->delete();
 			$log=new Log;
 			$log->id_user=Yii::app()->user->id;
@@ -1232,6 +1275,66 @@ class BolsaController extends Controller
 			$log->fecha=date('Y-m-d G:i:s');
 			$log->accion=2; //borrar
 			$log->save();
+
+			///////////////////busco todo lo perteneciente a este almacen ////////////////////////////////////////
+			$subtotalInterno=0;
+			$borrarDiv=0;
+			if(BolsaHasInventario::model()->findAllByAttributes(array('bolsa_id'=>$bolsaRespaldo->bolsa_id, 'almacen_id'=>$almacen_id)))
+			{
+				$bolsita=BolsaHasInventario::model()->findAllByAttributes(array('bolsa_id'=>$bolsaRespaldo->bolsa_id, 'almacen_id'=>$almacen_id)); 
+				foreach($bolsita as $bolsaInventario)
+				{
+					$subtotalInterno+=$bolsaInventario->cantidad*$bolsaInventario->inventario->precio;
+				}
+				$subtotalInterno=Funciones::formatPrecio($subtotalInterno);
+			}
+			else
+			{
+				$borrarDiv=1;
+			}
+			#echo $borrarDiv;
+			////////////////////////busco toda la bolsa/////////////////////////////
+			$total=0;
+			$iva=0;
+			$subtotal=0;
+			$bolsaVacia=0;
+			if(BolsaHasInventario::model()->findAllByAttributes(array('bolsa_id'=>$bolsaRespaldo->bolsa_id)))
+			{
+				$superBolsita=BolsaHasInventario::model()->findAllByAttributes(array('bolsa_id'=>$bolsaRespaldo->bolsa_id)); 
+				foreach($superBolsita as $bolsaInventario)
+				{
+					$subtotal+=$bolsaInventario->cantidad*$bolsaInventario->inventario->precio;
+				}
+				$total=Funciones::formatPrecio(($subtotal*Yii::app()->params['IVA']['value'])+$subtotal);
+				$iva=Funciones::formatPrecio($subtotal*Yii::app()->params['IVA']['value']);
+				$subtotal=Funciones::formatPrecio($subtotal);				
+			}
+			else
+			{
+				$bolsaVacia=1;
+			}
+			#echo $bolsaVacia;
+			$mensaje="";
+			///////////////////////////////busco la bolsa con este almacen//////////////////////
+			if(BolsaHasInventario::model()->findByAttributes(array('bolsa_id'=>$bolsaRespaldo->bolsa_id, 'almacen_id'=>$almacen_id)))
+			{
+				$bolsaAlmacen=BolsaHasInventario::model()->findByAttributes(array('bolsa_id'=>$bolsaRespaldo->bolsa_id, 'almacen_id'=>$almacen_id)); 
+	            foreach($bolsaAlmacen->bolsa->empresas->getEditoresCarrito($bolsaAlmacen->almacen->empresas->id,false,$bolsaAlmacen->almacen_id) as $key=>$editor){
+	                if($key==0)
+	                {
+	                    $mensaje.="Creado por: ".$editor['user']->profile->first_name." ".$editor['user']->profile->last_name."<br>"; 
+	                    $mensaje.="Fecha: ".date('d/m/y',strtotime($editor['accion']->fecha)). " Hora: ".date('h:i:s',strtotime($editor['accion']->fecha));
+	                }else
+	                { 
+	                    $mensaje.="<br/> Ultima edición realizada por: ".$editor['user']->profile->first_name." ".$editor['user']->profile->last_name."<br/>";
+	                    $mensaje.="Fecha: ".date('d/m/y',strtotime($editor['accion']->fecha)). " Hora: ".date('h:i:s',strtotime($editor['accion']->fecha));
+	                }          
+	            }
+			}
+			////mensaje en caso de que haya borrado todos los productos del carro de compra////////////////////////////
+			$mensajeAlt="Haz eliminado tu intención de compra. Ya no posees más productos en tu carrito pero hay una amplia variedad de artículos esperando por ti.";
+			$return=array('borrarDiv'=>$borrarDiv,'bolsaVacia'=>$bolsaVacia,'subtotalInterno'=>$subtotalInterno, 'subtotal'=>$subtotal, 'iva'=>$iva, 'total'=>$total, 'mensaje'=>$mensaje, 'mensajeAlt'=>$mensajeAlt,'opcion'=>2);
+			echo json_encode($return);
 		}
 		
 
