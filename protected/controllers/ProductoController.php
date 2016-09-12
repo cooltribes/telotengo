@@ -554,7 +554,10 @@ class ProductoController extends Controller
 	 */
 	public function actionImagenes($id)
 	{
-		
+		$producto=Producto::model()->findByPk($id);
+		if(!Yii::app()->user->isAdmin() && $producto->enviado==1)
+			throw new CHttpException(403,'No está autorizado a visualizar este contenido');
+
 		if(isset($_GET['id'])){
 			
 			$id = $_GET['id'];
@@ -1391,7 +1394,9 @@ class ProductoController extends Controller
 	
 	public function actionCaracteristicas($id=null)
 	{
-					
+		$producto=Producto::model()->findByPk($id);
+		if(!Yii::app()->user->isAdmin() && $producto->enviado==1)
+			throw new CHttpException(403,'No está autorizado a visualizar este contenido');		
 
 			$model = Producto::model()->findByPk($id);
 			
@@ -2170,6 +2175,10 @@ class ProductoController extends Controller
 	
 	public function actionDetails($id = null)
 	{
+		$producto=Producto::model()->findByPk($id);
+		if(!Yii::app()->user->isAdmin() && $producto->enviado==1)
+			throw new CHttpException(403,'No está autorizado a visualizar este contenido');
+
 		$data=array();
 		$connection = new MongoClass();
 		if(Funciones::isDev())
@@ -2224,9 +2233,10 @@ class ProductoController extends Controller
 			//var_dump($existente); 
 			//var_dump($data);
 			//$this->render('admin');
+			
 			if(Yii::app()->user->isAdmin())
 			{
-			    $producto=Producto::model()->findByPk($id);
+			    
 			    $producto->aprobado=1;
 				$producto->save();
 			    $log=new Log;
@@ -2246,6 +2256,8 @@ class ProductoController extends Controller
 			} 
             else
             {
+                $producto->enviado=1;
+                $producto->save();
                 Yii::app()->user->setFlash('success', 'La solicitud fue enviada exitosamente. Debes esperar a que el producto sea aprobado para visualizarlo y cargarle inventario.');
                 $this->redirect(array('productoInventario')); 
             }
@@ -3352,6 +3364,7 @@ class ProductoController extends Controller
             $producto->modelo=$_POST['Producto']['modelo'];
             $producto->user_id=Yii::app()->user->id;
             $producto->created_at=date("Y-m-d h:i:s");
+            $producto->enviado=0;
             if(!$padre){
                 $padre= new ProductoPadre;
                 $padre->attributes=$_POST['ProductoPadre'];
