@@ -117,10 +117,16 @@ class Bolsa extends CActiveRecord
     
     public function getLastItems($limit = 3)
     {   if(count(Yii::app()->db->createCommand("select inventario_id from tbl_bolsa_has_tbl_inventario where bolsa_id =".$this->id." and cantidad<>0 order by id desc")->queryColumn())>0)
-        {   $sql="select producto_id from tbl_inventario where id IN (select inventario_id from tbl_bolsa_has_tbl_inventario where cantidad<>0 and bolsa_id =".$this->id." order by id desc) limit 0,".$limit;
-             $productos=Yii::app()->db->createCommand($sql)->queryColumn();
-             if(count($productos>0))
-                return Producto::model()->findAllByAttributes(array(),array('condition'=>'id IN ('.implode(',',$productos).')'));
+        {   
+           /* $sql="select i.producto_id from tbl_inventario i join tbl_bolsa_has_tbl_inventario b on b.inventario_id=i.id where b.cantidad<>0 and b.bolsa_id=".$this->id." order by b.fecha desc limit 0,".$limit;*/
+            $sql="select p.id, p.nombre from tbl_producto p join tbl_inventario i on i.producto_id=p.id join tbl_bolsa_has_tbl_inventario b on b.inventario_id=i.id where b.cantidad<>0 and b.bolsa_id=".$this->id." order by b.fecha desc limit 0,".$limit;
+            # $productos=Yii::app()->db->createCommand($sql)->queryColumn();
+            $productos=Producto::model()->findAllBySql($sql);
+            if(count($productos>0))
+            {
+                #return Producto::model()->findAllByAttributes(array(),array('condition'=>'id IN ('.implode(',',$productos).')'));
+                return $productos;
+            }
         }
          return NULL;
     }

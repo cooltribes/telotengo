@@ -1,4 +1,20 @@
-<?php
+<style>
+.centrar{text-align: center;}
+    .negro{
+        background-color: black;
+        color: #fff;
+        border:0;
+    }
+    .negro:hover, .negro:active, .negro:visited   {
+        color: #fff;
+        background-color: black;
+        border:0;
+    }
+        .mientras {    
+    margin-top: -53px;
+    margin-left: 33px;
+    }
+</style><?php
 /* @var $this UnidadController */
 /* @var $model Unidad */
 
@@ -35,15 +51,44 @@ $this->breadcrumbs=array(
 		    </div>
 		<?php } ?>
      
-	         <form class="no_margin_bottom form-search row-fluid">
+	        <!-- <form class="no_margin_bottom form-search row-fluid">
                  <div class="col-md-3 col-md-offset-8 no_padding_right">
                      <input class="form-control no_radius_right" id="query" name="query" type="text" placeholder="Escribe tu criterio de búsqueda">                   
                  </div>
                  <div class="col-md-1 no_padding_left">
                      <a href="#" class="btn form-control btn-darkgray white" id="btn_search_event">Buscar</a>
                  </div>   
-             </form>
+             </form> -->
+
+        <div class="row-fluid clearfix margin_top margin_bottom">
+			<form >
+                         <div class="col-md-3 no_horizontal_padding">
+                             <input class="form-control no_radius" id="query" name="query" type="text" placeholder="Escribe tu criterio de búsqueda">                   
+                         </div>
+                         <div class="col-md-1 no_padding_left">
+                             <a href="#" class="btn form-control btn-darkgray white" id="btn_search_event">Buscar</a>
+                         </div>
+                         <div class="col-md-offset-8"></div>
+                                
+        	</form>
+	         <div class="col-md-8 no_horizontal_padding">
+	           <div class="row-fluid">
+	               <!--<div class="col-md-4">
+	                     <select class="form-control">
+	                       <option>-- Búsquedas avanzadas --</option>
+	                   </select>
+	               </div> -->
+	               <div class="col-md-3 col-md-offset-1">
+	                     <a class="btn btn-gray margin_left_minus" onclick="show('#nuevaBusqueda')">Crear búsqueda avanzada</a>
+	               </div>
+	           </div>
+	        </div>
+        
+        </div>
 			
+		<div class="row-fluid clearfix margin_bottom hide" id="nuevaBusqueda">
+	  	   <?php  $this->renderPartial("_filters"); ?>
+	   </div> 
 	  
 	    
 	    		<?php
@@ -56,7 +101,7 @@ $this->breadcrumbs=array(
 				
 				ajaxUpdateTimeout = setTimeout(function () {
 					$.fn.yiiListView.update(
-					'list-auth-marcas',
+					'list-auth-items',
 					{
 					type: 'POST',	
 					url: '" . CController::createUrl('unidad/admin') . "',
@@ -81,7 +126,7 @@ $this->breadcrumbs=array(
 					
 					ajaxUpdateTimeout = setTimeout(function () {
 						$.fn.yiiListView.update(
-						'list-auth-marcas',
+						'list-auth-items',
 						{
 						type: 'POST',	
 						url: '" . CController::createUrl('unidad/admin') . "',
@@ -105,6 +150,8 @@ $this->breadcrumbs=array(
 	            <th scope="col">Nombre comercial</th>
 	            <th scope="col">Sucursal</th>
 	           	<th scope="col">Ubicacion</th>
+	           	<th scope="col">Ciudad</th>
+	           	<th scope="col">Estado</th>
 	            <th scope="col">Acción</th>
 	        </tr>
 	        </thead>
@@ -114,7 +161,7 @@ $this->breadcrumbs=array(
 		';
 
 			$this->widget('zii.widgets.CListView', array(
-		    'id'=>'list-auth-marcas',
+		    'id'=>'list-auth-items',
 		    'dataProvider'=>$dataProvider,
 		    'itemView'=>'_datos',
 		    'template'=>$template,
@@ -132,4 +179,15 @@ $this->breadcrumbs=array(
 		
 		?>
 		</div>
+
+
+
+		 <script>
+    function show(id){
+        if($(id).hasClass('hide'))
+            $(id).removeClass('hide');
+        else
+            $(id).addClass('hide');
+    }
+</script>
 
