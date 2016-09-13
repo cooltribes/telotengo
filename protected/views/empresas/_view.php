@@ -28,7 +28,8 @@ echo"<tr>";
 
 		<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
 			<li><a tabindex="-1" href="'.Yii::app()->createUrl('/empresas/update',array('id'=>$data->id)).'" ><i class="glyphicon glyphicon-edit"></i> Editar </a></li>
-			<li><a tabindex="-1" href="'.Yii::app()->createUrl('/empresas/verEmpresa',array('id'=>$data->id)).'" ><i class="glyphicon glyphicon-eye-open"></i> Ver </a></li>';
+			<li><a tabindex="-1" href="'.Yii::app()->createUrl('/empresas/verEmpresa',array('id'=>$data->id)).'" ><i class="glyphicon glyphicon-eye-open"></i> Ver </a></li>
+			<li><a tabindex="-1" href="'.Yii::app()->createUrl('/empresas/perfilVendedor',array('id'=>$data->id)).'" ><i class="glyphicon glyphicon-eye-open"></i> Ver perfil</a></li>';
 			if(Documentos::model()->findByAttributes(array('empresas_id'=>$empresa_user->empresas->id)))
 			{
 				$documentos=Documentos::model()->findByAttributes(array('empresas_id'=>$empresa_user->empresas->id));
