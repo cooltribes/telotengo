@@ -107,7 +107,7 @@ foreach($bolsaInventario as $key=>$carrito)
                     <div class="row-fluid clearfix">
                         <div class="col-md-6" id="summary<?php echo $carrito->almacen_id;?>">
                             <?php
-                                foreach($carrito->bolsa->empresas->getEditoresCarrito($carrito->almacen->empresas->id,false,$carrito->almacen_id) as $key=>$editor){
+                                foreach($carrito->bolsa->empresas->getEditoresCarrito($carrito->almacen->empresas->id,false,$carrito->almacen_id, $model->id) as $key=>$editor){
                                     if($key==0):?>
                                         Creado por: <?php echo $editor['user']->profile->first_name." ".$editor['user']->profile->last_name; ?><br/>
                                         Fecha: <?php echo date('d/m/y',strtotime($editor['accion']->fecha)) ?> Hora: <?php echo date('h:i:s',strtotime($editor['accion']->fecha))  ?>
