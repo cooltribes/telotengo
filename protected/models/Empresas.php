@@ -339,10 +339,16 @@ const SECTOR_EDUCACION = 16;
         return array('total'=>$contador['contador'],'pendiente'=>$pendiente['contador'],'rechazado'=>$rechazado['contador'],'aprobado'=>$aprobado['contador']);
     }
     
-    public function getEditoresCarrito($idProveedor=0,$all=false, $almacen_id){
+    public function getEditoresCarrito($idProveedor=0,$all=false, $almacen_id, $bolsa_id){
         $array=array();
         $sql="select h.users_id, h.id from tbl_historial_bolsa h JOIN tbl_bolsa_has_tbl_inventario bhi ON h.bolsa_has_inventario_id=bhi.id JOIN tbl_bolsa b ON b.id=bhi.bolsa_id JOIN tbl_almacen a ON a.id=bhi.almacen_id JOIN tbl_empresas e ON e.id=a.empresas_id WHERE a.empresas_id =".$idProveedor." AND b.empresas_id =".$this->id." and bhi.almacen_id=".$almacen_id." order by h.fecha desc";
         $pairs=Yii::app()->db->createCommand($sql)->queryAll();
+
+       $sql="(SELECT id as ide, fecha FROM tbl_bolsa_has_tbl_inventario where bolsa_id=".$bolsa_id." and almacen_id=".$almacen_id.")
+				UNION
+				(SELECT bolsa_has_tbl_inventario as ide, fecha FROM tbl_bolsa_inventario_borrado where bolsa_id=".$bolsa_id." and almacen_id=".$almacen_id.")
+				ORDER BY fecha desc limit 1";
+			$segundos=Yii::app()->db->createCommand($sql)->queryRow();	
         if($all){
             foreach($pairs as $key=>$pair){
                 $array[$key]['user']=User::model()->findByPk($pair['users_id']);
@@ -353,8 +359,14 @@ const SECTOR_EDUCACION = 16;
             {
                  $array[0]['user']=User::model()->findByPk($pairs[count($pairs)-1]['users_id']);
                  $array[0]['accion']=HistorialBolsa::model()->findByPk($pairs[count($pairs)-1]['id']);
-                $array[1]['user']=User::model()->findByPk($pairs[0]['users_id']);
-                 $array[1]['accion']=HistorialBolsa::model()->findByPk($pairs[0]['id']);
+
+                 $cons="select * from tbl_historial_bolsa where bolsa_has_inventario_id=".$segundos['ide']." order by id desc limit 1";
+                 $consulta=Yii::app()->db->createCommand($cons)->queryRow();
+                  $array[1]['user']=User::model()->findByPk($consulta['users_id']);
+                 $array[1]['accion']=HistorialBolsa::model()->findByPk($consulta['id']);
+
+                /*$array[1]['user']=User::model()->findByPk($pairs[0]['users_id']);
+                 $array[1]['accion']=HistorialBolsa::model()->findByPk($pairs[0]['id']);*/
                  
             }
             if(count($pairs)==1)
@@ -362,6 +374,16 @@ const SECTOR_EDUCACION = 16;
                  
                  $array[0]['user']=User::model()->findByPk($pairs[count($pairs)-1]['users_id']);
                  $array[0]['accion']=HistorialBolsa::model()->findByPk($pairs[count($pairs)-1]['id']);
+
+                 $cons="select * from tbl_historial_bolsa where bolsa_has_inventario_id=".$segundos['ide']." order by id desc limit 1";
+                 $consulta=Yii::app()->db->createCommand($cons)->queryRow();
+                 if($pairs[count($pairs)-1]['id']<$consulta['id'])
+                 {
+                 	$array[1]['user']=User::model()->findByPk($consulta['users_id']);
+                 	$array[1]['accion']=HistorialBolsa::model()->findByPk($consulta['id']);
+                 }
+
+
             }
         }
         return $array;        

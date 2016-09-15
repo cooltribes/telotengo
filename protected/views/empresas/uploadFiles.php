@@ -75,7 +75,7 @@
         )); ?>
         <div class="col-md-5 col-md-offset-4"> <?php
 
-                    if(isset($_GET['id'])) // si viene algo por get
+                    /*if(isset($_GET['invitacion']))
                     {?>
                         <a class="blueLink" href="solicitudFinalizada">Enviar luego los documentos</a>  <?php
                     }
@@ -100,7 +100,25 @@
                             $user->save();  ?>
                             <a class="blueLink" href="<?php echo Yii::app()->session['url_act'];?>">Enviar luego los documentos</a> <?php
                         }
+                    }*/
+
+                     if(isset($_GET['invitacion']))
+                    {
+                        if($_GET['invitacion']=="normal") // la invitacion normal o hecha por un usuario no admin
+                        {?>
+                            <a class="blueLink" href="<?php echo Yii::app()->createUrl('empresas/solicitudFinalizada')?>">Enviar luego los documentos</a> 
+                        <?php
+                        }
+                        else
+                        {
+                            $user = User::model()->findByPk($_GET['user']);
+                            $user->registro_password=1;
+                            $user->save();  ?>
+                            <a class="blueLink" href="<?php echo Yii::app()->session['url_act'];?>">Enviar luego los documentos</a> <?php
+                        }
                     }
+
+
                     ?>
 
 

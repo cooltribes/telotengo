@@ -1250,7 +1250,7 @@ class BolsaController extends Controller
 			$mensaje="";
 			///////////////////////////////busco la bolsa con este almacen//////////////////////
 			$bolsaAlmacen=BolsaHasInventario::model()->findByAttributes(array('bolsa_id'=>$bolsa->bolsa_id, 'almacen_id'=>$almacen_id)); 
-            foreach($bolsaAlmacen->bolsa->empresas->getEditoresCarrito($bolsaAlmacen->almacen->empresas->id,false,$bolsaAlmacen->almacen_id) as $key=>$editor){
+            foreach($bolsaAlmacen->bolsa->empresas->getEditoresCarrito($bolsaAlmacen->almacen->empresas->id,false,$bolsaAlmacen->almacen_id, $bolsa->bolsa_id) as $key=>$editor){
                 if($key==0)
                 {
                     $mensaje.="Creado por: ".$editor['user']->profile->first_name." ".$editor['user']->profile->last_name."<br>"; 
@@ -1269,6 +1269,16 @@ class BolsaController extends Controller
 		{
 			$bolsaRespaldo=$bolsa;
 			$bolsa->delete();
+
+			$bolsaBorrada= new BolsaInventarioBorrado;
+			$bolsaBorrada->bolsa_id=$bolsaRespaldo->bolsa_id;
+			$bolsaBorrada->almacen_id=$bolsaRespaldo->almacen_id;
+			$bolsaBorrada->inventario_id=$bolsaRespaldo->inventario_id;
+			$bolsaBorrada->id_user=Yii::app()->user->id;
+			$bolsaBorrada->bolsa_has_tbl_inventario=$bolsa->id;
+			$bolsaBorrada->fecha=date('Y-m-d G:i:s');
+			$bolsaBorrada->save();
+
 			$log=new Log;
 			$log->id_user=Yii::app()->user->id;
 			$log->id_producto=$producto_id;
@@ -1319,7 +1329,7 @@ class BolsaController extends Controller
 			if(BolsaHasInventario::model()->findByAttributes(array('bolsa_id'=>$bolsaRespaldo->bolsa_id, 'almacen_id'=>$almacen_id)))
 			{
 				$bolsaAlmacen=BolsaHasInventario::model()->findByAttributes(array('bolsa_id'=>$bolsaRespaldo->bolsa_id, 'almacen_id'=>$almacen_id)); 
-	            foreach($bolsaAlmacen->bolsa->empresas->getEditoresCarrito($bolsaAlmacen->almacen->empresas->id,false,$bolsaAlmacen->almacen_id) as $key=>$editor){
+	            foreach($bolsaAlmacen->bolsa->empresas->getEditoresCarrito($bolsaAlmacen->almacen->empresas->id,false,$bolsaAlmacen->almacen_id, $bolsaRespaldo->bolsa_id) as $key=>$editor){
 	                if($key==0)
 	                {
 	                    $mensaje.="Creado por: ".$editor['user']->profile->first_name." ".$editor['user']->profile->last_name."<br>"; 
