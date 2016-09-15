@@ -23,6 +23,11 @@ class RegistrationController extends Controller
            	unset(Yii::app()->session['cliente']);
 			unset(Yii::app()->session['username']);
 			unset(Yii::app()->session['tipo']);
+			unset(Yii::app()->session['email']);
+			unset(Yii::app()->session['vacio']);
+			unset(Yii::app()->session['usuarionuevo']);
+			unset(Yii::app()->session['atributos']);
+
             $model = new RegistrationForm;
             $profile = new Profile;
             $profile->regMode = true;

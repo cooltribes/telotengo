@@ -693,7 +693,7 @@ class UserController extends Controller
 				$profile->user_id=0;*/
 				
 				Yii::app()->session['vacio']=1;
-				$this->redirect(array('/empresas/create'));
+				$this->redirect(array('/empresas/create/tipo/normal'));
 				
 			}elseif($_GET['tipo']=="empresa"){ // invitado como empresa, falta hacer la validacion
 				$model = User::model()->findByPk($get);
@@ -720,7 +720,7 @@ class UserController extends Controller
 				"activkey" => $_GET['activkey'], "email" => $_GET['email'], 
 				'solicitud'=>'nueva')); 
 				Yii::app()->session['url_act']=$activation_url;
-				$this->redirect(array('/empresas/create'));
+				$this->redirect(array('/empresas/create/id/'.$get));
 				/*$activation_url = Yii::app()->controller->createUrl(implode(Yii::app()->controller->module->recoveryUrl),array(
 				"activkey" => $_GET['activkey'], "email" => $_GET['email'], 
 				'solicitud'=>'nueva')); */
