@@ -2,11 +2,12 @@
 	<?php
 		$hasInventario = OrdenHasInventario::model()->findByAttributes(array('orden_id'=>$data->id)); 
 		$usuario = User::model()->findByPk($data->users_id);
+		$empresa=Empresas::model()->findByPk($data->almacen->empresas_id);
 	?>
 	 
 	<td><?php echo $data->id; ?></td>
 	<td><?php echo date('d/m/Y',strtotime($data->fecha)); ?></td>
-	<td><?php echo Empresas::model()->findByPk($data->almacen->empresas_id)->razon_social;?></td> 
+	<td><a href="<?php echo Yii::app()->createUrl('empresas/perfilVendedor/'.$empresa->id);?>"><?php echo $empresa->razon_social;?></a></td>
     
 		<td> 
 
