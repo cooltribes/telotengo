@@ -104,7 +104,7 @@ $this->breadcrumbs=array(
 					'list-auth-items',
 					{
 					type: 'POST',	
-					url: '" . CController::createUrl('unidad/admin') . "',
+					url: '" . CController::createUrl('almacen/admin') . "',
 					data: ajaxRequest}
 					)
 					},
@@ -129,7 +129,7 @@ $this->breadcrumbs=array(
 						'list-auth-items',
 						{
 						type: 'POST',	
-						url: '" . CController::createUrl('unidad/admin') . "',
+						url: '" . CController::createUrl('almacen/admin') . "',
 						data: ajaxRequest}
 						
 						)

@@ -219,7 +219,7 @@ class AlmacenController extends Controller
 		}
 
 		/* Para buscar desde el campo de texto */
-		if (isset($_POST['query'])){
+		if (isset($_POST['query'])){ echo "asdad";
 			$bandera=true;
 			unset($_SESSION['searchAlmacen']);
 			$_SESSION['searchAlmacen'] = $_POST['query'];
