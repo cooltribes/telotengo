@@ -93,7 +93,7 @@ $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
                         <h1 class="no_margin_top" style="height: auto">
                           <?php echo $model->nombre; ?> 
                         </h1>
-                     <small>Marca:&nbsp;<?php echo $model->padre->idMarca->nombre; ?></small> 
+                     <small>Marca:&nbsp; <a href="<?php echo Yii::app()->createUrl('tienda/index?marcas='.$model->padre->idMarca->id);?>"> <?php echo $model->padre->idMarca->nombre;?></a></small> 
                         <div class="separator"></div>
                         <table width="100%" class="priceTable">
                             

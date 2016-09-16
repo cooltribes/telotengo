@@ -93,12 +93,15 @@ class Almacen extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id);
-		$criteria->compare('ubicacion',$this->ubicacion,true);
-		$criteria->compare('empresas_id',$this->empresas_id);
-		$criteria->compare('alias',$this->alias);
-		$criteria->compare('ciudad_id',$this->ciudad_id);
-		$criteria->compare('provincia_id',$this->provincia_id);
+		#$criteria->compare('id',$this->id);
+		#$criteria->compare('ubicacion',$this->ubicacion,true);
+		#$criteria->compare('empresas_id',$this->empresas_id);
+		$criteria->compare('alias',$this->nombre, true);
+		$criteria->compare('nombre',$this->nombre, true);
+
+        $criteria->addCondition('empresas_id in (select id from tbl_empresas where razon_social like "%'.$this->nombre.'%")');
+		#$criteria->compare('ciudad_id',$this->ciudad_id);
+		#$criteria->compare('provincia_id',$this->provincia_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
