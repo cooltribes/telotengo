@@ -240,7 +240,7 @@ $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
                                 	if(!Yii::app()->authManager->checkAccess("vendedor", Yii::app()->user->id))
                                     if($inventario->cantidad>0)
                                     {
-                                      echo CHtml::submitButton('ORDENAR', array('id'=>'ordenar','class'=>'btn-orange margin_bottom_small white form-control'));               
+                                      echo CHtml::submitButton('Ordenar', array('id'=>'ordenar','class'=>'btn-orange margin_bottom_small btn btn-danger btn-large orange_border form-control'));               
                                     }
                                     else
                                     {?>
