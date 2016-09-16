@@ -133,7 +133,7 @@
                 </div>
                
 
-                <div class="summary text-right" style="text-align: right; border: solid 1px #666; height:30px; line-height:30px; vertical-align:middle; padding: 10px 5%">
+                <div class="summary text-right" style="text-align: right; border: solid 1px #666; /*height:30px;*/ line-height:30px; vertical-align:middle; padding: 10px 5%">
                     
                     <span id="total" style="font-size: 20px; font-weight: bolder;">SubTotal: <?php echo Funciones::formatPrecio($acumulado);?></span><br>
                     <span id="total" style="font-size: 20px; font-weight: bolder;">IVA: <?php $iva=$acumulado*Yii::app()->params['IVA']['value']; echo Funciones::formatPrecio($iva);?></span><br>
