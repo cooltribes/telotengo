@@ -24,28 +24,28 @@
             <?php if($field==6): 
                 $vars="var descripcion=$('#descripcion').val(); ";
                 $post="descripcion:descripcion"?>
-                <textarea rows="7" class="form-control margin_top_small" name="descripcion" id="descripcion" placeholder="Descripcion"> <?php echo $empresas->descripcion;?> </textarea> 
+                <textarea rows="7" class="form-control margin_top_small" name="descripcion" id="descripcion" placeholder="Descripcion"><?php echo preg_replace("/<br>/", "\n", $empresas->descripcion);?></textarea> 
 
             <?php endif;?>
            <?php if($field==7): 
                 $vars="var politicas=$('#politicas').val(); ";
                 $post="politicas:politicas"?>
-                <textarea rows="7" class="form-control margin_top_small" name="politicas" id="politicas" placeholder="Politicas"> <?php echo $empresas->politicas;?> </textarea> 
+                <textarea rows="7" class="form-control margin_top_small" name="politicas" id="politicas" placeholder="Politicas"> <?php echo preg_replace("/<br>/", "\n", $empresas->politicas);?></textarea> 
             <?php endif;?>
             <?php if($field==8): 
                 $vars="var pagos=$('#pagos').val(); ";
                 $post="pagos:pagos"?>
-                <textarea rows="7" class="form-control margin_top_small" name="pagos" id="pagos" placeholder="Pagos"> <?php echo $empresas->pagos;?> </textarea> 
+                <textarea rows="7" class="form-control margin_top_small" name="pagos" id="pagos" placeholder="Pagos"> <?php echo preg_replace("/<br>/", "\n", $empresas->pagos);?></textarea> 
             <?php endif;?>
             <?php if($field==10): 
                 $vars="var devoluciones=$('#devoluciones').val(); ";
                 $post="devoluciones:devoluciones"?>
-                <textarea rows="7" class="form-control margin_top_small" name="devoluciones" id="devoluciones" placeholder="Devoluciones"> <?php echo $empresas->devoluciones;?> </textarea> 
+                <textarea rows="7" class="form-control margin_top_small" name="devoluciones" id="devoluciones" placeholder="Devoluciones"> <?php echo preg_replace("/<br>/", "\n", $empresas->devoluciones);?></textarea>  
             <?php endif;?>
             <?php if($field==9): 
                 $vars="var envios=$('#envios').val(); ";
                 $post="envios:envios"?>
-                <textarea rows="7" class="form-control margin_top_small" name="envios" id="envios" placeholder="Envios"> <?php echo $empresas->envios;?> </textarea> 
+                <textarea rows="7" class="form-control margin_top_small" name="envios" id="envios" placeholder="Envios"> <?php echo preg_replace("/<br>/", "\n", $empresas->envios);?></textarea> 
             <?php endif;?>
             </div>
             <div class="errorMessage col-md-12"></div>
