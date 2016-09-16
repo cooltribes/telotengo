@@ -228,8 +228,10 @@ $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
                               {
                                  $empre=Empresas::model()->findByPk((EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id))->empresas_id));
                                 if($inventario->almacen->empresas->id==$empre->id)
-                                {?> 
-                                    <a href="#" class="btn-orange margin_bottom_small btn btn-danger btn-large orange_border form-control" data-toggle="tooltip"  title="No puede comprar productos de su propia empresa">Ordenar</
+                                { 
+                                    if(!Yii::app()->authManager->checkAccess("vendedor", Yii::app()->user->id)):?>
+                                      <a href="#" class="btn-orange margin_bottom_small btn btn-danger btn-large orange_border form-control" data-toggle="tooltip"  title="No puede comprar productos de su propia empresa">Ordenar</
+                                  <?php endif;?>
                                <?php
                                 }
                               } 
