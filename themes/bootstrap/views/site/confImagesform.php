@@ -17,22 +17,48 @@
     'htmlOptions' => array(
         'enctype' => 'multipart/form-data',
     ),
-)); 
-  if($index==1)
-  {  
-    $name="Superior";
-    $medidas= "1903x381";
-  }
-  if($index==2)
+));
+
+  switch ($index)
   {
-    $name="Lateral Derecho 1";
-    $medidas= "294x318";
+    case 1:
+      $name="Superior 1 Comprador";
+      $medidas= "1903x381";
+    break;
+    case 2:
+      $name="Lateral Derecho 1";
+      $medidas= "294x318";
+    break;
+    case 3:
+      $name="Lateral Derecho 2";
+      $medidas= "294x513";
+    break;    
+    case 4:
+      $name="Superior 2 Comprador";
+      $medidas= "1903x381";
+    break;    
+    case 5:
+      $name="Superior 3 Comprador";
+      $medidas= "1903x381";
+    break;    
+    case 6:
+      $name="Superior 1 Vendedor";
+      $medidas= "1903x381";
+    break;    
+    case 7:
+      $name="Superior 2 Vendedor";
+      $medidas= "1903x381";
+    break; 
+    case 8:
+      $name="Superior 3 Vendedor";
+      $medidas= "1903x381";
+    break;  
+    case 9:
+      $name="Superior 4 Vendedor";
+      $medidas= "1903x381";
+    break;     
   }
-  if($index==3)
-  {
-    $name="Lateral Derecho 2";
-    $medidas= "294x513";
-  }
+
 ?>
 
     <div class="row-fluid margin_bottom">

@@ -149,11 +149,17 @@ class Funciones {
 
     public static function getBanner($tipo, $opcion)
     {
-        $model=Banner::model()->findByAttributes(array('activo'=>1, 'tipo_banner'=>$tipo));
-        if($opcion==1)
-            return $model->ruta;
+        if(Banner::model()->findByAttributes(array('activo'=>1, 'tipo_banner'=>$tipo)))
+        {
+            $model=Banner::model()->findByAttributes(array('activo'=>1, 'tipo_banner'=>$tipo));
+            if($opcion==1)
+                return $model->ruta;
+            else
+                return $model->ruta_imagen;
+        }
         else
-            return $model->ruta_imagen;
+            return "http://placehold.it/350x150";
+
     }
 
     public static function verificarCadena($cadena)
