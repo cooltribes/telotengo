@@ -210,7 +210,7 @@ Hemos observado que recientemente has añadido ítems a tu carrito. Si requieres
                 </div>
                
 
-                <div class="summary text-right" style="text-align: right; border: solid 1px #666; height:30px; line-height:30px; vertical-align:middle; padding: 10px 5%">
+                <div class="summary text-right" style="text-align: right; border: solid 1px #666; line-height:30px; vertical-align:middle; padding: 10px 5%">
                     
                     <span id="total" style="font-size: 20px; font-weight: bolder;">SubTotal: Bs '.number_format($acumulado,0,",",".").'</span> <br>
                     <span id="total" style="font-size: 20px; font-weight: bolder;">IVA: Bs '.number_format($totaIVA=$acumulado*$iva,0,",",".").'</span> <br>
