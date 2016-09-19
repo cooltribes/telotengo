@@ -303,15 +303,15 @@ if(isset(Yii::app()->session['banner'])){
   <!-- Wrapper for slides -->
   <div class="carousel-inner" role="listbox">
     <div class="item active">
-    <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/comprador1.png?>">  
+    <a href="<?php echo Funciones::getBanner(1,1);?>"><img src="<?php echo Funciones::getBanner(1,2);?>" width="100%"/></a>
     </div>
 
     <div class="item">
-      <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/comprador2.png?>">
+      <a href="<?php echo Funciones::getBanner(4,1);?>"><img src="<?php echo Funciones::getBanner(4,2);?>" width="100%"/></a>
     </div>
 
     <div class="item">
-      <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/comprador3.png?>">
+      <a href="<?php echo Funciones::getBanner(5,1);?>"><img src="<?php echo Funciones::getBanner(5,2);?>" width="100%"/></a>
     </div>
   </div>
 

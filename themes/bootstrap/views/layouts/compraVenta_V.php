@@ -218,18 +218,19 @@ if(isset(Yii::app()->session['banner'])){
   <!-- Wrapper for slides -->
   <div class="carousel-inner" role="listbox">
     <div class="item active">
-    <img src="<?php echo Funciones::getBanner(1,2);?>">  
+    <a href="<?php echo Funciones::getBanner(6,1);?>"><img src="<?php echo Funciones::getBanner(6,2);?>" width="100%"/></a>
     </div>
 
     <div class="item">
-      <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/vender1.png?>">
+      <a href="<?php echo Funciones::getBanner(7,1);?>"><img src="<?php echo Funciones::getBanner(7,2);?>" width="100%"/></a>
     </div>
 
     <div class="item">
-      <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/vendedor2.png?>">
+      <a href="<?php echo Funciones::getBanner(8,1);?>"><img src="<?php echo Funciones::getBanner(8,2);?>" width="100%"/></a>
     </div>
-      <div class="item">
-      <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/vendedor3.png?>">
+
+    <div class="item">
+      <a href="<?php echo Funciones::getBanner(9,1);?>"><img src="<?php echo Funciones::getBanner(9,2);?>" width="100%"/></a>
     </div>
   </div>
 

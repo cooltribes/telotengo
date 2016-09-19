@@ -579,7 +579,7 @@ class SiteController extends Controller
                         }
                         $imgAttr=getimagesize(CUploadedFile::getInstanceByName('Banner[ruta_imagen]')->getTempName());
 
-                       if(($_POST['Banner']['index']==1&&($imgAttr[0]!=1903||$imgAttr[1]!=381))  ||   ($_POST['Banner']['index']==2 &&($imgAttr[0]!=294||$imgAttr[1]!=318))  ||   ($_POST['Banner']['index']==3 &&($imgAttr[0]!=294||$imgAttr[1]!=513))  )
+                       if(($_POST['Banner']['index']==1&&($imgAttr[0]!=1903||$imgAttr[1]!=381))  ||   ($_POST['Banner']['index']==2 &&($imgAttr[0]!=294||$imgAttr[1]!=318))  ||   ($_POST['Banner']['index']==3 &&($imgAttr[0]!=294||$imgAttr[1]!=513)) || ($_POST['Banner']['index']==4&&($imgAttr[0]!=1903||$imgAttr[1]!=381))  || ($_POST['Banner']['index']==5&&($imgAttr[0]!=1903||$imgAttr[1]!=381)) || ($_POST['Banner']['index']==6&&($imgAttr[0]!=1903||$imgAttr[1]!=381)) || ($_POST['Banner']['index']==7&&($imgAttr[0]!=1903||$imgAttr[1]!=381)) || ($_POST['Banner']['index']==8&&($imgAttr[0]!=1903||$imgAttr[1]!=381)) || ($_POST['Banner']['index']==9&&($imgAttr[0]!=1903||$imgAttr[1]!=381)))
                         {
                             echo "mostrar error";
                             $this->redirect('storefrontConf/1');
