@@ -3523,7 +3523,17 @@ a.blueLink {
 	}
 }
 @media (max-width:768px) {
-	#categorySearch {
+	.carousel-indicators{
+    	display: none
+  	}
+	.logoTLT{
+    	margin-bottom: 3px;
+    	left: 33%;
+  	}
+	.busquedaMovil{
+	    padding-top: 10px;
+	}
+	#searchSet {
 		display: none;
 	}
 	#categorySearch {
@@ -3622,7 +3632,8 @@ a.blueLink {
     margin-top: 5.68em !important;
   }
 }
-.categoriaRow{
-	max-height:150px; 
-	min-height:150px; 
+@media (min-width: 768px) {
+  .busquedaMovil{
+    display: none;
+  }
 }
