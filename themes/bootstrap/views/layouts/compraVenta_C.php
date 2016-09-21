@@ -8,7 +8,7 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
 <div class="navbar row-fluid b2b clearfix no_margin_bottom" >
     <div class="col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 col-xs-8 col-xs-offset-2 no_horizontal_padding" id="headerContainer">
                 <div class="row-fluid">
-                    <div class="col-md-2 col-sm-2 col-xs-5 no_padding_left">
+                    <div class="col-md-2 col-sm-2 col-xs-5 no_padding_left logoTLT">
                         <a href="<?php echo Yii::app()->baseUrl."/site/inhome2"; ?>"><img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/logo.png" width="100%"/></a> 
                     </div>
                     
@@ -275,6 +275,38 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
                                   </ul>
                             </div> 
                     </div>
+                    <div class="busquedaMovil col-xs-12 col-sm-12">
+                        <div class="col-md-7 col-sm-10 col-xs-10 no_horizontal_padding">
+                                   <!-- <input class="form-control no_radius orange_border_middle" placeholder:"incluye palabras clave..."/> -->
+                                   <?php
+                                        $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
+                                        'id'=>'busquedas',
+                                        'name'=>'busquedas',
+                                        'source'=>Yii::app()->createUrl('Site/autoComplete'),
+                                        'htmlOptions'=>array(
+                                              //'size'=>22,
+                                              'placeholder'=>'Incluye palabras claves...',
+                                              'class'=>'form-control no_radius orange_border_middle',
+                                              //'maxlength'=>45,
+                                            ),
+                                        // additional javascript options for the autocomplete plugin
+                                        'options'=>array(
+                                                'showAnim'=>'fold'
+                                                 
+                                                
+                                        ),
+                                        )); 
+                                        ?>
+                        </div>
+                                <div class="col-md-2 col-sm-2 col-xs-2 no_horizontal_padding">
+                                    <?php 
+                                    $usuario=User::model()->findByPk(Yii::app()->user->id);
+                                    /*echo CHtml::submitButton('', array('span'=>'glyphicon-search','id'=>'botonBusqueda','class'=>'btn-orange btn btn-danger orange_border'));*/ ?>
+                                    <button type="submit" id="botonBusquedaMovil" class="btn-orange btn btn-danger orange_border">
+                                      <span class="glyphicon glyphicon-search"></span>
+                                    </button>
+                                </div>
+                     </div>
                     <div class="col-md-10 col-sm-10 col-xs-12 no_horizontal_padding">
                         <div class="separator no_horizontal_padding"></div>
                     </div>
@@ -392,6 +424,38 @@ $(document).ready(function() {
         $('#botonBusqueda').on('click', function(event) {
             
             var busqueda=$('#busqueda').val();
+            if(busqueda=="")
+                return false;
+            var path='<?php echo Yii::app()->createUrl('tienda/index');?>';
+            '<?php unset(Yii::app()->session['menu']);?>'
+                if(filtroBusqueda!="")
+                {
+                    $.ajax({
+                     url: "<?php echo Yii::app()->createUrl('tienda/buscarCategoria') ?>",
+                     type: 'POST',
+                     data:{
+                            filtroBusqueda:filtroBusqueda,
+                           },
+                    success: function (data) {
+                        window.location.href = path+'?producto='+busqueda+'&categoria='+data;
+                        
+                    }
+                   })
+                    
+                }
+                else
+                {
+                    window.location.href = path+'?producto='+busqueda;
+                }
+            //window.location.href = '../tienda/index?producto='+busqueda;
+            //window.location.href = '../tienda/index/'+busqueda;
+                
+            
+        });
+
+        $('#botonBusquedaMovil').on('click', function(event) {
+            
+            var busqueda=$('#busquedas').val();
             if(busqueda=="")
                 return false;
             var path='<?php echo Yii::app()->createUrl('tienda/index');?>';

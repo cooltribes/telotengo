@@ -3171,7 +3171,17 @@ a.blueLink:hover {
   }
 }
 @media (max-width: 768px) {
-  #categorySearch {
+  .carousel-indicators{
+    display: none
+  }
+  .logoTLT{
+    margin-bottom: 3px;
+    left: 33%;
+  }
+  .busquedaMovil{
+    padding-top: 10px;
+  }
+  #searchSet {
     display: none;
   }
   #categorySearch {
@@ -3252,6 +3262,12 @@ a.blueLink:hover {
 @media (max-width:556px) {
   .destacados{
     margin-top: 5.68em !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .busquedaMovil{
+    display: none;
   }
 }
 
