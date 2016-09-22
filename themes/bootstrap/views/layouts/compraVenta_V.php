@@ -25,7 +25,7 @@ $userAdmin=EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::ap
                             <div class="col-md-3 col-sm-3 col-xs-3 no_horizontal_padding">
                                 <div class="dropdown">
                                   <select class="btn btn-default form-control no_radius dropdown-toggle orange_border_left"  id="sellerOptions" >
-                                    <option value="" selected>Buscar en:</option>
+                                    <option value="" selected>En:</option>
                                  <?php 
                                  foreach(Funciones::sellerOptions() as $key=>$opciones)
                                  {?>

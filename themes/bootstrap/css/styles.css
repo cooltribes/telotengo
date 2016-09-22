@@ -1411,6 +1411,7 @@ a:focus {
   background: linear-gradient(to right,#d4d4d4 0,#adadad 5%,#7d7d7d 51%,#969696 95%,#dbdbdb 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#d4d4d4',endColorstr='#dbdbdb',GradientType=1);
 }
+
 .searchby {
   position: absolute;
   top: 0;
@@ -2052,6 +2053,11 @@ a:focus {
   text-align: center;
 }
 .plainSeparator {
+  height: 1px;
+  margin: 5px 0;
+  background: #999;
+}
+.plainSeparatorTienda {
   height: 1px;
   margin: 5px 0;
   background: #999;
@@ -3174,6 +3180,21 @@ a.blueLink:hover {
   }
 }
 @media (max-width: 768px) {
+  #separatorDiv{
+    margin-top: 10%;
+  }
+  #priceFilter{
+    display: none;
+  }
+  .storeControls{
+    display: none;
+  }
+  .plainSeparatorTienda{
+    display: none;
+  }
+  .orange_border_middle {
+  border: solid 1px #ff5b0b;
+}
   #sellerMenu .title .text {
     display: none;
   }

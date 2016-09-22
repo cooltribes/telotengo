@@ -7,6 +7,22 @@
         right:5px;    
     }
     */
+    @media (max-width: 500px) and (min-width: 400px) {
+      .carouselHome .carousel-control {
+        margin-top: -7% !important;
+      }
+    }
+    @media (max-width: 400px) and (min-width: 350px){
+      .carouselHome .carousel-control {
+        margin-top: -12% !important;
+      }
+    }
+    @media (max-width: 350px) and (min-width: 300px){
+      .carouselHome .carousel-control {
+        margin-top: -15% !important;
+      }
+    }
+
     .carouselHome .carousel-control .glyphicon{
         line-height: 60px;
         position: relative;
