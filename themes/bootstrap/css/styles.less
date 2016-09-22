@@ -1853,6 +1853,9 @@ a {
 			margin-top: -12px;
 			border-top-color: #FFF;
 		}
+		.caret.white {
+			border-top-color: #FFF;
+		}
 	}
 	.icon {
 		padding-top: 4px;
@@ -3523,12 +3526,29 @@ a.blueLink {
 	}
 }
 @media (max-width:768px) {
+	#sellerMenu {
+		.title {
+			.text {
+				display: none;
+			}
+			.text.user {
+				display: none;
+			}
+		}
+	}
+	#search-bar{
+    	display: none;
+  	}
 	.carousel-indicators{
-    	display: none
+    	display: none;
   	}
 	.logoTLT{
     	margin-bottom: 3px;
     	left: 33%;
+  	}
+  	.logoTLTVendedor{
+    	margin-bottom: 7px;
+    	left: 30%;
   	}
 	.busquedaMovil{
 	    padding-top: 10px;

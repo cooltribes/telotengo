@@ -1679,6 +1679,9 @@ a:focus {
   margin-top: -12px;
   border-top-color: #FFF;
 }
+#sellerMenu .title .caret.white {
+  border-top-color: #FFF;
+}
 #sellerMenu .icon {
   padding-top: 4px;
   text-align: left;
@@ -3171,12 +3174,25 @@ a.blueLink:hover {
   }
 }
 @media (max-width: 768px) {
+  #sellerMenu .title .text {
+    display: none;
+  }
+  #sellerMenu .title .text.user {
+    display: none;
+  }
+  #search-bar{
+    display: none;
+  }
   .carousel-indicators{
-    display: none
+    display: none;
   }
   .logoTLT{
     margin-bottom: 3px;
     left: 33%;
+  }
+  .logoTLTVendedor{
+      margin-bottom: 7px;
+      left: 30%;
   }
   .busquedaMovil{
     padding-top: 10px;
@@ -3269,6 +3285,10 @@ a.blueLink:hover {
   .busquedaMovil{
     display: none;
   }
+}
+.caretWhite {
+  border-top: 8px solid;
+  border-top-color: #ffffff;
 }
 
 
