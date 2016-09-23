@@ -34,7 +34,7 @@ $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
         
  <div class="margin_top"></div>
             
-            <div class="col-md-9 main no_horizontal_padding">
+            <div class="col-md-9 main no_horizontal_padding containerDetail">
                 <div class="row-fluid clearfix">
                 
                     <div class="col-md-4 no_left_padding">
@@ -88,7 +88,7 @@ $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
                     </div>
                     
                     
-                    <div class="col-md-8 mainDetail">
+                    <div class="col-md-8 mainDetail mobilMargin">
                         
                         <h1 class="no_margin_top" style="height: auto">
                           <?php echo $model->nombre; ?> 
@@ -156,7 +156,7 @@ $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
                         </div> 
                         
                     </div>
-                    <div class="col-md-12 margin_top">
+                    <div class="col-md-12 margin_top navDetail">
                         <ul  class="nav nav-tabs"> 
                               <li  class="active"><a class="pointer" onclick="goTo('#caracteristicas')" >CARACTERÍSTICAS GENERALES</a></li>
                               <li class=""><a class="pointer" onclick="goTo('#detalles')"  >DETALLES DEL PRODUCTO</a></li>
@@ -169,7 +169,7 @@ $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
                     
                     
                     
-                    <div class="col-md-12 no_padding_left margin_top">
+                    <div class="col-md-12 no_padding_left margin_top normalOption">
                          <div class="moreDetails no_border"> 
                          <h3>Caracteristicas generales</h3>                                      
                               <div  class="padding_top padding_bottom" id="caracteristicas" aria-labelledby="specifications-tab">
@@ -302,8 +302,22 @@ $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
     
                            
             </div>
-            
-   
+                      <!-- OPCIONES PARA MOVILES///////////////////////////////*****//////////     -->  
+                      <div class="col-md-12 no_padding_left margin_top mobileOption">
+                         <div class="moreDetails no_border"> 
+                         <h3>Caracteristicas generales</h3>                                      
+                              <div  class="padding_top padding_bottom" id="caracteristicas" aria-labelledby="specifications-tab">
+                                 <?php echo $model->descripcion; ?>              
+                              </div>
+
+                               <div  id="detalles" aria-labelledby="home-tab" id="details">
+                                <h3>Detalles del Producto</h3>
+                                <?php if(!is_null($busqueda))$this->renderPartial('more_details', array('busqueda'=>$busqueda,'solo_una'=>true));else echo "<div class='text-center margin_top'>No hay información disponible</div>" ?>
+                              </div>
+
+                        </div>
+                    </div> 
+                    <!-- OPCIONES PARA MOVILES///////////////////////////////*****//////////     -->  
             
            <?php //$this->renderPartial('preguntas_respuestas', array('model'=>$model, 'empresa_id'=>$empresa->id)); ?>
            

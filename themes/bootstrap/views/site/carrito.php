@@ -53,7 +53,7 @@ if($cambios):
 <div class="col-md-12 margin_top_small">
     <h1 class="dark no_margin">INTENCIONES DE COMPRA</h1>
 </div>
-<div class="col-md-12 no_horizontal_padding cart">
+<div class="col-md-12 no_horizontal_padding cart col-xs-12 col-sm-12">
     <div class="row-fluid">
         <div class="col-md-9">
         <div id="emptyShoppingCart" class="orderContainer margin_top_small margin_bottom hide">
