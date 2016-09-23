@@ -5,15 +5,32 @@ $ima ='';
 echo"<tr>";
    	
 	echo "<td>".$data->id."</td>";
-	
-	if(User::model()->findByPk(Yii::app()->user->id)->isAdmin()) // admin
-		echo "<td>".Empresas::model()->findByPk((EmpresasHasUsers::model()->findByAttributes(array('users_id'=>$data->user->id))->empresas_id))->razon_social."</td>";
 
+    if(User::model()->findByPk(Yii::app()->user->id)->isAdmin()) 
+       echo "<td>".Empresas::model()->findByPk((EmpresasHasUsers::model()->findByAttributes(array('users_id'=>$data->user->id))->empresas_id))->razon_social."</td>"; 
+    else
+       echo "<td>".Funciones::invertirFecha($data->fecha_carga)."</td>"; 
+        
 	echo "<td>".$data->user->profile->first_name." ".$data->user->profile->last_name."</td>";
+    
+    if(User::model()->findByPk(Yii::app()->user->id)->isAdmin()) 
+    {
+        echo "<td>".Funciones::invertirFecha($data->fecha_carga)."</td>";
+        echo "<td>".$data->total_productos."</td>";
+         echo "<td>".$data->total_cantidad."</td>";   
+    }   
+    else
+    {
+       echo "<td>".$data->total_productos."</td>";
+       echo "<td>".$data->total_cantidad."</td>"; 
+    }
+
+
+	
   
-	echo "<td>".Funciones::invertirFecha($data->fecha_carga)."</td>";
-	echo "<td>".$data->total_productos."</td>";
-	echo "<td>".$data->total_cantidad."</td>";
+	
+	
+	
 	
 
 

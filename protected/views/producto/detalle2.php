@@ -334,24 +334,42 @@ $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
 	           	maximo=parseInt(maximo);
 	           	var unitario=$('#precioUnitario').val();
 	           	
-	           	if(cantidad<=0 || !$.isNumeric(cantidad))
+	           	if( !$.isNumeric(cantidad))
 	           	{
-	           		$('#cantidad').val('1');
-	           		$('#unitario').html(formatPrice(unitario));
-	           		//alert('epaa');
+	           		if($('#cantidad').val()=="")
+                {
+                  $('#ordenar').addClass('disabled');
+                  $('#unitario').html(formatPrice(0*unitario));
+                }
+                else
+                {
+                    $('#cantidad').val('1');
+                    $('#unitario').html(formatPrice(unitario));
+                    $('#ordenar').removeClass('disabled');
+                }  
 	           	}
 	           	else
 	           	{
-	           		if(cantidad>=maximo)
+                if(cantidad>=maximo || cantidad<=0)
 	           		{
-	           			alert("El maximo de unidades es "+maximo);
-	           			$('#cantidad').val(maximo);
-	           			$('#unitario').html(formatPrice(maximo*unitario));
-	           			
+	           			if(cantidad<=0)
+                  {
+                    $('#unitario').html(formatPrice(0*unitario));
+                    $('#ordenar').addClass('disabled');
+                  }
+                  else
+                  {
+                     alert("El maximo de unidades es "+maximo);
+                     $('#cantidad').val(maximo);
+                     $('#unitario').html(formatPrice(maximo*unitario));
+                     if(maximo>0)
+                       $('#ordenar').removeClass('disabled');
+                  }
 	           		}
 	           		else
 	           		{
 	           			$('#unitario').html(formatPrice(cantidad*unitario));
+                  $('#ordenar').removeClass('disabled');
 	           		}
 
 	           	}

@@ -12,10 +12,10 @@ $this->breadcrumbs=array(
      
      <div class="row-fluid clearfix">
                <div class="col-md-8">
-                     <h1 class="orderTitle">Masterdata de <?php echo $user->empresa->razon_social;?></h1>
+                     <h1>Administrador de Masterdata</h1>
                </div>
           
-               <div class="col-md-3 col-md-offset-1 no_padding_right">
+               <div class="col-md-2 col-md-offset-2 no_padding_right">
                       <a href="upload" name="cargar" id="buttonCargaMD" class="form-control btn-orange orange_border white btn" >Cargar Masterdata</a>
                </div>
            </div>
@@ -177,12 +177,11 @@ $this->breadcrumbs=array(
           <thead>
             <tr>
                 <th scope="col">ID</th>
-                <th scope="col">Archivo</th>
-                <th scope="col">Subido por</th>
-                <th scope="col">Empresa</th>
                 <th scope="col">Fecha - Hora</th>
+                <th scope="col">Subido por</th>
+                <th scope="col">Archivo</th>
                 <th scope="col" style="text-align:center">Filas /<br/>Productos</th>
-                <th scope="col"></th>
+                <th scope="col">Acciones</th>
                 
             </tr>
            </thead>

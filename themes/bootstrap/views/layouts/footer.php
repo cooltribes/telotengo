@@ -22,7 +22,7 @@
                                                 <li><a href="<?php echo Yii::app()->createUrl('site/contactanos');?>" title="Contacto">Contacto</a></li>
                                                 <li><a href="<?php echo Yii::app()->createUrl('site/formasPago');?>" title="Formas de Pago">Formas de Pago</a></li>
                                                <!-- <li><a href="#" title="Políticas de Devoluciones y Reembolsos">Políticas de Devoluciones y Reembolsos</a></li> -->
-                                                <li><a href="<?php echo Yii::app()->createUrl('site/politicasExteriores');?>" title="Políticas de productos internacionales">Políticas de productos internacionales</a></li>
+                                                <!-- <li><a href="<?php echo Yii::app()->createUrl('site/politicasExteriores');?>" title="Políticas de productos internacionales">Políticas de productos internacionales</a></li> -->
                                           </ul> 
                           </div>
                       </div>
