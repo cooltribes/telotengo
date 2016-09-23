@@ -44,7 +44,7 @@ foreach($bolsaInventario as $key=>$carrito)
 <div class="orderContainer margin_top_small margin_bottom" id="preorder<?php echo $carrito->almacen_id;?>">
                 <div class="title clearfix row-fluid" style="position: relative">
     
-                      <a href="#" class="close" onclick='modalConfirm(<?php echo $carrito->almacen_id;?>,<?php echo $carrito->bolsa_id;?>)'><span class="glyphicon glyphicon-remove off"></span></a>
+                      <a href="#" class="close" id="closeOrder" onclick='modalConfirm(<?php echo $carrito->almacen_id;?>,<?php echo $carrito->bolsa_id;?>)'><span class="glyphicon glyphicon-remove off"></span></a>
                       <div class="col-md-6 no_horizontal_padding"></div>
                       <div class="col-md-6 no_horizontal_padding text-right"><?php echo $carrito->almacen->empresas->razon_social." (".$carrito->almacen->nombre.")";?></div>
 

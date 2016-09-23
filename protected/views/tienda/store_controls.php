@@ -1,5 +1,5 @@
 <div class="row-fluid clearfix">
-                           <div class="col-md-4 no_horizontal_padding">
+                           <div class="col-md-4 no_horizontal_padding col-xs-4">
                                <div class="margin_top">
                                    <span class="muted" id="mostrando">{summary}</span>
                                </div>
@@ -9,7 +9,7 @@
                                Ordenar por: 
                                <input type="hidden" id="orderBy" value="<?php echo $order?>">
                                <div class="dropdown" style="display:inline">
-                                  <button class="btn btn-default no_radius dropdown-toggle" type="button" id="categorySearch" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                  <button class="btn btn-default no_radius dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                        <?php #echo $order=='asc'?"Menor Precio":$order=='desc'?"Mayor Precio":"Seleccione"; ?>
                                        <?php 
                                         switch ($order)
@@ -41,5 +41,6 @@
                                 </div>
                                 </div>
                            </div>
-                           <div class="col-md-12 plainSeparator margin_bottom"></div>     
+                           <div class="col-md-12 plainSeparatorTienda margin_bottom"></div>
+                           <div id="separatorDiv"></div>     
 </div>

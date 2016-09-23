@@ -32,7 +32,7 @@
                                 </div>
                                 </div>
                            </div>
-                           <div class="col-md-12 plainSeparator margin_bottom"></div>
+                           <div class="col-md-12 plainSeparatorTienda margin_bottom"></div>
                            <div class="col-md-12 no_horizontal_padding">
                                <?php  
                                if($list)

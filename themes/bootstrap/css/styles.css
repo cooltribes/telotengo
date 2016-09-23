@@ -1411,6 +1411,7 @@ a:focus {
   background: linear-gradient(to right,#d4d4d4 0,#adadad 5%,#7d7d7d 51%,#969696 95%,#dbdbdb 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#d4d4d4',endColorstr='#dbdbdb',GradientType=1);
 }
+
 .searchby {
   position: absolute;
   top: 0;
@@ -1677,6 +1678,9 @@ a:focus {
 }
 #sellerMenu .title .caret.user {
   margin-top: -12px;
+  border-top-color: #FFF;
+}
+#sellerMenu .title .caret.white {
   border-top-color: #FFF;
 }
 #sellerMenu .icon {
@@ -2049,6 +2053,11 @@ a:focus {
   text-align: center;
 }
 .plainSeparator {
+  height: 1px;
+  margin: 5px 0;
+  background: #999;
+}
+.plainSeparatorTienda {
   height: 1px;
   margin: 5px 0;
   background: #999;
@@ -3171,12 +3180,56 @@ a.blueLink:hover {
   }
 }
 @media (max-width: 768px) {
+  #closeOrder{
+    top: 4%;
+    right: 0px;
+  }
+  .mobilMargin{
+    margin-top: 5%;
+  }
+  .containerDetail{
+    margin-bottom: 5%;
+  }
+  .normalOption{
+    display: none;
+  }
+  .navDetail{
+    display: none;
+  }
+  #separatorDiv{
+    margin-top: 10%;
+  }
+  #priceFilter{
+    display: none;
+  }
+  .storeControls{
+    display: none;
+  }
+  .plainSeparatorTienda{
+    display: none;
+  }
+  .orange_border_middle {
+  border: solid 1px #ff5b0b;
+}
+  #sellerMenu .title .text {
+    display: none;
+  }
+  #sellerMenu .title .text.user {
+    display: none;
+  }
+  #search-bar{
+    display: none;
+  }
   .carousel-indicators{
-    display: none
+    display: none;
   }
   .logoTLT{
     margin-bottom: 3px;
     left: 33%;
+  }
+  .logoTLTVendedor{
+      margin-bottom: 7px;
+      left: 30%;
   }
   .busquedaMovil{
     padding-top: 10px;
@@ -3266,9 +3319,16 @@ a.blueLink:hover {
 }
 
 @media (min-width: 768px) {
+  .mobileOption{
+    display: none;
+  }
   .busquedaMovil{
     display: none;
   }
+}
+.caretWhite {
+  border-top: 8px solid;
+  border-top-color: #ffffff;
 }
 
 
