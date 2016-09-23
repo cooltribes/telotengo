@@ -88,8 +88,12 @@ class Inbound extends CActiveRecord
 		{
 				$condicion1="id='".$busqueda."'";
 				$condicion2="or user_id in (select user_id from tbl_profiles where first_name like '%".$busqueda."%' or last_name like '%".$busqueda."%' )";	
-				$condicion3="or user_id in (select users_id from tbl_empresas_has_tbl_users where empresas_id in (select id from tbl_empresas where razon_social like '%".$busqueda."%'))";
+				$condicion3="or user_id in (select users_id from tbl_empresas_has_tbl_users where empresas_id in (select id from tbl_empresas where razon_social like '%".$busqueda."%')) order by fecha_carga desc";
 				$criteria->condition=$condicion1.$condicion2.$condicion3;
+		}
+		else
+		{
+			$criteria->order="fecha_carga desc";
 		}		
 		//$criteria->compare('user_id',$busqueda);
 		/*$criteria->compare('user_id',$this->user_id);
@@ -108,7 +112,7 @@ class Inbound extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 		$empresa=Empresas::model()->findByPk((EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id))->empresas_id));
-		$condicion3="user_id in (select users_id from tbl_empresas_has_tbl_users where empresas_id='".$empresa->id."')";
+		$condicion3="user_id in (select users_id from tbl_empresas_has_tbl_users where empresas_id='".$empresa->id."') order by fecha_carga desc";
 		
 		if($busqueda!="")
 		{
