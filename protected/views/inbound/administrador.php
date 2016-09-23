@@ -105,10 +105,10 @@ $this->breadcrumbs=array(
 	        <thead>
 	        <tr>
 	            <th scope="col">ID</th>
-	            <th scope="col">Usuario</th>
-	            <th scope="col">Fecha Carga</th>
-	            <th scope="col">Total Productos</th>
-	            <th scope="col">Total Cantidad</th>
+	            <th scope="col">Subido por</th>
+	            <th scope="col">Fecha-Hora</th>
+	            <th scope="col">N° de Productos</th>
+	            <th scope="col">Cantidad Total</th>
 	             <th scope="col">Acciones</th>
 	        </tr>
 	        </thead>

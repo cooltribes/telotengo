@@ -39,6 +39,14 @@ echo "<tr>";
         $cargo="Manager";
     echo "<td id=cargo".$data->id.">".$cargo."</td>";
 
+    echo "<td>".$data->ingresos."</td>";
+    if($data->lastvisit_at=="0000-00-00 00:00:00")
+      echo "<td>-</td>";
+    else
+     {
+       $fecha= date("d-m-Y", strtotime($data->lastvisit_at));
+         echo "<td>".$fecha."</td>";   
+     }
     echo '<td>
 
     <div class="dropdown">
