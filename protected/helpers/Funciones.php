@@ -221,9 +221,24 @@ class Funciones {
         }
 
     }
+
+    public static function encriptar($cadena)
+    {
+         $key='tlt';  // Una clave de codificacion, debe usarse la misma para encriptar y desencriptar
+         $encrypted = base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, md5($key), $cadena, MCRYPT_MODE_CBC, md5(md5($key))));
+         $encrypted = str_replace("/", "dIf91TlPaL", $encrypted);
+         $encrypted = str_replace("+", "WLA1069POXR", $encrypted);
+         return $encrypted; //Devuelve el string encriptado
+    }
     
- 
-    
+    public static function desencriptar($cadena)
+    {
+         $key='tlt';  // Una clave de codificacion, debe usarse la misma para encriptar y desencriptar
+         $cadena = str_replace("dIf91TlPaL","/", $cadena);
+         $cadena = str_replace("WLA1069POXR","+", $cadena);
+         $decrypted = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, md5($key), base64_decode($cadena), MCRYPT_MODE_CBC, md5(md5($key))), "\0");
+         return $decrypted;  //Devuelve el string desencriptado
+    }  
 }
 
 
