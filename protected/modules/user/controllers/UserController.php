@@ -888,8 +888,9 @@ class UserController extends Controller
     	$user = User::model()->findByPk($id);
     	$empresas=Empresas::model()->findByPk((EmpresasHasUsers::model()->findByAttributes(array('users_id'=>$user->id))->empresas_id));
 		$message = new YiiMailMessage;
-		$message->activarPlantillaMandrill();					
-		$body=Yii::app()->controller->renderPartial('//mail/adjuntarDocumentos', array( 'user'=>$user, 'empresas'=>$empresas ),true);				
+		$message->activarPlantillaMandrill();
+		$empresas_id_en=Funciones::encriptar($empresas->id);					
+		$body=Yii::app()->controller->renderPartial('//mail/adjuntarDocumentos', array( 'user'=>$user, 'empresas_id_en'=>$empresas_id_en ),true);				
 		$message->subject= "Has olvidado adjuntar los documentos de tu empresa";
 		$message->setBody($body,'text/html');
 						

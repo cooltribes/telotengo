@@ -1,3 +1,15 @@
+    <style>
+    .control-group{
+        height:51px;
+    }
+    .button-form{
+        width:100%; 
+    }
+    #UserLogin_username,#UserLogin_password,#btn-login-b2b,#recuperarPassword
+    {
+        display:none;
+    }
+</style>
     <div class="col-md-6 col-md-offset-3 margin_top_large orangepanel">
         <h4 class="text-center">
             Introduce el correo electrónico asociado con tu cuenta en Telotengo

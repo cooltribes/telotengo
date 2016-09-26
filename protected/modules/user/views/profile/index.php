@@ -43,7 +43,7 @@
     
 
 <?php if($entro==0): ?>
-    <h1 class="margin_top_small">Órdenes de la Empresa</h1>
+    <h1 class="margin_top_small">Órdenes y Pedidos de la Empresa</h1>
     
     <?php $this->renderPartial('status', array(
     	    'model'=>$model,

@@ -214,7 +214,9 @@ class EmpresasController extends Controller
 				{
 					//$this->redirect(Yii::app()->session['url_act']);
 				}
-				$this->redirect(array('empresas/uploadFiles/id/'.$model->id.'/invitacion/'.$tipoInvitacion.'/user/'.$user->id));
+				$idEn=Funciones::encriptar($model->id);
+				$userEn=Funciones::encriptar($user->id);
+				$this->redirect(array('empresas/uploadFiles/id/'.$idEn.'/invitacion/'.$tipoInvitacion.'/user/'.$userEn));
 				#$this->redirect(array('solicitudFinalizada'));
 
 
@@ -919,15 +921,18 @@ class EmpresasController extends Controller
 
         public function actionUploadFiles()
         {
-        	echo var_dump($_GET);
-
         	if(isset($_GET['user']))
         	{
+        		$_GET['user']=Funciones::desencriptar($_GET['user']);
         		$user = User::model()->findByPk($_GET['user']);
+        		echo $user->id;
         	}
         	/*if(isset($_GET['id'])) // si viene algo por get
         	{*/
+        		echo $_GET['id'];
+        		$_GET['id']=Funciones::desencriptar($_GET['id']);
         		$model=Empresas::model()->findByPk($_GET['id']);
+        		
         	//}
         	/*else
         	{
@@ -1021,7 +1026,7 @@ class EmpresasController extends Controller
 				}
 				else
 				{
-					echo "asdasda"; Yii::app()->end();
+					//echo "asdasda"; Yii::app()->end();
 				}
     		}
     		$this->render('uploadFiles',array('model'=>$model));
