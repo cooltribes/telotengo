@@ -113,7 +113,7 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
                                                          
                                                     </div>
                                                     <div class="col-md-10 col-sm-9 col-xs-9 no_horizontal_padding title">
-                                                         <div class="text user"><?php echo Profile::model()->retornarNombreCompleto(Yii::app()->user->id);?></div>
+                                                         <div class="text user noText"><?php echo Profile::model()->retornarNombreCompleto(Yii::app()->user->id);?></div>
                                                          <span class="caret user"></span>
                                                     </div>
                                                     
@@ -157,7 +157,7 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
                                                          </span>
                                                     </div>
                                                     <div class="col-md-9 col-sm-9 col-xs-9 no_horizontal_padding title">
-                                                         <span class="text">Pedidos</span>
+                                                         <span class="text noText">Pedidos</span>
                                                    
                                                         <span class="caret no_margin_left"></span>
                                                     </div>
@@ -207,7 +207,7 @@ echo CHtml::hiddenField('name' , '', array('id' => 'oculto'));
                                                     </div>
                                                     <div class="col-md-8 col-sm-8 col-xs-8 no_horizontal_padding title">
                                                    
-                                                        <span class="text" >Carrito</span>                                        
+                                                        <span class="text noText" >Carrito</span>                                        
                                                         <span class="caret no_margin_left"></span>                                        
                                                     </div>
                                                 </div>                                

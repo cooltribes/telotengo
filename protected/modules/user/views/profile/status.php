@@ -98,7 +98,7 @@
 
 		         <div class="col-md-2 stat no_left_padding">
 		            <span class="value"><?php echo $totaAprobadaCompra;?></span>
-		            <span class="legend"> Pedidos Aprobados Pedidos</span>            
+		            <span class="legend"> Pedidos Aprobados para la compra</span>            
 		        </div>
 		        <div class="col-md-2 stat no_left_padding">
 		            <span class="value"><?php echo $totaRechazadasCompra;?></span>

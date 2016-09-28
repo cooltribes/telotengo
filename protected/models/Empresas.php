@@ -292,7 +292,7 @@ const SECTOR_EDUCACION = 16;
 				self::SECTOR_BANCA => 'Banca y Finanzas',
 				self::SECTOR_EDUCACION=> 'Educación',	
 				self::SECTOR_ENERGIA => 'Energía y Minería',
-				self::SECTOR_OTRO => 'Otro',
+				//self::SECTOR_OTRO => 'Otro',
 			),
 			'Cargo' => array(
 				'Presidente o Socio' => 'Presidente o Socio',
