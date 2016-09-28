@@ -71,7 +71,8 @@ class ProductoController extends Controller
 
 		if(isset($_POST['busqueda'])||isset($_GET['query']))
 		{
-			$query=isset($_POST['busqueda'])?$_POST['busqueda']:$_GET['query'];    
+			$query=isset($_POST['busqueda'])?$_POST['busqueda']:$_GET['query'];
+			$query=addslashes($query);    
 			$producto->nombre = $query;        
         	$dataProvider = $producto->busquedaSeleccion();	
             Yii::app()->session['busquedaPalabra']=$query;      
