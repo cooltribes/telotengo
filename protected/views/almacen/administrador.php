@@ -111,6 +111,8 @@ $this->breadcrumbs=array(
 	            <th scope="col">Nombre comercial</th>
 	            <th scope="col">Sucursal</th>
 	           	<th scope="col">Ubicacion</th>
+	           	<th scope="col">Ciudad</th>
+	           	<th scope="col">Estado</th>
 	            '.$columnaExtra.'
 	        </tr>
 	        </thead>

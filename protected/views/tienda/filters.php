@@ -99,31 +99,32 @@
                    echo CHtml::hiddenField('brands',$filter['marcas']); 
                 ?>
                <div class="separator"></div>
-               
-               <h1>PRECIO</h1>
-           
-               <?php if($filter['precio']!=''):?>
-                   <a href="#" class="cleanFilter" onclick="clean('#precioFilter')">Todos</a>
-               <?php endif; ?> 
-                 <input type="hidden" id="precioFilter" value="<?php echo $filter['precio']?>">
-                <div class="margin_top_small margin_bottom clearfix">    
-                    <div id="slider"></div>
-                    <p>
-                      <div id="edad" class="sliderLegend clearfix">
-                          <div class="indicator" id="from"></div>
-                          <div class="spacer"> - </div>
-                          <div class="indicator" id="to"></div>
+               <div id='priceFilter'>
+                 <h1>PRECIO</h1>
+             
+                 <?php if($filter['precio']!=''):?>
+                     <a href="#" class="cleanFilter" onclick="clean('#precioFilter')">Todos</a>
+                 <?php endif; ?> 
+                   <input type="hidden" id="precioFilter" value="<?php echo $filter['precio']?>">
+                  <div class="margin_top_small margin_bottom clearfix">    
+                      <div id="slider"></div>
+                      <p>
+                        <div id="edad" class="sliderLegend clearfix">
+                            <div class="indicator" id="from"></div>
+                            <div class="spacer"> - </div>
+                            <div class="indicator" id="to"></div>
+                        </div>
+                        <?php
+                              echo CHtml::hiddenField('minPrice','');  
+                              echo CHtml::hiddenField('maxPrice',''); 
+                          ?>
+                      </p>
+                      <div class="margin_top_small text-center">
+                          <a class="btn-orange btn-small btn-danger orange_border" onclick="go('#precioFilter',$('#minPrice').val()+'-'+$('#maxPrice').val())">Ir</a>
                       </div>
-                      <?php
-                            echo CHtml::hiddenField('minPrice','');  
-                            echo CHtml::hiddenField('maxPrice',''); 
-                        ?>
-                    </p>
-                    <div class="margin_top_small text-center">
-                        <a class="btn-orange btn-small btn-danger orange_border" onclick="go('#precioFilter',$('#minPrice').val()+'-'+$('#maxPrice').val())">Ir</a>
-                    </div>
-                 </div>
-              <div class="separator"></div>
+                   </div>
+                <div class="separator"></div>
+              </div>
             <?php //TODO esto va para otra entrega.
                /*
                <h1>CARACTERISTICA</h1>

@@ -693,7 +693,7 @@ class UserController extends Controller
 				$profile->user_id=0;*/
 				
 				Yii::app()->session['vacio']=1;
-				$this->redirect(array('/empresas/create'));
+				$this->redirect(array('/empresas/create/tipo/normal'));
 				
 			}elseif($_GET['tipo']=="empresa"){ // invitado como empresa, falta hacer la validacion
 				$model = User::model()->findByPk($get);
@@ -720,7 +720,7 @@ class UserController extends Controller
 				"activkey" => $_GET['activkey'], "email" => $_GET['email'], 
 				'solicitud'=>'nueva')); 
 				Yii::app()->session['url_act']=$activation_url;
-				$this->redirect(array('/empresas/create'));
+				$this->redirect(array('/empresas/create/id/'.$get));
 				/*$activation_url = Yii::app()->controller->createUrl(implode(Yii::app()->controller->module->recoveryUrl),array(
 				"activkey" => $_GET['activkey'], "email" => $_GET['email'], 
 				'solicitud'=>'nueva')); */
@@ -888,8 +888,9 @@ class UserController extends Controller
     	$user = User::model()->findByPk($id);
     	$empresas=Empresas::model()->findByPk((EmpresasHasUsers::model()->findByAttributes(array('users_id'=>$user->id))->empresas_id));
 		$message = new YiiMailMessage;
-		$message->activarPlantillaMandrill();					
-		$body=Yii::app()->controller->renderPartial('//mail/adjuntarDocumentos', array( 'user'=>$user, 'empresas'=>$empresas ),true);				
+		$message->activarPlantillaMandrill();
+		$empresas_id_en=Funciones::encriptar($empresas->id);					
+		$body=Yii::app()->controller->renderPartial('//mail/adjuntarDocumentos', array( 'user'=>$user, 'empresas_id_en'=>$empresas_id_en ),true);				
 		$message->subject= "Has olvidado adjuntar los documentos de tu empresa";
 		$message->setBody($body,'text/html');
 						

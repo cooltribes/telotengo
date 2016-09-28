@@ -119,9 +119,9 @@
 
 							<div class="form-group">
 								<div class="col-sm-12">
-									<?php echo $form->labelEx($empresas,'razon_social'); ?>
-									<?php echo $form->textField($empresas,'razon_social',array('size'=>60,'maxlength'=>128, 'class'=>'form-control', 'disabled'=>'disabled')); ?>
-									<?php echo $form->error($empresas,'razon_social'); ?>
+									<?php echo $form->labelEx($empresas,'cargo'); ?>
+									<?php echo $form->textField($empresas,'cargo',array('size'=>60,'maxlength'=>128, 'class'=>'form-control', 'disabled'=>'disabled')); ?>
+									<?php echo $form->error($empresas,'cargo'); ?>
 								</div>
 							</div>
 							<div class="form-group">
@@ -133,16 +133,16 @@
 							</div>
 							<div class="form-group">
 								<div class="col-sm-12">
-									<?php echo $form->labelEx($empresas,'rif'); ?>
-									<?php echo $form->textField($empresas,'rif',array('size'=>60,'maxlength'=>128, 'class'=>'form-control', 'disabled'=>'disabled')); ?>
-									<?php echo $form->error($empresas,'rif'); ?>
+									<?php echo $form->labelEx($empresas,'razon_social'); ?>
+									<?php echo $form->textField($empresas,'razon_social',array('size'=>60,'maxlength'=>128, 'class'=>'form-control', 'disabled'=>'disabled')); ?>
+									<?php echo $form->error($empresas,'razon_social'); ?>
 								</div>
 							</div>
 							<div class="form-group">
 								<div class="col-sm-12">
-									<?php echo $form->labelEx($empresas,'direccion'); ?>
-									<?php echo $form->textArea($empresas,'direccion',array('size'=>60,'maxlength'=>128, 'class'=>'form-control', 'disabled'=>'disabled')); ?>
-									<?php echo $form->error($empresas,'direccion'); ?>
+									<?php echo $form->labelEx($empresas,'rif'); ?>
+									<?php echo $form->textField($empresas,'rif',array('size'=>60,'maxlength'=>128, 'class'=>'form-control', 'disabled'=>'disabled')); ?>
+									<?php echo $form->error($empresas,'rif'); ?>
 								</div>
 							</div>
 							<div class="form-group">
@@ -151,7 +151,6 @@
 									<?php echo CHtml::textField("sector", CHtml::encode( $empresas->itemAlias("TipoContribuyente",$empresas->tipo_contribuyente)) , array('size'=>60,'maxlength'=>128, 'class'=>'form-control', 'disabled'=>'disabled')); ?>
 								</div>
 							</div>
-
 							<?php if($empresas->telefono!=""):?>
 							<div class="form-group">
 								<div class="col-sm-12">
@@ -161,20 +160,45 @@
 								</div>
 							</div>
 						<?php endif;?>
-
-							<div class="form-group">
+						<div class="form-group">
 								<div class="col-sm-12">
 									<?php echo $form->labelEx($empresas,'estado'); ?>
 									<?php echo CHtml::textField("provincia", Provincia::model()->findByPk($provincia)->nombre , array('size'=>60,'maxlength'=>128, 'class'=>'form-control', 'disabled'=>'disabled')); ?>
 								</div>
 							</div>
-
 							<div class="form-group">
 								<div class="col-sm-12">
 									<?php echo $form->labelEx($empresas,'ciudad'); ?>
 									<?php echo CHtml::textField("provincia", Ciudad::model()->findByPk($empresas->ciudad)->nombre , array('size'=>60,'maxlength'=>128, 'class'=>'form-control', 'disabled'=>'disabled')); ?>
 								</div>
 							</div>
+						
+							<div class="form-group">
+								<div class="col-sm-12">
+									<?php echo $form->labelEx($empresas,'zip'); ?>
+									<?php echo $form->textField($empresas,'zip',array('size'=>60,'maxlength'=>128, 'class'=>'form-control', 'disabled'=>'disabled')); ?>
+									<?php echo $form->error($empresas,'zip'); ?>
+								</div>
+							</div>
+					
+
+							<div class="form-group">
+								<div class="col-sm-12">
+									<?php echo $form->labelEx($empresas,'direccion'); ?>
+									<?php echo $form->textArea($empresas,'direccion',array('size'=>60,'maxlength'=>128, 'class'=>'form-control', 'disabled'=>'disabled')); ?>
+									<?php echo $form->error($empresas,'direccion'); ?>
+								</div>
+							</div>
+							<?php if($empresas->web!=""):?>
+							<div class="form-group">
+								<div class="col-sm-12">
+									<?php echo $form->labelEx($empresas,'web'); ?>
+									<?php echo $form->textField($empresas,'web',array('size'=>60,'maxlength'=>128, 'class'=>'form-control', 'disabled'=>'disabled')); ?>
+									<?php echo $form->error($empresas,'web'); ?>
+								</div>
+							</div>
+						<?php endif;?>
+
 
 							<div class="form-group">
 								<div class="col-sm-12">

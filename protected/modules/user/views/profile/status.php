@@ -15,44 +15,67 @@
         <div class="col-md-2 stat no_left_padding">
             <span class="value"><?php 
             if(Yii::app()->authManager->checkAccess("vendedor", $identificador))
-				echo $totaAprobadaVendidas+$totaRechazadasVendidas+$totaPendienteVendidas;
-			else 
-				echo $totaAprobadaCompra+$totaRechazadasCompra+$totaPendienteCompra;	
+            {
+              echo $totaAprobadaVendidas+$totaRechazadasVendidas+$totaPendienteVendidas;
+              $mensaje="Ordenes";
+            }
+			     else
+           {
+              echo $totaAprobadaCompra+$totaRechazadasCompra+$totaPendienteCompra;
+              $mensaje="Pedidos";  
+           } 	
             ?></span>
-            <span class="legend">  Ordenes</span>            
+            <span class="legend"><?php echo $mensaje;?></span>            
         </div>
         
         <div class="col-md-2 stat no_left_padding">
             <span class="value"><?php 
             if(Yii::app()->authManager->checkAccess("vendedor", $identificador))
-				echo $totaAprobadaVendidas;
-			else 
-				echo $totaAprobadaCompra;	
+            {
+              echo $totaAprobadaVendidas;
+              $mensaje="Ordenes Aprobadas";
+            }
+			     else
+           {
+             echo $totaAprobadaCompra;
+             $mensaje="Pedidos Aprobados";  
+           } 
             ?>
             </span>
-            <span class="legend">Ordenes Aprobadas</span>            
+            <span class="legend"><?php echo $mensaje;?></span>              
         </div>
         
         <div class="col-md-2 stat no_left_padding">
             <span class="value"><?php 
 
             if(Yii::app()->authManager->checkAccess("vendedor", $identificador))
-
-				echo $totaRechazadasVendidas;
-			else 
-				echo $totaRechazadasCompra;	
+            {
+                echo $totaRechazadasVendidas;
+                $mensaje="Ordenes Rechazadas";
+            }
+			     else
+           {
+                echo $totaRechazadasCompra;
+                $mensaje="Pedidos Rechazados"; 
+           } 
             ?></span>
-            <span class="legend">Ordenes Rechazadas</span>            
+            <span class="legend"><?php echo $mensaje;?></span>           
         </div>
         
          <div class="col-md-2 stat no_left_padding">
             <span class="value"><?php 
             if(Yii::app()->authManager->checkAccess("vendedor", $identificador))
-				echo $totaPendienteVendidas;
-			else 
-				echo $totaPendienteCompra;	
+            {
+              echo $totaPendienteVendidas;
+              $mensaje="Ordenes Pendientes";
+            }
+      			else
+            {
+              echo $totaPendienteCompra;
+              $mensaje="Pedidos Pendientes";
+            } 
             ?></span>
-            <span class="legend">Ordenes Pendientes</span>            
+             <span class="legend"><?php echo $mensaje;?></span>            
         </div>
       <?php endif;?> 
 
@@ -71,19 +94,19 @@
 		            <span class="value"><?php echo $totaPendienteVendidas;?></span>
 		            <span class="legend"> Ordenes Pendientes para la Venta</span>            
 		        </div>
-		        <span class="btn-separator"></span>
+		        <span class="btn-separator hidden-xs hidden-sm"></span>
 
 		         <div class="col-md-2 stat no_left_padding">
 		            <span class="value"><?php echo $totaAprobadaCompra;?></span>
-		            <span class="legend"> Ordenes Aprobadas para la Compra</span>            
+		            <span class="legend"> Pedidos Aprobados para la compra</span>            
 		        </div>
 		        <div class="col-md-2 stat no_left_padding">
 		            <span class="value"><?php echo $totaRechazadasCompra;?></span>
-		            <span class="legend"> Ordenes Rechazadas para la Compra</span>            
+		            <span class="legend"> Pedidos Rechazados para la Compra</span>            
 		        </div>
 		        <div class="col-md-1 stat no_left_padding">
 		            <span class="value"><?php echo $totaPendienteCompra;?></span>
-		            <span class="legend"> Ordenes Pendientes para la Compra</span>            
+		            <span class="legend"> Pedidos Pendientes para la Compra</span>            
 		        </div>
 		 </div>      
     </div>  

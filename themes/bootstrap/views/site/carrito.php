@@ -53,9 +53,9 @@ if($cambios):
 <div class="col-md-12 margin_top_small">
     <h1 class="dark no_margin">INTENCIONES DE COMPRA</h1>
 </div>
-<div class="col-md-12 no_horizontal_padding cart">
+<div class="col-md-12 no_horizontal_padding cart col-xs-12 col-sm-12">
     <div class="row-fluid">
-        <div class="col-md-9">
+        <div class="col-md-9" id="ShoppingCartContainer">
         <div id="emptyShoppingCart" class="orderContainer margin_top_small margin_bottom hide">
               <?php $this->renderPartial('emptyShoppingCart'); ?>
         </div>
@@ -107,6 +107,23 @@ if($cambios):
 
 <script>
 	$(document).ready(function() {
+    
+    if ((screen.width<320))
+    {
+      $('#ShoppingCartContainer').removeClass('col-md-9'); 
+    }
+    $(window).resize(function() {
+    if ((screen.width<320)) 
+    {
+        $('#ShoppingCartContainer').removeClass('col-md-9');      
+    }
+    else
+    {
+      $('#ShoppingCartContainer').addClass('col-md-9'); 
+    }
+  });
+
+
 		$('#procesarTodo').click(function() {
             $('.todosBotones').prop( "disabled", true );
 			var bolsa_id= '<?php echo $model->id;?>';

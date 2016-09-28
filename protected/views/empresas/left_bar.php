@@ -31,7 +31,22 @@
             </div>
      </div> 
      <div class="info clearfix"> 
-         
+            <div class="row-fluid item clearfix margin_top_small">
+                <span class="col-md-1 no_horizontal_padding icon">
+                    <span class="glyphicon glyphicon-briefcase"></span>
+                </span>
+                
+                <span class="col-md-8 no_horizontal_padding value">
+                    <?php echo $model->itemAlias('Sector', $model->sector); ?>
+                </span>
+                
+                <span class="col-md-3 text-center no_horizontal_padding edit">
+                <?php if($empresaPropia==1 && $admin==1): // si es igual edite, del resto no?>
+                  <!--  <a onclick="editField(4,'Teléfono',<?php echo $model->id; ?>)">Editar</a> -->
+                <?php endif;?>
+
+                </span>  
+            </div>
          <div class="row-fluid item clearfix margin_top_small">
              <span class="col-md-1 no_horizontal_padding icon">
                 <span class="glyphicon glyphicon-info-sign"></span>

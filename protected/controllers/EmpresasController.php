@@ -67,13 +67,17 @@ class EmpresasController extends Controller
 		//$this->layout='//layouts/b2b';
 		$empresa_user = new EmpresasHasUsers();
 		$rol='';
+		if(isset($_GET['id']))
+		{
+			$user = User::model()->findByPk($_GET['id']);
+		}
 
-		if(isset(Yii::app()->session["usuarionuevo"])){
+		/*if(isset(Yii::app()->session["usuarionuevo"])){
 			#$user = User::model()->findByAttributes(array('email'=>Yii::app()->session["usuarionuevo"]));
 		}
 		elseif(isset(Yii::app()->session['cliente'])){
 			$user = User::model()->findByPk(Yii::app()->session['cliente']);
-		}
+		}*/
 		
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
@@ -175,7 +179,7 @@ class EmpresasController extends Controller
 				$almacen->nombre=$model->razon_social.' - principal';
 				$almacen->save();
 
-				if($user->quien_invita!=1)
+				if($user->quien_invita!=1) //TODO diferente de un administrador
 				{
 					$message = new YiiMailMessage;
 					$message->activarPlantillaMandrill();					
@@ -185,6 +189,12 @@ class EmpresasController extends Controller
 									
 					$message->addTo($email);
 					Yii::app()->mail->send($message);
+
+					$tipoInvitacion='normal';
+				}
+				else
+				{
+					$tipoInvitacion='admin';
 				}
 
 				if(Yii::app()->session['tipo']=="") // en caso de ser una peticion normal
@@ -204,7 +214,9 @@ class EmpresasController extends Controller
 				{
 					//$this->redirect(Yii::app()->session['url_act']);
 				}
-				$this->redirect(array('uploadFiles'));
+				$idEn=Funciones::encriptar($model->id);
+				$userEn=Funciones::encriptar($user->id);
+				$this->redirect(array('empresas/uploadFiles/id/'.$idEn.'/invitacion/'.$tipoInvitacion.'/user/'.$userEn));
 				#$this->redirect(array('solicitudFinalizada'));
 
 
@@ -225,9 +237,17 @@ class EmpresasController extends Controller
 	{
 		//$this->layout='//layouts/b2b';
 		if(isset($_GET['caducado']))
+		{
 			Yii::app()->user->setFlash('success', 'Estimado Cliente,<br> el enlace ha caducado debido a que tus datos fueron registrados previamente en nuestro sistema.');
+		}
 		else
-		Yii::app()->user->setFlash('success', 'Solicitud realizada con éxito. Pronto estaremos en contacto contigo.');
+		{
+			if(isset($_GET['documentosRegistrados']))
+				Yii::app()->user->setFlash('success', 'Estimado Cliente,<br> el enlace ha caducado debido a que tus documentos ya fueron cargados en nuestro sistema.');
+			else
+				Yii::app()->user->setFlash('success', 'Solicitud realizada con éxito. Pronto estaremos en contacto contigo.');
+		}
+		
 
 		$this->render('solicitudFinalizada');
 	}
@@ -909,11 +929,22 @@ class EmpresasController extends Controller
 
         public function actionUploadFiles()
         {
-        	if(isset($_GET['id'])) // si viene algo por get
+        	if(isset($_GET['user']))
         	{
-        		$model=Empresas::model()->findByPk($_GET['id']);
+        		$_GET['user']=Funciones::desencriptar($_GET['user']);
+        		$user = User::model()->findByPk($_GET['user']);
         	}
-        	else
+        	/*if(isset($_GET['id'])) // si viene algo por get
+        	{*/
+        		$_GET['id']=Funciones::desencriptar($_GET['id']);
+        		$model=Empresas::model()->findByPk($_GET['id']);
+        		
+        		if(Documentos::model()->findByAttributes(array('empresas_id'=>$model->id)))
+        		{
+					$this->redirect(array('empresas/solicitudFinalizada/documentosRegistrados'));
+        		}
+        	//}
+        	/*else
         	{
         		if(isset(Yii::app()->session["usuarionuevo"])){
 					$user = User::model()->findByAttributes(array('email'=>Yii::app()->session["usuarionuevo"]));
@@ -923,7 +954,7 @@ class EmpresasController extends Controller
 				}
         		
         		$model=Empresas::model()->findByPk((EmpresasHasUsers::model()->findByAttributes(array('users_id'=>$user->id))->empresas_id));
-        	}
+        	}*/
     	    if(isset($_POST['Empresas']))
     		{
     			$dir = Yii::getPathOfAlias('webroot').'/docs/documentosEmpresas/'.$model->id;
@@ -946,7 +977,32 @@ class EmpresasController extends Controller
 					$documentos->rif_ruta=$fichero_rif;
 					$documentos->mercantil_ruta=$fichero_registro_mercantil;
 					$documentos->save();
-					if(isset($_GET['id'])) // si viene algo por get
+
+
+					if(isset($_GET['invitacion']))
+					{
+						if($_GET['invitacion']=="normal") // la invitacion normal o hecha por un usuario no admin
+						{
+							$this->redirect(array('solicitudFinalizada'));
+						}
+						else
+						{
+							$user->registro_password=1; // si lo invita el admin
+							$user->save();	
+							$this->redirect(Yii::app()->session['url_act']);
+						}
+					}
+
+					if(isset($_GET['tipo']))
+					{
+						if($_GET['tipo']=="recordatorio") // es un recordatorio via mail
+						{
+							$this->redirect(array('solicitudFinalizada'));
+						}
+					}
+
+
+					/*if(isset($_GET['id'])) // si viene algo por get
 					{
 						$this->redirect(array('solicitudFinalizada')); /// NUEVA VISTA OJO
 					}
@@ -975,8 +1031,12 @@ class EmpresasController extends Controller
 						$user->pendiente=1;
 						$user->save();	
 						$this->redirect(array('solicitudFinalizada'));
-					}
+					}*/
 				
+				}
+				else
+				{
+					//echo "asdasda"; Yii::app()->end();
 				}
     		}
     		$this->render('uploadFiles',array('model'=>$model));
@@ -1049,42 +1109,49 @@ class EmpresasController extends Controller
    
 	        if(isset ($_POST['web']))
 	        {
-	        	if($model->saveAttributes(array('web'=>$_POST['web'])))
+	        	$textarea_line = str_replace("\n", "<br>", $_POST['web']);
+	        	if($model->saveAttributes(array('web'=>$textarea_line)))
 	        		$save=true;
 	        }
 	        if(isset ($_POST['telefono']))
 	        {
-	        	if($model->saveAttributes(array('telefono'=>$_POST['telefono'])))
+	        	$textarea_line = str_replace("\n", "<br>", $_POST['telefono']);
+	        	if($model->saveAttributes(array('telefono'=>$textarea_line)))
 	        		$save=true;
 	        }
 
 	        if(isset ($_POST['descripcion']))
 	        {
-	        	if($model->saveAttributes(array('descripcion'=>$_POST['descripcion'])))
+	        	$textarea_line = str_replace("\n", "<br>", $_POST['descripcion']);
+	        	if($model->saveAttributes(array('descripcion'=>$textarea_line)))
 	        		$save=true;
 	        }
 
 	        if(isset ($_POST['politicas']))
 	        {
-	        	if($model->saveAttributes(array('politicas'=>$_POST['politicas'])))
+	        	$textarea_line = str_replace("\n", "<br>", $_POST['politicas']);
+	        	if($model->saveAttributes(array('politicas'=>$textarea_line)))
 	        		$save=true;
 	        }
 	        
 	        if(isset ($_POST['pagos']))
 	        {
-	        	if($model->saveAttributes(array('pagos'=>$_POST['pagos'])))
+	        	$textarea_line = str_replace("\n", "<br>", $_POST['pagos']);
+	        	if($model->saveAttributes(array('pagos'=>$textarea_line)))
 	        		$save=true;
 	        }
 	        
 	        if(isset ($_POST['devoluciones']))
 	        {
-	        	if($model->saveAttributes(array('devoluciones'=>$_POST['devoluciones'])))
+	        	$textarea_line = str_replace("\n", "<br>", $_POST['devoluciones']);
+	        	if($model->saveAttributes(array('devoluciones'=>$textarea_line)))
 	        		$save=true;
 	        }
 	        
 	        if(isset ($_POST['envios']))
 	        {
-	        	if($model->saveAttributes(array('envios'=>$_POST['envios'])))
+	        	$textarea_line = str_replace("\n", "<br>", $_POST['envios']);
+	        	if($model->saveAttributes(array('envios'=>$textarea_line)))
 	        		$save=true;
 	        }
 

@@ -236,7 +236,7 @@ class ProfileController extends Controller
 						$identificador=	$ide;
 					}
 					else
-						throw new CHttpException(403,'No esta autorizado a visualizar este contenido');
+						throw new CHttpException(403,'No está autorizado a visualizar este contenido');
 
 				}
 				else

@@ -34,7 +34,7 @@ $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
         
  <div class="margin_top"></div>
             
-            <div class="col-md-9 main no_horizontal_padding">
+            <div class="col-md-9 main no_horizontal_padding containerDetail">
                 <div class="row-fluid clearfix">
                 
                     <div class="col-md-4 no_left_padding">
@@ -88,12 +88,12 @@ $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
                     </div>
                     
                     
-                    <div class="col-md-8 mainDetail">
+                    <div class="col-md-8 mainDetail mobilMargin">
                         
                         <h1 class="no_margin_top" style="height: auto">
                           <?php echo $model->nombre; ?> 
                         </h1>
-                     <small>Marca:&nbsp;<?php echo $model->padre->idMarca->nombre; ?></small> 
+                     <small>Marca:&nbsp; <a href="<?php echo Yii::app()->createUrl('tienda/index?marcas='.$model->padre->idMarca->id);?>"> <?php echo $model->padre->idMarca->nombre;?></a></small> 
                         <div class="separator"></div>
                         <table width="100%" class="priceTable">
                             
@@ -156,7 +156,7 @@ $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
                         </div> 
                         
                     </div>
-                    <div class="col-md-12 margin_top">
+                    <div class="col-md-12 margin_top navDetail">
                         <ul  class="nav nav-tabs"> 
                               <li  class="active"><a class="pointer" onclick="goTo('#caracteristicas')" >CARACTERÍSTICAS GENERALES</a></li>
                               <li class=""><a class="pointer" onclick="goTo('#detalles')"  >DETALLES DEL PRODUCTO</a></li>
@@ -169,7 +169,7 @@ $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
                     
                     
                     
-                    <div class="col-md-12 no_padding_left margin_top">
+                    <div class="col-md-12 no_padding_left margin_top normalOption">
                          <div class="moreDetails no_border"> 
                          <h3>Caracteristicas generales</h3>                                      
                               <div  class="padding_top padding_bottom" id="caracteristicas" aria-labelledby="specifications-tab">
@@ -228,8 +228,10 @@ $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
                               {
                                  $empre=Empresas::model()->findByPk((EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::app()->user->id))->empresas_id));
                                 if($inventario->almacen->empresas->id==$empre->id)
-                                {?> 
-                                    <a href="#" class="btn-orange margin_bottom_small btn btn-danger btn-large orange_border form-control" data-toggle="tooltip"  title="No puede comprar productos de su propia empresa">Ordenar</
+                                { 
+                                    if(!Yii::app()->authManager->checkAccess("vendedor", Yii::app()->user->id)):?>
+                                      <a href="#" class="btn-orange margin_bottom_small btn btn-danger btn-large orange_border form-control" data-toggle="tooltip"  title="No puede comprar productos de su propia empresa">Ordenar</
+                                  <?php endif;?>
                                <?php
                                 }
                               } 
@@ -238,7 +240,7 @@ $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
                                 	if(!Yii::app()->authManager->checkAccess("vendedor", Yii::app()->user->id))
                                     if($inventario->cantidad>0)
                                     {
-                                      echo CHtml::submitButton('ORDENAR', array('id'=>'ordenar','class'=>'btn-orange margin_bottom_small white form-control'));               
+                                      echo CHtml::submitButton('Ordenar', array('id'=>'ordenar','class'=>'btn-orange margin_bottom_small btn btn-danger btn-large orange_border form-control'));               
                                     }
                                     else
                                     {?>
@@ -300,8 +302,22 @@ $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
     
                            
             </div>
-            
-   
+                      <!-- OPCIONES PARA MOVILES///////////////////////////////*****//////////     -->  
+                      <div class="col-md-12 no_padding_left margin_top mobileOption">
+                         <div class="moreDetails no_border"> 
+                         <h3>Caracteristicas generales</h3>                                      
+                              <div  class="padding_top padding_bottom" id="caracteristicas" aria-labelledby="specifications-tab">
+                                 <?php echo $model->descripcion; ?>              
+                              </div>
+
+                               <div  id="detalles" aria-labelledby="home-tab" id="details">
+                                <h3>Detalles del Producto</h3>
+                                <?php if(!is_null($busqueda))$this->renderPartial('more_details', array('busqueda'=>$busqueda,'solo_una'=>true));else echo "<div class='text-center margin_top'>No hay información disponible</div>" ?>
+                              </div>
+
+                        </div>
+                    </div> 
+                    <!-- OPCIONES PARA MOVILES///////////////////////////////*****//////////     -->  
             
            <?php //$this->renderPartial('preguntas_respuestas', array('model'=>$model, 'empresa_id'=>$empresa->id)); ?>
            
@@ -318,24 +334,42 @@ $cs->registerScriptFile($baseUrl.'/js/jquery.zoom.js');
 	           	maximo=parseInt(maximo);
 	           	var unitario=$('#precioUnitario').val();
 	           	
-	           	if(cantidad<=0 || !$.isNumeric(cantidad))
+	           	if( !$.isNumeric(cantidad))
 	           	{
-	           		$('#cantidad').val('1');
-	           		$('#unitario').html(formatPrice(unitario));
-	           		//alert('epaa');
+	           		if($('#cantidad').val()=="")
+                {
+                  $('#ordenar').addClass('disabled');
+                  $('#unitario').html(formatPrice(0*unitario));
+                }
+                else
+                {
+                    $('#cantidad').val('1');
+                    $('#unitario').html(formatPrice(unitario));
+                    $('#ordenar').removeClass('disabled');
+                }  
 	           	}
 	           	else
 	           	{
-	           		if(cantidad>=maximo)
+                if(cantidad>=maximo || cantidad<=0)
 	           		{
-	           			alert("El maximo de unidades es "+maximo);
-	           			$('#cantidad').val(maximo);
-	           			$('#unitario').html(formatPrice(maximo*unitario));
-	           			
+	           			if(cantidad<=0)
+                  {
+                    $('#unitario').html(formatPrice(0*unitario));
+                    $('#ordenar').addClass('disabled');
+                  }
+                  else
+                  {
+                     alert("El maximo de unidades es "+maximo);
+                     $('#cantidad').val(maximo);
+                     $('#unitario').html(formatPrice(maximo*unitario));
+                     if(maximo>0)
+                       $('#ordenar').removeClass('disabled');
+                  }
 	           		}
 	           		else
 	           		{
 	           			$('#unitario').html(formatPrice(cantidad*unitario));
+                  $('#ordenar').removeClass('disabled');
 	           		}
 
 	           	}

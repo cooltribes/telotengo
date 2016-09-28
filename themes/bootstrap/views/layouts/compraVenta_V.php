@@ -19,13 +19,13 @@ $userAdmin=EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::ap
           
           <div id="navbar">
           <div class="row-fluid" id="sellerMenu">
-              <div class="col-md-2 col-sm-5 col-xs-5"><a class="" href="<?php echo Yii::app()->getBaseUrl(true);?>"><img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/whitelogo.png" width="100%"/></a></div>
+              <div class="col-md-2 col-sm-5 col-xs-6 logoTLTVendedor"><a class="" href="<?php echo Yii::app()->getBaseUrl(true);?>"><img src="<?php echo Yii::app()->theme->baseUrl;?>/images/layout/whitelogo.png" width="100%"/></a></div>
               <div class="col-md-5 col-sm-7 col-xs-7 no_horizontal_padding" id="search-bar">
                   <div class="row-fluid searchBar">
                             <div class="col-md-3 col-sm-3 col-xs-3 no_horizontal_padding">
                                 <div class="dropdown">
                                   <select class="btn btn-default form-control no_radius dropdown-toggle orange_border_left"  id="sellerOptions" >
-                                    <option value="" selected>Buscar en:</option>
+                                    <option value="" selected>En:</option>
                                  <?php 
                                  foreach(Funciones::sellerOptions() as $key=>$opciones)
                                  {?>
@@ -120,11 +120,15 @@ $userAdmin=EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::ap
                                                       <a class="form-control text-left dropdown-toggle no_padding no_border" id="userButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                                         <div class="row-fluid">
                                                            
-                                                            <div class="col-md-12 no_horizontal_padding title">
-                                                                 <div class="text user">Inventario</div>
-                                                                 <span class="caret user"></span>
-                                                            </div>
                                                             
+                                                              <div class="col-md-3 col-md-3 col-xs-3 no_horizontal_padding icon">
+                                                                  <span class="glyphicon glyphicon-list-alt"></span>
+                                                              </div>
+                                                            <div class="col-md-9 col-sm-9 col-xs-9 no_horizontal_padding title">
+                                                                <div class="text user">Inventario</div>
+                                                   
+                                                              <span class="caret user no_margin_left"></span>
+                                                              </div>  
                                                         </div>                                
                                                       </a>
                                                       
@@ -140,9 +144,6 @@ $userAdmin=EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::ap
                                                       
                                                                                                     
                                                     </div>
-                  
-              
-              
               </div>
               <div class="col-md-6 col-sm-6 col-xs-6 no_right_padding">
                                             <div class="dropdown drophover">
@@ -165,9 +166,9 @@ $userAdmin=EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::ap
                                                          </span>
                                                     </div>
                                                     <div class="col-md-9 col-sm-9 col-xs-9 no_horizontal_padding title">
-                                                         <span class="text">Ordenes</span>
+                                                         <span class="text user">Ordenes</span>
                                                    
-                                                        <span class="caret no_margin_left"></span>
+                                                        <span class="caret user no_margin_left"></span>
                                                     </div>
                                                 </div>                                
                                               </a>
@@ -198,8 +199,44 @@ $userAdmin=EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::ap
           
           
           </div><!--/.nav-collapse -->
+                    <div class="busquedaMovil col-xs-12 col-sm-12">
+                        <div class="col-md-3 col-sm-3 col-xs-3 no_horizontal_padding">
+                                <div class="dropdown">
+                                  <select class="btn btn-default form-control no_radius dropdown-toggle orange_border_left"  id="sellerOptionsMovil" >
+                                    <option value="" selected>En:</option>
+                                 <?php 
+                                 foreach(Funciones::sellerOptions() as $key=>$opciones)
+                                 {?>
+                                  <option value="<?php echo $key?>"><?php echo $opciones;?></option>
+                                 <?php  
+                                 }?>     
+                                  </select>
+                                  
+                                <!--  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                    <li><a href="#">Action in <span class="highlighted">Your life</span></a></li>
+                                    <li><a href="#">Another action in <span class="highlighted">Another's life</span></a></li>
+                                    <li class="separator"></li>
+                                    <li><a href="#">Something else here</a></li>
+                                    <li><a href="#">Separated link</a></li>
+                                </ul> -->
+                                </div> 
+                        </div>
+                         <div class="col-md-7 col-sm-7 col-xs-7 no_horizontal_padding">
+                               <input class="form-control no_radius orange_border_middle" id="querySellerMovil" placeholder:"Nombres o números de registro"/>
+                              
+                            </div>
+                                <div class="col-md-2 col-sm-2 col-xs-2 no_horizontal_padding">
+                                    <?php 
+                                    $usuario=User::model()->findByPk(Yii::app()->user->id);
+                                    /*echo CHtml::submitButton('', array('span'=>'glyphicon-search','id'=>'botonBusqueda','class'=>'btn-orange btn btn-danger orange_border'));*/ ?>
+                                    <button type="submit" id="btn-sellerLayoutMovil" class="btn-orange btn btn-danger orange_border">
+                                      <span class="glyphicon glyphicon-search"></span>
+                                    </button>
+                                </div>
+                     </div>
         </div><!--/.container-fluid -->
       </nav>
+
      <?php
  
 if(isset(Yii::app()->session['banner'])){
@@ -218,18 +255,19 @@ if(isset(Yii::app()->session['banner'])){
   <!-- Wrapper for slides -->
   <div class="carousel-inner" role="listbox">
     <div class="item active">
-    <img src="<?php echo Funciones::getBanner(1,2);?>">  
+    <a href="<?php echo Funciones::getBanner(6,1);?>"><img src="<?php echo Funciones::getBanner(6,2);?>" width="100%"/></a>
     </div>
 
     <div class="item">
-      <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/vender1.png?>">
+      <a href="<?php echo Funciones::getBanner(7,1);?>"><img src="<?php echo Funciones::getBanner(7,2);?>" width="100%"/></a>
     </div>
 
     <div class="item">
-      <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/vendedor2.png?>">
+      <a href="<?php echo Funciones::getBanner(8,1);?>"><img src="<?php echo Funciones::getBanner(8,2);?>" width="100%"/></a>
     </div>
-      <div class="item">
-      <img src="<?php echo Yii::app()->theme->baseUrl;?>/images/home/vendedor3.png?>">
+
+    <div class="item">
+      <a href="<?php echo Funciones::getBanner(9,1);?>"><img src="<?php echo Funciones::getBanner(9,2);?>" width="100%"/></a>
     </div>
   </div>
 
@@ -273,6 +311,22 @@ if(isset(Yii::app()->session['banner'])){
                 window.location.href ='<?php echo $this->createUrl('orden/misVentas')?>?query='+$('#querySeller').val();
             }
 
+        }
+        
+    });
+    $('#btn-sellerLayoutMovil').click(function(e){
+        e.preventDefault();
+        if($('#querySellerMovil').val().replace(" ","").length>0&&$('')&&$('#sellerOptionsMovil').val()!=""){
+            if($('#sellerOptionsMovil').val()=="producto"){
+                window.location.href ='<?php echo $this->createUrl('producto/seleccion')?>?query='+$('#querySellerMovil').val();
+            }
+            if($('#sellerOptionsMovil').val()=="inventario"){
+                window.location.href ='<?php echo $this->createUrl('producto/productoInventario')?>?query='+$('#querySellerMovil').val();
+            }
+            if($('#sellerOptionsMovil').val()=="orden"){
+                window.location.href ='<?php echo $this->createUrl('orden/misVentas')?>?query='+$('#querySellerMovil').val();
+            }
+           
         }
         
     });

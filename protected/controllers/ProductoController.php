@@ -31,12 +31,12 @@ class ProductoController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('seleccion','busqueda','create','hijos','imagenes','seo','create','agregarCaracteristica','eliminarCaracteristica','agregarInventario',
+				'actions'=>array('seleccion','busqueda','hijos','imagenes','agregarCaracteristica','eliminarCaracteristica','agregarInventario',
 								 'agregarInventarioAjax','eliminarInventario','multi','orden', 'clasificar', 'niveles', 'nivelPartial', 'crearProducto', 'autoComplete','verificarPadre', 'verificarNombre', 'autoCompleteVer', 'autoCompleteModelo', 'ultimasCategorias', 'verificarTodaInformacion', 'detalle', 'verificarCampos', 'verificarSkuCadaEmpresa'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete','update','eliminar','orden','aprobar','rechazar','poraprobar','calificaciones','eliminarCalificacion','importar', 'details', 'caracteristicas','activarDesactivar', 'activarDesactivarDestacado', 'verDisponibilidad','revisionNuevos','aprobarNuevo', 'rechazarProducto', 'modificarProducto'),
+				'actions'=>array('admin','delete','update','eliminar','orden','aprobar','rechazar','poraprobar','calificaciones','eliminarCalificacion','importar', 'details', 'caracteristicas','activarDesactivar', 'activarDesactivarDestacado', 'verDisponibilidad','revisionNuevos','aprobarNuevo', 'rechazarProducto', 'modificarProducto', 'create', 'seo'),
 				#'users'=>array('admin'),
 				'roles'=>array('admin'),
 			),
@@ -554,7 +554,10 @@ class ProductoController extends Controller
 	 */
 	public function actionImagenes($id)
 	{
-		
+		$producto=Producto::model()->findByPk($id);
+		if(!Yii::app()->user->isAdmin() && $producto->enviado==1)
+			throw new CHttpException(403,'No está autorizado a visualizar este contenido');
+
 		if(isset($_GET['id'])){
 			
 			$id = $_GET['id'];
@@ -1391,7 +1394,9 @@ class ProductoController extends Controller
 	
 	public function actionCaracteristicas($id=null)
 	{
-					
+		$producto=Producto::model()->findByPk($id);
+		if(!Yii::app()->user->isAdmin() && $producto->enviado==1)
+			throw new CHttpException(403,'No está autorizado a visualizar este contenido');		
 
 			$model = Producto::model()->findByPk($id);
 			
@@ -2170,6 +2175,10 @@ class ProductoController extends Controller
 	
 	public function actionDetails($id = null)
 	{
+		$producto=Producto::model()->findByPk($id);
+		if(!Yii::app()->user->isAdmin() && $producto->enviado==1)
+			throw new CHttpException(403,'No está autorizado a visualizar este contenido');
+
 		$data=array();
 		$connection = new MongoClass();
 		if(Funciones::isDev())
@@ -2224,9 +2233,10 @@ class ProductoController extends Controller
 			//var_dump($existente); 
 			//var_dump($data);
 			//$this->render('admin');
+			
 			if(Yii::app()->user->isAdmin())
 			{
-			    $producto=Producto::model()->findByPk($id);
+			    
 			    $producto->aprobado=1;
 				$producto->save();
 			    $log=new Log;
@@ -2246,7 +2256,9 @@ class ProductoController extends Controller
 			} 
             else
             {
-                Yii::app()->user->setFlash('success', 'Se han cargado los datos con exito, el producto debe ser aprobado para visualizarlo.');
+                $producto->enviado=1;
+                $producto->save();
+                Yii::app()->user->setFlash('success', 'La solicitud fue enviada exitosamente. Debes esperar a que el producto sea aprobado para visualizarlo y cargarle inventario.');
                 $this->redirect(array('productoInventario')); 
             }
             
@@ -3352,6 +3364,7 @@ class ProductoController extends Controller
             $producto->modelo=$_POST['Producto']['modelo'];
             $producto->user_id=Yii::app()->user->id;
             $producto->created_at=date("Y-m-d h:i:s");
+            $producto->enviado=0;
             if(!$padre){
                 $padre= new ProductoPadre;
                 $padre->attributes=$_POST['ProductoPadre'];

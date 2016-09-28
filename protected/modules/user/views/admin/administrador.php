@@ -165,6 +165,8 @@ $this->breadcrumbs=array(
 	            <th colspan="3" rowspan="2">Usuario</th>
 	            <th rowspan="2">Cargo</th>  
                 <th rowspan="2">Rol</th>
+                <th rowspan="2">N° de ingresos</th>
+                <th rowspan="2">Fecha de ultimo ingreso</th>
 	            <th rowspan="2" scope="col"></th>
 	        </tr>
 	        

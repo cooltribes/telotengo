@@ -43,7 +43,7 @@
     
 
 <?php if($entro==0): ?>
-    <h1 class="margin_top_small">Órdenes de la Empresa</h1>
+    <h1 class="margin_top_small">Órdenes y Pedidos de la Empresa</h1>
     
     <?php $this->renderPartial('status', array(
     	    'model'=>$model,
@@ -61,41 +61,59 @@
 	
 	));?>
 
-   <div class="row-fluid clearfix cards margin_top">
-       <div class="col-md-6 no_padding_left">
-          <div class="card row-fluid clearfix">
-             <a href="<?php echo Yii::app()->createUrl('empresas/perfilVendedor')?>"><span class="title col-md-7"> <?php echo $empresa->razon_social;?></span> </a>
-              <span class="col-md-7"><?php echo $empresa->rif;?></span>
-             <span class="col-md-5 text-right">
-                 <a class="showInfo"  onclick="showInfo('#info1')" id="info1-show">Mostrar Información</a> 
-             </span>
-             <p class="hide col-md-12" id="info1">
-             	 <?php echo $empresa->telefono;?><br/>
-                 <?php echo $empresa->direccion;?><br/>
-                 <?php echo $empresa->web;?><br/>
+   <div class="row-fluid clearfix cards margin_top"> <?php
+        if(!Yii::app()->authManager->checkAccess("comprador", $identificador)): ?>
+           <div class="col-md-6 no_padding_left">
+              <div class="card row-fluid clearfix">
+                 <a href="<?php echo Yii::app()->createUrl('empresas/perfilVendedor')?>"><span class="title col-md-7"> <?php echo $empresa->razon_social;?></span> </a>
+                  <span class="col-md-7"><?php echo $empresa->rif;?></span>
+                 <span class="col-md-5 text-right">
+                     <a class="showInfo"  onclick="showInfo('#info1')" id="info1-show">Mostrar Información</a> 
+                 </span>
+                 <p class="hide col-md-12" id="info1">
+                 	 <?php echo $empresa->telefono;?><br/>
+                     <?php echo $empresa->direccion;?><br/>
+                     <?php echo $empresa->web;?><br/>
 
-                 
-             </p>
-          </div> 
-       </div>
-       <div class="col-md-6 no_padding_right"> 
-          <div class="card row-fluid clearfix">
-             <span class="title col-md-7"><a href="<?php echo Yii::app()->createUrl('almacen/administrador');?>">Almacenes</a></span>
-             <span class="col-md-7"><?php echo count($almacen);?></span>
-             <span class="col-md-5 text-right">
-                 <a class="showInfo" onclick="showInfo('#info2')" id="info2-show">Mostrar Información</a>
-             </span>
-             <p class="hide col-md-12" id="info2">
-             	<?php 
-             	foreach($almacen as $almacenes)
-             	{
-             		echo $almacenes->alias."<br/>"; //TODO DEFINIR SI ES EL ALIAS O EL NOMBRE
-             	}
-                ?>
-             </p>
-             
-          </div> 
-       </div>
+                     
+                 </p>
+              </div> 
+           </div>
+           <div class="col-md-6 no_padding_right"> 
+              <div class="card row-fluid clearfix">
+                 <span class="title col-md-7"><a href="<?php echo Yii::app()->createUrl('almacen/administrador');?>">Almacenes</a></span>
+                 <span class="col-md-7"><?php echo count($almacen);?></span>
+                 <span class="col-md-5 text-right">
+                     <a class="showInfo" onclick="showInfo('#info2')" id="info2-show">Mostrar Información</a>
+                 </span>
+                 <p class="hide col-md-12" id="info2">
+                 	<?php 
+                 	foreach($almacen as $almacenes)
+                 	{
+                 		echo $almacenes->alias."<br/>"; //TODO DEFINIR SI ES EL ALIAS O EL NOMBRE
+                 	}
+                    ?>
+                 </p> 
+              </div> 
+           </div>
+       <?php else:?>
+        <div class="col-md-12 no_padding_center">
+              <div class="card row-fluid clearfix">
+                 <a href="<?php echo Yii::app()->createUrl('empresas/perfilVendedor')?>"><span class="title col-md-7"> <?php echo $empresa->razon_social;?></span> </a>
+                  <span class="col-md-7"><?php echo $empresa->rif;?></span>
+                 <span class="col-md-5 text-right">
+                     <a class="showInfo"  onclick="showInfo('#info1')" id="info1-show">Mostrar Información</a> 
+                 </span>
+                 <p class="hide col-md-12" id="info1">
+                     <?php echo $empresa->telefono;?><br/>
+                     <?php echo $empresa->direccion;?><br/>
+                     <?php echo $empresa->web;?><br/>
+
+                     
+                 </p>
+              </div> 
+        </div>
+       <?php endif;?>
    </div>
    <?php endif; 
    if(!Yii::app()->authManager->checkAccess("admin", $identificador)):?>

@@ -93,12 +93,15 @@ class Almacen extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id);
-		$criteria->compare('ubicacion',$this->ubicacion,true);
-		$criteria->compare('empresas_id',$this->empresas_id);
-		$criteria->compare('alias',$this->alias);
-		$criteria->compare('ciudad_id',$this->ciudad_id);
-		$criteria->compare('provincia_id',$this->provincia_id);
+		#$criteria->compare('id',$this->id);
+		#$criteria->compare('ubicacion',$this->ubicacion,true);
+		#$criteria->compare('empresas_id',$this->empresas_id);
+		#$criteria->compare('alias',$this->nombre, true);
+		#$criteria->compare('nombre',$this->nombre, true);
+
+        $criteria->addCondition('alias like "%'.$this->nombre.'%" or nombre like "%'.$this->nombre.'%" or empresas_id in (select id from tbl_empresas where razon_social like "%'.$this->nombre.'%")');
+		#$criteria->compare('ciudad_id',$this->ciudad_id);
+		#$criteria->compare('provincia_id',$this->provincia_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -122,4 +125,76 @@ class Almacen extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+	    public function buscarPorFiltros($filters) {
+
+            $criteria = new CDbCriteria;
+
+            for ($i = 0; $i < count($filters['fields']); $i++) {
+                
+                $column = $filters['fields'][$i];
+                $value = $filters['vals'][$i];
+                $comparator = $filters['ops'][$i];
+                
+                if($i == 0){
+                   $logicOp = 'AND'; 
+                }else{                
+                    $logicOp = $filters['rels'][$i-1];                
+                }                
+
+                if($column=="razon_social")
+                {
+                	$value = ($comparator == '=') ? "= '".$value."'" : "LIKE '%".$value."%'";
+                	$criteria->addCondition('empresas_id in (select id from tbl_empresas where razon_social '.$value.')', $logicOp);
+                   	continue;
+                }
+                if($column == 'nombre_comercial' || $column == 'sucursal' || $column == 'ubicacion') 
+                {
+                  	if($column=="nombre_comercial")
+                  		$column="nombre";
+                  	if($column=="sucursal")
+                  		$column="alias";
+
+                    $value = ($comparator == '=') ? "= '".$value."'" : "LIKE '%".$value."%'";
+                    $criteria->addCondition($column.' '.$value, $logicOp);
+                    continue;
+                }                                
+                //Para las finalizadas
+
+
+                 if($column == 'provincia')
+                {
+                	$value = ($comparator == '=') ? "= '".$value."'" : "LIKE '%".$value."%'";
+                	$model=Provincia::model()->findAllBySql('select id from tbl_provincia where nombre '.$value);
+                	$vec=ARRAY();
+					foreach($model as $modelado):
+						$vec[]=$modelado->id;
+					endforeach;
+
+					if(empty($vec))
+						$criteria->addCondition('ciudad_id in (select id from tbl_ciudad where provincia_id in(0))', $logicOp);
+					else
+                    	$criteria->addCondition('ciudad_id in (select id from tbl_ciudad where provincia_id in('.implode(',', $vec).'))', $logicOp);
+                    continue;
+
+                }
+                if($column == 'ciudad')
+                {
+                	$value = ($comparator == '=') ? "= '".$value."'" : "LIKE '%".$value."%'";
+                	$criteria->addCondition('ciudad_id in (select id from tbl_ciudad where nombre '.$value.')', $logicOp);
+                   	continue;
+                }
+                #echo 't.'.$column, $comparator." ".$value;
+                $criteria->compare('t.'.$column, $comparator." ".$value,
+                        false, $logicOp);  
+            }
+                                   
+            
+            $criteria->select = 't.*';
+                        
+        
+
+            return new CActiveDataProvider($this, array(
+                'criteria' => $criteria,
+            ));
+       }
 }

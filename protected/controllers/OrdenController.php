@@ -566,7 +566,7 @@ class OrdenController extends Controller
 	   if($model->empresa_id==$empresas_id)
        		$this->render("detalle", array('model'=>$model, 'productoOrden'=>$productoOrden, 'ordenEstado'=>$ordenEstado));  
 	   else
-		  throw new CHttpException(403,'No esta autorizado a visualizar este contenido');
+		  throw new CHttpException(403,'No está autorizado a visualizar este contenido');
 	   
         
         
@@ -613,7 +613,7 @@ class OrdenController extends Controller
 		}
 		else 
 		{
-			throw new CHttpException(403,'No esta autorizado a visualizar este contenido');
+			throw new CHttpException(403,'No está autorizado a visualizar este contenido');
 		}
 	}
 

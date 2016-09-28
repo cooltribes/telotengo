@@ -40,10 +40,10 @@ $this->breadcrumbs=array(
                  <span class="value"><?php echo User::model()->countByAssignment("all");?></span>
                  <span class="legend">Totales</span>
              </div>
-             <div class="col-md-2 stat">
+             <!--<div class="col-md-2 stat">
                  <span class="value"><?php echo User::model()->countByAssignment("admin");?></span>
                  <span class="legend">Administradores</span>
-             </div>
+             </div> -->
              <div class="col-md-2 stat">
                  <span class="value"><?php echo User::model()->countByAssignment("vendedor");?></span>
                  <span class="legend">Vendedores</span>
@@ -194,10 +194,11 @@ $this->breadcrumbs=array(
 	           <th rowspan="2"><input type="checkbox" rowspan="2"/></th>
 	            <th colspan="3" rowspan="2">Usuario</th>
 	            <th scope="col" rowspan="2">Empresa</th>
-	            <th rowspan="2">Cargo</th>
+	            <th rowspan="2">Rol</th>
+                <th rowspan="2">Cargo</th>
                 <th colspan="2">Ingresos al Portal</th>
                  
-	            <th rowspan="2">Estado</th>
+	            
 
 	            <th rowspan="2" scope="col"></th>
 	        </tr>
