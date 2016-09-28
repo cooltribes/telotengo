@@ -237,9 +237,17 @@ class EmpresasController extends Controller
 	{
 		//$this->layout='//layouts/b2b';
 		if(isset($_GET['caducado']))
+		{
 			Yii::app()->user->setFlash('success', 'Estimado Cliente,<br> el enlace ha caducado debido a que tus datos fueron registrados previamente en nuestro sistema.');
+		}
 		else
-		Yii::app()->user->setFlash('success', 'Solicitud realizada con éxito. Pronto estaremos en contacto contigo.');
+		{
+			if(isset($_GET['documentosRegistrados']))
+				Yii::app()->user->setFlash('success', 'Estimado Cliente,<br> el enlace ha caducado debido a que tus documentos ya fueron cargados en nuestro sistema.');
+			else
+				Yii::app()->user->setFlash('success', 'Solicitud realizada con éxito. Pronto estaremos en contacto contigo.');
+		}
+		
 
 		$this->render('solicitudFinalizada');
 	}
@@ -925,14 +933,16 @@ class EmpresasController extends Controller
         	{
         		$_GET['user']=Funciones::desencriptar($_GET['user']);
         		$user = User::model()->findByPk($_GET['user']);
-        		echo $user->id;
         	}
         	/*if(isset($_GET['id'])) // si viene algo por get
         	{*/
-        		echo $_GET['id'];
         		$_GET['id']=Funciones::desencriptar($_GET['id']);
         		$model=Empresas::model()->findByPk($_GET['id']);
         		
+        		if(Documentos::model()->findByAttributes(array('empresas_id'=>$model->id)))
+        		{
+					$this->redirect(array('empresas/solicitudFinalizada/documentosRegistrados'));
+        		}
         	//}
         	/*else
         	{
