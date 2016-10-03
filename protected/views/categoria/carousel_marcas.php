@@ -97,8 +97,7 @@ $('#carouselBrands1').carousel({
 <div id="carouselBrands1" class="carousel slide carouselBrands margin_top">
                <!-- Carousel indicators -->
           
-               <!-- Carousel items -->
-               <div class="carousel-inner row-fluid">
+               
                    
                     <div class="item active">
                      <?php foreach($marcas as $marca): ?>   
@@ -112,7 +111,7 @@ $('#carouselBrands1').carousel({
                      <?php endforeach; ?>
                     </div>
                     
-                </div> 
+                
            
                
 

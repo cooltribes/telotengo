@@ -54,7 +54,7 @@
                 </div>
             </div>
             
-            <div class="">
+            <div>
                 <?php $this->renderPartial('carousel_marcas', array('marcas'=>$marcas, 'model'=>$model)); ?>
             </div> 
         <?php endif;?>
