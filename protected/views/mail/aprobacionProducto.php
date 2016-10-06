@@ -26,6 +26,7 @@
 
 	 <?php if($aprobar==1){?>
 	Para proceder a indicar la cantidad que deseas vender dirígete al menú Inventario y selecciona la opción <a href="<?php echo 'http://' . $_SERVER['HTTP_HOST'].Yii::app()->createUrl('producto/seleccion');?>">Cargar</a><br><br>
+				<p>Si el producto creado no coincide con el que deseabas, ingresa al formulario de <a href="<?php echo 'http://' . $_SERVER['HTTP_HOST'].Yii::app()->createUrl('site/contactanos');?>">Contacto</a> selecciona el motivo <b>Dudas acerca de productos</b> y en el campo <b>Mensaje*</b> indícanos las diferencias y con mucho gusto lo modificaremos o crearemos justo el que necesitas.</p>
 	<?php }else{?>
 		Las razón por la que rechazamos la creación de algunos productos es porque no cumplen con los parámetros establecidos o ya se encuentran registrados en nuestro sistema. Si deseas solicitar otro producto dirígete al menú Inventario y selecciona la opción <a href="<?php echo 'http://' . $_SERVER['HTTP_HOST'].Yii::app()->createUrl('producto/nuevoProducto');?>">Agregar nuevo producto</a><br><br>
 		<?php }?>

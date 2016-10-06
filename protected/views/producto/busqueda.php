@@ -11,7 +11,7 @@
 		<?php //echo CHtml::button('Regresar',array('submit' => array('producto/seleccion'), 'class'=>'btn btn-danger')); ?>
     	
     	<div class="page-header">
-        	<h1> Resultados de la busqueda - <?php echo Yii::app()->session['busquedaPalabra']; ?> </h1>
+        	<h1> Resultados de la busqueda - <?php echo stripslashes(Yii::app()->session['busquedaPalabra']); ?> </h1>
 		</div>
                     
 		<?php 

@@ -96,11 +96,11 @@ $this->breadcrumbs=array(
           </tr>
           <tr>
             <td>Promedio de productos por orden</td>
-            <td><?php echo round($sumatoria/$todasOrdenes,2); echo " Productos/Orden";?></td>
+            <td><?php if($todasOrdenes>0){echo round($sumatoria/$todasOrdenes,2);}else{echo "0";} echo " Productos/Orden";?></td>
           </tr>
           <tr>
             <td>Valor medio de una orden </td>
-            <td><?php echo Funciones::formatPrecio(round($sumatoriaMontos/$todasOrdenes,2), false); echo " Bs"?></td>
+            <td><?php if($todasOrdenes>0){ echo Funciones::formatPrecio(round($sumatoriaMontos/$todasOrdenes,2), false);}else{ echo "0";} echo " Bs"?></td>
           </tr>
           <tr>
             <td>Monto total de órdenes aprobadas</td>

@@ -178,7 +178,7 @@ class TiendaController extends Controller
             if(isset($_GET['producto']))
             {
                 $validacion=Funciones::verificarCadena($_GET['producto']);
-
+                $_GET['producto']=addslashes($_GET['producto']); 
                /* $condition['productos']=Funciones::long_query($_GET['producto'],"padre.nombre")." OR ";
                 $condition['productos'].=Funciones::long_query($_GET['producto'],"marca.nombre")." OR ";  
                 $condition['productos'].=Funciones::long_query($_GET['producto'],"producto.nombre"); */
@@ -197,7 +197,8 @@ class TiendaController extends Controller
             if(isset($_GET['marcas']))
             {
                 if(isset($_GET['producto']))
-                     $query=$query." AND ";        
+                     $query=$query." AND ";
+                $_GET['marcas']=addslashes($_GET['marcas']);             
                 $condition['marcas']= Funciones::inCondition(str_replace('-',',', $_GET['marcas']),'marca.id');
                 $query=$query.$condition['marcas'];
                 $r1=true;
