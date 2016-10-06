@@ -12,7 +12,7 @@ $this->breadcrumbs=array(
 
 <div class="container-fluid">   
   <div>
-  <h1 class="orderTitle">Panel de control de Ordenes</h1>
+  <h1 class="orderTitle">PANEL DE CONTROL DE ÓRDENES Y PEDIDOS</h1>
   <hr>
      <div class="clearfix stats">
          <div class="col-md-1 stat"> <!-- col-xs-1 stat -->
@@ -101,7 +101,7 @@ $this->breadcrumbs=array(
       </div>      
     </div>
     <hr>
-    <h3 class="bolder">Ordenes Generadas por tipo de usuario</h3>    
+    <h3 class="bolder">Pedidos generados por tipo de usuario</h3>    
     <div class="row">
       <div class="col-md-11 col-md-offset-1">
 ​         <div id="ordenesUsuarios"  style="width: 1000px;"></div>
@@ -230,7 +230,7 @@ $this->breadcrumbs=array(
         var options = {
          // title: 'Usuarios',
           hAxis: {title: 'Fecha',  titleTextStyle: {color: '#333'}},
-          vAxis: {title: 'Ordenes', minValue: 0, maxValue:maxNumbPorRol, format:'0'},
+          vAxis: {title: 'Pedidos', minValue: 0, maxValue:maxNumbPorRol, format:'0'},
           legend: {position: 'top', alignment: 'center'},
 
         };
