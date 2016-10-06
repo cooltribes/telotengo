@@ -100,7 +100,7 @@ $this->breadcrumbs=array(
           </tr>
           <tr>
             <td>Valor medio de un pedido </td>
-            <td><?php if($todasOrdenes>0){ echoFunciones::formatPrecio(round($sumatoriaMontos/$todasOrdenes,2), false);}else{echo "0";} echo " Bs"?></td>
+            <td><?php if($todasOrdenes>0){ echo Funciones::formatPrecio(round($sumatoriaMontos/$todasOrdenes,2), false);}else{echo "0";} echo " Bs"?></td>
           </tr>
           <tr>
             <td>Monto total de pedidos aprobados</td>
