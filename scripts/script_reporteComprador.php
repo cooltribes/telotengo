@@ -138,49 +138,6 @@ foreach($result as $resultado)
 	$value = mysqli_query($link,$sql) or die('Consulta fallida: ' . mysql_error());
 	$pedidosPendientes = $value->fetch_assoc();
 
-
-	/////////////////////////////////////////////////////ORDENES//////////////////////////////////////////////////////
-	/*$sql='select  * from tbl_orden where fecha >= DATE_SUB(CURDATE(), INTERVAL 1 WEEK) and almacen_id in (select id from tbl_almacen where empresas_id="'.$empresas['id'].'") order by fecha asc';
-	$todasOrdenes = mysqli_query($link,$sql) or die('Consulta fallida: ' . mysql_error());
-	$maxNumb=0;
-	$ordenDate="";
-	$vectorOrdenAceptada=array();
-	$vectorOrdenPendiente=array();
-	$vectorOrdenCancelada=array();
-	$vectorFecha=array();
-	foreach($todasOrdenes as $each)
-	{
-		$fecha=date('Y-m-d',strtotime($each['fecha']));
-		if($fecha!=$ordenDate)
-		{
-			$ordenDate=$fecha;
-			$invert = explode("-",$fecha); 
-            $fecha_invert = $invert[2]."-".$invert[1]."-".$invert[0]; 
-			array_push($vectorFecha, $fecha_invert);
-
-			$sql="select count(*) as contador from tbl_orden where estado=1 and cast(fecha as DATE)='".$fecha."'";
-			$value= mysqli_query($link,$sql) or die('Consulta fallida: ' . mysql_error());
-			$ordenAceptada = $value->fetch_assoc();
-			array_push($vectorOrdenAceptada, $ordenAceptada['contador']);
-			if($maxNumb<$ordenAceptada['contador'])
-				$maxNumb=$ordenAceptada['contador'];
-
-			$sql="select count(*) as contador from tbl_orden where estado=0 and cast(fecha as DATE)='".$fecha."'";
-			$value= mysqli_query($link,$sql) or die('Consulta fallida: ' . mysql_error());
-			$ordenPendiente = $value->fetch_assoc();
-			array_push($vectorOrdenPendiente, $ordenPendiente['contador']);
-			if($maxNumb<$ordenPendiente['contador'])
-				$maxNumb=$ordenPendiente['contador'];
-
-			$sql="select count(*) as contador from tbl_orden where estado=2 and cast(fecha as DATE)='".$fecha."'";
-			$value= mysqli_query($link,$sql) or die('Consulta fallida: ' . mysql_error());
-			$ordenRechazada = $value->fetch_assoc();
-			array_push($vectorOrdenCancelada, $ordenRechazada['contador']);
-			if($maxNumb<$ordenRechazada['contador'])
-				$maxNumb=$ordenRechazada['contador'];
-		}
-	
-	}*/
 ////////////////////////////////////////////MENSAJES PERSONALIZADOS///////////////////////////////////////////////////////////
 if($total['totalMiembros']<>1)
 	{
@@ -270,9 +227,11 @@ if($total['totalMiembros']<>1)
 	else
 		$pedidosP="pedido pendiente";
 
-
+	 $sql='select  count(*) as total  from tbl_orden where fecha >= DATE_SUB(CURDATE(), INTERVAL 1 WEEK) and empresa_id="'.$empresas['id'].'" order by fecha asc';
+	 $value = mysqli_query($link,$sql) or die('Consulta fallida: ' . mysql_error());
+	 $graficaMostrarComprar = $value->fetch_assoc();
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		echo $body='
+		 $body='
 
 	<div>
 	     <div style="width:100%;min-height:70px;line-height:70px;background:#000">
@@ -285,9 +244,9 @@ if($total['totalMiembros']<>1)
 
 		Estimado cliente. <br><br>
 		<p>
-		Esperamos que hayas tenido un buen fin de semana. A continuación te presentaremos un resumen de lo que sucedió en '.$empresas['razon_social'].' la semana pasada.</p>
+		Esperamos que hayas tenido un buen fin de semana. A continuación te presentaremos un resumen de lo que sucedió en '.$empresas['razon_social'].' la semana pasada.</p><br>
 
-		<p>Miembros</p><hr>
+		<p><b>Miembros</b></p><hr>
 
 		Hay '.$total['totalMiembros'].' '.$mensajePrincipal.' en tu empresa, '.$mensajeSecundario.': '.$totalAdministradores['totalMiembros'].' '.$mensajePrincipalAdministrador.' y '.$totalManagers['totalMiembros'].' '.$mensajePrincipalManager.'.<br><br>
 
@@ -298,7 +257,7 @@ if($total['totalMiembros']<>1)
 		<li> '.$mensajeParrafoManager.' '.$totalManagers['totalMiembros'].' '.$pluralManager.', '.$totalManagersConectados['totalMiembros'].' '.$pluralPalabraManager.', '.$totalManagersInvitadores['totalMiembros'].' '.$pluralSingleManager.' realizado invitaciones a nuevos usuarios y  '.$totalManagersCompradores['totalMiembros'].' '.$pluralSingle3.' generado solicitudes de compras.</li>
 		</ul>
 
-		<p>Compras</p><hr> 
+		<p><b>Compras</b></p><hr>
 		<ul>
 			<li>Mantienes '.$numProductosCarrito['total'].' '.$productosCarro.' en tu carrito. </li>
 			<li>Te aprobaron '.$pedidosAprobados['total'].' '.$pedidosA.'.</li>
@@ -306,14 +265,19 @@ if($total['totalMiembros']<>1)
 			<li>Tienes '.$pedidosPendientes['total'].' '.$pedidosP.' de revisión.</li>
 
 		</ul>
-
-		<div id="ordenes'.$resultado['empresas_id'].'"  style="width: 1000px;"></div>
-
-		</div>  
+		';
+		if($graficaMostrarComprar['total']>0)
+		{
+			$body.='
+			<img src="www.telotengo.com/'.$entorno.'scripts/linear_plot.php?empresas_id='.$empresas['id'].'&orden=0" alt="" border="0">
+			<img src="linear_plot.php?empresas_id='.$empresas['id'].'&orden=0" alt="" border="0">';
+		}
+	$body.='
 	</div>
 	';
+	 echo $body;
 
-	/*$correosEnviar=array();
+	$correosEnviar=array();
 	$sql="select * from tbl_empresas_has_tbl_users where admin=1 and empresas_id='".$empresas['id']."'";
 	$consul = mysqli_query($link,$sql) or die('Consulta fallida: ' . mysql_error());
 	foreach($consul as $correos)
@@ -342,7 +306,7 @@ if($total['totalMiembros']<>1)
 	} else {
 	 echo "There was an error:";
 	 print_r($failures);
-	}*/
+	}
 	//break;
 }
 

@@ -753,7 +753,7 @@ class SiteController extends Controller
 								
 				$message->addTo("contacto@telotengo.com");
 				Yii::app()->mail->send($message);
-				Yii::app()->user->setFlash('success','Gracias por escribirnos. Tu pregunta es importante para nosotros y te contestaremos cuanto antes.');
+				Yii::app()->user->setFlash('success','¡Gracias por contactarnos! Tus inquietudes son importantes para nosotros por lo que te contestaremos lo más pronto posible.');
 				$this->render('contactanos', array('model'=>$model, 'hide'=>1));
 				Yii::app()->end();
    		}
