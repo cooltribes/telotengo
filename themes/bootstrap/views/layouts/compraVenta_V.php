@@ -102,7 +102,7 @@ $userAdmin=EmpresasHasUsers::model()->findByAttributes(array('users_id'=>Yii::ap
                                                               <li><a href="<?php echo Yii::app()->baseUrl; ?>/user/admin/administrador";>Panel de control</a></li>
                                                          <?php endif;?>
                                                           <li><a href="<?php echo Yii::app()->baseUrl; ?>/user/admin/invitarUsuario";>Invitaciones</a></li>
-                                                          <li><a href="<?php echo Yii::app()->baseUrl; ?>/almacen/administrador";>Ver Almacenes</a></li>
+                                                          <li><a href="<?php echo Yii::app()->baseUrl; ?>/almacen/administrador";>Ver Sucursales</a></li>
                                                           <li><a href="<?php echo Yii::app()->baseUrl; ?>/site/changeMode";>Comprar</a></li>
                                                           <li class="separator"></li>
                                                           <li><a href="<?php echo Yii::app()->baseUrl; ?>/site/logout";>Cerrar sesión</a></li>

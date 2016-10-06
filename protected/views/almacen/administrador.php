@@ -10,12 +10,12 @@ $this->breadcrumbs=array(
 		
     	<!-- COLUMNA PRINCIPAL DERECHA ON // OJO: esta de primera para mejorar el SEO sin embargo por CSS se ubica visualmente a la derecha -->
 		<div class="row-fluid">
-		<h1 class="col-md-10 no_padding_left">Administrar Almacenes de la Empresa <?php echo $empresa->razon_social?></h1>
+		<h1 class="col-md-10 no_padding_left">Las sucursales de tu empresa</h1>
         <div class="col-md-2 margin_top_medium text-right no_padding_right">
                 <?php
          if($empresaUsuario->admin==1)
          {
-         	echo CHtml::link('<span class="glyphicon glyphicon-plus"></span> Crear almacen', Yii::app()->baseUrl."/almacen/create", array('class'=>'btn btn-orange white', 'role'=>'button'));
+         	echo CHtml::link('<span class="glyphicon glyphicon-plus"></span> Crear sucursal', Yii::app()->baseUrl."/almacen/create", array('class'=>'btn btn-orange white', 'role'=>'button'));
          	$columnaExtra='<th scope="col">Acción</th>';
          }
          else
