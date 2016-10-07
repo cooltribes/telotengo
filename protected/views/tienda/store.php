@@ -46,6 +46,7 @@
                 'header'=>'',
                 'htmlOptions'=>array(
                 'class'=>'pagination pagination-right',
+                'id'=>'paginacion',
             )
             ),                  
         ));
@@ -63,12 +64,25 @@
            </div>
 <script>
 		
+    $(document).ready(function() {
+        if ((screen.width<410))
+        {
+          $('#paginacion').removeClass('pagination pagination-right'); 
+        }
+      $(window).resize(function() {
+        if ((screen.width<410))
+        {
+          $('#paginacion').removeClass('pagination pagination-right'); 
+        }
+      });
+    });
     function removeLast(string,letter){
          if(string.substring(string.length - 1, string.length)==letter){
             string=string.substring(0, string.length - 1);
         }
         return string;
     }
+
      function filtrar(){
         var params="?";
         if($("#producto").length > 0){params=params+"producto="+$('#producto').val()+"&"};

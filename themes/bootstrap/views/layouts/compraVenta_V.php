@@ -302,13 +302,13 @@ if(isset(Yii::app()->session['banner'])){
         e.preventDefault();
         if($('#querySeller').val().replace(" ","").length>0&&$('')&&$('#sellerOptions').val()!=""){
             if($('#sellerOptions').val()=="producto"){
-                window.location.href ='<?php echo $this->createUrl('producto/seleccion')?>?query='+$('#querySeller').val();
+                window.location.href ='<?php echo Yii::app()->createUrl('producto/seleccion')?>?query='+$('#querySeller').val();
             }
             if($('#sellerOptions').val()=="inventario"){
-                window.location.href ='<?php echo $this->createUrl('producto/productoInventario')?>?query='+$('#querySeller').val();
+                window.location.href ='<?php echo Yii::app()->createUrl('producto/productoInventario')?>?query='+$('#querySeller').val();
             }
             if($('#sellerOptions').val()=="orden"){
-                window.location.href ='<?php echo $this->createUrl('orden/misVentas')?>?query='+$('#querySeller').val();
+                window.location.href ='<?php echo Yii::app()->createUrl('orden/misVentas')?>?query='+$('#querySeller').val();
             }
 
         }
@@ -318,13 +318,13 @@ if(isset(Yii::app()->session['banner'])){
         e.preventDefault();
         if($('#querySellerMovil').val().replace(" ","").length>0&&$('')&&$('#sellerOptionsMovil').val()!=""){
             if($('#sellerOptionsMovil').val()=="producto"){
-                window.location.href ='<?php echo $this->createUrl('producto/seleccion')?>?query='+$('#querySellerMovil').val();
+                window.location.href ='<?php echo Yii::app()->createUrl('producto/seleccion')?>?query='+$('#querySellerMovil').val();
             }
             if($('#sellerOptionsMovil').val()=="inventario"){
-                window.location.href ='<?php echo $this->createUrl('producto/productoInventario')?>?query='+$('#querySellerMovil').val();
+                window.location.href ='<?php echo Yii::app()->createUrl('producto/productoInventario')?>?query='+$('#querySellerMovil').val();
             }
             if($('#sellerOptionsMovil').val()=="orden"){
-                window.location.href ='<?php echo $this->createUrl('orden/misVentas')?>?query='+$('#querySellerMovil').val();
+                window.location.href ='<?php echo Yii::app()->createUrl('orden/misVentas')?>?query='+$('#querySellerMovil').val();
             }
            
         }
