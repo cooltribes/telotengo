@@ -1,3 +1,19 @@
+<style>
+    .negro{
+        background-color: black;
+        color: #fff;
+        border:0;
+    }
+    .negro:hover, .negro:active, .negro:visited   {
+        color: #fff;
+        background-color: black;
+        border:0;
+    }
+        .mientras {    
+    margin-top: -53px;
+    margin-left: 33px;
+    }
+</style>
 <?php
 $this->breadcrumbs=array(
 	'Marcas',
@@ -40,9 +56,15 @@ $this->breadcrumbs=array(
                      <a href="#" class="btn form-control btn-darkgray white" id="btn_search_event">Buscar</a>
                  </div>   
              </form>
-			
+			  
+			  <div class="col-md-3 col-md-offset-1">
+                     <a class="btn btn-gray margin_left_minus" onclick="show('#nuevaBusqueda')">Crear búsqueda avanzada</a>
+               </div>
 	    </div>
-
+	    
+	   <div class="row-fluid clearfix margin_bottom hide" id="nuevaBusqueda">
+	     <?php  $this->renderPartial("_filters"); ?>
+	   </div> 
 
 		<?php
 		Yii::app()->clientScript->registerScript('query1',
@@ -54,7 +76,7 @@ $this->breadcrumbs=array(
 				
 				ajaxUpdateTimeout = setTimeout(function () {
 					$.fn.yiiListView.update(
-					'list-auth-marcas',
+					'list-auth-items',
 					{
 					type: 'POST',	
 					url: '" . CController::createUrl('marca/admin') . "',
@@ -79,7 +101,7 @@ $this->breadcrumbs=array(
 					
 					ajaxUpdateTimeout = setTimeout(function () {
 						$.fn.yiiListView.update(
-						'list-auth-marcas',
+						'list-auth-items',
 						{
 						type: 'POST',	
 						url: '" . CController::createUrl('marca/admin') . "',
@@ -113,7 +135,7 @@ $this->breadcrumbs=array(
 		';
 
 			$this->widget('zii.widgets.CListView', array(
-		    'id'=>'list-auth-marcas',
+		    'id'=>'list-auth-items',
 		    'dataProvider'=>$dataProvider,
 		    'itemView'=>'_datos',
 		    'template'=>$template,
@@ -132,3 +154,11 @@ $this->breadcrumbs=array(
 		?>
 
 </div>
+<script>
+    function show(id){
+        if($(id).hasClass('hide'))
+            $(id).removeClass('hide');
+        else
+            $(id).addClass('hide');
+    }
+</script>  
