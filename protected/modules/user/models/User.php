@@ -879,6 +879,16 @@ class User extends CActiveRecord
                 continue;
                 
             }
+			if($column === 'rol')
+            {
+                if($value === 'administrador')
+                    $criteria->addCondition('id in (select users_id from tbl_empresas_has_tbl_users where admin=1)', $logicOp);
+                else 
+                    $criteria->addCondition('id in (select users_id from tbl_empresas_has_tbl_users where admin=0)', $logicOp);
+                
+                continue;
+                
+            }
             
 
             if($column === 'interno'){

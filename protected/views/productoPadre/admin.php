@@ -1,3 +1,19 @@
+<style>
+    .negro{
+        background-color: black;
+        color: #fff;
+        border:0;
+    }
+    .negro:hover, .negro:active, .negro:visited   {
+        color: #fff;
+        background-color: black;
+        border:0;
+    }
+        .mientras {    
+    margin-top: -53px;
+    margin-left: 33px;
+    }
+</style>
 <?php
 /* @var $this ProductoPadreController */
 /* @var $model ProductoPadre */
@@ -56,12 +72,20 @@ $this->breadcrumbs=array(
               <?php      echo CHtml::link('Crear Variacion', Yii::app()->baseUrl."/producto/create", array('class'=>'btn form-control btn-darkgray white', 'role'=>'button'));
                 ?>
                  </div>
+                
+                <div class="col-md-3 col-md-offset-1">
+                     <a class="btn btn-gray margin_left_minus" onclick="show('#nuevaBusqueda')">Crear búsqueda avanzada</a>
+               </div>
                  
                     
              </form>
             </div> 
 			
 	    </div>
+	    
+	   <div class="row-fluid clearfix margin_bottom hide" id="nuevaBusqueda">
+	     <?php  $this->renderPartial("_filters"); ?>
+	   </div> 
 	    
 	    		<?php
 		Yii::app()->clientScript->registerScript('query1',
@@ -73,7 +97,7 @@ $this->breadcrumbs=array(
 				
 				ajaxUpdateTimeout = setTimeout(function () {
 					$.fn.yiiListView.update(
-					'list-auth-marcas',
+					'list-auth-items',
 					{
 					type: 'POST',	
 					url: '" . CController::createUrl('productoPadre/admin') . "',
@@ -98,7 +122,7 @@ $this->breadcrumbs=array(
 					
 					ajaxUpdateTimeout = setTimeout(function () {
 						$.fn.yiiListView.update(
-						'list-auth-marcas',
+						'list-auth-items',
 						{
 						type: 'POST',	
 						url: '" . CController::createUrl('productoPadre/admin') . "',
@@ -130,7 +154,7 @@ $this->breadcrumbs=array(
 		';
 
 			$this->widget('zii.widgets.CListView', array(
-		    'id'=>'list-auth-marcas',
+		    'id'=>'list-auth-items',
 		    'dataProvider'=>$dataProvider,
 		    'itemView'=>'_datos',
 		    'template'=>$template,
@@ -148,3 +172,11 @@ $this->breadcrumbs=array(
 		
 		?>
 
+<script>
+    function show(id){
+        if($(id).hasClass('hide'))
+            $(id).removeClass('hide');
+        else
+            $(id).addClass('hide');
+    }
+</script>  
