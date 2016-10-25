@@ -423,8 +423,8 @@ class Categoria extends CActiveRecord
                 } 
                  if($column == 'url_amigable') 
                 {
-                    $value = ($comparator == '=') ? "= '".$value."'" : "LIKE '%".$value."%'";
-                    $criteria->addCondition('id_seo in(select id from tbl_seo where amigable '.$value.')', $logicOp);
+                   $value = ($comparator == '=') ? "= '".$value."'" : "LIKE '%".$value."%'";
+				   $criteria->addCondition('id_seo in(select id from tbl_seo where amigable '.$value.')', $logicOp);
                     continue;
                 }                
                 

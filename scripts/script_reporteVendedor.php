@@ -246,7 +246,7 @@ foreach($result as $resultado)
 
 		Estimado cliente. <br><br>
 		<p>
-		Esperamos que hayas tenido un buen fin de semana. A continuación te presentaremos un resumen de lo que sucedió en '.$empresas['razon_social'].' la semana pasada.</p><br>
+		Esperamos que hayas tenido un buen fin de semana. A continuación te presentaremos un resumen de lo que sucedió en <b>'.$empresas['razon_social'].' </b> la semana pasada.</p><br>
 
 		<p><b>Miembros</b></p><hr>
 

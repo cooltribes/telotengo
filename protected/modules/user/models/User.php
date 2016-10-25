@@ -690,8 +690,8 @@ class User extends CActiveRecord
             		return self::$statuses[$key];
         		return self::$statuses;
     		}
-    		    public function buscarPorFiltros($filters) 
-    		    {
+  		public function buscarPorFiltros($filters) 
+    	{
 
         $criteria = new CDbCriteria;
 
@@ -879,6 +879,16 @@ class User extends CActiveRecord
                 continue;
                 
             }
+			if($column === 'rol')
+            {
+                if($value === 'administrador')
+                    $criteria->addCondition('id in (select users_id from tbl_empresas_has_tbl_users where admin=1)', $logicOp);
+                else 
+                    $criteria->addCondition('id in (select users_id from tbl_empresas_has_tbl_users where admin=0)', $logicOp);
+                
+                continue;
+                
+            }
             
 
             if($column === 'interno'){
@@ -1057,5 +1067,67 @@ class User extends CActiveRecord
 			),
         ));
     }
+
+	public function buscarPorFiltrosInvitaciones($filters) 
+    {
+            $criteria = new CDbCriteria;
+
+            for ($i = 0; $i < count($filters['fields']); $i++) {
+                
+                $column = $filters['fields'][$i];
+                $value = $filters['vals'][$i];
+                $comparator = $filters['ops'][$i];
+                
+                if($i == 0){
+                   $logicOp = 'AND'; 
+                }else{                
+                    $logicOp = $filters['rels'][$i-1];                
+                }                
+				$criteria->addCondition('type in (2,3)');
+				
+	             if ($column == 'email' || $column=='id')
+	            {
+	                $value = ($comparator == '=') ? "=" . $value . "" : $value;
+	                $criteria->compare($column, $value, true, $logicOp);
+	                continue;
+	            }
+				if ($column == 'empresa')
+	            {
+	                $value = ($comparator == '=') ? "= '".$value."'" : "LIKE '%".$value."%'";
+	                $criteria->addCondition('id in(select users_id from tbl_empresas_has_tbl_users where empresas_id in (select id from tbl_empresas where razon_social '.$value.'))');
+	                continue;
+	            }
+                if($column == 'nombre') 
+                {
+                    #$value = ($comparator == '=') ? "= '".$value."'" : "LIKE '%".$value."%'";
+                    $criteria->addCondition('id in (select user_id from tbl_profiles where '.Funciones::long_query($value,"last_name").' OR '.Funciones::long_query($value,"first_name").')');
+                    continue;
+                } 
+                if ($column == 'create_at')
+	            {
+	                $value = strtotime($value);
+	                $value = date('Y-m-d H:i:s', $value);
+	                $criteria->addCondition('date('.$column.')'.$comparator.'"'.$value.'"', $logicOp);
+	
+	                continue;
+	            }
+                
+                //Para las finalizadas
+
+                
+                $criteria->compare('t.'.$column, $comparator." ".$value,
+                        false, $logicOp);
+                
+            }
+                                   
+            
+            $criteria->select = 't.*';
+            $criteria->order='id desc';            
         
+
+            return new CActiveDataProvider($this, array(
+                'criteria' => $criteria,
+            ));
+       }
 }
+        

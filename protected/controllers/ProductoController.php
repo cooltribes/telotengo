@@ -1917,6 +1917,7 @@ class ProductoController extends Controller
 			$bandera=true;
              $query=isset($_POST['query'])?$_POST['query']:$_GET['query'];  
 			unset($_SESSION['searchBox']);
+			$query=addslashes($query);    
 			$_SESSION['searchBox'] =  $query;
             $model->nombre =  $query;
             $dataProvider = $model->busquedaInventario($query);

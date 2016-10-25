@@ -103,4 +103,54 @@ class Marca extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+	public function buscarPorFiltros($filters) 
+    {
+            $criteria = new CDbCriteria;
+
+            for ($i = 0; $i < count($filters['fields']); $i++) {
+                
+                $column = $filters['fields'][$i];
+                $value = $filters['vals'][$i];
+                $comparator = $filters['ops'][$i];
+                
+                if($i == 0){
+                   $logicOp = 'AND'; 
+                }else{                
+                    $logicOp = $filters['rels'][$i-1];                
+                }                
+
+                if($column == 'nombre' || $column=='descripcion') 
+                {
+                    $value = ($comparator == '=') ? "= '".$value."'" : "LIKE '%".$value."%'";
+                    $criteria->addCondition($column.' '.$value, $logicOp);
+                    continue;
+                } 
+                 if($column == 'status') 
+                {
+                    $criteria->compare("activo", $comparator.$value, false, $logicOp);
+                    continue;
+                }
+				if($column == 'destacado') 
+                {
+                    $criteria->compare("destacado", $comparator.$value, false, $logicOp);
+                    continue;
+                }                    
+                
+                //Para las finalizadas
+
+                
+                $criteria->compare('t.'.$column, $comparator." ".$value,
+                        false, $logicOp);
+                
+            }
+                                   
+            
+            $criteria->select = 't.*';
+                        
+        
+
+            return new CActiveDataProvider($this, array(
+                'criteria' => $criteria,
+            ));
+       }
 }

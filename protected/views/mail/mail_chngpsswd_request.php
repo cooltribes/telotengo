@@ -1,12 +1,14 @@
  <div>
                
-                         <h1 style="margin-bottom: 1px; margin-left:1%; margin-top:35px">
-                             Recuperar contraseña
-                         </h1>
+                        
                          <hr style="margin-top:0px; border-top:#DDD;"/> 
                          
                          <div style="width:100%; margin-top:35px; font-size:14px">
-                          Has solicitado recuperar tu contraseña en TeloTengo. <br/><br/>Por favor haz click <b><a href="<?php echo $activation_url; ?>">aquí</a></b> para seguir con el proceso de recuperación.
+                         <p>Estimado cliente, </p>
+                         <p>
+                          Hemos recibido una solicitud para restablecer la contraseña asociada a esta dirección de correo electrónico registrada en Telotengo.</p>
+                          <p>
+                          Haz clic <a href="<?php echo $activation_url; ?>">aquí</a> para continuar con el proceso. </p>
                          </div>
                          
                          <div style="margin-top:30px; margin-bottom:20px; border-top: solid 1px #333"></div>

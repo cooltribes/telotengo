@@ -21,7 +21,12 @@
                                                        'vendedor' => 'Vendedor',
                                                        'compraVenta' => 'Comprador y vendedor',
                                                        ),
-                            array('class'=>'form-control','style' => 'display:none'));    
+                            array('class'=>'form-control','style' => 'display:none'));
+							
+	echo CHtml::dropDownList('rol', '', array('administrador' => 'Administrador',
+                                                       'manager' => 'Manager',                                                     
+                                                       ),
+                            array('class'=>'form-control','style' => 'display:none'));      
     
     echo CHtml::dropDownList('fuenteR', '', array('face' => 'Facebook',                                                       
                                                   'user' => 'Registro Normal',
@@ -150,6 +155,7 @@
                             <?php 
                             $opcionesFiltros = array(
                                 'tipoUsuario' => 'Tipo de usuario',
+                                'rol'=>'Rol',
                                 'id' => 'ID',
                                 'first_name' => 'Nombre',
                                 'last_name' => 'Apellido',
