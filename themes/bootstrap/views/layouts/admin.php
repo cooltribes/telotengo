@@ -45,7 +45,7 @@ $assetUrl=Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('applicatio
                 <ul class="dropdown-menu">
                            
                             <li><a href="<?php echo Yii::app()->baseUrl; ?>/empresas/admin">Admin</a></li> 
-                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/almacen/admin">Almacenes</a> </li>
+                            <li><a href="<?php echo Yii::app()->baseUrl; ?>/almacen/admin">Sucursales</a> </li>
                 </ul>
               </li>
               <li class="dropdown">

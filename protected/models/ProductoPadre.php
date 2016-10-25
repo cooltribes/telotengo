@@ -129,7 +129,7 @@ class ProductoPadre extends CActiveRecord
                     $logicOp = $filters['rels'][$i-1];                
                 }                
 
-                if($column == 'nombre' || $column=='categoria') 
+                if($column == 'nombre') 
                 {
                     $value = ($comparator == '=') ? "= '".$value."'" : "LIKE '%".$value."%'";
                     $criteria->addCondition($column.' '.$value, $logicOp);
@@ -139,7 +139,13 @@ class ProductoPadre extends CActiveRecord
                 {
                     $criteria->compare("activo", $comparator.$value, false, $logicOp);
                     continue;
-                }                
+                }
+				if($column == 'categoria') 
+                {
+                    $value = ($comparator == '=') ? "= '".$value."'" : "LIKE '%".$value."%'";
+                    $criteria->addCondition('id_categoria in (select id from tbl_categoria where nombre '.$value.')');
+                    continue;
+                }                 
                 
                 //Para las finalizadas
 

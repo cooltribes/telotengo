@@ -56,7 +56,7 @@
 			'buttonType'=>'submit',
 			'type'=>'primary',
 			'label'=>$model->isNewRecord ? 'Registrar' : 'Guardar',
-			'htmlOptions'=>array('class'=>' no-radius btn-orange white')
+			'htmlOptions'=>array('class'=>' no-radius btn-orange white btn btn-danger')
 		)); ?>
 
 <?php $this->endWidget(); ?>
