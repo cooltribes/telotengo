@@ -49,17 +49,16 @@ $this->breadcrumbs=array(
 
 	    <div class="row margin_top margin_bottom ">
 	         <form class="no_margin_bottom form-search row-fluid">
-                 <div class="col-md-3 col-md-offset-8 no_padding_right">
+                 <div class="col-md-3 no_padding_right">
                      <input class="form-control no_radius_right" id="query" name="query" type="text" placeholder="Escribe tu criterio de búsqueda">                   
                  </div>
                  <div class="col-md-1 no_padding_left">
                      <a href="#" class="btn form-control btn-darkgray white" id="btn_search_event">Buscar</a>
-                 </div>   
-             </form>
-			  
-			  <div class="col-md-3 col-md-offset-1">
+                 </div>
+               <div class="col-md-3 col-md-offset-1">
                      <a class="btn btn-gray margin_left_minus" onclick="show('#nuevaBusqueda')">Crear búsqueda avanzada</a>
-               </div>
+               </div>   
+             </form>
 	    </div>
 	    
 	   <div class="row-fluid clearfix margin_bottom hide" id="nuevaBusqueda">

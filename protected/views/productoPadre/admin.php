@@ -63,19 +63,15 @@ $this->breadcrumbs=array(
                      <a href="#" class="btn form-control btn-darkgray white" id="btn_search_event">Buscar</a>
                  </div>
                  
-                 <div class="col-md-3 col-md-offset-3 "> 
-                <?php
-                    #echo CHtml::link('Crear Producto Padre', Yii::app()->baseUrl."/producto/clasificar", array('class'=>'btn form-control btn-orange orange_border white', 'role'=>'button')); ?>
-                </div>
+                <div class="col-md-3 col-md-offset-2">
+                     <a class="btn btn-gray margin_left_minus" onclick="show('#nuevaBusqueda')">Crear búsqueda avanzada</a>
+               </div>
                 
                 <div class="col-md-2"> 
               <?php      echo CHtml::link('Crear Variacion', Yii::app()->baseUrl."/producto/create", array('class'=>'btn form-control btn-darkgray white', 'role'=>'button'));
                 ?>
                  </div>
                 
-                <div class="col-md-3 col-md-offset-1">
-                     <a class="btn btn-gray margin_left_minus" onclick="show('#nuevaBusqueda')">Crear búsqueda avanzada</a>
-               </div>
                  
                     
              </form>

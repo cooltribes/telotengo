@@ -10,7 +10,20 @@
         background: black;
         vertical-align: top;
     }
-
+    .negro{
+        background-color: black;
+        color: #fff;
+        border:0;
+    }
+    .negro:hover, .negro:active, .negro:visited   {
+        color: #fff;
+        background-color: black;
+        border:0;
+    }
+        .mientras {    
+    margin-top: -53px;
+    margin-left: 33px;
+    }
 </style>
 <?php
 /* @var $this FlashsaleController */
@@ -29,7 +42,7 @@ $this->breadcrumbs=array(
                      <h1 class="orderTitle">Administrador de Invitaciones</h1>
                </div>
           
-               <div class="col-md-3 col-md-offset-1 no_padding_right">
+               <div class="col-md-2 col-md-offset-2 no_padding_right">
                      <?php
          echo CHtml::link('Invitar usuario', $this->createUrl('invitarUsuario'), array('class'=>'btn form-control btn-orange orange_border white', 'role'=>'button'));
                 ?>
@@ -95,16 +108,22 @@ $this->breadcrumbs=array(
                      <div class="margin_top col-md-12 no_horizontal_padding">
 
              <form class="margin_bottom form-search row-fluid">
-                 <div class="col-md-3 col-md-offset-8 no_padding_right">
+                 <div class="col-md-3  no_padding_right">
                     <input class="form-control no_radius_right" id="query" name="query" type="text" placeholder="Nombre o email">              
                  </div>
                  <div class="col-md-1 no_padding_left">
                      <a href="#" class="btn form-control btn-darkgray white" id="btn_search_event">Buscar</a>
-                 </div>   
+                 </div>
+                 <div class="col-md-3 col-md-offset-1">
+                     <a class="btn btn-gray margin_left_minus" onclick="show('#nuevaBusqueda')">Crear búsqueda avanzada</a>
+               </div>   
              </form>
             </div>   
 
        </div>
+       <div class="row-fluid clearfix margin_bottom hide" id="nuevaBusqueda">
+	     <?php  $this->renderPartial("_filtersInvite"); ?>
+	   </div> 
         <?php
         Yii::app()->clientScript->registerScript('query1',
             "var ajaxUpdateTimeout;
@@ -167,7 +186,7 @@ $this->breadcrumbs=array(
                 
                 ajaxUpdateTimeout = setTimeout(function () {
                     $.fn.yiiListView.update(
-                    'list-auth-invitaciones',
+                    'list-auth-items',
                     {
                     type: 'POST',   
                     url: '" . CController::createUrl('admin/adminInvite') . "',
@@ -192,7 +211,7 @@ $this->breadcrumbs=array(
                     
                     ajaxUpdateTimeout = setTimeout(function () {
                         $.fn.yiiListView.update(
-                        'list-auth-invitaciones',
+                        'list-auth-items',
                         {
                         type: 'POST',   
                         url: '" . CController::createUrl('admin/adminInvite') . "',
@@ -236,7 +255,7 @@ $this->breadcrumbs=array(
         ';
 
             $this->widget('zii.widgets.CListView', array(
-            'id'=>'list-auth-invitaciones',
+            'id'=>'list-auth-items',
             'dataProvider'=>$dataProvider,
             'itemView'=>'_datos',
             'template'=>$template,
@@ -256,4 +275,11 @@ $this->breadcrumbs=array(
 
 </div>
 
-
+<script>
+    function show(id){
+        if($(id).hasClass('hide'))
+            $(id).removeClass('hide');
+        else
+            $(id).addClass('hide');
+    }
+</script>  

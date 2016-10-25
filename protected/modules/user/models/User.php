@@ -690,8 +690,8 @@ class User extends CActiveRecord
             		return self::$statuses[$key];
         		return self::$statuses;
     		}
-    		    public function buscarPorFiltros($filters) 
-    		    {
+  		public function buscarPorFiltros($filters) 
+    	{
 
         $criteria = new CDbCriteria;
 
@@ -1067,5 +1067,60 @@ class User extends CActiveRecord
 			),
         ));
     }
+
+	public function buscarPorFiltrosInvitaciones($filters) 
+    {
+            $criteria = new CDbCriteria;
+
+            for ($i = 0; $i < count($filters['fields']); $i++) {
+                
+                $column = $filters['fields'][$i];
+                $value = $filters['vals'][$i];
+                $comparator = $filters['ops'][$i];
+                
+                if($i == 0){
+                   $logicOp = 'AND'; 
+                }else{                
+                    $logicOp = $filters['rels'][$i-1];                
+                }                
+				$criteria->addCondition('type in (2,3)');
+				
+	             if ($column == 'email' || $column=='id')
+	            {
+	                $value = ($comparator == '=') ? "=" . $value . "" : $value;
+	                $criteria->compare($column, $value, true, $logicOp);
+	                continue;
+	            }
+				if ($column == 'empresa')
+	            {
+	                $value = ($comparator == '=') ? "= '".$value."'" : "LIKE '%".$value."%'";
+	                $criteria->addCondition('id in(select users_id from tbl_empresas_has_tbl_users where empresas_id in (select id from tbl_empresas where razon_social '.$value.'))');
+	                continue;
+	            }
+                if($column == 'nombre') 
+                {
+                    #$value = ($comparator == '=') ? "= '".$value."'" : "LIKE '%".$value."%'";
+                    $criteria->addCondition('id in (select user_id from tbl_profiles where '.Funciones::long_query($value,"last_name").' OR '.Funciones::long_query($value,"first_name").')');
+                    continue;
+                } 
+                 
+                
+                //Para las finalizadas
+
+                
+                $criteria->compare('t.'.$column, $comparator." ".$value,
+                        false, $logicOp);
+                
+            }
+                                   
+            
+            $criteria->select = 't.*';
+            $criteria->order='id desc';            
         
+
+            return new CActiveDataProvider($this, array(
+                'criteria' => $criteria,
+            ));
+       }
 }
+        
