@@ -1103,7 +1103,14 @@ class User extends CActiveRecord
                     $criteria->addCondition('id in (select user_id from tbl_profiles where '.Funciones::long_query($value,"last_name").' OR '.Funciones::long_query($value,"first_name").')');
                     continue;
                 } 
-                 
+                if ($column == 'create_at')
+	            {
+	                $value = strtotime($value);
+	                $value = date('Y-m-d H:i:s', $value);
+	                $criteria->addCondition('date('.$column.')'.$comparator.'"'.$value.'"', $logicOp);
+	
+	                continue;
+	            }
                 
                 //Para las finalizadas
 

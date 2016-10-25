@@ -8,7 +8,7 @@ function changeFilter(e){
 
    var column = $(this);
    
-   var fecha = ['fecha'];
+   var fecha = ['create_at'];
    var opciones = ['algo'];
    var texto = ['id', 'nombre', 'email', 'empresa'];
     

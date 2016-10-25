@@ -42,7 +42,7 @@
                             <?php 
                             $opcionesFiltros = array(
                                 'nombre' => 'Nombre',
-                                'fecha' => 'Fecha',
+                                'create_at' => 'Fecha',
                                 'id' => 'ID',
                                 'email' => 'Email',
                                 'empresa' => 'Empresa',
