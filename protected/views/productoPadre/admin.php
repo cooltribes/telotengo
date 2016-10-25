@@ -47,7 +47,7 @@ $this->breadcrumbs=array(
 		<?php } ?>
 
 		    <div class="row-fluid margin_top margin_bottom_small ">
-		       <div class="col-md-3 col-md-offset-9"> 
+		       <div class="col-md-2 col-md-offset-10"> 
                 <?php
                     echo CHtml::link('Crear Producto Padre', Yii::app()->baseUrl."/producto/clasificar", array('class'=>'btn form-control btn-orange orange_border white', 'role'=>'button')); ?>
                 </div>
@@ -67,7 +67,7 @@ $this->breadcrumbs=array(
                      <a class="btn btn-gray margin_left_minus" onclick="show('#nuevaBusqueda')">Crear búsqueda avanzada</a>
                </div>
                 
-                <div class="col-md-2"> 
+                <div class="col-md-2 col-md-offset-1"> 
               <?php      echo CHtml::link('Crear Variacion', Yii::app()->baseUrl."/producto/create", array('class'=>'btn form-control btn-darkgray white', 'role'=>'button'));
                 ?>
                  </div>
