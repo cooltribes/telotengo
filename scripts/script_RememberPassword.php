@@ -40,7 +40,7 @@ $from = array('info@telotengo.com' =>'Telotengo');
 foreach($result as $resultado)
 {
 
-
+		$enlace='http://telotengo.com/'.$entorno.'user/recovery?activkey='.$resultado['activkey'].'&email='.$resultado['email'].'&solicitud=nueva';
 		$body='
 
 	<div>
@@ -55,10 +55,40 @@ foreach($result as $resultado)
 		Estimado cliente. <br><br>
 		<p>
 		Hemos observado que recientemente te has registrado en Telotengo pero aún no has creado tu contraseña. Debes hacerlo a la brevedad posible si quieres empezar a disfrutar de todos los beneficios que te ofrece nuestra plataforma. </p>
-		Haz click <a href="http://telotengo.com/'.$entorno.'user/recovery?activkey='.$resultado['activkey'].'&email='.$resultado['email'].'&solicitud=nueva">aquí</a> y genera tu nueva clave de acceso.
+		<form>
+		 <input onclick="window.location.href='.$enlace.'" type="submit" Value="Go">
+		</form>
+		<form method="get" action="'.$enlace.'">
+	    <input   type="submit" value="Crea tu nueva contraseña" style="
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.428571429;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+    background-color: #ff5b0b;
+    height: 34px;
+    border: solid 1px #FFF;
+    font-weight: 600;
+    border-radius: 0;
+    color: #fff;
+    margin-left: 41.6%;
+"/>
+	</form>
 		</div>  
 	</div>
-	<div style="text-align: center; margin-top: 15px; font-size:15px;">¡Gracias por participar en Telotengo!</div>
 	';
 	$to = array(
 			 	$resultado['email']  => $resultado['email'],
@@ -84,6 +114,7 @@ foreach($result as $resultado)
 	 echo "There was an error:";
 	 print_r($failures);
 	}
+	break;
 }
 
 
