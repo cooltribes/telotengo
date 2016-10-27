@@ -47,7 +47,7 @@ $this->breadcrumbs=array(
 								 		Almacen::model()->findAllByAttributes(array('empresas_id'=>$empresas_id)),'id','alias'
 									), array(
 										'class'=>'form-control',
-										'empty' => 'Seleccione un almacen'
+										'empty' => 'Seleccione una sucursal'
 										)
 									);
 								}
@@ -56,7 +56,7 @@ $this->breadcrumbs=array(
 									$almacenn=Almacen::model()->findByAttributes(array('empresas_id'=>$empresas_id));
 									echo $form->dropDownListRow($model,'almacen_id',
 										array($almacenn->id=>$almacenn->alias), 
-										array('empty' => 'Seleccione un almacen','class'=>'form-control','options' => array($almacenn->id=>array('selected'=>true))));
+										array('empty' => 'Seleccione una sucursal','class'=>'form-control','options' => array($almacenn->id=>array('selected'=>true))));
 								}*/
 
 								//echo $form->error($model,'almacen_id'); 
@@ -65,7 +65,7 @@ $this->breadcrumbs=array(
 								 		Almacen::model()->findAllByAttributes(array('empresas_id'=>$empresas_id)),'id','alias'
 									), array(
 										'class'=>'form-control',
-										'empty' => 'Seleccione un almacen',
+										'empty' => 'Seleccione una sucursal',
 										'options'=>array(''=>array('selected'=>true))
 										)
 									);*/
@@ -73,7 +73,7 @@ $this->breadcrumbs=array(
 								?>
 								<label for="Inventario_almacen_id" class="required">Sucursal <span class="required">*</span></label>
 								<select id="Inventario_almacen_id" class="form-control" name="Inventario[almacen_id]">
-								 <option value="">Seleccione un almacen</option>
+								 <option value="">Seleccione una sucursal</option>
 								 <?php foreach($modelado as $mode): ?>
 								  	<option value="<?php echo $mode->id;?>"><?php echo $mode->alias;?></option>
 								  <?php endforeach;?>

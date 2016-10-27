@@ -30,7 +30,7 @@
         <div class="orderContainer margin_bottom">
                 <div class="title clearfix">
                    <div class="row-fluid">
-                      <div class="col-md-10 no_horizontal_padding reducirNombre">Almacen: <?php echo $model->almacen->alias;?></div>
+                      <div class="col-md-10 no_horizontal_padding reducirNombre">Sucursal: <?php echo $model->almacen->alias;?></div>
                       <div class="col-md-2 no_horizontal_padding text-right">ORDEN #<?php echo $model->id;?></div>
                   
                    </div>

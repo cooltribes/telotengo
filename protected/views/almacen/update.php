@@ -2,14 +2,14 @@
 if(Yii::app()->user->isAdmin())
 {
 	$this->breadcrumbs=array(
-	'Almacen' => array('almacen/admin'),
+	'Sucursal' => array('almacen/admin'),
 	'Editar Sucursal',
 	);
 }
 else
 {
 	$this->breadcrumbs=array(
-	'Almacen' => array('almacen/administrador'),
+	'Sucursal' => array('almacen/administrador'),
 	'Editar Sucursal',
 	);
 }

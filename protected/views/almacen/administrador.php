@@ -4,7 +4,7 @@
 
 
 $this->breadcrumbs=array(
-	'Almacenes',
+	'Sucursales',
 );
 ?>
 		
