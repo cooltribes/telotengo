@@ -10,7 +10,7 @@ function changeFilter(e){
    
    var fecha = ['create_at'];
    var opciones = ['algo'];
-   var texto = ['id', 'nombre', 'email', 'empresa'];
+   var texto = [ 'nombre', 'email', 'empresa', 'nombreInvitado', 'emailQuienInvita'];
     
        
    //si es fecha
