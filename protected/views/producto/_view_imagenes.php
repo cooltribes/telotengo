@@ -69,7 +69,7 @@
 				    <div class="margin_top_small">
                                         <?php $this->widget('bootstrap.widgets.TbButton', array(
                                     'buttonType'=>'submit',
-                                    'type'=>'primary',
+                                    'type'=>'danger',
                                     'label'=>'Cargar imagen(es)',
                                     'htmlOptions'=>array('class'=>'btn-large btn-orange white'), 
                                 )); ?> 

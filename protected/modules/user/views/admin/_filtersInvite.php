@@ -41,10 +41,12 @@
                         <div class="span3" >
                             <?php 
                             $opcionesFiltros = array(
-                                'nombre' => 'Nombre',
+                                'nombre' => 'Nombre del que invita',
+                                'nombreInvitado'=>'Nombre del invitado',
                                 'create_at' => 'Fecha',
                                 'id' => 'ID',
-                                'email' => 'Email',
+                                'email' => 'Email del invitado',
+                                'emailQuienInvita'=>'Email del que invita',
                                 'empresa' => 'Empresa',
                                  );
                                  asort($opcionesFiltros);

@@ -141,9 +141,9 @@ class AlmacenController extends Controller
 					$log->accion=21; //modifico un almacen de un usuario
             	}
             	$log->save();
-				Yii::app()->user->setFlash('success',"Almacen modificado con éxito");
+				Yii::app()->user->setFlash('success',"Sucursal modificada con éxito");
 			}else{
-				Yii::app()->user->setFlash('error',"Error al modificar el Almacen");
+				Yii::app()->user->setFlash('error',"Error al modificar la sucursal");
 			}
 			if(!Yii::app()->authManager->checkAccess("admin", Yii::app()->user->id))
 				$this->redirect(array('administrador'));

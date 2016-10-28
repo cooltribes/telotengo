@@ -166,7 +166,7 @@ class Log extends CActiveRecord
             break;
         case 11:
             $enlace=Yii::app()->createUrl('producto/detalle?producto='.$id_producto.'&almacen_id='.$id_almacen);
-            $mensaje="Le has cargado inventario al producto <a href=".$enlace."><b>".Producto::model()->findByPk($id_producto)->nombre."</a></b> en el almacen <b>".Almacen::model()->findByPk($id_almacen)->alias."</b>";
+            $mensaje="Le has cargado inventario al producto <a href=".$enlace."><b>".Producto::model()->findByPk($id_producto)->nombre."</a></b> en la sucursal <b>".Almacen::model()->findByPk($id_almacen)->alias."</b>";
             break;
         case 12:
             $mensaje="Has subido el inbound #<b>".$id_inbound."</b>";
@@ -176,11 +176,11 @@ class Log extends CActiveRecord
             break;
         case 14:
             $enlace=Yii::app()->createUrl('almacen/update', array('id'=>$id_almacen));
-            $mensaje="Has creado el almacen <a href=".$enlace."><b>".Almacen::model()->findByPk($id_almacen)->alias."</b> </a>";
+            $mensaje="Has creado la sucursal <a href=".$enlace."><b>".Almacen::model()->findByPk($id_almacen)->alias."</b> </a>";
             break;
         case 15:
             $enlace=Yii::app()->createUrl('almacen/update', array('id'=>$id_almacen));
-            $mensaje="Has modificado el almacen <a href=".$enlace."><b>".Almacen::model()->findByPk($id_almacen)->alias."</b> </a>";
+            $mensaje="Has modificado la sucursal <a href=".$enlace."><b>".Almacen::model()->findByPk($id_almacen)->alias."</b> </a>";
             break;
         case 16:
             $enlace=Yii::app()->createUrl('empresas/verEmpresa', array('id'=>$id_empresa));

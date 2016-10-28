@@ -1085,7 +1085,7 @@ class User extends CActiveRecord
                 }                
 				$criteria->addCondition('type in (2,3)');
 				
-	             if ($column == 'email' || $column=='id')
+	             if ($column == 'email')
 	            {
 	                $value = ($comparator == '=') ? "=" . $value . "" : $value;
 	                $criteria->compare($column, $value, true, $logicOp);
@@ -1094,15 +1094,27 @@ class User extends CActiveRecord
 				if ($column == 'empresa')
 	            {
 	                $value = ($comparator == '=') ? "= '".$value."'" : "LIKE '%".$value."%'";
-	                $criteria->addCondition('id in(select users_id from tbl_empresas_has_tbl_users where empresas_id in (select id from tbl_empresas where razon_social '.$value.'))');
+	                $criteria->addCondition('quien_invita in(select users_id from tbl_empresas_has_tbl_users where empresas_id in (select id from tbl_empresas where razon_social '.$value.'))');
+	                continue;
+	            }
+				if ($column == 'emailQuienInvita')
+	            {
+	                $value = ($comparator == '=') ? "= '".$value."'" : "LIKE '%".$value."%'";
+	                $criteria->addCondition('quien_invita in(select id from tbl_users where email '.$value.')');
 	                continue;
 	            }
                 if($column == 'nombre') 
                 {
-                    #$value = ($comparator == '=') ? "= '".$value."'" : "LIKE '%".$value."%'";
-                    $criteria->addCondition('id in (select user_id from tbl_profiles where '.Funciones::long_query($value,"last_name").' OR '.Funciones::long_query($value,"first_name").')');
+            		$orden=new Orden;
+                    $criteria->addCondition('quien_invita in (select user_id from tbl_profiles where '.$orden->buscarNombres($value,$comparator).')');
                     continue;
-                } 
+                }
+				if($column == 'nombreInvitado') 
+                {
+            		$orden=new Orden;
+                    $criteria->addCondition('id in (select user_id from tbl_profiles where '.$orden->buscarNombres($value,$comparator).')');
+                    continue;
+                }  
                 if ($column == 'create_at')
 	            {
 	                $value = strtotime($value);
@@ -1115,7 +1127,7 @@ class User extends CActiveRecord
                 //Para las finalizadas
 
                 
-                $criteria->compare('t.'.$column, $comparator." ".$value,
+                $criteria->compare($column, $comparator." ".$value,
                         false, $logicOp);
                 
             }

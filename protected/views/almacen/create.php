@@ -5,7 +5,7 @@
 /* @var $model Almacen */
 
 $this->breadcrumbs=array(
-	'Almacenes'=>array('almacen/administrador/'),
+	'Sucursales'=>array('almacen/administrador/'),
 	'Crear',
 );
 ?>
